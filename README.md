@@ -3,7 +3,7 @@
 Material de apoio da disciplina **Bases de Dados IV** do Bacharelado em Engenharia de Software — UnDF.
 
 O site do curso é publicado automaticamente via GitHub Actions em:
-**https://BragaD.github.io/BasesIV_EngSoft_BD**
+**https://BragaD.github.io/UnDF-BancodeDados-202601**
 
 ## Estrutura do Repositório
 
