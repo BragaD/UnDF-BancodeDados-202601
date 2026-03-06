@@ -20,3 +20,12 @@ renv/staging/
 # Output
 *.html
 !docs/**/*.html
+
+#claude
+.claude/
+
+# slides
+slides-db-book/
+
+# VSCode
+.vscode/
