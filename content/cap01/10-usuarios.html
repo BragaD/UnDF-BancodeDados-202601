@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
-<meta name="dcterms.date" content="2026-06-03">
 
-<title>Bases da Engenharia de Software 4</title>
+<title>11&nbsp; 1.10 Usuários de Banco de Dados – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,48 +21,29 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./content/cap01/index.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/cap01/11-historia.html" rel="next">
+<link href="../../content/cap01/09-arquiteturas.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -93,7 +73,7 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Início</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/10-usuarios.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">1.10 Usuários e DBA</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -120,7 +100,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Bases da Engenharia de Software 4</a> 
+      <a href="../../">Bases da Engenharia de Software 4</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/BragaD/UnDF-BancodeDados-202601" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
 </div>
@@ -135,7 +115,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Início</span></a>
   </div>
 </li>
@@ -150,79 +130,79 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">1.1 O que é um Banco de Dados?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1.2 Aplicações</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">1.3 Por que não usar Arquivos?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1.4 Modelos de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">1.5 Visão em Três Níveis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">1.6 Linguagens (DDL, DML, SQL)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">1.7 Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/08-motor.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/08-motor.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">1.8 Motor de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">1.9 Arquiteturas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">1.10 Usuários e DBA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/11-historia.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/11-historia.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">1.11 História</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
   </div>
 </li>
@@ -238,23 +218,16 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#bem-vindo" id="toc-bem-vindo" class="nav-link active" data-scroll-target="#bem-vindo">Bem-vindo</a>
-  <ul>
-  <li><a href="#sobre-a-disciplina" id="toc-sobre-a-disciplina" class="nav-link" data-scroll-target="#sobre-a-disciplina">Sobre a Disciplina</a></li>
-  <li><a href="#material-bibliográfico" id="toc-material-bibliográfico" class="nav-link" data-scroll-target="#material-bibliográfico">Material Bibliográfico</a></li>
-  <li><a href="#como-usar-este-material" id="toc-como-usar-este-material" class="nav-link" data-scroll-target="#como-usar-este-material">Como Usar Este Material</a></li>
-  <li><a href="#licença" id="toc-licença" class="nav-link" data-scroll-target="#licença">Licença</a></li>
-  </ul></li>
+  <li><a href="#administrador-de-banco-de-dados-dba" id="toc-administrador-de-banco-de-dados-dba" class="nav-link active" data-scroll-target="#administrador-de-banco-de-dados-dba"><span class="header-section-number">11.1</span> Administrador de Banco de Dados (DBA)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/10-usuarios.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">1.10 Usuários e DBA</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bases da Engenharia de Software 4</h1>
-<p class="subtitle lead">Banco de Dados</p>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">1.10 Usuários de Banco de Dados</span></h1>
 </div>
 
 
@@ -268,12 +241,6 @@ div.csl-indent {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Data de Publicação</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">06/03/2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -283,49 +250,49 @@ div.csl-indent {
 </header>
 
 
-<section id="bem-vindo" class="level1 unnumbered">
-<h1 class="unnumbered">Bem-vindo</h1>
-<p>Este é o material de apoio da disciplina <strong>Bases de Dados IV</strong> do curso de <strong>Bacharelado em Engenharia de Software</strong> da UnDF.</p>
-<section id="sobre-a-disciplina" class="level2">
-<h2 class="anchored" data-anchor-id="sobre-a-disciplina">Sobre a Disciplina</h2>
-<p>A disciplina aborda os fundamentos de sistemas de bancos de dados, com ênfase em conceitos essenciais para o desenvolvimento de software moderno. Os temas incluem:</p>
+<p>Existem quatro perfis de usuários:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Perfil</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Usuários leigos</strong></td>
+<td>Interagem com o sistema por meio de aplicações prontas (ex: caixa eletrônico, e-commerce)</td>
+</tr>
+<tr class="even">
+<td><strong>Programadores de aplicação</strong></td>
+<td>Profissionais que escrevem os programas que os usuários leigos utilizam</td>
+</tr>
+<tr class="odd">
+<td><strong>Usuários sofisticados</strong></td>
+<td>Interagem com o sistema via linguagem de consulta ou ferramentas de análise de dados, sem escrever programas</td>
+</tr>
+<tr class="even">
+<td><strong>Usuários especializados</strong></td>
+<td>Desenvolvem aplicações especializadas (ex: CAD, dados geográficos, multimídia)</td>
+</tr>
+</tbody>
+</table>
+<section id="administrador-de-banco-de-dados-dba" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="administrador-de-banco-de-dados-dba"><span class="header-section-number">11.1</span> Administrador de Banco de Dados (DBA)</h2>
+<p>O <strong>DBA</strong> (Database Administrator) tem controle central sobre o sistema. Suas funções incluem:</p>
 <ul>
-<li>Fundamentos e arquitetura de sistemas de banco de dados</li>
-<li>Modelagem de dados (Modelo Relacional e Entidade-Relacionamento)</li>
-<li>SQL: definição e manipulação de dados</li>
-<li>Projeto e normalização de bancos de dados</li>
-<li>Transações, controle de concorrência e recuperação</li>
-<li>Introdução a NoSQL e bancos de dados modernos</li>
+<li>Definição do schema</li>
+<li>Definição de estruturas de armazenamento e métodos de acesso</li>
+<li>Modificação do schema e da organização física</li>
+<li>Concessão de autorizações de acesso</li>
+<li>Manutenção de rotina (backups, monitoramento, espaço em disco)</li>
 </ul>
-</section>
-<section id="material-bibliográfico" class="level2">
-<h2 class="anchored" data-anchor-id="material-bibliográfico">Material Bibliográfico</h2>
-<p>O principal livro-texto da disciplina é:</p>
-<blockquote class="blockquote">
-<p><span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span></p>
-</blockquote>
-<p>Os slides utilizados nas aulas são baseados no material oficial do livro, disponível em <a href="https://www.db-book.com">db-book.com</a>.</p>
-</section>
-<section id="como-usar-este-material" class="level2">
-<h2 class="anchored" data-anchor-id="como-usar-este-material">Como Usar Este Material</h2>
-<p>O material está organizado em capítulos que acompanham a progressão da disciplina. Cada capítulo contém:</p>
-<ul>
-<li>Conceitos teóricos com exemplos</li>
-<li>Exemplos de código SQL</li>
-<li>Exercícios de fixação</li>
-</ul>
-</section>
-<section id="licença" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="licença">Licença</h2>
-<p>Este material é disponibilizado para fins educacionais. Os slides originais são de autoria de Silberschatz, Korth e Sudarshan <span class="citation" data-cites="silberschatz2019">(<a href="#ref-silberschatz2019" role="doc-biblioref">Silberschatz, Korth, e Sudarshan 2019</a>)</span>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
-</div>
-</div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -777,10 +744,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../../content/cap01/09-arquiteturas.html" class="pagination-link" aria-label="1.9 Arquiteturas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">1.9 Arquiteturas</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./content/cap01/index.html" class="pagination-link" aria-label="Visão Geral">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Visão Geral</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap01/11-historia.html" class="pagination-link" aria-label="1.11 História">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">1.11 História</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

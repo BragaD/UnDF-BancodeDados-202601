@@ -50,157 +50,366 @@
     ]
   },
   {
-    "objectID": "01-introducao.html",
-    "href": "01-introducao.html",
+    "objectID": "content/cap01/index.html",
+    "href": "content/cap01/index.html",
     "title": "1  Introdução a Bancos de Dados",
     "section": "",
-    "text": "1.1 O que é um Banco de Dados?\nUm banco de dados é uma coleção organizada de dados inter-relacionados que modela algum aspecto do mundo real. Um Sistema de Gerenciamento de Banco de Dados (SGBD) é o software que permite criar, manter e consultar esses dados de forma eficiente, segura e confiável.\nExemplos do cotidiano que dependem de bancos de dados:",
+    "text": "1.1 Seções\nEste capítulo apresenta os conceitos fundamentais de sistemas de banco de dados. Ao final, você será capaz de:",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Visão Geral</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#o-que-é-um-banco-de-dados",
-    "href": "01-introducao.html#o-que-é-um-banco-de-dados",
+    "objectID": "content/cap01/index.html#seções",
+    "href": "content/cap01/index.html#seções",
     "title": "1  Introdução a Bancos de Dados",
     "section": "",
-    "text": "Sistemas bancários (contas, transações, empréstimos)\nRedes sociais (usuários, postagens, conexões)\nE-commerce (produtos, pedidos, clientes)\nSistemas hospitalares (prontuários, agendamentos)\nAplicativos de navegação (mapas, rotas, pontos de interesse)",
+    "text": "Seção\nTópico\n\n\n\n\n1.1\nO que é um Banco de Dados?\n\n\n1.2\nAplicações de Banco de Dados\n\n\n1.3\nPor que não usar Arquivos?\n\n\n1.4\nModelos de Dados\n\n\n1.5\nVisão em Três Níveis\n\n\n1.6\nLinguagens de Banco de Dados\n\n\n1.7\nProjeto de Banco de Dados\n\n\n1.8\nMotor de Banco de Dados\n\n\n1.9\nArquiteturas de Banco de Dados\n\n\n1.10\nUsuários de Banco de Dados\n\n\n1.11\nBreve História dos Bancos de Dados\n\n\nResumo\nResumo e Exercícios\n\n\n\n\n\n\n\nSilberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. Database System Concepts. 7th ed. McGraw-Hill Education.",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Visão Geral</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#aplicações-de-banco-de-dados",
-    "href": "01-introducao.html#aplicações-de-banco-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.2 Aplicações de Banco de Dados",
-    "text": "1.2 Aplicações de Banco de Dados\nBancos de dados estão presentes em praticamente todos os setores:\nEmpresas e Negócios\n\nVendas: clientes, produtos, compras\nContabilidade: pagamentos, recebimentos, ativos\nRH: funcionários, salários, impostos\n\nIndústria\n\nGestão de produção, inventário, pedidos e cadeia de suprimentos\n\nSetor Financeiro e Bancário\n\nInformações de clientes, contas e empréstimos\nTransações com cartão de crédito\nNegociação de ações e títulos em tempo real\n\nUniversidades\n\nMatrículas, notas, histórico escolar\n\nTelecomunicações\n\nRegistros de chamadas, SMS e uso de dados\nGeração de faturas mensais\n\nServiços Web\n\nVarejistas online: rastreamento de pedidos, recomendações personalizadas\nPublicidade online direcionada\n\nSistemas de Navegação\n\nLocalização de pontos de interesse, rotas de estradas, linhas de transporte",
+    "objectID": "content/cap01/01-o-que-e-bd.html",
+    "href": "content/cap01/01-o-que-e-bd.html",
+    "title": "2  1.1 O que é um Banco de Dados?",
+    "section": "",
+    "text": "Um banco de dados é uma coleção organizada de dados inter-relacionados que modela algum aspecto do mundo real. Um Sistema de Gerenciamento de Banco de Dados (SGBD) é o software que permite criar, manter e consultar esses dados de forma eficiente, segura e confiável.\nExemplos do cotidiano que dependem de bancos de dados:\n\nSistemas bancários (contas, transações, empréstimos)\nRedes sociais (usuários, postagens, conexões)\nE-commerce (produtos, pedidos, clientes)\nSistemas hospitalares (prontuários, agendamentos)\nAplicativos de navegação (mapas, rotas, pontos de interesse)",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>1.1 O que é um Banco de Dados?</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#por-que-não-usar-arquivos",
-    "href": "01-introducao.html#por-que-não-usar-arquivos",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.3 Por que não usar Arquivos?",
-    "text": "1.3 Por que não usar Arquivos?\nNos primórdios da computação, sistemas de informação eram construídos diretamente sobre sistemas de arquivos. Essa abordagem apresenta problemas sérios:\n\n1.3.1 Problemas com Sistemas de Arquivos\n\n\n\n\n\n\n\nProblema\nDescrição\n\n\n\n\nRedundância e inconsistência\nOs mesmos dados são armazenados em múltiplos arquivos, em formatos diferentes, levando à duplicação e inconsistências\n\n\nDificuldade de acesso\nÉ preciso escrever um novo programa para cada nova necessidade de consulta\n\n\nIsolamento de dados\nDados em múltiplos arquivos e formatos dificultam consultas integradas\n\n\nProblemas de integridade\nRestrições (ex: saldo &gt; 0) ficam enterradas no código dos programas, difíceis de modificar\n\n\nAtomicidade de atualizações\nFalhas podem deixar o sistema em estado inconsistente (ex: transferência bancária parcial)\n\n\nAcesso concorrente\nAcessos simultâneos sem controle levam a resultados incorretos\n\n\nProblemas de segurança\nDifícil controlar o acesso granular aos dados\n\n\n\n\n\n\n\n\n\nImportante\n\n\n\nSistemas de banco de dados oferecem soluções para todos esses problemas.",
+    "objectID": "content/cap01/02-aplicacoes.html",
+    "href": "content/cap01/02-aplicacoes.html",
+    "title": "3  1.2 Aplicações de Banco de Dados",
+    "section": "",
+    "text": "Bancos de dados estão presentes em praticamente todos os setores:\nEmpresas e Negócios\n\nVendas: clientes, produtos, compras\nContabilidade: pagamentos, recebimentos, ativos\nRH: funcionários, salários, impostos\n\nIndústria\n\nGestão de produção, inventário, pedidos e cadeia de suprimentos\n\nSetor Financeiro e Bancário\n\nInformações de clientes, contas e empréstimos\nTransações com cartão de crédito\nNegociação de ações e títulos em tempo real\n\nUniversidades\n\nMatrículas, notas, histórico escolar\n\nTelecomunicações\n\nRegistros de chamadas, SMS e uso de dados\nGeração de faturas mensais\n\nServiços Web\n\nVarejistas online: rastreamento de pedidos, recomendações personalizadas\nPublicidade online direcionada\n\nSistemas de Navegação\n\nLocalização de pontos de interesse, rotas de estradas, linhas de transporte",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>1.2 Aplicações</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#modelos-de-dados",
-    "href": "01-introducao.html#modelos-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.4 Modelos de Dados",
-    "text": "1.4 Modelos de Dados\nUm modelo de dados é um conjunto de ferramentas conceituais para descrever:\n\nOs dados em si\nAs relações entre os dados\nA semântica (significado) dos dados\nAs restrições (constraints) sobre os dados\n\n\n1.4.1 Principais Modelos\nModelos de Dados\n├── Modelo Relacional          ← foco principal desta disciplina\n├── Modelo Entidade-Relacionamento (ER)  ← para projeto de banco de dados\n├── Modelos Baseados em Objetos\n│   ├── Orientado a Objetos\n│   └── Objeto-Relacional\n├── Modelo Semiestruturado (XML, JSON)\n└── Modelos Antigos (legados)\n    ├── Modelo em Rede\n    └── Modelo Hierárquico\n\n\n1.4.2 Modelo Relacional\nNo modelo relacional (proposto por Ted Codd em 1970, Prêmio Turing 1981), todos os dados são armazenados em tabelas (relações):\n\nCada tabela possui colunas (atributos)\nCada linha é uma tupla (registro)\n\nExemplo de tabela de instrutores:\n\n\n\nID\nnome\ndepto\nsalário\n\n\n\n\n10101\nSrinivasan\nComp. Sci.\n65.000,00\n\n\n12121\nWu\nFinance\n90.000,00\n\n\n15151\nMozart\nMusic\n40.000,00\n\n\n22222\nEinstein\nPhysics\n95.000,00",
+    "objectID": "content/cap01/03-sistemas-arquivos.html",
+    "href": "content/cap01/03-sistemas-arquivos.html",
+    "title": "4  1.3 Por que não usar Arquivos?",
+    "section": "",
+    "text": "4.1 Problemas com Sistemas de Arquivos\nNos primórdios da computação, sistemas de informação eram construídos diretamente sobre sistemas de arquivos. Essa abordagem apresenta problemas sérios:",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>1.3 Por que não usar Arquivos?</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#visão-em-três-níveis-arquitetura-ansisparc",
-    "href": "01-introducao.html#visão-em-três-níveis-arquitetura-ansisparc",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.5 Visão em Três Níveis (Arquitetura ANSI/SPARC)",
-    "text": "1.5 Visão em Três Níveis (Arquitetura ANSI/SPARC)\nUm SGBD organiza os dados em três níveis de abstração:\n┌──────────────────────────────────────┐\n│  Nível de Visão (View Level)         │  ← o que cada usuário vê\n│  Visão 1  |  Visão 2  |  Visão 3    │\n├──────────────────────────────────────┤\n│  Nível Lógico (Logical Level)        │  ← estrutura lógica completa\n│  (quais dados existem e suas         │\n│   relações)                          │\n├──────────────────────────────────────┤\n│  Nível Físico (Physical Level)       │  ← como os dados são armazenados\n│  (estruturas de armazenamento)       │\n└──────────────────────────────────────┘\nEssa separação é fundamental para a independência de dados.\n\n1.5.1 Schemas e Instâncias\nAnalogia com linguagens de programação:\n\n\n\nBanco de Dados\nProgramação\n\n\n\n\nSchema Lógico\nTipo de uma variável\n\n\nSchema Físico\nLayout de memória\n\n\nInstância\nValor atual da variável\n\n\n\n\nSchema lógico: estrutura geral do banco (ex: “existe uma tabela de clientes com os campos nome, CPF, endereço”)\nSchema físico: como os dados são fisicamente armazenados em disco\nInstância: o conteúdo atual do banco em um dado momento\n\n\n\n1.5.2 Independência de Dados Física\nA independência de dados física é a capacidade de modificar o schema físico sem alterar o schema lógico. Isso permite, por exemplo, reorganizar como os dados são guardados em disco sem impactar os programas que os utilizam.",
+    "objectID": "content/cap01/03-sistemas-arquivos.html#problemas-com-sistemas-de-arquivos",
+    "href": "content/cap01/03-sistemas-arquivos.html#problemas-com-sistemas-de-arquivos",
+    "title": "4  1.3 Por que não usar Arquivos?",
+    "section": "",
+    "text": "Problema\nDescrição\n\n\n\n\nRedundância e inconsistência\nOs mesmos dados são armazenados em múltiplos arquivos, em formatos diferentes, levando à duplicação e inconsistências\n\n\nDificuldade de acesso\nÉ preciso escrever um novo programa para cada nova necessidade de consulta\n\n\nIsolamento de dados\nDados em múltiplos arquivos e formatos dificultam consultas integradas\n\n\nProblemas de integridade\nRestrições (ex: saldo &gt; 0) ficam enterradas no código dos programas, difíceis de modificar\n\n\nAtomicidade de atualizações\nFalhas podem deixar o sistema em estado inconsistente (ex: transferência bancária parcial)\n\n\nAcesso concorrente\nAcessos simultâneos sem controle levam a resultados incorretos\n\n\nProblemas de segurança\nDifícil controlar o acesso granular aos dados\n\n\n\n\n\n\n\n\n\nImportante\n\n\n\nSistemas de banco de dados oferecem soluções para todos esses problemas.",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>1.3 Por que não usar Arquivos?</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#linguagens-de-banco-de-dados",
-    "href": "01-introducao.html#linguagens-de-banco-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.6 Linguagens de Banco de Dados",
-    "text": "1.6 Linguagens de Banco de Dados\n\n1.6.1 DDL — Data Definition Language\nA DDL é usada para definir a estrutura do banco de dados (schema).\nCREATE TABLE instructor (\n    ID          CHAR(5),\n    name        VARCHAR(20)   NOT NULL,\n    dept_name   VARCHAR(20),\n    salary      NUMERIC(8,2),\n    PRIMARY KEY (ID)\n);\nO compilador DDL gera um conjunto de templates de tabelas armazenados no dicionário de dados, que contém metadados como:\n\nSchema do banco\nRestrições de integridade (chave primária, chave estrangeira)\nAutorizações de acesso\n\n\n\n1.6.2 DML — Data Manipulation Language\nA DML (também chamada de linguagem de consulta) é usada para acessar e atualizar dados. Existem dois tipos:\n\n\n\n\n\n\n\n\nTipo\nCaracterística\nExemplo\n\n\n\n\nProcedural\nEspecifica o que e como obter os dados\nÁlgebra Relacional\n\n\nDeclarativa\nEspecifica apenas o que obter\nSQL\n\n\n\nDMLs declarativas são mais fáceis de aprender e usar. SQL é o padrão comercial mais utilizado.\n\n\n1.6.3 SQL — Structured Query Language\nSQL é não-procedural: uma consulta recebe uma ou mais tabelas e sempre retorna uma tabela.\n-- Encontrar todos os instrutores do departamento de Ciência da Computação\nSELECT name\nFROM instructor\nWHERE dept_name = 'Comp. Sci.';\n\n\n\n\n\n\nNota\n\n\n\nSQL não é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em uma linguagem de propósito geral (Python, Java, C++).\n\n\nFormas de acessar o banco a partir de aplicações:\n\nExtensões de linguagem para SQL embutido\nInterfaces de programa (ODBC, JDBC, drivers de banco de dados)",
+    "objectID": "content/cap01/04-modelos-dados.html",
+    "href": "content/cap01/04-modelos-dados.html",
+    "title": "5  1.4 Modelos de Dados",
+    "section": "",
+    "text": "5.1 Principais Modelos\nUm modelo de dados é um conjunto de ferramentas conceituais para descrever:",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>1.4 Modelos de Dados</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#projeto-de-banco-de-dados",
-    "href": "01-introducao.html#projeto-de-banco-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.7 Projeto de Banco de Dados",
-    "text": "1.7 Projeto de Banco de Dados\nO projeto de um banco de dados envolve duas etapas principais:\nProjeto Lógico\n└── Decidir o schema: quais tabelas existirão e quais atributos cada uma terá\n    ├── Decisão de negócio: quais dados precisamos registrar?\n    └── Decisão técnica: como distribuir atributos entre as tabelas?\n\nProjeto Físico\n└── Decidir o layout físico: índices, particionamento, armazenamento",
+    "objectID": "content/cap01/04-modelos-dados.html#principais-modelos",
+    "href": "content/cap01/04-modelos-dados.html#principais-modelos",
+    "title": "5  1.4 Modelos de Dados",
+    "section": "",
+    "text": "Modelos de Dados\n├── Modelo Relacional          ← foco principal desta disciplina\n├── Modelo Entidade-Relacionamento (ER)  ← para projeto de banco de dados\n├── Modelos Baseados em Objetos\n│   ├── Orientado a Objetos\n│   └── Objeto-Relacional\n├── Modelo Semiestruturado (XML, JSON)\n└── Modelos Antigos (legados)\n    ├── Modelo em Rede\n    └── Modelo Hierárquico",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>1.4 Modelos de Dados</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#motor-de-banco-de-dados-database-engine",
-    "href": "01-introducao.html#motor-de-banco-de-dados-database-engine",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.8 Motor de Banco de Dados (Database Engine)",
-    "text": "1.8 Motor de Banco de Dados (Database Engine)\nUm SGBD é dividido em módulos que gerenciam diferentes responsabilidades:\n\n1.8.1 Gerenciador de Armazenamento (Storage Manager)\nProvê a interface entre os dados de baixo nível armazenados e os programas e consultas. É responsável por:\n\nInteração com o gerenciador de arquivos do SO\nArmazenamento, recuperação e atualização eficiente dos dados\n\nComponentes:\n\nGerenciador de autorização e integridade: verifica restrições\nGerenciador de transações: garante consistência em falhas\nGerenciador de arquivos: gerencia a alocação de espaço em disco\nGerenciador de buffer: carrega dados do disco para a memória RAM\n\nEstruturas de dados:\n\nArquivos de dados: armazenam o banco em si\nDicionário de dados: armazena metadados e o schema\nÍndices: fornecem acesso rápido a itens de dados por valor\n\n\n\n1.8.2 Processador de Consultas (Query Processor)\nComponentes:\n\nInterpretador DDL: interpreta instruções DDL e registra definições no dicionário de dados\nCompilador DML: traduz DML em um plano de execução de instruções de baixo nível (com query optimization)\nMotor de avaliação de consultas: executa as instruções geradas pelo compilador\n\nEtapas do processamento de uma consulta:\nConsulta SQL\n    │\n    ▼\n1. Parsing e tradução\n    │\n    ▼\n2. Otimização  ←── estatísticas do banco\n    │\n    ▼\n3. Avaliação\n    │\n    ▼\nResultado\n\n\n1.8.3 Gerenciamento de Transações\nUma transação é uma coleção de operações que executa uma única função lógica. Por exemplo, uma transferência bancária (débito de uma conta + crédito em outra) deve ser atômica.\nO gerenciador de transações garante que o banco permaneça em estado consistente mesmo diante de:\n\nFalhas de sistema (quedas de energia, crashes)\nFalhas de transação\nAcessos concorrentes\n\nO gerenciador de controle de concorrência coordena transações simultâneas para garantir consistência.",
+    "objectID": "content/cap01/04-modelos-dados.html#modelo-relacional",
+    "href": "content/cap01/04-modelos-dados.html#modelo-relacional",
+    "title": "5  1.4 Modelos de Dados",
+    "section": "5.2 Modelo Relacional",
+    "text": "5.2 Modelo Relacional\nNo modelo relacional (proposto por Ted Codd em 1970, Prêmio Turing 1981), todos os dados são armazenados em tabelas (relações):\n\nCada tabela possui colunas (atributos)\nCada linha é uma tupla (registro)\n\nExemplo de tabela de instrutores:\n\n\n\nID\nnome\ndepto\nsalário\n\n\n\n\n10101\nSrinivasan\nComp. Sci.\n65.000,00\n\n\n12121\nWu\nFinance\n90.000,00\n\n\n15151\nMozart\nMusic\n40.000,00\n\n\n22222\nEinstein\nPhysics\n95.000,00",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>1.4 Modelos de Dados</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#arquiteturas-de-banco-de-dados",
-    "href": "01-introducao.html#arquiteturas-de-banco-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.9 Arquiteturas de Banco de Dados",
-    "text": "1.9 Arquiteturas de Banco de Dados\n\n1.9.1 Arquitetura Centralizada\n\nUm servidor (ou poucos núcleos com memória compartilhada)\nToda a carga de trabalho é processada em um único local\n\n\n\n1.9.2 Arquitetura Cliente-Servidor\n\nUm servidor executa o trabalho em nome de múltiplos clientes\nO cliente envia requisições SQL; o servidor processa e retorna resultados\n\n\n\n1.9.3 Banco de Dados Paralelo\n\nMemória compartilhada: múltiplos núcleos acessam a mesma RAM\nDisco compartilhado: múltiplos processadores acessam os mesmos discos\nSem compartilhamento (Shared-nothing): cada nó tem sua própria memória e disco\n\n\n\n1.9.4 Banco de Dados Distribuído\n\nDados distribuídos geograficamente\nHeterogeneidade de schemas e dados\n\n\n\n1.9.5 Aplicações de Duas e Três Camadas\n┌─────────────────────────────────────────────────────────┐\n│  Duas Camadas (Two-tier)                                 │\n│                                                          │\n│  [Cliente]  ←──── chamadas diretas ao BD ────→  [BD]    │\n└─────────────────────────────────────────────────────────┘\n\n┌─────────────────────────────────────────────────────────┐\n│  Três Camadas (Three-tier)                               │\n│                                                          │\n│  [Cliente] ←→ [Servidor de Aplicação] ←→ [BD]           │\n│  (navegador)  (lógica de negócio)     (dados)           │\n└─────────────────────────────────────────────────────────┘\nNa arquitetura de três camadas, o cliente não faz chamadas diretas ao banco — ele se comunica com um servidor de aplicação que, por sua vez, acessa o banco. Essa é a arquitetura predominante em aplicações web modernas.",
+    "objectID": "content/cap01/05-tres-niveis.html",
+    "href": "content/cap01/05-tres-niveis.html",
+    "title": "6  1.5 Visão em Três Níveis",
+    "section": "",
+    "text": "6.1 Schemas e Instâncias\nUm SGBD organiza os dados em três níveis de abstração (Arquitetura ANSI/SPARC):\nEssa separação é fundamental para a independência de dados.\nAnalogia com linguagens de programação:",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>1.5 Visão em Três Níveis</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#usuários-de-banco-de-dados",
-    "href": "01-introducao.html#usuários-de-banco-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.10 Usuários de Banco de Dados",
-    "text": "1.10 Usuários de Banco de Dados\nExistem quatro perfis de usuários:\n\n\n\n\n\n\n\nPerfil\nDescrição\n\n\n\n\nUsuários leigos\nInteragem com o sistema por meio de aplicações prontas (ex: caixa eletrônico, e-commerce)\n\n\nProgramadores de aplicação\nProfissionais que escrevem os programas que os usuários leigos utilizam\n\n\nUsuários sofisticados\nInteragem com o sistema via linguagem de consulta ou ferramentas de análise de dados, sem escrever programas\n\n\nUsuários especializados\nDesenvolvem aplicações especializadas (ex: CAD, dados geográficos, multimídia)\n\n\n\n\n1.10.1 Administrador de Banco de Dados (DBA)\nO DBA (Database Administrator) tem controle central sobre o sistema. Suas funções incluem:\n\nDefinição do schema\nDefinição de estruturas de armazenamento e métodos de acesso\nModificação do schema e da organização física\nConcessão de autorizações de acesso\nManutenção de rotina (backups, monitoramento, espaço em disco)",
+    "objectID": "content/cap01/05-tres-niveis.html#schemas-e-instâncias",
+    "href": "content/cap01/05-tres-niveis.html#schemas-e-instâncias",
+    "title": "6  1.5 Visão em Três Níveis",
+    "section": "",
+    "text": "Banco de Dados\nProgramação\n\n\n\n\nSchema Lógico\nTipo de uma variável\n\n\nSchema Físico\nLayout de memória\n\n\nInstância\nValor atual da variável\n\n\n\n\nSchema lógico: estrutura geral do banco (ex: “existe uma tabela de clientes com os campos nome, CPF, endereço”)\nSchema físico: como os dados são fisicamente armazenados em disco\nInstância: o conteúdo atual do banco em um dado momento",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>1.5 Visão em Três Níveis</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#breve-história-dos-bancos-de-dados",
-    "href": "01-introducao.html#breve-história-dos-bancos-de-dados",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.11 Breve História dos Bancos de Dados",
-    "text": "1.11 Breve História dos Bancos de Dados\n\n\n\n\n\n\n\nPeríodo\nMarco\n\n\n\n\nAnos 1950 e início dos 60\nProcessamento de dados em fitas magnéticas (acesso sequencial); cartões perfurados para entrada\n\n\nFinal dos anos 60 e 70\nDiscos rígidos permitem acesso direto; modelos em rede e hierárquico; Ted Codd define o modelo relacional; Oracle lança o primeiro BD relacional comercial\n\n\nAnos 80\nSQL se torna padrão industrial; BDs relacionais comerciais; BDs paralelos e distribuídos; BDs orientados a objetos\n\n\nAnos 90\nData warehouses multi-terabyte; suporte a decisão e mineração de dados; surgimento do e-commerce\n\n\nAnos 2000\nBig data (Google BigTable, Amazon); sistemas NoSQL; MapReduce\n\n\nAnos 2010\nSQL sobre MapReduce; BDs massivamente paralelos; BDs em memória principal (in-memory)",
+    "objectID": "content/cap01/05-tres-niveis.html#independência-de-dados-física",
+    "href": "content/cap01/05-tres-niveis.html#independência-de-dados-física",
+    "title": "6  1.5 Visão em Três Níveis",
+    "section": "6.2 Independência de Dados Física",
+    "text": "6.2 Independência de Dados Física\nA independência de dados física é a capacidade de modificar o schema físico sem alterar o schema lógico. Isso permite, por exemplo, reorganizar como os dados são guardados em disco sem impactar os programas que os utilizam.",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>1.5 Visão em Três Níveis</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#resumo",
-    "href": "01-introducao.html#resumo",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.12 Resumo",
-    "text": "1.12 Resumo\nNeste capítulo vimos:\n\nO que são bancos de dados e por que eles existem\nAs limitações de sistemas baseados em arquivos\nOs principais modelos de dados (com ênfase no relacional)\nA arquitetura em três níveis (físico, lógico, visão)\nAs linguagens DDL e DML (SQL)\nA arquitetura interna de um SGBD (storage manager, query processor, transaction manager)\nOs perfis de usuários e o papel do DBA\nUma linha do tempo da evolução dos bancos de dados",
+    "objectID": "content/cap01/06-linguagens.html",
+    "href": "content/cap01/06-linguagens.html",
+    "title": "7  1.6 Linguagens de Banco de Dados",
+    "section": "",
+    "text": "7.1 DDL — Data Definition Language\nA DDL é usada para definir a estrutura do banco de dados (schema).\nO compilador DDL gera um conjunto de templates de tabelas armazenados no dicionário de dados, que contém metadados como:",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>1.6 Linguagens (DDL, DML, SQL)</span>"
     ]
   },
   {
-    "objectID": "01-introducao.html#exercícios",
-    "href": "01-introducao.html#exercícios",
-    "title": "1  Introdução a Bancos de Dados",
-    "section": "1.13 Exercícios",
-    "text": "1.13 Exercícios\n\nListe três exemplos de aplicações do cotidiano que utilizam bancos de dados e identifique que tipos de dados cada uma armazena.\nExplique com suas palavras por que sistemas baseados em arquivos apresentam problemas de atomicidade. Dê um exemplo concreto.\nQual é a diferença entre schema e instância de um banco de dados? Faça a analogia com conceitos de programação.\nCompare DML procedural e declarativa. Qual a vantagem da abordagem declarativa?\nEm uma arquitetura de três camadas, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?\nConsidere a seguinte consulta SQL:\nSELECT name, salary\nFROM instructor\nWHERE salary &gt; 70000;\nQuais etapas o processador de consultas executa para responder essa consulta?\n\n\n\n\n\nSilberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. Database System Concepts. 7th ed. McGraw-Hill Education.",
+    "objectID": "content/cap01/06-linguagens.html#ddl-data-definition-language",
+    "href": "content/cap01/06-linguagens.html#ddl-data-definition-language",
+    "title": "7  1.6 Linguagens de Banco de Dados",
+    "section": "",
+    "text": "CREATE TABLE instructor (\n    ID          CHAR(5),\n    name        VARCHAR(20)   NOT NULL,\n    dept_name   VARCHAR(20),\n    salary      NUMERIC(8,2),\n    PRIMARY KEY (ID)\n);\n\n\nSchema do banco\nRestrições de integridade (chave primária, chave estrangeira)\nAutorizações de acesso",
     "crumbs": [
-      "Fundamentos",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>1. Introdução a Bancos de Dados</span>"
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>1.6 Linguagens (DDL, DML, SQL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/06-linguagens.html#dml-data-manipulation-language",
+    "href": "content/cap01/06-linguagens.html#dml-data-manipulation-language",
+    "title": "7  1.6 Linguagens de Banco de Dados",
+    "section": "7.2 DML — Data Manipulation Language",
+    "text": "7.2 DML — Data Manipulation Language\nA DML (também chamada de linguagem de consulta) é usada para acessar e atualizar dados. Existem dois tipos:\n\n\n\n\n\n\n\n\nTipo\nCaracterística\nExemplo\n\n\n\n\nProcedural\nEspecifica o que e como obter os dados\nÁlgebra Relacional\n\n\nDeclarativa\nEspecifica apenas o que obter\nSQL\n\n\n\nDMLs declarativas são mais fáceis de aprender e usar. SQL é o padrão comercial mais utilizado.",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>1.6 Linguagens (DDL, DML, SQL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/06-linguagens.html#sql-structured-query-language",
+    "href": "content/cap01/06-linguagens.html#sql-structured-query-language",
+    "title": "7  1.6 Linguagens de Banco de Dados",
+    "section": "7.3 SQL — Structured Query Language",
+    "text": "7.3 SQL — Structured Query Language\nSQL é não-procedural: uma consulta recebe uma ou mais tabelas e sempre retorna uma tabela.\n-- Encontrar todos os instrutores do departamento de Ciência da Computação\nSELECT name\nFROM instructor\nWHERE dept_name = 'Comp. Sci.';\n\n\n\n\n\n\nNota\n\n\n\nSQL não é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em uma linguagem de propósito geral (Python, Java, C++).\n\n\nFormas de acessar o banco a partir de aplicações:\n\nExtensões de linguagem para SQL embutido\nInterfaces de programa (ODBC, JDBC, drivers de banco de dados)",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>1.6 Linguagens (DDL, DML, SQL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/07-projeto.html",
+    "href": "content/cap01/07-projeto.html",
+    "title": "8  1.7 Projeto de Banco de Dados",
+    "section": "",
+    "text": "O projeto de um banco de dados envolve duas etapas principais:\nProjeto Lógico\n└── Decidir o schema: quais tabelas existirão e quais atributos cada uma terá\n    ├── Decisão de negócio: quais dados precisamos registrar?\n    └── Decisão técnica: como distribuir atributos entre as tabelas?\n\nProjeto Físico\n└── Decidir o layout físico: índices, particionamento, armazenamento",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>1.7 Projeto de Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/08-motor.html",
+    "href": "content/cap01/08-motor.html",
+    "title": "9  1.8 Motor de Banco de Dados",
+    "section": "",
+    "text": "9.1 Gerenciador de Armazenamento (Storage Manager)\nUm SGBD é dividido em módulos que gerenciam diferentes responsabilidades:\nProvê a interface entre os dados de baixo nível armazenados e os programas e consultas. É responsável por:\nComponentes:\nEstruturas de dados:",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>1.8 Motor de Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/08-motor.html#gerenciador-de-armazenamento-storage-manager",
+    "href": "content/cap01/08-motor.html#gerenciador-de-armazenamento-storage-manager",
+    "title": "9  1.8 Motor de Banco de Dados",
+    "section": "",
+    "text": "Interação com o gerenciador de arquivos do SO\nArmazenamento, recuperação e atualização eficiente dos dados\n\n\n\nGerenciador de autorização e integridade: verifica restrições\nGerenciador de transações: garante consistência em falhas\nGerenciador de arquivos: gerencia a alocação de espaço em disco\nGerenciador de buffer: carrega dados do disco para a memória RAM\n\n\n\nArquivos de dados: armazenam o banco em si\nDicionário de dados: armazena metadados e o schema\nÍndices: fornecem acesso rápido a itens de dados por valor",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>1.8 Motor de Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/08-motor.html#processador-de-consultas-query-processor",
+    "href": "content/cap01/08-motor.html#processador-de-consultas-query-processor",
+    "title": "9  1.8 Motor de Banco de Dados",
+    "section": "9.2 Processador de Consultas (Query Processor)",
+    "text": "9.2 Processador de Consultas (Query Processor)\nComponentes:\n\nInterpretador DDL: interpreta instruções DDL e registra definições no dicionário de dados\nCompilador DML: traduz DML em um plano de execução de instruções de baixo nível (com query optimization)\nMotor de avaliação de consultas: executa as instruções geradas pelo compilador\n\nEtapas do processamento de uma consulta:\nConsulta SQL\n    │\n    ▼\n1. Parsing e tradução\n    │\n    ▼\n2. Otimização  ←── estatísticas do banco\n    │\n    ▼\n3. Avaliação\n    │\n    ▼\nResultado",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>1.8 Motor de Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/08-motor.html#gerenciamento-de-transações",
+    "href": "content/cap01/08-motor.html#gerenciamento-de-transações",
+    "title": "9  1.8 Motor de Banco de Dados",
+    "section": "9.3 Gerenciamento de Transações",
+    "text": "9.3 Gerenciamento de Transações\nUma transação é uma coleção de operações que executa uma única função lógica. Por exemplo, uma transferência bancária (débito de uma conta + crédito em outra) deve ser atômica.\nO gerenciador de transações garante que o banco permaneça em estado consistente mesmo diante de:\n\nFalhas de sistema (quedas de energia, crashes)\nFalhas de transação\nAcessos concorrentes\n\nO gerenciador de controle de concorrência coordena transações simultâneas para garantir consistência.",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>1.8 Motor de Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html",
+    "href": "content/cap01/09-arquiteturas.html",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "",
+    "text": "10.1 Arquitetura Centralizada",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html#arquitetura-centralizada",
+    "href": "content/cap01/09-arquiteturas.html#arquitetura-centralizada",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "",
+    "text": "Um servidor (ou poucos núcleos com memória compartilhada)\nToda a carga de trabalho é processada em um único local",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html#arquitetura-cliente-servidor",
+    "href": "content/cap01/09-arquiteturas.html#arquitetura-cliente-servidor",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "10.2 Arquitetura Cliente-Servidor",
+    "text": "10.2 Arquitetura Cliente-Servidor\n\nUm servidor executa o trabalho em nome de múltiplos clientes\nO cliente envia requisições SQL; o servidor processa e retorna resultados",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html#banco-de-dados-paralelo",
+    "href": "content/cap01/09-arquiteturas.html#banco-de-dados-paralelo",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "10.3 Banco de Dados Paralelo",
+    "text": "10.3 Banco de Dados Paralelo\n\nMemória compartilhada: múltiplos núcleos acessam a mesma RAM\nDisco compartilhado: múltiplos processadores acessam os mesmos discos\nSem compartilhamento (Shared-nothing): cada nó tem sua própria memória e disco",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html#banco-de-dados-distribuído",
+    "href": "content/cap01/09-arquiteturas.html#banco-de-dados-distribuído",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "10.4 Banco de Dados Distribuído",
+    "text": "10.4 Banco de Dados Distribuído\n\nDados distribuídos geograficamente\nHeterogeneidade de schemas e dados",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/09-arquiteturas.html#aplicações-de-duas-e-três-camadas",
+    "href": "content/cap01/09-arquiteturas.html#aplicações-de-duas-e-três-camadas",
+    "title": "10  1.9 Arquiteturas de Banco de Dados",
+    "section": "10.5 Aplicações de Duas e Três Camadas",
+    "text": "10.5 Aplicações de Duas e Três Camadas\n┌─────────────────────────────────────────────────────────┐\n│  Duas Camadas (Two-tier)                                 │\n│                                                          │\n│  [Cliente]  ←──── chamadas diretas ao BD ────→  [BD]    │\n└─────────────────────────────────────────────────────────┘\n\n┌─────────────────────────────────────────────────────────┐\n│  Três Camadas (Three-tier)                               │\n│                                                          │\n│  [Cliente] ←→ [Servidor de Aplicação] ←→ [BD]           │\n│  (navegador)  (lógica de negócio)     (dados)           │\n└─────────────────────────────────────────────────────────┘\nNa arquitetura de três camadas, o cliente não faz chamadas diretas ao banco — ele se comunica com um servidor de aplicação que, por sua vez, acessa o banco. Essa é a arquitetura predominante em aplicações web modernas.",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>1.9 Arquiteturas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/10-usuarios.html",
+    "href": "content/cap01/10-usuarios.html",
+    "title": "11  1.10 Usuários de Banco de Dados",
+    "section": "",
+    "text": "11.1 Administrador de Banco de Dados (DBA)\nExistem quatro perfis de usuários:\nO DBA (Database Administrator) tem controle central sobre o sistema. Suas funções incluem:",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>1.10 Usuários e DBA</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/10-usuarios.html#administrador-de-banco-de-dados-dba",
+    "href": "content/cap01/10-usuarios.html#administrador-de-banco-de-dados-dba",
+    "title": "11  1.10 Usuários de Banco de Dados",
+    "section": "",
+    "text": "Definição do schema\nDefinição de estruturas de armazenamento e métodos de acesso\nModificação do schema e da organização física\nConcessão de autorizações de acesso\nManutenção de rotina (backups, monitoramento, espaço em disco)",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>1.10 Usuários e DBA</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/11-historia.html",
+    "href": "content/cap01/11-historia.html",
+    "title": "12  1.11 Breve História dos Bancos de Dados",
+    "section": "",
+    "text": "Período\nMarco\n\n\n\n\nAnos 1950 e início dos 60\nProcessamento de dados em fitas magnéticas (acesso sequencial); cartões perfurados para entrada\n\n\nFinal dos anos 60 e 70\nDiscos rígidos permitem acesso direto; modelos em rede e hierárquico; Ted Codd define o modelo relacional; Oracle lança o primeiro BD relacional comercial\n\n\nAnos 80\nSQL se torna padrão industrial; BDs relacionais comerciais; BDs paralelos e distribuídos; BDs orientados a objetos\n\n\nAnos 90\nData warehouses multi-terabyte; suporte a decisão e mineração de dados; surgimento do e-commerce\n\n\nAnos 2000\nBig data (Google BigTable, Amazon); sistemas NoSQL; MapReduce\n\n\nAnos 2010\nSQL sobre MapReduce; BDs massivamente paralelos; BDs em memória principal (in-memory)",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>1.11 História</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/12-resumo.html",
+    "href": "content/cap01/12-resumo.html",
+    "title": "13  Resumo e Exercícios",
+    "section": "",
+    "text": "13.1 Resumo\nNeste capítulo vimos:",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/12-resumo.html#resumo",
+    "href": "content/cap01/12-resumo.html#resumo",
+    "title": "13  Resumo e Exercícios",
+    "section": "",
+    "text": "O que são bancos de dados e por que eles existem\nAs limitações de sistemas baseados em arquivos\nOs principais modelos de dados (com ênfase no relacional)\nA arquitetura em três níveis (físico, lógico, visão)\nAs linguagens DDL e DML (SQL)\nA arquitetura interna de um SGBD (storage manager, query processor, transaction manager)\nOs perfis de usuários e o papel do DBA\nUma linha do tempo da evolução dos bancos de dados",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap01/12-resumo.html#exercícios",
+    "href": "content/cap01/12-resumo.html#exercícios",
+    "title": "13  Resumo e Exercícios",
+    "section": "13.2 Exercícios",
+    "text": "13.2 Exercícios\n\nListe três exemplos de aplicações do cotidiano que utilizam bancos de dados e identifique que tipos de dados cada uma armazena.\nExplique com suas palavras por que sistemas baseados em arquivos apresentam problemas de atomicidade. Dê um exemplo concreto.\nQual é a diferença entre schema e instância de um banco de dados? Faça a analogia com conceitos de programação.\nCompare DML procedural e declarativa. Qual a vantagem da abordagem declarativa?\nEm uma arquitetura de três camadas, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?\nConsidere a seguinte consulta SQL:\nSELECT name, salary\nFROM instructor\nWHERE salary &gt; 70000;\nQuais etapas o processador de consultas executa para responder essa consulta?",
+    "crumbs": [
+      "Capítulo 1: Introdução",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
     ]
   }
 ]
