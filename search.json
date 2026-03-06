@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Banco de Dados para Engenharia de Software",
+    "title": "Bases da Engenharia de Software 4",
     "section": "",
     "text": "Bem-vindo\nEste é o material de apoio da disciplina Bases de Dados IV do curso de Bacharelado em Engenharia de Software da UnDF.",
     "crumbs": [
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#sobre-a-disciplina",
     "href": "index.html#sobre-a-disciplina",
-    "title": "Banco de Dados para Engenharia de Software",
+    "title": "Bases da Engenharia de Software 4",
     "section": "Sobre a Disciplina",
     "text": "Sobre a Disciplina\nA disciplina aborda os fundamentos de sistemas de bancos de dados, com ênfase em conceitos essenciais para o desenvolvimento de software moderno. Os temas incluem:\n\nFundamentos e arquitetura de sistemas de banco de dados\nModelagem de dados (Modelo Relacional e Entidade-Relacionamento)\nSQL: definição e manipulação de dados\nProjeto e normalização de bancos de dados\nTransações, controle de concorrência e recuperação\nIntrodução a NoSQL e bancos de dados modernos",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#material-bibliográfico",
     "href": "index.html#material-bibliográfico",
-    "title": "Banco de Dados para Engenharia de Software",
+    "title": "Bases da Engenharia de Software 4",
     "section": "Material Bibliográfico",
     "text": "Material Bibliográfico\nO principal livro-texto da disciplina é:\n\nSilberschatz, Korth, e Sudarshan (2019)\n\nOs slides utilizados nas aulas são baseados no material oficial do livro, disponível em db-book.com.",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#como-usar-este-material",
     "href": "index.html#como-usar-este-material",
-    "title": "Banco de Dados para Engenharia de Software",
+    "title": "Bases da Engenharia de Software 4",
     "section": "Como Usar Este Material",
     "text": "Como Usar Este Material\nO material está organizado em capítulos que acompanham a progressão da disciplina. Cada capítulo contém:\n\nConceitos teóricos com exemplos\nExemplos de código SQL\nExercícios de fixação",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#licença",
     "href": "index.html#licença",
-    "title": "Banco de Dados para Engenharia de Software",
+    "title": "Bases da Engenharia de Software 4",
     "section": "Licença",
     "text": "Licença\nEste material é disponibilizado para fins educacionais. Os slides originais são de autoria de Silberschatz, Korth e Sudarshan (Silberschatz, Korth, e Sudarshan 2019).\n\n\n\n\nSilberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. Database System Concepts. 7th ed. McGraw-Hill Education.",
     "crumbs": [
