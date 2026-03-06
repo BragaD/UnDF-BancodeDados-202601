@@ -8,13 +8,11 @@ execute:
 lang: pt
 
 book:
-  title: "Banco de Dados para Engenharia de Software"
-  subtitle: "Bases de Dados IV"
+  title: "Bases da Engenharia de Software 4"
+  subtitle: "Banco de Dados"
   site-url: "https://BragaD.github.io/UnDF-BancodeDados-202601"
   repo-url: "https://github.com/BragaD/UnDF-BancodeDados-202601"
-  repo-actions: [edit, issue]
-  author:
-    - name: "Douglas Braga"
+  repo-actions: [issue]
   date: today
   date-format: "DD/MM/YYYY"
   chapters:
@@ -29,16 +27,14 @@ page-navigation: true
 
 page-footer:
   border: true
-  left: "UnDF - Engenharia de Software - Bases de Dados IV"
+  left: "UnDF - Engenharia de Software - Banco de Dados - 2026.1"
   right:
     - icon: github
       href: "https://github.com/BragaD/UnDF-BancodeDados-202601"
 
 format:
   html:
-    theme:
-      light: flatly
-      dark: darkly
+    theme: cosmo
     css: styles.css
     toc: true
     toc-depth: 4
@@ -51,3 +47,8 @@ format:
 bibliography: references.bib
 
 editor: source
+code-annotations: hover
+
+author:
+  - name: "Douglas Braga"
+    email: "douglas.braga@undf.edu.br"
