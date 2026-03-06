@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introdução a Bancos de Dados – Banco de Dados para Engenharia de Software</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6b4204007dd9a1d93dbdf0d17639aac5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-6b4204007dd9a1d93dbdf0d17639aac5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introducao.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./01-introducao.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. Introdução a Bancos de Dados</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Banco de Dados para Engenharia de Software</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/BragaD/UnDF-BancodeDados-202601" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Início</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introducao.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. Introdução a Bancos de Dados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-que-é-um-banco-de-dados" id="toc-o-que-é-um-banco-de-dados" class="nav-link active" data-scroll-target="#o-que-é-um-banco-de-dados"><span class="header-section-number">1.1</span> O que é um Banco de Dados?</a></li>
+  <li><a href="#aplicações-de-banco-de-dados" id="toc-aplicações-de-banco-de-dados" class="nav-link" data-scroll-target="#aplicações-de-banco-de-dados"><span class="header-section-number">1.2</span> Aplicações de Banco de Dados</a></li>
+  <li><a href="#por-que-não-usar-arquivos" id="toc-por-que-não-usar-arquivos" class="nav-link" data-scroll-target="#por-que-não-usar-arquivos"><span class="header-section-number">1.3</span> Por que não usar Arquivos?</a>
+  <ul>
+  <li><a href="#problemas-com-sistemas-de-arquivos" id="toc-problemas-com-sistemas-de-arquivos" class="nav-link" data-scroll-target="#problemas-com-sistemas-de-arquivos"><span class="header-section-number">1.3.1</span> Problemas com Sistemas de Arquivos</a></li>
+  </ul></li>
+  <li><a href="#modelos-de-dados" id="toc-modelos-de-dados" class="nav-link" data-scroll-target="#modelos-de-dados"><span class="header-section-number">1.4</span> Modelos de Dados</a>
+  <ul>
+  <li><a href="#principais-modelos" id="toc-principais-modelos" class="nav-link" data-scroll-target="#principais-modelos"><span class="header-section-number">1.4.1</span> Principais Modelos</a></li>
+  <li><a href="#modelo-relacional" id="toc-modelo-relacional" class="nav-link" data-scroll-target="#modelo-relacional"><span class="header-section-number">1.4.2</span> Modelo Relacional</a></li>
+  </ul></li>
+  <li><a href="#visão-em-três-níveis-arquitetura-ansisparc" id="toc-visão-em-três-níveis-arquitetura-ansisparc" class="nav-link" data-scroll-target="#visão-em-três-níveis-arquitetura-ansisparc"><span class="header-section-number">1.5</span> Visão em Três Níveis (Arquitetura ANSI/SPARC)</a>
+  <ul>
+  <li><a href="#schemas-e-instâncias" id="toc-schemas-e-instâncias" class="nav-link" data-scroll-target="#schemas-e-instâncias"><span class="header-section-number">1.5.1</span> Schemas e Instâncias</a></li>
+  <li><a href="#independência-de-dados-física" id="toc-independência-de-dados-física" class="nav-link" data-scroll-target="#independência-de-dados-física"><span class="header-section-number">1.5.2</span> Independência de Dados Física</a></li>
+  </ul></li>
+  <li><a href="#linguagens-de-banco-de-dados" id="toc-linguagens-de-banco-de-dados" class="nav-link" data-scroll-target="#linguagens-de-banco-de-dados"><span class="header-section-number">1.6</span> Linguagens de Banco de Dados</a>
+  <ul>
+  <li><a href="#ddl-data-definition-language" id="toc-ddl-data-definition-language" class="nav-link" data-scroll-target="#ddl-data-definition-language"><span class="header-section-number">1.6.1</span> DDL — Data Definition Language</a></li>
+  <li><a href="#dml-data-manipulation-language" id="toc-dml-data-manipulation-language" class="nav-link" data-scroll-target="#dml-data-manipulation-language"><span class="header-section-number">1.6.2</span> DML — Data Manipulation Language</a></li>
+  <li><a href="#sql-structured-query-language" id="toc-sql-structured-query-language" class="nav-link" data-scroll-target="#sql-structured-query-language"><span class="header-section-number">1.6.3</span> SQL — Structured Query Language</a></li>
+  </ul></li>
+  <li><a href="#projeto-de-banco-de-dados" id="toc-projeto-de-banco-de-dados" class="nav-link" data-scroll-target="#projeto-de-banco-de-dados"><span class="header-section-number">1.7</span> Projeto de Banco de Dados</a></li>
+  <li><a href="#motor-de-banco-de-dados-database-engine" id="toc-motor-de-banco-de-dados-database-engine" class="nav-link" data-scroll-target="#motor-de-banco-de-dados-database-engine"><span class="header-section-number">1.8</span> Motor de Banco de Dados (Database Engine)</a>
+  <ul>
+  <li><a href="#gerenciador-de-armazenamento-storage-manager" id="toc-gerenciador-de-armazenamento-storage-manager" class="nav-link" data-scroll-target="#gerenciador-de-armazenamento-storage-manager"><span class="header-section-number">1.8.1</span> Gerenciador de Armazenamento (Storage Manager)</a></li>
+  <li><a href="#processador-de-consultas-query-processor" id="toc-processador-de-consultas-query-processor" class="nav-link" data-scroll-target="#processador-de-consultas-query-processor"><span class="header-section-number">1.8.2</span> Processador de Consultas (Query Processor)</a></li>
+  <li><a href="#gerenciamento-de-transações" id="toc-gerenciamento-de-transações" class="nav-link" data-scroll-target="#gerenciamento-de-transações"><span class="header-section-number">1.8.3</span> Gerenciamento de Transações</a></li>
+  </ul></li>
+  <li><a href="#arquiteturas-de-banco-de-dados" id="toc-arquiteturas-de-banco-de-dados" class="nav-link" data-scroll-target="#arquiteturas-de-banco-de-dados"><span class="header-section-number">1.9</span> Arquiteturas de Banco de Dados</a>
+  <ul>
+  <li><a href="#arquitetura-centralizada" id="toc-arquitetura-centralizada" class="nav-link" data-scroll-target="#arquitetura-centralizada"><span class="header-section-number">1.9.1</span> Arquitetura Centralizada</a></li>
+  <li><a href="#arquitetura-cliente-servidor" id="toc-arquitetura-cliente-servidor" class="nav-link" data-scroll-target="#arquitetura-cliente-servidor"><span class="header-section-number">1.9.2</span> Arquitetura Cliente-Servidor</a></li>
+  <li><a href="#banco-de-dados-paralelo" id="toc-banco-de-dados-paralelo" class="nav-link" data-scroll-target="#banco-de-dados-paralelo"><span class="header-section-number">1.9.3</span> Banco de Dados Paralelo</a></li>
+  <li><a href="#banco-de-dados-distribuído" id="toc-banco-de-dados-distribuído" class="nav-link" data-scroll-target="#banco-de-dados-distribuído"><span class="header-section-number">1.9.4</span> Banco de Dados Distribuído</a></li>
+  <li><a href="#aplicações-de-duas-e-três-camadas" id="toc-aplicações-de-duas-e-três-camadas" class="nav-link" data-scroll-target="#aplicações-de-duas-e-três-camadas"><span class="header-section-number">1.9.5</span> Aplicações de Duas e Três Camadas</a></li>
+  </ul></li>
+  <li><a href="#usuários-de-banco-de-dados" id="toc-usuários-de-banco-de-dados" class="nav-link" data-scroll-target="#usuários-de-banco-de-dados"><span class="header-section-number">1.10</span> Usuários de Banco de Dados</a>
+  <ul>
+  <li><a href="#administrador-de-banco-de-dados-dba" id="toc-administrador-de-banco-de-dados-dba" class="nav-link" data-scroll-target="#administrador-de-banco-de-dados-dba"><span class="header-section-number">1.10.1</span> Administrador de Banco de Dados (DBA)</a></li>
+  </ul></li>
+  <li><a href="#breve-história-dos-bancos-de-dados" id="toc-breve-história-dos-bancos-de-dados" class="nav-link" data-scroll-target="#breve-história-dos-bancos-de-dados"><span class="header-section-number">1.11</span> Breve História dos Bancos de Dados</a></li>
+  <li><a href="#resumo" id="toc-resumo" class="nav-link" data-scroll-target="#resumo"><span class="header-section-number">1.12</span> Resumo</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">1.13</span> Exercícios</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/edit/main/01-introducao.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introducao.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./01-introducao.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. Introdução a Bancos de Dados</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução a Bancos de Dados</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este capítulo é baseado no Capítulo 1 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+</div>
+</div>
+<section id="o-que-é-um-banco-de-dados" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="o-que-é-um-banco-de-dados"><span class="header-section-number">1.1</span> O que é um Banco de Dados?</h2>
+<p>Um <strong>banco de dados</strong> é uma coleção organizada de dados inter-relacionados que modela algum aspecto do mundo real. Um <strong>Sistema de Gerenciamento de Banco de Dados (SGBD)</strong> é o software que permite criar, manter e consultar esses dados de forma eficiente, segura e confiável.</p>
+<p>Exemplos do cotidiano que dependem de bancos de dados:</p>
+<ul>
+<li>Sistemas bancários (contas, transações, empréstimos)</li>
+<li>Redes sociais (usuários, postagens, conexões)</li>
+<li>E-commerce (produtos, pedidos, clientes)</li>
+<li>Sistemas hospitalares (prontuários, agendamentos)</li>
+<li>Aplicativos de navegação (mapas, rotas, pontos de interesse)</li>
+</ul>
+</section>
+<section id="aplicações-de-banco-de-dados" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="aplicações-de-banco-de-dados"><span class="header-section-number">1.2</span> Aplicações de Banco de Dados</h2>
+<p>Bancos de dados estão presentes em praticamente todos os setores:</p>
+<p><strong>Empresas e Negócios</strong></p>
+<ul>
+<li><em>Vendas</em>: clientes, produtos, compras</li>
+<li><em>Contabilidade</em>: pagamentos, recebimentos, ativos</li>
+<li><em>RH</em>: funcionários, salários, impostos</li>
+</ul>
+<p><strong>Indústria</strong></p>
+<ul>
+<li>Gestão de produção, inventário, pedidos e cadeia de suprimentos</li>
+</ul>
+<p><strong>Setor Financeiro e Bancário</strong></p>
+<ul>
+<li>Informações de clientes, contas e empréstimos</li>
+<li>Transações com cartão de crédito</li>
+<li>Negociação de ações e títulos em tempo real</li>
+</ul>
+<p><strong>Universidades</strong></p>
+<ul>
+<li>Matrículas, notas, histórico escolar</li>
+</ul>
+<p><strong>Telecomunicações</strong></p>
+<ul>
+<li>Registros de chamadas, SMS e uso de dados</li>
+<li>Geração de faturas mensais</li>
+</ul>
+<p><strong>Serviços Web</strong></p>
+<ul>
+<li>Varejistas online: rastreamento de pedidos, recomendações personalizadas</li>
+<li>Publicidade online direcionada</li>
+</ul>
+<p><strong>Sistemas de Navegação</strong></p>
+<ul>
+<li>Localização de pontos de interesse, rotas de estradas, linhas de transporte</li>
+</ul>
+</section>
+<section id="por-que-não-usar-arquivos" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="por-que-não-usar-arquivos"><span class="header-section-number">1.3</span> Por que não usar Arquivos?</h2>
+<p>Nos primórdios da computação, sistemas de informação eram construídos diretamente sobre sistemas de arquivos. Essa abordagem apresenta problemas sérios:</p>
+<section id="problemas-com-sistemas-de-arquivos" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="problemas-com-sistemas-de-arquivos"><span class="header-section-number">1.3.1</span> Problemas com Sistemas de Arquivos</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problema</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Redundância e inconsistência</strong></td>
+<td>Os mesmos dados são armazenados em múltiplos arquivos, em formatos diferentes, levando à duplicação e inconsistências</td>
+</tr>
+<tr class="even">
+<td><strong>Dificuldade de acesso</strong></td>
+<td>É preciso escrever um novo programa para cada nova necessidade de consulta</td>
+</tr>
+<tr class="odd">
+<td><strong>Isolamento de dados</strong></td>
+<td>Dados em múltiplos arquivos e formatos dificultam consultas integradas</td>
+</tr>
+<tr class="even">
+<td><strong>Problemas de integridade</strong></td>
+<td>Restrições (ex: saldo &gt; 0) ficam enterradas no código dos programas, difíceis de modificar</td>
+</tr>
+<tr class="odd">
+<td><strong>Atomicidade de atualizações</strong></td>
+<td>Falhas podem deixar o sistema em estado inconsistente (ex: transferência bancária parcial)</td>
+</tr>
+<tr class="even">
+<td><strong>Acesso concorrente</strong></td>
+<td>Acessos simultâneos sem controle levam a resultados incorretos</td>
+</tr>
+<tr class="odd">
+<td><strong>Problemas de segurança</strong></td>
+<td>Difícil controlar o acesso granular aos dados</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Sistemas de banco de dados oferecem soluções para todos esses problemas.</strong></p>
+</div>
+</div>
+</section>
+</section>
+<section id="modelos-de-dados" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="modelos-de-dados"><span class="header-section-number">1.4</span> Modelos de Dados</h2>
+<p>Um <strong>modelo de dados</strong> é um conjunto de ferramentas conceituais para descrever:</p>
+<ul>
+<li>Os <strong>dados</strong> em si</li>
+<li>As <strong>relações</strong> entre os dados</li>
+<li>A <strong>semântica</strong> (significado) dos dados</li>
+<li>As <strong>restrições</strong> (constraints) sobre os dados</li>
+</ul>
+<section id="principais-modelos" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="principais-modelos"><span class="header-section-number">1.4.1</span> Principais Modelos</h3>
+<pre><code>Modelos de Dados
+├── Modelo Relacional          ← foco principal desta disciplina
+├── Modelo Entidade-Relacionamento (ER)  ← para projeto de banco de dados
+├── Modelos Baseados em Objetos
+│   ├── Orientado a Objetos
+│   └── Objeto-Relacional
+├── Modelo Semiestruturado (XML, JSON)
+└── Modelos Antigos (legados)
+    ├── Modelo em Rede
+    └── Modelo Hierárquico</code></pre>
+</section>
+<section id="modelo-relacional" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="modelo-relacional"><span class="header-section-number">1.4.2</span> Modelo Relacional</h3>
+<p>No modelo relacional (proposto por <strong>Ted Codd</strong> em 1970, Prêmio Turing 1981), todos os dados são armazenados em <strong>tabelas</strong> (relações):</p>
+<ul>
+<li>Cada tabela possui <strong>colunas</strong> (atributos)</li>
+<li>Cada linha é uma <strong>tupla</strong> (registro)</li>
+</ul>
+<p>Exemplo de tabela de instrutores:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>nome</th>
+<th>depto</th>
+<th>salário</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10101</td>
+<td>Srinivasan</td>
+<td>Comp. Sci.</td>
+<td>65.000,00</td>
+</tr>
+<tr class="even">
+<td>12121</td>
+<td>Wu</td>
+<td>Finance</td>
+<td>90.000,00</td>
+</tr>
+<tr class="odd">
+<td>15151</td>
+<td>Mozart</td>
+<td>Music</td>
+<td>40.000,00</td>
+</tr>
+<tr class="even">
+<td>22222</td>
+<td>Einstein</td>
+<td>Physics</td>
+<td>95.000,00</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="visão-em-três-níveis-arquitetura-ansisparc" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="visão-em-três-níveis-arquitetura-ansisparc"><span class="header-section-number">1.5</span> Visão em Três Níveis (Arquitetura ANSI/SPARC)</h2>
+<p>Um SGBD organiza os dados em três níveis de abstração:</p>
+<pre><code>┌──────────────────────────────────────┐
+│  Nível de Visão (View Level)         │  ← o que cada usuário vê
+│  Visão 1  |  Visão 2  |  Visão 3    │
+├──────────────────────────────────────┤
+│  Nível Lógico (Logical Level)        │  ← estrutura lógica completa
+│  (quais dados existem e suas         │
+│   relações)                          │
+├──────────────────────────────────────┤
+│  Nível Físico (Physical Level)       │  ← como os dados são armazenados
+│  (estruturas de armazenamento)       │
+└──────────────────────────────────────┘</code></pre>
+<p>Essa separação é fundamental para a <strong>independência de dados</strong>.</p>
+<section id="schemas-e-instâncias" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="schemas-e-instâncias"><span class="header-section-number">1.5.1</span> Schemas e Instâncias</h3>
+<p>Analogia com linguagens de programação:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Banco de Dados</th>
+<th>Programação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Schema Lógico</strong></td>
+<td>Tipo de uma variável</td>
+</tr>
+<tr class="even">
+<td><strong>Schema Físico</strong></td>
+<td>Layout de memória</td>
+</tr>
+<tr class="odd">
+<td><strong>Instância</strong></td>
+<td>Valor atual da variável</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Schema lógico</strong>: estrutura geral do banco (ex: “existe uma tabela de clientes com os campos nome, CPF, endereço”)</li>
+<li><strong>Schema físico</strong>: como os dados são fisicamente armazenados em disco</li>
+<li><strong>Instância</strong>: o conteúdo atual do banco em um dado momento</li>
+</ul>
+</section>
+<section id="independência-de-dados-física" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="independência-de-dados-física"><span class="header-section-number">1.5.2</span> Independência de Dados Física</h3>
+<p>A <strong>independência de dados física</strong> é a capacidade de modificar o schema físico sem alterar o schema lógico. Isso permite, por exemplo, reorganizar como os dados são guardados em disco sem impactar os programas que os utilizam.</p>
+</section>
+</section>
+<section id="linguagens-de-banco-de-dados" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="linguagens-de-banco-de-dados"><span class="header-section-number">1.6</span> Linguagens de Banco de Dados</h2>
+<section id="ddl-data-definition-language" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="ddl-data-definition-language"><span class="header-section-number">1.6.1</span> DDL — Data Definition Language</h3>
+<p>A <strong>DDL</strong> é usada para definir a estrutura do banco de dados (schema).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> instructor (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ID</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    name        <span class="dt">VARCHAR</span>(<span class="dv">20</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dept_name   <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    salary      <span class="dt">NUMERIC</span>(<span class="dv">8</span>,<span class="dv">2</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">ID</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O compilador DDL gera um conjunto de templates de tabelas armazenados no <strong>dicionário de dados</strong>, que contém metadados como:</p>
+<ul>
+<li>Schema do banco</li>
+<li>Restrições de integridade (chave primária, chave estrangeira)</li>
+<li>Autorizações de acesso</li>
+</ul>
+</section>
+<section id="dml-data-manipulation-language" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="dml-data-manipulation-language"><span class="header-section-number">1.6.2</span> DML — Data Manipulation Language</h3>
+<p>A <strong>DML</strong> (também chamada de <em>linguagem de consulta</em>) é usada para acessar e atualizar dados. Existem dois tipos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Característica</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Procedural</strong></td>
+<td>Especifica <em>o que</em> e <em>como</em> obter os dados</td>
+<td>Álgebra Relacional</td>
+</tr>
+<tr class="even">
+<td><strong>Declarativa</strong></td>
+<td>Especifica apenas <em>o que</em> obter</td>
+<td>SQL</td>
+</tr>
+</tbody>
+</table>
+<p>DMLs declarativas são mais fáceis de aprender e usar. SQL é o padrão comercial mais utilizado.</p>
+</section>
+<section id="sql-structured-query-language" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="sql-structured-query-language"><span class="header-section-number">1.6.3</span> SQL — Structured Query Language</h3>
+<p>SQL é <strong>não-procedural</strong>: uma consulta recebe uma ou mais tabelas e sempre retorna uma tabela.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Encontrar todos os instrutores do departamento de Ciência da Computação</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> instructor</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> dept_name <span class="op">=</span> <span class="st">'Comp. Sci.'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>SQL <strong>não</strong> é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em uma linguagem de propósito geral (Python, Java, C++).</p>
+</div>
+</div>
+<p>Formas de acessar o banco a partir de aplicações:</p>
+<ol type="1">
+<li><strong>Extensões de linguagem</strong> para SQL embutido</li>
+<li><strong>Interfaces de programa</strong> (ODBC, JDBC, drivers de banco de dados)</li>
+</ol>
+</section>
+</section>
+<section id="projeto-de-banco-de-dados" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="projeto-de-banco-de-dados"><span class="header-section-number">1.7</span> Projeto de Banco de Dados</h2>
+<p>O projeto de um banco de dados envolve duas etapas principais:</p>
+<pre><code>Projeto Lógico
+└── Decidir o schema: quais tabelas existirão e quais atributos cada uma terá
+    ├── Decisão de negócio: quais dados precisamos registrar?
+    └── Decisão técnica: como distribuir atributos entre as tabelas?
+
+Projeto Físico
+└── Decidir o layout físico: índices, particionamento, armazenamento</code></pre>
+</section>
+<section id="motor-de-banco-de-dados-database-engine" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="motor-de-banco-de-dados-database-engine"><span class="header-section-number">1.8</span> Motor de Banco de Dados (Database Engine)</h2>
+<p>Um SGBD é dividido em módulos que gerenciam diferentes responsabilidades:</p>
+<section id="gerenciador-de-armazenamento-storage-manager" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="gerenciador-de-armazenamento-storage-manager"><span class="header-section-number">1.8.1</span> Gerenciador de Armazenamento (Storage Manager)</h3>
+<p>Provê a interface entre os dados de baixo nível armazenados e os programas e consultas. É responsável por:</p>
+<ul>
+<li>Interação com o gerenciador de arquivos do SO</li>
+<li>Armazenamento, recuperação e atualização eficiente dos dados</li>
+</ul>
+<p>Componentes:</p>
+<ul>
+<li><strong>Gerenciador de autorização e integridade</strong>: verifica restrições</li>
+<li><strong>Gerenciador de transações</strong>: garante consistência em falhas</li>
+<li><strong>Gerenciador de arquivos</strong>: gerencia a alocação de espaço em disco</li>
+<li><strong>Gerenciador de buffer</strong>: carrega dados do disco para a memória RAM</li>
+</ul>
+<p>Estruturas de dados:</p>
+<ul>
+<li><strong>Arquivos de dados</strong>: armazenam o banco em si</li>
+<li><strong>Dicionário de dados</strong>: armazena metadados e o schema</li>
+<li><strong>Índices</strong>: fornecem acesso rápido a itens de dados por valor</li>
+</ul>
+</section>
+<section id="processador-de-consultas-query-processor" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="processador-de-consultas-query-processor"><span class="header-section-number">1.8.2</span> Processador de Consultas (Query Processor)</h3>
+<p>Componentes:</p>
+<ul>
+<li><strong>Interpretador DDL</strong>: interpreta instruções DDL e registra definições no dicionário de dados</li>
+<li><strong>Compilador DML</strong>: traduz DML em um plano de execução de instruções de baixo nível (com <em>query optimization</em>)</li>
+<li><strong>Motor de avaliação de consultas</strong>: executa as instruções geradas pelo compilador</li>
+</ul>
+<p><strong>Etapas do processamento de uma consulta:</strong></p>
+<pre><code>Consulta SQL
+    │
+    ▼
+1. Parsing e tradução
+    │
+    ▼
+2. Otimização  ←── estatísticas do banco
+    │
+    ▼
+3. Avaliação
+    │
+    ▼
+Resultado</code></pre>
+</section>
+<section id="gerenciamento-de-transações" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="gerenciamento-de-transações"><span class="header-section-number">1.8.3</span> Gerenciamento de Transações</h3>
+<p>Uma <strong>transação</strong> é uma coleção de operações que executa uma única função lógica. Por exemplo, uma transferência bancária (débito de uma conta + crédito em outra) deve ser atômica.</p>
+<p>O gerenciador de transações garante que o banco permaneça em estado <strong>consistente</strong> mesmo diante de:</p>
+<ul>
+<li>Falhas de sistema (quedas de energia, crashes)</li>
+<li>Falhas de transação</li>
+<li>Acessos concorrentes</li>
+</ul>
+<p>O <strong>gerenciador de controle de concorrência</strong> coordena transações simultâneas para garantir consistência.</p>
+</section>
+</section>
+<section id="arquiteturas-de-banco-de-dados" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="arquiteturas-de-banco-de-dados"><span class="header-section-number">1.9</span> Arquiteturas de Banco de Dados</h2>
+<section id="arquitetura-centralizada" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="arquitetura-centralizada"><span class="header-section-number">1.9.1</span> Arquitetura Centralizada</h3>
+<ul>
+<li>Um servidor (ou poucos núcleos com memória compartilhada)</li>
+<li>Toda a carga de trabalho é processada em um único local</li>
+</ul>
+</section>
+<section id="arquitetura-cliente-servidor" class="level3" data-number="1.9.2">
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="arquitetura-cliente-servidor"><span class="header-section-number">1.9.2</span> Arquitetura Cliente-Servidor</h3>
+<ul>
+<li>Um servidor executa o trabalho em nome de múltiplos clientes</li>
+<li>O cliente envia requisições SQL; o servidor processa e retorna resultados</li>
+</ul>
+</section>
+<section id="banco-de-dados-paralelo" class="level3" data-number="1.9.3">
+<h3 data-number="1.9.3" class="anchored" data-anchor-id="banco-de-dados-paralelo"><span class="header-section-number">1.9.3</span> Banco de Dados Paralelo</h3>
+<ul>
+<li><strong>Memória compartilhada</strong>: múltiplos núcleos acessam a mesma RAM</li>
+<li><strong>Disco compartilhado</strong>: múltiplos processadores acessam os mesmos discos</li>
+<li><strong>Sem compartilhamento (Shared-nothing)</strong>: cada nó tem sua própria memória e disco</li>
+</ul>
+</section>
+<section id="banco-de-dados-distribuído" class="level3" data-number="1.9.4">
+<h3 data-number="1.9.4" class="anchored" data-anchor-id="banco-de-dados-distribuído"><span class="header-section-number">1.9.4</span> Banco de Dados Distribuído</h3>
+<ul>
+<li>Dados distribuídos geograficamente</li>
+<li>Heterogeneidade de schemas e dados</li>
+</ul>
+</section>
+<section id="aplicações-de-duas-e-três-camadas" class="level3" data-number="1.9.5">
+<h3 data-number="1.9.5" class="anchored" data-anchor-id="aplicações-de-duas-e-três-camadas"><span class="header-section-number">1.9.5</span> Aplicações de Duas e Três Camadas</h3>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│  Duas Camadas (Two-tier)                                 │
+│                                                          │
+│  [Cliente]  ←──── chamadas diretas ao BD ────→  [BD]    │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│  Três Camadas (Three-tier)                               │
+│                                                          │
+│  [Cliente] ←→ [Servidor de Aplicação] ←→ [BD]           │
+│  (navegador)  (lógica de negócio)     (dados)           │
+└─────────────────────────────────────────────────────────┘</code></pre>
+<p>Na arquitetura de três camadas, o cliente não faz chamadas diretas ao banco — ele se comunica com um servidor de aplicação que, por sua vez, acessa o banco. Essa é a arquitetura predominante em aplicações web modernas.</p>
+</section>
+</section>
+<section id="usuários-de-banco-de-dados" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="usuários-de-banco-de-dados"><span class="header-section-number">1.10</span> Usuários de Banco de Dados</h2>
+<p>Existem quatro perfis de usuários:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Perfil</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Usuários leigos</strong></td>
+<td>Interagem com o sistema por meio de aplicações prontas (ex: caixa eletrônico, e-commerce)</td>
+</tr>
+<tr class="even">
+<td><strong>Programadores de aplicação</strong></td>
+<td>Profissionais que escrevem os programas que os usuários leigos utilizam</td>
+</tr>
+<tr class="odd">
+<td><strong>Usuários sofisticados</strong></td>
+<td>Interagem com o sistema via linguagem de consulta ou ferramentas de análise de dados, sem escrever programas</td>
+</tr>
+<tr class="even">
+<td><strong>Usuários especializados</strong></td>
+<td>Desenvolvem aplicações especializadas (ex: CAD, dados geográficos, multimídia)</td>
+</tr>
+</tbody>
+</table>
+<section id="administrador-de-banco-de-dados-dba" class="level3" data-number="1.10.1">
+<h3 data-number="1.10.1" class="anchored" data-anchor-id="administrador-de-banco-de-dados-dba"><span class="header-section-number">1.10.1</span> Administrador de Banco de Dados (DBA)</h3>
+<p>O <strong>DBA</strong> (Database Administrator) tem controle central sobre o sistema. Suas funções incluem:</p>
+<ul>
+<li>Definição do schema</li>
+<li>Definição de estruturas de armazenamento e métodos de acesso</li>
+<li>Modificação do schema e da organização física</li>
+<li>Concessão de autorizações de acesso</li>
+<li>Manutenção de rotina (backups, monitoramento, espaço em disco)</li>
+</ul>
+</section>
+</section>
+<section id="breve-história-dos-bancos-de-dados" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="breve-história-dos-bancos-de-dados"><span class="header-section-number">1.11</span> Breve História dos Bancos de Dados</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Período</th>
+<th>Marco</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Anos 1950 e início dos 60</strong></td>
+<td>Processamento de dados em fitas magnéticas (acesso sequencial); cartões perfurados para entrada</td>
+</tr>
+<tr class="even">
+<td><strong>Final dos anos 60 e 70</strong></td>
+<td>Discos rígidos permitem acesso direto; modelos em rede e hierárquico; <strong>Ted Codd</strong> define o modelo relacional; Oracle lança o primeiro BD relacional comercial</td>
+</tr>
+<tr class="odd">
+<td><strong>Anos 80</strong></td>
+<td>SQL se torna padrão industrial; BDs relacionais comerciais; BDs paralelos e distribuídos; BDs orientados a objetos</td>
+</tr>
+<tr class="even">
+<td><strong>Anos 90</strong></td>
+<td>Data warehouses multi-terabyte; suporte a decisão e mineração de dados; surgimento do e-commerce</td>
+</tr>
+<tr class="odd">
+<td><strong>Anos 2000</strong></td>
+<td>Big data (Google BigTable, Amazon); sistemas NoSQL; MapReduce</td>
+</tr>
+<tr class="even">
+<td><strong>Anos 2010</strong></td>
+<td>SQL sobre MapReduce; BDs massivamente paralelos; BDs em memória principal (<em>in-memory</em>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="resumo" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="resumo"><span class="header-section-number">1.12</span> Resumo</h2>
+<p>Neste capítulo vimos:</p>
+<ul>
+<li>O que são bancos de dados e por que eles existem</li>
+<li>As limitações de sistemas baseados em arquivos</li>
+<li>Os principais modelos de dados (com ênfase no relacional)</li>
+<li>A arquitetura em três níveis (físico, lógico, visão)</li>
+<li>As linguagens DDL e DML (SQL)</li>
+<li>A arquitetura interna de um SGBD (storage manager, query processor, transaction manager)</li>
+<li>Os perfis de usuários e o papel do DBA</li>
+<li>Uma linha do tempo da evolução dos bancos de dados</li>
+</ul>
+</section>
+<section id="exercícios" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">1.13</span> Exercícios</h2>
+<ol type="1">
+<li><p>Liste três exemplos de aplicações do cotidiano que utilizam bancos de dados e identifique que tipos de dados cada uma armazena.</p></li>
+<li><p>Explique com suas palavras por que sistemas baseados em arquivos apresentam problemas de <strong>atomicidade</strong>. Dê um exemplo concreto.</p></li>
+<li><p>Qual é a diferença entre <strong>schema</strong> e <strong>instância</strong> de um banco de dados? Faça a analogia com conceitos de programação.</p></li>
+<li><p>Compare DML <strong>procedural</strong> e <strong>declarativa</strong>. Qual a vantagem da abordagem declarativa?</p></li>
+<li><p>Em uma arquitetura de <strong>três camadas</strong>, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?</p></li>
+<li><p>Considere a seguinte consulta SQL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name, salary</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> instructor</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> <span class="dv">70000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quais etapas o processador de consultas executa para responder essa consulta?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
+Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/BragaD\.github\.io\/UnDF-BancodeDados-202601");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Início">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Início</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/edit/main/01-introducao.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
