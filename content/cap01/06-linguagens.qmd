@@ -1,0 +1,52 @@
+# 1.6 Linguagens de Banco de Dados
+
+## DDL — Data Definition Language
+
+A **DDL** é usada para definir a estrutura do banco de dados (schema).
+
+```sql
+CREATE TABLE instructor (
+    ID          CHAR(5),
+    name        VARCHAR(20)   NOT NULL,
+    dept_name   VARCHAR(20),
+    salary      NUMERIC(8,2),
+    PRIMARY KEY (ID)
+);
+```
+
+O compilador DDL gera um conjunto de templates de tabelas armazenados no **dicionário de dados**, que contém metadados como:
+
+- Schema do banco
+- Restrições de integridade (chave primária, chave estrangeira)
+- Autorizações de acesso
+
+## DML — Data Manipulation Language
+
+A **DML** (também chamada de *linguagem de consulta*) é usada para acessar e atualizar dados. Existem dois tipos:
+
+| Tipo | Característica | Exemplo |
+|---|---|---|
+| **Procedural** | Especifica *o que* e *como* obter os dados | Álgebra Relacional |
+| **Declarativa** | Especifica apenas *o que* obter | SQL |
+
+DMLs declarativas são mais fáceis de aprender e usar. SQL é o padrão comercial mais utilizado.
+
+## SQL — Structured Query Language
+
+SQL é **não-procedural**: uma consulta recebe uma ou mais tabelas e sempre retorna uma tabela.
+
+```sql
+-- Encontrar todos os instrutores do departamento de Ciência da Computação
+SELECT name
+FROM instructor
+WHERE dept_name = 'Comp. Sci.';
+```
+
+::: {.callout-note}
+SQL **não** é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em uma linguagem de propósito geral (Python, Java, C++).
+:::
+
+Formas de acessar o banco a partir de aplicações:
+
+1. **Extensões de linguagem** para SQL embutido
+2. **Interfaces de programa** (ODBC, JDBC, drivers de banco de dados)

@@ -1,0 +1,10 @@
+# 1.11 Breve História dos Bancos de Dados
+
+| Período | Marco |
+|---|---|
+| **Anos 1950 e início dos 60** | Processamento de dados em fitas magnéticas (acesso sequencial); cartões perfurados para entrada |
+| **Final dos anos 60 e 70** | Discos rígidos permitem acesso direto; modelos em rede e hierárquico; **Ted Codd** define o modelo relacional; Oracle lança o primeiro BD relacional comercial |
+| **Anos 80** | SQL se torna padrão industrial; BDs relacionais comerciais; BDs paralelos e distribuídos; BDs orientados a objetos |
+| **Anos 90** | Data warehouses multi-terabyte; suporte a decisão e mineração de dados; surgimento do e-commerce |
+| **Anos 2000** | Big data (Google BigTable, Amazon); sistemas NoSQL; MapReduce |
+| **Anos 2010** | SQL sobre MapReduce; BDs massivamente paralelos; BDs em memória principal (*in-memory*) |

@@ -1,0 +1,37 @@
+# 1.5 Visão em Três Níveis
+
+Um SGBD organiza os dados em três níveis de abstração (Arquitetura ANSI/SPARC):
+
+```
+┌──────────────────────────────────────┐
+│  Nível de Visão (View Level)         │  ← o que cada usuário vê
+│  Visão 1  |  Visão 2  |  Visão 3    │
+├──────────────────────────────────────┤
+│  Nível Lógico (Logical Level)        │  ← estrutura lógica completa
+│  (quais dados existem e suas         │
+│   relações)                          │
+├──────────────────────────────────────┤
+│  Nível Físico (Physical Level)       │  ← como os dados são armazenados
+│  (estruturas de armazenamento)       │
+└──────────────────────────────────────┘
+```
+
+Essa separação é fundamental para a **independência de dados**.
+
+## Schemas e Instâncias
+
+Analogia com linguagens de programação:
+
+| Banco de Dados | Programação |
+|---|---|
+| **Schema Lógico** | Tipo de uma variável |
+| **Schema Físico** | Layout de memória |
+| **Instância** | Valor atual da variável |
+
+- **Schema lógico**: estrutura geral do banco (ex: "existe uma tabela de clientes com os campos nome, CPF, endereço")
+- **Schema físico**: como os dados são fisicamente armazenados em disco
+- **Instância**: o conteúdo atual do banco em um dado momento
+
+## Independência de Dados Física
+
+A **independência de dados física** é a capacidade de modificar o schema físico sem alterar o schema lógico. Isso permite, por exemplo, reorganizar como os dados são guardados em disco sem impactar os programas que os utilizam.

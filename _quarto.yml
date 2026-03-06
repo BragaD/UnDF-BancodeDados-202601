@@ -18,10 +18,34 @@ book:
   chapters:
     - text: "Início"
       href: index.qmd
-    - part: "Fundamentos"
+    - part: "Capítulo 1: Introdução"
       chapters:
-        - href: 01-introducao.qmd
-          text: "1. Introdução a Bancos de Dados"
+        - href: content/cap01/index.qmd
+          text: "Visão Geral"
+        - href: content/cap01/01-o-que-e-bd.qmd
+          text: "1.1 O que é um Banco de Dados?"
+        - href: content/cap01/02-aplicacoes.qmd
+          text: "1.2 Aplicações"
+        - href: content/cap01/03-sistemas-arquivos.qmd
+          text: "1.3 Por que não usar Arquivos?"
+        - href: content/cap01/04-modelos-dados.qmd
+          text: "1.4 Modelos de Dados"
+        - href: content/cap01/05-tres-niveis.qmd
+          text: "1.5 Visão em Três Níveis"
+        - href: content/cap01/06-linguagens.qmd
+          text: "1.6 Linguagens (DDL, DML, SQL)"
+        - href: content/cap01/07-projeto.qmd
+          text: "1.7 Projeto de Banco de Dados"
+        - href: content/cap01/08-motor.qmd
+          text: "1.8 Motor de Banco de Dados"
+        - href: content/cap01/09-arquiteturas.qmd
+          text: "1.9 Arquiteturas"
+        - href: content/cap01/10-usuarios.qmd
+          text: "1.10 Usuários e DBA"
+        - href: content/cap01/11-historia.qmd
+          text: "1.11 História"
+        - href: content/cap01/12-resumo.qmd
+          text: "Resumo e Exercícios"
 
 page-navigation: true
 

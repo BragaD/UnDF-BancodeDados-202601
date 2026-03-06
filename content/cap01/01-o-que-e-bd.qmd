@@ -1,0 +1,11 @@
+# 1.1 O que é um Banco de Dados?
+
+Um **banco de dados** é uma coleção organizada de dados inter-relacionados que modela algum aspecto do mundo real. Um **Sistema de Gerenciamento de Banco de Dados (SGBD)** é o software que permite criar, manter e consultar esses dados de forma eficiente, segura e confiável.
+
+Exemplos do cotidiano que dependem de bancos de dados:
+
+- Sistemas bancários (contas, transações, empréstimos)
+- Redes sociais (usuários, postagens, conexões)
+- E-commerce (produtos, pedidos, clientes)
+- Sistemas hospitalares (prontuários, agendamentos)
+- Aplicativos de navegação (mapas, rotas, pontos de interesse)

@@ -1,0 +1,20 @@
+# 1.10 Usuários de Banco de Dados
+
+Existem quatro perfis de usuários:
+
+| Perfil | Descrição |
+|---|---|
+| **Usuários leigos** | Interagem com o sistema por meio de aplicações prontas (ex: caixa eletrônico, e-commerce) |
+| **Programadores de aplicação** | Profissionais que escrevem os programas que os usuários leigos utilizam |
+| **Usuários sofisticados** | Interagem com o sistema via linguagem de consulta ou ferramentas de análise de dados, sem escrever programas |
+| **Usuários especializados** | Desenvolvem aplicações especializadas (ex: CAD, dados geográficos, multimídia) |
+
+## Administrador de Banco de Dados (DBA)
+
+O **DBA** (Database Administrator) tem controle central sobre o sistema. Suas funções incluem:
+
+- Definição do schema
+- Definição de estruturas de armazenamento e métodos de acesso
+- Modificação do schema e da organização física
+- Concessão de autorizações de acesso
+- Manutenção de rotina (backups, monitoramento, espaço em disco)

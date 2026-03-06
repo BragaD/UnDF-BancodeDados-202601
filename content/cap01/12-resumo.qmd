@@ -1,0 +1,36 @@
+# Resumo e Exercícios
+
+## Resumo
+
+Neste capítulo vimos:
+
+- O que são bancos de dados e por que eles existem
+- As limitações de sistemas baseados em arquivos
+- Os principais modelos de dados (com ênfase no relacional)
+- A arquitetura em três níveis (físico, lógico, visão)
+- As linguagens DDL e DML (SQL)
+- A arquitetura interna de um SGBD (storage manager, query processor, transaction manager)
+- Os perfis de usuários e o papel do DBA
+- Uma linha do tempo da evolução dos bancos de dados
+
+## Exercícios
+
+1. Liste três exemplos de aplicações do cotidiano que utilizam bancos de dados e identifique que tipos de dados cada uma armazena.
+
+2. Explique com suas palavras por que sistemas baseados em arquivos apresentam problemas de **atomicidade**. Dê um exemplo concreto.
+
+3. Qual é a diferença entre **schema** e **instância** de um banco de dados? Faça a analogia com conceitos de programação.
+
+4. Compare DML **procedural** e **declarativa**. Qual a vantagem da abordagem declarativa?
+
+5. Em uma arquitetura de **três camadas**, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?
+
+6. Considere a seguinte consulta SQL:
+
+   ```sql
+   SELECT name, salary
+   FROM instructor
+   WHERE salary > 70000;
+   ```
+
+   Quais etapas o processador de consultas executa para responder essa consulta?

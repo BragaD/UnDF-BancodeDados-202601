@@ -1,0 +1,41 @@
+# 1.9 Arquiteturas de Banco de Dados
+
+## Arquitetura Centralizada
+
+- Um servidor (ou poucos núcleos com memória compartilhada)
+- Toda a carga de trabalho é processada em um único local
+
+## Arquitetura Cliente-Servidor
+
+- Um servidor executa o trabalho em nome de múltiplos clientes
+- O cliente envia requisições SQL; o servidor processa e retorna resultados
+
+## Banco de Dados Paralelo
+
+- **Memória compartilhada**: múltiplos núcleos acessam a mesma RAM
+- **Disco compartilhado**: múltiplos processadores acessam os mesmos discos
+- **Sem compartilhamento (Shared-nothing)**: cada nó tem sua própria memória e disco
+
+## Banco de Dados Distribuído
+
+- Dados distribuídos geograficamente
+- Heterogeneidade de schemas e dados
+
+## Aplicações de Duas e Três Camadas
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Duas Camadas (Two-tier)                                 │
+│                                                          │
+│  [Cliente]  ←──── chamadas diretas ao BD ────→  [BD]    │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│  Três Camadas (Three-tier)                               │
+│                                                          │
+│  [Cliente] ←→ [Servidor de Aplicação] ←→ [BD]           │
+│  (navegador)  (lógica de negócio)     (dados)           │
+└─────────────────────────────────────────────────────────┘
+```
+
+Na arquitetura de três camadas, o cliente não faz chamadas diretas ao banco — ele se comunica com um servidor de aplicação que, por sua vez, acessa o banco. Essa é a arquitetura predominante em aplicações web modernas.

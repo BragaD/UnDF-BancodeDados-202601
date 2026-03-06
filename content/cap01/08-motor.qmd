@@ -1,0 +1,61 @@
+# 1.8 Motor de Banco de Dados
+
+Um SGBD é dividido em módulos que gerenciam diferentes responsabilidades:
+
+## Gerenciador de Armazenamento (Storage Manager)
+
+Provê a interface entre os dados de baixo nível armazenados e os programas e consultas. É responsável por:
+
+- Interação com o gerenciador de arquivos do SO
+- Armazenamento, recuperação e atualização eficiente dos dados
+
+Componentes:
+
+- **Gerenciador de autorização e integridade**: verifica restrições
+- **Gerenciador de transações**: garante consistência em falhas
+- **Gerenciador de arquivos**: gerencia a alocação de espaço em disco
+- **Gerenciador de buffer**: carrega dados do disco para a memória RAM
+
+Estruturas de dados:
+
+- **Arquivos de dados**: armazenam o banco em si
+- **Dicionário de dados**: armazena metadados e o schema
+- **Índices**: fornecem acesso rápido a itens de dados por valor
+
+## Processador de Consultas (Query Processor)
+
+Componentes:
+
+- **Interpretador DDL**: interpreta instruções DDL e registra definições no dicionário de dados
+- **Compilador DML**: traduz DML em um plano de execução de instruções de baixo nível (com *query optimization*)
+- **Motor de avaliação de consultas**: executa as instruções geradas pelo compilador
+
+**Etapas do processamento de uma consulta:**
+
+```
+Consulta SQL
+    │
+    ▼
+1. Parsing e tradução
+    │
+    ▼
+2. Otimização  ←── estatísticas do banco
+    │
+    ▼
+3. Avaliação
+    │
+    ▼
+Resultado
+```
+
+## Gerenciamento de Transações
+
+Uma **transação** é uma coleção de operações que executa uma única função lógica. Por exemplo, uma transferência bancária (débito de uma conta + crédito em outra) deve ser atômica.
+
+O gerenciador de transações garante que o banco permaneça em estado **consistente** mesmo diante de:
+
+- Falhas de sistema (quedas de energia, crashes)
+- Falhas de transação
+- Acessos concorrentes
+
+O **gerenciador de controle de concorrência** coordena transações simultâneas para garantir consistência.

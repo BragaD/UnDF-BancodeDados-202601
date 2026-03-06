@@ -1,0 +1,39 @@
+# 1.4 Modelos de Dados
+
+Um **modelo de dados** é um conjunto de ferramentas conceituais para descrever:
+
+- Os **dados** em si
+- As **relações** entre os dados
+- A **semântica** (significado) dos dados
+- As **restrições** (constraints) sobre os dados
+
+## Principais Modelos
+
+```
+Modelos de Dados
+├── Modelo Relacional          ← foco principal desta disciplina
+├── Modelo Entidade-Relacionamento (ER)  ← para projeto de banco de dados
+├── Modelos Baseados em Objetos
+│   ├── Orientado a Objetos
+│   └── Objeto-Relacional
+├── Modelo Semiestruturado (XML, JSON)
+└── Modelos Antigos (legados)
+    ├── Modelo em Rede
+    └── Modelo Hierárquico
+```
+
+## Modelo Relacional
+
+No modelo relacional (proposto por **Ted Codd** em 1970, Prêmio Turing 1981), todos os dados são armazenados em **tabelas** (relações):
+
+- Cada tabela possui **colunas** (atributos)
+- Cada linha é uma **tupla** (registro)
+
+Exemplo de tabela de instrutores:
+
+| ID    | nome           | depto       | salário   |
+|-------|----------------|-------------|-----------|
+| 10101 | Srinivasan     | Comp. Sci.  | 65.000,00 |
+| 12121 | Wu             | Finance     | 90.000,00 |
+| 15151 | Mozart         | Music       | 40.000,00 |
+| 22222 | Einstein       | Physics     | 95.000,00 |
