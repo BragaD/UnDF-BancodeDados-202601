@@ -10,8 +10,8 @@ lang: pt
 book:
   title: "Banco de Dados para Engenharia de Software"
   subtitle: "Bases de Dados IV"
-  site-url: "https://dbraga.github.io/BasesIV_EngSoft_BD"
-  repo-url: "https://github.com/dbraga/BasesIV_EngSoft_BD"
+  site-url: "https://BragaD.github.io/BasesIV_EngSoft_BD"
+  repo-url: "https://github.com/BragaD/BasesIV_EngSoft_BD"
   repo-actions: [edit, issue]
   author:
     - name: "Douglas Braga"
@@ -32,7 +32,7 @@ page-footer:
   left: "UnDF - Engenharia de Software - Bases de Dados IV"
   right:
     - icon: github
-      href: "https://github.com/dbraga/BasesIV_EngSoft_BD"
+      href: "https://github.com/BragaD/BasesIV_EngSoft_BD"
 
 format:
   html:
