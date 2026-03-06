@@ -1,0 +1,22 @@
+# Quarto
+/.quarto/
+docs/
+_freeze/
+
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# renv
+renv/library/
+renv/staging/
+
+# macOS
+.DS_Store
+
+# Output
+*.html
+!docs/**/*.html

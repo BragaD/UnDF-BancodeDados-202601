@@ -1,0 +1,34 @@
+# Bem-vindo {.unnumbered}
+
+Este é o material de apoio da disciplina **Bases de Dados IV** do curso de **Bacharelado em Engenharia de Software** da UnDF.
+
+## Sobre a Disciplina
+
+A disciplina aborda os fundamentos de sistemas de bancos de dados, com ênfase em conceitos essenciais para o desenvolvimento de software moderno. Os temas incluem:
+
+- Fundamentos e arquitetura de sistemas de banco de dados
+- Modelagem de dados (Modelo Relacional e Entidade-Relacionamento)
+- SQL: definição e manipulação de dados
+- Projeto e normalização de bancos de dados
+- Transações, controle de concorrência e recuperação
+- Introdução a NoSQL e bancos de dados modernos
+
+## Material Bibliográfico
+
+O principal livro-texto da disciplina é:
+
+> @silberschatz2019
+
+Os slides utilizados nas aulas são baseados no material oficial do livro, disponível em [db-book.com](https://www.db-book.com).
+
+## Como Usar Este Material
+
+O material está organizado em capítulos que acompanham a progressão da disciplina. Cada capítulo contém:
+
+- Conceitos teóricos com exemplos
+- Exemplos de código SQL
+- Exercícios de fixação
+
+## Licença {.unnumbered}
+
+Este material é disponibilizado para fins educacionais. Os slides originais são de autoria de Silberschatz, Korth e Sudarshan [@silberschatz2019].

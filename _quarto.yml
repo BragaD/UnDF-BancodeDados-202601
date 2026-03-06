@@ -1,0 +1,53 @@
+project:
+  type: book
+  output-dir: docs
+
+execute:
+  freeze: auto
+
+lang: pt
+
+book:
+  title: "Banco de Dados para Engenharia de Software"
+  subtitle: "Bases de Dados IV"
+  site-url: "https://dbraga.github.io/BasesIV_EngSoft_BD"
+  repo-url: "https://github.com/dbraga/BasesIV_EngSoft_BD"
+  repo-actions: [edit, issue]
+  author:
+    - name: "Douglas Braga"
+  date: today
+  date-format: "DD/MM/YYYY"
+  chapters:
+    - text: "Início"
+      href: index.qmd
+    - part: "Fundamentos"
+      chapters:
+        - href: 01-introducao.qmd
+          text: "1. Introdução a Bancos de Dados"
+
+page-navigation: true
+
+page-footer:
+  border: true
+  left: "UnDF - Engenharia de Software - Bases de Dados IV"
+  right:
+    - icon: github
+      href: "https://github.com/dbraga/BasesIV_EngSoft_BD"
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+    toc-depth: 4
+    toc-title: "Nesta página"
+    link-external-icon: true
+    link-external-newwindow: true
+    code-copy: true
+    code-overflow: wrap
+
+bibliography: references.bib
+
+editor: source

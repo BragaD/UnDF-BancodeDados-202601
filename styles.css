@@ -1,0 +1,35 @@
+/* ── Banco de Dados para Engenharia de Software ── */
+
+/* Destaque para conceitos importantes */
+.conceito {
+  background-color: #e8f4f8;
+  border-left: 4px solid #2196F3;
+  padding: 1em 1.2em;
+  margin: 1em 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Caixa de exemplo */
+.exemplo {
+  background-color: #f0f7ee;
+  border-left: 4px solid #4CAF50;
+  padding: 1em 1.2em;
+  margin: 1em 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Tabelas */
+.table th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+/* Cabeçalho do livro */
+#quarto-cover-image {
+  max-width: 200px;
+}
+
+/* Sidebar */
+.sidebar-title {
+  font-weight: 700;
+}
