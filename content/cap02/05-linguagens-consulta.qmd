@@ -1,0 +1,41 @@
+# Linguagens de Consulta Relacional
+
+Uma **linguagem de consulta** (*query language*) é uma linguagem na qual o usuário solicita informações ao banco de dados. As linguagens de consulta relacionais se dividem em duas grandes categorias.
+
+## Linguagens Procedurais vs. Declarativas
+
+::: {.conceito}
+**Linguagem procedural**: o usuário instrui o sistema a realizar uma sequência de operações para obter o resultado desejado. O *como* chegar ao resultado é especificado explicitamente.
+
+**Linguagem declarativa** (não-procedural): o usuário descreve *o que* deseja obter, sem especificar como obtê-lo. O sistema determina a melhor estratégia de execução.
+:::
+
+| Característica | Procedural | Declarativa |
+|---|---|---|
+| O usuário especifica | Como e o quê | Somente o quê |
+| Controle da execução | Pelo programador | Pelo sistema |
+| Exemplo | Álgebra Relacional | SQL, Cálculo Relacional |
+
+## As Três Linguagens "Puras"
+
+O modelo relacional é fundamentado em três linguagens formais:
+
+1. **Álgebra Relacional** — linguagem *procedural* baseada em operações sobre relações. Cada expressão descreve um procedimento passo a passo para derivar o resultado.
+
+2. **Cálculo Relacional de Tuplas** — linguagem *declarativa* baseada em lógica de predicados de primeira ordem. Uma consulta descreve as propriedades que as tuplas do resultado devem satisfazer.
+
+3. **Cálculo Relacional de Domínios** — linguagem *declarativa* semelhante ao cálculo de tuplas, mas que quantifica sobre valores de domínios (atributos) em vez de tuplas inteiras.
+
+::: {.conceito}
+As três linguagens puras são **equivalentes em poder computacional**: qualquer consulta expressável em uma delas pode ser expressa nas outras duas. Essa propriedade define o que se chama de **completude relacional** (*relational completeness*).
+:::
+
+## Foco deste Capítulo
+
+Este capítulo se concentra na **Álgebra Relacional**, pois ela:
+
+- Fornece a base formal sobre a qual os otimizadores de consulta SQL são construídos
+- Torna explícitas as etapas de processamento de uma consulta
+- É essencial para entender como o SGBD avalia e otimiza expressões SQL
+
+O SQL — linguagem padrão dos SGBDs modernos — é baseado no cálculo relacional de tuplas, mas absorve elementos procedurais da álgebra relacional em sua semântica de execução.

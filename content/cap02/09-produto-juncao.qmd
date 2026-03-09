@@ -1,0 +1,96 @@
+# Produto Cartesiano e Junção
+
+## Produto Cartesiano ($\times$)
+
+O **produto cartesiano** combina informações de duas relações quaisquer, produzindo todas as combinações possíveis de tuplas.
+
+::: {.conceito}
+$$r \times s$$
+
+O resultado contém todas as tuplas $(t_r, t_s)$ onde $t_r$ é uma tupla de $r$ e $t_s$ é uma tupla de $s$. Se $r$ tem $n$ tuplas e $s$ tem $m$ tuplas, o resultado tem $n \times m$ tuplas.
+:::
+
+### Qualificação de Atributos
+
+Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular $professor \times ministra$, o atributo `id_professor` aparece em `ministra` e `id` em `professor`; ambos referem-se ao mesmo conceito e a junção os conectará pelo predicado `professor.id = ministra.id_professor`.
+
+### Tabelas utilizadas nos exemplos
+
+Versão reduzida de `professor` (3 tuplas):
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 45565 | Lucas | COETI | 75000 |
+
+Tabela `ministra` (4 tuplas):
+
+| id_professor | id_disciplina | id_turma | semestre | ano |
+|---|---|---|---|---|
+| 10101 | BES 301 | 1 | Primeiro | 2026 |
+| 10101 | BES 601 | 1 | Primeiro | 2026 |
+| 12121 | MTI 101 | 1 | Primeiro | 2026 |
+| 45565 | BES 101 | 1 | Segundo | 2025 |
+
+### Exemplo: $professor \times ministra$
+
+$$professor \times ministra$$
+
+O produto cartesiano gera $3 \times 4 = 12$ tuplas — todas as combinações possíveis entre as 3 tuplas de `professor` e as 4 de `ministra`, independentemente de qualquer correspondência semântica:
+
+| professor.id | professor.nome | professor.nome_centro | professor.salario | ministra.id_professor | ministra.id_disciplina | ministra.id_turma | ministra.semestre | ministra.ano |
+|---|---|---|---|---|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
+| 10101 | Carlos | COETI | 65000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
+| 10101 | Carlos | COETI | 65000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
+| 10101 | Carlos | COETI | 65000 | 45565 | BES 101 | 1 | Segundo | 2025 |
+| 12121 | Ana | COCHCMA | 90000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
+| 12121 | Ana | COCHCMA | 90000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
+| 12121 | Ana | COCHCMA | 90000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
+| 12121 | Ana | COCHCMA | 90000 | 45565 | BES 101 | 1 | Segundo | 2025 |
+| 45565 | Lucas | COETI | 75000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
+| 45565 | Lucas | COETI | 75000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
+| 45565 | Lucas | COETI | 75000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
+| 45565 | Lucas | COETI | 75000 | 45565 | BES 101 | 1 | Segundo | 2025 |
+
+::: {.exemplo}
+Das 12 tuplas, apenas 4 são semanticamente válidas (aquelas em que `professor.id = ministra.id_professor`). As demais 8 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.
+:::
+
+## Junção ($\bowtie$)
+
+A **junção** combina seleção e produto cartesiano em uma única operação conveniente, retornando apenas as combinações de tuplas que satisfazem um predicado.
+
+::: {.conceito}
+$$r \bowtie_\theta s = \sigma_\theta(r \times s)$$
+
+onde $\theta$ é o **predicado de junção**. A junção é equivalente a fazer o produto cartesiano e depois filtrar com $\sigma_\theta$.
+:::
+
+### Exemplo: Professores com Suas Turmas
+
+Para associar cada professor às turmas que ministra:
+
+$$professor \bowtie_{professor.id\ =\ ministra.id\_professor} ministra$$
+
+Esta expressão é equivalente a:
+
+$$\sigma_{professor.id\ =\ ministra.id\_professor}(professor \times ministra)$$
+
+Resultado (apenas as 4 tuplas válidas do produto cartesiano de 12):
+
+| professor.id | professor.nome | professor.nome_centro | professor.salario | ministra.id_disciplina | ministra.id_turma | ministra.semestre | ministra.ano |
+|---|---|---|---|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 | BES 301 | 1 | Primeiro | 2026 |
+| 10101 | Carlos | COETI | 65000 | BES 601 | 1 | Primeiro | 2026 |
+| 12121 | Ana | COCHCMA | 90000 | MTI 101 | 1 | Primeiro | 2026 |
+| 45565 | Lucas | COETI | 75000 | BES 101 | 1 | Segundo | 2025 |
+
+::: {.exemplo}
+A junção filtrou as 8 combinações sem sentido e manteve exatamente as 4 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.id_professor` é redundante no resultado e pode ser eliminado com uma projeção.
+:::
+
+### Vantagem da Junção
+
+A notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.

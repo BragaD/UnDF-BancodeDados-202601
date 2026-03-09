@@ -1,0 +1,32 @@
+# Introdução ao Modelo Relacional
+
+::: {.callout-note}
+Este capítulo é baseado no Capítulo 2 de @silberschatz2019.
+:::
+
+Este capítulo apresenta o **modelo relacional**, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:
+
+- Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)
+- Distinguir schema de instância
+- Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras
+- Interpretar um diagrama de schema
+- Reconhecer os tipos de linguagens de consulta relacionais
+- Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação
+- Usar funções de agregação para sumarizar dados
+
+## Seções
+
+| Seção | Tópico |
+|---|---|
+| [2.1](01-estrutura.qmd) | Estrutura do Banco de Dados Relacional |
+| [2.2](02-schema.qmd) | Schema e Instância |
+| [2.3](03-chaves.qmd) | Chaves |
+| [2.4](04-diagrama-schema.qmd) | Diagrama de Schema |
+| [2.5](05-linguagens-consulta.qmd) | Linguagens de Consulta Relacional |
+| [2.6](06-algebra-relacional.qmd) | Álgebra Relacional |
+| [2.7](07-selecao.qmd) | Operação de Seleção |
+| [2.8](08-projecao.qmd) | Operação de Projeção |
+| [2.9](09-produto-juncao.qmd) | Produto Cartesiano e Junção |
+| [2.10](10-operacoes-conjunto.qmd) | Operações de Conjunto |
+| [2.11](11-operacoes-adicionais.qmd) | Operações Adicionais |
+| [Resumo](12-resumo.qmd) | Resumo e Exercícios |

@@ -1,0 +1,134 @@
+# Operações de Conjunto
+
+As **operações de conjunto** tratam relações como conjuntos de tuplas e aplicam as operações clássicas de teoria dos conjuntos: união, interseção e diferença.
+
+## Requisito de Compatibilidade
+
+::: {.conceito}
+Para que as operações $\cup$, $\cap$ e $-$ sejam válidas, as duas relações devem ser **compatíveis**, o que exige:
+
+1. A mesma **aridade**: ambas devem ter o mesmo número de atributos.
+2. **Domínios compatíveis**: para cada posição $i$, o domínio do $i$-ésimo atributo de $r$ deve ser compatível com o domínio do $i$-ésimo atributo de $s$.
+:::
+
+Em outras palavras, as relações devem "ter a mesma forma" para que faz sentido combinar suas tuplas.
+
+### Conjuntos utilizados nos exemplos
+
+Definimos duas relações auxiliares a partir da tabela `disciplina`:
+
+$$A \leftarrow \Pi_{id\_disciplina}(\sigma_{nome\_centro = \text{"COETI"}}(disciplina))$$
+
+$$B \leftarrow \Pi_{id\_disciplina}(\sigma_{carga\_horaria \geq 60}(disciplina))$$
+
+Relação $A$ — disciplinas do COETI:
+
+| id_disciplina |
+|---|
+| BES 101 |
+| BES 301 |
+| BES 601 |
+
+Relação $B$ — disciplinas com carga horária $\geq 60$:
+
+| id_disciplina |
+|---|
+| MTI 101 |
+| MTI 202 |
+| MTI 402 |
+| BES 301 |
+| BES 601 |
+| NUT 101 |
+| NUT 401 |
+| NUT 701 |
+| PED 101 |
+| PED 301 |
+| PED 601 |
+
+::: {.callout-note}
+Note que BES 101 (20 h) **não** aparece em $B$, e que BES 301 e BES 601 aparecem em **ambas** as relações.
+:::
+
+## União ($\cup$)
+
+::: {.conceito}
+$$r \cup s$$
+
+Retorna todas as tuplas que pertencem a $r$, a $s$ ou a ambas. Duplicatas são eliminadas.
+:::
+
+$$A \cup B$$
+
+Resultado — disciplinas do COETI **ou** com carga horária $\geq 60$:
+
+| id_disciplina |
+|---|
+| BES 101 |
+| BES 301 |
+| BES 601 |
+| MTI 101 |
+| MTI 202 |
+| MTI 402 |
+| NUT 101 |
+| NUT 401 |
+| NUT 701 |
+| PED 101 |
+| PED 301 |
+| PED 601 |
+
+::: {.exemplo}
+BES 301 e BES 601 pertencem às duas relações, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente.
+:::
+
+## Interseção ($\cap$)
+
+::: {.conceito}
+$$r \cap s$$
+
+Retorna apenas as tuplas que pertencem **simultaneamente** a $r$ e a $s$.
+:::
+
+$$A \cap B$$
+
+Resultado — disciplinas do COETI **que também** têm carga horária $\geq 60$:
+
+| id_disciplina |
+|---|
+| BES 301 |
+| BES 601 |
+
+::: {.exemplo}
+BES 101 (20 h) está em $A$ mas não em $B$, por isso é excluída. As demais disciplinas de $B$ não estão em $A$, também excluídas. Apenas BES 301 e BES 601 satisfazem as duas condições.
+:::
+
+::: {.callout-note}
+A interseção pode ser derivada das operações básicas: $r \cap s = r - (r - s)$. Portanto, $\cap$ não é um operador primitivo da álgebra relacional — é incluída por conveniência.
+:::
+
+## Diferença ($-$)
+
+::: {.conceito}
+$$r - s$$
+
+Retorna as tuplas que pertencem a $r$ mas **não** pertencem a $s$.
+:::
+
+$$A - B$$
+
+Resultado — disciplinas do COETI com carga horária $< 60$:
+
+| id_disciplina |
+|---|
+| BES 101 |
+
+::: {.exemplo}
+Das três disciplinas do COETI, apenas BES 101 (20 h) não satisfaz $carga\_horaria \geq 60$ e portanto não está em $B$. É a única que permanece após a diferença.
+:::
+
+## Resumo Comparativo
+
+| Operação | Símbolo | Resultado com $A$ e $B$ |
+|---|---|---|
+| União | $A \cup B$ | 12 disciplinas (todo o catálogo) |
+| Interseção | $A \cap B$ | 2 disciplinas (BES 301, BES 601) |
+| Diferença | $A - B$ | 1 disciplina (BES 101) |

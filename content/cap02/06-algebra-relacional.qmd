@@ -1,0 +1,35 @@
+# Álgebra Relacional
+
+A **álgebra relacional** é uma linguagem de consulta procedural composta por um conjunto de operações que recebem uma ou duas relações como entrada e produzem uma nova relação como resultado.
+
+::: {.conceito}
+Na álgebra relacional, cada operação recebe uma ou duas **relações** como operandos e retorna uma nova **relação**. Isso permite **composição**: o resultado de uma operação pode ser usado como entrada de outra, formando expressões arbitrariamente complexas.
+:::
+
+## Operadores Básicos
+
+Existem seis operadores fundamentais da álgebra relacional:
+
+| Operador | Símbolo | Tipo | Descrição |
+|---|---|---|---|
+| Seleção | $\sigma$ | Unário | Filtra tuplas que satisfazem um predicado |
+| Projeção | $\Pi$ | Unário | Seleciona um subconjunto de atributos (colunas) |
+| União | $\cup$ | Binário | Retorna todas as tuplas de duas relações compatíveis |
+| Diferença de conjuntos | $-$ | Binário | Retorna tuplas presentes em uma relação mas não na outra |
+| Produto Cartesiano | $\times$ | Binário | Combina todas as tuplas de duas relações |
+| Renomeação | $\rho$ | Unário | Renomeia a relação resultado ou seus atributos |
+
+Além dos seis operadores básicos, operações adicionais — como junção ($\bowtie$), interseção ($\cap$) e agregação ($\gamma$) — podem ser derivadas a partir dos básicos ou são extensões convenientes.
+
+## Expressões de Álgebra Relacional
+
+A composição de operações permite construir **expressões de álgebra relacional** complexas. Por exemplo, para encontrar os nomes dos professores do COETI com salário superior a 80 000:
+
+$$\Pi_{nome}\!\left(\sigma_{nome\_centro = \text{"COETI"} \,\wedge\, salario > 80000}(professor)\right)$$
+
+Nessa expressão:
+1. $\sigma$ filtra as tuplas relevantes
+2. $\Pi$ projeta apenas o atributo `nome`
+3. O resultado é uma nova relação contendo somente os nomes desejados
+
+Nas seções seguintes, cada operador é apresentado em detalhe com exemplos usando as tabelas da UnDF.

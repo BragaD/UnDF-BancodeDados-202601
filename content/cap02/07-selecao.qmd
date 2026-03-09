@@ -1,0 +1,74 @@
+# Operação de Seleção
+
+A operação de **seleção** filtra as tuplas de uma relação, retornando apenas aquelas que satisfazem um determinado predicado.
+
+## Notação e Sintaxe
+
+::: {.conceito}
+$$\sigma_p(r)$$
+
+onde $r$ é uma relação e $p$ é o **predicado de seleção** — uma condição booleana sobre os atributos das tuplas.
+:::
+
+O resultado de $\sigma_p(r)$ é uma relação com o mesmo schema de $r$, mas contendo apenas as tuplas para as quais $p$ é verdadeiro.
+
+## Predicados de Seleção
+
+Os predicados podem usar:
+
+- **Operadores de comparação**: $=$, $\neq$, $>$, $\geq$, $<$, $\leq$
+- **Conectivos lógicos**: $\wedge$ (e), $\vee$ (ou), $\neg$ (não)
+- **Comparação entre atributos**: $\sigma_{predio = nome\_centro}(centro)$
+
+## Exemplo 1: Professores do COETI
+
+Considere a relação `professor`:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 15151 | João | COEMAG | 40000 |
+| 22222 | Marcos | COCBS | 95000 |
+| 32343 | Fernanda | COCHCMA | 60000 |
+| 33456 | Roberto | COCBS | 87000 |
+| 45565 | Lucas | COETI | 75000 |
+| 58583 | Juliana | COCHCMA | 62000 |
+| 76543 | Rafael | COCHCMA | 80000 |
+| 76766 | Beatriz | COCBS | 72000 |
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+A expressão $\sigma_{nome\_centro = \text{"COETI"}}(professor)$ retorna:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 45565 | Lucas | COETI | 75000 |
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+::: {.exemplo}
+Apenas as tuplas onde `nome_centro = "COETI"` foram mantidas. O schema do resultado é idêntico ao schema de `professor`.
+:::
+
+## Exemplo 2: Predicado Composto
+
+Para selecionar professores do COETI **e** com salário superior a 75 000, usa-se o conectivo $\wedge$:
+
+$$\sigma_{nome\_centro = \text{"COETI"} \,\wedge\, salario > 75000}(professor)$$
+
+Resultado:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+## Exemplo 3: Comparação Entre Atributos
+
+O predicado pode também comparar dois atributos da mesma relação. Por exemplo, para encontrar centros cujo nome coincide com o prédio onde estão instalados:
+
+$$\sigma_{predio = nome\_centro}(centro)$$
+
+Neste caso, o predicado $predio = nome\_centro$ compara o valor de dois atributos da mesma tupla.

@@ -1,0 +1,64 @@
+# Schema e Instância
+
+Ao trabalhar com bancos de dados, é fundamental distinguir dois conceitos complementares: o **schema** (estrutura) e a **instância** (conteúdo).
+
+## Schema do Banco de Dados
+
+::: {.conceito}
+O **schema** de um banco de dados é a sua estrutura lógica — a descrição das relações, seus atributos e os tipos de dados de cada atributo. O schema muda raramente e é definido durante o projeto do banco de dados.
+:::
+
+Representa-se o schema de uma relação pelo nome da relação seguido dos seus atributos entre parênteses:
+
+$$professor(\underline{id},\ nome,\ nome\_centro,\ salario)$$
+
+O atributo sublinhado indica a chave primária (conceito detalhado na próxima seção).
+
+O banco de dados da UnDF possui quatro relações com os seguintes schemas:
+
+- $professor(\underline{id},\ nome,\ nome\_centro,\ salario)$
+- $aluno(\underline{id},\ nome,\ nome\_centro,\ carga\_total)$
+- $disciplina(\underline{id\_disciplina},\ titulo,\ nome\_centro,\ carga\_horaria)$
+- $centro(\underline{nome\_centro},\ predio,\ orcamento)$
+
+## Instância do Banco de Dados
+
+::: {.conceito}
+A **instância** de um banco de dados é o conjunto de dados efetivamente armazenados em um determinado momento — um *snapshot* do banco de dados.
+:::
+
+A instância muda continuamente à medida que dados são inseridos, alterados ou removidos. O schema, por sua vez, permanece estável.
+
+::: {.exemplo}
+A tabela a seguir é uma instância do schema `professor`:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 15151 | João | COEMAG | 40000 |
+| 22222 | Marcos | COCBS | 95000 |
+| 32343 | Fernanda | COCHCMA | 60000 |
+| 33456 | Roberto | COCBS | 87000 |
+| 45565 | Lucas | COETI | 75000 |
+| 58583 | Juliana | COCHCMA | 62000 |
+| 76543 | Rafael | COCHCMA | 80000 |
+| 76766 | Beatriz | COCBS | 72000 |
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+Amanhã, após a contratação de um novo professor, essa instância terá treze tuplas — mas o schema continuará sendo exatamente o mesmo.
+:::
+
+## Analogia com Programação
+
+A distinção entre schema e instância tem um paralelo direto com conceitos de linguagens de programação:
+
+| Conceito em BD | Analogia em programação |
+|---|---|
+| Schema de uma relação | Declaração de tipo de uma variável (ex: `struct Professor`) |
+| Instância de uma relação | Valor atual da variável em tempo de execução |
+| Schema do banco de dados | Conjunto de todas as declarações de tipos do programa |
+| Instância do banco de dados | Estado da memória do programa em um dado instante |
+
+Assim como o tipo de uma variável não muda durante a execução do programa mas o seu valor muda o tempo todo, o schema de um banco de dados é estável enquanto a instância está em constante evolução.

@@ -1,0 +1,61 @@
+# Chaves
+
+Um dos requisitos fundamentais do modelo relacional é a capacidade de **identificar unicamente** cada tupla de uma relação. Para isso, utilizamos o conceito de chave.
+
+## Definição Formal
+
+Seja $R$ o schema de uma relação e $K \subseteq R$ um subconjunto de seus atributos.
+
+::: {.conceito}
+**Superclave** (*superkey*): $K$ é uma superclave de $R$ se os valores de $K$ são suficientes para identificar unicamente cada tupla em qualquer instância válida da relação.
+:::
+
+::: {.conceito}
+**Chave candidata** (*candidate key*): $K$ é uma chave candidata de $R$ se $K$ é uma superclave **minimal**, ou seja, nenhum subconjunto próprio de $K$ é também uma superclave.
+:::
+
+::: {.conceito}
+**Chave primária** (*primary key*): uma chave candidata escolhida pelo projetista do banco de dados para identificar oficialmente as tuplas da relação. É indicada sublinhando-se os atributos no schema.
+:::
+
+## Exemplos com as Tabelas da UnDF
+
+### Relação `professor`
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 22222 | Marcos | COCBS | 95000 |
+
+- $\{id\}$ é **superclave**: cada professor tem um `id` único.
+- $\{id, nome\}$ é **superclave**: a combinação também identifica unicamente, mas é redundante.
+- $\{nome\}$ **não é superclave**: poderiam existir dois professores com o mesmo nome.
+- $\{id\}$ é **chave candidata**: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).
+- $\{id\}$ é escolhida como **chave primária**.
+
+### Relação `centro`
+
+- $\{nome\_centro\}$ é chave candidata e chave primária — cada centro tem um nome único.
+
+### Relação `disciplina`
+
+- $\{id\_disciplina\}$ é chave candidata e chave primária.
+
+## Chave Estrangeira
+
+::: {.conceito}
+Uma **chave estrangeira** (*foreign key*) é um conjunto de atributos em uma relação cujos valores devem corresponder a valores da chave primária de outra relação. A relação que contém a chave estrangeira é chamada de **relação referenciante**; a relação que contém a chave primária correspondente é chamada de **relação referenciada**.
+:::
+
+::: {.exemplo}
+O atributo `nome_centro` em `professor` é uma chave estrangeira que referencia `nome_centro` em `centro`:
+
+- **Relação referenciante**: `professor`
+- **Relação referenciada**: `centro`
+- **Restrição**: todo valor de `professor.nome_centro` deve existir em `centro.nome_centro`
+
+Isso garante que não seja possível cadastrar um professor em um centro inexistente. Da mesma forma, `disciplina.nome_centro` e `aluno.nome_centro` são chaves estrangeiras que referenciam `centro`.
+:::
+
+A restrição imposta por uma chave estrangeira é chamada de **restrição de integridade referencial** (*referential integrity constraint*) e é uma das formas como o SGBD preserva a consistência dos dados.

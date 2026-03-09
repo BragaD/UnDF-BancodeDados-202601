@@ -48,6 +48,34 @@ book:
           text: "Resumo e Exercícios"
         - href: content/cap01/13-hands-on-postgresql.qmd
           text: "Hands-on: PostgreSQL"
+    - part: "Capítulo 2: Modelo Relacional"
+      chapters:
+        - href: content/cap02/index.qmd
+          text: "Visão Geral"
+        - href: content/cap02/01-estrutura.qmd
+          text: "Estrutura do Banco de Dados Relacional"
+        - href: content/cap02/02-schema.qmd
+          text: "Schema e Instância"
+        - href: content/cap02/03-chaves.qmd
+          text: "Chaves"
+        - href: content/cap02/04-diagrama-schema.qmd
+          text: "Diagrama de Schema"
+        - href: content/cap02/05-linguagens-consulta.qmd
+          text: "Linguagens de Consulta Relacional"
+        - href: content/cap02/06-algebra-relacional.qmd
+          text: "Álgebra Relacional"
+        - href: content/cap02/07-selecao.qmd
+          text: "Operação de Seleção"
+        - href: content/cap02/08-projecao.qmd
+          text: "Operação de Projeção"
+        - href: content/cap02/09-produto-juncao.qmd
+          text: "Produto Cartesiano e Junção"
+        - href: content/cap02/10-operacoes-conjunto.qmd
+          text: "Operações de Conjunto"
+        - href: content/cap02/11-operacoes-adicionais.qmd
+          text: "Operações Adicionais"
+        - href: content/cap02/12-resumo.qmd
+          text: "Resumo e Exercícios"
 
 page-navigation: true
 

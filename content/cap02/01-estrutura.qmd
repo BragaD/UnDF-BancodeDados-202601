@@ -1,0 +1,69 @@
+# Estrutura do Banco de Dados Relacional
+
+O modelo relacional representa os dados como uma coleção de **relações** — o termo formal para o que chamamos informalmente de *tabela*.
+
+## Relação, Tupla e Atributo
+
+::: {.conceito}
+Uma **relação** é uma tabela composta por linhas e colunas. Cada linha é chamada de **tupla** e cada coluna é chamada de **atributo**.
+:::
+
+- **Tupla**: uma linha da tabela; representa um registro individual (por exemplo, os dados de um professor)
+- **Atributo**: uma coluna da tabela; representa uma propriedade das entidades armazenadas (por exemplo, `nome` ou `salario`)
+- **Aridade** (*arity*): o número de atributos de uma relação
+
+A tabela `professor` da UnDF é um exemplo de relação:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 15151 | João | COEMAG | 40000 |
+| 22222 | Marcos | COCBS | 95000 |
+| 32343 | Fernanda | COCHCMA | 60000 |
+| 33456 | Roberto | COCBS | 87000 |
+| 45565 | Lucas | COETI | 75000 |
+| 58583 | Juliana | COCHCMA | 62000 |
+| 76543 | Rafael | COCHCMA | 80000 |
+| 76766 | Beatriz | COCBS | 72000 |
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+Aqui a relação `professor` tem aridade 4 (quatro atributos) e doze tuplas.
+
+## Domínio dos Atributos
+
+Cada atributo tem um **domínio** — o conjunto de valores permitidos para aquele atributo.
+
+::: {.conceito}
+O domínio de um atributo é o conjunto de todos os valores possíveis que esse atributo pode assumir. Exige-se que os valores de cada atributo sejam **atômicos**, ou seja, indivisíveis.
+:::
+
+Exemplos de domínios nos dados da UnDF:
+
+| Atributo | Domínio |
+|---|---|
+| `id` | sequência de caracteres alfanuméricos |
+| `nome` | cadeias de texto |
+| `nome_centro` | `{COETI, COCBS, COCHCMA, COEMAG}` |
+| `salario` | números reais positivos |
+
+A exigência de **atomicidade** significa que não é permitido armazenar valores compostos ou multivalorados diretamente em um atributo. Por exemplo, não se deve armazenar uma lista de telefones em um único campo `telefone` — isso violaria o modelo relacional.
+
+## O Valor Nulo (`null`)
+
+::: {.conceito}
+O valor especial `null` pertence a todo domínio e indica que o valor de um atributo é **desconhecido** ou **não aplicável**.
+:::
+
+Por exemplo, se o salário de um professor ainda não foi definido, o atributo `salario` recebe `null`. Embora necessário na prática, o `null` causa complicações em muitas operações (comparações, agregações) e deve ser usado com critério.
+
+## Tuplas Não Ordenadas
+
+Uma propriedade fundamental do modelo relacional é que **a ordem das tuplas é irrelevante**. Uma relação é formalmente um *conjunto* de tuplas, e conjuntos não têm ordem definida.
+
+::: {.exemplo}
+A tabela `professor` apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por `nome`, por `salario` decrescente, ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.
+:::
+
+Da mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenição sempre usemos uma ordem consistente.

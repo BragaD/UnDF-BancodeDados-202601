@@ -1,0 +1,43 @@
+# Resumo e Exercícios
+
+## Resumo
+
+Neste capítulo estudamos os fundamentos do **modelo relacional**:
+
+- Uma **relação** é uma tabela composta por **tuplas** (linhas) e **atributos** (colunas); a ordem das tuplas é irrelevante
+- Cada atributo tem um **domínio** de valores permitidos; os valores devem ser **atômicos** (indivisíveis); o valor especial `null` pertence a todo domínio e indica ausência de informação
+- O **schema** de um banco de dados é sua estrutura lógica (muda raramente); a **instância** é o conjunto de dados armazenados em um dado momento (muda continuamente)
+- **Superclave**: subconjunto de atributos que identifica unicamente cada tupla; **chave candidata**: superclave minimal; **chave primária**: chave candidata escolhida pelo projetista
+- **Chave estrangeira**: atributo(s) em uma relação referenciante cujos valores devem aparecer como chave primária na relação referenciada; impõe a **restrição de integridade referencial**
+- O **diagrama de schema** representa visualmente as tabelas, atributos e relacionamentos via chaves estrangeiras
+- As linguagens de consulta relacionais são **procedurais** (álgebra relacional) ou **declarativas** (cálculo relacional de tuplas e de domínios); as três são equivalentes em poder computacional
+- A **álgebra relacional** possui seis operadores básicos: $\sigma$ (seleção), $\Pi$ (projeção), $\cup$ (união), $-$ (diferença), $\times$ (produto cartesiano) e $\rho$ (renomeação)
+- **Seleção** ($\sigma_p(r)$): filtra tuplas por um predicado; aceita comparações e conectivos lógicos $\wedge$, $\vee$, $\neg$
+- **Projeção** ($\Pi_{A_1,\ldots,A_k}(r)$): seleciona colunas e elimina duplicatas; operações podem ser **compostas**
+- **Produto cartesiano** ($r \times s$): todas as combinações de tuplas; **junção** ($r \bowtie_\theta s$): produto cartesiano filtrado por predicado $\theta$
+- **Operações de conjunto** ($\cup$, $\cap$, $-$) exigem relações compatíveis (mesma aridade e domínios compatíveis)
+- **Atribuição** ($\leftarrow$) e **renomeação** ($\rho$) facilitam a escrita de expressões complexas
+- **Funções de agregação** ($\gamma$) calculam `avg`, `min`, `max`, `sum` e `count` sobre grupos de tuplas
+
+## Exercícios
+
+1. **Schema vs. Instância**: qual é a diferença entre o schema e a instância de um banco de dados? Dê um exemplo concreto usando a relação `professor` da UnDF.
+
+2. **Tuplas não ordenadas**: por que a ordem das tuplas é irrelevante no modelo relacional? Qual consequência prática isso tem ao recuperar dados de um banco de dados?
+
+3. **Chaves**: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação `disciplina`$(\underline{id\_disciplina},\ titulo,\ nome\_centro,\ carga\_horaria)$, identifique:
+   a. Duas superchaves distintas
+   b. A(s) chave(s) candidata(s)
+   c. A chave primária mais adequada e justifique sua escolha
+
+4. **Seleção**: escreva uma expressão de álgebra relacional para encontrar os **nomes** de todos os professores do COCHCMA. Indique quais operações são necessárias e em que ordem.
+
+5. **Projeção e composição**: escreva uma expressão para encontrar os **títulos** de todas as disciplinas com carga horária superior a 60 horas. Use a composição de seleção e projeção.
+
+6. **Produto cartesiano vs. junção**: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas `professor` e `centro`.
+
+7. **Agregação**: usando a notação de funções de agregação ($\gamma$), escreva a expressão para obter o **total de carga horária** de disciplinas por centro (equivalente ao `GROUP BY nome_centro` no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.
+
+8. **Operações de conjunto**: explique a diferença entre $\cup$, $\cap$ e $-$. Quais são os requisitos para que essas operações sejam válidas? Escreva expressões de álgebra relacional para:
+   a. Encontrar os ids de alunos que são do COETI **ou** do COCBS
+   b. Encontrar os ids de professores que **não** pertencem ao COEMAG

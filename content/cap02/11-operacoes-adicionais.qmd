@@ -1,0 +1,142 @@
+# Operações Adicionais
+
+Além dos seis operadores básicos, a álgebra relacional é frequentemente estendida com operações adicionais que tornam a escrita de consultas mais prática e expressiva.
+
+## Atribuição ($\leftarrow$)
+
+A operação de **atribuição** permite nomear subexpressões intermediárias, facilitando a leitura de consultas complexas.
+
+::: {.conceito}
+$$x \leftarrow E$$
+
+Atribui à variável temporária $x$ o resultado da expressão $E$. A variável pode ser usada nas expressões seguintes como se fosse uma relação, mas **não altera o banco de dados**.
+:::
+
+::: {.exemplo}
+Para encontrar os professores que são do COETI **ou** do COCBS, em vez de escrever tudo em uma linha:
+
+$$COETI \leftarrow \sigma_{nome\_centro = \text{"COETI"}}(professor)$$
+$$COCBS \leftarrow \sigma_{nome\_centro = \text{"COCBS"}}(professor)$$
+$$COETI \cup COCBS$$
+
+Isso é equivalente a:
+$$\sigma_{nome\_centro = \text{"COETI"}}(professor)\ \cup\ \sigma_{nome\_centro = \text{"COCBS"}}(professor)$$
+
+mas muito mais legível.
+:::
+
+## Renomeação ($\rho$)
+
+A operação de **renomeação** atribui um novo nome a uma relação (ou a seus atributos), o que é necessário, por exemplo, quando se faz o produto cartesiano de uma relação consigo mesma.
+
+::: {.conceito}
+$$\rho_x(E)$$
+
+Retorna o resultado da expressão $E$ sob o nome $x$.
+
+Forma alternativa com renomeação de atributos:
+
+$$\rho_{x(A_1, A_2, \ldots, A_n)}(E)$$
+
+Retorna o resultado de $E$ com o nome $x$ e com os atributos renomeados para $A_1, A_2, \ldots, A_n$.
+:::
+
+::: {.exemplo}
+Para encontrar pares de professores do mesmo centro (autojunção), precisamos de dois "aliases" para `professor`. Usamos $p1.id < p2.id$ para evitar pares duplicados e auto-pares:
+
+$$P1 \leftarrow \rho_{p1}(professor)$$
+$$P2 \leftarrow \rho_{p2}(professor)$$
+$$\Pi_{p1.nome,\ p2.nome,\ p1.nome\_centro}(\sigma_{p1.nome\_centro = p2.nome\_centro\ \wedge\ p1.id < p2.id}(P1 \times P2))$$
+
+Usando a versão reduzida da tabela `professor` com 6 tuplas:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 15151 | João     | COEMAG     | 40000   |
+| 32343 | Fernanda | COCHCMA | 60000 |
+| 45565 | Lucas | COETI | 75000 |
+| 83821 | Pedro | COETI | 92000 |
+
+Resultado:
+
+| p1.nome | p2.nome | nome_centro |
+|---|---|---|
+| Carlos | Lucas | COETI |
+| Carlos | Pedro | COETI |
+| Lucas | Pedro | COETI |
+| Ana | Fernanda | COCHCMA |
+
+Os pares são únicos e não contêm auto-pares graças à condição $p1.id < p2.id$. João (único professor do COEMAG) não forma nenhum par.
+:::
+
+## Funções de Agregação ($\gamma$)
+
+As **funções de agregação** operam sobre multiconjuntos de valores de uma coluna e produzem um único valor sumarizado.
+
+Funções disponíveis:
+
+| Função | Descrição |
+|---|---|
+| $\text{avg}$ | Média aritmética |
+| $\text{min}$ | Valor mínimo |
+| $\text{max}$ | Valor máximo |
+| $\text{sum}$ | Soma total |
+| $\text{count}$ | Contagem de valores |
+
+::: {.conceito}
+A notação geral da operação de agregação é:
+
+$${}_{G_1, G_2, \ldots, G_n}\ \gamma_{F_1(A_1),\ F_2(A_2),\ \ldots}(r)$$
+
+onde $G_1, \ldots, G_n$ são os **atributos de agrupamento** (equivalente ao `GROUP BY` do SQL) e $F_i(A_i)$ são as funções de agregação aplicadas aos atributos $A_i$.
+:::
+
+### Exemplo 1: Sem Agrupamento
+
+Salário médio de todos os professores:
+
+$$\gamma_{\text{avg}(salario)}(professor)$$
+
+Tabela de entrada:
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 10101 | Carlos | COETI | 65000 |
+| 12121 | Ana | COCHCMA | 90000 |
+| 15151 | João | COEMAG | 40000 |
+| 22222 | Marcos | COCBS | 95000 |
+| 32343 | Fernanda | COCHCMA | 60000 |
+| 33456 | Roberto | COCBS | 87000 |
+| 45565 | Lucas | COETI | 75000 |
+| 58583 | Juliana | COCHCMA | 62000 |
+| 76543 | Rafael | COCHCMA | 80000 |
+| 76766 | Beatriz | COCBS | 72000 |
+| 83821 | Pedro | COETI | 92000 |
+| 98345 | Mariana | COETI | 80000 |
+
+Resultado:
+
+| avg(salario) |
+|---|
+| 74833 |
+
+### Exemplo 2: Com Agrupamento
+
+Salário médio por centro (equivalente a `GROUP BY nome_centro`):
+
+$${}_{nome\_centro}\ \gamma_{\text{avg}(salario)}(professor)$$
+
+Resultado:
+
+| nome_centro | avg(salario) |
+|---|---|
+| COETI | 78000 |
+| COCBS | 84667 |
+| COCHCMA | 73000 |
+| COEMAG | 40000 |
+
+::: {.exemplo}
+O agrupamento por `nome_centro` faz com que a função `avg` seja calculada **separadamente** para cada grupo de tuplas com o mesmo valor de `nome_centro`.
+:::
