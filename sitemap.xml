@@ -2,62 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/index.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/index.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/01-o-que-e-bd.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/02-aplicacoes.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/03-sistemas-arquivos.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/04-modelos-dados.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/05-tres-niveis.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/06-linguagens.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/07-projeto.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/08-motor.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/09-arquiteturas.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/10-usuarios.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/11-historia.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/12-resumo.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
   </url>
   <url>
     <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap01/13-hands-on-postgresql.html</loc>
-    <lastmod>2026-03-09T18:29:57.413Z</lastmod>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/index.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/01-estrutura.html</loc>
+    <lastmod>2026-03-09T19:59:38.004Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/02-schema.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/03-chaves.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/04-diagrama-schema.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/05-linguagens-consulta.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/06-algebra-relacional.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/07-selecao.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/08-projecao.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/09-produto-juncao.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/10-operacoes-conjunto.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/11-operacoes-adicionais.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://BragaD.github.io/UnDF-BancodeDados-202601/content/cap02/12-resumo.html</loc>
+    <lastmod>2026-03-09T19:59:38.005Z</lastmod>
   </url>
 </urlset>

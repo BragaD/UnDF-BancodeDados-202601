@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>5&nbsp; Modelos de Dados – Bases da Engenharia de Software 4</title>
+<title>19&nbsp; Diagrama de Schema – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/05-tres-niveis.html" rel="next">
-<link href="../../content/cap01/03-sistemas-arquivos.html" rel="prev">
+<link href="../../content/cap02/05-linguagens-consulta.html" rel="next">
+<link href="../../content/cap02/03-chaves.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/04-modelos-dados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/04-diagrama-schema.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
   </div>
 </li>
@@ -249,7 +249,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/04-diagrama-schema.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap02/04-diagrama-schema.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></span></a>
   </div>
 </li>
@@ -313,19 +313,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#visão-dos-dados" id="toc-visão-dos-dados" class="nav-link active" data-scroll-target="#visão-dos-dados"><span class="header-section-number">5.1</span> Visão dos Dados</a></li>
-  <li><a href="#principais-modelos-de-dados" id="toc-principais-modelos-de-dados" class="nav-link" data-scroll-target="#principais-modelos-de-dados"><span class="header-section-number">5.2</span> Principais Modelos de Dados</a></li>
-  <li><a href="#modelo-relacional" id="toc-modelo-relacional" class="nav-link" data-scroll-target="#modelo-relacional"><span class="header-section-number">5.3</span> Modelo Relacional</a></li>
-  <li><a href="#um-banco-de-dados-relacional-de-exemplo" id="toc-um-banco-de-dados-relacional-de-exemplo" class="nav-link" data-scroll-target="#um-banco-de-dados-relacional-de-exemplo"><span class="header-section-number">5.4</span> Um Banco de Dados Relacional de Exemplo</a></li>
+  <li><a href="#o-que-é-um-diagrama-de-schema" id="toc-o-que-é-um-diagrama-de-schema" class="nav-link active" data-scroll-target="#o-que-é-um-diagrama-de-schema"><span class="header-section-number">19.1</span> O que é um Diagrama de Schema?</a></li>
+  <li><a href="#diagrama-do-banco-de-dados-da-undf" id="toc-diagrama-do-banco-de-dados-da-undf" class="nav-link" data-scroll-target="#diagrama-do-banco-de-dados-da-undf"><span class="header-section-number">19.2</span> Diagrama do Banco de Dados da UnDF</a></li>
+  <li><a href="#leitura-do-diagrama" id="toc-leitura-do-diagrama" class="nav-link" data-scroll-target="#leitura-do-diagrama"><span class="header-section-number">19.3</span> Leitura do Diagrama</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/04-modelos-dados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/04-diagrama-schema.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></h1>
 </div>
 
 
@@ -348,331 +347,257 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="visão-dos-dados" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="visão-dos-dados"><span class="header-section-number">5.1</span> Visão dos Dados</h2>
-<p>Um sistema de banco de dados é uma coleção de dados inter-relacionados e um conjunto de programas que permitem aos usuários acessar e modificar esses dados. Um dos principais objetivos de um sistema de banco de dados é fornecer aos usuários uma <strong>visão abstrata</strong> dos dados.</p>
-<p><strong>Modelo de dados</strong> é uma coleção de ferramentas conceituais para descrever:</p>
+<p>Quando um banco de dados possui várias relações interconectadas por chaves estrangeiras, é útil visualizar sua estrutura de forma gráfica por meio de um <strong>diagrama de schema</strong>.</p>
+<section id="o-que-é-um-diagrama-de-schema" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="o-que-é-um-diagrama-de-schema"><span class="header-section-number">19.1</span> O que é um Diagrama de Schema?</h2>
+<div class="conceito">
+<p>Um <strong>diagrama de schema</strong> é uma representação visual da estrutura de um banco de dados. Ele mostra as relações (tabelas), seus atributos, as chaves primárias (sublinhadas ou destacadas) e as chaves estrangeiras (indicadas por setas entre tabelas).</p>
+</div>
+<p>Convenções:</p>
 <ul>
-<li>Os <strong>dados</strong></li>
-<li>Os <strong>relacionamentos</strong> entre os dados</li>
-<li>A <strong>semântica</strong> dos dados</li>
-<li>As <strong>restrições</strong> sobre os dados</li>
-</ul>
-<p><strong>Abstração de dados</strong> oculta a complexidade das estruturas internas de representação por meio de diferentes níveis de abstração.</p>
-</section>
-<section id="principais-modelos-de-dados" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="principais-modelos-de-dados"><span class="header-section-number">5.2</span> Principais Modelos de Dados</h2>
-<ul>
-<li><strong>Modelo Relacional</strong></li>
-<li><strong>Modelo Entidade-Relacionamento (ER)</strong> — principalmente para projeto de banco de dados</li>
-<li><strong>Modelos Baseados em Objetos</strong> (orientado a objetos e objeto-relacional)</li>
-<li><strong>Modelo Semiestruturado</strong> (XML)</li>
-<li>Modelos mais antigos (legados): <strong>Modelo em Rede</strong> e <strong>Modelo Hierárquico</strong></li>
+<li><strong>Chave primária</strong>: atributo sublinhado</li>
+<li><strong>Chave estrangeira</strong>: seta saindo do atributo e apontando para a relação referenciada</li>
 </ul>
 </section>
-<section id="modelo-relacional" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="modelo-relacional"><span class="header-section-number">5.3</span> Modelo Relacional</h2>
-<p>Todos os dados são armazenados em diversas tabelas. Abaixo, um exemplo de dados tabulares no modelo relacional:</p>
-<table class="table-striped caption-top table">
-<caption>Tabela <code>professor</code></caption>
-<thead>
-<tr class="header">
-<th>id</th>
-<th>nome</th>
-<th>nome_centro</th>
-<th style="text-align: right;">salario</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td style="text-align: right;">65000</td>
-</tr>
-<tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">90000</td>
-</tr>
-<tr class="odd">
-<td>15151</td>
-<td>João</td>
-<td>COEMAG</td>
-<td style="text-align: right;">40000</td>
-</tr>
-<tr class="even">
-<td>22222</td>
-<td>Marcos</td>
-<td>COCBS</td>
-<td style="text-align: right;">95000</td>
-</tr>
-<tr class="odd">
-<td>32343</td>
-<td>Fernanda</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">60000</td>
-</tr>
-<tr class="even">
-<td>33456</td>
-<td>Roberto</td>
-<td>COCBS</td>
-<td style="text-align: right;">87000</td>
-</tr>
-<tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td style="text-align: right;">75000</td>
-</tr>
-<tr class="even">
-<td>58583</td>
-<td>Juliana</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">62000</td>
-</tr>
-<tr class="odd">
-<td>76543</td>
-<td>Rafael</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">80000</td>
-</tr>
-<tr class="even">
-<td>76766</td>
-<td>Beatriz</td>
-<td>COCBS</td>
-<td style="text-align: right;">72000</td>
-</tr>
-<tr class="odd">
-<td>83821</td>
-<td>Pedro</td>
-<td>COETI</td>
-<td style="text-align: right;">92000</td>
-</tr>
-<tr class="even">
-<td>98345</td>
-<td>Mariana</td>
-<td>COETI</td>
-<td style="text-align: right;">80000</td>
-</tr>
-</tbody>
-</table>
-<blockquote class="blockquote">
-<p>O modelo relacional foi proposto por <strong>Ted Codd</strong> (Prêmio Turing ACM, 1981).</p>
-</blockquote>
+<section id="diagrama-do-banco-de-dados-da-undf" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="diagrama-do-banco-de-dados-da-undf"><span class="header-section-number">19.2</span> Diagrama do Banco de Dados da UnDF</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 528.00 740.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 736)">
+<title>schema</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-736 524,-736 524,4 -4,4"></polygon>
+<!-- matriculado -->
+<g id="node1" class="node">
+<title>matriculado</title>
+<polygon fill="white" stroke="transparent" points="26,-425 26,-581 107,-581 107,-425 26,-425"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="27.5,-558 27.5,-580 106.5,-580 106.5,-558 27.5,-558"></polygon>
+<text text-anchor="start" x="32" y="-565.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">matriculado</text>
+<text text-anchor="start" x="30.5" y="-543.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_aluno</text>
+<text text-anchor="start" x="30.44" y="-521.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_disciplina</text>
+<text text-anchor="start" x="30.5" y="-499.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_turma</text>
+<text text-anchor="start" x="30.5" y="-477.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">semestre</text>
+<text text-anchor="start" x="30.5" y="-455.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">ano</text>
+<text text-anchor="start" x="30.5" y="-433.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nota</text>
+<polygon fill="none" stroke="black" points="26,-425 26,-581 107,-581 107,-425 26,-425"></polygon>
+</g>
+<!-- aluno -->
+<g id="node2" class="node">
+<title>aluno</title>
+<polygon fill="white" stroke="transparent" points="26,-63 26,-175 107,-175 107,-63 26,-63"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="27.5,-152 27.5,-174 106.5,-174 106.5,-152 27.5,-152"></polygon>
+<text text-anchor="start" x="50.27" y="-159.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">aluno</text>
+<text text-anchor="start" x="30.5" y="-137.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id</text>
+<text text-anchor="start" x="30.5" y="-115.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome</text>
+<text text-anchor="start" x="30.46" y="-93.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_centro</text>
+<text text-anchor="start" x="30.5" y="-71.4" font-family="Times New Roman" font-style="italic" font-size="14.00">carga_total</text>
+<polygon fill="none" stroke="black" points="26,-63 26,-175 107,-175 107,-63 26,-63"></polygon>
+</g>
+<!-- matriculado&#45;&gt;aluno -->
+<g id="edge1" class="edge">
+<title>matriculado-&gt;aluno</title>
+<path fill="none" stroke="black" d="M17.82,-503C7.68,-503 0,-503 0,-503 0,-503 0,-119 0,-119 0,-119 10.82,-119 10.82,-119"></path>
+<polygon fill="black" stroke="black" points="10.82,-121.45 17.82,-119 10.82,-116.55 10.82,-121.45"></polygon>
+</g>
+<!-- turma -->
+<g id="node3" class="node">
+<title>turma</title>
+<polygon fill="white" stroke="transparent" points="228.5,-380 228.5,-558 309.5,-558 309.5,-380 228.5,-380"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="230,-535 230,-557 309,-557 309,-535 230,-535"></polygon>
+<text text-anchor="start" x="251.99" y="-542.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">turma</text>
+<text text-anchor="start" x="232.94" y="-520.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_disciplina</text>
+<text text-anchor="start" x="233" y="-498.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_turma</text>
+<text text-anchor="start" x="233" y="-476.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">semestre</text>
+<text text-anchor="start" x="233" y="-454.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">ano</text>
+<text text-anchor="start" x="233" y="-432.4" font-family="Times New Roman" font-style="italic" font-size="14.00">predio</text>
+<text text-anchor="start" x="232.94" y="-410.4" font-family="Times New Roman" font-style="italic" font-size="14.00">numero_sala</text>
+<text text-anchor="start" x="233" y="-388.4" font-family="Times New Roman" font-style="italic" font-size="14.00">id_horario</text>
+<polygon fill="none" stroke="black" points="228.5,-380 228.5,-558 309.5,-558 309.5,-380 228.5,-380"></polygon>
+</g>
+<!-- matriculado&#45;&gt;turma -->
+<g id="edge2" class="edge">
+<title>matriculado-&gt;turma</title>
+<path fill="none" stroke="black" d="M115,-491.5C115,-491.5 213.19,-491.5 213.19,-491.5"></path>
+<polygon fill="black" stroke="black" points="213.19,-493.95 220.19,-491.5 213.19,-489.05 213.19,-493.95"></polygon>
+</g>
+<!-- centro -->
+<g id="node8" class="node">
+<title>centro</title>
+<polygon fill="white" stroke="transparent" points="228.5,-130 228.5,-220 309.5,-220 309.5,-130 228.5,-130"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="230,-197 230,-219 309,-219 309,-197 230,-197"></polygon>
+<text text-anchor="start" x="251.22" y="-204.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">centro</text>
+<text text-anchor="start" x="232.96" y="-182.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">nome_centro</text>
+<text text-anchor="start" x="233" y="-160.4" font-family="Times New Roman" font-style="italic" font-size="14.00">predio</text>
+<text text-anchor="start" x="233" y="-138.4" font-family="Times New Roman" font-style="italic" font-size="14.00">orcamento</text>
+<polygon fill="none" stroke="black" points="228.5,-130 228.5,-220 309.5,-220 309.5,-130 228.5,-130"></polygon>
+</g>
+<!-- aluno&#45;&gt;centro -->
+<g id="edge9" class="edge">
+<title>aluno-&gt;centro</title>
+<path fill="none" stroke="black" d="M115,-152.5C115,-152.5 213.19,-152.5 213.19,-152.5"></path>
+<polygon fill="black" stroke="black" points="213.19,-154.95 220.19,-152.5 213.19,-150.05 213.19,-154.95"></polygon>
+</g>
+<!-- horario -->
+<g id="node4" class="node">
+<title>horario</title>
+<polygon fill="white" stroke="transparent" points="434,-304 434,-416 509,-416 509,-304 434,-304"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="435.5,-393 435.5,-415 508.5,-415 508.5,-393 435.5,-393"></polygon>
+<text text-anchor="start" x="450.21" y="-400.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">horario</text>
+<text text-anchor="start" x="438.5" y="-378.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_horario</text>
+<text text-anchor="start" x="438.17" y="-356.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">dia_semana</text>
+<text text-anchor="start" x="438.5" y="-334.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">hora_inicio</text>
+<text text-anchor="start" x="438.5" y="-312.4" font-family="Times New Roman" font-style="italic" font-size="14.00">hora_fim</text>
+<polygon fill="none" stroke="black" points="434,-304 434,-416 509,-416 509,-304 434,-304"></polygon>
+</g>
+<!-- turma&#45;&gt;horario -->
+<g id="edge5" class="edge">
+<title>turma-&gt;horario</title>
+<path fill="none" stroke="black" d="M317.5,-398C317.5,-398 418.82,-398 418.82,-398"></path>
+<polygon fill="black" stroke="black" points="418.82,-400.45 425.82,-398 418.82,-395.55 418.82,-400.45"></polygon>
+</g>
+<!-- sala -->
+<g id="node5" class="node">
+<title>sala</title>
+<polygon fill="white" stroke="transparent" points="431,-474 431,-564 512,-564 512,-474 431,-474"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="432.5,-541 432.5,-563 511.5,-563 511.5,-541 432.5,-541"></polygon>
+<text text-anchor="start" x="460.33" y="-548.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">sala</text>
+<text text-anchor="start" x="435.5" y="-526.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">predio</text>
+<text text-anchor="start" x="435.44" y="-504.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">numero_sala</text>
+<text text-anchor="start" x="435.5" y="-482.4" font-family="Times New Roman" font-style="italic" font-size="14.00">capacidade</text>
+<polygon fill="none" stroke="black" points="431,-474 431,-564 512,-564 512,-474 431,-474"></polygon>
+</g>
+<!-- turma&#45;&gt;sala -->
+<g id="edge4" class="edge">
+<title>turma-&gt;sala</title>
+<path fill="none" stroke="black" d="M317.5,-516C317.5,-516 415.69,-516 415.69,-516"></path>
+<polygon fill="black" stroke="black" points="415.69,-518.45 422.69,-516 415.69,-513.55 415.69,-518.45"></polygon>
+</g>
+<!-- disciplina -->
+<g id="node7" class="node">
+<title>disciplina</title>
+<polygon fill="white" stroke="transparent" points="224,-616 224,-728 314,-728 314,-616 224,-616"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="225,-705 225,-727 313,-727 313,-705 225,-705"></polygon>
+<text text-anchor="start" x="241" y="-712.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">disciplina</text>
+<text text-anchor="start" x="228" y="-690.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_disciplina</text>
+<text text-anchor="start" x="228" y="-668.4" font-family="Times New Roman" font-style="italic" font-size="14.00">titulo</text>
+<text text-anchor="start" x="228" y="-646.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_centro</text>
+<text text-anchor="start" x="227.78" y="-624.4" font-family="Times New Roman" font-style="italic" font-size="14.00">carga_horaria</text>
+<polygon fill="none" stroke="black" points="224,-616 224,-728 314,-728 314,-616 224,-616"></polygon>
+</g>
+<!-- turma&#45;&gt;disciplina -->
+<g id="edge3" class="edge">
+<title>turma-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M269,-562.18C269,-562.18 269,-604.88 269,-604.88"></path>
+<polygon fill="black" stroke="black" points="266.55,-604.88 269,-611.88 271.45,-604.88 266.55,-604.88"></polygon>
+</g>
+<!-- ministra -->
+<g id="node6" class="node">
+<title>ministra</title>
+<polygon fill="white" stroke="transparent" points="26,-233 26,-367 107,-367 107,-233 26,-233"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="27.5,-344 27.5,-366 106.5,-366 106.5,-344 27.5,-344"></polygon>
+<text text-anchor="start" x="42.88" y="-351.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">ministra</text>
+<text text-anchor="start" x="30.5" y="-329.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_professor</text>
+<text text-anchor="start" x="30.44" y="-307.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_disciplina</text>
+<text text-anchor="start" x="30.5" y="-285.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_turma</text>
+<text text-anchor="start" x="30.5" y="-263.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">semestre</text>
+<text text-anchor="start" x="30.5" y="-241.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">ano</text>
+<polygon fill="none" stroke="black" points="26,-233 26,-367 107,-367 107,-233 26,-233"></polygon>
+</g>
+<!-- ministra&#45;&gt;turma -->
+<g id="edge6" class="edge">
+<title>ministra-&gt;turma</title>
+<path fill="none" stroke="black" d="M67,-371.06C67,-386.59 67,-398.5 67,-398.5 67,-398.5 213.36,-398.5 213.36,-398.5"></path>
+<polygon fill="black" stroke="black" points="213.36,-400.95 220.36,-398.5 213.36,-396.05 213.36,-400.95"></polygon>
+</g>
+<!-- professor -->
+<g id="node10" class="node">
+<title>professor</title>
+<polygon fill="white" stroke="transparent" points="431,-119 431,-231 512,-231 512,-119 431,-119"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="432.5,-208 432.5,-230 511.5,-230 511.5,-208 432.5,-208"></polygon>
+<text text-anchor="start" x="445.17" y="-215.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">professor</text>
+<text text-anchor="start" x="435.5" y="-193.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id</text>
+<text text-anchor="start" x="435.5" y="-171.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome</text>
+<text text-anchor="start" x="435.46" y="-149.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_centro</text>
+<text text-anchor="start" x="435.5" y="-127.4" font-family="Times New Roman" font-style="italic" font-size="14.00">salario</text>
+<polygon fill="none" stroke="black" points="431,-119 431,-231 512,-231 512,-119 431,-119"></polygon>
+</g>
+<!-- ministra&#45;&gt;professor -->
+<g id="edge7" class="edge">
+<title>ministra-&gt;professor</title>
+<path fill="none" stroke="black" d="M115.01,-267.5C222.64,-267.5 472,-267.5 472,-267.5 472,-267.5 472,-242.15 472,-242.15"></path>
+<polygon fill="black" stroke="black" points="474.45,-242.15 472,-235.15 469.55,-242.15 474.45,-242.15"></polygon>
+</g>
+<!-- disciplina&#45;&gt;centro -->
+<g id="edge8" class="edge">
+<title>disciplina-&gt;centro</title>
+<path fill="none" stroke="black" d="M322.22,-623C347.81,-623 373,-623 373,-623 373,-623 373,-191.33 373,-191.33 373,-191.33 324.65,-191.33 324.65,-191.33"></path>
+<polygon fill="black" stroke="black" points="324.65,-188.88 317.65,-191.33 324.65,-193.78 324.65,-188.88"></polygon>
+</g>
+<!-- prereq -->
+<g id="node9" class="node">
+<title>prereq</title>
+<polygon fill="white" stroke="transparent" points="431,-638 431,-706 512,-706 512,-638 431,-638"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="432.5,-683 432.5,-705 511.5,-705 511.5,-683 432.5,-683"></polygon>
+<text text-anchor="start" x="453.34" y="-690.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">prereq</text>
+<text text-anchor="start" x="435.44" y="-668.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_disciplina</text>
+<text text-anchor="start" x="435.5" y="-646.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_prereq</text>
+<polygon fill="none" stroke="black" points="431,-638 431,-706 512,-706 512,-638 431,-638"></polygon>
+</g>
+<!-- prereq&#45;&gt;disciplina -->
+<g id="edge13" class="edge">
+<title>prereq-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M423,-672C423,-672 329.08,-672 329.08,-672"></path>
+<polygon fill="black" stroke="black" points="329.08,-669.55 322.08,-672 329.08,-674.45 329.08,-669.55"></polygon>
+</g>
+<!-- professor&#45;&gt;centro -->
+<g id="edge10" class="edge">
+<title>professor-&gt;centro</title>
+<path fill="none" stroke="black" d="M423,-158.67C423,-158.67 324.81,-158.67 324.81,-158.67"></path>
+<polygon fill="black" stroke="black" points="324.81,-156.22 317.81,-158.67 324.81,-161.12 324.81,-156.22"></polygon>
+</g>
+<!-- orientador -->
+<g id="node11" class="node">
+<title>orientador</title>
+<polygon fill="white" stroke="transparent" points="230,-4 230,-72 308,-72 308,-4 230,-4"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="231,-49 231,-71 307,-71 307,-49 231,-49"></polygon>
+<text text-anchor="start" x="238.66" y="-56.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">orientador</text>
+<text text-anchor="start" x="234" y="-34.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">id_aluno</text>
+<text text-anchor="start" x="233.61" y="-12.4" font-family="Times New Roman" font-style="italic" font-size="14.00">id_professor</text>
+<polygon fill="none" stroke="black" points="230,-4 230,-72 308,-72 308,-4 230,-4"></polygon>
+</g>
+<!-- orientador&#45;&gt;aluno -->
+<g id="edge11" class="edge">
+<title>orientador-&gt;aluno</title>
+<path fill="none" stroke="black" d="M221.78,-67.5C221.78,-67.5 122.21,-67.5 122.21,-67.5"></path>
+<polygon fill="black" stroke="black" points="122.21,-65.05 115.21,-67.5 122.21,-69.95 122.21,-65.05"></polygon>
+</g>
+<!-- orientador&#45;&gt;professor -->
+<g id="edge12" class="edge">
+<title>orientador-&gt;professor</title>
+<path fill="none" stroke="black" d="M269,-76.35C269,-97.9 269,-120.5 269,-120.5 269,-120.5 416,-120.5 416,-120.5"></path>
+<polygon fill="black" stroke="black" points="416,-122.95 423,-120.5 416,-118.05 416,-122.95"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="um-banco-de-dados-relacional-de-exemplo" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="um-banco-de-dados-relacional-de-exemplo"><span class="header-section-number">5.4</span> Um Banco de Dados Relacional de Exemplo</h2>
-<p>O banco de dados universitário utilizado ao longo deste material é composto pelas seguintes tabelas:</p>
-<p><strong>Tabela <code>centro</code></strong></p>
-<table class="table-striped caption-top table">
-<thead>
-<tr class="header">
-<th>nome_centro</th>
-<th>predio</th>
-<th style="text-align: right;">orcamento</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>COCBS</td>
-<td>Samambaia</td>
-<td style="text-align: right;">160000</td>
-</tr>
-<tr class="even">
-<td>COETI</td>
-<td>Lago Norte</td>
-<td style="text-align: right;">185000</td>
-</tr>
-<tr class="odd">
-<td>COCHCMA</td>
-<td>Buritis</td>
-<td style="text-align: right;">170000</td>
-</tr>
-<tr class="even">
-<td>COEMAG</td>
-<td>Ceilândia</td>
-<td style="text-align: right;">80000</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Tabela <code>disciplina</code></strong></p>
-<table class="table-striped caption-top table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 48%">
-<col style="width: 15%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>id_disciplina</th>
-<th>titulo</th>
-<th>nome_centro</th>
-<th style="text-align: center;">carga_horaria</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>MTI 101</td>
-<td>Introdução à Pesquisa Científica</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>MTI 202</td>
-<td>Gestão de Pessoas na Adm. Pública</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="odd">
-<td>MTI 402</td>
-<td>Políticas Públicas e Sociais</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>BES 101</td>
-<td>Introdução à Engenharia de Software</td>
-<td>COETI</td>
-<td style="text-align: center;">20</td>
-</tr>
-<tr class="odd">
-<td>BES 301</td>
-<td>Bases da Engenharia de Software 3</td>
-<td>COETI</td>
-<td style="text-align: center;">120</td>
-</tr>
-<tr class="even">
-<td>BES 601</td>
-<td>Projeto Aplicado 6: Machine Learning</td>
-<td>COETI</td>
-<td style="text-align: center;">120</td>
-</tr>
-<tr class="odd">
-<td>NUT 101</td>
-<td>Bioquímica e Biofísica</td>
-<td>COCBS</td>
-<td style="text-align: center;">105</td>
-</tr>
-<tr class="even">
-<td>NUT 401</td>
-<td>Epidemiologia Geral</td>
-<td>COCBS</td>
-<td style="text-align: center;">70</td>
-</tr>
-<tr class="odd">
-<td>NUT 701</td>
-<td>Nutrição em Saúde Coletiva</td>
-<td>COCBS</td>
-<td style="text-align: center;">70</td>
-</tr>
-<tr class="even">
-<td>PED 101</td>
-<td>História da Educação</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="odd">
-<td>PED 301</td>
-<td>Jogos e Brincadeiras na Infância</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>PED 601</td>
-<td>Alfabetização e Práticas de Letramento</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Tabela <code>aluno</code></strong></p>
-<table class="table-striped caption-top table">
-<thead>
-<tr class="header">
-<th>id</th>
-<th>nome</th>
-<th>nome_centro</th>
-<th style="text-align: center;">carga_total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>00128</td>
-<td>Thiago</td>
-<td>COETI</td>
-<td style="text-align: center;">1000</td>
-</tr>
-<tr class="even">
-<td>12345</td>
-<td>Larissa</td>
-<td>COETI</td>
-<td style="text-align: center;">205</td>
-</tr>
-<tr class="odd">
-<td>19991</td>
-<td>Gabriel</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">300</td>
-</tr>
-<tr class="even">
-<td>23121</td>
-<td>Amanda</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">2100</td>
-</tr>
-<tr class="odd">
-<td>44553</td>
-<td>Felipe</td>
-<td>COCBS</td>
-<td style="text-align: center;">340</td>
-</tr>
-<tr class="even">
-<td>45678</td>
-<td>Camila</td>
-<td>COCBS</td>
-<td style="text-align: center;">460</td>
-</tr>
-<tr class="odd">
-<td>54321</td>
-<td>Diego</td>
-<td>COETI</td>
-<td style="text-align: center;">1240</td>
-</tr>
-<tr class="even">
-<td>55739</td>
-<td>Bruna</td>
-<td>COEMAG</td>
-<td style="text-align: center;">1100</td>
-</tr>
-<tr class="odd">
-<td>70557</td>
-<td>Henrique</td>
-<td>COCBS</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td>76543</td>
-<td>Natália</td>
-<td>COETI</td>
-<td style="text-align: center;">360</td>
-</tr>
-<tr class="odd">
-<td>76653</td>
-<td>Eduardo</td>
-<td>COETI</td>
-<td style="text-align: center;">340</td>
-</tr>
-<tr class="even">
-<td>98988</td>
-<td>Isabela</td>
-<td>COCBS</td>
-<td style="text-align: center;">450</td>
-</tr>
-</tbody>
-</table>
+<section id="leitura-do-diagrama" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="leitura-do-diagrama"><span class="header-section-number">19.3</span> Leitura do Diagrama</h2>
+<ul>
+<li><strong>Atributo sublinhado</strong> = chave primária (identifica unicamente cada tupla)</li>
+<li><strong>Seta</strong> = chave estrangeira (o atributo referencia a chave primária da tabela apontada)</li>
+<li><code>centro</code> é a relação central: <code>professor</code>, <code>disciplina</code> e <code>aluno</code> referenciam <code>nome_centro</code></li>
+<li><code>secao</code> conecta <code>disciplina</code>, <code>sala</code> e <code>horario</code></li>
+<li><code>ministra</code> e <code>matriculado</code> são relações de associação (many-to-many)</li>
+<li><code>prereq</code> é auto-referencial: ambas as colunas referenciam <code>disciplina(id_disciplina)</code></li>
+</ul>
 
 
 </section>
@@ -1126,13 +1051,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/03-sistemas-arquivos.html" class="pagination-link" aria-label="Por que não usar Arquivos?">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span>
+      <a href="../../content/cap02/03-chaves.html" class="pagination-link" aria-label="Chaves">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/05-tres-niveis.html" class="pagination-link" aria-label="Visão em Três Níveis">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap02/05-linguagens-consulta.html" class="pagination-link" aria-label="Linguagens de Consulta Relacional">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Linguagens de Consulta Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

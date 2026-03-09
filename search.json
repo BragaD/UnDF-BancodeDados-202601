@@ -587,5 +587,588 @@
       "Capítulo 1: Introdução",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Hands-on: PostgreSQL</span>"
     ]
+  },
+  {
+    "objectID": "content/cap02/index.html",
+    "href": "content/cap02/index.html",
+    "title": "15  Introdução ao Modelo Relacional",
+    "section": "",
+    "text": "15.1 Seções\nEste capítulo apresenta o modelo relacional, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Visão Geral</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/index.html#seções",
+    "href": "content/cap02/index.html#seções",
+    "title": "15  Introdução ao Modelo Relacional",
+    "section": "",
+    "text": "Seção\nTópico\n\n\n\n\n2.1\nEstrutura do Banco de Dados Relacional\n\n\n2.2\nSchema e Instância\n\n\n2.3\nChaves\n\n\n2.4\nDiagrama de Schema\n\n\n2.5\nLinguagens de Consulta Relacional\n\n\n2.6\nÁlgebra Relacional\n\n\n2.7\nOperação de Seleção\n\n\n2.8\nOperação de Projeção\n\n\n2.9\nProduto Cartesiano e Junção\n\n\n2.10\nOperações de Conjunto\n\n\n2.11\nOperações Adicionais\n\n\nResumo\nResumo e Exercícios\n\n\n\n\n\n\n\nSilberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. Database System Concepts. 7th ed. McGraw-Hill Education.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Visão Geral</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/01-estrutura.html",
+    "href": "content/cap02/01-estrutura.html",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "",
+    "text": "16.1 Relação, Tupla e Atributo\nO modelo relacional representa os dados como uma coleção de relações — o termo formal para o que chamamos informalmente de tabela.\nA tabela professor da UnDF é um exemplo de relação:\nAqui a relação professor tem aridade 4 (quatro atributos) e doze tuplas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/01-estrutura.html#relação-tupla-e-atributo",
+    "href": "content/cap02/01-estrutura.html#relação-tupla-e-atributo",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "",
+    "text": "Uma relação é uma tabela composta por linhas e colunas. Cada linha é chamada de tupla e cada coluna é chamada de atributo.\n\n\nTupla: uma linha da tabela; representa um registro individual (por exemplo, os dados de um professor)\nAtributo: uma coluna da tabela; representa uma propriedade das entidades armazenadas (por exemplo, nome ou salario)\nAridade (arity): o número de atributos de uma relação\n\n\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n33456\nRoberto\nCOCBS\n87000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n58583\nJuliana\nCOCHCMA\n62000\n\n\n76543\nRafael\nCOCHCMA\n80000\n\n\n76766\nBeatriz\nCOCBS\n72000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/01-estrutura.html#domínio-dos-atributos",
+    "href": "content/cap02/01-estrutura.html#domínio-dos-atributos",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "16.2 Domínio dos Atributos",
+    "text": "16.2 Domínio dos Atributos\nCada atributo tem um domínio — o conjunto de valores permitidos para aquele atributo.\n\nO domínio de um atributo é o conjunto de todos os valores possíveis que esse atributo pode assumir. Exige-se que os valores de cada atributo sejam atômicos, ou seja, indivisíveis.\n\nExemplos de domínios nos dados da UnDF:\n\n\n\nAtributo\nDomínio\n\n\n\n\nid\nsequência de caracteres alfanuméricos\n\n\nnome\ncadeias de texto\n\n\nnome_centro\n{COETI, COCBS, COCHCMA, COEMAG}\n\n\nsalario\nnúmeros reais positivos\n\n\n\nA exigência de atomicidade significa que não é permitido armazenar valores compostos ou multivalorados diretamente em um atributo. Por exemplo, não se deve armazenar uma lista de telefones em um único campo telefone — isso violaria o modelo relacional.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/01-estrutura.html#o-valor-nulo-null",
+    "href": "content/cap02/01-estrutura.html#o-valor-nulo-null",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "16.3 O Valor Nulo (null)",
+    "text": "16.3 O Valor Nulo (null)\n\nO valor especial null pertence a todo domínio e indica que o valor de um atributo é desconhecido ou não aplicável.\n\nPor exemplo, se o salário de um professor ainda não foi definido, o atributo salario recebe null. Embora necessário na prática, o null causa complicações em muitas operações (comparações, agregações) e deve ser usado com critério.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/01-estrutura.html#tuplas-não-ordenadas",
+    "href": "content/cap02/01-estrutura.html#tuplas-não-ordenadas",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "16.4 Tuplas Não Ordenadas",
+    "text": "16.4 Tuplas Não Ordenadas\nUma propriedade fundamental do modelo relacional é que a ordem das tuplas é irrelevante. Uma relação é formalmente um conjunto de tuplas, e conjuntos não têm ordem definida.\n\nA tabela professor apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por nome, por salario decrescente, ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.\n\nDa mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenição sempre usemos uma ordem consistente.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/02-schema.html",
+    "href": "content/cap02/02-schema.html",
+    "title": "17  Schema e Instância",
+    "section": "",
+    "text": "17.1 Schema do Banco de Dados\nAo trabalhar com bancos de dados, é fundamental distinguir dois conceitos complementares: o schema (estrutura) e a instância (conteúdo).\nRepresenta-se o schema de uma relação pelo nome da relação seguido dos seus atributos entre parênteses:\n\\[professor(\\underline{id},\\ nome,\\ nome\\_centro,\\ salario)\\]\nO atributo sublinhado indica a chave primária (conceito detalhado na próxima seção).\nO banco de dados da UnDF possui quatro relações com os seguintes schemas:",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/02-schema.html#schema-do-banco-de-dados",
+    "href": "content/cap02/02-schema.html#schema-do-banco-de-dados",
+    "title": "17  Schema e Instância",
+    "section": "",
+    "text": "O schema de um banco de dados é a sua estrutura lógica — a descrição das relações, seus atributos e os tipos de dados de cada atributo. O schema muda raramente e é definido durante o projeto do banco de dados.\n\n\n\n\n\n\n\\(professor(\\underline{id},\\ nome,\\ nome\\_centro,\\ salario)\\)\n\\(aluno(\\underline{id},\\ nome,\\ nome\\_centro,\\ carga\\_total)\\)\n\\(disciplina(\\underline{id\\_disciplina},\\ titulo,\\ nome\\_centro,\\ carga\\_horaria)\\)\n\\(centro(\\underline{nome\\_centro},\\ predio,\\ orcamento)\\)",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/02-schema.html#instância-do-banco-de-dados",
+    "href": "content/cap02/02-schema.html#instância-do-banco-de-dados",
+    "title": "17  Schema e Instância",
+    "section": "17.2 Instância do Banco de Dados",
+    "text": "17.2 Instância do Banco de Dados\n\nA instância de um banco de dados é o conjunto de dados efetivamente armazenados em um determinado momento — um snapshot do banco de dados.\n\nA instância muda continuamente à medida que dados são inseridos, alterados ou removidos. O schema, por sua vez, permanece estável.\n\nA tabela a seguir é uma instância do schema professor:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n33456\nRoberto\nCOCBS\n87000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n58583\nJuliana\nCOCHCMA\n62000\n\n\n76543\nRafael\nCOCHCMA\n80000\n\n\n76766\nBeatriz\nCOCBS\n72000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\nAmanhã, após a contratação de um novo professor, essa instância terá treze tuplas — mas o schema continuará sendo exatamente o mesmo.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/02-schema.html#analogia-com-programação",
+    "href": "content/cap02/02-schema.html#analogia-com-programação",
+    "title": "17  Schema e Instância",
+    "section": "17.3 Analogia com Programação",
+    "text": "17.3 Analogia com Programação\nA distinção entre schema e instância tem um paralelo direto com conceitos de linguagens de programação:\n\n\n\n\n\n\n\nConceito em BD\nAnalogia em programação\n\n\n\n\nSchema de uma relação\nDeclaração de tipo de uma variável (ex: struct Professor)\n\n\nInstância de uma relação\nValor atual da variável em tempo de execução\n\n\nSchema do banco de dados\nConjunto de todas as declarações de tipos do programa\n\n\nInstância do banco de dados\nEstado da memória do programa em um dado instante\n\n\n\nAssim como o tipo de uma variável não muda durante a execução do programa mas o seu valor muda o tempo todo, o schema de um banco de dados é estável enquanto a instância está em constante evolução.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/03-chaves.html",
+    "href": "content/cap02/03-chaves.html",
+    "title": "18  Chaves",
+    "section": "",
+    "text": "18.1 Definição Formal\nUm dos requisitos fundamentais do modelo relacional é a capacidade de identificar unicamente cada tupla de uma relação. Para isso, utilizamos o conceito de chave.\nSeja \\(R\\) o schema de uma relação e \\(K \\subseteq R\\) um subconjunto de seus atributos.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Chaves</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/03-chaves.html#definição-formal",
+    "href": "content/cap02/03-chaves.html#definição-formal",
+    "title": "18  Chaves",
+    "section": "",
+    "text": "Superclave (superkey): \\(K\\) é uma superclave de \\(R\\) se os valores de \\(K\\) são suficientes para identificar unicamente cada tupla em qualquer instância válida da relação.\n\n\nChave candidata (candidate key): \\(K\\) é uma chave candidata de \\(R\\) se \\(K\\) é uma superclave minimal, ou seja, nenhum subconjunto próprio de \\(K\\) é também uma superclave.\n\n\nChave primária (primary key): uma chave candidata escolhida pelo projetista do banco de dados para identificar oficialmente as tuplas da relação. É indicada sublinhando-se os atributos no schema.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Chaves</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/03-chaves.html#exemplos-com-as-tabelas-da-undf",
+    "href": "content/cap02/03-chaves.html#exemplos-com-as-tabelas-da-undf",
+    "title": "18  Chaves",
+    "section": "18.2 Exemplos com as Tabelas da UnDF",
+    "text": "18.2 Exemplos com as Tabelas da UnDF\n\n18.2.1 Relação professor\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n\n\n\\(\\{id\\}\\) é superclave: cada professor tem um id único.\n\\(\\{id, nome\\}\\) é superclave: a combinação também identifica unicamente, mas é redundante.\n\\(\\{nome\\}\\) não é superclave: poderiam existir dois professores com o mesmo nome.\n\\(\\{id\\}\\) é chave candidata: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).\n\\(\\{id\\}\\) é escolhida como chave primária.\n\n\n\n18.2.2 Relação centro\n\n\\(\\{nome\\_centro\\}\\) é chave candidata e chave primária — cada centro tem um nome único.\n\n\n\n18.2.3 Relação disciplina\n\n\\(\\{id\\_disciplina\\}\\) é chave candidata e chave primária.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Chaves</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/03-chaves.html#chave-estrangeira",
+    "href": "content/cap02/03-chaves.html#chave-estrangeira",
+    "title": "18  Chaves",
+    "section": "18.3 Chave Estrangeira",
+    "text": "18.3 Chave Estrangeira\n\nUma chave estrangeira (foreign key) é um conjunto de atributos em uma relação cujos valores devem corresponder a valores da chave primária de outra relação. A relação que contém a chave estrangeira é chamada de relação referenciante; a relação que contém a chave primária correspondente é chamada de relação referenciada.\n\n\nO atributo nome_centro em professor é uma chave estrangeira que referencia nome_centro em centro:\n\nRelação referenciante: professor\nRelação referenciada: centro\nRestrição: todo valor de professor.nome_centro deve existir em centro.nome_centro\n\nIsso garante que não seja possível cadastrar um professor em um centro inexistente. Da mesma forma, disciplina.nome_centro e aluno.nome_centro são chaves estrangeiras que referenciam centro.\n\nA restrição imposta por uma chave estrangeira é chamada de restrição de integridade referencial (referential integrity constraint) e é uma das formas como o SGBD preserva a consistência dos dados.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Chaves</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/04-diagrama-schema.html",
+    "href": "content/cap02/04-diagrama-schema.html",
+    "title": "19  Diagrama de Schema",
+    "section": "",
+    "text": "19.1 O que é um Diagrama de Schema?\nQuando um banco de dados possui várias relações interconectadas por chaves estrangeiras, é útil visualizar sua estrutura de forma gráfica por meio de um diagrama de schema.\nConvenções:",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/04-diagrama-schema.html#o-que-é-um-diagrama-de-schema",
+    "href": "content/cap02/04-diagrama-schema.html#o-que-é-um-diagrama-de-schema",
+    "title": "19  Diagrama de Schema",
+    "section": "",
+    "text": "Um diagrama de schema é uma representação visual da estrutura de um banco de dados. Ele mostra as relações (tabelas), seus atributos, as chaves primárias (sublinhadas ou destacadas) e as chaves estrangeiras (indicadas por setas entre tabelas).\n\n\n\nChave primária: atributo sublinhado\nChave estrangeira: seta saindo do atributo e apontando para a relação referenciada",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/04-diagrama-schema.html#diagrama-do-banco-de-dados-da-undf",
+    "href": "content/cap02/04-diagrama-schema.html#diagrama-do-banco-de-dados-da-undf",
+    "title": "19  Diagrama de Schema",
+    "section": "19.2 Diagrama do Banco de Dados da UnDF",
+    "text": "19.2 Diagrama do Banco de Dados da UnDF\n\n\n\n\n\n\n\nschema\n\n\n\nmatriculado\n\n\nmatriculado\nid_aluno\nid_disciplina\nid_turma\nsemestre\nano\nnota\n\n\n\n\naluno\n\n\naluno\nid\nnome\nnome_centro\ncarga_total\n\n\n\n\nmatriculado-&gt;aluno\n\n\n\n\n\nturma\n\n\nturma\nid_disciplina\nid_turma\nsemestre\nano\npredio\nnumero_sala\nid_horario\n\n\n\n\nmatriculado-&gt;turma\n\n\n\n\n\ncentro\n\n\ncentro\nnome_centro\npredio\norcamento\n\n\n\n\naluno-&gt;centro\n\n\n\n\n\nhorario\n\n\nhorario\nid_horario\ndia_semana\nhora_inicio\nhora_fim\n\n\n\n\nturma-&gt;horario\n\n\n\n\n\nsala\n\n\nsala\npredio\nnumero_sala\ncapacidade\n\n\n\n\nturma-&gt;sala\n\n\n\n\n\ndisciplina\n\n\ndisciplina\nid_disciplina\ntitulo\nnome_centro\ncarga_horaria\n\n\n\n\nturma-&gt;disciplina\n\n\n\n\n\nministra\n\n\nministra\nid_professor\nid_disciplina\nid_turma\nsemestre\nano\n\n\n\n\nministra-&gt;turma\n\n\n\n\n\nprofessor\n\n\nprofessor\nid\nnome\nnome_centro\nsalario\n\n\n\n\nministra-&gt;professor\n\n\n\n\n\ndisciplina-&gt;centro\n\n\n\n\n\nprereq\n\n\nprereq\nid_disciplina\nid_prereq\n\n\n\n\nprereq-&gt;disciplina\n\n\n\n\n\nprofessor-&gt;centro\n\n\n\n\n\norientador\n\n\norientador\nid_aluno\nid_professor\n\n\n\n\norientador-&gt;aluno\n\n\n\n\n\norientador-&gt;professor",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/04-diagrama-schema.html#leitura-do-diagrama",
+    "href": "content/cap02/04-diagrama-schema.html#leitura-do-diagrama",
+    "title": "19  Diagrama de Schema",
+    "section": "19.3 Leitura do Diagrama",
+    "text": "19.3 Leitura do Diagrama\n\nAtributo sublinhado = chave primária (identifica unicamente cada tupla)\nSeta = chave estrangeira (o atributo referencia a chave primária da tabela apontada)\ncentro é a relação central: professor, disciplina e aluno referenciam nome_centro\nsecao conecta disciplina, sala e horario\nministra e matriculado são relações de associação (many-to-many)\nprereq é auto-referencial: ambas as colunas referenciam disciplina(id_disciplina)",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/05-linguagens-consulta.html",
+    "href": "content/cap02/05-linguagens-consulta.html",
+    "title": "20  Linguagens de Consulta Relacional",
+    "section": "",
+    "text": "20.1 Linguagens Procedurais vs. Declarativas\nUma linguagem de consulta (query language) é uma linguagem na qual o usuário solicita informações ao banco de dados. As linguagens de consulta relacionais se dividem em duas grandes categorias.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Linguagens de Consulta Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/05-linguagens-consulta.html#linguagens-procedurais-vs.-declarativas",
+    "href": "content/cap02/05-linguagens-consulta.html#linguagens-procedurais-vs.-declarativas",
+    "title": "20  Linguagens de Consulta Relacional",
+    "section": "",
+    "text": "Linguagem procedural: o usuário instrui o sistema a realizar uma sequência de operações para obter o resultado desejado. O como chegar ao resultado é especificado explicitamente.\nLinguagem declarativa (não-procedural): o usuário descreve o que deseja obter, sem especificar como obtê-lo. O sistema determina a melhor estratégia de execução.\n\n\n\n\nCaracterística\nProcedural\nDeclarativa\n\n\n\n\nO usuário especifica\nComo e o quê\nSomente o quê\n\n\nControle da execução\nPelo programador\nPelo sistema\n\n\nExemplo\nÁlgebra Relacional\nSQL, Cálculo Relacional",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Linguagens de Consulta Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/05-linguagens-consulta.html#as-três-linguagens-puras",
+    "href": "content/cap02/05-linguagens-consulta.html#as-três-linguagens-puras",
+    "title": "20  Linguagens de Consulta Relacional",
+    "section": "20.2 As Três Linguagens “Puras”",
+    "text": "20.2 As Três Linguagens “Puras”\nO modelo relacional é fundamentado em três linguagens formais:\n\nÁlgebra Relacional — linguagem procedural baseada em operações sobre relações. Cada expressão descreve um procedimento passo a passo para derivar o resultado.\nCálculo Relacional de Tuplas — linguagem declarativa baseada em lógica de predicados de primeira ordem. Uma consulta descreve as propriedades que as tuplas do resultado devem satisfazer.\nCálculo Relacional de Domínios — linguagem declarativa semelhante ao cálculo de tuplas, mas que quantifica sobre valores de domínios (atributos) em vez de tuplas inteiras.\n\n\nAs três linguagens puras são equivalentes em poder computacional: qualquer consulta expressável em uma delas pode ser expressa nas outras duas. Essa propriedade define o que se chama de completude relacional (relational completeness).",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Linguagens de Consulta Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/05-linguagens-consulta.html#foco-deste-capítulo",
+    "href": "content/cap02/05-linguagens-consulta.html#foco-deste-capítulo",
+    "title": "20  Linguagens de Consulta Relacional",
+    "section": "20.3 Foco deste Capítulo",
+    "text": "20.3 Foco deste Capítulo\nEste capítulo se concentra na Álgebra Relacional, pois ela:\n\nFornece a base formal sobre a qual os otimizadores de consulta SQL são construídos\nTorna explícitas as etapas de processamento de uma consulta\nÉ essencial para entender como o SGBD avalia e otimiza expressões SQL\n\nO SQL — linguagem padrão dos SGBDs modernos — é baseado no cálculo relacional de tuplas, mas absorve elementos procedurais da álgebra relacional em sua semântica de execução.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Linguagens de Consulta Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/06-algebra-relacional.html",
+    "href": "content/cap02/06-algebra-relacional.html",
+    "title": "21  Álgebra Relacional",
+    "section": "",
+    "text": "21.1 Operadores Básicos\nA álgebra relacional é uma linguagem de consulta procedural composta por um conjunto de operações que recebem uma ou duas relações como entrada e produzem uma nova relação como resultado.\nExistem seis operadores fundamentais da álgebra relacional:\nAlém dos seis operadores básicos, operações adicionais — como junção (\\(\\bowtie\\)), interseção (\\(\\cap\\)) e agregação (\\(\\gamma\\)) — podem ser derivadas a partir dos básicos ou são extensões convenientes.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Álgebra Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/06-algebra-relacional.html#operadores-básicos",
+    "href": "content/cap02/06-algebra-relacional.html#operadores-básicos",
+    "title": "21  Álgebra Relacional",
+    "section": "",
+    "text": "Operador\nSímbolo\nTipo\nDescrição\n\n\n\n\nSeleção\n\\(\\sigma\\)\nUnário\nFiltra tuplas que satisfazem um predicado\n\n\nProjeção\n\\(\\Pi\\)\nUnário\nSeleciona um subconjunto de atributos (colunas)\n\n\nUnião\n\\(\\cup\\)\nBinário\nRetorna todas as tuplas de duas relações compatíveis\n\n\nDiferença de conjuntos\n\\(-\\)\nBinário\nRetorna tuplas presentes em uma relação mas não na outra\n\n\nProduto Cartesiano\n\\(\\times\\)\nBinário\nCombina todas as tuplas de duas relações\n\n\nRenomeação\n\\(\\rho\\)\nUnário\nRenomeia a relação resultado ou seus atributos",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Álgebra Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/06-algebra-relacional.html#expressões-de-álgebra-relacional",
+    "href": "content/cap02/06-algebra-relacional.html#expressões-de-álgebra-relacional",
+    "title": "21  Álgebra Relacional",
+    "section": "21.2 Expressões de Álgebra Relacional",
+    "text": "21.2 Expressões de Álgebra Relacional\nA composição de operações permite construir expressões de álgebra relacional complexas. Por exemplo, para encontrar os nomes dos professores do COETI com salário superior a 80 000:\n\\[\\Pi_{nome}\\!\\left(\\sigma_{nome\\_centro = \\text{\"COETI\"} \\,\\wedge\\, salario &gt; 80000}(professor)\\right)\\]\nNessa expressão: 1. \\(\\sigma\\) filtra as tuplas relevantes 2. \\(\\Pi\\) projeta apenas o atributo nome 3. O resultado é uma nova relação contendo somente os nomes desejados\nNas seções seguintes, cada operador é apresentado em detalhe com exemplos usando as tabelas da UnDF.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Álgebra Relacional</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html",
+    "href": "content/cap02/07-selecao.html",
+    "title": "22  Operação de Seleção",
+    "section": "",
+    "text": "22.1 Notação e Sintaxe\nA operação de seleção filtra as tuplas de uma relação, retornando apenas aquelas que satisfazem um determinado predicado.\nO resultado de \\(\\sigma_p(r)\\) é uma relação com o mesmo schema de \\(r\\), mas contendo apenas as tuplas para as quais \\(p\\) é verdadeiro.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html#notação-e-sintaxe",
+    "href": "content/cap02/07-selecao.html#notação-e-sintaxe",
+    "title": "22  Operação de Seleção",
+    "section": "",
+    "text": "\\[\\sigma_p(r)\\]\nonde \\(r\\) é uma relação e \\(p\\) é o predicado de seleção — uma condição booleana sobre os atributos das tuplas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html#predicados-de-seleção",
+    "href": "content/cap02/07-selecao.html#predicados-de-seleção",
+    "title": "22  Operação de Seleção",
+    "section": "22.2 Predicados de Seleção",
+    "text": "22.2 Predicados de Seleção\nOs predicados podem usar:\n\nOperadores de comparação: \\(=\\), \\(\\neq\\), \\(&gt;\\), \\(\\geq\\), \\(&lt;\\), \\(\\leq\\)\nConectivos lógicos: \\(\\wedge\\) (e), \\(\\vee\\) (ou), \\(\\neg\\) (não)\nComparação entre atributos: \\(\\sigma_{predio = nome\\_centro}(centro)\\)",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html#exemplo-1-professores-do-coeti",
+    "href": "content/cap02/07-selecao.html#exemplo-1-professores-do-coeti",
+    "title": "22  Operação de Seleção",
+    "section": "22.3 Exemplo 1: Professores do COETI",
+    "text": "22.3 Exemplo 1: Professores do COETI\nConsidere a relação professor:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n33456\nRoberto\nCOCBS\n87000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n58583\nJuliana\nCOCHCMA\n62000\n\n\n76543\nRafael\nCOCHCMA\n80000\n\n\n76766\nBeatriz\nCOCBS\n72000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\nA expressão \\(\\sigma_{nome\\_centro = \\text{\"COETI\"}}(professor)\\) retorna:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\n\nApenas as tuplas onde nome_centro = \"COETI\" foram mantidas. O schema do resultado é idêntico ao schema de professor.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html#exemplo-2-predicado-composto",
+    "href": "content/cap02/07-selecao.html#exemplo-2-predicado-composto",
+    "title": "22  Operação de Seleção",
+    "section": "22.4 Exemplo 2: Predicado Composto",
+    "text": "22.4 Exemplo 2: Predicado Composto\nPara selecionar professores do COETI e com salário superior a 75 000, usa-se o conectivo \\(\\wedge\\):\n\\[\\sigma_{nome\\_centro = \\text{\"COETI\"} \\,\\wedge\\, salario &gt; 75000}(professor)\\]\nResultado:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/07-selecao.html#exemplo-3-comparação-entre-atributos",
+    "href": "content/cap02/07-selecao.html#exemplo-3-comparação-entre-atributos",
+    "title": "22  Operação de Seleção",
+    "section": "22.5 Exemplo 3: Comparação Entre Atributos",
+    "text": "22.5 Exemplo 3: Comparação Entre Atributos\nO predicado pode também comparar dois atributos da mesma relação. Por exemplo, para encontrar centros cujo nome coincide com o prédio onde estão instalados:\n\\[\\sigma_{predio = nome\\_centro}(centro)\\]\nNeste caso, o predicado \\(predio = nome\\_centro\\) compara o valor de dois atributos da mesma tupla.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/08-projecao.html",
+    "href": "content/cap02/08-projecao.html",
+    "title": "23  Operação de Projeção",
+    "section": "",
+    "text": "23.1 Notação e Sintaxe\nA operação de projeção retorna uma relação com apenas um subconjunto dos atributos da relação original, eliminando colunas indesejadas.\nComo o resultado é uma relação (um conjunto), linhas duplicadas são automaticamente eliminadas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/08-projecao.html#notação-e-sintaxe",
+    "href": "content/cap02/08-projecao.html#notação-e-sintaxe",
+    "title": "23  Operação de Projeção",
+    "section": "",
+    "text": "\\[\\Pi_{A_1, A_2, \\ldots, A_k}(r)\\]\nonde \\(r\\) é uma relação e \\(A_1, A_2, \\ldots, A_k\\) são os atributos que devem ser mantidos no resultado.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/08-projecao.html#exemplo-1-projeção-simples",
+    "href": "content/cap02/08-projecao.html#exemplo-1-projeção-simples",
+    "title": "23  Operação de Projeção",
+    "section": "23.2 Exemplo 1: Projeção Simples",
+    "text": "23.2 Exemplo 1: Projeção Simples\nPara obter apenas id, nome e salario de todos os professores — omitindo nome_centro:\n\\[\\Pi_{id,\\ nome,\\ salario}(professor)\\]\nRelação original professor:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n33456\nRoberto\nCOCBS\n87000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n58583\nJuliana\nCOCHCMA\n62000\n\n\n76543\nRafael\nCOCHCMA\n80000\n\n\n76766\nBeatriz\nCOCBS\n72000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\nResultado de \\(\\Pi_{id,\\ nome,\\ salario}(professor)\\):\n\n\n\nid\nnome\nsalario\n\n\n\n\n10101\nCarlos\n65000\n\n\n12121\nAna\n90000\n\n\n15151\nJoão\n40000\n\n\n22222\nMarcos\n95000\n\n\n32343\nFernanda\n60000\n\n\n33456\nRoberto\n87000\n\n\n45565\nLucas\n75000\n\n\n58583\nJuliana\n62000\n\n\n76543\nRafael\n80000\n\n\n76766\nBeatriz\n72000\n\n\n83821\nPedro\n92000\n\n\n98345\nMariana\n80000",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/08-projecao.html#eliminação-de-duplicatas",
+    "href": "content/cap02/08-projecao.html#eliminação-de-duplicatas",
+    "title": "23  Operação de Projeção",
+    "section": "23.3 Eliminação de Duplicatas",
+    "text": "23.3 Eliminação de Duplicatas\nSe projetarmos apenas nome_centro de professor, o resultado terá somente os valores distintos:\n\\[\\Pi_{nome\\_centro}(professor)\\]\n\n\n\nnome_centro\n\n\n\n\nCOETI\n\n\nCOCBS\n\n\nCOCHCMA\n\n\nCOEMAG\n\n\n\nMesmo que COETI apareça em quatro tuplas (Carlos, Lucas, Pedro e Mariana), o resultado contém cada valor apenas uma vez.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/08-projecao.html#composição-de-operações",
+    "href": "content/cap02/08-projecao.html#composição-de-operações",
+    "title": "23  Operação de Projeção",
+    "section": "23.4 Composição de Operações",
+    "text": "23.4 Composição de Operações\nComo o resultado de qualquer operação é uma relação, operações podem ser compostas — o resultado de uma operação serve como entrada da próxima.\n\nComposição de operações: expressões de álgebra relacional são construídas aninhando operações. O resultado de uma operação interna é passado como argumento para a operação externa.\n\n\nPara obter os nomes de todos os professores do COETI, combina-se seleção e projeção:\n\\[\\Pi_{nome}\\!\\left(\\sigma_{nome\\_centro = \\text{\"COETI\"}}(professor)\\right)\\]\nPasso 1 — Seleção \\(\\sigma_{nome\\_centro = \\text{\"COETI\"}}(professor)\\):\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\nPasso 2 — Projeção \\(\\Pi_{nome}(\\cdot)\\):\n\n\n\nnome\n\n\n\n\nCarlos\n\n\nLucas\n\n\nPedro\n\n\nMariana",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/09-produto-juncao.html",
+    "href": "content/cap02/09-produto-juncao.html",
+    "title": "24  Produto Cartesiano e Junção",
+    "section": "",
+    "text": "24.1 Produto Cartesiano (\\(\\times\\))\nO produto cartesiano combina informações de duas relações quaisquer, produzindo todas as combinações possíveis de tuplas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Produto Cartesiano e Junção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/09-produto-juncao.html#produto-cartesiano-times",
+    "href": "content/cap02/09-produto-juncao.html#produto-cartesiano-times",
+    "title": "24  Produto Cartesiano e Junção",
+    "section": "",
+    "text": "\\[r \\times s\\]\nO resultado contém todas as tuplas \\((t_r, t_s)\\) onde \\(t_r\\) é uma tupla de \\(r\\) e \\(t_s\\) é uma tupla de \\(s\\). Se \\(r\\) tem \\(n\\) tuplas e \\(s\\) tem \\(m\\) tuplas, o resultado tem \\(n \\times m\\) tuplas.\n\n\n24.1.1 Qualificação de Atributos\nQuando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular \\(professor \\times ministra\\), o atributo id_professor aparece em ministra e id em professor; ambos referem-se ao mesmo conceito e a junção os conectará pelo predicado professor.id = ministra.id_professor.\n\n\n24.1.2 Tabelas utilizadas nos exemplos\nVersão reduzida de professor (3 tuplas):\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n\nTabela ministra (4 tuplas):\n\n\n\nid_professor\nid_disciplina\nid_turma\nsemestre\nano\n\n\n\n\n10101\nBES 301\n1\nPrimeiro\n2026\n\n\n10101\nBES 601\n1\nPrimeiro\n2026\n\n\n12121\nMTI 101\n1\nPrimeiro\n2026\n\n\n45565\nBES 101\n1\nSegundo\n2025\n\n\n\n\n\n24.1.3 Exemplo: \\(professor \\times ministra\\)\n\\[professor \\times ministra\\]\nO produto cartesiano gera \\(3 \\times 4 = 12\\) tuplas — todas as combinações possíveis entre as 3 tuplas de professor e as 4 de ministra, independentemente de qualquer correspondência semântica:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nprofessor.id\nprofessor.nome\nprofessor.nome_centro\nprofessor.salario\nministra.id_professor\nministra.id_disciplina\nministra.id_turma\nministra.semestre\nministra.ano\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n10101\nBES 301\n1\nPrimeiro\n2026\n\n\n10101\nCarlos\nCOETI\n65000\n10101\nBES 601\n1\nPrimeiro\n2026\n\n\n10101\nCarlos\nCOETI\n65000\n12121\nMTI 101\n1\nPrimeiro\n2026\n\n\n10101\nCarlos\nCOETI\n65000\n45565\nBES 101\n1\nSegundo\n2025\n\n\n12121\nAna\nCOCHCMA\n90000\n10101\nBES 301\n1\nPrimeiro\n2026\n\n\n12121\nAna\nCOCHCMA\n90000\n10101\nBES 601\n1\nPrimeiro\n2026\n\n\n12121\nAna\nCOCHCMA\n90000\n12121\nMTI 101\n1\nPrimeiro\n2026\n\n\n12121\nAna\nCOCHCMA\n90000\n45565\nBES 101\n1\nSegundo\n2025\n\n\n45565\nLucas\nCOETI\n75000\n10101\nBES 301\n1\nPrimeiro\n2026\n\n\n45565\nLucas\nCOETI\n75000\n10101\nBES 601\n1\nPrimeiro\n2026\n\n\n45565\nLucas\nCOETI\n75000\n12121\nMTI 101\n1\nPrimeiro\n2026\n\n\n45565\nLucas\nCOETI\n75000\n45565\nBES 101\n1\nSegundo\n2025\n\n\n\n\nDas 12 tuplas, apenas 4 são semanticamente válidas (aquelas em que professor.id = ministra.id_professor). As demais 8 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Produto Cartesiano e Junção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/09-produto-juncao.html#junção-bowtie",
+    "href": "content/cap02/09-produto-juncao.html#junção-bowtie",
+    "title": "24  Produto Cartesiano e Junção",
+    "section": "24.2 Junção (\\(\\bowtie\\))",
+    "text": "24.2 Junção (\\(\\bowtie\\))\nA junção combina seleção e produto cartesiano em uma única operação conveniente, retornando apenas as combinações de tuplas que satisfazem um predicado.\n\n\\[r \\bowtie_\\theta s = \\sigma_\\theta(r \\times s)\\]\nonde \\(\\theta\\) é o predicado de junção. A junção é equivalente a fazer o produto cartesiano e depois filtrar com \\(\\sigma_\\theta\\).\n\n\n24.2.1 Exemplo: Professores com Suas Turmas\nPara associar cada professor às turmas que ministra:\n\\[professor \\bowtie_{professor.id\\ =\\ ministra.id\\_professor} ministra\\]\nEsta expressão é equivalente a:\n\\[\\sigma_{professor.id\\ =\\ ministra.id\\_professor}(professor \\times ministra)\\]\nResultado (apenas as 4 tuplas válidas do produto cartesiano de 12):\n\n\n\n\n\n\n\n\n\n\n\n\n\nprofessor.id\nprofessor.nome\nprofessor.nome_centro\nprofessor.salario\nministra.id_disciplina\nministra.id_turma\nministra.semestre\nministra.ano\n\n\n\n\n10101\nCarlos\nCOETI\n65000\nBES 301\n1\nPrimeiro\n2026\n\n\n10101\nCarlos\nCOETI\n65000\nBES 601\n1\nPrimeiro\n2026\n\n\n12121\nAna\nCOCHCMA\n90000\nMTI 101\n1\nPrimeiro\n2026\n\n\n45565\nLucas\nCOETI\n75000\nBES 101\n1\nSegundo\n2025\n\n\n\n\nA junção filtrou as 8 combinações sem sentido e manteve exatamente as 4 tuplas onde o professor corresponde ao registro de ministração. O atributo ministra.id_professor é redundante no resultado e pode ser eliminado com uma projeção.\n\n\n\n24.2.2 Vantagem da Junção\nA notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Produto Cartesiano e Junção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html",
+    "href": "content/cap02/10-operacoes-conjunto.html",
+    "title": "25  Operações de Conjunto",
+    "section": "",
+    "text": "25.1 Requisito de Compatibilidade\nAs operações de conjunto tratam relações como conjuntos de tuplas e aplicam as operações clássicas de teoria dos conjuntos: união, interseção e diferença.\nEm outras palavras, as relações devem “ter a mesma forma” para que faz sentido combinar suas tuplas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#requisito-de-compatibilidade",
+    "href": "content/cap02/10-operacoes-conjunto.html#requisito-de-compatibilidade",
+    "title": "25  Operações de Conjunto",
+    "section": "",
+    "text": "Para que as operações \\(\\cup\\), \\(\\cap\\) e \\(-\\) sejam válidas, as duas relações devem ser compatíveis, o que exige:\n\nA mesma aridade: ambas devem ter o mesmo número de atributos.\nDomínios compatíveis: para cada posição \\(i\\), o domínio do \\(i\\)-ésimo atributo de \\(r\\) deve ser compatível com o domínio do \\(i\\)-ésimo atributo de \\(s\\).\n\n\n\n\n25.1.1 Conjuntos utilizados nos exemplos\nDefinimos duas relações auxiliares a partir da tabela disciplina:\n\\[A \\leftarrow \\Pi_{id\\_disciplina}(\\sigma_{nome\\_centro = \\text{\"COETI\"}}(disciplina))\\]\n\\[B \\leftarrow \\Pi_{id\\_disciplina}(\\sigma_{carga\\_horaria \\geq 60}(disciplina))\\]\nRelação \\(A\\) — disciplinas do COETI:\n\n\n\nid_disciplina\n\n\n\n\nBES 101\n\n\nBES 301\n\n\nBES 601\n\n\n\nRelação \\(B\\) — disciplinas com carga horária \\(\\geq 60\\):\n\n\n\nid_disciplina\n\n\n\n\nMTI 101\n\n\nMTI 202\n\n\nMTI 402\n\n\nBES 301\n\n\nBES 601\n\n\nNUT 101\n\n\nNUT 401\n\n\nNUT 701\n\n\nPED 101\n\n\nPED 301\n\n\nPED 601\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nNote que BES 101 (20 h) não aparece em \\(B\\), e que BES 301 e BES 601 aparecem em ambas as relações.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#união-cup",
+    "href": "content/cap02/10-operacoes-conjunto.html#união-cup",
+    "title": "25  Operações de Conjunto",
+    "section": "25.2 União (\\(\\cup\\))",
+    "text": "25.2 União (\\(\\cup\\))\n\n\\[r \\cup s\\]\nRetorna todas as tuplas que pertencem a \\(r\\), a \\(s\\) ou a ambas. Duplicatas são eliminadas.\n\n\\[A \\cup B\\]\nResultado — disciplinas do COETI ou com carga horária \\(\\geq 60\\):\n\n\n\nid_disciplina\n\n\n\n\nBES 101\n\n\nBES 301\n\n\nBES 601\n\n\nMTI 101\n\n\nMTI 202\n\n\nMTI 402\n\n\nNUT 101\n\n\nNUT 401\n\n\nNUT 701\n\n\nPED 101\n\n\nPED 301\n\n\nPED 601\n\n\n\n\nBES 301 e BES 601 pertencem às duas relações, mas aparecem apenas uma vez no resultado — a união elimina duplicatas automaticamente.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#interseção-cap",
+    "href": "content/cap02/10-operacoes-conjunto.html#interseção-cap",
+    "title": "25  Operações de Conjunto",
+    "section": "25.3 Interseção (\\(\\cap\\))",
+    "text": "25.3 Interseção (\\(\\cap\\))\n\n\\[r \\cap s\\]\nRetorna apenas as tuplas que pertencem simultaneamente a \\(r\\) e a \\(s\\).\n\n\\[A \\cap B\\]\nResultado — disciplinas do COETI que também têm carga horária \\(\\geq 60\\):\n\n\n\nid_disciplina\n\n\n\n\nBES 301\n\n\nBES 601\n\n\n\n\nBES 101 (20 h) está em \\(A\\) mas não em \\(B\\), por isso é excluída. As demais disciplinas de \\(B\\) não estão em \\(A\\), também excluídas. Apenas BES 301 e BES 601 satisfazem as duas condições.\n\n\n\n\n\n\n\nNota\n\n\n\nA interseção pode ser derivada das operações básicas: \\(r \\cap s = r - (r - s)\\). Portanto, \\(\\cap\\) não é um operador primitivo da álgebra relacional — é incluída por conveniência.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#diferença--",
+    "href": "content/cap02/10-operacoes-conjunto.html#diferença--",
+    "title": "25  Operações de Conjunto",
+    "section": "25.4 Diferença (\\(-\\))",
+    "text": "25.4 Diferença (\\(-\\))\n\n\\[r - s\\]\nRetorna as tuplas que pertencem a \\(r\\) mas não pertencem a \\(s\\).\n\n\\[A - B\\]\nResultado — disciplinas do COETI com carga horária \\(&lt; 60\\):\n\n\n\nid_disciplina\n\n\n\n\nBES 101\n\n\n\n\nDas três disciplinas do COETI, apenas BES 101 (20 h) não satisfaz \\(carga\\_horaria \\geq 60\\) e portanto não está em \\(B\\). É a única que permanece após a diferença.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#resumo-comparativo",
+    "href": "content/cap02/10-operacoes-conjunto.html#resumo-comparativo",
+    "title": "25  Operações de Conjunto",
+    "section": "25.5 Resumo Comparativo",
+    "text": "25.5 Resumo Comparativo\n\n\n\nOperação\nSímbolo\nResultado com \\(A\\) e \\(B\\)\n\n\n\n\nUnião\n\\(A \\cup B\\)\n12 disciplinas (todo o catálogo)\n\n\nInterseção\n\\(A \\cap B\\)\n2 disciplinas (BES 301, BES 601)\n\n\nDiferença\n\\(A - B\\)\n1 disciplina (BES 101)",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/11-operacoes-adicionais.html",
+    "href": "content/cap02/11-operacoes-adicionais.html",
+    "title": "26  Operações Adicionais",
+    "section": "",
+    "text": "26.1 Atribuição (\\(\\leftarrow\\))\nAlém dos seis operadores básicos, a álgebra relacional é frequentemente estendida com operações adicionais que tornam a escrita de consultas mais prática e expressiva.\nA operação de atribuição permite nomear subexpressões intermediárias, facilitando a leitura de consultas complexas.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/11-operacoes-adicionais.html#atribuição-leftarrow",
+    "href": "content/cap02/11-operacoes-adicionais.html#atribuição-leftarrow",
+    "title": "26  Operações Adicionais",
+    "section": "",
+    "text": "\\[x \\leftarrow E\\]\nAtribui à variável temporária \\(x\\) o resultado da expressão \\(E\\). A variável pode ser usada nas expressões seguintes como se fosse uma relação, mas não altera o banco de dados.\n\n\nPara encontrar os professores que são do COETI ou do COCBS, em vez de escrever tudo em uma linha:\n\\[COETI \\leftarrow \\sigma_{nome\\_centro = \\text{\"COETI\"}}(professor)\\] \\[COCBS \\leftarrow \\sigma_{nome\\_centro = \\text{\"COCBS\"}}(professor)\\] \\[COETI \\cup COCBS\\]\nIsso é equivalente a: \\[\\sigma_{nome\\_centro = \\text{\"COETI\"}}(professor)\\ \\cup\\ \\sigma_{nome\\_centro = \\text{\"COCBS\"}}(professor)\\]\nmas muito mais legível.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/11-operacoes-adicionais.html#renomeação-rho",
+    "href": "content/cap02/11-operacoes-adicionais.html#renomeação-rho",
+    "title": "26  Operações Adicionais",
+    "section": "26.2 Renomeação (\\(\\rho\\))",
+    "text": "26.2 Renomeação (\\(\\rho\\))\nA operação de renomeação atribui um novo nome a uma relação (ou a seus atributos), o que é necessário, por exemplo, quando se faz o produto cartesiano de uma relação consigo mesma.\n\n\\[\\rho_x(E)\\]\nRetorna o resultado da expressão \\(E\\) sob o nome \\(x\\).\nForma alternativa com renomeação de atributos:\n\\[\\rho_{x(A_1, A_2, \\ldots, A_n)}(E)\\]\nRetorna o resultado de \\(E\\) com o nome \\(x\\) e com os atributos renomeados para \\(A_1, A_2, \\ldots, A_n\\).\n\n\nPara encontrar pares de professores do mesmo centro (autojunção), precisamos de dois “aliases” para professor. Usamos \\(p1.id &lt; p2.id\\) para evitar pares duplicados e auto-pares:\n\\[P1 \\leftarrow \\rho_{p1}(professor)\\] \\[P2 \\leftarrow \\rho_{p2}(professor)\\] \\[\\Pi_{p1.nome,\\ p2.nome,\\ p1.nome\\_centro}(\\sigma_{p1.nome\\_centro = p2.nome\\_centro\\ \\wedge\\ p1.id &lt; p2.id}(P1 \\times P2))\\]\nUsando a versão reduzida da tabela professor com 6 tuplas:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n\nResultado:\n\n\n\np1.nome\np2.nome\nnome_centro\n\n\n\n\nCarlos\nLucas\nCOETI\n\n\nCarlos\nPedro\nCOETI\n\n\nLucas\nPedro\nCOETI\n\n\nAna\nFernanda\nCOCHCMA\n\n\n\nOs pares são únicos e não contêm auto-pares graças à condição \\(p1.id &lt; p2.id\\). João (único professor do COEMAG) não forma nenhum par.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/11-operacoes-adicionais.html#funções-de-agregação-gamma",
+    "href": "content/cap02/11-operacoes-adicionais.html#funções-de-agregação-gamma",
+    "title": "26  Operações Adicionais",
+    "section": "26.3 Funções de Agregação (\\(\\gamma\\))",
+    "text": "26.3 Funções de Agregação (\\(\\gamma\\))\nAs funções de agregação operam sobre multiconjuntos de valores de uma coluna e produzem um único valor sumarizado.\nFunções disponíveis:\n\n\n\nFunção\nDescrição\n\n\n\n\n\\(\\text{avg}\\)\nMédia aritmética\n\n\n\\(\\text{min}\\)\nValor mínimo\n\n\n\\(\\text{max}\\)\nValor máximo\n\n\n\\(\\text{sum}\\)\nSoma total\n\n\n\\(\\text{count}\\)\nContagem de valores\n\n\n\n\nA notação geral da operação de agregação é:\n\\[{}_{G_1, G_2, \\ldots, G_n}\\ \\gamma_{F_1(A_1),\\ F_2(A_2),\\ \\ldots}(r)\\]\nonde \\(G_1, \\ldots, G_n\\) são os atributos de agrupamento (equivalente ao GROUP BY do SQL) e \\(F_i(A_i)\\) são as funções de agregação aplicadas aos atributos \\(A_i\\).\n\n\n26.3.1 Exemplo 1: Sem Agrupamento\nSalário médio de todos os professores:\n\\[\\gamma_{\\text{avg}(salario)}(professor)\\]\nTabela de entrada:\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n10101\nCarlos\nCOETI\n65000\n\n\n12121\nAna\nCOCHCMA\n90000\n\n\n15151\nJoão\nCOEMAG\n40000\n\n\n22222\nMarcos\nCOCBS\n95000\n\n\n32343\nFernanda\nCOCHCMA\n60000\n\n\n33456\nRoberto\nCOCBS\n87000\n\n\n45565\nLucas\nCOETI\n75000\n\n\n58583\nJuliana\nCOCHCMA\n62000\n\n\n76543\nRafael\nCOCHCMA\n80000\n\n\n76766\nBeatriz\nCOCBS\n72000\n\n\n83821\nPedro\nCOETI\n92000\n\n\n98345\nMariana\nCOETI\n80000\n\n\n\nResultado:\n\n\n\navg(salario)\n\n\n\n\n74833\n\n\n\n\n\n26.3.2 Exemplo 2: Com Agrupamento\nSalário médio por centro (equivalente a GROUP BY nome_centro):\n\\[{}_{nome\\_centro}\\ \\gamma_{\\text{avg}(salario)}(professor)\\]\nResultado:\n\n\n\nnome_centro\navg(salario)\n\n\n\n\nCOETI\n78000\n\n\nCOCBS\n84667\n\n\nCOCHCMA\n73000\n\n\nCOEMAG\n40000\n\n\n\n\nO agrupamento por nome_centro faz com que a função avg seja calculada separadamente para cada grupo de tuplas com o mesmo valor de nome_centro.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/12-resumo.html",
+    "href": "content/cap02/12-resumo.html",
+    "title": "27  Resumo e Exercícios",
+    "section": "",
+    "text": "27.1 Resumo\nNeste capítulo estudamos os fundamentos do modelo relacional:",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/12-resumo.html#resumo",
+    "href": "content/cap02/12-resumo.html#resumo",
+    "title": "27  Resumo e Exercícios",
+    "section": "",
+    "text": "Uma relação é uma tabela composta por tuplas (linhas) e atributos (colunas); a ordem das tuplas é irrelevante\nCada atributo tem um domínio de valores permitidos; os valores devem ser atômicos (indivisíveis); o valor especial null pertence a todo domínio e indica ausência de informação\nO schema de um banco de dados é sua estrutura lógica (muda raramente); a instância é o conjunto de dados armazenados em um dado momento (muda continuamente)\nSuperclave: subconjunto de atributos que identifica unicamente cada tupla; chave candidata: superclave minimal; chave primária: chave candidata escolhida pelo projetista\nChave estrangeira: atributo(s) em uma relação referenciante cujos valores devem aparecer como chave primária na relação referenciada; impõe a restrição de integridade referencial\nO diagrama de schema representa visualmente as tabelas, atributos e relacionamentos via chaves estrangeiras\nAs linguagens de consulta relacionais são procedurais (álgebra relacional) ou declarativas (cálculo relacional de tuplas e de domínios); as três são equivalentes em poder computacional\nA álgebra relacional possui seis operadores básicos: \\(\\sigma\\) (seleção), \\(\\Pi\\) (projeção), \\(\\cup\\) (união), \\(-\\) (diferença), \\(\\times\\) (produto cartesiano) e \\(\\rho\\) (renomeação)\nSeleção (\\(\\sigma_p(r)\\)): filtra tuplas por um predicado; aceita comparações e conectivos lógicos \\(\\wedge\\), \\(\\vee\\), \\(\\neg\\)\nProjeção (\\(\\Pi_{A_1,\\ldots,A_k}(r)\\)): seleciona colunas e elimina duplicatas; operações podem ser compostas\nProduto cartesiano (\\(r \\times s\\)): todas as combinações de tuplas; junção (\\(r \\bowtie_\\theta s\\)): produto cartesiano filtrado por predicado \\(\\theta\\)\nOperações de conjunto (\\(\\cup\\), \\(\\cap\\), \\(-\\)) exigem relações compatíveis (mesma aridade e domínios compatíveis)\nAtribuição (\\(\\leftarrow\\)) e renomeação (\\(\\rho\\)) facilitam a escrita de expressões complexas\nFunções de agregação (\\(\\gamma\\)) calculam avg, min, max, sum e count sobre grupos de tuplas",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/12-resumo.html#exercícios",
+    "href": "content/cap02/12-resumo.html#exercícios",
+    "title": "27  Resumo e Exercícios",
+    "section": "27.2 Exercícios",
+    "text": "27.2 Exercícios\n\nSchema vs. Instância: qual é a diferença entre o schema e a instância de um banco de dados? Dê um exemplo concreto usando a relação professor da UnDF.\nTuplas não ordenadas: por que a ordem das tuplas é irrelevante no modelo relacional? Qual consequência prática isso tem ao recuperar dados de um banco de dados?\nChaves: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação disciplina\\((\\underline{id\\_disciplina},\\ titulo,\\ nome\\_centro,\\ carga\\_horaria)\\), identifique:\n\nDuas superchaves distintas\nA(s) chave(s) candidata(s)\nA chave primária mais adequada e justifique sua escolha\n\nSeleção: escreva uma expressão de álgebra relacional para encontrar os nomes de todos os professores do COCHCMA. Indique quais operações são necessárias e em que ordem.\nProjeção e composição: escreva uma expressão para encontrar os títulos de todas as disciplinas com carga horária superior a 60 horas. Use a composição de seleção e projeção.\nProduto cartesiano vs. junção: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas professor e centro.\nAgregação: usando a notação de funções de agregação (\\(\\gamma\\)), escreva a expressão para obter o total de carga horária de disciplinas por centro (equivalente ao GROUP BY nome_centro no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.\nOperações de conjunto: explique a diferença entre \\(\\cup\\), \\(\\cap\\) e \\(-\\). Quais são os requisitos para que essas operações sejam válidas? Escreva expressões de álgebra relacional para:\n\nEncontrar os ids de alunos que são do COETI ou do COCBS\nEncontrar os ids de professores que não pertencem ao COEMAG",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
   }
 ]

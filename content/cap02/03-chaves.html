@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>5&nbsp; Modelos de Dados – Bases da Engenharia de Software 4</title>
+<title>18&nbsp; Chaves – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/05-tres-niveis.html" rel="next">
-<link href="../../content/cap01/03-sistemas-arquivos.html" rel="prev">
+<link href="../../content/cap02/04-diagrama-schema.html" rel="next">
+<link href="../../content/cap02/02-schema.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -85,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/04-modelos-dados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/03-chaves.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -154,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
   </div>
 </li>
@@ -243,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/03-chaves.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap02/03-chaves.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></span></a>
   </div>
 </li>
@@ -313,19 +342,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#visão-dos-dados" id="toc-visão-dos-dados" class="nav-link active" data-scroll-target="#visão-dos-dados"><span class="header-section-number">5.1</span> Visão dos Dados</a></li>
-  <li><a href="#principais-modelos-de-dados" id="toc-principais-modelos-de-dados" class="nav-link" data-scroll-target="#principais-modelos-de-dados"><span class="header-section-number">5.2</span> Principais Modelos de Dados</a></li>
-  <li><a href="#modelo-relacional" id="toc-modelo-relacional" class="nav-link" data-scroll-target="#modelo-relacional"><span class="header-section-number">5.3</span> Modelo Relacional</a></li>
-  <li><a href="#um-banco-de-dados-relacional-de-exemplo" id="toc-um-banco-de-dados-relacional-de-exemplo" class="nav-link" data-scroll-target="#um-banco-de-dados-relacional-de-exemplo"><span class="header-section-number">5.4</span> Um Banco de Dados Relacional de Exemplo</a></li>
+  <li><a href="#definição-formal" id="toc-definição-formal" class="nav-link active" data-scroll-target="#definição-formal"><span class="header-section-number">18.1</span> Definição Formal</a></li>
+  <li><a href="#exemplos-com-as-tabelas-da-undf" id="toc-exemplos-com-as-tabelas-da-undf" class="nav-link" data-scroll-target="#exemplos-com-as-tabelas-da-undf"><span class="header-section-number">18.2</span> Exemplos com as Tabelas da UnDF</a>
+  <ul>
+  <li><a href="#relação-professor" id="toc-relação-professor" class="nav-link" data-scroll-target="#relação-professor"><span class="header-section-number">18.2.1</span> Relação <code>professor</code></a></li>
+  <li><a href="#relação-centro" id="toc-relação-centro" class="nav-link" data-scroll-target="#relação-centro"><span class="header-section-number">18.2.2</span> Relação <code>centro</code></a></li>
+  <li><a href="#relação-disciplina" id="toc-relação-disciplina" class="nav-link" data-scroll-target="#relação-disciplina"><span class="header-section-number">18.2.3</span> Relação <code>disciplina</code></a></li>
+  </ul></li>
+  <li><a href="#chave-estrangeira" id="toc-chave-estrangeira" class="nav-link" data-scroll-target="#chave-estrangeira"><span class="header-section-number">18.3</span> Chave Estrangeira</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/04-modelos-dados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/03-chaves.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></h1>
 </div>
 
 
@@ -348,39 +381,31 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="visão-dos-dados" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="visão-dos-dados"><span class="header-section-number">5.1</span> Visão dos Dados</h2>
-<p>Um sistema de banco de dados é uma coleção de dados inter-relacionados e um conjunto de programas que permitem aos usuários acessar e modificar esses dados. Um dos principais objetivos de um sistema de banco de dados é fornecer aos usuários uma <strong>visão abstrata</strong> dos dados.</p>
-<p><strong>Modelo de dados</strong> é uma coleção de ferramentas conceituais para descrever:</p>
-<ul>
-<li>Os <strong>dados</strong></li>
-<li>Os <strong>relacionamentos</strong> entre os dados</li>
-<li>A <strong>semântica</strong> dos dados</li>
-<li>As <strong>restrições</strong> sobre os dados</li>
-</ul>
-<p><strong>Abstração de dados</strong> oculta a complexidade das estruturas internas de representação por meio de diferentes níveis de abstração.</p>
+<p>Um dos requisitos fundamentais do modelo relacional é a capacidade de <strong>identificar unicamente</strong> cada tupla de uma relação. Para isso, utilizamos o conceito de chave.</p>
+<section id="definição-formal" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="definição-formal"><span class="header-section-number">18.1</span> Definição Formal</h2>
+<p>Seja <span class="math inline">\(R\)</span> o schema de uma relação e <span class="math inline">\(K \subseteq R\)</span> um subconjunto de seus atributos.</p>
+<div class="conceito">
+<p><strong>Superclave</strong> (<em>superkey</em>): <span class="math inline">\(K\)</span> é uma superclave de <span class="math inline">\(R\)</span> se os valores de <span class="math inline">\(K\)</span> são suficientes para identificar unicamente cada tupla em qualquer instância válida da relação.</p>
+</div>
+<div class="conceito">
+<p><strong>Chave candidata</strong> (<em>candidate key</em>): <span class="math inline">\(K\)</span> é uma chave candidata de <span class="math inline">\(R\)</span> se <span class="math inline">\(K\)</span> é uma superclave <strong>minimal</strong>, ou seja, nenhum subconjunto próprio de <span class="math inline">\(K\)</span> é também uma superclave.</p>
+</div>
+<div class="conceito">
+<p><strong>Chave primária</strong> (<em>primary key</em>): uma chave candidata escolhida pelo projetista do banco de dados para identificar oficialmente as tuplas da relação. É indicada sublinhando-se os atributos no schema.</p>
+</div>
 </section>
-<section id="principais-modelos-de-dados" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="principais-modelos-de-dados"><span class="header-section-number">5.2</span> Principais Modelos de Dados</h2>
-<ul>
-<li><strong>Modelo Relacional</strong></li>
-<li><strong>Modelo Entidade-Relacionamento (ER)</strong> — principalmente para projeto de banco de dados</li>
-<li><strong>Modelos Baseados em Objetos</strong> (orientado a objetos e objeto-relacional)</li>
-<li><strong>Modelo Semiestruturado</strong> (XML)</li>
-<li>Modelos mais antigos (legados): <strong>Modelo em Rede</strong> e <strong>Modelo Hierárquico</strong></li>
-</ul>
-</section>
-<section id="modelo-relacional" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="modelo-relacional"><span class="header-section-number">5.3</span> Modelo Relacional</h2>
-<p>Todos os dados são armazenados em diversas tabelas. Abaixo, um exemplo de dados tabulares no modelo relacional:</p>
-<table class="table-striped caption-top table">
-<caption>Tabela <code>professor</code></caption>
+<section id="exemplos-com-as-tabelas-da-undf" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="exemplos-com-as-tabelas-da-undf"><span class="header-section-number">18.2</span> Exemplos com as Tabelas da UnDF</h2>
+<section id="relação-professor" class="level3" data-number="18.2.1">
+<h3 data-number="18.2.1" class="anchored" data-anchor-id="relação-professor"><span class="header-section-number">18.2.1</span> Relação <code>professor</code></h3>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>id</th>
 <th>nome</th>
 <th>nome_centro</th>
-<th style="text-align: right;">salario</th>
+<th>salario</th>
 </tr>
 </thead>
 <tbody>
@@ -388,291 +413,58 @@ ul.task-list li input[type="checkbox"] {
 <td>10101</td>
 <td>Carlos</td>
 <td>COETI</td>
-<td style="text-align: right;">65000</td>
+<td>65000</td>
 </tr>
 <tr class="even">
 <td>12121</td>
 <td>Ana</td>
 <td>COCHCMA</td>
-<td style="text-align: right;">90000</td>
+<td>90000</td>
 </tr>
 <tr class="odd">
-<td>15151</td>
-<td>João</td>
-<td>COEMAG</td>
-<td style="text-align: right;">40000</td>
-</tr>
-<tr class="even">
 <td>22222</td>
 <td>Marcos</td>
 <td>COCBS</td>
-<td style="text-align: right;">95000</td>
-</tr>
-<tr class="odd">
-<td>32343</td>
-<td>Fernanda</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">60000</td>
-</tr>
-<tr class="even">
-<td>33456</td>
-<td>Roberto</td>
-<td>COCBS</td>
-<td style="text-align: right;">87000</td>
-</tr>
-<tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td style="text-align: right;">75000</td>
-</tr>
-<tr class="even">
-<td>58583</td>
-<td>Juliana</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">62000</td>
-</tr>
-<tr class="odd">
-<td>76543</td>
-<td>Rafael</td>
-<td>COCHCMA</td>
-<td style="text-align: right;">80000</td>
-</tr>
-<tr class="even">
-<td>76766</td>
-<td>Beatriz</td>
-<td>COCBS</td>
-<td style="text-align: right;">72000</td>
-</tr>
-<tr class="odd">
-<td>83821</td>
-<td>Pedro</td>
-<td>COETI</td>
-<td style="text-align: right;">92000</td>
-</tr>
-<tr class="even">
-<td>98345</td>
-<td>Mariana</td>
-<td>COETI</td>
-<td style="text-align: right;">80000</td>
+<td>95000</td>
 </tr>
 </tbody>
 </table>
-<blockquote class="blockquote">
-<p>O modelo relacional foi proposto por <strong>Ted Codd</strong> (Prêmio Turing ACM, 1981).</p>
-</blockquote>
+<ul>
+<li><span class="math inline">\(\{id\}\)</span> é <strong>superclave</strong>: cada professor tem um <code>id</code> único.</li>
+<li><span class="math inline">\(\{id, nome\}\)</span> é <strong>superclave</strong>: a combinação também identifica unicamente, mas é redundante.</li>
+<li><span class="math inline">\(\{nome\}\)</span> <strong>não é superclave</strong>: poderiam existir dois professores com o mesmo nome.</li>
+<li><span class="math inline">\(\{id\}\)</span> é <strong>chave candidata</strong>: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).</li>
+<li><span class="math inline">\(\{id\}\)</span> é escolhida como <strong>chave primária</strong>.</li>
+</ul>
 </section>
-<section id="um-banco-de-dados-relacional-de-exemplo" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="um-banco-de-dados-relacional-de-exemplo"><span class="header-section-number">5.4</span> Um Banco de Dados Relacional de Exemplo</h2>
-<p>O banco de dados universitário utilizado ao longo deste material é composto pelas seguintes tabelas:</p>
-<p><strong>Tabela <code>centro</code></strong></p>
-<table class="table-striped caption-top table">
-<thead>
-<tr class="header">
-<th>nome_centro</th>
-<th>predio</th>
-<th style="text-align: right;">orcamento</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>COCBS</td>
-<td>Samambaia</td>
-<td style="text-align: right;">160000</td>
-</tr>
-<tr class="even">
-<td>COETI</td>
-<td>Lago Norte</td>
-<td style="text-align: right;">185000</td>
-</tr>
-<tr class="odd">
-<td>COCHCMA</td>
-<td>Buritis</td>
-<td style="text-align: right;">170000</td>
-</tr>
-<tr class="even">
-<td>COEMAG</td>
-<td>Ceilândia</td>
-<td style="text-align: right;">80000</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Tabela <code>disciplina</code></strong></p>
-<table class="table-striped caption-top table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 48%">
-<col style="width: 15%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>id_disciplina</th>
-<th>titulo</th>
-<th>nome_centro</th>
-<th style="text-align: center;">carga_horaria</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>MTI 101</td>
-<td>Introdução à Pesquisa Científica</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>MTI 202</td>
-<td>Gestão de Pessoas na Adm. Pública</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="odd">
-<td>MTI 402</td>
-<td>Políticas Públicas e Sociais</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>BES 101</td>
-<td>Introdução à Engenharia de Software</td>
-<td>COETI</td>
-<td style="text-align: center;">20</td>
-</tr>
-<tr class="odd">
-<td>BES 301</td>
-<td>Bases da Engenharia de Software 3</td>
-<td>COETI</td>
-<td style="text-align: center;">120</td>
-</tr>
-<tr class="even">
-<td>BES 601</td>
-<td>Projeto Aplicado 6: Machine Learning</td>
-<td>COETI</td>
-<td style="text-align: center;">120</td>
-</tr>
-<tr class="odd">
-<td>NUT 101</td>
-<td>Bioquímica e Biofísica</td>
-<td>COCBS</td>
-<td style="text-align: center;">105</td>
-</tr>
-<tr class="even">
-<td>NUT 401</td>
-<td>Epidemiologia Geral</td>
-<td>COCBS</td>
-<td style="text-align: center;">70</td>
-</tr>
-<tr class="odd">
-<td>NUT 701</td>
-<td>Nutrição em Saúde Coletiva</td>
-<td>COCBS</td>
-<td style="text-align: center;">70</td>
-</tr>
-<tr class="even">
-<td>PED 101</td>
-<td>História da Educação</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="odd">
-<td>PED 301</td>
-<td>Jogos e Brincadeiras na Infância</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-<tr class="even">
-<td>PED 601</td>
-<td>Alfabetização e Práticas de Letramento</td>
-<td>COEMAG</td>
-<td style="text-align: center;">60</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Tabela <code>aluno</code></strong></p>
-<table class="table-striped caption-top table">
-<thead>
-<tr class="header">
-<th>id</th>
-<th>nome</th>
-<th>nome_centro</th>
-<th style="text-align: center;">carga_total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>00128</td>
-<td>Thiago</td>
-<td>COETI</td>
-<td style="text-align: center;">1000</td>
-</tr>
-<tr class="even">
-<td>12345</td>
-<td>Larissa</td>
-<td>COETI</td>
-<td style="text-align: center;">205</td>
-</tr>
-<tr class="odd">
-<td>19991</td>
-<td>Gabriel</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">300</td>
-</tr>
-<tr class="even">
-<td>23121</td>
-<td>Amanda</td>
-<td>COCHCMA</td>
-<td style="text-align: center;">2100</td>
-</tr>
-<tr class="odd">
-<td>44553</td>
-<td>Felipe</td>
-<td>COCBS</td>
-<td style="text-align: center;">340</td>
-</tr>
-<tr class="even">
-<td>45678</td>
-<td>Camila</td>
-<td>COCBS</td>
-<td style="text-align: center;">460</td>
-</tr>
-<tr class="odd">
-<td>54321</td>
-<td>Diego</td>
-<td>COETI</td>
-<td style="text-align: center;">1240</td>
-</tr>
-<tr class="even">
-<td>55739</td>
-<td>Bruna</td>
-<td>COEMAG</td>
-<td style="text-align: center;">1100</td>
-</tr>
-<tr class="odd">
-<td>70557</td>
-<td>Henrique</td>
-<td>COCBS</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td>76543</td>
-<td>Natália</td>
-<td>COETI</td>
-<td style="text-align: center;">360</td>
-</tr>
-<tr class="odd">
-<td>76653</td>
-<td>Eduardo</td>
-<td>COETI</td>
-<td style="text-align: center;">340</td>
-</tr>
-<tr class="even">
-<td>98988</td>
-<td>Isabela</td>
-<td>COCBS</td>
-<td style="text-align: center;">450</td>
-</tr>
-</tbody>
-</table>
+<section id="relação-centro" class="level3" data-number="18.2.2">
+<h3 data-number="18.2.2" class="anchored" data-anchor-id="relação-centro"><span class="header-section-number">18.2.2</span> Relação <code>centro</code></h3>
+<ul>
+<li><span class="math inline">\(\{nome\_centro\}\)</span> é chave candidata e chave primária — cada centro tem um nome único.</li>
+</ul>
+</section>
+<section id="relação-disciplina" class="level3" data-number="18.2.3">
+<h3 data-number="18.2.3" class="anchored" data-anchor-id="relação-disciplina"><span class="header-section-number">18.2.3</span> Relação <code>disciplina</code></h3>
+<ul>
+<li><span class="math inline">\(\{id\_disciplina\}\)</span> é chave candidata e chave primária.</li>
+</ul>
+</section>
+</section>
+<section id="chave-estrangeira" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="chave-estrangeira"><span class="header-section-number">18.3</span> Chave Estrangeira</h2>
+<div class="conceito">
+<p>Uma <strong>chave estrangeira</strong> (<em>foreign key</em>) é um conjunto de atributos em uma relação cujos valores devem corresponder a valores da chave primária de outra relação. A relação que contém a chave estrangeira é chamada de <strong>relação referenciante</strong>; a relação que contém a chave primária correspondente é chamada de <strong>relação referenciada</strong>.</p>
+</div>
+<div class="exemplo">
+<p>O atributo <code>nome_centro</code> em <code>professor</code> é uma chave estrangeira que referencia <code>nome_centro</code> em <code>centro</code>:</p>
+<ul>
+<li><strong>Relação referenciante</strong>: <code>professor</code></li>
+<li><strong>Relação referenciada</strong>: <code>centro</code></li>
+<li><strong>Restrição</strong>: todo valor de <code>professor.nome_centro</code> deve existir em <code>centro.nome_centro</code></li>
+</ul>
+<p>Isso garante que não seja possível cadastrar um professor em um centro inexistente. Da mesma forma, <code>disciplina.nome_centro</code> e <code>aluno.nome_centro</code> são chaves estrangeiras que referenciam <code>centro</code>.</p>
+</div>
+<p>A restrição imposta por uma chave estrangeira é chamada de <strong>restrição de integridade referencial</strong> (<em>referential integrity constraint</em>) e é uma das formas como o SGBD preserva a consistência dos dados.</p>
 
 
 </section>
@@ -1126,13 +918,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/03-sistemas-arquivos.html" class="pagination-link" aria-label="Por que não usar Arquivos?">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span>
+      <a href="../../content/cap02/02-schema.html" class="pagination-link" aria-label="Schema e Instância">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Schema e Instância</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/05-tres-niveis.html" class="pagination-link" aria-label="Visão em Três Níveis">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap02/04-diagrama-schema.html" class="pagination-link" aria-label="Diagrama de Schema">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
