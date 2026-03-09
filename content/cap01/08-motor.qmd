@@ -1,61 +1,70 @@
-# 1.8 Motor de Banco de Dados
+# Motor de Banco de Dados
 
-Um SGBD é dividido em módulos que gerenciam diferentes responsabilidades:
+Um sistema de banco de dados é particionado em módulos que lidam com cada uma das responsabilidades do sistema. Os componentes funcionais podem ser divididos em:
 
-## Gerenciador de Armazenamento (Storage Manager)
+- O **gerenciador de armazenamento**
+- O **componente processador de consultas**
+- O **componente de gerenciamento de transações**
 
-Provê a interface entre os dados de baixo nível armazenados e os programas e consultas. É responsável por:
+## Gerenciador de Armazenamento (*Storage Manager*)
 
-- Interação com o gerenciador de arquivos do SO
+Módulo de programa que provê a interface entre os dados de baixo nível armazenados no banco e os programas de aplicação e consultas submetidas ao sistema. O gerenciador de armazenamento é responsável por:
+
+- Interação com o gerenciador de arquivos do sistema operacional
 - Armazenamento, recuperação e atualização eficiente dos dados
 
-Componentes:
+**Componentes do gerenciador de armazenamento:**
 
-- **Gerenciador de autorização e integridade**: verifica restrições
-- **Gerenciador de transações**: garante consistência em falhas
-- **Gerenciador de arquivos**: gerencia a alocação de espaço em disco
-- **Gerenciador de buffer**: carrega dados do disco para a memória RAM
+| Componente | Função |
+|---|---|
+| Gerenciador de autorização e integridade | Testa o cumprimento das restrições de integridade e verifica a autoridade dos usuários |
+| Gerenciador de transações | Garante que o banco permaneça em estado consistente em caso de falhas; controla a execução de transações concorrentes |
+| Gerenciador de arquivos | Gerencia a alocação de espaço em disco e as estruturas de dados usadas para representar informações |
+| Gerenciador de buffer | Responsável por transferir dados do disco para a memória principal e por decidir quais dados manter em memória |
 
-Estruturas de dados:
+**Estruturas de dados implementadas pelo gerenciador de armazenamento:**
 
-- **Arquivos de dados**: armazenam o banco em si
-- **Dicionário de dados**: armazena metadados e o schema
-- **Índices**: fornecem acesso rápido a itens de dados por valor
+| Estrutura | Descrição |
+|---|---|
+| **Arquivos de dados** (*data files*) | Armazenam o próprio banco de dados |
+| **Dicionário de dados** (*data dictionary*) | Armazena metadados sobre a estrutura do banco, em particular o schema |
+| **Índices** (*indices*) | Fornecem acesso rápido a itens de dados por valor; um índice aponta para os itens que possuem um determinado valor |
 
-## Processador de Consultas (Query Processor)
+## Processador de Consultas (*Query Processor*)
 
-Componentes:
+**Componentes:**
 
-- **Interpretador DDL**: interpreta instruções DDL e registra definições no dicionário de dados
-- **Compilador DML**: traduz DML em um plano de execução de instruções de baixo nível (com *query optimization*)
-- **Motor de avaliação de consultas**: executa as instruções geradas pelo compilador
+| Componente | Função |
+|---|---|
+| **Interpretador DDL** | Interpreta instruções DDL e registra as definições no dicionário de dados |
+| **Compilador DML** | Traduz instruções DML em um plano de avaliação de instruções de baixo nível que o motor de avaliação compreende; realiza **otimização de consultas** — escolhe o plano de menor custo entre as alternativas |
+| **Motor de avaliação de consultas** | Executa as instruções de baixo nível geradas pelo compilador DML |
 
 **Etapas do processamento de uma consulta:**
 
 ```
 Consulta SQL
-    │
-    ▼
+     │
+     ▼
 1. Parsing e tradução
-    │
-    ▼
+     │
+     ▼
 2. Otimização  ←── estatísticas do banco
-    │
-    ▼
+     │
+     ▼
 3. Avaliação
-    │
-    ▼
-Resultado
+     │
+     ▼
+   Resultado
 ```
 
 ## Gerenciamento de Transações
 
-Uma **transação** é uma coleção de operações que executa uma única função lógica. Por exemplo, uma transferência bancária (débito de uma conta + crédito em outra) deve ser atômica.
+Uma **transação** é uma coleção de operações que executa uma única função lógica em uma aplicação de banco de dados.
 
-O gerenciador de transações garante que o banco permaneça em estado **consistente** mesmo diante de:
+O **componente de gerenciamento de transações** garante que o banco permaneça em estado consistente (correto) apesar de:
 
-- Falhas de sistema (quedas de energia, crashes)
+- Falhas de sistema (quedas de energia, crashes de sistema operacional)
 - Falhas de transação
-- Acessos concorrentes
 
-O **gerenciador de controle de concorrência** coordena transações simultâneas para garantir consistência.
+O **gerenciador de controle de concorrência** (*concurrency-control manager*) controla a interação entre transações concorrentes para garantir a consistência do banco.

@@ -1,37 +1,38 @@
-# 1.2 Aplicações de Banco de Dados
+# Aplicações de Banco de Dados
 
-Bancos de dados estão presentes em praticamente todos os setores:
+## Informações Empresariais
 
-**Empresas e Negócios**
+- **Vendas**: clientes, produtos, compras
+- **Contabilidade**: pagamentos, recebimentos, ativos
+- **Recursos Humanos**: informações sobre funcionários, salários, impostos sobre a folha de pagamento
+- **Manufatura**: gestão de produção, estoque, pedidos e cadeia de suprimentos
 
-- *Vendas*: clientes, produtos, compras
-- *Contabilidade*: pagamentos, recebimentos, ativos
-- *RH*: funcionários, salários, impostos
+## Setor Bancário e Financeiro
 
-**Indústria**
-
-- Gestão de produção, inventário, pedidos e cadeia de suprimentos
-
-**Setor Financeiro e Bancário**
-
-- Informações de clientes, contas e empréstimos
+- Informações de clientes, contas, empréstimos e transações bancárias
 - Transações com cartão de crédito
-- Negociação de ações e títulos em tempo real
+- Finanças: compra e venda de instrumentos financeiros (ações, títulos); dados de mercado em tempo real
 
-**Universidades**
+## Universidades
 
-- Matrículas, notas, histórico escolar
+- Matrículas, notas
 
-**Telecomunicações**
+## Companhias Aéreas
+
+- Reservas, horários
+
+## Telecomunicações
 
 - Registros de chamadas, SMS e uso de dados
 - Geração de faturas mensais
+- Saldos de cartões pré-pagos
 
-**Serviços Web**
+## Serviços Web
 
-- Varejistas online: rastreamento de pedidos, recomendações personalizadas
-- Publicidade online direcionada
+- **Varejistas online**: rastreamento de pedidos, recomendações personalizadas
+- Publicidade online
 
-**Sistemas de Navegação**
+## Outras Aplicações
 
-- Localização de pontos de interesse, rotas de estradas, linhas de transporte
+- **Bancos de documentos**
+- **Sistemas de navegação**: manutenção de localizações de pontos de interesse e rotas de estradas, sistemas de trem, ônibus etc.

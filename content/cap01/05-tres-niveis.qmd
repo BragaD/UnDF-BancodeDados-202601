@@ -1,37 +1,54 @@
-# 1.5 Visão em Três Níveis
+# Visão em Três Níveis
 
-Um SGBD organiza os dados em três níveis de abstração (Arquitetura ANSI/SPARC):
+## Níveis de Abstração
+
+Um banco de dados oferece três níveis de abstração:
+
+**Nível físico** (*physical level*)
+: Descreve *como* um registro (ex: `professor`) é armazenado em disco.
+
+**Nível lógico** (*logical level*)
+: Descreve *quais* dados estão armazenados no banco e os relacionamentos entre eles. Exemplo de definição no nível lógico:
 
 ```
-┌──────────────────────────────────────┐
-│  Nível de Visão (View Level)         │  ← o que cada usuário vê
-│  Visão 1  |  Visão 2  |  Visão 3    │
-├──────────────────────────────────────┤
-│  Nível Lógico (Logical Level)        │  ← estrutura lógica completa
-│  (quais dados existem e suas         │
-│   relações)                          │
-├──────────────────────────────────────┤
-│  Nível Físico (Physical Level)       │  ← como os dados são armazenados
-│  (estruturas de armazenamento)       │
-└──────────────────────────────────────┘
+type professor = record
+    id          : string;
+    nome        : string;
+    nome_centro : string;
+    salario     : integer;
+end;
 ```
 
-Essa separação é fundamental para a **independência de dados**.
+**Nível de visão** (*view level*)
+: Os programas de aplicação ocultam detalhes dos tipos de dados. As visões também podem ocultar informações (como o salário de um funcionário) por razões de segurança.
+
+```
+┌────────────────────────────────────────┐
+│  Nível de Visão                        │
+│  Visão 1  │  Visão 2  │  Visão 3  ... │
+├────────────────────────────────────────┤
+│  Nível Lógico                          │
+├────────────────────────────────────────┤
+│  Nível Físico                          │
+└────────────────────────────────────────┘
+```
 
 ## Schemas e Instâncias
 
-Analogia com linguagens de programação:
+Analogia com linguagens de programação (tipos e variáveis):
 
 | Banco de Dados | Programação |
 |---|---|
-| **Schema Lógico** | Tipo de uma variável |
-| **Schema Físico** | Layout de memória |
-| **Instância** | Valor atual da variável |
+| **Schema lógico** — estrutura lógica geral do banco | Informação de tipo de uma variável |
+| **Schema físico** — estrutura física geral do banco | — |
+| **Instância** — conteúdo atual do banco em um dado momento | Valor de uma variável |
 
-- **Schema lógico**: estrutura geral do banco (ex: "existe uma tabela de clientes com os campos nome, CPF, endereço")
-- **Schema físico**: como os dados são fisicamente armazenados em disco
-- **Instância**: o conteúdo atual do banco em um dado momento
+- **Schema lógico**: ex.: "o banco contém informações sobre um conjunto de clientes e contas em um banco e o relacionamento entre eles"
+- **Instância**: os dados concretos armazenados no banco naquele instante
 
 ## Independência de Dados Física
 
-A **independência de dados física** é a capacidade de modificar o schema físico sem alterar o schema lógico. Isso permite, por exemplo, reorganizar como os dados são guardados em disco sem impactar os programas que os utilizam.
+**Independência de dados física** é a capacidade de modificar o schema físico sem alterar o schema lógico.
+
+- Aplicações dependem do schema lógico
+- Em geral, as interfaces entre os diversos níveis e componentes devem ser bem definidas, de modo que mudanças em algumas partes não afetem seriamente as outras

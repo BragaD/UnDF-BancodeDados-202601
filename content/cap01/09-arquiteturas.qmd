@@ -1,41 +1,42 @@
-# 1.9 Arquiteturas de Banco de Dados
+# Arquiteturas de Banco de Dados
 
-## Arquitetura Centralizada
+## Tipos de Arquitetura
 
-- Um servidor (ou poucos núcleos com memória compartilhada)
-- Toda a carga de trabalho é processada em um único local
+| Arquitetura | Características |
+|---|---|
+| **Centralizada** | Um a poucos núcleos, memória compartilhada |
+| **Cliente-servidor** | Um servidor executa trabalho em nome de múltiplas máquinas clientes |
+| **Paralela** | Muitos núcleos com memória compartilhada; disco compartilhado; ou *shared-nothing* |
+| **Distribuída** | Distribuição geográfica; heterogeneidade de schema/dados |
 
-## Arquitetura Cliente-Servidor
+## Arquitetura Centralizada / Memória Compartilhada
 
-- Um servidor executa o trabalho em nome de múltiplos clientes
-- O cliente envia requisições SQL; o servidor processa e retorna resultados
+Um único servidor (ou cluster de poucos núcleos com memória compartilhada) concentra todo o processamento. É a arquitetura mais simples e adequada para cargas de trabalho moderadas.
 
-## Banco de Dados Paralelo
+## Aplicações de Banco de Dados
 
-- **Memória compartilhada**: múltiplos núcleos acessam a mesma RAM
-- **Disco compartilhado**: múltiplos processadores acessam os mesmos discos
-- **Sem compartilhamento (Shared-nothing)**: cada nó tem sua própria memória e disco
+As aplicações de banco de dados são geralmente particionadas em **duas** ou **três camadas**:
 
-## Banco de Dados Distribuído
+**Arquitetura de duas camadas (*two-tier*)**
+: A aplicação reside na máquina cliente, que invoca diretamente a funcionalidade do banco de dados no servidor.
 
-- Dados distribuídos geograficamente
-- Heterogeneidade de schemas e dados
+**Arquitetura de três camadas (*three-tier*)**
+: A máquina cliente atua apenas como interface (front end) e não contém chamadas diretas ao banco.
 
-## Aplicações de Duas e Três Camadas
+- O cliente se comunica com um **servidor de aplicação**, normalmente por meio de uma interface de formulários
+- O servidor de aplicação, por sua vez, se comunica com o sistema de banco de dados para acessar os dados
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Duas Camadas (Two-tier)                                 │
-│                                                          │
-│  [Cliente]  ←──── chamadas diretas ao BD ────→  [BD]    │
-└─────────────────────────────────────────────────────────┘
+Duas camadas:
 
-┌─────────────────────────────────────────────────────────┐
-│  Três Camadas (Three-tier)                               │
-│                                                          │
-│  [Cliente] ←→ [Servidor de Aplicação] ←→ [BD]           │
-│  (navegador)  (lógica de negócio)     (dados)           │
-└─────────────────────────────────────────────────────────┘
+  [Cliente]  ──────────────────────────────▶  [Banco de Dados]
+  (aplicação)        chamadas diretas
+
+
+Três camadas:
+
+  [Cliente]  ──▶  [Servidor de Aplicação]  ──▶  [Banco de Dados]
+  (navegador)     (lógica de negócio)            (dados)
 ```
 
-Na arquitetura de três camadas, o cliente não faz chamadas diretas ao banco — ele se comunica com um servidor de aplicação que, por sua vez, acessa o banco. Essa é a arquitetura predominante em aplicações web modernas.
+A arquitetura de três camadas é a predominante em aplicações web modernas. O cliente não faz chamadas diretas ao banco — ele se comunica com o servidor de aplicação, que isola o banco de dados da internet e centraliza a lógica de negócio.

@@ -23,29 +23,31 @@ book:
         - href: content/cap01/index.qmd
           text: "Visão Geral"
         - href: content/cap01/01-o-que-e-bd.qmd
-          text: "1.1 O que é um Banco de Dados?"
+          text: "O que é um Banco de Dados?"
         - href: content/cap01/02-aplicacoes.qmd
-          text: "1.2 Aplicações"
+          text: "Aplicações"
         - href: content/cap01/03-sistemas-arquivos.qmd
-          text: "1.3 Por que não usar Arquivos?"
+          text: "Por que não usar Arquivos?"
         - href: content/cap01/04-modelos-dados.qmd
-          text: "1.4 Modelos de Dados"
+          text: "Modelos de Dados"
         - href: content/cap01/05-tres-niveis.qmd
-          text: "1.5 Visão em Três Níveis"
+          text: "Visão em Três Níveis"
         - href: content/cap01/06-linguagens.qmd
-          text: "1.6 Linguagens (DDL, DML, SQL)"
+          text: "Linguagens (DDL, DML, SQL)"
         - href: content/cap01/07-projeto.qmd
-          text: "1.7 Projeto de Banco de Dados"
+          text: "Projeto de Banco de Dados"
         - href: content/cap01/08-motor.qmd
-          text: "1.8 Motor de Banco de Dados"
+          text: "Motor de Banco de Dados"
         - href: content/cap01/09-arquiteturas.qmd
-          text: "1.9 Arquiteturas"
+          text: "Arquiteturas"
         - href: content/cap01/10-usuarios.qmd
-          text: "1.10 Usuários e DBA"
+          text: "Usuários e DBA"
         - href: content/cap01/11-historia.qmd
-          text: "1.11 História"
+          text: "História"
         - href: content/cap01/12-resumo.qmd
           text: "Resumo e Exercícios"
+        - href: content/cap01/13-hands-on-postgresql.qmd
+          text: "Hands-on: PostgreSQL"
 
 page-navigation: true
 

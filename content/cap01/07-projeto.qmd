@@ -1,13 +1,10 @@
-# 1.7 Projeto de Banco de Dados
+# Projeto de Banco de Dados
 
-O projeto de um banco de dados envolve duas etapas principais:
+O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:
 
-```
-Projeto Lógico
-└── Decidir o schema: quais tabelas existirão e quais atributos cada uma terá
-    ├── Decisão de negócio: quais dados precisamos registrar?
-    └── Decisão técnica: como distribuir atributos entre as tabelas?
+**Projeto Lógico** — Decidir o schema do banco de dados. Requer encontrar uma "boa" coleção de schemas de relações, envolvendo duas perspectivas:
 
-Projeto Físico
-└── Decidir o layout físico: índices, particionamento, armazenamento
-```
+- **Decisão de negócio**: Quais atributos devemos registrar no banco?
+- **Decisão de Ciência da Computação**: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?
+
+**Projeto Físico** — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).

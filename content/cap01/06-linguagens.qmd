@@ -1,52 +1,55 @@
-# 1.6 Linguagens de Banco de Dados
+# Linguagens de Banco de Dados
 
 ## DDL — Data Definition Language
 
-A **DDL** é usada para definir a estrutura do banco de dados (schema).
+Notação de especificação para definir o schema do banco de dados. Exemplo:
 
 ```sql
-CREATE TABLE instructor (
-    ID          CHAR(5),
-    name        VARCHAR(20)   NOT NULL,
-    dept_name   VARCHAR(20),
-    salary      NUMERIC(8,2),
-    PRIMARY KEY (ID)
+CREATE TABLE professor (
+    id          CHAR(5),
+    nome        VARCHAR(20),
+    nome_centro VARCHAR(10),
+    salario     NUMERIC(8,2)
 );
 ```
 
-O compilador DDL gera um conjunto de templates de tabelas armazenados no **dicionário de dados**, que contém metadados como:
+O compilador DDL gera um conjunto de *templates* de tabelas armazenados em um **dicionário de dados** (*data dictionary*). O dicionário de dados contém **metadados** (dados sobre dados):
 
-- Schema do banco
-- Restrições de integridade (chave primária, chave estrangeira)
-- Autorizações de acesso
+- Schema do banco de dados
+- Restrições de integridade
+  - Chave primária (`id` identifica unicamente cada professor)
+- Autorizações — quem pode acessar o quê
 
 ## DML — Data Manipulation Language
 
-A **DML** (também chamada de *linguagem de consulta*) é usada para acessar e atualizar dados. Existem dois tipos:
+Linguagem para acessar e atualizar os dados organizados pelo modelo de dados apropriado. A DML também é conhecida como *linguagem de consulta*. Existem dois tipos básicos:
 
-| Tipo | Característica | Exemplo |
-|---|---|---|
-| **Procedural** | Especifica *o que* e *como* obter os dados | Álgebra Relacional |
-| **Declarativa** | Especifica apenas *o que* obter | SQL |
+| Tipo | Característica |
+|---|---|
+| **DML Procedural** | Requer que o usuário especifique *quais* dados são necessários e *como* obtê-los |
+| **DML Declarativa** | Requer que o usuário especifique *quais* dados são necessários, sem especificar como obtê-los |
 
-DMLs declarativas são mais fáceis de aprender e usar. SQL é o padrão comercial mais utilizado.
+DMLs declarativas são geralmente mais fáceis de aprender e usar. DMLs declarativas também são chamadas de **DMLs não-procedurais**. A parte da DML que envolve recuperação de informações é chamada de **linguagem de consulta** (*query language*).
 
-## SQL — Structured Query Language
+## SQL
 
-SQL é **não-procedural**: uma consulta recebe uma ou mais tabelas e sempre retorna uma tabela.
+A linguagem de consulta SQL é **não-procedural**. Uma consulta recebe como entrada uma ou mais tabelas e sempre retorna uma única tabela. Exemplo para encontrar todos os professores do COETI:
 
 ```sql
--- Encontrar todos os instrutores do departamento de Ciência da Computação
-SELECT name
-FROM instructor
-WHERE dept_name = 'Comp. Sci.';
+SELECT nome
+FROM professor
+WHERE nome_centro = 'COETI';
 ```
 
 ::: {.callout-note}
-SQL **não** é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em uma linguagem de propósito geral (Python, Java, C++).
+SQL **não** é equivalente a uma Máquina de Turing. Para computações complexas, SQL é geralmente embutido em alguma linguagem de mais alto nível.
 :::
 
-Formas de acessar o banco a partir de aplicações:
+Programas de aplicação geralmente acessam bancos de dados por meio de:
 
-1. **Extensões de linguagem** para SQL embutido
-2. **Interfaces de programa** (ODBC, JDBC, drivers de banco de dados)
+1. **Extensões de linguagem** que permitem SQL embutido
+2. **Interface de programa de aplicação** (ex.: ODBC/JDBC) que permite enviar consultas SQL para um banco de dados
+
+## Acesso a Banco de Dados a partir de Programas
+
+Linguagens de consulta não-procedurais como SQL não são tão poderosas quanto uma Máquina de Turing universal. SQL não suporta ações como entrada de dados pelo usuário, saída para monitores ou comunicação em rede. Tais computações devem ser escritas em uma **linguagem hospedeira** (*host language*), como C/C++, Java ou Python, com consultas SQL embutidas que acessam os dados no banco. **Programas de aplicação** são programas que interagem com o banco de dados dessa forma.

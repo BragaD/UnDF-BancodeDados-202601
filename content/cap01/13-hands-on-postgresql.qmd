@@ -1,0 +1,323 @@
+# Hands-on: PostgreSQL na Prática
+
+Nesta seção vamos instalar o PostgreSQL, criar o banco de dados universitário da UnDF e popular as tabelas com os dados que vimos ao longo do capítulo.
+
+## Instalação do PostgreSQL
+
+::: {.panel-tabset}
+
+### Linux (Ubuntu/Debian)
+
+```{r}
+#| echo: false
+#| eval: false
+system("sudo apt update && sudo apt install -y postgresql postgresql-contrib")
+system("sudo systemctl start postgresql && sudo systemctl enable postgresql")
+system("sudo systemctl status postgresql")
+```
+
+```bash
+sudo apt update
+sudo apt install -y postgresql postgresql-contrib
+
+# Iniciar e habilitar o serviço
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+# Verificar se está rodando
+sudo systemctl status postgresql
+```
+
+Após a instalação, acesse o console interativo:
+
+```bash
+sudo -u postgres psql
+```
+
+### macOS
+
+```{r}
+#| echo: false
+#| eval: false
+system("brew install postgresql@16")
+system("brew services start postgresql@16")
+system('echo \'export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc')
+```
+
+Com [Homebrew](https://brew.sh) instalado:
+
+```bash
+brew install postgresql@16
+
+# Iniciar o serviço
+brew services start postgresql@16
+
+# Adicionar ao PATH (cole no ~/.zshrc ou ~/.bash_profile)
+echo 'export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# Acessar o console
+psql postgres
+```
+
+> **Alternativa:** o app [Postgres.app](https://postgresapp.com) oferece instalação com um clique e não requer Homebrew.
+
+### Windows
+
+```{r}
+#| echo: false
+#| eval: false
+system("psql --version")
+```
+
+1. Acesse [postgresql.org/download/windows](https://www.postgresql.org/download/windows/) e baixe o instalador EDB.
+2. Execute o instalador e siga o assistente. Anote a **senha** definida para o usuário `postgres`.
+3. O **pgAdmin 4** (interface gráfica) é instalado junto e pode ser usado no lugar do terminal.
+
+Para usar o terminal `psql`, abra o **SQL Shell (psql)** pelo Menu Iniciar e preencha as informações solicitadas (host: `localhost`, porta: `5432`, usuário: `postgres`).
+
+> **Alternativa:** Caso não possua privilégios de administrador, siga [essas instruções.](https://tutlinks.com/install-postgresql-without-admin-rights-windows/)
+
+:::
+
+## Criando o Banco de Dados
+
+```{r}
+#| label: create-db
+#| echo: false
+#| eval: true
+#| message: false
+system('psql -U postgres -c "CREATE DATABASE undf;"')
+```
+
+Conecte-se ao console do PostgreSQL e crie o banco:
+
+```sql
+CREATE DATABASE undf;
+```
+
+Em seguida, conecte-se a ele:
+
+```{r}
+#| label: setup
+#| echo: false
+#| eval: true
+
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "undf",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = "postgres"
+)
+```
+
+```sql
+\c undf
+```
+
+::: {.callout-note}
+No pgAdmin (Windows/Mac), clique com o botão direito em **Databases → Create → Database**, informe o nome `undf` e clique em *Save*. Depois abra o **Query Tool** para executar os comandos SQL.
+:::
+
+## Criando as Tabelas
+
+As tabelas devem ser criadas na ordem correta: primeiro `centro`, pois as demais referenciam ela por chave estrangeira.
+
+### Tabela `centro`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE centro (
+    nome_centro VARCHAR(10)   PRIMARY KEY,
+    predio      VARCHAR(50)   NOT NULL,
+    orcamento   NUMERIC(10,2) NOT NULL
+);
+```
+
+### Tabela `professor`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE professor (
+    id          CHAR(5)      PRIMARY KEY,
+    nome        VARCHAR(50)  NOT NULL,
+    nome_centro VARCHAR(10)  REFERENCES centro(nome_centro),
+    salario     NUMERIC(8,2) NOT NULL
+);
+```
+
+### Tabela `disciplina`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE disciplina (
+    id_disciplina VARCHAR(10)  PRIMARY KEY,
+    titulo        VARCHAR(100) NOT NULL,
+    nome_centro   VARCHAR(10)  REFERENCES centro(nome_centro),
+    carga_horaria INTEGER      NOT NULL CHECK (carga_horaria > 0)
+);
+```
+
+### Tabela `aluno`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE aluno (
+    id          CHAR(5)     PRIMARY KEY,
+    nome        VARCHAR(50) NOT NULL,
+    nome_centro VARCHAR(10) REFERENCES centro(nome_centro),
+    carga_total INTEGER     NOT NULL DEFAULT 0
+);
+```
+
+Para confirmar que as tabelas foram criadas:
+
+```sql
+\dt
+```
+
+## Inserindo os Dados
+
+### Centros
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO centro (nome_centro, predio, orcamento) VALUES
+    ('COCBS',   'Samambaia',  160000),
+    ('COETI',   'Lago Norte', 185000),
+    ('COCHCMA', 'Buritis',    170000),
+    ('COEMAG',  'Ceilândia',   80000);
+```
+
+### Professores
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO professor (id, nome, nome_centro, salario) VALUES
+    ('10101', 'Carlos',   'COETI',   65000),
+    ('12121', 'Ana',      'COCHCMA', 90000),
+    ('15151', 'João',     'COEMAG',  40000),
+    ('22222', 'Marcos',   'COCBS',   95000),
+    ('32343', 'Fernanda', 'COCHCMA', 60000),
+    ('33456', 'Roberto',  'COCBS',   87000),
+    ('45565', 'Lucas',    'COETI',   75000),
+    ('58583', 'Juliana',  'COCHCMA', 62000),
+    ('76543', 'Rafael',   'COCHCMA', 80000),
+    ('76766', 'Beatriz',  'COCBS',   72000),
+    ('83821', 'Pedro',    'COETI',   92000),
+    ('98345', 'Mariana',  'COETI',   80000);
+```
+
+### Disciplinas
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO disciplina (id_disciplina, titulo, nome_centro, carga_horaria) VALUES
+    ('MTI 101', 'Introdução à Pesquisa Científica',       'COCHCMA', 60),
+    ('MTI 202', 'Gestão de Pessoas na Adm. Pública',      'COCHCMA', 60),
+    ('MTI 402', 'Políticas Públicas e Sociais',           'COCHCMA', 60),
+    ('BES 101', 'Introdução à Engenharia de Software',    'COETI',   20),
+    ('BES 301', 'Bases da Engenharia de Software 3',      'COETI',  120),
+    ('BES 601', 'Projeto Aplicado 6: Machine Learning',   'COETI',  120),
+    ('NUT 101', 'Bioquímica e Biofísica',                 'COCBS',  105),
+    ('NUT 401', 'Epidemiologia Geral',                    'COCBS',   70),
+    ('NUT 701', 'Nutrição em Saúde Coletiva',             'COCBS',   70),
+    ('PED 101', 'História da Educação',                   'COEMAG',  60),
+    ('PED 301', 'Jogos e Brincadeiras na Infância',       'COEMAG',  60),
+    ('PED 601', 'Alfabetização e Práticas de Letramento', 'COEMAG',  60);
+```
+
+### Alunos
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO aluno (id, nome, nome_centro, carga_total) VALUES
+    ('00128', 'Thiago',   'COETI',   1000),
+    ('12345', 'Larissa',  'COETI',    205),
+    ('19991', 'Gabriel',  'COCHCMA',  300),
+    ('23121', 'Amanda',   'COCHCMA', 2100),
+    ('44553', 'Felipe',   'COCBS',    340),
+    ('45678', 'Camila',   'COCBS',    460),
+    ('54321', 'Diego',    'COETI',   1240),
+    ('55739', 'Bruna',    'COEMAG',  1100),
+    ('70557', 'Henrique', 'COCBS',      0),
+    ('76543', 'Natália',  'COETI',    360),
+    ('76653', 'Eduardo',  'COETI',    340),
+    ('98988', 'Isabela',  'COCBS',    450);
+```
+
+## Verificando os Dados
+
+### Todos os centros
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT * FROM centro;
+```
+
+### Professores do COETI com salário acima de 70 000
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT nome, salario
+FROM professor
+WHERE nome_centro = 'COETI'
+  AND salario > 70000;
+```
+
+### Carga horária total por centro
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT nome_centro, SUM(carga_horaria) AS total_horas
+FROM disciplina
+GROUP BY nome_centro
+ORDER BY total_horas DESC;
+```
+
+### Alunos com mais de 500 h acumuladas
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT nome, nome_centro, carga_total
+FROM aluno
+WHERE carga_total > 500
+ORDER BY carga_total DESC;
+```
+
+::: {.callout-tip}
+## Desfazendo tudo (reset)
+
+Para remover todas as tabelas e começar do zero:
+
+```{sql}
+--| connection: con
+--| eval: true
+DROP TABLE aluno, disciplina, professor, centro;
+```
+
+A ordem importa: tabelas com chaves estrangeiras devem ser removidas antes da referenciada, ou use `CASCADE`:
+
+```{sql}
+--| connection: con
+--| eval: false
+DROP TABLE centro CASCADE;
+```
+:::

@@ -1,39 +1,98 @@
-# 1.4 Modelos de Dados
+# Modelos de Dados
 
-Um **modelo de dados** é um conjunto de ferramentas conceituais para descrever:
+## Visão dos Dados
 
-- Os **dados** em si
-- As **relações** entre os dados
-- A **semântica** (significado) dos dados
-- As **restrições** (constraints) sobre os dados
+Um sistema de banco de dados é uma coleção de dados inter-relacionados e um conjunto de programas que permitem aos usuários acessar e modificar esses dados. Um dos principais objetivos de um sistema de banco de dados é fornecer aos usuários uma **visão abstrata** dos dados.
 
-## Principais Modelos
+**Modelo de dados** é uma coleção de ferramentas conceituais para descrever:
 
-```
-Modelos de Dados
-├── Modelo Relacional          ← foco principal desta disciplina
-├── Modelo Entidade-Relacionamento (ER)  ← para projeto de banco de dados
-├── Modelos Baseados em Objetos
-│   ├── Orientado a Objetos
-│   └── Objeto-Relacional
-├── Modelo Semiestruturado (XML, JSON)
-└── Modelos Antigos (legados)
-    ├── Modelo em Rede
-    └── Modelo Hierárquico
-```
+- Os **dados**
+- Os **relacionamentos** entre os dados
+- A **semântica** dos dados
+- As **restrições** sobre os dados
+
+**Abstração de dados** oculta a complexidade das estruturas internas de representação por meio de diferentes níveis de abstração.
+
+## Principais Modelos de Dados
+
+- **Modelo Relacional**
+- **Modelo Entidade-Relacionamento (ER)** — principalmente para projeto de banco de dados
+- **Modelos Baseados em Objetos** (orientado a objetos e objeto-relacional)
+- **Modelo Semiestruturado** (XML)
+- Modelos mais antigos (legados): **Modelo em Rede** e **Modelo Hierárquico**
 
 ## Modelo Relacional
 
-No modelo relacional (proposto por **Ted Codd** em 1970, Prêmio Turing 1981), todos os dados são armazenados em **tabelas** (relações):
+Todos os dados são armazenados em diversas tabelas. Abaixo, um exemplo de dados tabulares no modelo relacional:
 
-- Cada tabela possui **colunas** (atributos)
-- Cada linha é uma **tupla** (registro)
+| id    | nome     | nome_centro | salario |
+|-------|----------|-------------|--------:|
+| 10101 | Carlos   | COETI      | 65000   |
+| 12121 | Ana      | COCHCMA    | 90000   |
+| 15151 | João     | COEMAG     | 40000   |
+| 22222 | Marcos   | COCBS      | 95000   |
+| 32343 | Fernanda | COCHCMA    | 60000   |
+| 33456 | Roberto  | COCBS      | 87000   |
+| 45565 | Lucas    | COETI      | 75000   |
+| 58583 | Juliana  | COCHCMA    | 62000   |
+| 76543 | Rafael   | COCHCMA    | 80000   |
+| 76766 | Beatriz  | COCBS      | 72000   |
+| 83821 | Pedro    | COETI      | 92000   |
+| 98345 | Mariana  | COETI      | 80000   |
 
-Exemplo de tabela de instrutores:
+: Tabela `professor` {.striped}
 
-| ID    | nome           | depto       | salário   |
-|-------|----------------|-------------|-----------|
-| 10101 | Srinivasan     | Comp. Sci.  | 65.000,00 |
-| 12121 | Wu             | Finance     | 90.000,00 |
-| 15151 | Mozart         | Music       | 40.000,00 |
-| 22222 | Einstein       | Physics     | 95.000,00 |
+> O modelo relacional foi proposto por **Ted Codd** (Prêmio Turing ACM, 1981).
+
+## Um Banco de Dados Relacional de Exemplo
+
+O banco de dados universitário utilizado ao longo deste material é composto pelas seguintes tabelas:
+
+**Tabela `centro`**
+
+| nome_centro | predio        | orcamento |
+|------------|---------------|----------:|
+| COCBS      | Samambaia   | 160000    |
+| COETI      | Lago Norte | 185000    |
+| COCHCMA    | Buritis    | 170000    |
+| COEMAG     | Ceilândia   | 80000     |
+
+: {.striped}
+
+**Tabela `disciplina`**
+
+| id_disciplina | titulo                                 | nome_centro | carga_horaria |
+|---------------|----------------------------------------|-------------|:-------------:|
+| MTI 101       | Introdução à Pesquisa Científica       | COCHCMA     | 60            |
+| MTI 202       | Gestão de Pessoas na Adm. Pública      | COCHCMA     | 60            |
+| MTI 402       | Políticas Públicas e Sociais           | COCHCMA     | 60            |
+| BES 101       | Introdução à Engenharia de Software    | COETI       | 20            |
+| BES 301       | Bases da Engenharia de Software 3      | COETI       | 120           |
+| BES 601       | Projeto Aplicado 6: Machine Learning   | COETI       | 120           |
+| NUT 101       | Bioquímica e Biofísica                 | COCBS       | 105           |
+| NUT 401       | Epidemiologia Geral                    | COCBS       | 70            |
+| NUT 701       | Nutrição em Saúde Coletiva             | COCBS       | 70            |
+| PED 101       | História da Educação                   | COEMAG      | 60            |
+| PED 301       | Jogos e Brincadeiras na Infância       | COEMAG      | 60            |
+| PED 601       | Alfabetização e Práticas de Letramento | COEMAG      | 60            |
+
+: {.striped}
+
+**Tabela `aluno`**
+
+| id    | nome     | nome_centro | carga_total |
+|-------|----------|-------------|:----------:|
+| 00128 | Thiago   | COETI      | 1000        |
+| 12345 | Larissa  | COETI      | 205         |
+| 19991 | Gabriel  | COCHCMA    | 300        |
+| 23121 | Amanda   | COCHCMA    | 2100        |
+| 44553 | Felipe   | COCBS      | 340         |
+| 45678 | Camila   | COCBS      | 460         |
+| 54321 | Diego    | COETI      | 1240         |
+| 55739 | Bruna    | COEMAG     | 1100         |
+| 70557 | Henrique | COCBS      | 0          |
+| 76543 | Natália  | COETI      | 360         |
+| 76653 | Eduardo  | COETI      | 340         |
+| 98988 | Isabela  | COCBS      | 450        |
+
+: {.striped}

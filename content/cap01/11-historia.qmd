@@ -1,10 +1,10 @@
-# 1.11 Breve História dos Bancos de Dados
+# Breve História dos Bancos de Dados
 
-| Período | Marco |
+| Período | Marcos |
 |---|---|
-| **Anos 1950 e início dos 60** | Processamento de dados em fitas magnéticas (acesso sequencial); cartões perfurados para entrada |
-| **Final dos anos 60 e 70** | Discos rígidos permitem acesso direto; modelos em rede e hierárquico; **Ted Codd** define o modelo relacional; Oracle lança o primeiro BD relacional comercial |
-| **Anos 80** | SQL se torna padrão industrial; BDs relacionais comerciais; BDs paralelos e distribuídos; BDs orientados a objetos |
-| **Anos 90** | Data warehouses multi-terabyte; suporte a decisão e mineração de dados; surgimento do e-commerce |
-| **Anos 2000** | Big data (Google BigTable, Amazon); sistemas NoSQL; MapReduce |
-| **Anos 2010** | SQL sobre MapReduce; BDs massivamente paralelos; BDs em memória principal (*in-memory*) |
+| **Anos 1950 e início dos 60** | Processamento de dados com fitas magnéticas para armazenamento (apenas acesso sequencial); cartões perfurados para entrada |
+| **Final dos anos 60 e 70** | Discos rígidos permitem acesso direto a dados; modelos em rede e hierárquico em uso generalizado; **Ted Codd** define o modelo de dados relacional (Prêmio ACM Turing por esse trabalho); IBM Research inicia protótipo System R; UC Berkeley (Michael Stonebraker) inicia protótipo Ingres; Oracle lança o primeiro banco de dados relacional comercial; processamento de transações de alto desempenho (para a época) |
+| **Anos 1980** | Protótipos relacionais de pesquisa evoluem para sistemas comerciais; SQL se torna padrão industrial; sistemas de banco de dados paralelos e distribuídos (Wisconsin, IBM, Teradata); sistemas de banco de dados orientados a objetos |
+| **Anos 1990** | Grandes aplicações de suporte à decisão e mineração de dados; grandes *data warehouses* multi-terabyte; surgimento do comércio eletrônico (*Web commerce*) |
+| **Anos 2000** | Sistemas de armazenamento de Big Data (Google BigTable, Yahoo PNuts, Amazon); sistemas "NoSQL"; análise de Big Data além do SQL: MapReduce e similares |
+| **Anos 2010** | SQL recarregado: *front-end* SQL para sistemas MapReduce; sistemas de banco de dados massivamente paralelos; bancos de dados em memória principal (*main-memory*) multi-core |

@@ -4,14 +4,18 @@
 
 Neste capítulo vimos:
 
-- O que são bancos de dados e por que eles existem
-- As limitações de sistemas baseados em arquivos
-- Os principais modelos de dados (com ênfase no relacional)
-- A arquitetura em três níveis (físico, lógico, visão)
-- As linguagens DDL e DML (SQL)
-- A arquitetura interna de um SGBD (storage manager, query processor, transaction manager)
-- Os perfis de usuários e o papel do DBA
-- Uma linha do tempo da evolução dos bancos de dados
+- O que é um SGBD e por que os bancos de dados existem (dados valiosos, grandes, multi-usuário)
+- O banco de dados universitário como exemplo recorrente ao longo da disciplina
+- As principais aplicações de banco de dados nos diferentes setores
+- As limitações de sistemas baseados em arquivos e como SGBDs as resolvem
+- Os principais modelos de dados, com ênfase no **modelo relacional** (Ted Codd, 1970)
+- As tabelas do banco universitário: `professor`, `aluno`, `disciplina`, `departamento`
+- A arquitetura em três níveis de abstração: físico, lógico e visão
+- Schemas e instâncias; independência de dados física
+- A **DDL** para definição do schema e a **DML** (SQL) para consulta e atualização
+- A arquitetura interna de um SGBD: gerenciador de armazenamento, processador de consultas, gerenciador de transações
+- Os perfis de usuários e as funções do DBA
+- A linha do tempo da evolução dos bancos de dados (anos 50 até os anos 2010)
 
 ## Exercícios
 
@@ -23,14 +27,18 @@ Neste capítulo vimos:
 
 4. Compare DML **procedural** e **declarativa**. Qual a vantagem da abordagem declarativa?
 
-5. Em uma arquitetura de **três camadas**, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?
+5. Em uma arquitetura de **três camadas**, qual é a função de cada camada? Por que essa separação é vantajosa para o desenvolvimento de software?
 
 6. Considere a seguinte consulta SQL:
 
    ```sql
-   SELECT name, salary
-   FROM instructor
-   WHERE salary > 70000;
+   SELECT nome, salario
+   FROM professor
+   WHERE salario > 70000;
    ```
 
    Quais etapas o processador de consultas executa para responder essa consulta?
+
+7. Qual foi a contribuição de Ted Codd para a história dos bancos de dados? Em que década ela ocorreu?
+
+8. Quais são os quatro componentes do gerenciador de armazenamento? Descreva a função de cada um.

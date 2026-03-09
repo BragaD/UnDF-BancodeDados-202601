@@ -1,18 +1,18 @@
-# 1.3 Por que não usar Arquivos?
+# Por que não usar Arquivos?
 
-Nos primórdios da computação, sistemas de informação eram construídos diretamente sobre sistemas de arquivos. Essa abordagem apresenta problemas sérios:
+Nos primórdios da computação, aplicações de banco de dados eram construídas diretamente sobre sistemas de arquivos. Essa abordagem leva aos seguintes problemas:
 
 ## Problemas com Sistemas de Arquivos
 
 | Problema | Descrição |
 |---|---|
-| **Redundância e inconsistência** | Os mesmos dados são armazenados em múltiplos arquivos, em formatos diferentes, levando à duplicação e inconsistências |
-| **Dificuldade de acesso** | É preciso escrever um novo programa para cada nova necessidade de consulta |
-| **Isolamento de dados** | Dados em múltiplos arquivos e formatos dificultam consultas integradas |
-| **Problemas de integridade** | Restrições (ex: saldo > 0) ficam enterradas no código dos programas, difíceis de modificar |
-| **Atomicidade de atualizações** | Falhas podem deixar o sistema em estado inconsistente (ex: transferência bancária parcial) |
-| **Acesso concorrente** | Acessos simultâneos sem controle levam a resultados incorretos |
-| **Problemas de segurança** | Difícil controlar o acesso granular aos dados |
+| **Redundância e inconsistência de dados** | Os dados são armazenados em múltiplos formatos de arquivo, resultando em duplicação de informações em arquivos diferentes |
+| **Dificuldade de acesso** | É necessário escrever um novo programa para realizar cada nova tarefa de consulta |
+| **Isolamento de dados** | Múltiplos arquivos e formatos dificultam consultas integradas |
+| **Problemas de integridade** | Restrições de integridade (ex: saldo > 0) ficam "enterradas" no código dos programas em vez de serem declaradas explicitamente; difícil adicionar novas restrições ou modificar as existentes |
+| **Atomicidade de atualizações** | Falhas podem deixar o banco em estado inconsistente com atualizações parcialmente executadas — exemplo: a transferência de fundos de uma conta para outra deve ser completada ou não acontecer |
+| **Acesso concorrente** | Acesso concorrente é necessário para desempenho, mas acessos simultâneos não controlados levam a inconsistências — ex: duas pessoas lendo um saldo (digamos 100) e realizando saques (digamos 50 cada) ao mesmo tempo |
+| **Problemas de segurança** | Difícil fornecer ao usuário acesso a apenas parte dos dados |
 
 ::: {.callout-important}
 **Sistemas de banco de dados oferecem soluções para todos esses problemas.**
