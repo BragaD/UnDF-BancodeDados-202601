@@ -66,6 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../content/cap01/13-hands-on-postgresql.html" rel="next">
 <link href="../../content/cap01/11-historia.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -171,73 +172,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">1.1 O que é um Banco de Dados?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O que é um Banco de Dados?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1.2 Aplicações</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicações</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">1.3 Por que não usar Arquivos?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1.4 Modelos de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">1.5 Visão em Três Níveis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">1.6 Linguagens (DDL, DML, SQL)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">1.7 Projeto de Banco de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/08-motor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">1.8 Motor de Banco de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">1.9 Arquiteturas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Arquiteturas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">1.10 Usuários e DBA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Usuários e DBA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/11-historia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">1.11 História</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">História</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap01/13-hands-on-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,14 +296,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="13.1" class="anchored" data-anchor-id="resumo"><span class="header-section-number">13.1</span> Resumo</h2>
 <p>Neste capítulo vimos:</p>
 <ul>
-<li>O que são bancos de dados e por que eles existem</li>
-<li>As limitações de sistemas baseados em arquivos</li>
-<li>Os principais modelos de dados (com ênfase no relacional)</li>
-<li>A arquitetura em três níveis (físico, lógico, visão)</li>
-<li>As linguagens DDL e DML (SQL)</li>
-<li>A arquitetura interna de um SGBD (storage manager, query processor, transaction manager)</li>
-<li>Os perfis de usuários e o papel do DBA</li>
-<li>Uma linha do tempo da evolução dos bancos de dados</li>
+<li>O que é um SGBD e por que os bancos de dados existem (dados valiosos, grandes, multi-usuário)</li>
+<li>O banco de dados universitário como exemplo recorrente ao longo da disciplina</li>
+<li>As principais aplicações de banco de dados nos diferentes setores</li>
+<li>As limitações de sistemas baseados em arquivos e como SGBDs as resolvem</li>
+<li>Os principais modelos de dados, com ênfase no <strong>modelo relacional</strong> (Ted Codd, 1970)</li>
+<li>As tabelas do banco universitário: <code>professor</code>, <code>aluno</code>, <code>disciplina</code>, <code>departamento</code></li>
+<li>A arquitetura em três níveis de abstração: físico, lógico e visão</li>
+<li>Schemas e instâncias; independência de dados física</li>
+<li>A <strong>DDL</strong> para definição do schema e a <strong>DML</strong> (SQL) para consulta e atualização</li>
+<li>A arquitetura interna de um SGBD: gerenciador de armazenamento, processador de consultas, gerenciador de transações</li>
+<li>Os perfis de usuários e as funções do DBA</li>
+<li>A linha do tempo da evolução dos bancos de dados (anos 50 até os anos 2010)</li>
 </ul>
 </section>
 <section id="exercícios" class="level2" data-number="13.2">
@@ -306,12 +317,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Explique com suas palavras por que sistemas baseados em arquivos apresentam problemas de <strong>atomicidade</strong>. Dê um exemplo concreto.</p></li>
 <li><p>Qual é a diferença entre <strong>schema</strong> e <strong>instância</strong> de um banco de dados? Faça a analogia com conceitos de programação.</p></li>
 <li><p>Compare DML <strong>procedural</strong> e <strong>declarativa</strong>. Qual a vantagem da abordagem declarativa?</p></li>
-<li><p>Em uma arquitetura de <strong>três camadas</strong>, qual é a função de cada camada? Por que essa separação é vantajosa para desenvolvimento de software?</p></li>
+<li><p>Em uma arquitetura de <strong>três camadas</strong>, qual é a função de cada camada? Por que essa separação é vantajosa para o desenvolvimento de software?</p></li>
 <li><p>Considere a seguinte consulta SQL:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> name, salary</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> instructor</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> <span class="dv">70000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Quais etapas o processador de consultas executa para responder essa consulta?</p></li>
+<li><p>Qual foi a contribuição de Ted Codd para a história dos bancos de dados? Em que década ela ocorreu?</p></li>
+<li><p>Quais são os quatro componentes do gerenciador de armazenamento? Descreva a função de cada um.</p></li>
 </ol>
 
 
@@ -766,11 +779,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/11-historia.html" class="pagination-link" aria-label="1.11 História">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">1.11 História</span></span>
+      <a href="../../content/cap01/11-historia.html" class="pagination-link" aria-label="História">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">História</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
