@@ -1,0 +1,135 @@
+# Valores Nulos
+
+## O que é NULL?
+
+::: {.conceito}
+**NULL** é um valor especial em SQL que indica a **ausência de informação**. Um valor nulo pode significar:
+
+- **Desconhecido**: o valor existe, mas não é conhecido (ex.: o salário de um novo professor ainda não foi definido).
+- **Inaplicável**: o atributo não se aplica a essa entidade (ex.: um campo "cônjuge" para alguém solteiro).
+- **Inexistente**: a informação simplesmente não está disponível.
+:::
+
+NULL não é zero, não é uma string vazia `''` e não é `false`. É um valor especial que se comporta de forma diferente em operações aritméticas e comparações.
+
+## Aritmética com NULL
+
+Qualquer operação aritmética envolvendo NULL retorna NULL:
+
+| Expressão | Resultado |
+|---|---|
+| `NULL + 1000` | `NULL` |
+| `NULL * 1.10` | `NULL` |
+| `60000 + NULL` | `NULL` |
+
+::: {.exemplo}
+Se o salário de um professor fosse `NULL`, a consulta abaixo retornaria `NULL` como salário reajustado:
+
+```sql
+SELECT nome, salario * 1.10 AS salario_reajustado
+FROM   professor
+WHERE  nome = 'Carlos';
+-- Se salario fosse NULL, salario_reajustado também seria NULL
+```
+:::
+
+## Comparações com NULL: Lógica de Três Valores
+
+Em álgebra booleana clássica, uma comparação retorna `TRUE` ou `FALSE`. Em SQL, comparações com NULL retornam um terceiro resultado: **UNKNOWN**.
+
+```sql
+NULL = 5        -- UNKNOWN
+NULL <> 5       -- UNKNOWN
+NULL > 5        -- UNKNOWN
+NULL = NULL     -- UNKNOWN (!)
+```
+
+::: {.callout-warning}
+`NULL = NULL` retorna **UNKNOWN**, não `TRUE`. Para verificar se um valor é nulo, é obrigatório usar `IS NULL` ou `IS NOT NULL`.
+:::
+
+### Tabelas de Verdade com UNKNOWN
+
+A lógica de três valores do SQL define como `AND`, `OR` e `NOT` se comportam quando um dos operandos é `UNKNOWN`:
+
+**AND:**
+
+| A | B | A AND B |
+|---|---|---|
+| TRUE | TRUE | TRUE |
+| TRUE | UNKNOWN | UNKNOWN |
+| TRUE | FALSE | FALSE |
+| UNKNOWN | TRUE | UNKNOWN |
+| UNKNOWN | UNKNOWN | UNKNOWN |
+| UNKNOWN | FALSE | FALSE |
+| FALSE | qualquer | FALSE |
+
+**OR:**
+
+| A | B | A OR B |
+|---|---|---|
+| TRUE | qualquer | TRUE |
+| UNKNOWN | TRUE | TRUE |
+| UNKNOWN | UNKNOWN | UNKNOWN |
+| UNKNOWN | FALSE | UNKNOWN |
+| FALSE | FALSE | FALSE |
+
+**NOT:**
+
+| A | NOT A |
+|---|---|
+| TRUE | FALSE |
+| FALSE | TRUE |
+| UNKNOWN | UNKNOWN |
+
+::: {.conceito}
+A cláusula `WHERE` retém apenas as linhas para as quais a condição é avaliada como **TRUE**. Linhas com resultado **UNKNOWN** são **descartadas**, da mesma forma que linhas com resultado FALSE.
+:::
+
+## IS NULL e IS NOT NULL
+
+Para verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:
+
+```sql
+-- Professores cujo salário é desconhecido (nulo)
+SELECT nome
+FROM   professor
+WHERE  salario IS NULL;
+
+-- Professores com salário informado
+SELECT nome
+FROM   professor
+WHERE  salario IS NOT NULL;
+```
+
+No banco de dados atual da UnDF, nenhum professor tem salário nulo — todos têm valores definidos. Mas considere um cenário hipotético onde Carlos ainda não tivesse salário definido:
+
+```sql
+-- Sem IS NOT NULL: Carlos poderia aparecer ou não (resultado imprevisível)
+SELECT nome FROM professor WHERE salario > 70000;
+
+-- Com IS NOT NULL: garante que a comparação é feita apenas para valores conhecidos
+SELECT nome FROM professor WHERE salario > 70000 AND salario IS NOT NULL;
+```
+
+## NULL em Funções de Agregação
+
+As funções de agregação (`AVG`, `SUM`, `COUNT`, `MIN`, `MAX`) **ignoram** valores nulos em sua computação:
+
+::: {.exemplo}
+Suponha que a tabela tivesse 3 professores com salários `65000`, `NULL` e `75000`:
+
+```sql
+SELECT AVG(salario) FROM professor;
+-- Resultado: (65000 + 75000) / 2 = 70000
+-- O NULL é ignorado; o denominador é 2, não 3
+```
+
+Exceção: `COUNT(*)` conta **todas** as linhas, incluindo aquelas com valores nulos em qualquer coluna.
+:::
+
+## Boas Práticas
+
+- Ao projetar tabelas, use `NOT NULL` nas colunas que **sempre** devem ter um valor.
+- Ao escrever condições que envolvem colunas que podem ser nulas, inclua verificações explícitas com `IS NULL` ou `IS NOT NULL`.
+- Nunca compare com `= NULL`; use sempre `IS NULL`.

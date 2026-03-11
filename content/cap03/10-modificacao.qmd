@@ -1,0 +1,189 @@
+# Modificação do Banco de Dados
+
+Além de consultar dados com `SELECT`, o SQL permite **modificar** o conteúdo de um banco de dados por meio de três comandos DML: `INSERT` (inserir), `DELETE` (excluir) e `UPDATE` (atualizar).
+
+## INSERT: Inserindo Dados
+
+### Inserção de uma única linha
+
+A forma mais simples insere uma linha com valores explícitos:
+
+```sql
+-- Inserir um novo centro na UnDF
+INSERT INTO centro (nome_centro, predio, orcamento)
+VALUES ('COMAT', 'Plano Piloto', 120000.00);
+```
+
+Quando os valores são fornecidos na mesma ordem das colunas da tabela, a lista de colunas pode ser omitida — mas é considerada boa prática sempre especificá-la:
+
+```sql
+-- Forma equivalente (sem lista de colunas — menos recomendada)
+INSERT INTO centro
+VALUES ('COMAT', 'Plano Piloto', 120000.00);
+```
+
+Ao inserir um professor vinculado ao novo centro:
+
+```sql
+INSERT INTO professor (id, nome, nome_centro, salario)
+VALUES ('11111', 'Vanessa', 'COMAT', 55000.00);
+```
+
+### INSERT com SELECT
+
+É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela `professor_historico` com a mesma estrutura de `professor`:
+
+```sql
+-- Criar tabela histórica (estrutura idêntica a professor)
+CREATE TABLE professor_historico (
+    id          CHAR(5)       PRIMARY KEY,
+    nome        VARCHAR(50)   NOT NULL,
+    nome_centro VARCHAR(10),
+    salario     NUMERIC(8, 2) NOT NULL
+);
+
+-- Copiar para o histórico os professores com salário acima de R$ 90.000
+INSERT INTO professor_historico (id, nome, nome_centro, salario)
+SELECT id, nome, nome_centro, salario
+FROM   professor
+WHERE  salario > 90000;
+```
+
+**Linhas inseridas** (professores com salário > 90.000):
+
+| id | nome | nome_centro | salario |
+|---|---|---|---|
+| 22222 | Marcos | COCBS | 95000.00 |
+| 83821 | Pedro | COETI | 92000.00 |
+
+## DELETE: Excluindo Dados
+
+### DELETE simples
+
+```sql
+-- Remover o professor João (único professor do COEMAG)
+DELETE FROM professor
+WHERE  nome_centro = 'COEMAG';
+```
+
+Essa operação remove a linha de João (id 15151) permanentemente.
+
+### DELETE com subconsulta
+
+Para condições mais complexas, o `WHERE` pode conter subconsultas:
+
+```sql
+-- Remover professores com salário abaixo da média geral
+-- Média atual: (65000+90000+40000+95000+60000+87000+75000+62000+80000+72000+92000+80000)/12 ≈ 74833
+DELETE FROM professor
+WHERE  salario < (
+    SELECT AVG(salario)
+    FROM   professor
+);
+```
+
+**Professores removidos** (salário < 74833.33):
+
+| nome | salario |
+|---|---|
+| Carlos | 65000.00 |
+| João | 40000.00 |
+| Fernanda | 60000.00 |
+| Juliana | 62000.00 |
+| Beatriz | 72000.00 |
+
+::: {.callout-warning}
+**Atenção ao comportamento da subconsulta em DELETE:**
+
+Alguns SGBDs (como MySQL) **não permitem** que a subconsulta referencie a mesma tabela que está sendo modificada. Em PostgreSQL, isso é permitido, pois o banco computa a subconsulta com o estado da tabela **antes** de iniciar as exclusões.
+
+Para máxima portabilidade, use uma CTE ou subconsulta no `FROM` quando necessário.
+:::
+
+## UPDATE: Atualizando Dados
+
+### UPDATE simples
+
+```sql
+-- Aplicar reajuste de 5% para todos os professores
+UPDATE professor
+SET    salario = salario * 1.05;
+```
+
+### UPDATE condicional
+
+```sql
+-- Aumentar 10% para professores do COETI
+UPDATE professor
+SET    salario = salario * 1.10
+WHERE  nome_centro = 'COETI';
+```
+
+**Antes e depois (professores do COETI):**
+
+| nome | salario antes | salario depois |
+|---|---|---|
+| Carlos | 65000.00 | 71500.00 |
+| Lucas | 75000.00 | 82500.00 |
+| Pedro | 92000.00 | 101200.00 |
+| Mariana | 80000.00 | 88000.00 |
+
+### UPDATE com CASE: reajuste escalonado
+
+Quando diferentes grupos de linhas precisam de atualizações diferentes, o `CASE` permite aplicar regras distintas em um único comando:
+
+```sql
+-- Reajuste diferenciado por faixa salarial:
+--   Salário <= R$ 70.000 → aumento de 10%
+--   Salário >  R$ 70.000 → aumento de 5%
+UPDATE professor
+SET    salario = CASE
+                    WHEN salario <= 70000 THEN salario * 1.10
+                    ELSE                      salario * 1.05
+                END;
+```
+
+**Resultado para todos os professores:**
+
+| nome | nome_centro | salario antes | salario depois |
+|---|---|---|---|
+| Carlos | COETI | 65000.00 | 71500.00 |
+| Ana | COCHCMA | 90000.00 | 94500.00 |
+| João | COEMAG | 40000.00 | 44000.00 |
+| Marcos | COCBS | 95000.00 | 99750.00 |
+| Fernanda | COCHCMA | 60000.00 | 66000.00 |
+| Roberto | COCBS | 87000.00 | 91350.00 |
+| Lucas | COETI | 75000.00 | 78750.00 |
+| Juliana | COCHCMA | 62000.00 | 68200.00 |
+| Rafael | COCHCMA | 80000.00 | 84000.00 |
+| Beatriz | COCBS | 72000.00 | 75600.00 |
+| Pedro | COETI | 92000.00 | 96600.00 |
+| Mariana | COETI | 80000.00 | 84000.00 |
+
+::: {.conceito}
+**Vantagem do CASE em UPDATE:**
+
+O uso de um único `UPDATE` com `CASE` garante que o reajuste seja calculado com base nos **valores originais** — não há risco de um professor receber o primeiro reajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois `UPDATE`s separados.
+:::
+
+### UPDATE com subconsulta
+
+```sql
+-- Atualizar o orçamento do COETI para ser igual ao dobro da média dos outros centros
+UPDATE centro
+SET    orcamento = (
+    SELECT 2 * AVG(orcamento)
+    FROM   centro
+    WHERE  nome_centro <> 'COETI'
+)
+WHERE  nome_centro = 'COETI';
+```
+
+## Resumo dos Comandos de Modificação
+
+| Comando | Ação | Cuidado |
+|---|---|---|
+| `INSERT INTO ... VALUES` | Insere linhas com valores explícitos | Respeit restrições (PK, FK, NOT NULL, CHECK) |
+| `INSERT INTO ... SELECT` | Insere linhas copiadas de uma consulta | A consulta deve retornar colunas compatíveis |
+| `DELETE FROM ... WHERE` | Remove linhas que satisfazem a condição | Sem `WHERE`, remove **todas** as linhas |
+| `UPDATE ... SET ... WHERE` | Atualiza colunas das linhas que satisfazem a condição | Sem `WHERE`, atualiza **todas** as linhas |

@@ -1,0 +1,148 @@
+# Definição de Dados (DDL)
+
+A DDL (*Data Definition Language*) permite criar e modificar a estrutura de um banco de dados. Nesta seção, veremos os tipos de dados disponíveis em SQL e os comandos `CREATE TABLE`, `ALTER TABLE` e `DROP TABLE`.
+
+## Tipos de Domínio em SQL
+
+Cada coluna de uma tabela deve ter um **tipo de dado** que determina quais valores ela pode armazenar. Os principais tipos do padrão SQL são:
+
+| Tipo | Descrição | Exemplo |
+|---|---|---|
+| `CHAR(n)` | String de comprimento fixo com exatamente *n* caracteres | `CHAR(5)` para um código como `'10101'` |
+| `VARCHAR(n)` | String de comprimento variável com até *n* caracteres | `VARCHAR(50)` para nomes |
+| `INT` ou `INTEGER` | Número inteiro (tipicamente 4 bytes) | `42`, `-7` |
+| `SMALLINT` | Número inteiro menor (tipicamente 2 bytes) | `32767` |
+| `NUMERIC(p, d)` | Número decimal com *p* dígitos no total e *d* após a vírgula | `NUMERIC(8,2)` para `65000.00` |
+| `REAL` | Número de ponto flutuante de precisão simples | `3.14` |
+| `FLOAT(n)` | Ponto flutuante com pelo menos *n* dígitos de precisão | `FLOAT(10)` |
+| `DATE` | Data no formato `AAAA-MM-DD` | `'2026-03-10'` |
+| `TIME` | Hora no formato `HH:MM:SS` | `'08:30:00'` |
+| `TIMESTAMP` | Data e hora combinadas | `'2026-03-10 08:30:00'` |
+| `BOOLEAN` | Valor lógico `TRUE` ou `FALSE` | `TRUE` |
+
+::: {.conceito}
+A escolha do tipo de dado adequado é importante por duas razões: **integridade** (impede que valores inválidos sejam inseridos) e **eficiência** (tipos menores ocupam menos espaço e são processados mais rapidamente).
+:::
+
+## CREATE TABLE
+
+O comando `CREATE TABLE` define uma nova tabela no banco de dados. A sintaxe geral é:
+
+```sql
+CREATE TABLE nome_da_tabela (
+    coluna1  TIPO  [restrições],
+    coluna2  TIPO  [restrições],
+    ...
+    [restrições de tabela]
+);
+```
+
+### Restrições de integridade
+
+| Restrição | Descrição |
+|---|---|
+| `PRIMARY KEY` | Identifica unicamente cada linha; implica `NOT NULL` e `UNIQUE` |
+| `NOT NULL` | Impede que a coluna receba valor nulo |
+| `UNIQUE` | Garante que todos os valores da coluna são distintos |
+| `REFERENCES tabela(coluna)` | Define uma chave estrangeira (integridade referencial) |
+| `CHECK (condição)` | Valida que o valor satisfaz a condição especificada |
+| `DEFAULT valor` | Define um valor padrão quando nenhum é informado |
+
+## Criando as Tabelas da UnDF
+
+As tabelas devem ser criadas na ordem correta: primeiro `centro`, pois as outras tabelas referenciam essa tabela por meio de chaves estrangeiras.
+
+::: {.exemplo}
+**Tabela `centro`** — sem chaves estrangeiras, criada primeiro:
+
+```sql
+-- Centros acadêmicos da UnDF
+CREATE TABLE centro (
+    nome_centro VARCHAR(10)    PRIMARY KEY,
+    predio      VARCHAR(50)    NOT NULL,
+    orcamento   NUMERIC(10, 2) NOT NULL
+);
+```
+
+**Tabela `professor`** — referencia `centro`:
+
+```sql
+-- Professores vinculados a cada centro
+CREATE TABLE professor (
+    id          CHAR(5)       PRIMARY KEY,
+    nome        VARCHAR(50)   NOT NULL,
+    nome_centro VARCHAR(10)   REFERENCES centro(nome_centro),
+    salario     NUMERIC(8, 2) NOT NULL
+);
+```
+
+**Tabela `disciplina`** — referencia `centro` e exige carga horária positiva:
+
+```sql
+-- Disciplinas oferecidas por cada centro
+CREATE TABLE disciplina (
+    id_disciplina VARCHAR(10)  PRIMARY KEY,
+    titulo        VARCHAR(100) NOT NULL,
+    nome_centro   VARCHAR(10)  REFERENCES centro(nome_centro),
+    carga_horaria INTEGER      NOT NULL CHECK (carga_horaria > 0)
+);
+```
+
+**Tabela `aluno`** — referencia `centro` e define carga total com valor padrão zero:
+
+```sql
+-- Alunos matriculados na UnDF
+CREATE TABLE aluno (
+    id          CHAR(5)     PRIMARY KEY,
+    nome        VARCHAR(50) NOT NULL,
+    nome_centro VARCHAR(10) REFERENCES centro(nome_centro),
+    carga_total INTEGER     NOT NULL DEFAULT 0
+);
+```
+:::
+
+### O que acontece se a ordem for invertida?
+
+Se tentarmos criar `professor` antes de `centro`, o banco de dados retornará um erro semelhante a:
+
+```
+ERROR: relation "centro" does not exist
+```
+
+Isso ocorre porque a restrição `REFERENCES centro(nome_centro)` exige que a tabela `centro` já exista no momento da criação.
+
+## ALTER TABLE
+
+O comando `ALTER TABLE` modifica a estrutura de uma tabela já existente:
+
+```sql
+-- Adicionar uma nova coluna
+ALTER TABLE professor ADD COLUMN email VARCHAR(100);
+
+-- Remover uma coluna
+ALTER TABLE professor DROP COLUMN email;
+
+-- Alterar o tipo de uma coluna (sintaxe varia por SGBD)
+ALTER TABLE professor ALTER COLUMN salario TYPE NUMERIC(10, 2);
+
+-- Adicionar uma restrição
+ALTER TABLE aluno ADD CONSTRAINT chk_carga CHECK (carga_total >= 0);
+```
+
+## DROP TABLE
+
+O comando `DROP TABLE` remove uma tabela e todos os seus dados permanentemente:
+
+```sql
+-- Remove a tabela e todos os seus dados
+DROP TABLE aluno;
+
+-- Remove apenas se a tabela existir (evita erro)
+DROP TABLE IF EXISTS aluno;
+```
+
+::: {.callout-warning}
+`DROP TABLE` é uma operação irreversível. Todos os dados da tabela são perdidos permanentemente. Use com cautela em ambientes de produção.
+
+Além disso, se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará (ou removerá as tabelas dependentes, se `CASCADE` for especificado).
+:::

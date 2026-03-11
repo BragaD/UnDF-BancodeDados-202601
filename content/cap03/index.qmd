@@ -1,0 +1,38 @@
+# Visão Geral
+
+::: {.callout-note}
+Este capítulo é baseado no Capítulo 3 de @silberschatz2019.
+:::
+
+Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.
+
+Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — `centro`, `professor`, `disciplina` e `aluno` — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.
+
+Ao final deste capítulo, você será capaz de:
+
+- Descrever a história e as partes da linguagem SQL
+- Criar tabelas com tipos de dados e restrições de integridade usando DDL
+- Escrever consultas com `SELECT`, `FROM` e `WHERE`
+- Usar `DISTINCT`, `ORDER BY`, expressões aritméticas e aliases
+- Combinar condições com `AND`, `OR`, `NOT`, `BETWEEN` e `LIKE`
+- Aplicar operações de conjunto (`UNION`, `INTERSECT`, `EXCEPT`)
+- Compreender o tratamento de valores nulos em SQL
+- Usar funções de agregação e cláusulas `GROUP BY` e `HAVING`
+- Escrever subconsultas com `IN`, `SOME`, `ALL`, `EXISTS` e `WITH`
+- Inserir, atualizar e excluir dados com `INSERT`, `UPDATE` e `DELETE`
+
+## Seções
+
+| Seção | Tópico |
+|---|---|
+| [3.1](01-historia.qmd) | História e Partes do SQL |
+| [3.2](02-ddl.qmd) | Definição de Dados (DDL) |
+| [3.3](03-select-from-where.qmd) | Estrutura Básica: SELECT-FROM-WHERE |
+| [3.4](04-clausula-select.qmd) | Cláusula SELECT |
+| [3.5](05-clausula-where.qmd) | Cláusulas WHERE e ORDER BY |
+| [3.6](06-operacoes-conjunto.qmd) | Operações de Conjunto |
+| [3.7](07-nulos.qmd) | Valores Nulos |
+| [3.8](08-agregacao.qmd) | Funções de Agregação |
+| [3.9](09-subconsultas.qmd) | Subconsultas |
+| [3.10](10-modificacao.qmd) | Modificação do Banco de Dados |
+| [Resumo](11-resumo.qmd) | Resumo e Exercícios |

@@ -76,6 +76,32 @@ book:
           text: "Operações Adicionais"
         - href: content/cap02/12-resumo.qmd
           text: "Resumo e Exercícios"
+    - part: "Capítulo 3: Introdução ao SQL"
+      chapters:
+        - href: content/cap03/index.qmd
+          text: "Visão Geral"
+        - href: content/cap03/01-historia.qmd
+          text: "História e Partes do SQL"
+        - href: content/cap03/02-ddl.qmd
+          text: "Definição de Dados (DDL)"
+        - href: content/cap03/03-select-from-where.qmd
+          text: "SELECT-FROM-WHERE"
+        - href: content/cap03/04-clausula-select.qmd
+          text: "Cláusula SELECT"
+        - href: content/cap03/05-clausula-where.qmd
+          text: "WHERE e ORDER BY"
+        - href: content/cap03/06-operacoes-conjunto.qmd
+          text: "Operações de Conjunto"
+        - href: content/cap03/07-nulos.qmd
+          text: "Valores Nulos"
+        - href: content/cap03/08-agregacao.qmd
+          text: "Funções de Agregação"
+        - href: content/cap03/09-subconsultas.qmd
+          text: "Subconsultas"
+        - href: content/cap03/10-modificacao.qmd
+          text: "Modificação do Banco de Dados"
+        - href: content/cap03/11-resumo.qmd
+          text: "Resumo e Exercícios"
 
 page-navigation: true
 

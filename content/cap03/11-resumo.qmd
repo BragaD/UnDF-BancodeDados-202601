@@ -1,0 +1,82 @@
+# Resumo e Exercícios
+
+## Resumo
+
+Neste capítulo, cobrimos os fundamentos da linguagem SQL, da definição de dados à consulta e modificação:
+
+| Comando / Recurso | Finalidade |
+|---|---|
+| `CREATE TABLE` | Cria uma tabela com colunas, tipos e restrições |
+| `ALTER TABLE` | Modifica a estrutura de uma tabela existente |
+| `DROP TABLE` | Remove uma tabela permanentemente |
+| `SELECT ... FROM ... WHERE` | Consulta básica: projeção, filtragem e produto cartesiano |
+| `DISTINCT` | Elimina linhas duplicadas no resultado |
+| `ORDER BY` | Ordena o resultado (ASC ou DESC) |
+| `BETWEEN` | Filtra valores dentro de um intervalo fechado |
+| `LIKE` | Filtra strings por padrões (`%` e `_`) |
+| `UNION` | Une resultados de duas consultas (elimina duplicatas) |
+| `UNION ALL` | Une resultados mantendo duplicatas |
+| `INTERSECT` | Retorna apenas linhas presentes nas duas consultas |
+| `EXCEPT` | Retorna linhas da primeira consulta ausentes na segunda |
+| `NULL` / `IS NULL` | Valor ausente; comparações com `IS NULL` ou `IS NOT NULL` |
+| `AVG`, `SUM`, `MIN`, `MAX`, `COUNT` | Funções de agregação sobre conjuntos de linhas |
+| `GROUP BY` | Agrupa linhas por valores iguais de uma ou mais colunas |
+| `HAVING` | Filtra grupos após a agregação |
+| `IN` / `NOT IN` | Verifica pertencimento a um conjunto (subconsulta ou lista) |
+| `SOME` / `ALL` | Compara com ao menos um ou com todos os elementos de um conjunto |
+| `EXISTS` / `NOT EXISTS` | Verifica existência de linhas em uma subconsulta correlacionada |
+| Subconsulta no `FROM` | Subconsulta usada como tabela derivada |
+| `WITH` (CTE) | Define expressões de tabela nomeadas e reutilizáveis |
+| `INSERT INTO` | Insere novas linhas em uma tabela |
+| `DELETE FROM` | Remove linhas de uma tabela |
+| `UPDATE ... SET` | Atualiza valores de colunas em linhas existentes |
+| `CASE` | Expressão condicional usada em `SELECT` e `UPDATE` |
+
+## Exercícios
+
+Os exercícios abaixo usam as tabelas `centro`, `professor`, `disciplina` e `aluno` da UnDF com os dados apresentados ao longo deste capítulo.
+
+---
+
+**Exercício 1.** Liste os nomes de todos os alunos do COCBS em ordem alfabética.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `WHERE nome_centro = 'COCBS'` e `ORDER BY nome ASC`.
+:::
+
+---
+
+**Exercício 2.** Qual é o total de carga horária das disciplinas oferecidas pelo COETI?
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `SUM(carga_horaria)` com `WHERE nome_centro = 'COETI'`.
+:::
+
+---
+
+**Exercício 3.** Quais centros têm orçamento acima da média de todos os centros? Exiba o nome do centro e seu orçamento, em ordem decrescente de orçamento.
+
+::: {.callout-tip collapse="true"}
+## Dica
+A média pode ser calculada com uma subconsulta: `WHERE orcamento > (SELECT AVG(orcamento) FROM centro)`.
+:::
+
+---
+
+**Exercício 4.** Liste os professores que pertencem ao mesmo centro que pelo menos uma disciplina com carga horária superior a 100 horas. Exiba o nome do professor, o centro e o salário.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `IN` com uma subconsulta que seleciona `nome_centro` de `disciplina WHERE carga_horaria > 100`.
+:::
+
+---
+
+**Exercício 5.** Para cada centro, retorne o nome do professor com o maior salário. Exiba o nome do centro, o nome do professor e o salário.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use uma subconsulta correlacionada no `WHERE` para comparar o salário com o `MAX(salario)` do mesmo centro, ou use uma CTE com `WITH`.
+:::

@@ -1,0 +1,60 @@
+# História e Partes do SQL
+
+## Origem e Evolução
+
+A linguagem SQL — *Structured Query Language* — tem suas raízes nos laboratórios da IBM no início dos anos 1970. O pesquisador Edgar F. Codd publicou, em 1970, seu artigo seminal que estabeleceu as bases do modelo relacional. Pouco depois, a IBM iniciou o projeto **System R**, cujo objetivo era construir um protótipo de banco de dados relacional. Para interagir com esse sistema, foi criada uma linguagem de consulta chamada **SEQUEL** (*Structured English Query Language*), desenvolvida por Donald Chamberlin e Raymond Boyce.
+
+Com o tempo, o nome foi abreviado para **SQL** por razões legais. Em 1979, a empresa Relational Software Inc. (hoje Oracle) lançou o primeiro SGBD comercial baseado em SQL.
+
+A padronização internacional chegou em 1986, quando o *American National Standards Institute* (ANSI) e, posteriormente, a *International Organization for Standardization* (ISO) adotaram o SQL como padrão oficial para linguagens de banco de dados relacionais. Desde então, o padrão passou por diversas revisões:
+
+| Versão | Ano | Principais novidades |
+|---|---|---|
+| SQL-86 | 1986 | Primeira versão padronizada (ANSI) |
+| SQL-89 | 1989 | Pequenas revisões e correções |
+| SQL-92 | 1992 | Grandes extensões: tipos de dados, junções, subconsultas |
+| SQL:1999 | 1999 | Suporte a objetos, gatilhos, expressões regulares |
+| SQL:2003 | 2003 | Funções de janela, sequências, XML |
+| SQL:2008 | 2008 | TRUNCATE, cláusula ORDER BY em funções de janela |
+| SQL:2011 | 2011 | Dados temporais |
+| SQL:2016 | 2016 | Suporte a JSON |
+| SQL:2023 | 2023 | Grafos de propriedades, melhorias em JSON |
+
+Embora o padrão ISO defina um núcleo comum, cada SGBD (PostgreSQL, MySQL, Oracle, SQL Server) implementa extensões próprias. Por isso, consultas escritas em um SGBD podem precisar de pequenos ajustes para funcionar em outro.
+
+## Partes do SQL
+
+A linguagem SQL é dividida em três grandes sublinguagens, cada uma com um propósito distinto:
+
+::: {.conceito}
+**DDL — Data Definition Language (Linguagem de Definição de Dados)**
+
+Conjunto de comandos responsável por **definir, alterar e remover** a estrutura do banco de dados: tabelas, tipos de dados, restrições de integridade, índices e visões.
+
+Comandos principais: `CREATE`, `ALTER`, `DROP`.
+:::
+
+::: {.conceito}
+**DML — Data Manipulation Language (Linguagem de Manipulação de Dados)**
+
+Conjunto de comandos responsável por **consultar e modificar** os dados armazenados nas tabelas.
+
+Comandos principais: `SELECT`, `INSERT`, `UPDATE`, `DELETE`.
+:::
+
+::: {.conceito}
+**DCL — Data Control Language (Linguagem de Controle de Dados)**
+
+Conjunto de comandos responsável por **controlar o acesso** aos dados, concedendo ou revogando permissões a usuários e perfis.
+
+Comandos principais: `GRANT`, `REVOKE`.
+:::
+
+Além dessas três sublinguagens, o SQL moderno inclui também:
+
+- **TCL** (*Transaction Control Language*): controle de transações com `COMMIT`, `ROLLBACK` e `SAVEPOINT`.
+- **Integridade**: restrições como `NOT NULL`, `UNIQUE`, `CHECK`, `PRIMARY KEY` e `FOREIGN KEY`.
+- **Visões**: definição de relações virtuais com `CREATE VIEW`.
+- **SQL embutido e dinâmico**: uso de SQL dentro de programas escritos em outras linguagens (Java, Python, C).
+
+Neste capítulo, o foco está na **DDL** (criação de tabelas) e na **DML** (consultas e modificações).
