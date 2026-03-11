@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>29&nbsp; História e Partes do SQL – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/02-ddl.html" rel="next">
+<link href="../../content/cap03/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/01-historia.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -320,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/01-historia.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/01-historia.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span></a>
   </div>
 </li>
@@ -391,15 +391,22 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#origem-e-evolução" id="toc-origem-e-evolução" class="nav-link active" data-scroll-target="#origem-e-evolução"><span class="header-section-number">29.1</span> Origem e Evolução</a></li>
+  <li><a href="#partes-do-sql" id="toc-partes-do-sql" class="nav-link" data-scroll-target="#partes-do-sql"><span class="header-section-number">29.2</span> Partes do SQL</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/01-historia.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></h1>
 </div>
 
 
@@ -422,15 +429,103 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<section id="origem-e-evolução" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="origem-e-evolução"><span class="header-section-number">29.1</span> Origem e Evolução</h2>
+<p>A linguagem SQL — <em>Structured Query Language</em> — tem suas raízes nos laboratórios da IBM no início dos anos 1970. O pesquisador Edgar F. Codd publicou, em 1970, seu artigo seminal que estabeleceu as bases do modelo relacional. Pouco depois, a IBM iniciou o projeto <strong>System R</strong>, cujo objetivo era construir um protótipo de banco de dados relacional. Para interagir com esse sistema, foi criada uma linguagem de consulta chamada <strong>SEQUEL</strong> (<em>Structured English Query Language</em>), desenvolvida por Donald Chamberlin e Raymond Boyce.</p>
+<p>Com o tempo, o nome foi abreviado para <strong>SQL</strong> por razões legais. Em 1979, a empresa Relational Software Inc.&nbsp;(hoje Oracle) lançou o primeiro SGBD comercial baseado em SQL.</p>
+<p>A padronização internacional chegou em 1986, quando o <em>American National Standards Institute</em> (ANSI) e, posteriormente, a <em>International Organization for Standardization</em> (ISO) adotaram o SQL como padrão oficial para linguagens de banco de dados relacionais. Desde então, o padrão passou por diversas revisões:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Versão</th>
+<th>Ano</th>
+<th>Principais novidades</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SQL-86</td>
+<td>1986</td>
+<td>Primeira versão padronizada (ANSI)</td>
+</tr>
+<tr class="even">
+<td>SQL-89</td>
+<td>1989</td>
+<td>Pequenas revisões e correções</td>
+</tr>
+<tr class="odd">
+<td>SQL-92</td>
+<td>1992</td>
+<td>Grandes extensões: tipos de dados, junções, subconsultas</td>
+</tr>
+<tr class="even">
+<td>SQL:1999</td>
+<td>1999</td>
+<td>Suporte a objetos, gatilhos, expressões regulares</td>
+</tr>
+<tr class="odd">
+<td>SQL:2003</td>
+<td>2003</td>
+<td>Funções de janela, sequências, XML</td>
+</tr>
+<tr class="even">
+<td>SQL:2008</td>
+<td>2008</td>
+<td>TRUNCATE, cláusula ORDER BY em funções de janela</td>
+</tr>
+<tr class="odd">
+<td>SQL:2011</td>
+<td>2011</td>
+<td>Dados temporais</td>
+</tr>
+<tr class="even">
+<td>SQL:2016</td>
+<td>2016</td>
+<td>Suporte a JSON</td>
+</tr>
+<tr class="odd">
+<td>SQL:2023</td>
+<td>2023</td>
+<td>Grafos de propriedades, melhorias em JSON</td>
+</tr>
+</tbody>
+</table>
+<p>Embora o padrão ISO defina um núcleo comum, cada SGBD (PostgreSQL, MySQL, Oracle, SQL Server) implementa extensões próprias. Por isso, consultas escritas em um SGBD podem precisar de pequenos ajustes para funcionar em outro.</p>
+</section>
+<section id="partes-do-sql" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="partes-do-sql"><span class="header-section-number">29.2</span> Partes do SQL</h2>
+<p>A linguagem SQL é dividida em três grandes sublinguagens, cada uma com um propósito distinto:</p>
+<div class="conceito">
+<p><strong>DDL — Data Definition Language (Linguagem de Definição de Dados)</strong></p>
+<p>Conjunto de comandos responsável por <strong>definir, alterar e remover</strong> a estrutura do banco de dados: tabelas, tipos de dados, restrições de integridade, índices e visões.</p>
+<p>Comandos principais: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>.</p>
+</div>
+<div class="conceito">
+<p><strong>DML — Data Manipulation Language (Linguagem de Manipulação de Dados)</strong></p>
+<p>Conjunto de comandos responsável por <strong>consultar e modificar</strong> os dados armazenados nas tabelas.</p>
+<p>Comandos principais: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</p>
+</div>
+<div class="conceito">
+<p><strong>DCL — Data Control Language (Linguagem de Controle de Dados)</strong></p>
+<p>Conjunto de comandos responsável por <strong>controlar o acesso</strong> aos dados, concedendo ou revogando permissões a usuários e perfis.</p>
+<p>Comandos principais: <code>GRANT</code>, <code>REVOKE</code>.</p>
+</div>
+<p>Além dessas três sublinguagens, o SQL moderno inclui também:</p>
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><strong>TCL</strong> (<em>Transaction Control Language</em>): controle de transações com <code>COMMIT</code>, <code>ROLLBACK</code> e <code>SAVEPOINT</code>.</li>
+<li><strong>Integridade</strong>: restrições como <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>, <code>PRIMARY KEY</code> e <code>FOREIGN KEY</code>.</li>
+<li><strong>Visões</strong>: definição de relações virtuais com <code>CREATE VIEW</code>.</li>
+<li><strong>SQL embutido e dinâmico</strong>: uso de SQL dentro de programas escritos em outras linguagens (Java, Python, C).</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<p>Neste capítulo, o foco está na <strong>DDL</strong> (criação de tabelas) e na <strong>DML</strong> (consultas e modificações).</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +976,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/index.html" class="pagination-link" aria-label="Visão Geral">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Visão Geral</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/02-ddl.html" class="pagination-link" aria-label="Definição de Dados (DDL)">
+        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +991,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

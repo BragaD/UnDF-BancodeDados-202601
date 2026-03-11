@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>38&nbsp; Modificação do Banco de Dados – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/11-resumo.html" rel="next">
+<link href="../../content/cap03/09-subconsultas.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/10-modificacao.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -374,7 +409,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/10-modificacao.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/10-modificacao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></span></a>
   </div>
 </li>
@@ -391,15 +426,38 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#insert-inserindo-dados" id="toc-insert-inserindo-dados" class="nav-link active" data-scroll-target="#insert-inserindo-dados"><span class="header-section-number">38.1</span> INSERT: Inserindo Dados</a>
+  <ul>
+  <li><a href="#inserção-de-uma-única-linha" id="toc-inserção-de-uma-única-linha" class="nav-link" data-scroll-target="#inserção-de-uma-única-linha"><span class="header-section-number">38.1.1</span> Inserção de uma única linha</a></li>
+  <li><a href="#insert-com-select" id="toc-insert-com-select" class="nav-link" data-scroll-target="#insert-com-select"><span class="header-section-number">38.1.2</span> INSERT com SELECT</a></li>
+  </ul></li>
+  <li><a href="#delete-excluindo-dados" id="toc-delete-excluindo-dados" class="nav-link" data-scroll-target="#delete-excluindo-dados"><span class="header-section-number">38.2</span> DELETE: Excluindo Dados</a>
+  <ul>
+  <li><a href="#delete-simples" id="toc-delete-simples" class="nav-link" data-scroll-target="#delete-simples"><span class="header-section-number">38.2.1</span> DELETE simples</a></li>
+  <li><a href="#delete-com-subconsulta" id="toc-delete-com-subconsulta" class="nav-link" data-scroll-target="#delete-com-subconsulta"><span class="header-section-number">38.2.2</span> DELETE com subconsulta</a></li>
+  </ul></li>
+  <li><a href="#update-atualizando-dados" id="toc-update-atualizando-dados" class="nav-link" data-scroll-target="#update-atualizando-dados"><span class="header-section-number">38.3</span> UPDATE: Atualizando Dados</a>
+  <ul>
+  <li><a href="#update-simples" id="toc-update-simples" class="nav-link" data-scroll-target="#update-simples"><span class="header-section-number">38.3.1</span> UPDATE simples</a></li>
+  <li><a href="#update-condicional" id="toc-update-condicional" class="nav-link" data-scroll-target="#update-condicional"><span class="header-section-number">38.3.2</span> UPDATE condicional</a></li>
+  <li><a href="#update-com-case-reajuste-escalonado" id="toc-update-com-case-reajuste-escalonado" class="nav-link" data-scroll-target="#update-com-case-reajuste-escalonado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste escalonado</a></li>
+  <li><a href="#update-com-subconsulta" id="toc-update-com-subconsulta" class="nav-link" data-scroll-target="#update-com-subconsulta"><span class="header-section-number">38.3.4</span> UPDATE com subconsulta</a></li>
+  </ul></li>
+  <li><a href="#resumo-dos-comandos-de-modificação" id="toc-resumo-dos-comandos-de-modificação" class="nav-link" data-scroll-target="#resumo-dos-comandos-de-modificação"><span class="header-section-number">38.4</span> Resumo dos Comandos de Modificação</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/10-modificacao.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></h1>
 </div>
 
 
@@ -422,15 +480,334 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
-<ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
-</ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<p>Além de consultar dados com <code>SELECT</code>, o SQL permite <strong>modificar</strong> o conteúdo de um banco de dados por meio de três comandos DML: <code>INSERT</code> (inserir), <code>DELETE</code> (excluir) e <code>UPDATE</code> (atualizar).</p>
+<section id="insert-inserindo-dados" class="level2" data-number="38.1">
+<h2 data-number="38.1" class="anchored" data-anchor-id="insert-inserindo-dados"><span class="header-section-number">38.1</span> INSERT: Inserindo Dados</h2>
+<section id="inserção-de-uma-única-linha" class="level3" data-number="38.1.1">
+<h3 data-number="38.1.1" class="anchored" data-anchor-id="inserção-de-uma-única-linha"><span class="header-section-number">38.1.1</span> Inserção de uma única linha</h3>
+<p>A forma mais simples insere uma linha com valores explícitos:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Inserir um novo centro na UnDF</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (nome_centro, predio, orcamento)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'COMAT'</span>, <span class="st">'Plano Piloto'</span>, <span class="fl">120000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quando os valores são fornecidos na mesma ordem das colunas da tabela, a lista de colunas pode ser omitida — mas é considerada boa prática sempre especificá-la:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Forma equivalente (sem lista de colunas — menos recomendada)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'COMAT'</span>, <span class="st">'Plano Piloto'</span>, <span class="fl">120000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ao inserir um professor vinculado ao novo centro:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (<span class="kw">id</span>, nome, nome_centro, salario)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'11111'</span>, <span class="st">'Vanessa'</span>, <span class="st">'COMAT'</span>, <span class="fl">55000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="insert-com-select" class="level3" data-number="38.1.2">
+<h3 data-number="38.1.2" class="anchored" data-anchor-id="insert-com-select"><span class="header-section-number">38.1.2</span> INSERT com SELECT</h3>
+<p>É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela <code>professor_historico</code> com a mesma estrutura de <code>professor</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Criar tabela histórica (estrutura idêntica a professor)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor_historico (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    salario     <span class="dt">NUMERIC</span>(<span class="dv">8</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Copiar para o histórico os professores com salário acima de R$ 90.000</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor_historico (<span class="kw">id</span>, nome, nome_centro, salario)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, nome, nome_centro, salario</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="dv">90000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Linhas inseridas</strong> (professores com salário &gt; 90.000):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>nome</th>
+<th>nome_centro</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>22222</td>
+<td>Marcos</td>
+<td>COCBS</td>
+<td>95000.00</td>
+</tr>
+<tr class="even">
+<td>83821</td>
+<td>Pedro</td>
+<td>COETI</td>
+<td>92000.00</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delete-excluindo-dados" class="level2" data-number="38.2">
+<h2 data-number="38.2" class="anchored" data-anchor-id="delete-excluindo-dados"><span class="header-section-number">38.2</span> DELETE: Excluindo Dados</h2>
+<section id="delete-simples" class="level3" data-number="38.2.1">
+<h3 data-number="38.2.1" class="anchored" data-anchor-id="delete-simples"><span class="header-section-number">38.2.1</span> DELETE simples</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover o professor João (único professor do COEMAG)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> professor</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Essa operação remove a linha de João (id 15151) permanentemente.</p>
+</section>
+<section id="delete-com-subconsulta" class="level3" data-number="38.2.2">
+<h3 data-number="38.2.2" class="anchored" data-anchor-id="delete-com-subconsulta"><span class="header-section-number">38.2.2</span> DELETE com subconsulta</h3>
+<p>Para condições mais complexas, o <code>WHERE</code> pode conter subconsultas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover professores com salário abaixo da média geral</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Média atual: (65000+90000+40000+95000+60000+87000+75000+62000+80000+72000+92000+80000)/12 ≈ 74833</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> professor</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&lt;</span> (</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="fu">AVG</span>(salario)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Professores removidos</strong> (salário &lt; 74833.33):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>65000.00</td>
+</tr>
+<tr class="even">
+<td>João</td>
+<td>40000.00</td>
+</tr>
+<tr class="odd">
+<td>Fernanda</td>
+<td>60000.00</td>
+</tr>
+<tr class="even">
+<td>Juliana</td>
+<td>62000.00</td>
+</tr>
+<tr class="odd">
+<td>Beatriz</td>
+<td>72000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Atenção ao comportamento da subconsulta em DELETE:</strong></p>
+<p>Alguns SGBDs (como MySQL) <strong>não permitem</strong> que a subconsulta referencie a mesma tabela que está sendo modificada. Em PostgreSQL, isso é permitido, pois o banco computa a subconsulta com o estado da tabela <strong>antes</strong> de iniciar as exclusões.</p>
+<p>Para máxima portabilidade, use uma CTE ou subconsulta no <code>FROM</code> quando necessário.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="update-atualizando-dados" class="level2" data-number="38.3">
+<h2 data-number="38.3" class="anchored" data-anchor-id="update-atualizando-dados"><span class="header-section-number">38.3</span> UPDATE: Atualizando Dados</h2>
+<section id="update-simples" class="level3" data-number="38.3.1">
+<h3 data-number="38.3.1" class="anchored" data-anchor-id="update-simples"><span class="header-section-number">38.3.1</span> UPDATE simples</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aplicar reajuste de 5% para todos os professores</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.05</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="update-condicional" class="level3" data-number="38.3.2">
+<h3 data-number="38.3.2" class="anchored" data-anchor-id="update-condicional"><span class="header-section-number">38.3.2</span> UPDATE condicional</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aumentar 10% para professores do COETI</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.10</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Antes e depois (professores do COETI):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario antes</th>
+<th>salario depois</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>65000.00</td>
+<td>71500.00</td>
+</tr>
+<tr class="even">
+<td>Lucas</td>
+<td>75000.00</td>
+<td>82500.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>92000.00</td>
+<td>101200.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>80000.00</td>
+<td>88000.00</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="update-com-case-reajuste-escalonado" class="level3" data-number="38.3.3">
+<h3 data-number="38.3.3" class="anchored" data-anchor-id="update-com-case-reajuste-escalonado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste escalonado</h3>
+<p>Quando diferentes grupos de linhas precisam de atualizações diferentes, o <code>CASE</code> permite aplicar regras distintas em um único comando:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Reajuste diferenciado por faixa salarial:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">--   Salário &lt;= R$ 70.000 → aumento de 10%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   Salário &gt;  R$ 70.000 → aumento de 5%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> <span class="cf">CASE</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">WHEN</span> salario <span class="op">&lt;=</span> <span class="dv">70000</span> <span class="cf">THEN</span> salario <span class="op">*</span> <span class="fl">1.10</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">ELSE</span>                      salario <span class="op">*</span> <span class="fl">1.05</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado para todos os professores:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+<th>salario antes</th>
+<th>salario depois</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>COETI</td>
+<td>65000.00</td>
+<td>71500.00</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>COCHCMA</td>
+<td>90000.00</td>
+<td>94500.00</td>
+</tr>
+<tr class="odd">
+<td>João</td>
+<td>COEMAG</td>
+<td>40000.00</td>
+<td>44000.00</td>
+</tr>
+<tr class="even">
+<td>Marcos</td>
+<td>COCBS</td>
+<td>95000.00</td>
+<td>99750.00</td>
+</tr>
+<tr class="odd">
+<td>Fernanda</td>
+<td>COCHCMA</td>
+<td>60000.00</td>
+<td>66000.00</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>COCBS</td>
+<td>87000.00</td>
+<td>91350.00</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>COETI</td>
+<td>75000.00</td>
+<td>78750.00</td>
+</tr>
+<tr class="even">
+<td>Juliana</td>
+<td>COCHCMA</td>
+<td>62000.00</td>
+<td>68200.00</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>COCHCMA</td>
+<td>80000.00</td>
+<td>84000.00</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>COCBS</td>
+<td>72000.00</td>
+<td>75600.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>COETI</td>
+<td>92000.00</td>
+<td>96600.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>COETI</td>
+<td>80000.00</td>
+<td>84000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="conceito">
+<p><strong>Vantagem do CASE em UPDATE:</strong></p>
+<p>O uso de um único <code>UPDATE</code> com <code>CASE</code> garante que o reajuste seja calculado com base nos <strong>valores originais</strong> — não há risco de um professor receber o primeiro reajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois <code>UPDATE</code>s separados.</p>
+</div>
+</section>
+<section id="update-com-subconsulta" class="level3" data-number="38.3.4">
+<h3 data-number="38.3.4" class="anchored" data-anchor-id="update-com-subconsulta"><span class="header-section-number">38.3.4</span> UPDATE com subconsulta</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Atualizar o orçamento do COETI para ser igual ao dobro da média dos outros centros</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> centro</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    orcamento <span class="op">=</span> (</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">2</span> <span class="op">*</span> <span class="fu">AVG</span>(orcamento)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">&lt;&gt;</span> <span class="st">'COETI'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="resumo-dos-comandos-de-modificação" class="level2" data-number="38.4">
+<h2 data-number="38.4" class="anchored" data-anchor-id="resumo-dos-comandos-de-modificação"><span class="header-section-number">38.4</span> Resumo dos Comandos de Modificação</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Comando</th>
+<th>Ação</th>
+<th>Cuidado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INSERT INTO ... VALUES</code></td>
+<td>Insere linhas com valores explícitos</td>
+<td>Respeit restrições (PK, FK, NOT NULL, CHECK)</td>
+</tr>
+<tr class="even">
+<td><code>INSERT INTO ... SELECT</code></td>
+<td>Insere linhas copiadas de uma consulta</td>
+<td>A consulta deve retornar colunas compatíveis</td>
+</tr>
+<tr class="odd">
+<td><code>DELETE FROM ... WHERE</code></td>
+<td>Remove linhas que satisfazem a condição</td>
+<td>Sem <code>WHERE</code>, remove <strong>todas</strong> as linhas</td>
+</tr>
+<tr class="even">
+<td><code>UPDATE ... SET ... WHERE</code></td>
+<td>Atualiza colunas das linhas que satisfazem a condição</td>
+<td>Sem <code>WHERE</code>, atualiza <strong>todas</strong> as linhas</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1258,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/09-subconsultas.html" class="pagination-link" aria-label="Subconsultas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/11-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
+        <span class="nav-page-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1273,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

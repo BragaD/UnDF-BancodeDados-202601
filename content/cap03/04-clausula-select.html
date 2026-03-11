@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>32&nbsp; Cláusula SELECT – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/05-clausula-where.html" rel="next">
+<link href="../../content/cap03/03-select-from-where.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -338,7 +373,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span></a>
   </div>
 </li>
@@ -391,15 +426,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#distinct-eliminando-duplicatas" id="toc-distinct-eliminando-duplicatas" class="nav-link active" data-scroll-target="#distinct-eliminando-duplicatas"><span class="header-section-number">32.1</span> DISTINCT: Eliminando Duplicatas</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">32.2</span> SELECT *</a></li>
+  <li><a href="#expressões-aritméticas" id="toc-expressões-aritméticas" class="nav-link" data-scroll-target="#expressões-aritméticas"><span class="header-section-number">32.3</span> Expressões Aritméticas</a></li>
+  <li><a href="#alias-com-as" id="toc-alias-com-as" class="nav-link" data-scroll-target="#alias-com-as"><span class="header-section-number">32.4</span> Alias com AS</a></li>
+  <li><a href="#literais-no-select" id="toc-literais-no-select" class="nav-link" data-scroll-target="#literais-no-select"><span class="header-section-number">32.5</span> Literais no SELECT</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></h1>
 </div>
 
 
@@ -422,15 +467,261 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<p>A cláusula <code>SELECT</code> determina <strong>quais colunas</strong> (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.</p>
+<section id="distinct-eliminando-duplicatas" class="level2" data-number="32.1">
+<h2 data-number="32.1" class="anchored" data-anchor-id="distinct-eliminando-duplicatas"><span class="header-section-number">32.1</span> DISTINCT: Eliminando Duplicatas</h2>
+<p>Por padrão, o SQL <strong>não</strong> elimina linhas duplicadas no resultado — comportamento chamado de <code>ALL</code>. Para remover duplicatas, usa-se a palavra-chave <code>DISTINCT</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista todos os centros, um por professor (com repetição)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>COEMAG</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com DISTINCT: cada centro aparece apenas uma vez</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> nome_centro</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>COEMAG</td>
+</tr>
+</tbody>
+</table>
+<p>Os 12 professores são distribuídos entre 4 centros distintos. <code>DISTINCT</code> eliminará as repetições.</p>
+</section>
+<section id="select" class="level2" data-number="32.2">
+<h2 data-number="32.2" class="anchored" data-anchor-id="select"><span class="header-section-number">32.2</span> SELECT *</h2>
+<p>O asterisco <code>*</code> seleciona <strong>todas as colunas</strong> da tabela:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Retorna todas as colunas de professor</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Embora prático para exploração, o uso de <code>SELECT *</code> em aplicações de produção é desaconselhado, pois o resultado depende da estrutura atual da tabela e pode mudar se colunas forem adicionadas ou reordenadas.</p>
+</section>
+<section id="expressões-aritméticas" class="level2" data-number="32.3">
+<h2 data-number="32.3" class="anchored" data-anchor-id="expressões-aritméticas"><span class="header-section-number">32.3</span> Expressões Aritméticas</h2>
+<p>A cláusula <code>SELECT</code> pode conter expressões aritméticas com os operadores <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular um reajuste de 10% nos salários sem alterar o banco</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario, salario <span class="op">*</span> <span class="fl">1.10</span> <span class="kw">AS</span> salario_reajustado</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado (primeiras linhas):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+<th>salario_reajustado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>65000.00</td>
+<td>71500.00</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>90000.00</td>
+<td>99000.00</td>
+</tr>
+<tr class="odd">
+<td>João</td>
+<td>40000.00</td>
+<td>44000.00</td>
+</tr>
+<tr class="even">
+<td>Marcos</td>
+<td>95000.00</td>
+<td>104500.00</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A expressão <code>salario * 1.10</code> <strong>não altera</strong> o banco de dados. Ela cria uma coluna calculada apenas no resultado da consulta. Para alterar os dados de fato, seria necessário usar <code>UPDATE</code> (ver seção 3.10).</p>
+</div>
+</div>
+</section>
+<section id="alias-com-as" class="level2" data-number="32.4">
+<h2 data-number="32.4" class="anchored" data-anchor-id="alias-com-as"><span class="header-section-number">32.4</span> Alias com AS</h2>
+<p>A palavra-chave <code>AS</code> permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de <strong>alias</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias em coluna: renomeia a coluna calculada</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">AS</span> professor, salario <span class="op">*</span> <span class="fl">1.10</span> <span class="kw">AS</span> salario_reajustado</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor <span class="kw">AS</span> p</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>professor</th>
+<th>salario_reajustado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>71500.00</td>
+</tr>
+<tr class="even">
+<td>Lucas</td>
+<td>82500.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>101200.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>88000.00</td>
+</tr>
+</tbody>
+</table>
+<p>Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas, pois permitem abreviar os qualificadores:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias de tabela: p no lugar de professor</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, c.predio</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor <span class="kw">AS</span> p, centro <span class="kw">AS</span> c</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.nome_centro <span class="op">=</span> c.nome_centro</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  p.nome_centro <span class="op">=</span> <span class="st">'COCBS'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>predio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Marcos</td>
+<td>Samambaia</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>Samambaia</td>
+</tr>
+<tr class="odd">
+<td>Beatriz</td>
+<td>Samambaia</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="literais-no-select" class="level2" data-number="32.5">
+<h2 data-number="32.5" class="anchored" data-anchor-id="literais-no-select"><span class="header-section-number">32.5</span> Literais no SELECT</h2>
+<p>É possível incluir valores literais (constantes) na cláusula <code>SELECT</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adiciona uma coluna com o texto fixo 'UnDF'</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UnDF'</span> <span class="kw">AS</span> instituicao, nome, nome_centro</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>instituicao</th>
+<th>nome</th>
+<th>nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UnDF</td>
+<td>Carlos</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>UnDF</td>
+<td>Lucas</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>UnDF</td>
+<td>Pedro</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>UnDF</td>
+<td>Mariana</td>
+<td>COETI</td>
+</tr>
+</tbody>
+</table>
+<div class="conceito">
+<p><strong>Resumo da cláusula SELECT:</strong></p>
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><code>SELECT coluna</code> — projeta uma coluna específica</li>
+<li><code>SELECT DISTINCT coluna</code> — elimina duplicatas</li>
+<li><code>SELECT *</code> — projeta todas as colunas</li>
+<li><code>SELECT expressão AS alias</code> — projeta uma expressão com nome alternativo</li>
+<li><code>SELECT 'literal' AS alias</code> — inclui uma constante no resultado</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1172,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/03-select-from-where.html" class="pagination-link" aria-label="SELECT-FROM-WHERE">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/05-clausula-where.html" class="pagination-link" aria-label="WHERE e ORDER BY">
+        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1187,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

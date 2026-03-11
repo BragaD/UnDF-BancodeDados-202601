@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>35&nbsp; Valores Nulos – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/08-agregacao.html" rel="next">
+<link href="../../content/cap03/06-operacoes-conjunto.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/07-nulos.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -356,7 +391,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/07-nulos.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/07-nulos.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span></a>
   </div>
 </li>
@@ -391,15 +426,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-que-é-null" id="toc-o-que-é-null" class="nav-link active" data-scroll-target="#o-que-é-null"><span class="header-section-number">35.1</span> O que é NULL?</a></li>
+  <li><a href="#aritmética-com-null" id="toc-aritmética-com-null" class="nav-link" data-scroll-target="#aritmética-com-null"><span class="header-section-number">35.2</span> Aritmética com NULL</a></li>
+  <li><a href="#comparações-com-null-lógica-de-três-valores" id="toc-comparações-com-null-lógica-de-três-valores" class="nav-link" data-scroll-target="#comparações-com-null-lógica-de-três-valores"><span class="header-section-number">35.3</span> Comparações com NULL: Lógica de Três Valores</a>
+  <ul>
+  <li><a href="#tabelas-de-verdade-com-unknown" id="toc-tabelas-de-verdade-com-unknown" class="nav-link" data-scroll-target="#tabelas-de-verdade-com-unknown"><span class="header-section-number">35.3.1</span> Tabelas de Verdade com UNKNOWN</a></li>
+  </ul></li>
+  <li><a href="#is-null-e-is-not-null" id="toc-is-null-e-is-not-null" class="nav-link" data-scroll-target="#is-null-e-is-not-null"><span class="header-section-number">35.4</span> IS NULL e IS NOT NULL</a></li>
+  <li><a href="#null-em-funções-de-agregação" id="toc-null-em-funções-de-agregação" class="nav-link" data-scroll-target="#null-em-funções-de-agregação"><span class="header-section-number">35.5</span> NULL em Funções de Agregação</a></li>
+  <li><a href="#boas-práticas" id="toc-boas-práticas" class="nav-link" data-scroll-target="#boas-práticas"><span class="header-section-number">35.6</span> Boas Práticas</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/07-nulos.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></h1>
 </div>
 
 
@@ -422,15 +471,226 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<section id="o-que-é-null" class="level2" data-number="35.1">
+<h2 data-number="35.1" class="anchored" data-anchor-id="o-que-é-null"><span class="header-section-number">35.1</span> O que é NULL?</h2>
+<div class="conceito">
+<p><strong>NULL</strong> é um valor especial em SQL que indica a <strong>ausência de informação</strong>. Um valor nulo pode significar:</p>
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><strong>Desconhecido</strong>: o valor existe, mas não é conhecido (ex.: o salário de um novo professor ainda não foi definido).</li>
+<li><strong>Inaplicável</strong>: o atributo não se aplica a essa entidade (ex.: um campo “cônjuge” para alguém solteiro).</li>
+<li><strong>Inexistente</strong>: a informação simplesmente não está disponível.</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+</div>
+<p>NULL não é zero, não é uma string vazia <code>''</code> e não é <code>false</code>. É um valor especial que se comporta de forma diferente em operações aritméticas e comparações.</p>
+</section>
+<section id="aritmética-com-null" class="level2" data-number="35.2">
+<h2 data-number="35.2" class="anchored" data-anchor-id="aritmética-com-null"><span class="header-section-number">35.2</span> Aritmética com NULL</h2>
+<p>Qualquer operação aritmética envolvendo NULL retorna NULL:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Expressão</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NULL + 1000</code></td>
+<td><code>NULL</code></td>
+</tr>
+<tr class="even">
+<td><code>NULL * 1.10</code></td>
+<td><code>NULL</code></td>
+</tr>
+<tr class="odd">
+<td><code>60000 + NULL</code></td>
+<td><code>NULL</code></td>
+</tr>
+</tbody>
+</table>
+<div class="exemplo">
+<p>Se o salário de um professor fosse <code>NULL</code>, a consulta abaixo retornaria <code>NULL</code> como salário reajustado:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="op">*</span> <span class="fl">1.10</span> <span class="kw">AS</span> salario_reajustado</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome <span class="op">=</span> <span class="st">'Carlos'</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Se salario fosse NULL, salario_reajustado também seria NULL</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="comparações-com-null-lógica-de-três-valores" class="level2" data-number="35.3">
+<h2 data-number="35.3" class="anchored" data-anchor-id="comparações-com-null-lógica-de-três-valores"><span class="header-section-number">35.3</span> Comparações com NULL: Lógica de Três Valores</h2>
+<p>Em álgebra booleana clássica, uma comparação retorna <code>TRUE</code> ou <code>FALSE</code>. Em SQL, comparações com NULL retornam um terceiro resultado: <strong>UNKNOWN</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&lt;&gt;</span> <span class="dv">5</span>       <span class="co">-- UNKNOWN</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&gt;</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="kw">NULL</span>     <span class="co">-- UNKNOWN (!)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>NULL = NULL</code> retorna <strong>UNKNOWN</strong>, não <code>TRUE</code>. Para verificar se um valor é nulo, é obrigatório usar <code>IS NULL</code> ou <code>IS NOT NULL</code>.</p>
+</div>
+</div>
+<section id="tabelas-de-verdade-com-unknown" class="level3" data-number="35.3.1">
+<h3 data-number="35.3.1" class="anchored" data-anchor-id="tabelas-de-verdade-com-unknown"><span class="header-section-number">35.3.1</span> Tabelas de Verdade com UNKNOWN</h3>
+<p>A lógica de três valores do SQL define como <code>AND</code>, <code>OR</code> e <code>NOT</code> se comportam quando um dos operandos é <code>UNKNOWN</code>:</p>
+<p><strong>AND:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th>A AND B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="even">
+<td>TRUE</td>
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="odd">
+<td>TRUE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>UNKNOWN</td>
+<td>TRUE</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="odd">
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="even">
+<td>UNKNOWN</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+<tr class="odd">
+<td>FALSE</td>
+<td>qualquer</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OR:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th>A OR B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TRUE</td>
+<td>qualquer</td>
+<td>TRUE</td>
+</tr>
+<tr class="even">
+<td>UNKNOWN</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr class="odd">
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="even">
+<td>UNKNOWN</td>
+<td>FALSE</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="odd">
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NOT:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>A</th>
+<th>NOT A</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>FALSE</td>
+<td>TRUE</td>
+</tr>
+<tr class="odd">
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<div class="conceito">
+<p>A cláusula <code>WHERE</code> retém apenas as linhas para as quais a condição é avaliada como <strong>TRUE</strong>. Linhas com resultado <strong>UNKNOWN</strong> são <strong>descartadas</strong>, da mesma forma que linhas com resultado FALSE.</p>
+</div>
+</section>
+</section>
+<section id="is-null-e-is-not-null" class="level2" data-number="35.4">
+<h2 data-number="35.4" class="anchored" data-anchor-id="is-null-e-is-not-null"><span class="header-section-number">35.4</span> IS NULL e IS NOT NULL</h2>
+<p>Para verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores cujo salário é desconhecido (nulo)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores com salário informado</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>No banco de dados atual da UnDF, nenhum professor tem salário nulo — todos têm valores definidos. Mas considere um cenário hipotético onde Carlos ainda não tivesse salário definido:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem IS NOT NULL: Carlos poderia aparecer ou não (resultado imprevisível)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span>;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com IS NOT NULL: garante que a comparação é feita apenas para valores conhecidos</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span> <span class="kw">AND</span> salario <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="null-em-funções-de-agregação" class="level2" data-number="35.5">
+<h2 data-number="35.5" class="anchored" data-anchor-id="null-em-funções-de-agregação"><span class="header-section-number">35.5</span> NULL em Funções de Agregação</h2>
+<p>As funções de agregação (<code>AVG</code>, <code>SUM</code>, <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>) <strong>ignoram</strong> valores nulos em sua computação:</p>
+<div class="exemplo">
+<p>Suponha que a tabela tivesse 3 professores com salários <code>65000</code>, <code>NULL</code> e <code>75000</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">FROM</span> professor;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado: (65000 + 75000) / 2 = 70000</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- O NULL é ignorado; o denominador é 2, não 3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Exceção: <code>COUNT(*)</code> conta <strong>todas</strong> as linhas, incluindo aquelas com valores nulos em qualquer coluna.</p>
+</div>
+</section>
+<section id="boas-práticas" class="level2" data-number="35.6">
+<h2 data-number="35.6" class="anchored" data-anchor-id="boas-práticas"><span class="header-section-number">35.6</span> Boas Práticas</h2>
+<ul>
+<li>Ao projetar tabelas, use <code>NOT NULL</code> nas colunas que <strong>sempre</strong> devem ter um valor.</li>
+<li>Ao escrever condições que envolvem colunas que podem ser nulas, inclua verificações explícitas com <code>IS NULL</code> ou <code>IS NOT NULL</code>.</li>
+<li>Nunca compare com <code>= NULL</code>; use sempre <code>IS NULL</code>.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1141,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/06-operacoes-conjunto.html" class="pagination-link" aria-label="Operações de Conjunto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/08-agregacao.html" class="pagination-link" aria-label="Funções de Agregação">
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1156,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

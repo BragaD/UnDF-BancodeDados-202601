@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>36&nbsp; Funções de Agregação – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/09-subconsultas.html" rel="next">
+<link href="../../content/cap03/07-nulos.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/08-agregacao.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -362,7 +397,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/08-agregacao.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/08-agregacao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span></a>
   </div>
 </li>
@@ -391,15 +426,28 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#as-cinco-funções-básicas" id="toc-as-cinco-funções-básicas" class="nav-link active" data-scroll-target="#as-cinco-funções-básicas"><span class="header-section-number">36.1</span> As Cinco Funções Básicas</a></li>
+  <li><a href="#agregação-sem-group-by" id="toc-agregação-sem-group-by" class="nav-link" data-scroll-target="#agregação-sem-group-by"><span class="header-section-number">36.2</span> Agregação Sem GROUP BY</a></li>
+  <li><a href="#group-by-agrupando-por-categoria" id="toc-group-by-agrupando-por-categoria" class="nav-link" data-scroll-target="#group-by-agrupando-por-categoria"><span class="header-section-number">36.3</span> GROUP BY: Agrupando por Categoria</a>
+  <ul>
+  <li><a href="#erro-comum-atributo-fora-do-group-by" id="toc-erro-comum-atributo-fora-do-group-by" class="nav-link" data-scroll-target="#erro-comum-atributo-fora-do-group-by"><span class="header-section-number">36.3.1</span> Erro Comum: Atributo Fora do GROUP BY</a></li>
+  </ul></li>
+  <li><a href="#having-filtrando-grupos" id="toc-having-filtrando-grupos" class="nav-link" data-scroll-target="#having-filtrando-grupos"><span class="header-section-number">36.4</span> HAVING: Filtrando Grupos</a></li>
+  <li><a href="#where-vs.-having" id="toc-where-vs.-having" class="nav-link" data-scroll-target="#where-vs.-having"><span class="header-section-number">36.5</span> WHERE vs.&nbsp;HAVING</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/08-agregacao.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></h1>
 </div>
 
 
@@ -422,15 +470,361 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<p>As funções de agregação calculam um único valor a partir de um conjunto de linhas. São amplamente usadas para obter estatísticas sobre os dados.</p>
+<section id="as-cinco-funções-básicas" class="level2" data-number="36.1">
+<h2 data-number="36.1" class="anchored" data-anchor-id="as-cinco-funções-básicas"><span class="header-section-number">36.1</span> As Cinco Funções Básicas</h2>
+<div class="conceito">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Função</th>
+<th>Descrição</th>
+<th>Aplica-se a</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>AVG(coluna)</code></td>
+<td>Média aritmética dos valores</td>
+<td>Numérico</td>
+</tr>
+<tr class="even">
+<td><code>MIN(coluna)</code></td>
+<td>Menor valor</td>
+<td>Numérico, string, data</td>
+</tr>
+<tr class="odd">
+<td><code>MAX(coluna)</code></td>
+<td>Maior valor</td>
+<td>Numérico, string, data</td>
+</tr>
+<tr class="even">
+<td><code>SUM(coluna)</code></td>
+<td>Soma de todos os valores</td>
+<td>Numérico</td>
+</tr>
+<tr class="odd">
+<td><code>COUNT(*)</code></td>
+<td>Número de linhas</td>
+<td>Qualquer</td>
+</tr>
+<tr class="even">
+<td><code>COUNT(coluna)</code></td>
+<td>Número de linhas com valor não nulo</td>
+<td>Qualquer</td>
+</tr>
+</tbody>
+</table>
+<p>Todas as funções, exceto <code>COUNT(*)</code>, <strong>ignoram valores nulos</strong>.</p>
+</div>
+</section>
+<section id="agregação-sem-group-by" class="level2" data-number="36.2">
+<h2 data-number="36.2" class="anchored" data-anchor-id="agregação-sem-group-by"><span class="header-section-number">36.2</span> Agregação Sem GROUP BY</h2>
+<p>Quando nenhuma cláusula <code>GROUP BY</code> é especificada, a função agrega <strong>todas as linhas</strong> da tabela (ou do subconjunto filtrado pelo <code>WHERE</code>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio de todos os professores da UnDF</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media_salarial</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>media_salarial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>74833.33</td>
+</tr>
+</tbody>
+</table>
+<p>O cálculo: (65000 + 90000 + 40000 + 95000 + 60000 + 87000 + 75000 + 62000 + 80000 + 72000 + 92000 + 80000) / 12 = 898000 / 12 ≈ 74833.33</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos professores há na universidade?</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_professores</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>total_professores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos centros distintos têm professores?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> nome_centro) <span class="kw">AS</span> centros_com_professor</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>centros_com_professor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maior e menor salário</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">MAX</span>(salario) <span class="kw">AS</span> maior_salario,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MIN</span>(salario) <span class="kw">AS</span> menor_salario</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>maior_salario</th>
+<th>menor_salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>95000.00</td>
+<td>40000.00</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="group-by-agrupando-por-categoria" class="level2" data-number="36.3">
+<h2 data-number="36.3" class="anchored" data-anchor-id="group-by-agrupando-por-categoria"><span class="header-section-number">36.3</span> GROUP BY: Agrupando por Categoria</h2>
+<p>A cláusula <code>GROUP BY</code> divide as linhas em grupos e aplica a função de agregação a cada grupo separadamente.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio por centro acadêmico</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCBS</td>
+<td>84666.67</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>78000.00</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>73000.00</td>
+</tr>
+<tr class="even">
+<td>COEMAG</td>
+<td>40000.00</td>
+</tr>
+</tbody>
+</table>
+<p>Cálculo por centro:</p>
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><strong>COCBS</strong>: (95000 + 87000 + 72000) / 3 = 254000 / 3 ≈ 84666.67</li>
+<li><strong>COETI</strong>: (65000 + 75000 + 92000 + 80000) / 4 = 312000 / 4 = 78000.00</li>
+<li><strong>COCHCMA</strong>: (90000 + 60000 + 62000 + 80000) / 4 = 292000 / 4 = 73000.00</li>
+<li><strong>COEMAG</strong>: 40000 / 1 = 40000.00</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Número de professores e maior salário por centro</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)     <span class="kw">AS</span> qtd_professores,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(salario) <span class="kw">AS</span> maior_salario</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> qtd_professores <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>qtd_professores</th>
+<th>maior_salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>4</td>
+<td>90000.00</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>4</td>
+<td>92000.00</td>
+</tr>
+<tr class="odd">
+<td>COCBS</td>
+<td>3</td>
+<td>95000.00</td>
+</tr>
+<tr class="even">
+<td>COEMAG</td>
+<td>1</td>
+<td>40000.00</td>
+</tr>
+</tbody>
+</table>
+<section id="erro-comum-atributo-fora-do-group-by" class="level3" data-number="36.3.1">
+<h3 data-number="36.3.1" class="anchored" data-anchor-id="erro-comum-atributo-fora-do-group-by"><span class="header-section-number">36.3.1</span> Erro Comum: Atributo Fora do GROUP BY</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todo atributo listado no <code>SELECT</code> que <strong>não</strong> é uma função de agregação <strong>deve</strong> aparecer no <code>GROUP BY</code>. O exemplo abaixo causaria erro:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- INCORRETO: 'nome' não está no GROUP BY</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, nome, <span class="fu">AVG</span>(salario)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: column "professor.nome" must appear in the GROUP BY clause</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">--        or be used in an aggregate function</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A razão: para cada grupo (um centro), há vários nomes de professores. O banco não sabe qual nome retornar.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="having-filtrando-grupos" class="level2" data-number="36.4">
+<h2 data-number="36.4" class="anchored" data-anchor-id="having-filtrando-grupos"><span class="header-section-number">36.4</span> HAVING: Filtrando Grupos</h2>
+<p>A cláusula <code>HAVING</code> filtra os <strong>grupos</strong> resultantes do <code>GROUP BY</code>, da mesma forma que o <code>WHERE</code> filtra linhas individuais.</p>
+<div class="conceito">
+<p><strong>Ordem de execução de uma consulta com agregação:</strong></p>
+<ol type="1">
+<li><code>FROM</code> — determina as tabelas</li>
+<li><code>WHERE</code> — filtra linhas individuais (antes da agregação)</li>
+<li><code>GROUP BY</code> — agrupa as linhas restantes</li>
+<li>Funções de agregação — calculadas por grupo</li>
+<li><code>HAVING</code> — filtra grupos (depois da agregação)</li>
+<li><code>SELECT</code> — projeta as colunas</li>
+<li><code>ORDER BY</code> — ordena o resultado</li>
+</ol>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros com salário médio acima de R$ 70.000</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">70000</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (COEMAG com média de R$ 40.000 é excluído):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCBS</td>
+<td>84666.67</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>78000.00</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>73000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros com pelo menos 3 professores, ordenados pelo número de professores</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> qtd</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">3</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> qtd <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>qtd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>COCBS</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>COEMAG (1 professor) é excluído pelo <code>HAVING COUNT(*) &gt;= 3</code>.</p>
+</section>
+<section id="where-vs.-having" class="level2" data-number="36.5">
+<h2 data-number="36.5" class="anchored" data-anchor-id="where-vs.-having"><span class="header-section-number">36.5</span> WHERE vs.&nbsp;HAVING</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>WHERE</th>
+<th>HAVING</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Opera sobre</td>
+<td>Linhas individuais</td>
+<td>Grupos</td>
+</tr>
+<tr class="even">
+<td>Executado</td>
+<td>Antes do GROUP BY</td>
+<td>Depois do GROUP BY</td>
+</tr>
+<tr class="odd">
+<td>Pode usar agregação?</td>
+<td>Não</td>
+<td>Sim</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- WHERE filtra antes: considera apenas COETI e COCBS, depois agrupa</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">IN</span> (<span class="st">'COETI'</span>, <span class="st">'COCBS'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COETI</td>
+<td>78000.00</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+<td>84666.67</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1275,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/07-nulos.html" class="pagination-link" aria-label="Valores Nulos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/09-subconsultas.html" class="pagination-link" aria-label="Subconsultas">
+        <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1290,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

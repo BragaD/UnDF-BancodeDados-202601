@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>33&nbsp; Cláusulas WHERE e ORDER BY – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/06-operacoes-conjunto.html" rel="next">
+<link href="../../content/cap03/04-clausula-select.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/05-clausula-where.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -344,7 +379,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/05-clausula-where.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/05-clausula-where.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span></a>
   </div>
 </li>
@@ -391,15 +426,28 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#where-filtrando-linhas" id="toc-where-filtrando-linhas" class="nav-link active" data-scroll-target="#where-filtrando-linhas"><span class="header-section-number">33.1</span> WHERE: Filtrando Linhas</a>
+  <ul>
+  <li><a href="#operadores-de-comparação" id="toc-operadores-de-comparação" class="nav-link" data-scroll-target="#operadores-de-comparação"><span class="header-section-number">33.1.1</span> Operadores de Comparação</a></li>
+  <li><a href="#conectivos-lógicos-and-or-not" id="toc-conectivos-lógicos-and-or-not" class="nav-link" data-scroll-target="#conectivos-lógicos-and-or-not"><span class="header-section-number">33.1.2</span> Conectivos Lógicos: AND, OR, NOT</a></li>
+  </ul></li>
+  <li><a href="#between" id="toc-between" class="nav-link" data-scroll-target="#between"><span class="header-section-number">33.2</span> BETWEEN</a></li>
+  <li><a href="#like-padrões-em-strings" id="toc-like-padrões-em-strings" class="nav-link" data-scroll-target="#like-padrões-em-strings"><span class="header-section-number">33.3</span> LIKE: Padrões em Strings</a></li>
+  <li><a href="#order-by-ordenando-o-resultado" id="toc-order-by-ordenando-o-resultado" class="nav-link" data-scroll-target="#order-by-ordenando-o-resultado"><span class="header-section-number">33.4</span> ORDER BY: Ordenando o Resultado</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/05-clausula-where.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusulas WHERE e ORDER BY</span></h1>
 </div>
 
 
@@ -422,15 +470,435 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
-<ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
-</ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<section id="where-filtrando-linhas" class="level2" data-number="33.1">
+<h2 data-number="33.1" class="anchored" data-anchor-id="where-filtrando-linhas"><span class="header-section-number">33.1</span> WHERE: Filtrando Linhas</h2>
+<p>A cláusula <code>WHERE</code> especifica quais linhas devem aparecer no resultado. Ela aceita expressões lógicas compostas por comparações, conectivos booleanos e predicados especiais.</p>
+<section id="operadores-de-comparação" class="level3" data-number="33.1.1">
+<h3 data-number="33.1.1" class="anchored" data-anchor-id="operadores-de-comparação"><span class="header-section-number">33.1.1</span> Operadores de Comparação</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operador</th>
+<th>Significado</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>=</code></td>
+<td>igual</td>
+<td><code>nome_centro = 'COETI'</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;&gt;</code> ou <code>!=</code></td>
+<td>diferente</td>
+<td><code>salario &lt;&gt; 90000</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;</code></td>
+<td>menor que</td>
+<td><code>salario &lt; 60000</code></td>
+</tr>
+<tr class="even">
+<td><code>&gt;</code></td>
+<td>maior que</td>
+<td><code>salario &gt; 80000</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;=</code></td>
+<td>menor ou igual</td>
+<td><code>carga_total &lt;= 500</code></td>
+</tr>
+<tr class="even">
+<td><code>&gt;=</code></td>
+<td>maior ou igual</td>
+<td><code>carga_horaria &gt;= 60</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conectivos-lógicos-and-or-not" class="level3" data-number="33.1.2">
+<h3 data-number="33.1.2" class="anchored" data-anchor-id="conectivos-lógicos-and-or-not"><span class="header-section-number">33.1.2</span> Conectivos Lógicos: AND, OR, NOT</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores do COETI com salário maior que R$ 75.000</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  salario <span class="op">&gt;</span> <span class="dv">75000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pedro</td>
+<td>92000.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>80000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores do COCBS ou com salário acima de 85.000</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro, salario</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COCBS'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">OR</span>  salario <span class="op">&gt;</span> <span class="dv">85000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ana</td>
+<td>COCHCMA</td>
+<td>90000.00</td>
+</tr>
+<tr class="even">
+<td>Marcos</td>
+<td>COCBS</td>
+<td>95000.00</td>
+</tr>
+<tr class="odd">
+<td>Roberto</td>
+<td>COCBS</td>
+<td>87000.00</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>COCBS</td>
+<td>72000.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>COETI</td>
+<td>92000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores que NÃO são do COCHCMA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> nome_centro <span class="op">=</span> <span class="st">'COCHCMA'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="between" class="level2" data-number="33.2">
+<h2 data-number="33.2" class="anchored" data-anchor-id="between"><span class="header-section-number">33.2</span> BETWEEN</h2>
+<p>O predicado <code>BETWEEN</code> verifica se um valor está dentro de um intervalo fechado (inclusive os extremos):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores com salário entre R$ 70.000 e R$ 90.000 (inclusive)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="kw">BETWEEN</span> <span class="dv">70000</span> <span class="kw">AND</span> <span class="dv">90000</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Beatriz</td>
+<td>72000.00</td>
+</tr>
+<tr class="even">
+<td>Lucas</td>
+<td>75000.00</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>80000.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>80000.00</td>
+</tr>
+<tr class="odd">
+<td>Roberto</td>
+<td>87000.00</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>90000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="conceito">
+<p><code>salario BETWEEN 70000 AND 90000</code> é equivalente a <code>salario &gt;= 70000 AND salario &lt;= 90000</code>. A versão com <code>BETWEEN</code> é mais legível.</p>
+<p>O predicado <code>NOT BETWEEN</code> exclui o intervalo.</p>
+</div>
+</section>
+<section id="like-padrões-em-strings" class="level2" data-number="33.3">
+<h2 data-number="33.3" class="anchored" data-anchor-id="like-padrões-em-strings"><span class="header-section-number">33.3</span> LIKE: Padrões em Strings</h2>
+<p>O predicado <code>LIKE</code> permite filtrar strings usando <strong>padrões</strong>. Dois caracteres especiais estão disponíveis:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Caractere</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>%</code></td>
+<td>Qualquer sequência de zero ou mais caracteres</td>
+</tr>
+<tr class="even">
+<td><code>_</code></td>
+<td>Exatamente um caractere qualquer</td>
+</tr>
+</tbody>
+</table>
+<div class="exemplo">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo título começa com "Introdução"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> titulo</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  titulo <span class="kw">LIKE</span> <span class="st">'Introdução%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Introdução à Pesquisa Científica</td>
+</tr>
+<tr class="even">
+<td>Introdução à Engenharia de Software</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo título contém a palavra "Bases"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> titulo</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  titulo <span class="kw">LIKE</span> <span class="st">'%Bases%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bases da Engenharia de Software 3</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo id começa com "BES"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="kw">LIKE</span> <span class="st">'BES%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id_disciplina</th>
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BES 101</td>
+<td>Introdução à Engenharia de Software</td>
+</tr>
+<tr class="even">
+<td>BES 301</td>
+<td>Bases da Engenharia de Software 3</td>
+</tr>
+<tr class="odd">
+<td>BES 601</td>
+<td>Projeto Aplicado 6: Machine Learning</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por padrão, <code>LIKE</code> é <strong>sensível a maiúsculas e minúsculas</strong> (case-sensitive) na maioria dos SGBDs. Para buscas sem distinção de caixa, alguns SGBDs oferecem <code>ILIKE</code> (PostgreSQL) ou a função <code>LOWER()</code>.</p>
+</div>
+</div>
+</section>
+<section id="order-by-ordenando-o-resultado" class="level2" data-number="33.4">
+<h2 data-number="33.4" class="anchored" data-anchor-id="order-by-ordenando-o-resultado"><span class="header-section-number">33.4</span> ORDER BY: Ordenando o Resultado</h2>
+<p>A cláusula <code>ORDER BY</code> especifica a ordem em que as linhas são retornadas. Por padrão, a ordem é crescente (<code>ASC</code>); para ordem decrescente, usa-se <code>DESC</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores ordenados por salário, do maior para o menor</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro, salario</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Marcos</td>
+<td>COCBS</td>
+<td>95000.00</td>
+</tr>
+<tr class="even">
+<td>Pedro</td>
+<td>COETI</td>
+<td>92000.00</td>
+</tr>
+<tr class="odd">
+<td>Ana</td>
+<td>COCHCMA</td>
+<td>90000.00</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>COCBS</td>
+<td>87000.00</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>COCHCMA</td>
+<td>80000.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>COETI</td>
+<td>80000.00</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>COETI</td>
+<td>75000.00</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>COCBS</td>
+<td>72000.00</td>
+</tr>
+<tr class="odd">
+<td>Juliana</td>
+<td>COCHCMA</td>
+<td>62000.00</td>
+</tr>
+<tr class="even">
+<td>Fernanda</td>
+<td>COCHCMA</td>
+<td>60000.00</td>
+</tr>
+<tr class="odd">
+<td>Carlos</td>
+<td>COETI</td>
+<td>65000.00</td>
+</tr>
+<tr class="even">
+<td>João</td>
+<td>COEMAG</td>
+<td>40000.00</td>
+</tr>
+</tbody>
+</table>
+<p>É possível ordenar por múltiplas colunas. O critério secundário é aplicado quando há empate no critério primário:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores ordenados por centro (alfabético) e, dentro do mesmo centro, por salário decrescente</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro, salario</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome_centro <span class="kw">ASC</span>, salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Marcos</td>
+<td>COCBS</td>
+<td>95000.00</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>COCBS</td>
+<td>87000.00</td>
+</tr>
+<tr class="odd">
+<td>Beatriz</td>
+<td>COCBS</td>
+<td>72000.00</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>COCHCMA</td>
+<td>90000.00</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>COCHCMA</td>
+<td>80000.00</td>
+</tr>
+<tr class="even">
+<td>Juliana</td>
+<td>COCHCMA</td>
+<td>62000.00</td>
+</tr>
+<tr class="odd">
+<td>Fernanda</td>
+<td>COCHCMA</td>
+<td>60000.00</td>
+</tr>
+<tr class="even">
+<td>João</td>
+<td>COEMAG</td>
+<td>40000.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>COETI</td>
+<td>92000.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>COETI</td>
+<td>80000.00</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>COETI</td>
+<td>75000.00</td>
+</tr>
+<tr class="even">
+<td>Carlos</td>
+<td>COETI</td>
+<td>65000.00</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1349,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/04-clausula-select.html" class="pagination-link" aria-label="Cláusula SELECT">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/06-operacoes-conjunto.html" class="pagination-link" aria-label="Operações de Conjunto">
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1364,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

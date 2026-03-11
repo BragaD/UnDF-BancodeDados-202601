@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>30&nbsp; Definição de Dados (DDL) – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/03-select-from-where.html" rel="next">
+<link href="../../content/cap03/01-historia.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/02-ddl.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -326,7 +361,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/02-ddl.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/02-ddl.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span></a>
   </div>
 </li>
@@ -391,15 +426,31 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#tipos-de-domínio-em-sql" id="toc-tipos-de-domínio-em-sql" class="nav-link active" data-scroll-target="#tipos-de-domínio-em-sql"><span class="header-section-number">30.1</span> Tipos de Domínio em SQL</a></li>
+  <li><a href="#create-table" id="toc-create-table" class="nav-link" data-scroll-target="#create-table"><span class="header-section-number">30.2</span> CREATE TABLE</a>
+  <ul>
+  <li><a href="#restrições-de-integridade" id="toc-restrições-de-integridade" class="nav-link" data-scroll-target="#restrições-de-integridade"><span class="header-section-number">30.2.1</span> Restrições de integridade</a></li>
+  </ul></li>
+  <li><a href="#criando-as-tabelas-da-undf" id="toc-criando-as-tabelas-da-undf" class="nav-link" data-scroll-target="#criando-as-tabelas-da-undf"><span class="header-section-number">30.3</span> Criando as Tabelas da UnDF</a>
+  <ul>
+  <li><a href="#o-que-acontece-se-a-ordem-for-invertida" id="toc-o-que-acontece-se-a-ordem-for-invertida" class="nav-link" data-scroll-target="#o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.1</span> O que acontece se a ordem for invertida?</a></li>
+  </ul></li>
+  <li><a href="#alter-table" id="toc-alter-table" class="nav-link" data-scroll-target="#alter-table"><span class="header-section-number">30.4</span> ALTER TABLE</a></li>
+  <li><a href="#drop-table" id="toc-drop-table" class="nav-link" data-scroll-target="#drop-table"><span class="header-section-number">30.5</span> DROP TABLE</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/02-ddl.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></h1>
 </div>
 
 
@@ -422,15 +473,219 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
-<ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
-</ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<p>A DDL (<em>Data Definition Language</em>) permite criar e modificar a estrutura de um banco de dados. Nesta seção, veremos os tipos de dados disponíveis em SQL e os comandos <code>CREATE TABLE</code>, <code>ALTER TABLE</code> e <code>DROP TABLE</code>.</p>
+<section id="tipos-de-domínio-em-sql" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="tipos-de-domínio-em-sql"><span class="header-section-number">30.1</span> Tipos de Domínio em SQL</h2>
+<p>Cada coluna de uma tabela deve ter um <strong>tipo de dado</strong> que determina quais valores ela pode armazenar. Os principais tipos do padrão SQL são:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CHAR(n)</code></td>
+<td>String de comprimento fixo com exatamente <em>n</em> caracteres</td>
+<td><code>CHAR(5)</code> para um código como <code>'10101'</code></td>
+</tr>
+<tr class="even">
+<td><code>VARCHAR(n)</code></td>
+<td>String de comprimento variável com até <em>n</em> caracteres</td>
+<td><code>VARCHAR(50)</code> para nomes</td>
+</tr>
+<tr class="odd">
+<td><code>INT</code> ou <code>INTEGER</code></td>
+<td>Número inteiro (tipicamente 4 bytes)</td>
+<td><code>42</code>, <code>-7</code></td>
+</tr>
+<tr class="even">
+<td><code>SMALLINT</code></td>
+<td>Número inteiro menor (tipicamente 2 bytes)</td>
+<td><code>32767</code></td>
+</tr>
+<tr class="odd">
+<td><code>NUMERIC(p, d)</code></td>
+<td>Número decimal com <em>p</em> dígitos no total e <em>d</em> após a vírgula</td>
+<td><code>NUMERIC(8,2)</code> para <code>65000.00</code></td>
+</tr>
+<tr class="even">
+<td><code>REAL</code></td>
+<td>Número de ponto flutuante de precisão simples</td>
+<td><code>3.14</code></td>
+</tr>
+<tr class="odd">
+<td><code>FLOAT(n)</code></td>
+<td>Ponto flutuante com pelo menos <em>n</em> dígitos de precisão</td>
+<td><code>FLOAT(10)</code></td>
+</tr>
+<tr class="even">
+<td><code>DATE</code></td>
+<td>Data no formato <code>AAAA-MM-DD</code></td>
+<td><code>'2026-03-10'</code></td>
+</tr>
+<tr class="odd">
+<td><code>TIME</code></td>
+<td>Hora no formato <code>HH:MM:SS</code></td>
+<td><code>'08:30:00'</code></td>
+</tr>
+<tr class="even">
+<td><code>TIMESTAMP</code></td>
+<td>Data e hora combinadas</td>
+<td><code>'2026-03-10 08:30:00'</code></td>
+</tr>
+<tr class="odd">
+<td><code>BOOLEAN</code></td>
+<td>Valor lógico <code>TRUE</code> ou <code>FALSE</code></td>
+<td><code>TRUE</code></td>
+</tr>
+</tbody>
+</table>
+<div class="conceito">
+<p>A escolha do tipo de dado adequado é importante por duas razões: <strong>integridade</strong> (impede que valores inválidos sejam inseridos) e <strong>eficiência</strong> (tipos menores ocupam menos espaço e são processados mais rapidamente).</p>
+</div>
+</section>
+<section id="create-table" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="create-table"><span class="header-section-number">30.2</span> CREATE TABLE</h2>
+<p>O comando <code>CREATE TABLE</code> define uma nova tabela no banco de dados. A sintaxe geral é:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> nome_da_tabela (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    coluna1  TIPO  [restrições],</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    coluna2  TIPO  [restrições],</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    [restrições de tabela]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="restrições-de-integridade" class="level3" data-number="30.2.1">
+<h3 data-number="30.2.1" class="anchored" data-anchor-id="restrições-de-integridade"><span class="header-section-number">30.2.1</span> Restrições de integridade</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Restrição</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PRIMARY KEY</code></td>
+<td>Identifica unicamente cada linha; implica <code>NOT NULL</code> e <code>UNIQUE</code></td>
+</tr>
+<tr class="even">
+<td><code>NOT NULL</code></td>
+<td>Impede que a coluna receba valor nulo</td>
+</tr>
+<tr class="odd">
+<td><code>UNIQUE</code></td>
+<td>Garante que todos os valores da coluna são distintos</td>
+</tr>
+<tr class="even">
+<td><code>REFERENCES tabela(coluna)</code></td>
+<td>Define uma chave estrangeira (integridade referencial)</td>
+</tr>
+<tr class="odd">
+<td><code>CHECK (condição)</code></td>
+<td>Valida que o valor satisfaz a condição especificada</td>
+</tr>
+<tr class="even">
+<td><code>DEFAULT valor</code></td>
+<td>Define um valor padrão quando nenhum é informado</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="criando-as-tabelas-da-undf" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="criando-as-tabelas-da-undf"><span class="header-section-number">30.3</span> Criando as Tabelas da UnDF</h2>
+<p>As tabelas devem ser criadas na ordem correta: primeiro <code>centro</code>, pois as outras tabelas referenciam essa tabela por meio de chaves estrangeiras.</p>
+<div class="exemplo">
+<p><strong>Tabela <code>centro</code></strong> — sem chaves estrangeiras, criada primeiro:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros acadêmicos da UnDF</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> centro (</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>)    <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    predio      <span class="dt">VARCHAR</span>(<span class="dv">50</span>)    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    orcamento   <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>professor</code></strong> — referencia <code>centro</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores vinculados a cada centro</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor (</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>)   <span class="kw">REFERENCES</span> centro(nome_centro),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    salario     <span class="dt">NUMERIC</span>(<span class="dv">8</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>disciplina</code></strong> — referencia <code>centro</code> e exige carga horária positiva:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas oferecidas por cada centro</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> disciplina (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    titulo        <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    nome_centro   <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> centro(nome_centro),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (carga_horaria <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>aluno</code></strong> — referencia <code>centro</code> e define carga total com valor padrão zero:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos matriculados na UnDF</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> aluno (</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)     <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> centro(nome_centro),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    carga_total <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="o-que-acontece-se-a-ordem-for-invertida" class="level3" data-number="30.3.1">
+<h3 data-number="30.3.1" class="anchored" data-anchor-id="o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.1</span> O que acontece se a ordem for invertida?</h3>
+<p>Se tentarmos criar <code>professor</code> antes de <code>centro</code>, o banco de dados retornará um erro semelhante a:</p>
+<pre><code>ERROR: relation "centro" does not exist</code></pre>
+<p>Isso ocorre porque a restrição <code>REFERENCES centro(nome_centro)</code> exige que a tabela <code>centro</code> já exista no momento da criação.</p>
+</section>
+</section>
+<section id="alter-table" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="alter-table"><span class="header-section-number">30.4</span> ALTER TABLE</h2>
+<p>O comando <code>ALTER TABLE</code> modifica a estrutura de uma tabela já existente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma nova coluna</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ADD</span> <span class="kw">COLUMN</span> email <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover uma coluna</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">DROP</span> <span class="kw">COLUMN</span> email;</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alterar o tipo de uma coluna (sintaxe varia por SGBD)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ALTER</span> <span class="kw">COLUMN</span> salario <span class="kw">TYPE</span> <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>);</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma restrição</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> aluno <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_carga <span class="kw">CHECK</span> (carga_total <span class="op">&gt;=</span> <span class="dv">0</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="drop-table" class="level2" data-number="30.5">
+<h2 data-number="30.5" class="anchored" data-anchor-id="drop-table"><span class="header-section-number">30.5</span> DROP TABLE</h2>
+<p>O comando <code>DROP TABLE</code> remove uma tabela e todos os seus dados permanentemente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove a tabela e todos os seus dados</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> aluno;</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove apenas se a tabela existir (evita erro)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>DROP TABLE</code> é uma operação irreversível. Todos os dados da tabela são perdidos permanentemente. Use com cautela em ambientes de produção.</p>
+<p>Além disso, se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará (ou removerá as tabelas dependentes, se <code>CASCADE</code> for especificado).</p>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1136,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/03-select-from-where.html" class="pagination-link" aria-label="SELECT-FROM-WHERE">
+        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1151,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

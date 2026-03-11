@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>37&nbsp; Subconsultas – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/10-modificacao.html" rel="next">
+<link href="../../content/cap03/08-agregacao.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/09-subconsultas.html"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -368,7 +403,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/09-subconsultas.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/09-subconsultas.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></span></a>
   </div>
 </li>
@@ -391,15 +426,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#in-e-not-in" id="toc-in-e-not-in" class="nav-link active" data-scroll-target="#in-e-not-in"><span class="header-section-number">37.1</span> IN e NOT IN</a></li>
+  <li><a href="#some-e-all" id="toc-some-e-all" class="nav-link" data-scroll-target="#some-e-all"><span class="header-section-number">37.2</span> SOME e ALL</a></li>
+  <li><a href="#exists-e-not-exists" id="toc-exists-e-not-exists" class="nav-link" data-scroll-target="#exists-e-not-exists"><span class="header-section-number">37.3</span> EXISTS e NOT EXISTS</a></li>
+  <li><a href="#subconsulta-no-from" id="toc-subconsulta-no-from" class="nav-link" data-scroll-target="#subconsulta-no-from"><span class="header-section-number">37.4</span> Subconsulta no FROM</a></li>
+  <li><a href="#with-expressões-de-tabela-comuns-cte" id="toc-with-expressões-de-tabela-comuns-cte" class="nav-link" data-scroll-target="#with-expressões-de-tabela-comuns-cte"><span class="header-section-number">37.5</span> WITH: Expressões de Tabela Comuns (CTE)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/09-subconsultas.html"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></h1>
 </div>
 
 
@@ -422,15 +467,447 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<p>Uma <strong>subconsulta</strong> (ou <em>subquery</em>) é uma consulta SQL aninhada dentro de outra consulta. Ela pode aparecer na cláusula <code>WHERE</code>, na cláusula <code>FROM</code> ou na cláusula <code>SELECT</code>. Subconsultas permitem expressar perguntas complexas que não podem ser respondidas com uma única consulta simples.</p>
+<section id="in-e-not-in" class="level2" data-number="37.1">
+<h2 data-number="37.1" class="anchored" data-anchor-id="in-e-not-in"><span class="header-section-number">37.1</span> IN e NOT IN</h2>
+<p>O predicado <code>IN</code> verifica se um valor pertence ao conjunto retornado por uma subconsulta.</p>
+<div class="exemplo">
+<p><strong>Professores em centros com orçamento acima de R$ 150.000:</strong></p>
+<p>Os centros com orçamento &gt; 150.000 são: COETI (185.000), COCHCMA (170.000) e COCBS (160.000). Apenas o COEMAG (80.000) fica fora.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 1 (subconsulta): encontra os centros com orçamento &gt; 150.000</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 2 (consulta principal): retorna professores desses centros</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">IN</span> (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  orcamento <span class="op">&gt;</span> <span class="dv">150000</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome_centro, nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (todos exceto João, do COEMAG):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Marcos</td>
+<td>COCBS</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>Beatriz</td>
+<td>COCBS</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>Fernanda</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>Juliana</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>Carlos</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>Pedro</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>Mariana</td>
+<td>COETI</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="exemplo">
+<p><strong>NOT IN: professores que não são do COEMAG (via subconsulta):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (11 professores, excluindo João):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ana</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>COCBS</td>
+</tr>
+<tr class="odd">
+<td>Carlos</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>Fernanda</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>Juliana</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="even">
+<td>Lucas</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>Marcos</td>
+<td>COCBS</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>Rafael</td>
+<td>COCHCMA</td>
+</tr>
+<tr class="odd">
+<td>Roberto</td>
+<td>COCBS</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="some-e-all" class="level2" data-number="37.2">
+<h2 data-number="37.2" class="anchored" data-anchor-id="some-e-all"><span class="header-section-number">37.2</span> SOME e ALL</h2>
+<p><code>SOME</code> e <code>ALL</code> comparam um valor com cada elemento do conjunto retornado pela subconsulta.</p>
+<div class="conceito">
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><code>valor &gt; SOME (subconsulta)</code>: verdadeiro se o valor for maior que <strong>pelo menos um</strong> elemento do conjunto.</li>
+<li><code>valor &gt; ALL (subconsulta)</code>: verdadeiro se o valor for maior que <strong>todos</strong> os elementos do conjunto.</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<p>O predicado <code>= SOME</code> é equivalente a <code>IN</code>.</p>
+</div>
+<div class="exemplo">
+<p><strong>Professores com salário maior que pelo menos um professor do COEMAG (<code>&gt; SOME</code>):</strong></p>
+<p>O único professor do COEMAG é João, com salário de R$ 40.000. Portanto, qualquer professor com salário &gt; 40.000 satisfaz a condição.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="kw">SOME</span> (</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> salario</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (todos exceto João, cujo salário é exatamente igual ao limite):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>65000.00</td>
+</tr>
+<tr class="even">
+<td>Fernanda</td>
+<td>60000.00</td>
+</tr>
+<tr class="odd">
+<td>Juliana</td>
+<td>62000.00</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>72000.00</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>75000.00</td>
+</tr>
+<tr class="even">
+<td>Rafael</td>
+<td>80000.00</td>
+</tr>
+<tr class="odd">
+<td>Mariana</td>
+<td>80000.00</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>87000.00</td>
+</tr>
+<tr class="odd">
+<td>Ana</td>
+<td>90000.00</td>
+</tr>
+<tr class="even">
+<td>Pedro</td>
+<td>92000.00</td>
+</tr>
+<tr class="odd">
+<td>Marcos</td>
+<td>95000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="exemplo">
+<p><strong>Professores com salário maior que TODOS os professores do COEMAG (<code>&gt; ALL</code>):</strong></p>
+<p>Como há apenas um professor no COEMAG (João, R$ 40.000), <code>&gt; ALL</code> equivale a <code>&gt; 40000</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="kw">ALL</span> (</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> salario</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> — os mesmos 11 professores com salário acima de R$ 40.000.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>65000.00</td>
+</tr>
+<tr class="even">
+<td>Fernanda</td>
+<td>60000.00</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>Marcos</td>
+<td>95000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="exists-e-not-exists" class="level2" data-number="37.3">
+<h2 data-number="37.3" class="anchored" data-anchor-id="exists-e-not-exists"><span class="header-section-number">37.3</span> EXISTS e NOT EXISTS</h2>
+<p><code>EXISTS</code> verifica se a subconsulta retorna ao menos uma linha. É frequentemente usado com <strong>subconsultas correlacionadas</strong>, em que a subconsulta referencia colunas da consulta externa.</p>
+<div class="exemplo">
+<p><strong>EXISTS: centros que têm pelo menos um professor com salário acima de R$ 80.000:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, predio</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   centro c</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">EXISTS</span> (</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor p</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  p.nome_centro <span class="op">=</span> c.nome_centro   <span class="co">-- correlação com a consulta externa</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  p.salario <span class="op">&gt;</span> <span class="dv">80000</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>predio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCBS</td>
+<td>Samambaia</td>
+</tr>
+<tr class="even">
+<td>COCHCMA</td>
+<td>Buritis</td>
+</tr>
+<tr class="odd">
+<td>COETI</td>
+<td>Lago Norte</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>COCBS: Marcos (95.000) e Roberto (87.000) — satisfaz.</li>
+<li>COCHCMA: Ana (90.000) — satisfaz.</li>
+<li>COETI: Pedro (92.000) — satisfaz.</li>
+<li>COEMAG: João (40.000) — não satisfaz; excluído.</li>
+</ul>
+</div>
+<div class="exemplo">
+<p><strong>NOT EXISTS: alunos que não têm carga total (carga_total = 0):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos cuja carga_total é zero (nunca cursaram nenhuma disciplina)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span> (</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   aluno a2</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  a2.<span class="kw">id</span> <span class="op">=</span> aluno.<span class="kw">id</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  a2.carga_total <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Uma forma mais direta para este caso específico:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_total <span class="op">=</span> <span class="dv">0</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Henrique</td>
+</tr>
+</tbody>
+</table>
+<p>Henrique (id 70557) é o único aluno com <code>carga_total = 0</code>.</p>
+</div>
+</section>
+<section id="subconsulta-no-from" class="level2" data-number="37.4">
+<h2 data-number="37.4" class="anchored" data-anchor-id="subconsulta-no-from"><span class="header-section-number">37.4</span> Subconsulta no FROM</h2>
+<p>Uma subconsulta pode ser usada como se fosse uma tabela na cláusula <code>FROM</code>. Ela deve receber um alias.</p>
+<div class="exemplo">
+<p><strong>Centros com salário médio acima de R$ 70.000:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- A subconsulta calcula a média por centro; a consulta externa filtra</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> media_por_centro.nome_centro, media_por_centro.media</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> media_por_centro</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  media_por_centro.media <span class="op">&gt;</span> <span class="dv">70000</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_por_centro.media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCBS</td>
+<td>84666.67</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>78000.00</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>73000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="with-expressões-de-tabela-comuns-cte" class="level2" data-number="37.5">
+<h2 data-number="37.5" class="anchored" data-anchor-id="with-expressões-de-tabela-comuns-cte"><span class="header-section-number">37.5</span> WITH: Expressões de Tabela Comuns (CTE)</h2>
+<p>A cláusula <code>WITH</code> define uma <strong>CTE</strong> (<em>Common Table Expression</em>), que é uma subconsulta nomeada e reutilizável na consulta principal. CTEs tornam consultas complexas mais legíveis.</p>
+<div class="exemplo">
+<p><strong>Carga horária total por centro e filtro de centros com mais de 200 horas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Define a CTE com a soma de carga horária por centro</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> carga_por_centro <span class="kw">AS</span> (</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro, <span class="fu">SUM</span>(carga_horaria) <span class="kw">AS</span> total_horas</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usa a CTE como se fosse uma tabela</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, total_horas</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   carga_por_centro</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  total_horas <span class="op">&gt;</span> <span class="dv">200</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_horas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>total_horas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COCBS</td>
+<td>245</td>
+</tr>
+<tr class="even">
+<td>COETI</td>
+<td>260</td>
+</tr>
+<tr class="odd">
+<td>COCHCMA</td>
+<td>180</td>
+</tr>
+</tbody>
+</table>
+<p>Nota: COCHCMA tem 60 + 60 + 60 = 180 horas (abaixo de 200) e seria excluído. COETI tem 20 + 120 + 120 = 260, COCBS tem 105 + 70 + 70 = 245. COEMAG tem 60 + 60 + 60 = 180, também abaixo de 200.</p>
+<p><strong>Resultado corrigido:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome_centro</th>
+<th>total_horas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>COETI</td>
+<td>260</td>
+</tr>
+<tr class="even">
+<td>COCBS</td>
+<td>245</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="conceito">
+<p><strong>Vantagens das CTEs com <code>WITH</code>:</strong></p>
+<ul>
+<li>Melhoram a legibilidade ao dar nomes descritivos a subconsultas complexas.</li>
+<li>Permitem reutilizar a mesma subconsulta várias vezes na consulta principal.</li>
+<li>Em alguns SGBDs, podem ser usadas recursivamente para consultas hierárquicas (<code>WITH RECURSIVE</code>).</li>
+</ul>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1358,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/08-agregacao.html" class="pagination-link" aria-label="Funções de Agregação">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/10-modificacao.html" class="pagination-link" aria-label="Modificação do Banco de Dados">
+        <span class="nav-page-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1373,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

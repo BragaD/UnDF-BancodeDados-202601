@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>31&nbsp; Estrutura Básica: SELECT-FROM-WHERE – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/04-clausula-select.html" rel="next">
+<link href="../../content/cap03/02-ddl.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/03-select-from-where.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -332,7 +367,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/03-select-from-where.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/03-select-from-where.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span></a>
   </div>
 </li>
@@ -391,15 +426,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#forma-geral" id="toc-forma-geral" class="nav-link active" data-scroll-target="#forma-geral"><span class="header-section-number">31.1</span> Forma Geral</a></li>
+  <li><a href="#correspondência-com-a-álgebra-relacional" id="toc-correspondência-com-a-álgebra-relacional" class="nav-link" data-scroll-target="#correspondência-com-a-álgebra-relacional"><span class="header-section-number">31.2</span> Correspondência com a Álgebra Relacional</a></li>
+  <li><a href="#exemplo-1-nomes-dos-professores-do-coeti" id="toc-exemplo-1-nomes-dos-professores-do-coeti" class="nav-link" data-scroll-target="#exemplo-1-nomes-dos-professores-do-coeti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores do COETI</a></li>
+  <li><a href="#exemplo-2-nomes-e-salários-dos-professores-do-cochcma" id="toc-exemplo-2-nomes-e-salários-dos-professores-do-cochcma" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-salários-dos-professores-do-cochcma"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Salários dos Professores do COCHCMA</a></li>
+  <li><a href="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas" id="toc-exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="nav-link" data-scroll-target="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</a></li>
+  <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/03-select-from-where.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Estrutura Básica: SELECT-FROM-WHERE</span></h1>
 </div>
 
 
@@ -422,15 +468,219 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
-<ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
-</ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<p>A consulta SQL mais fundamental é composta por três cláusulas obrigatórias: <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code>. Essa estrutura corresponde diretamente às operações da álgebra relacional estudadas no Capítulo 2.</p>
+<section id="forma-geral" class="level2" data-number="31.1">
+<h2 data-number="31.1" class="anchored" data-anchor-id="forma-geral"><span class="header-section-number">31.1</span> Forma Geral</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  A1, A2, <span class="op">..</span>., An       <span class="co">-- atributos a serem retornados</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>    r1, r2, <span class="op">..</span>., rm       <span class="co">-- tabelas envolvidas</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>   condição;             <span class="co">-- critério de filtragem (opcional)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="correspondência-com-a-álgebra-relacional" class="level2" data-number="31.2">
+<h2 data-number="31.2" class="anchored" data-anchor-id="correspondência-com-a-álgebra-relacional"><span class="header-section-number">31.2</span> Correspondência com a Álgebra Relacional</h2>
+<div class="conceito">
+<p>Cada cláusula da consulta SQL corresponde a uma operação da álgebra relacional:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cláusula SQL</th>
+<th>Operação equivalente</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SELECT A1, A2</code></td>
+<td>Projeção (π)</td>
+<td>Escolhe quais colunas exibir</td>
+</tr>
+<tr class="even">
+<td><code>WHERE condição</code></td>
+<td>Seleção (σ)</td>
+<td>Filtra as linhas que satisfazem a condição</td>
+</tr>
+<tr class="odd">
+<td><code>FROM r1, r2</code></td>
+<td>Produto cartesiano (×)</td>
+<td>Combina as tabelas listadas</td>
+</tr>
+</tbody>
+</table>
+<p>A consulta <code>SELECT A FROM r WHERE condição</code> equivale a: <strong>π<sub>A</sub>(σ<sub>condição</sub>(r))</strong></p>
+</div>
+</section>
+<section id="exemplo-1-nomes-dos-professores-do-coeti" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="exemplo-1-nomes-dos-professores-do-coeti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores do COETI</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores estão lotados no Centro de Engenharia, Tecnologia e Inovação?</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+</tr>
+<tr class="even">
+<td>Lucas</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+</tr>
+</tbody>
+</table>
+<p>O banco contém 4 professores vinculados ao COETI: Carlos (id 10101), Lucas (45565), Pedro (83821) e Mariana (98345).</p>
+</section>
+<section id="exemplo-2-nomes-e-salários-dos-professores-do-cochcma" class="level2" data-number="31.4">
+<h2 data-number="31.4" class="anchored" data-anchor-id="exemplo-2-nomes-e-salários-dos-professores-do-cochcma"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Salários dos Professores do COCHCMA</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores pertencem ao COCHCMA e quais são seus salários?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COCHCMA'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ana</td>
+<td>90000.00</td>
+</tr>
+<tr class="even">
+<td>Fernanda</td>
+<td>60000.00</td>
+</tr>
+<tr class="odd">
+<td>Juliana</td>
+<td>62000.00</td>
+</tr>
+<tr class="even">
+<td>Rafael</td>
+<td>80000.00</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="level2" data-number="31.5">
+<h2 data-number="31.5" class="anchored" data-anchor-id="exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</h2>
+<p>Quando duas ou mais tabelas são listadas na cláusula <code>FROM</code>, o SQL produz o <strong>produto cartesiano</strong> entre elas — ou seja, cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com <code>WHERE</code> para ser significativo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nomes dos professores junto com os dados do centro ao qual pertencem</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> professor.nome, centro.predio, centro.orcamento</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor, centro</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  professor.nome_centro <span class="op">=</span> centro.nome_centro;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado (primeiras linhas):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>nome</th>
+<th>predio</th>
+<th>orcamento</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Carlos</td>
+<td>Lago Norte</td>
+<td>185000.00</td>
+</tr>
+<tr class="even">
+<td>Ana</td>
+<td>Buritis</td>
+<td>170000.00</td>
+</tr>
+<tr class="odd">
+<td>João</td>
+<td>Ceilândia</td>
+<td>80000.00</td>
+</tr>
+<tr class="even">
+<td>Marcos</td>
+<td>Samambaia</td>
+<td>160000.00</td>
+</tr>
+<tr class="odd">
+<td>Fernanda</td>
+<td>Buritis</td>
+<td>170000.00</td>
+</tr>
+<tr class="even">
+<td>Roberto</td>
+<td>Samambaia</td>
+<td>160000.00</td>
+</tr>
+<tr class="odd">
+<td>Lucas</td>
+<td>Lago Norte</td>
+<td>185000.00</td>
+</tr>
+<tr class="even">
+<td>Juliana</td>
+<td>Buritis</td>
+<td>170000.00</td>
+</tr>
+<tr class="odd">
+<td>Rafael</td>
+<td>Buritis</td>
+<td>170000.00</td>
+</tr>
+<tr class="even">
+<td>Beatriz</td>
+<td>Samambaia</td>
+<td>160000.00</td>
+</tr>
+<tr class="odd">
+<td>Pedro</td>
+<td>Lago Norte</td>
+<td>185000.00</td>
+</tr>
+<tr class="even">
+<td>Mariana</td>
+<td>Lago Norte</td>
+<td>185000.00</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A condição <code>professor.nome_centro = centro.nome_centro</code> na cláusula <code>WHERE</code> funciona como uma <strong>junção natural</strong> entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 12 professores × 4 centros = 48 linhas, a maioria sem sentido.</p>
+<p>A sintaxe com <code>JOIN</code> explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.</p>
+</div>
+</div>
+</section>
+<section id="notação-com-qualificador-de-tabela" class="level2" data-number="31.6">
+<h2 data-number="31.6" class="anchored" data-anchor-id="notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</h2>
+<p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>nome_centro</code> em <code>professor</code> e <code>centro</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>professor.nome_centro   <span class="co">-- coluna nome_centro da tabela professor</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>centro.nome_centro      <span class="co">-- coluna nome_centro da tabela centro</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Sem o qualificador, o SQL lançará um erro de ambiguidade:</p>
+<pre><code>ERROR: column reference "nome_centro" is ambiguous</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1131,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/02-ddl.html" class="pagination-link" aria-label="Definição de Dados (DDL)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/04-clausula-select.html" class="pagination-link" aria-label="Cláusula SELECT">
+        <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1146,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>

@@ -1170,5 +1170,676 @@
       "Capítulo 2: Modelo Relacional",
       "<span class='chapter-number'>27</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
     ]
+  },
+  {
+    "objectID": "content/cap03/index.html",
+    "href": "content/cap03/index.html",
+    "title": "28  Visão Geral",
+    "section": "",
+    "text": "28.1 Seções\nEste capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.\nTodos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — centro, professor, disciplina e aluno — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.\nAo final deste capítulo, você será capaz de:",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Visão Geral</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/index.html#seções",
+    "href": "content/cap03/index.html#seções",
+    "title": "28  Visão Geral",
+    "section": "",
+    "text": "Seção\nTópico\n\n\n\n\n3.1\nHistória e Partes do SQL\n\n\n3.2\nDefinição de Dados (DDL)\n\n\n3.3\nEstrutura Básica: SELECT-FROM-WHERE\n\n\n3.4\nCláusula SELECT\n\n\n3.5\nCláusulas WHERE e ORDER BY\n\n\n3.6\nOperações de Conjunto\n\n\n3.7\nValores Nulos\n\n\n3.8\nFunções de Agregação\n\n\n3.9\nSubconsultas\n\n\n3.10\nModificação do Banco de Dados\n\n\nResumo\nResumo e Exercícios\n\n\n\n\n\n\n\nSilberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. Database System Concepts. 7th ed. McGraw-Hill Education.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Visão Geral</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/01-historia.html",
+    "href": "content/cap03/01-historia.html",
+    "title": "29  História e Partes do SQL",
+    "section": "",
+    "text": "29.1 Origem e Evolução\nA linguagem SQL — Structured Query Language — tem suas raízes nos laboratórios da IBM no início dos anos 1970. O pesquisador Edgar F. Codd publicou, em 1970, seu artigo seminal que estabeleceu as bases do modelo relacional. Pouco depois, a IBM iniciou o projeto System R, cujo objetivo era construir um protótipo de banco de dados relacional. Para interagir com esse sistema, foi criada uma linguagem de consulta chamada SEQUEL (Structured English Query Language), desenvolvida por Donald Chamberlin e Raymond Boyce.\nCom o tempo, o nome foi abreviado para SQL por razões legais. Em 1979, a empresa Relational Software Inc. (hoje Oracle) lançou o primeiro SGBD comercial baseado em SQL.\nA padronização internacional chegou em 1986, quando o American National Standards Institute (ANSI) e, posteriormente, a International Organization for Standardization (ISO) adotaram o SQL como padrão oficial para linguagens de banco de dados relacionais. Desde então, o padrão passou por diversas revisões:\nEmbora o padrão ISO defina um núcleo comum, cada SGBD (PostgreSQL, MySQL, Oracle, SQL Server) implementa extensões próprias. Por isso, consultas escritas em um SGBD podem precisar de pequenos ajustes para funcionar em outro.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>História e Partes do SQL</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/01-historia.html#origem-e-evolução",
+    "href": "content/cap03/01-historia.html#origem-e-evolução",
+    "title": "29  História e Partes do SQL",
+    "section": "",
+    "text": "Versão\nAno\nPrincipais novidades\n\n\n\n\nSQL-86\n1986\nPrimeira versão padronizada (ANSI)\n\n\nSQL-89\n1989\nPequenas revisões e correções\n\n\nSQL-92\n1992\nGrandes extensões: tipos de dados, junções, subconsultas\n\n\nSQL:1999\n1999\nSuporte a objetos, gatilhos, expressões regulares\n\n\nSQL:2003\n2003\nFunções de janela, sequências, XML\n\n\nSQL:2008\n2008\nTRUNCATE, cláusula ORDER BY em funções de janela\n\n\nSQL:2011\n2011\nDados temporais\n\n\nSQL:2016\n2016\nSuporte a JSON\n\n\nSQL:2023\n2023\nGrafos de propriedades, melhorias em JSON",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>História e Partes do SQL</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/01-historia.html#partes-do-sql",
+    "href": "content/cap03/01-historia.html#partes-do-sql",
+    "title": "29  História e Partes do SQL",
+    "section": "29.2 Partes do SQL",
+    "text": "29.2 Partes do SQL\nA linguagem SQL é dividida em três grandes sublinguagens, cada uma com um propósito distinto:\n\nDDL — Data Definition Language (Linguagem de Definição de Dados)\nConjunto de comandos responsável por definir, alterar e remover a estrutura do banco de dados: tabelas, tipos de dados, restrições de integridade, índices e visões.\nComandos principais: CREATE, ALTER, DROP.\n\n\nDML — Data Manipulation Language (Linguagem de Manipulação de Dados)\nConjunto de comandos responsável por consultar e modificar os dados armazenados nas tabelas.\nComandos principais: SELECT, INSERT, UPDATE, DELETE.\n\n\nDCL — Data Control Language (Linguagem de Controle de Dados)\nConjunto de comandos responsável por controlar o acesso aos dados, concedendo ou revogando permissões a usuários e perfis.\nComandos principais: GRANT, REVOKE.\n\nAlém dessas três sublinguagens, o SQL moderno inclui também:\n\nTCL (Transaction Control Language): controle de transações com COMMIT, ROLLBACK e SAVEPOINT.\nIntegridade: restrições como NOT NULL, UNIQUE, CHECK, PRIMARY KEY e FOREIGN KEY.\nVisões: definição de relações virtuais com CREATE VIEW.\nSQL embutido e dinâmico: uso de SQL dentro de programas escritos em outras linguagens (Java, Python, C).\n\nNeste capítulo, o foco está na DDL (criação de tabelas) e na DML (consultas e modificações).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>História e Partes do SQL</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html",
+    "href": "content/cap03/02-ddl.html",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "",
+    "text": "30.1 Tipos de Domínio em SQL\nA DDL (Data Definition Language) permite criar e modificar a estrutura de um banco de dados. Nesta seção, veremos os tipos de dados disponíveis em SQL e os comandos CREATE TABLE, ALTER TABLE e DROP TABLE.\nCada coluna de uma tabela deve ter um tipo de dado que determina quais valores ela pode armazenar. Os principais tipos do padrão SQL são:",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html#tipos-de-domínio-em-sql",
+    "href": "content/cap03/02-ddl.html#tipos-de-domínio-em-sql",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "",
+    "text": "Tipo\nDescrição\nExemplo\n\n\n\n\nCHAR(n)\nString de comprimento fixo com exatamente n caracteres\nCHAR(5) para um código como '10101'\n\n\nVARCHAR(n)\nString de comprimento variável com até n caracteres\nVARCHAR(50) para nomes\n\n\nINT ou INTEGER\nNúmero inteiro (tipicamente 4 bytes)\n42, -7\n\n\nSMALLINT\nNúmero inteiro menor (tipicamente 2 bytes)\n32767\n\n\nNUMERIC(p, d)\nNúmero decimal com p dígitos no total e d após a vírgula\nNUMERIC(8,2) para 65000.00\n\n\nREAL\nNúmero de ponto flutuante de precisão simples\n3.14\n\n\nFLOAT(n)\nPonto flutuante com pelo menos n dígitos de precisão\nFLOAT(10)\n\n\nDATE\nData no formato AAAA-MM-DD\n'2026-03-10'\n\n\nTIME\nHora no formato HH:MM:SS\n'08:30:00'\n\n\nTIMESTAMP\nData e hora combinadas\n'2026-03-10 08:30:00'\n\n\nBOOLEAN\nValor lógico TRUE ou FALSE\nTRUE\n\n\n\n\nA escolha do tipo de dado adequado é importante por duas razões: integridade (impede que valores inválidos sejam inseridos) e eficiência (tipos menores ocupam menos espaço e são processados mais rapidamente).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html#create-table",
+    "href": "content/cap03/02-ddl.html#create-table",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "30.2 CREATE TABLE",
+    "text": "30.2 CREATE TABLE\nO comando CREATE TABLE define uma nova tabela no banco de dados. A sintaxe geral é:\nCREATE TABLE nome_da_tabela (\n    coluna1  TIPO  [restrições],\n    coluna2  TIPO  [restrições],\n    ...\n    [restrições de tabela]\n);\n\n30.2.1 Restrições de integridade\n\n\n\n\n\n\n\nRestrição\nDescrição\n\n\n\n\nPRIMARY KEY\nIdentifica unicamente cada linha; implica NOT NULL e UNIQUE\n\n\nNOT NULL\nImpede que a coluna receba valor nulo\n\n\nUNIQUE\nGarante que todos os valores da coluna são distintos\n\n\nREFERENCES tabela(coluna)\nDefine uma chave estrangeira (integridade referencial)\n\n\nCHECK (condição)\nValida que o valor satisfaz a condição especificada\n\n\nDEFAULT valor\nDefine um valor padrão quando nenhum é informado",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html#criando-as-tabelas-da-undf",
+    "href": "content/cap03/02-ddl.html#criando-as-tabelas-da-undf",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "30.3 Criando as Tabelas da UnDF",
+    "text": "30.3 Criando as Tabelas da UnDF\nAs tabelas devem ser criadas na ordem correta: primeiro centro, pois as outras tabelas referenciam essa tabela por meio de chaves estrangeiras.\n\nTabela centro — sem chaves estrangeiras, criada primeiro:\n-- Centros acadêmicos da UnDF\nCREATE TABLE centro (\n    nome_centro VARCHAR(10)    PRIMARY KEY,\n    predio      VARCHAR(50)    NOT NULL,\n    orcamento   NUMERIC(10, 2) NOT NULL\n);\nTabela professor — referencia centro:\n-- Professores vinculados a cada centro\nCREATE TABLE professor (\n    id          CHAR(5)       PRIMARY KEY,\n    nome        VARCHAR(50)   NOT NULL,\n    nome_centro VARCHAR(10)   REFERENCES centro(nome_centro),\n    salario     NUMERIC(8, 2) NOT NULL\n);\nTabela disciplina — referencia centro e exige carga horária positiva:\n-- Disciplinas oferecidas por cada centro\nCREATE TABLE disciplina (\n    id_disciplina VARCHAR(10)  PRIMARY KEY,\n    titulo        VARCHAR(100) NOT NULL,\n    nome_centro   VARCHAR(10)  REFERENCES centro(nome_centro),\n    carga_horaria INTEGER      NOT NULL CHECK (carga_horaria &gt; 0)\n);\nTabela aluno — referencia centro e define carga total com valor padrão zero:\n-- Alunos matriculados na UnDF\nCREATE TABLE aluno (\n    id          CHAR(5)     PRIMARY KEY,\n    nome        VARCHAR(50) NOT NULL,\n    nome_centro VARCHAR(10) REFERENCES centro(nome_centro),\n    carga_total INTEGER     NOT NULL DEFAULT 0\n);\n\n\n30.3.1 O que acontece se a ordem for invertida?\nSe tentarmos criar professor antes de centro, o banco de dados retornará um erro semelhante a:\nERROR: relation \"centro\" does not exist\nIsso ocorre porque a restrição REFERENCES centro(nome_centro) exige que a tabela centro já exista no momento da criação.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html#alter-table",
+    "href": "content/cap03/02-ddl.html#alter-table",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "30.4 ALTER TABLE",
+    "text": "30.4 ALTER TABLE\nO comando ALTER TABLE modifica a estrutura de uma tabela já existente:\n-- Adicionar uma nova coluna\nALTER TABLE professor ADD COLUMN email VARCHAR(100);\n\n-- Remover uma coluna\nALTER TABLE professor DROP COLUMN email;\n\n-- Alterar o tipo de uma coluna (sintaxe varia por SGBD)\nALTER TABLE professor ALTER COLUMN salario TYPE NUMERIC(10, 2);\n\n-- Adicionar uma restrição\nALTER TABLE aluno ADD CONSTRAINT chk_carga CHECK (carga_total &gt;= 0);",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/02-ddl.html#drop-table",
+    "href": "content/cap03/02-ddl.html#drop-table",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "30.5 DROP TABLE",
+    "text": "30.5 DROP TABLE\nO comando DROP TABLE remove uma tabela e todos os seus dados permanentemente:\n-- Remove a tabela e todos os seus dados\nDROP TABLE aluno;\n\n-- Remove apenas se a tabela existir (evita erro)\nDROP TABLE IF EXISTS aluno;\n\n\n\n\n\n\nAviso\n\n\n\nDROP TABLE é uma operação irreversível. Todos os dados da tabela são perdidos permanentemente. Use com cautela em ambientes de produção.\nAlém disso, se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará (ou removerá as tabelas dependentes, se CASCADE for especificado).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html",
+    "href": "content/cap03/03-select-from-where.html",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "",
+    "text": "31.1 Forma Geral\nA consulta SQL mais fundamental é composta por três cláusulas obrigatórias: SELECT, FROM e WHERE. Essa estrutura corresponde diretamente às operações da álgebra relacional estudadas no Capítulo 2.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#forma-geral",
+    "href": "content/cap03/03-select-from-where.html#forma-geral",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "",
+    "text": "SELECT  A1, A2, ..., An       -- atributos a serem retornados\nFROM    r1, r2, ..., rm       -- tabelas envolvidas\nWHERE   condição;             -- critério de filtragem (opcional)",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#correspondência-com-a-álgebra-relacional",
+    "href": "content/cap03/03-select-from-where.html#correspondência-com-a-álgebra-relacional",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.2 Correspondência com a Álgebra Relacional",
+    "text": "31.2 Correspondência com a Álgebra Relacional\n\nCada cláusula da consulta SQL corresponde a uma operação da álgebra relacional:\n\n\n\n\n\n\n\n\nCláusula SQL\nOperação equivalente\nDescrição\n\n\n\n\nSELECT A1, A2\nProjeção (π)\nEscolhe quais colunas exibir\n\n\nWHERE condição\nSeleção (σ)\nFiltra as linhas que satisfazem a condição\n\n\nFROM r1, r2\nProduto cartesiano (×)\nCombina as tabelas listadas\n\n\n\nA consulta SELECT A FROM r WHERE condição equivale a: πA(σcondição(r))",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#exemplo-1-nomes-dos-professores-do-coeti",
+    "href": "content/cap03/03-select-from-where.html#exemplo-1-nomes-dos-professores-do-coeti",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.3 Exemplo 1: Nomes dos Professores do COETI",
+    "text": "31.3 Exemplo 1: Nomes dos Professores do COETI\n-- Quais professores estão lotados no Centro de Engenharia, Tecnologia e Inovação?\nSELECT nome\nFROM   professor\nWHERE  nome_centro = 'COETI';\nResultado:\n\n\n\nnome\n\n\n\n\nCarlos\n\n\nLucas\n\n\nPedro\n\n\nMariana\n\n\n\nO banco contém 4 professores vinculados ao COETI: Carlos (id 10101), Lucas (45565), Pedro (83821) e Mariana (98345).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#exemplo-2-nomes-e-salários-dos-professores-do-cochcma",
+    "href": "content/cap03/03-select-from-where.html#exemplo-2-nomes-e-salários-dos-professores-do-cochcma",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.4 Exemplo 2: Nomes e Salários dos Professores do COCHCMA",
+    "text": "31.4 Exemplo 2: Nomes e Salários dos Professores do COCHCMA\n-- Quais professores pertencem ao COCHCMA e quais são seus salários?\nSELECT nome, salario\nFROM   professor\nWHERE  nome_centro = 'COCHCMA';\nResultado:\n\n\n\nnome\nsalario\n\n\n\n\nAna\n90000.00\n\n\nFernanda\n60000.00\n\n\nJuliana\n62000.00\n\n\nRafael\n80000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#exemplo-3-produto-cartesiano-com-múltiplas-tabelas",
+    "href": "content/cap03/03-select-from-where.html#exemplo-3-produto-cartesiano-com-múltiplas-tabelas",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.5 Exemplo 3: Produto Cartesiano com Múltiplas Tabelas",
+    "text": "31.5 Exemplo 3: Produto Cartesiano com Múltiplas Tabelas\nQuando duas ou mais tabelas são listadas na cláusula FROM, o SQL produz o produto cartesiano entre elas — ou seja, cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com WHERE para ser significativo.\n-- Nomes dos professores junto com os dados do centro ao qual pertencem\nSELECT professor.nome, centro.predio, centro.orcamento\nFROM   professor, centro\nWHERE  professor.nome_centro = centro.nome_centro;\nResultado (primeiras linhas):\n\n\n\nnome\npredio\norcamento\n\n\n\n\nCarlos\nLago Norte\n185000.00\n\n\nAna\nBuritis\n170000.00\n\n\nJoão\nCeilândia\n80000.00\n\n\nMarcos\nSamambaia\n160000.00\n\n\nFernanda\nBuritis\n170000.00\n\n\nRoberto\nSamambaia\n160000.00\n\n\nLucas\nLago Norte\n185000.00\n\n\nJuliana\nBuritis\n170000.00\n\n\nRafael\nBuritis\n170000.00\n\n\nBeatriz\nSamambaia\n160000.00\n\n\nPedro\nLago Norte\n185000.00\n\n\nMariana\nLago Norte\n185000.00\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nA condição professor.nome_centro = centro.nome_centro na cláusula WHERE funciona como uma junção natural entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 12 professores × 4 centros = 48 linhas, a maioria sem sentido.\nA sintaxe com JOIN explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/03-select-from-where.html#notação-com-qualificador-de-tabela",
+    "href": "content/cap03/03-select-from-where.html#notação-com-qualificador-de-tabela",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.6 Notação com Qualificador de Tabela",
+    "text": "31.6 Notação com Qualificador de Tabela\nQuando o mesmo nome de coluna aparece em mais de uma tabela (como nome_centro em professor e centro), é necessário qualificar o nome da coluna com o nome da tabela:\nprofessor.nome_centro   -- coluna nome_centro da tabela professor\ncentro.nome_centro      -- coluna nome_centro da tabela centro\nSem o qualificador, o SQL lançará um erro de ambiguidade:\nERROR: column reference \"nome_centro\" is ambiguous",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html",
+    "href": "content/cap03/04-clausula-select.html",
+    "title": "32  Cláusula SELECT",
+    "section": "",
+    "text": "32.1 DISTINCT: Eliminando Duplicatas\nA cláusula SELECT determina quais colunas (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.\nPor padrão, o SQL não elimina linhas duplicadas no resultado — comportamento chamado de ALL. Para remover duplicatas, usa-se a palavra-chave DISTINCT.\nResultado:\nOs 12 professores são distribuídos entre 4 centros distintos. DISTINCT eliminará as repetições.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#distinct-eliminando-duplicatas",
+    "href": "content/cap03/04-clausula-select.html#distinct-eliminando-duplicatas",
+    "title": "32  Cláusula SELECT",
+    "section": "",
+    "text": "-- Sem DISTINCT: lista todos os centros, um por professor (com repetição)\nSELECT nome_centro\nFROM   professor;\n\n\n\nnome_centro\n\n\n\n\nCOETI\n\n\nCOCHCMA\n\n\nCOEMAG\n\n\nCOCBS\n\n\nCOCHCMA\n\n\nCOCBS\n\n\nCOETI\n\n\nCOCHCMA\n\n\nCOCHCMA\n\n\nCOCBS\n\n\nCOETI\n\n\nCOETI\n\n\n\n-- Com DISTINCT: cada centro aparece apenas uma vez\nSELECT DISTINCT nome_centro\nFROM   professor;\n\n\n\n\nnome_centro\n\n\n\n\nCOETI\n\n\nCOCBS\n\n\nCOCHCMA\n\n\nCOEMAG",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#select",
+    "href": "content/cap03/04-clausula-select.html#select",
+    "title": "32  Cláusula SELECT",
+    "section": "32.2 SELECT *",
+    "text": "32.2 SELECT *\nO asterisco * seleciona todas as colunas da tabela:\n-- Retorna todas as colunas de professor\nSELECT *\nFROM   professor;\nEmbora prático para exploração, o uso de SELECT * em aplicações de produção é desaconselhado, pois o resultado depende da estrutura atual da tabela e pode mudar se colunas forem adicionadas ou reordenadas.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#expressões-aritméticas",
+    "href": "content/cap03/04-clausula-select.html#expressões-aritméticas",
+    "title": "32  Cláusula SELECT",
+    "section": "32.3 Expressões Aritméticas",
+    "text": "32.3 Expressões Aritméticas\nA cláusula SELECT pode conter expressões aritméticas com os operadores +, -, * e /:\n-- Simular um reajuste de 10% nos salários sem alterar o banco\nSELECT nome, salario, salario * 1.10 AS salario_reajustado\nFROM   professor;\nResultado (primeiras linhas):\n\n\n\nnome\nsalario\nsalario_reajustado\n\n\n\n\nCarlos\n65000.00\n71500.00\n\n\nAna\n90000.00\n99000.00\n\n\nJoão\n40000.00\n44000.00\n\n\nMarcos\n95000.00\n104500.00\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nA expressão salario * 1.10 não altera o banco de dados. Ela cria uma coluna calculada apenas no resultado da consulta. Para alterar os dados de fato, seria necessário usar UPDATE (ver seção 3.10).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#alias-com-as",
+    "href": "content/cap03/04-clausula-select.html#alias-com-as",
+    "title": "32  Cláusula SELECT",
+    "section": "32.4 Alias com AS",
+    "text": "32.4 Alias com AS\nA palavra-chave AS permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de alias:\n-- Alias em coluna: renomeia a coluna calculada\nSELECT nome AS professor, salario * 1.10 AS salario_reajustado\nFROM   professor AS p\nWHERE  p.nome_centro = 'COETI';\nResultado:\n\n\n\nprofessor\nsalario_reajustado\n\n\n\n\nCarlos\n71500.00\n\n\nLucas\n82500.00\n\n\nPedro\n101200.00\n\n\nMariana\n88000.00\n\n\n\nAliases de tabela são especialmente úteis em consultas com múltiplas tabelas, pois permitem abreviar os qualificadores:\n-- Alias de tabela: p no lugar de professor\nSELECT p.nome, c.predio\nFROM   professor AS p, centro AS c\nWHERE  p.nome_centro = c.nome_centro\n  AND  p.nome_centro = 'COCBS';\nResultado:\n\n\n\nnome\npredio\n\n\n\n\nMarcos\nSamambaia\n\n\nRoberto\nSamambaia\n\n\nBeatriz\nSamambaia",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#literais-no-select",
+    "href": "content/cap03/04-clausula-select.html#literais-no-select",
+    "title": "32  Cláusula SELECT",
+    "section": "32.5 Literais no SELECT",
+    "text": "32.5 Literais no SELECT\nÉ possível incluir valores literais (constantes) na cláusula SELECT:\n-- Adiciona uma coluna com o texto fixo 'UnDF'\nSELECT 'UnDF' AS instituicao, nome, nome_centro\nFROM   professor\nWHERE  nome_centro = 'COETI';\nResultado:\n\n\n\ninstituicao\nnome\nnome_centro\n\n\n\n\nUnDF\nCarlos\nCOETI\n\n\nUnDF\nLucas\nCOETI\n\n\nUnDF\nPedro\nCOETI\n\n\nUnDF\nMariana\nCOETI\n\n\n\n\nResumo da cláusula SELECT:\n\nSELECT coluna — projeta uma coluna específica\nSELECT DISTINCT coluna — elimina duplicatas\nSELECT * — projeta todas as colunas\nSELECT expressão AS alias — projeta uma expressão com nome alternativo\nSELECT 'literal' AS alias — inclui uma constante no resultado",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/05-clausula-where.html",
+    "href": "content/cap03/05-clausula-where.html",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "",
+    "text": "33.1 WHERE: Filtrando Linhas\nA cláusula WHERE especifica quais linhas devem aparecer no resultado. Ela aceita expressões lógicas compostas por comparações, conectivos booleanos e predicados especiais.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/05-clausula-where.html#where-filtrando-linhas",
+    "href": "content/cap03/05-clausula-where.html#where-filtrando-linhas",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "",
+    "text": "33.1.1 Operadores de Comparação\n\n\n\nOperador\nSignificado\nExemplo\n\n\n\n\n=\nigual\nnome_centro = 'COETI'\n\n\n&lt;&gt; ou !=\ndiferente\nsalario &lt;&gt; 90000\n\n\n&lt;\nmenor que\nsalario &lt; 60000\n\n\n&gt;\nmaior que\nsalario &gt; 80000\n\n\n&lt;=\nmenor ou igual\ncarga_total &lt;= 500\n\n\n&gt;=\nmaior ou igual\ncarga_horaria &gt;= 60\n\n\n\n\n\n33.1.2 Conectivos Lógicos: AND, OR, NOT\n-- Professores do COETI com salário maior que R$ 75.000\nSELECT nome, salario\nFROM   professor\nWHERE  nome_centro = 'COETI'\n  AND  salario &gt; 75000;\nResultado:\n\n\n\nnome\nsalario\n\n\n\n\nPedro\n92000.00\n\n\nMariana\n80000.00\n\n\n\n-- Professores do COCBS ou com salário acima de 85.000\nSELECT nome, nome_centro, salario\nFROM   professor\nWHERE  nome_centro = 'COCBS'\n   OR  salario &gt; 85000;\nResultado:\n\n\n\nnome\nnome_centro\nsalario\n\n\n\n\nAna\nCOCHCMA\n90000.00\n\n\nMarcos\nCOCBS\n95000.00\n\n\nRoberto\nCOCBS\n87000.00\n\n\nBeatriz\nCOCBS\n72000.00\n\n\nPedro\nCOETI\n92000.00\n\n\n\n-- Professores que NÃO são do COCHCMA\nSELECT nome, nome_centro\nFROM   professor\nWHERE  NOT nome_centro = 'COCHCMA';",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/05-clausula-where.html#between",
+    "href": "content/cap03/05-clausula-where.html#between",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "33.2 BETWEEN",
+    "text": "33.2 BETWEEN\nO predicado BETWEEN verifica se um valor está dentro de um intervalo fechado (inclusive os extremos):\n-- Professores com salário entre R$ 70.000 e R$ 90.000 (inclusive)\nSELECT nome, salario\nFROM   professor\nWHERE  salario BETWEEN 70000 AND 90000\nORDER BY salario;\nResultado:\n\n\n\nnome\nsalario\n\n\n\n\nBeatriz\n72000.00\n\n\nLucas\n75000.00\n\n\nRafael\n80000.00\n\n\nMariana\n80000.00\n\n\nRoberto\n87000.00\n\n\nAna\n90000.00\n\n\n\n\nsalario BETWEEN 70000 AND 90000 é equivalente a salario &gt;= 70000 AND salario &lt;= 90000. A versão com BETWEEN é mais legível.\nO predicado NOT BETWEEN exclui o intervalo.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/05-clausula-where.html#like-padrões-em-strings",
+    "href": "content/cap03/05-clausula-where.html#like-padrões-em-strings",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "33.3 LIKE: Padrões em Strings",
+    "text": "33.3 LIKE: Padrões em Strings\nO predicado LIKE permite filtrar strings usando padrões. Dois caracteres especiais estão disponíveis:\n\n\n\nCaractere\nSignificado\n\n\n\n\n%\nQualquer sequência de zero ou mais caracteres\n\n\n_\nExatamente um caractere qualquer\n\n\n\n\n-- Disciplinas cujo título começa com \"Introdução\"\nSELECT titulo\nFROM   disciplina\nWHERE  titulo LIKE 'Introdução%';\nResultado:\n\n\n\ntitulo\n\n\n\n\nIntrodução à Pesquisa Científica\n\n\nIntrodução à Engenharia de Software\n\n\n\n-- Disciplinas cujo título contém a palavra \"Bases\"\nSELECT titulo\nFROM   disciplina\nWHERE  titulo LIKE '%Bases%';\nResultado:\n\n\n\ntitulo\n\n\n\n\nBases da Engenharia de Software 3\n\n\n\n-- Disciplinas cujo id começa com \"BES\"\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  id_disciplina LIKE 'BES%';\nResultado:\n\n\n\nid_disciplina\ntitulo\n\n\n\n\nBES 101\nIntrodução à Engenharia de Software\n\n\nBES 301\nBases da Engenharia de Software 3\n\n\nBES 601\nProjeto Aplicado 6: Machine Learning\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nPor padrão, LIKE é sensível a maiúsculas e minúsculas (case-sensitive) na maioria dos SGBDs. Para buscas sem distinção de caixa, alguns SGBDs oferecem ILIKE (PostgreSQL) ou a função LOWER().",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/05-clausula-where.html#order-by-ordenando-o-resultado",
+    "href": "content/cap03/05-clausula-where.html#order-by-ordenando-o-resultado",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "33.4 ORDER BY: Ordenando o Resultado",
+    "text": "33.4 ORDER BY: Ordenando o Resultado\nA cláusula ORDER BY especifica a ordem em que as linhas são retornadas. Por padrão, a ordem é crescente (ASC); para ordem decrescente, usa-se DESC.\n-- Professores ordenados por salário, do maior para o menor\nSELECT nome, nome_centro, salario\nFROM   professor\nORDER BY salario DESC;\nResultado:\n\n\n\nnome\nnome_centro\nsalario\n\n\n\n\nMarcos\nCOCBS\n95000.00\n\n\nPedro\nCOETI\n92000.00\n\n\nAna\nCOCHCMA\n90000.00\n\n\nRoberto\nCOCBS\n87000.00\n\n\nRafael\nCOCHCMA\n80000.00\n\n\nMariana\nCOETI\n80000.00\n\n\nLucas\nCOETI\n75000.00\n\n\nBeatriz\nCOCBS\n72000.00\n\n\nJuliana\nCOCHCMA\n62000.00\n\n\nFernanda\nCOCHCMA\n60000.00\n\n\nCarlos\nCOETI\n65000.00\n\n\nJoão\nCOEMAG\n40000.00\n\n\n\nÉ possível ordenar por múltiplas colunas. O critério secundário é aplicado quando há empate no critério primário:\n-- Professores ordenados por centro (alfabético) e, dentro do mesmo centro, por salário decrescente\nSELECT nome, nome_centro, salario\nFROM   professor\nORDER BY nome_centro ASC, salario DESC;\nResultado:\n\n\n\nnome\nnome_centro\nsalario\n\n\n\n\nMarcos\nCOCBS\n95000.00\n\n\nRoberto\nCOCBS\n87000.00\n\n\nBeatriz\nCOCBS\n72000.00\n\n\nAna\nCOCHCMA\n90000.00\n\n\nRafael\nCOCHCMA\n80000.00\n\n\nJuliana\nCOCHCMA\n62000.00\n\n\nFernanda\nCOCHCMA\n60000.00\n\n\nJoão\nCOEMAG\n40000.00\n\n\nPedro\nCOETI\n92000.00\n\n\nMariana\nCOETI\n80000.00\n\n\nLucas\nCOETI\n75000.00\n\n\nCarlos\nCOETI\n65000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html",
+    "href": "content/cap03/06-operacoes-conjunto.html",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "",
+    "text": "34.1 Os Três Operadores\nSQL suporta operações de conjunto equivalentes às da álgebra relacional: união, interseção e diferença. Essas operações combinam os resultados de duas consultas e exigem que ambas retornem o mesmo número de colunas, com tipos compatíveis.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html#os-três-operadores",
+    "href": "content/cap03/06-operacoes-conjunto.html#os-três-operadores",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "",
+    "text": "Operador SQL\nÁlgebra Relacional\nDescrição\n\n\n\n\nUNION\n∪ (união)\nLinhas que aparecem em pelo menos uma das consultas\n\n\nINTERSECT\n∩ (interseção)\nLinhas que aparecem nas duas consultas\n\n\nEXCEPT\n− (diferença)\nLinhas da primeira consulta que não aparecem na segunda\n\n\n\nPor padrão, todas as três operações eliminam duplicatas do resultado. Para manter duplicatas, adicione ALL: UNION ALL, INTERSECT ALL, EXCEPT ALL.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html#exemplos-com-as-disciplinas-da-undf",
+    "href": "content/cap03/06-operacoes-conjunto.html#exemplos-com-as-disciplinas-da-undf",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "34.2 Exemplos com as Disciplinas da UnDF",
+    "text": "34.2 Exemplos com as Disciplinas da UnDF\nPara demonstrar as operações, usaremos dois conjuntos:\n\nConjunto A: disciplinas do COETI → BES 101, BES 301, BES 601\nConjunto B: disciplinas com carga horária ≥ 60 horas → MTI 101, MTI 202, MTI 402, BES 301, BES 601, NUT 101, NUT 401, NUT 701, PED 101, PED 301, PED 601\n\n\n34.2.1 UNION: Disciplinas do COETI ou com carga horária ≥ 60 h\n-- Disciplinas do COETI\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  nome_centro = 'COETI'\n\nUNION\n\n-- Disciplinas com carga horária igual ou superior a 60 horas\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  carga_horaria &gt;= 60;\nResultado (BES 101 aparece uma só vez, mesmo estando em ambos os conjuntos):\n\n\n\nid_disciplina\ntitulo\n\n\n\n\nBES 101\nIntrodução à Engenharia de Software\n\n\nBES 301\nBases da Engenharia de Software 3\n\n\nBES 601\nProjeto Aplicado 6: Machine Learning\n\n\nMTI 101\nIntrodução à Pesquisa Científica\n\n\nMTI 202\nGestão de Pessoas na Adm. Pública\n\n\nMTI 402\nPolíticas Públicas e Sociais\n\n\nNUT 101\nBioquímica e Biofísica\n\n\nNUT 401\nEpidemiologia Geral\n\n\nNUT 701\nNutrição em Saúde Coletiva\n\n\nPED 101\nHistória da Educação\n\n\nPED 301\nJogos e Brincadeiras na Infância\n\n\nPED 601\nAlfabetização e Práticas de Letramento\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nBES 101 tem carga horária de apenas 20 horas, portanto está no conjunto A mas não no conjunto B. Ainda assim, aparece no resultado da UNION porque basta estar em um dos dois lados.\n\n\n\n\n34.2.2 INTERSECT: Disciplinas do COETI E com carga horária ≥ 60 h\n-- Disciplinas do COETI que também têm carga horária &gt;= 60 horas\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  nome_centro = 'COETI'\n\nINTERSECT\n\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  carga_horaria &gt;= 60;\nResultado (apenas as disciplinas que satisfazem ambas as condições):\n\n\n\nid_disciplina\ntitulo\n\n\n\n\nBES 301\nBases da Engenharia de Software 3\n\n\nBES 601\nProjeto Aplicado 6: Machine Learning\n\n\n\nBES 101 (carga horária = 20 h) é excluída, pois não satisfaz a condição de carga horária ≥ 60 h.\n\n\n34.2.3 EXCEPT: Disciplinas do COETI que NÃO têm carga horária ≥ 60 h\n-- Disciplinas do COETI que não possuem carga horária &gt;= 60 horas\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  nome_centro = 'COETI'\n\nEXCEPT\n\nSELECT id_disciplina, titulo\nFROM   disciplina\nWHERE  carga_horaria &gt;= 60;\nResultado:\n\n\n\nid_disciplina\ntitulo\n\n\n\n\nBES 101\nIntrodução à Engenharia de Software\n\n\n\nApenas BES 101 (20 horas) está no conjunto A e não está no conjunto B.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html#union-all-mantendo-duplicatas",
+    "href": "content/cap03/06-operacoes-conjunto.html#union-all-mantendo-duplicatas",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "34.3 UNION ALL: Mantendo Duplicatas",
+    "text": "34.3 UNION ALL: Mantendo Duplicatas\n-- Todos os nomes de centros de alunos e professores (com repetição)\nSELECT nome_centro FROM aluno\nUNION ALL\nSELECT nome_centro FROM professor;\nO resultado terá 12 + 12 = 24 linhas, com muitas repetições. Use UNION ALL quando a presença de duplicatas é intencional (por exemplo, ao contar ocorrências).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html#compatibilidade-de-esquema",
+    "href": "content/cap03/06-operacoes-conjunto.html#compatibilidade-de-esquema",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "34.4 Compatibilidade de Esquema",
+    "text": "34.4 Compatibilidade de Esquema\nAs duas consultas combinadas por UNION, INTERSECT ou EXCEPT devem ter:\n\nO mesmo número de colunas no SELECT\nTipos de dados compatíveis em cada posição correspondente\n\nOs nomes das colunas no resultado final são determinados pela primeira consulta.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html",
+    "href": "content/cap03/07-nulos.html",
+    "title": "35  Valores Nulos",
+    "section": "",
+    "text": "35.1 O que é NULL?\nNULL não é zero, não é uma string vazia '' e não é false. É um valor especial que se comporta de forma diferente em operações aritméticas e comparações.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#o-que-é-null",
+    "href": "content/cap03/07-nulos.html#o-que-é-null",
+    "title": "35  Valores Nulos",
+    "section": "",
+    "text": "NULL é um valor especial em SQL que indica a ausência de informação. Um valor nulo pode significar:\n\nDesconhecido: o valor existe, mas não é conhecido (ex.: o salário de um novo professor ainda não foi definido).\nInaplicável: o atributo não se aplica a essa entidade (ex.: um campo “cônjuge” para alguém solteiro).\nInexistente: a informação simplesmente não está disponível.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#aritmética-com-null",
+    "href": "content/cap03/07-nulos.html#aritmética-com-null",
+    "title": "35  Valores Nulos",
+    "section": "35.2 Aritmética com NULL",
+    "text": "35.2 Aritmética com NULL\nQualquer operação aritmética envolvendo NULL retorna NULL:\n\n\n\nExpressão\nResultado\n\n\n\n\nNULL + 1000\nNULL\n\n\nNULL * 1.10\nNULL\n\n\n60000 + NULL\nNULL\n\n\n\n\nSe o salário de um professor fosse NULL, a consulta abaixo retornaria NULL como salário reajustado:\nSELECT nome, salario * 1.10 AS salario_reajustado\nFROM   professor\nWHERE  nome = 'Carlos';\n-- Se salario fosse NULL, salario_reajustado também seria NULL",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#comparações-com-null-lógica-de-três-valores",
+    "href": "content/cap03/07-nulos.html#comparações-com-null-lógica-de-três-valores",
+    "title": "35  Valores Nulos",
+    "section": "35.3 Comparações com NULL: Lógica de Três Valores",
+    "text": "35.3 Comparações com NULL: Lógica de Três Valores\nEm álgebra booleana clássica, uma comparação retorna TRUE ou FALSE. Em SQL, comparações com NULL retornam um terceiro resultado: UNKNOWN.\nNULL = 5        -- UNKNOWN\nNULL &lt;&gt; 5       -- UNKNOWN\nNULL &gt; 5        -- UNKNOWN\nNULL = NULL     -- UNKNOWN (!)\n\n\n\n\n\n\nAviso\n\n\n\nNULL = NULL retorna UNKNOWN, não TRUE. Para verificar se um valor é nulo, é obrigatório usar IS NULL ou IS NOT NULL.\n\n\n\n35.3.1 Tabelas de Verdade com UNKNOWN\nA lógica de três valores do SQL define como AND, OR e NOT se comportam quando um dos operandos é UNKNOWN:\nAND:\n\n\n\nA\nB\nA AND B\n\n\n\n\nTRUE\nTRUE\nTRUE\n\n\nTRUE\nUNKNOWN\nUNKNOWN\n\n\nTRUE\nFALSE\nFALSE\n\n\nUNKNOWN\nTRUE\nUNKNOWN\n\n\nUNKNOWN\nUNKNOWN\nUNKNOWN\n\n\nUNKNOWN\nFALSE\nFALSE\n\n\nFALSE\nqualquer\nFALSE\n\n\n\nOR:\n\n\n\nA\nB\nA OR B\n\n\n\n\nTRUE\nqualquer\nTRUE\n\n\nUNKNOWN\nTRUE\nTRUE\n\n\nUNKNOWN\nUNKNOWN\nUNKNOWN\n\n\nUNKNOWN\nFALSE\nUNKNOWN\n\n\nFALSE\nFALSE\nFALSE\n\n\n\nNOT:\n\n\n\nA\nNOT A\n\n\n\n\nTRUE\nFALSE\n\n\nFALSE\nTRUE\n\n\nUNKNOWN\nUNKNOWN\n\n\n\n\nA cláusula WHERE retém apenas as linhas para as quais a condição é avaliada como TRUE. Linhas com resultado UNKNOWN são descartadas, da mesma forma que linhas com resultado FALSE.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#is-null-e-is-not-null",
+    "href": "content/cap03/07-nulos.html#is-null-e-is-not-null",
+    "title": "35  Valores Nulos",
+    "section": "35.4 IS NULL e IS NOT NULL",
+    "text": "35.4 IS NULL e IS NOT NULL\nPara verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:\n-- Professores cujo salário é desconhecido (nulo)\nSELECT nome\nFROM   professor\nWHERE  salario IS NULL;\n\n-- Professores com salário informado\nSELECT nome\nFROM   professor\nWHERE  salario IS NOT NULL;\nNo banco de dados atual da UnDF, nenhum professor tem salário nulo — todos têm valores definidos. Mas considere um cenário hipotético onde Carlos ainda não tivesse salário definido:\n-- Sem IS NOT NULL: Carlos poderia aparecer ou não (resultado imprevisível)\nSELECT nome FROM professor WHERE salario &gt; 70000;\n\n-- Com IS NOT NULL: garante que a comparação é feita apenas para valores conhecidos\nSELECT nome FROM professor WHERE salario &gt; 70000 AND salario IS NOT NULL;",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#null-em-funções-de-agregação",
+    "href": "content/cap03/07-nulos.html#null-em-funções-de-agregação",
+    "title": "35  Valores Nulos",
+    "section": "35.5 NULL em Funções de Agregação",
+    "text": "35.5 NULL em Funções de Agregação\nAs funções de agregação (AVG, SUM, COUNT, MIN, MAX) ignoram valores nulos em sua computação:\n\nSuponha que a tabela tivesse 3 professores com salários 65000, NULL e 75000:\nSELECT AVG(salario) FROM professor;\n-- Resultado: (65000 + 75000) / 2 = 70000\n-- O NULL é ignorado; o denominador é 2, não 3\nExceção: COUNT(*) conta todas as linhas, incluindo aquelas com valores nulos em qualquer coluna.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/07-nulos.html#boas-práticas",
+    "href": "content/cap03/07-nulos.html#boas-práticas",
+    "title": "35  Valores Nulos",
+    "section": "35.6 Boas Práticas",
+    "text": "35.6 Boas Práticas\n\nAo projetar tabelas, use NOT NULL nas colunas que sempre devem ter um valor.\nAo escrever condições que envolvem colunas que podem ser nulas, inclua verificações explícitas com IS NULL ou IS NOT NULL.\nNunca compare com = NULL; use sempre IS NULL.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html",
+    "href": "content/cap03/08-agregacao.html",
+    "title": "36  Funções de Agregação",
+    "section": "",
+    "text": "36.1 As Cinco Funções Básicas\nAs funções de agregação calculam um único valor a partir de um conjunto de linhas. São amplamente usadas para obter estatísticas sobre os dados.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#as-cinco-funções-básicas",
+    "href": "content/cap03/08-agregacao.html#as-cinco-funções-básicas",
+    "title": "36  Funções de Agregação",
+    "section": "",
+    "text": "Função\nDescrição\nAplica-se a\n\n\n\n\nAVG(coluna)\nMédia aritmética dos valores\nNumérico\n\n\nMIN(coluna)\nMenor valor\nNumérico, string, data\n\n\nMAX(coluna)\nMaior valor\nNumérico, string, data\n\n\nSUM(coluna)\nSoma de todos os valores\nNumérico\n\n\nCOUNT(*)\nNúmero de linhas\nQualquer\n\n\nCOUNT(coluna)\nNúmero de linhas com valor não nulo\nQualquer\n\n\n\nTodas as funções, exceto COUNT(*), ignoram valores nulos.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#agregação-sem-group-by",
+    "href": "content/cap03/08-agregacao.html#agregação-sem-group-by",
+    "title": "36  Funções de Agregação",
+    "section": "36.2 Agregação Sem GROUP BY",
+    "text": "36.2 Agregação Sem GROUP BY\nQuando nenhuma cláusula GROUP BY é especificada, a função agrega todas as linhas da tabela (ou do subconjunto filtrado pelo WHERE).\n-- Salário médio de todos os professores da UnDF\nSELECT AVG(salario) AS media_salarial\nFROM   professor;\nResultado:\n\n\n\nmedia_salarial\n\n\n\n\n74833.33\n\n\n\nO cálculo: (65000 + 90000 + 40000 + 95000 + 60000 + 87000 + 75000 + 62000 + 80000 + 72000 + 92000 + 80000) / 12 = 898000 / 12 ≈ 74833.33\n-- Quantos professores há na universidade?\nSELECT COUNT(*) AS total_professores\nFROM   professor;\nResultado:\n\n\n\ntotal_professores\n\n\n\n\n12\n\n\n\n-- Quantos centros distintos têm professores?\nSELECT COUNT(DISTINCT nome_centro) AS centros_com_professor\nFROM   professor;\nResultado:\n\n\n\ncentros_com_professor\n\n\n\n\n4\n\n\n\n-- Maior e menor salário\nSELECT MAX(salario) AS maior_salario,\n       MIN(salario) AS menor_salario\nFROM   professor;\nResultado:\n\n\n\nmaior_salario\nmenor_salario\n\n\n\n\n95000.00\n40000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#group-by-agrupando-por-categoria",
+    "href": "content/cap03/08-agregacao.html#group-by-agrupando-por-categoria",
+    "title": "36  Funções de Agregação",
+    "section": "36.3 GROUP BY: Agrupando por Categoria",
+    "text": "36.3 GROUP BY: Agrupando por Categoria\nA cláusula GROUP BY divide as linhas em grupos e aplica a função de agregação a cada grupo separadamente.\n-- Salário médio por centro acadêmico\nSELECT nome_centro, AVG(salario) AS media\nFROM   professor\nGROUP BY nome_centro\nORDER BY media DESC;\nResultado:\n\n\n\nnome_centro\nmedia\n\n\n\n\nCOCBS\n84666.67\n\n\nCOETI\n78000.00\n\n\nCOCHCMA\n73000.00\n\n\nCOEMAG\n40000.00\n\n\n\nCálculo por centro:\n\nCOCBS: (95000 + 87000 + 72000) / 3 = 254000 / 3 ≈ 84666.67\nCOETI: (65000 + 75000 + 92000 + 80000) / 4 = 312000 / 4 = 78000.00\nCOCHCMA: (90000 + 60000 + 62000 + 80000) / 4 = 292000 / 4 = 73000.00\nCOEMAG: 40000 / 1 = 40000.00\n\n-- Número de professores e maior salário por centro\nSELECT nome_centro,\n       COUNT(*)     AS qtd_professores,\n       MAX(salario) AS maior_salario\nFROM   professor\nGROUP BY nome_centro\nORDER BY qtd_professores DESC;\nResultado:\n\n\n\nnome_centro\nqtd_professores\nmaior_salario\n\n\n\n\nCOCHCMA\n4\n90000.00\n\n\nCOETI\n4\n92000.00\n\n\nCOCBS\n3\n95000.00\n\n\nCOEMAG\n1\n40000.00\n\n\n\n\n36.3.1 Erro Comum: Atributo Fora do GROUP BY\n\n\n\n\n\n\nAviso\n\n\n\nTodo atributo listado no SELECT que não é uma função de agregação deve aparecer no GROUP BY. O exemplo abaixo causaria erro:\n-- INCORRETO: 'nome' não está no GROUP BY\nSELECT nome_centro, nome, AVG(salario)\nFROM   professor\nGROUP BY nome_centro;\n-- ERROR: column \"professor.nome\" must appear in the GROUP BY clause\n--        or be used in an aggregate function\nA razão: para cada grupo (um centro), há vários nomes de professores. O banco não sabe qual nome retornar.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#having-filtrando-grupos",
+    "href": "content/cap03/08-agregacao.html#having-filtrando-grupos",
+    "title": "36  Funções de Agregação",
+    "section": "36.4 HAVING: Filtrando Grupos",
+    "text": "36.4 HAVING: Filtrando Grupos\nA cláusula HAVING filtra os grupos resultantes do GROUP BY, da mesma forma que o WHERE filtra linhas individuais.\n\nOrdem de execução de uma consulta com agregação:\n\nFROM — determina as tabelas\nWHERE — filtra linhas individuais (antes da agregação)\nGROUP BY — agrupa as linhas restantes\nFunções de agregação — calculadas por grupo\nHAVING — filtra grupos (depois da agregação)\nSELECT — projeta as colunas\nORDER BY — ordena o resultado\n\n\n-- Centros com salário médio acima de R$ 70.000\nSELECT nome_centro, AVG(salario) AS media\nFROM   professor\nGROUP BY nome_centro\nHAVING AVG(salario) &gt; 70000\nORDER BY media DESC;\nResultado (COEMAG com média de R$ 40.000 é excluído):\n\n\n\nnome_centro\nmedia\n\n\n\n\nCOCBS\n84666.67\n\n\nCOETI\n78000.00\n\n\nCOCHCMA\n73000.00\n\n\n\n-- Centros com pelo menos 3 professores, ordenados pelo número de professores\nSELECT nome_centro, COUNT(*) AS qtd\nFROM   professor\nGROUP BY nome_centro\nHAVING COUNT(*) &gt;= 3\nORDER BY qtd DESC;\nResultado:\n\n\n\nnome_centro\nqtd\n\n\n\n\nCOCHCMA\n4\n\n\nCOETI\n4\n\n\nCOCBS\n3\n\n\n\nCOEMAG (1 professor) é excluído pelo HAVING COUNT(*) &gt;= 3.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#where-vs.-having",
+    "href": "content/cap03/08-agregacao.html#where-vs.-having",
+    "title": "36  Funções de Agregação",
+    "section": "36.5 WHERE vs. HAVING",
+    "text": "36.5 WHERE vs. HAVING\n\n\n\nAspecto\nWHERE\nHAVING\n\n\n\n\nOpera sobre\nLinhas individuais\nGrupos\n\n\nExecutado\nAntes do GROUP BY\nDepois do GROUP BY\n\n\nPode usar agregação?\nNão\nSim\n\n\n\n-- WHERE filtra antes: considera apenas COETI e COCBS, depois agrupa\nSELECT nome_centro, AVG(salario) AS media\nFROM   professor\nWHERE  nome_centro IN ('COETI', 'COCBS')\nGROUP BY nome_centro;\nResultado:\n\n\n\nnome_centro\nmedia\n\n\n\n\nCOETI\n78000.00\n\n\nCOCBS\n84666.67",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html",
+    "href": "content/cap03/09-subconsultas.html",
+    "title": "37  Subconsultas",
+    "section": "",
+    "text": "37.1 IN e NOT IN\nUma subconsulta (ou subquery) é uma consulta SQL aninhada dentro de outra consulta. Ela pode aparecer na cláusula WHERE, na cláusula FROM ou na cláusula SELECT. Subconsultas permitem expressar perguntas complexas que não podem ser respondidas com uma única consulta simples.\nO predicado IN verifica se um valor pertence ao conjunto retornado por uma subconsulta.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html#in-e-not-in",
+    "href": "content/cap03/09-subconsultas.html#in-e-not-in",
+    "title": "37  Subconsultas",
+    "section": "",
+    "text": "Professores em centros com orçamento acima de R$ 150.000:\nOs centros com orçamento &gt; 150.000 são: COETI (185.000), COCHCMA (170.000) e COCBS (160.000). Apenas o COEMAG (80.000) fica fora.\n-- Passo 1 (subconsulta): encontra os centros com orçamento &gt; 150.000\n-- Passo 2 (consulta principal): retorna professores desses centros\nSELECT nome, nome_centro\nFROM   professor\nWHERE  nome_centro IN (\n    SELECT nome_centro\n    FROM   centro\n    WHERE  orcamento &gt; 150000\n)\nORDER BY nome_centro, nome;\nResultado (todos exceto João, do COEMAG):\n\n\n\nnome\nnome_centro\n\n\n\n\nMarcos\nCOCBS\n\n\nRoberto\nCOCBS\n\n\nBeatriz\nCOCBS\n\n\nAna\nCOCHCMA\n\n\nFernanda\nCOCHCMA\n\n\nJuliana\nCOCHCMA\n\n\nRafael\nCOCHCMA\n\n\nCarlos\nCOETI\n\n\nLucas\nCOETI\n\n\nPedro\nCOETI\n\n\nMariana\nCOETI\n\n\n\n\n\nNOT IN: professores que não são do COEMAG (via subconsulta):\nSELECT nome, nome_centro\nFROM   professor\nWHERE  nome_centro NOT IN (\n    SELECT nome_centro\n    FROM   centro\n    WHERE  nome_centro = 'COEMAG'\n)\nORDER BY nome;\nResultado (11 professores, excluindo João):\n\n\n\nnome\nnome_centro\n\n\n\n\nAna\nCOCHCMA\n\n\nBeatriz\nCOCBS\n\n\nCarlos\nCOETI\n\n\nFernanda\nCOCHCMA\n\n\nJuliana\nCOCHCMA\n\n\nLucas\nCOETI\n\n\nMarcos\nCOCBS\n\n\nMariana\nCOETI\n\n\nPedro\nCOETI\n\n\nRafael\nCOCHCMA\n\n\nRoberto\nCOCBS",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html#some-e-all",
+    "href": "content/cap03/09-subconsultas.html#some-e-all",
+    "title": "37  Subconsultas",
+    "section": "37.2 SOME e ALL",
+    "text": "37.2 SOME e ALL\nSOME e ALL comparam um valor com cada elemento do conjunto retornado pela subconsulta.\n\n\nvalor &gt; SOME (subconsulta): verdadeiro se o valor for maior que pelo menos um elemento do conjunto.\nvalor &gt; ALL (subconsulta): verdadeiro se o valor for maior que todos os elementos do conjunto.\n\nO predicado = SOME é equivalente a IN.\n\n\nProfessores com salário maior que pelo menos um professor do COEMAG (&gt; SOME):\nO único professor do COEMAG é João, com salário de R$ 40.000. Portanto, qualquer professor com salário &gt; 40.000 satisfaz a condição.\nSELECT nome, salario\nFROM   professor\nWHERE  salario &gt; SOME (\n    SELECT salario\n    FROM   professor\n    WHERE  nome_centro = 'COEMAG'\n)\nORDER BY salario;\nResultado (todos exceto João, cujo salário é exatamente igual ao limite):\n\n\n\nnome\nsalario\n\n\n\n\nCarlos\n65000.00\n\n\nFernanda\n60000.00\n\n\nJuliana\n62000.00\n\n\nBeatriz\n72000.00\n\n\nLucas\n75000.00\n\n\nRafael\n80000.00\n\n\nMariana\n80000.00\n\n\nRoberto\n87000.00\n\n\nAna\n90000.00\n\n\nPedro\n92000.00\n\n\nMarcos\n95000.00\n\n\n\n\n\nProfessores com salário maior que TODOS os professores do COEMAG (&gt; ALL):\nComo há apenas um professor no COEMAG (João, R$ 40.000), &gt; ALL equivale a &gt; 40000.\nSELECT nome, salario\nFROM   professor\nWHERE  salario &gt; ALL (\n    SELECT salario\n    FROM   professor\n    WHERE  nome_centro = 'COEMAG'\n)\nORDER BY salario;\nResultado — os mesmos 11 professores com salário acima de R$ 40.000.\n\n\n\nnome\nsalario\n\n\n\n\nCarlos\n65000.00\n\n\nFernanda\n60000.00\n\n\n…\n…\n\n\nMarcos\n95000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html#exists-e-not-exists",
+    "href": "content/cap03/09-subconsultas.html#exists-e-not-exists",
+    "title": "37  Subconsultas",
+    "section": "37.3 EXISTS e NOT EXISTS",
+    "text": "37.3 EXISTS e NOT EXISTS\nEXISTS verifica se a subconsulta retorna ao menos uma linha. É frequentemente usado com subconsultas correlacionadas, em que a subconsulta referencia colunas da consulta externa.\n\nEXISTS: centros que têm pelo menos um professor com salário acima de R$ 80.000:\nSELECT nome_centro, predio\nFROM   centro c\nWHERE  EXISTS (\n    SELECT 1\n    FROM   professor p\n    WHERE  p.nome_centro = c.nome_centro   -- correlação com a consulta externa\n      AND  p.salario &gt; 80000\n);\nResultado:\n\n\n\nnome_centro\npredio\n\n\n\n\nCOCBS\nSamambaia\n\n\nCOCHCMA\nBuritis\n\n\nCOETI\nLago Norte\n\n\n\n\nCOCBS: Marcos (95.000) e Roberto (87.000) — satisfaz.\nCOCHCMA: Ana (90.000) — satisfaz.\nCOETI: Pedro (92.000) — satisfaz.\nCOEMAG: João (40.000) — não satisfaz; excluído.\n\n\n\nNOT EXISTS: alunos que não têm carga total (carga_total = 0):\n-- Alunos cuja carga_total é zero (nunca cursaram nenhuma disciplina)\nSELECT nome\nFROM   aluno\nWHERE  NOT EXISTS (\n    SELECT 1\n    FROM   aluno a2\n    WHERE  a2.id = aluno.id\n      AND  a2.carga_total &gt; 0\n);\nUma forma mais direta para este caso específico:\nSELECT nome\nFROM   aluno\nWHERE  carga_total = 0;\nResultado:\n\n\n\nnome\n\n\n\n\nHenrique\n\n\n\nHenrique (id 70557) é o único aluno com carga_total = 0.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html#subconsulta-no-from",
+    "href": "content/cap03/09-subconsultas.html#subconsulta-no-from",
+    "title": "37  Subconsultas",
+    "section": "37.4 Subconsulta no FROM",
+    "text": "37.4 Subconsulta no FROM\nUma subconsulta pode ser usada como se fosse uma tabela na cláusula FROM. Ela deve receber um alias.\n\nCentros com salário médio acima de R$ 70.000:\n-- A subconsulta calcula a média por centro; a consulta externa filtra\nSELECT media_por_centro.nome_centro, media_por_centro.media\nFROM (\n    SELECT nome_centro, AVG(salario) AS media\n    FROM   professor\n    GROUP BY nome_centro\n) AS media_por_centro\nWHERE  media_por_centro.media &gt; 70000\nORDER BY media_por_centro.media DESC;\nResultado:\n\n\n\nnome_centro\nmedia\n\n\n\n\nCOCBS\n84666.67\n\n\nCOETI\n78000.00\n\n\nCOCHCMA\n73000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/09-subconsultas.html#with-expressões-de-tabela-comuns-cte",
+    "href": "content/cap03/09-subconsultas.html#with-expressões-de-tabela-comuns-cte",
+    "title": "37  Subconsultas",
+    "section": "37.5 WITH: Expressões de Tabela Comuns (CTE)",
+    "text": "37.5 WITH: Expressões de Tabela Comuns (CTE)\nA cláusula WITH define uma CTE (Common Table Expression), que é uma subconsulta nomeada e reutilizável na consulta principal. CTEs tornam consultas complexas mais legíveis.\n\nCarga horária total por centro e filtro de centros com mais de 200 horas:\n-- Define a CTE com a soma de carga horária por centro\nWITH carga_por_centro AS (\n    SELECT nome_centro, SUM(carga_horaria) AS total_horas\n    FROM   disciplina\n    GROUP BY nome_centro\n)\n-- Usa a CTE como se fosse uma tabela\nSELECT nome_centro, total_horas\nFROM   carga_por_centro\nWHERE  total_horas &gt; 200\nORDER BY total_horas DESC;\nResultado:\n\n\n\nnome_centro\ntotal_horas\n\n\n\n\nCOCBS\n245\n\n\nCOETI\n260\n\n\nCOCHCMA\n180\n\n\n\nNota: COCHCMA tem 60 + 60 + 60 = 180 horas (abaixo de 200) e seria excluído. COETI tem 20 + 120 + 120 = 260, COCBS tem 105 + 70 + 70 = 245. COEMAG tem 60 + 60 + 60 = 180, também abaixo de 200.\nResultado corrigido:\n\n\n\nnome_centro\ntotal_horas\n\n\n\n\nCOETI\n260\n\n\nCOCBS\n245\n\n\n\n\n\nVantagens das CTEs com WITH:\n\nMelhoram a legibilidade ao dar nomes descritivos a subconsultas complexas.\nPermitem reutilizar a mesma subconsulta várias vezes na consulta principal.\nEm alguns SGBDs, podem ser usadas recursivamente para consultas hierárquicas (WITH RECURSIVE).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html",
+    "href": "content/cap03/10-modificacao.html",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "",
+    "text": "38.1 INSERT: Inserindo Dados\nAlém de consultar dados com SELECT, o SQL permite modificar o conteúdo de um banco de dados por meio de três comandos DML: INSERT (inserir), DELETE (excluir) e UPDATE (atualizar).",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html#insert-inserindo-dados",
+    "href": "content/cap03/10-modificacao.html#insert-inserindo-dados",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "",
+    "text": "38.1.1 Inserção de uma única linha\nA forma mais simples insere uma linha com valores explícitos:\n-- Inserir um novo centro na UnDF\nINSERT INTO centro (nome_centro, predio, orcamento)\nVALUES ('COMAT', 'Plano Piloto', 120000.00);\nQuando os valores são fornecidos na mesma ordem das colunas da tabela, a lista de colunas pode ser omitida — mas é considerada boa prática sempre especificá-la:\n-- Forma equivalente (sem lista de colunas — menos recomendada)\nINSERT INTO centro\nVALUES ('COMAT', 'Plano Piloto', 120000.00);\nAo inserir um professor vinculado ao novo centro:\nINSERT INTO professor (id, nome, nome_centro, salario)\nVALUES ('11111', 'Vanessa', 'COMAT', 55000.00);\n\n\n38.1.2 INSERT com SELECT\nÉ possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela professor_historico com a mesma estrutura de professor:\n-- Criar tabela histórica (estrutura idêntica a professor)\nCREATE TABLE professor_historico (\n    id          CHAR(5)       PRIMARY KEY,\n    nome        VARCHAR(50)   NOT NULL,\n    nome_centro VARCHAR(10),\n    salario     NUMERIC(8, 2) NOT NULL\n);\n\n-- Copiar para o histórico os professores com salário acima de R$ 90.000\nINSERT INTO professor_historico (id, nome, nome_centro, salario)\nSELECT id, nome, nome_centro, salario\nFROM   professor\nWHERE  salario &gt; 90000;\nLinhas inseridas (professores com salário &gt; 90.000):\n\n\n\nid\nnome\nnome_centro\nsalario\n\n\n\n\n22222\nMarcos\nCOCBS\n95000.00\n\n\n83821\nPedro\nCOETI\n92000.00",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html#delete-excluindo-dados",
+    "href": "content/cap03/10-modificacao.html#delete-excluindo-dados",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "38.2 DELETE: Excluindo Dados",
+    "text": "38.2 DELETE: Excluindo Dados\n\n38.2.1 DELETE simples\n-- Remover o professor João (único professor do COEMAG)\nDELETE FROM professor\nWHERE  nome_centro = 'COEMAG';\nEssa operação remove a linha de João (id 15151) permanentemente.\n\n\n38.2.2 DELETE com subconsulta\nPara condições mais complexas, o WHERE pode conter subconsultas:\n-- Remover professores com salário abaixo da média geral\n-- Média atual: (65000+90000+40000+95000+60000+87000+75000+62000+80000+72000+92000+80000)/12 ≈ 74833\nDELETE FROM professor\nWHERE  salario &lt; (\n    SELECT AVG(salario)\n    FROM   professor\n);\nProfessores removidos (salário &lt; 74833.33):\n\n\n\nnome\nsalario\n\n\n\n\nCarlos\n65000.00\n\n\nJoão\n40000.00\n\n\nFernanda\n60000.00\n\n\nJuliana\n62000.00\n\n\nBeatriz\n72000.00\n\n\n\n\n\n\n\n\n\nAviso\n\n\n\nAtenção ao comportamento da subconsulta em DELETE:\nAlguns SGBDs (como MySQL) não permitem que a subconsulta referencie a mesma tabela que está sendo modificada. Em PostgreSQL, isso é permitido, pois o banco computa a subconsulta com o estado da tabela antes de iniciar as exclusões.\nPara máxima portabilidade, use uma CTE ou subconsulta no FROM quando necessário.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html#update-atualizando-dados",
+    "href": "content/cap03/10-modificacao.html#update-atualizando-dados",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "38.3 UPDATE: Atualizando Dados",
+    "text": "38.3 UPDATE: Atualizando Dados\n\n38.3.1 UPDATE simples\n-- Aplicar reajuste de 5% para todos os professores\nUPDATE professor\nSET    salario = salario * 1.05;\n\n\n38.3.2 UPDATE condicional\n-- Aumentar 10% para professores do COETI\nUPDATE professor\nSET    salario = salario * 1.10\nWHERE  nome_centro = 'COETI';\nAntes e depois (professores do COETI):\n\n\n\nnome\nsalario antes\nsalario depois\n\n\n\n\nCarlos\n65000.00\n71500.00\n\n\nLucas\n75000.00\n82500.00\n\n\nPedro\n92000.00\n101200.00\n\n\nMariana\n80000.00\n88000.00\n\n\n\n\n\n38.3.3 UPDATE com CASE: reajuste escalonado\nQuando diferentes grupos de linhas precisam de atualizações diferentes, o CASE permite aplicar regras distintas em um único comando:\n-- Reajuste diferenciado por faixa salarial:\n--   Salário &lt;= R$ 70.000 → aumento de 10%\n--   Salário &gt;  R$ 70.000 → aumento de 5%\nUPDATE professor\nSET    salario = CASE\n                    WHEN salario &lt;= 70000 THEN salario * 1.10\n                    ELSE                      salario * 1.05\n                END;\nResultado para todos os professores:\n\n\n\nnome\nnome_centro\nsalario antes\nsalario depois\n\n\n\n\nCarlos\nCOETI\n65000.00\n71500.00\n\n\nAna\nCOCHCMA\n90000.00\n94500.00\n\n\nJoão\nCOEMAG\n40000.00\n44000.00\n\n\nMarcos\nCOCBS\n95000.00\n99750.00\n\n\nFernanda\nCOCHCMA\n60000.00\n66000.00\n\n\nRoberto\nCOCBS\n87000.00\n91350.00\n\n\nLucas\nCOETI\n75000.00\n78750.00\n\n\nJuliana\nCOCHCMA\n62000.00\n68200.00\n\n\nRafael\nCOCHCMA\n80000.00\n84000.00\n\n\nBeatriz\nCOCBS\n72000.00\n75600.00\n\n\nPedro\nCOETI\n92000.00\n96600.00\n\n\nMariana\nCOETI\n80000.00\n84000.00\n\n\n\n\nVantagem do CASE em UPDATE:\nO uso de um único UPDATE com CASE garante que o reajuste seja calculado com base nos valores originais — não há risco de um professor receber o primeiro reajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois UPDATEs separados.\n\n\n\n38.3.4 UPDATE com subconsulta\n-- Atualizar o orçamento do COETI para ser igual ao dobro da média dos outros centros\nUPDATE centro\nSET    orcamento = (\n    SELECT 2 * AVG(orcamento)\n    FROM   centro\n    WHERE  nome_centro &lt;&gt; 'COETI'\n)\nWHERE  nome_centro = 'COETI';",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html#resumo-dos-comandos-de-modificação",
+    "href": "content/cap03/10-modificacao.html#resumo-dos-comandos-de-modificação",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "38.4 Resumo dos Comandos de Modificação",
+    "text": "38.4 Resumo dos Comandos de Modificação\n\n\n\n\n\n\n\n\nComando\nAção\nCuidado\n\n\n\n\nINSERT INTO ... VALUES\nInsere linhas com valores explícitos\nRespeit restrições (PK, FK, NOT NULL, CHECK)\n\n\nINSERT INTO ... SELECT\nInsere linhas copiadas de uma consulta\nA consulta deve retornar colunas compatíveis\n\n\nDELETE FROM ... WHERE\nRemove linhas que satisfazem a condição\nSem WHERE, remove todas as linhas\n\n\nUPDATE ... SET ... WHERE\nAtualiza colunas das linhas que satisfazem a condição\nSem WHERE, atualiza todas as linhas",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/11-resumo.html",
+    "href": "content/cap03/11-resumo.html",
+    "title": "39  Resumo e Exercícios",
+    "section": "",
+    "text": "39.1 Resumo\nNeste capítulo, cobrimos os fundamentos da linguagem SQL, da definição de dados à consulta e modificação:",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>39</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/11-resumo.html#resumo",
+    "href": "content/cap03/11-resumo.html#resumo",
+    "title": "39  Resumo e Exercícios",
+    "section": "",
+    "text": "Comando / Recurso\nFinalidade\n\n\n\n\nCREATE TABLE\nCria uma tabela com colunas, tipos e restrições\n\n\nALTER TABLE\nModifica a estrutura de uma tabela existente\n\n\nDROP TABLE\nRemove uma tabela permanentemente\n\n\nSELECT ... FROM ... WHERE\nConsulta básica: projeção, filtragem e produto cartesiano\n\n\nDISTINCT\nElimina linhas duplicadas no resultado\n\n\nORDER BY\nOrdena o resultado (ASC ou DESC)\n\n\nBETWEEN\nFiltra valores dentro de um intervalo fechado\n\n\nLIKE\nFiltra strings por padrões (% e _)\n\n\nUNION\nUne resultados de duas consultas (elimina duplicatas)\n\n\nUNION ALL\nUne resultados mantendo duplicatas\n\n\nINTERSECT\nRetorna apenas linhas presentes nas duas consultas\n\n\nEXCEPT\nRetorna linhas da primeira consulta ausentes na segunda\n\n\nNULL / IS NULL\nValor ausente; comparações com IS NULL ou IS NOT NULL\n\n\nAVG, SUM, MIN, MAX, COUNT\nFunções de agregação sobre conjuntos de linhas\n\n\nGROUP BY\nAgrupa linhas por valores iguais de uma ou mais colunas\n\n\nHAVING\nFiltra grupos após a agregação\n\n\nIN / NOT IN\nVerifica pertencimento a um conjunto (subconsulta ou lista)\n\n\nSOME / ALL\nCompara com ao menos um ou com todos os elementos de um conjunto\n\n\nEXISTS / NOT EXISTS\nVerifica existência de linhas em uma subconsulta correlacionada\n\n\nSubconsulta no FROM\nSubconsulta usada como tabela derivada\n\n\nWITH (CTE)\nDefine expressões de tabela nomeadas e reutilizáveis\n\n\nINSERT INTO\nInsere novas linhas em uma tabela\n\n\nDELETE FROM\nRemove linhas de uma tabela\n\n\nUPDATE ... SET\nAtualiza valores de colunas em linhas existentes\n\n\nCASE\nExpressão condicional usada em SELECT e UPDATE",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>39</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/11-resumo.html#exercícios",
+    "href": "content/cap03/11-resumo.html#exercícios",
+    "title": "39  Resumo e Exercícios",
+    "section": "39.2 Exercícios",
+    "text": "39.2 Exercícios\nOs exercícios abaixo usam as tabelas centro, professor, disciplina e aluno da UnDF com os dados apresentados ao longo deste capítulo.\n\nExercício 1. Liste os nomes de todos os alunos do COCBS em ordem alfabética.\n\n\n\n\n\n\nDicaDica\n\n\n\n\n\nUse WHERE nome_centro = 'COCBS' e ORDER BY nome ASC.\n\n\n\n\nExercício 2. Qual é o total de carga horária das disciplinas oferecidas pelo COETI?\n\n\n\n\n\n\nDicaDica\n\n\n\n\n\nUse SUM(carga_horaria) com WHERE nome_centro = 'COETI'.\n\n\n\n\nExercício 3. Quais centros têm orçamento acima da média de todos os centros? Exiba o nome do centro e seu orçamento, em ordem decrescente de orçamento.\n\n\n\n\n\n\nDicaDica\n\n\n\n\n\nA média pode ser calculada com uma subconsulta: WHERE orcamento &gt; (SELECT AVG(orcamento) FROM centro).\n\n\n\n\nExercício 4. Liste os professores que pertencem ao mesmo centro que pelo menos uma disciplina com carga horária superior a 100 horas. Exiba o nome do professor, o centro e o salário.\n\n\n\n\n\n\nDicaDica\n\n\n\n\n\nUse IN com uma subconsulta que seleciona nome_centro de disciplina WHERE carga_horaria &gt; 100.\n\n\n\n\nExercício 5. Para cada centro, retorne o nome do professor com o maior salário. Exiba o nome do centro, o nome do professor e o salário.\n\n\n\n\n\n\nDicaDica\n\n\n\n\n\nUse uma subconsulta correlacionada no WHERE para comparar o salário com o MAX(salario) do mesmo centro, ou use uma CTE com WITH.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>39</span>  <span class='chapter-title'>Resumo e Exercícios</span>"
+    ]
   }
 ]

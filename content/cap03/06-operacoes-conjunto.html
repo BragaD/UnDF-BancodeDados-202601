@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>8&nbsp; Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
+<title>34&nbsp; Operações de Conjunto em SQL – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap01/08-motor.html" rel="next">
-<link href="../../content/cap01/06-linguagens.html" rel="prev">
+<link href="../../content/cap03/07-nulos.html" rel="next">
+<link href="../../content/cap03/05-clausula-where.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/06-operacoes-conjunto.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
@@ -350,7 +385,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/06-operacoes-conjunto.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap03/06-operacoes-conjunto.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
   </div>
 </li>
@@ -391,15 +426,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#os-três-operadores" id="toc-os-três-operadores" class="nav-link active" data-scroll-target="#os-três-operadores"><span class="header-section-number">34.1</span> Os Três Operadores</a></li>
+  <li><a href="#exemplos-com-as-disciplinas-da-undf" id="toc-exemplos-com-as-disciplinas-da-undf" class="nav-link" data-scroll-target="#exemplos-com-as-disciplinas-da-undf"><span class="header-section-number">34.2</span> Exemplos com as Disciplinas da UnDF</a>
+  <ul>
+  <li><a href="#union-disciplinas-do-coeti-ou-com-carga-horária-60-h" id="toc-union-disciplinas-do-coeti-ou-com-carga-horária-60-h" class="nav-link" data-scroll-target="#union-disciplinas-do-coeti-ou-com-carga-horária-60-h"><span class="header-section-number">34.2.1</span> UNION: Disciplinas do COETI ou com carga horária ≥ 60 h</a></li>
+  <li><a href="#intersect-disciplinas-do-coeti-e-com-carga-horária-60-h" id="toc-intersect-disciplinas-do-coeti-e-com-carga-horária-60-h" class="nav-link" data-scroll-target="#intersect-disciplinas-do-coeti-e-com-carga-horária-60-h"><span class="header-section-number">34.2.2</span> INTERSECT: Disciplinas do COETI E com carga horária ≥ 60 h</a></li>
+  <li><a href="#except-disciplinas-do-coeti-que-não-têm-carga-horária-60-h" id="toc-except-disciplinas-do-coeti-que-não-têm-carga-horária-60-h" class="nav-link" data-scroll-target="#except-disciplinas-do-coeti-que-não-têm-carga-horária-60-h"><span class="header-section-number">34.2.3</span> EXCEPT: Disciplinas do COETI que NÃO têm carga horária ≥ 60 h</a></li>
+  </ul></li>
+  <li><a href="#union-all-mantendo-duplicatas" id="toc-union-all-mantendo-duplicatas" class="nav-link" data-scroll-target="#union-all-mantendo-duplicatas"><span class="header-section-number">34.3</span> UNION ALL: Mantendo Duplicatas</a></li>
+  <li><a href="#compatibilidade-de-esquema" id="toc-compatibilidade-de-esquema" class="nav-link" data-scroll-target="#compatibilidade-de-esquema"><span class="header-section-number">34.4</span> Compatibilidade de Esquema</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/07-projeto.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/06-operacoes-conjunto.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></h1>
+<h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto em SQL</span></h1>
 </div>
 
 
@@ -422,15 +471,219 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O processo de projetar a estrutura geral do banco de dados envolve duas etapas principais:</p>
-<p><strong>Projeto Lógico</strong> — Decidir o schema do banco de dados. Requer encontrar uma “boa” coleção de schemas de relações, envolvendo duas perspectivas:</p>
+<p>SQL suporta operações de conjunto equivalentes às da álgebra relacional: <strong>união</strong>, <strong>interseção</strong> e <strong>diferença</strong>. Essas operações combinam os resultados de duas consultas e exigem que ambas retornem o mesmo número de colunas, com tipos compatíveis.</p>
+<section id="os-três-operadores" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="os-três-operadores"><span class="header-section-number">34.1</span> Os Três Operadores</h2>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operador SQL</th>
+<th>Álgebra Relacional</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>UNION</code></td>
+<td>∪ (união)</td>
+<td>Linhas que aparecem em <strong>pelo menos uma</strong> das consultas</td>
+</tr>
+<tr class="even">
+<td><code>INTERSECT</code></td>
+<td>∩ (interseção)</td>
+<td>Linhas que aparecem <strong>nas duas</strong> consultas</td>
+</tr>
+<tr class="odd">
+<td><code>EXCEPT</code></td>
+<td>− (diferença)</td>
+<td>Linhas da <strong>primeira</strong> consulta que <strong>não</strong> aparecem na segunda</td>
+</tr>
+</tbody>
+</table>
+<p>Por padrão, todas as três operações <strong>eliminam duplicatas</strong> do resultado. Para manter duplicatas, adicione <code>ALL</code>: <code>UNION ALL</code>, <code>INTERSECT ALL</code>, <code>EXCEPT ALL</code>.</p>
+</div>
+</section>
+<section id="exemplos-com-as-disciplinas-da-undf" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="exemplos-com-as-disciplinas-da-undf"><span class="header-section-number">34.2</span> Exemplos com as Disciplinas da UnDF</h2>
+<p>Para demonstrar as operações, usaremos dois conjuntos:</p>
 <ul>
-<li><strong>Decisão de negócio</strong>: Quais atributos devemos registrar no banco?</li>
-<li><strong>Decisão de Ciência da Computação</strong>: Quais schemas de relação devemos ter e como os atributos devem ser distribuídos entre os diversos schemas?</li>
+<li><strong>Conjunto A</strong>: disciplinas do COETI → BES 101, BES 301, BES 601</li>
+<li><strong>Conjunto B</strong>: disciplinas com carga horária ≥ 60 horas → MTI 101, MTI 202, MTI 402, BES 301, BES 601, NUT 101, NUT 401, NUT 701, PED 101, PED 301, PED 601</li>
 </ul>
-<p><strong>Projeto Físico</strong> — Decidir o layout físico do banco de dados (estruturas de armazenamento, índices, particionamento).</p>
+<section id="union-disciplinas-do-coeti-ou-com-carga-horária-60-h" class="level3" data-number="34.2.1">
+<h3 data-number="34.2.1" class="anchored" data-anchor-id="union-disciplinas-do-coeti-ou-com-carga-horária-60-h"><span class="header-section-number">34.2.1</span> UNION: Disciplinas do COETI ou com carga horária ≥ 60 h</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas do COETI</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas com carga horária igual ou superior a 60 horas</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;=</span> <span class="dv">60</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (BES 101 aparece uma só vez, mesmo estando em ambos os conjuntos):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id_disciplina</th>
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BES 101</td>
+<td>Introdução à Engenharia de Software</td>
+</tr>
+<tr class="even">
+<td>BES 301</td>
+<td>Bases da Engenharia de Software 3</td>
+</tr>
+<tr class="odd">
+<td>BES 601</td>
+<td>Projeto Aplicado 6: Machine Learning</td>
+</tr>
+<tr class="even">
+<td>MTI 101</td>
+<td>Introdução à Pesquisa Científica</td>
+</tr>
+<tr class="odd">
+<td>MTI 202</td>
+<td>Gestão de Pessoas na Adm. Pública</td>
+</tr>
+<tr class="even">
+<td>MTI 402</td>
+<td>Políticas Públicas e Sociais</td>
+</tr>
+<tr class="odd">
+<td>NUT 101</td>
+<td>Bioquímica e Biofísica</td>
+</tr>
+<tr class="even">
+<td>NUT 401</td>
+<td>Epidemiologia Geral</td>
+</tr>
+<tr class="odd">
+<td>NUT 701</td>
+<td>Nutrição em Saúde Coletiva</td>
+</tr>
+<tr class="even">
+<td>PED 101</td>
+<td>História da Educação</td>
+</tr>
+<tr class="odd">
+<td>PED 301</td>
+<td>Jogos e Brincadeiras na Infância</td>
+</tr>
+<tr class="even">
+<td>PED 601</td>
+<td>Alfabetização e Práticas de Letramento</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>BES 101</code> tem carga horária de apenas 20 horas, portanto está no conjunto A mas não no conjunto B. Ainda assim, aparece no resultado da <code>UNION</code> porque basta estar em um dos dois lados.</p>
+</div>
+</div>
+</section>
+<section id="intersect-disciplinas-do-coeti-e-com-carga-horária-60-h" class="level3" data-number="34.2.2">
+<h3 data-number="34.2.2" class="anchored" data-anchor-id="intersect-disciplinas-do-coeti-e-com-carga-horária-60-h"><span class="header-section-number">34.2.2</span> INTERSECT: Disciplinas do COETI E com carga horária ≥ 60 h</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas do COETI que também têm carga horária &gt;= 60 horas</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">INTERSECT</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;=</span> <span class="dv">60</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado</strong> (apenas as disciplinas que satisfazem <strong>ambas</strong> as condições):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id_disciplina</th>
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BES 301</td>
+<td>Bases da Engenharia de Software 3</td>
+</tr>
+<tr class="even">
+<td>BES 601</td>
+<td>Projeto Aplicado 6: Machine Learning</td>
+</tr>
+</tbody>
+</table>
+<p><code>BES 101</code> (carga horária = 20 h) é excluída, pois não satisfaz a condição de carga horária ≥ 60 h.</p>
+</section>
+<section id="except-disciplinas-do-coeti-que-não-têm-carga-horária-60-h" class="level3" data-number="34.2.3">
+<h3 data-number="34.2.3" class="anchored" data-anchor-id="except-disciplinas-do-coeti-que-não-têm-carga-horária-60-h"><span class="header-section-number">34.2.3</span> EXCEPT: Disciplinas do COETI que NÃO têm carga horária ≥ 60 h</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas do COETI que não possuem carga horária &gt;= 60 horas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPT</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, titulo</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;=</span> <span class="dv">60</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Resultado:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id_disciplina</th>
+<th>titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BES 101</td>
+<td>Introdução à Engenharia de Software</td>
+</tr>
+</tbody>
+</table>
+<p>Apenas <code>BES 101</code> (20 horas) está no conjunto A e não está no conjunto B.</p>
+</section>
+</section>
+<section id="union-all-mantendo-duplicatas" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="union-all-mantendo-duplicatas"><span class="header-section-number">34.3</span> UNION ALL: Mantendo Duplicatas</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Todos os nomes de centros de alunos e professores (com repetição)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro <span class="kw">FROM</span> aluno</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro <span class="kw">FROM</span> professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O resultado terá 12 + 12 = 24 linhas, com muitas repetições. Use <code>UNION ALL</code> quando a presença de duplicatas é intencional (por exemplo, ao contar ocorrências).</p>
+</section>
+<section id="compatibilidade-de-esquema" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="compatibilidade-de-esquema"><span class="header-section-number">34.4</span> Compatibilidade de Esquema</h2>
+<p>As duas consultas combinadas por <code>UNION</code>, <code>INTERSECT</code> ou <code>EXCEPT</code> devem ter:</p>
+<ol type="1">
+<li>O <strong>mesmo número de colunas</strong> no <code>SELECT</code></li>
+<li>Tipos de dados <strong>compatíveis</strong> em cada posição correspondente</li>
+</ol>
+<p>Os nomes das colunas no resultado final são determinados pela <strong>primeira</strong> consulta.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -881,13 +1134,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/06-linguagens.html" class="pagination-link" aria-label="Linguagens (DDL, DML, SQL)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span>
+      <a href="../../content/cap03/05-clausula-where.html" class="pagination-link" aria-label="WHERE e ORDER BY">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap01/08-motor.html" class="pagination-link" aria-label="Motor de Banco de Dados">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap03/07-nulos.html" class="pagination-link" aria-label="Valores Nulos">
+        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,4 +1149,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div></div></footer></body></html>
