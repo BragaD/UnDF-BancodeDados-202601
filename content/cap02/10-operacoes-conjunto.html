@@ -478,67 +478,138 @@ window.Quarto = {
 <section id="conjuntos-utilizados-nos-exemplos" class="level3" data-number="25.1.1">
 <h3 data-number="25.1.1" class="anchored" data-anchor-id="conjuntos-utilizados-nos-exemplos"><span class="header-section-number">25.1.1</span> Conjuntos utilizados nos exemplos</h3>
 <p>Definimos duas relações auxiliares a partir da tabela <code>disciplina</code>:</p>
-<p><span class="math display">\[A \leftarrow \Pi_{id\_disciplina}(\sigma_{nome\_centro = \text{"COETI"}}(disciplina))\]</span></p>
-<p><span class="math display">\[B \leftarrow \Pi_{id\_disciplina}(\sigma_{carga\_horaria \geq 60}(disciplina))\]</span></p>
-<p>Relação <span class="math inline">\(A\)</span> — disciplinas do COETI:</p>
+<p><span class="math display">\[A \leftarrow \Pi_{codigo}(\sigma_{sigla\_curso = \text{"PED"}}(disciplina))\]</span></p>
+<p><span class="math display">\[B \leftarrow \Pi_{codigo}(\sigma_{carga\_horaria \geq 60}(disciplina))\]</span></p>
+<p>Relação <span class="math inline">\(A\)</span> — disciplinas de Pedagogia (8 disciplinas):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id_disciplina</th>
+<th>codigo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>BES 101</td>
+<td>PED-203</td>
 </tr>
 <tr class="even">
-<td>BES 301</td>
+<td>PED-204</td>
 </tr>
 <tr class="odd">
-<td>BES 601</td>
+<td>PED-403</td>
+</tr>
+<tr class="even">
+<td>PED-404</td>
+</tr>
+<tr class="odd">
+<td>PED-603</td>
+</tr>
+<tr class="even">
+<td>PED-604</td>
+</tr>
+<tr class="odd">
+<td>PED-803</td>
+</tr>
+<tr class="even">
+<td>PED-804</td>
 </tr>
 </tbody>
 </table>
-<p>Relação <span class="math inline">\(B\)</span> — disciplinas com carga horária <span class="math inline">\(\geq 60\)</span>:</p>
+<p>Relação <span class="math inline">\(B\)</span> — disciplinas com carga horária <span class="math inline">\(\geq 60\)</span> h (22 disciplinas — todas exceto PED-604 = 40 h e PED-804 = 50 h):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id_disciplina</th>
+<th>codigo</th>
+<th style="text-align: right;">(carga_horaria)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>MTI 101</td>
+<td>ECO-201</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>MTI 202</td>
+<td>ECO-202</td>
+<td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td>MTI 402</td>
+<td>ECO-401</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>BES 301</td>
+<td>ECO-402</td>
+<td style="text-align: right;">95</td>
 </tr>
 <tr class="odd">
-<td>BES 601</td>
+<td>ECO-601</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>NUT 101</td>
+<td>ECO-602</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td>NUT 401</td>
+<td>ECO-801</td>
+<td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td>NUT 701</td>
+<td>ECO-802</td>
+<td style="text-align: right;">90</td>
 </tr>
 <tr class="odd">
-<td>PED 101</td>
+<td>ENS-201</td>
+<td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td>PED 301</td>
+<td>ENS-202</td>
+<td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>PED 601</td>
+<td>ENS-401</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="even">
+<td>ENS-402</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td>ENS-601</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td>ENS-602</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td>ENS-801</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td>ENS-802</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td>PED-203</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="even">
+<td>PED-204</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td>PED-403</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td>PED-404</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td>PED-603</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td>PED-803</td>
+<td style="text-align: right;">60</td>
 </tr>
 </tbody>
 </table>
@@ -552,7 +623,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note que BES 101 (20 h) <strong>não</strong> aparece em <span class="math inline">\(B\)</span>, e que BES 301 e BES 601 aparecem em <strong>ambas</strong> as relações.</p>
+<p>PED-604 (40 h) e PED-804 (50 h) <strong>não</strong> aparecem em <span class="math inline">\(B\)</span>, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em <strong>ambas</strong> as relações.</p>
 </div>
 </div>
 </section>
@@ -564,54 +635,9 @@ Nota
 <p>Retorna todas as tuplas que pertencem a <span class="math inline">\(r\)</span>, a <span class="math inline">\(s\)</span> ou a ambas. Duplicatas são eliminadas.</p>
 </div>
 <p><span class="math display">\[A \cup B\]</span></p>
-<p>Resultado — disciplinas do COETI <strong>ou</strong> com carga horária <span class="math inline">\(\geq 60\)</span>:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>id_disciplina</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>BES 101</td>
-</tr>
-<tr class="even">
-<td>BES 301</td>
-</tr>
-<tr class="odd">
-<td>BES 601</td>
-</tr>
-<tr class="even">
-<td>MTI 101</td>
-</tr>
-<tr class="odd">
-<td>MTI 202</td>
-</tr>
-<tr class="even">
-<td>MTI 402</td>
-</tr>
-<tr class="odd">
-<td>NUT 101</td>
-</tr>
-<tr class="even">
-<td>NUT 401</td>
-</tr>
-<tr class="odd">
-<td>NUT 701</td>
-</tr>
-<tr class="even">
-<td>PED 101</td>
-</tr>
-<tr class="odd">
-<td>PED 301</td>
-</tr>
-<tr class="even">
-<td>PED 601</td>
-</tr>
-</tbody>
-</table>
+<p>Resultado — disciplinas de Pedagogia <strong>ou</strong> com carga horária <span class="math inline">\(\geq 60\)</span> h (24 disciplinas — o conjunto completo da amostra):</p>
 <div class="exemplo">
-<p>BES 301 e BES 601 pertencem às duas relações, mas aparecem apenas <strong>uma vez</strong> no resultado — a união elimina duplicatas automaticamente.</p>
+<p>PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem às duas relações, mas aparecem apenas <strong>uma vez</strong> no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via <span class="math inline">\(A\)</span>.</p>
 </div>
 </section>
 <section id="interseção-cap" class="level2" data-number="25.3">
@@ -621,24 +647,36 @@ Nota
 <p>Retorna apenas as tuplas que pertencem <strong>simultaneamente</strong> a <span class="math inline">\(r\)</span> e a <span class="math inline">\(s\)</span>.</p>
 </div>
 <p><span class="math display">\[A \cap B\]</span></p>
-<p>Resultado — disciplinas do COETI <strong>que também</strong> têm carga horária <span class="math inline">\(\geq 60\)</span>:</p>
+<p>Resultado — disciplinas de Pedagogia <strong>que também</strong> têm carga horária <span class="math inline">\(\geq 60\)</span> h:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id_disciplina</th>
+<th>codigo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>BES 301</td>
+<td>PED-203</td>
 </tr>
 <tr class="even">
-<td>BES 601</td>
+<td>PED-204</td>
+</tr>
+<tr class="odd">
+<td>PED-403</td>
+</tr>
+<tr class="even">
+<td>PED-404</td>
+</tr>
+<tr class="odd">
+<td>PED-603</td>
+</tr>
+<tr class="even">
+<td>PED-803</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>BES 101 (20 h) está em <span class="math inline">\(A\)</span> mas não em <span class="math inline">\(B\)</span>, por isso é excluída. As demais disciplinas de <span class="math inline">\(B\)</span> não estão em <span class="math inline">\(A\)</span>, também excluídas. Apenas BES 301 e BES 601 satisfazem as duas condições.</p>
+<p>PED-604 (40 h) e PED-804 (50 h) estão em <span class="math inline">\(A\)</span> mas não em <span class="math inline">\(B\)</span>, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -661,21 +699,24 @@ Nota
 <p>Retorna as tuplas que pertencem a <span class="math inline">\(r\)</span> mas <strong>não</strong> pertencem a <span class="math inline">\(s\)</span>.</p>
 </div>
 <p><span class="math display">\[A - B\]</span></p>
-<p>Resultado — disciplinas do COETI com carga horária <span class="math inline">\(&lt; 60\)</span>:</p>
+<p>Resultado — disciplinas de Pedagogia com carga horária <span class="math inline">\(&lt; 60\)</span> h:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id_disciplina</th>
+<th>codigo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>BES 101</td>
+<td>PED-604</td>
+</tr>
+<tr class="even">
+<td>PED-804</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Das três disciplinas do COETI, apenas BES 101 (20 h) não satisfaz <span class="math inline">\(carga\_horaria \geq 60\)</span> e portanto não está em <span class="math inline">\(B\)</span>. É a única que permanece após a diferença.</p>
+<p>Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem <span class="math inline">\(carga\_horaria \geq 60\)</span> h e portanto não estão em <span class="math inline">\(B\)</span>. São as únicas que permanecem após a diferença.</p>
 </div>
 </section>
 <section id="resumo-comparativo" class="level2" data-number="25.5">
@@ -692,17 +733,17 @@ Nota
 <tr class="odd">
 <td>União</td>
 <td><span class="math inline">\(A \cup B\)</span></td>
-<td>12 disciplinas (todo o catálogo)</td>
+<td>24 disciplinas (catálogo completo)</td>
 </tr>
 <tr class="even">
 <td>Interseção</td>
 <td><span class="math inline">\(A \cap B\)</span></td>
-<td>2 disciplinas (BES 301, BES 601)</td>
+<td>6 disciplinas de PED com carga ≥ 60 h</td>
 </tr>
 <tr class="odd">
 <td>Diferença</td>
 <td><span class="math inline">\(A - B\)</span></td>
-<td>1 disciplina (BES 101)</td>
+<td>2 disciplinas de PED com carga &lt; 60 h</td>
 </tr>
 </tbody>
 </table>

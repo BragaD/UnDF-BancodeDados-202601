@@ -548,9 +548,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="exercícios" class="level2" data-number="39.2">
 <h2 data-number="39.2" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">39.2</span> Exercícios</h2>
-<p>Os exercícios abaixo usam as tabelas <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> da UnDF com os dados apresentados ao longo deste capítulo.</p>
+<p>Os exercícios abaixo usam as tabelas <code>escola</code>, <code>curso</code>, <code>professor</code>, <code>disciplina</code>, <code>aluno</code> e <code>matricula_disciplina</code> da UnDF com os dados apresentados ao longo deste capítulo.</p>
 <hr>
-<p><strong>Exercício 1.</strong> Liste os nomes de todos os alunos do COCBS em ordem alfabética.</p>
+<p><strong>Exercício 1.</strong> Liste os nomes de todos os alunos do curso de Pedagogia (<code>PED</code>) em ordem alfabética.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -563,12 +563,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use <code>WHERE nome_centro = 'COCBS'</code> e <code>ORDER BY nome ASC</code>.</p>
+<p>Use <code>WHERE sigla_curso = 'PED'</code> e <code>ORDER BY nome ASC</code>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>Exercício 2.</strong> Qual é o total de carga horária das disciplinas oferecidas pelo COETI?</p>
+<p><strong>Exercício 2.</strong> Qual é a carga horária total e a carga horária média das disciplinas oferecidas pelo curso de Engenharia de Software (<code>ENS</code>)?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -581,12 +581,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use <code>SUM(carga_horaria)</code> com <code>WHERE nome_centro = 'COETI'</code>.</p>
+<p>Use <code>SUM(carga_horaria)</code> e <code>AVG(carga_horaria)</code> com <code>WHERE sigla_curso = 'ENS'</code>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>Exercício 3.</strong> Quais centros têm orçamento acima da média de todos os centros? Exiba o nome do centro e seu orçamento, em ordem decrescente de orçamento.</p>
+<p><strong>Exercício 3.</strong> Quais cursos têm carga horária média por disciplina acima da média geral de todas as disciplinas? Exiba a sigla do curso e a média, em ordem decrescente.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -599,12 +599,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A média pode ser calculada com uma subconsulta: <code>WHERE orcamento &gt; (SELECT AVG(orcamento) FROM centro)</code>.</p>
+<p>A média geral pode ser calculada com uma subconsulta: <code>HAVING AVG(carga_horaria) &gt; (SELECT AVG(carga_horaria) FROM disciplina)</code>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>Exercício 4.</strong> Liste os professores que pertencem ao mesmo centro que pelo menos uma disciplina com carga horária superior a 100 horas. Exiba o nome do professor, o centro e o salário.</p>
+<p><strong>Exercício 4.</strong> Liste os professores que pertencem à mesma escola que pelo menos uma disciplina com carga horária superior a 150 horas. Exiba o nome do professor e a escola.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -617,12 +617,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use <code>IN</code> com uma subconsulta que seleciona <code>nome_centro</code> de <code>disciplina WHERE carga_horaria &gt; 100</code>.</p>
+<p>Use <code>IN</code> com uma subconsulta que seleciona <code>escola</code> das disciplinas via a relação <code>curso</code> para encontrar as escolas relevantes. Ou junte <code>professor</code> com <code>curso</code> e <code>disciplina</code> usando <code>JOIN</code>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>Exercício 5.</strong> Para cada centro, retorne o nome do professor com o maior salário. Exiba o nome do centro, o nome do professor e o salário.</p>
+<p><strong>Exercício 5.</strong> Para cada escola, retorne o nome do professor com maior carga horária semanal (<code>ch_semanal</code>). Exiba o nome da escola, o nome do professor e a carga horária semanal.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -635,7 +635,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Use uma subconsulta correlacionada no <code>WHERE</code> para comparar o salário com o <code>MAX(salario)</code> do mesmo centro, ou use uma CTE com <code>WITH</code>.</p>
+<p>Use uma CTE com <code>WITH</code> para calcular <code>MAX(ch_semanal)</code> por escola, depois junte com <code>professor</code> para obter o nome.</p>
 </div>
 </div>
 </div>

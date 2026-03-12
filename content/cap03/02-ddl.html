@@ -438,7 +438,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#criando-as-tabelas-da-undf" id="toc-criando-as-tabelas-da-undf" class="nav-link" data-scroll-target="#criando-as-tabelas-da-undf"><span class="header-section-number">30.3</span> Criando as Tabelas da UnDF</a>
   <ul>
-  <li><a href="#o-que-acontece-se-a-ordem-for-invertida" id="toc-o-que-acontece-se-a-ordem-for-invertida" class="nav-link" data-scroll-target="#o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.1</span> O que acontece se a ordem for invertida?</a></li>
+  <li><a href="#verificando-as-tabelas-criadas" id="toc-verificando-as-tabelas-criadas" class="nav-link" data-scroll-target="#verificando-as-tabelas-criadas"><span class="header-section-number">30.3.1</span> Verificando as tabelas criadas</a></li>
+  <li><a href="#o-que-acontece-se-a-ordem-for-invertida" id="toc-o-que-acontece-se-a-ordem-for-invertida" class="nav-link" data-scroll-target="#o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.2</span> O que acontece se a ordem for invertida?</a></li>
   </ul></li>
   <li><a href="#alter-table" id="toc-alter-table" class="nav-link" data-scroll-target="#alter-table"><span class="header-section-number">30.4</span> ALTER TABLE</a></li>
   <li><a href="#drop-table" id="toc-drop-table" class="nav-link" data-scroll-target="#drop-table"><span class="header-section-number">30.5</span> DROP TABLE</a></li>
@@ -494,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>CHAR(n)</code></td>
 <td>String de comprimento fixo com exatamente <em>n</em> caracteres</td>
-<td><code>CHAR(5)</code> para um código como <code>'10101'</code></td>
+<td><code>CHAR(1)</code> para turma <code>'A'</code></td>
 </tr>
 <tr class="even">
 <td><code>VARCHAR(n)</code></td>
@@ -514,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>NUMERIC(p, d)</code></td>
 <td>Número decimal com <em>p</em> dígitos no total e <em>d</em> após a vírgula</td>
-<td><code>NUMERIC(8,2)</code> para <code>65000.00</code></td>
+<td><code>NUMERIC(4,1)</code> para nota <code>9.5</code></td>
 </tr>
 <tr class="even">
 <td><code>REAL</code></td>
@@ -605,70 +606,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="criando-as-tabelas-da-undf" class="level2" data-number="30.3">
 <h2 data-number="30.3" class="anchored" data-anchor-id="criando-as-tabelas-da-undf"><span class="header-section-number">30.3</span> Criando as Tabelas da UnDF</h2>
-<p>As tabelas devem ser criadas na ordem correta: primeiro <code>centro</code>, pois as outras tabelas referenciam essa tabela por meio de chaves estrangeiras.</p>
+<p>As tabelas devem ser criadas na ordem correta: primeiro as que não têm dependências, depois as que referenciam outras por chave estrangeira.</p>
 <div class="exemplo">
 <p><strong>Tabela <code>centro</code></strong> — sem chaves estrangeiras, criada primeiro:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros acadêmicos da UnDF</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> centro (</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>)    <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    predio      <span class="dt">VARCHAR</span>(<span class="dv">50</span>)    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    orcamento   <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Tabela <code>professor</code></strong> — referencia <code>centro</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores vinculados a cada centro</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor (</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>)   <span class="kw">REFERENCES</span> centro(nome_centro),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    salario     <span class="dt">NUMERIC</span>(<span class="dv">8</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Tabela <code>disciplina</code></strong> — referencia <code>centro</code> e exige carga horária positiva:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas oferecidas por cada centro</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> disciplina (</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    titulo        <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    nome_centro   <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> centro(nome_centro),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (carga_horaria <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Tabela <code>aluno</code></strong> — referencia <code>centro</code> e define carga total com valor padrão zero:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos matriculados na UnDF</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> aluno (</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)     <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> centro(nome_centro),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    carga_total <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="dv">0</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> centro (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    centro      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>escola</code></strong> — referencia <code>centro</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> escola (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    escola      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    nome_escola <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    centro      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> centro(centro)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>curso</code></strong> — referencia <code>escola</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> curso (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    sigla_curso   <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    nome_curso    <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    escola        <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> escola(escola),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    n_semestres   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    tipo_curso    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>professor</code></strong> — referencia <code>escola</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor (</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>)    <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    nome           <span class="dt">VARCHAR</span>(<span class="dv">50</span>)    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    escola         <span class="dt">VARCHAR</span>(<span class="dv">10</span>)    <span class="kw">REFERENCES</span> escola(escola),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    ch_semanal     <span class="dt">INTEGER</span>        <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    salario        <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>disciplina</code></strong> — referencia <code>curso</code> e exige carga horária positiva:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> disciplina (</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    codigo          <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    nome_disciplina <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    sigla_curso     <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">REFERENCES</span> curso(sigla_curso),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    semestre        <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (carga_horaria <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>ministra</code></strong> — chave primária composta, referencia <code>disciplina</code> e <code>professor</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> ministra (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ano            <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    turma          <span class="dt">CHAR</span>(<span class="dv">1</span>)     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>) <span class="kw">REFERENCES</span> professor(matricula_prof),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    horario        <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    sala           <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tabela <code>matricula_disciplina</code></strong> — chave primária composta com chave estrangeira composta:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> matricula_disciplina (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ano            <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    turma          <span class="dt">CHAR</span>(<span class="dv">1</span>)     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cod_matricula  <span class="dt">VARCHAR</span>(<span class="dv">15</span>) <span class="kw">REFERENCES</span> aluno(matricula),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    nota           <span class="dt">NUMERIC</span>(<span class="dv">4</span>,<span class="dv">1</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    aprovado       <span class="dt">SMALLINT</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma, cod_matricula),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ministra(cod_disciplina, ano, semestre, turma)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="o-que-acontece-se-a-ordem-for-invertida" class="level3" data-number="30.3.1">
-<h3 data-number="30.3.1" class="anchored" data-anchor-id="o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.1</span> O que acontece se a ordem for invertida?</h3>
-<p>Se tentarmos criar <code>professor</code> antes de <code>centro</code>, o banco de dados retornará um erro semelhante a:</p>
+<section id="verificando-as-tabelas-criadas" class="level3" data-number="30.3.1">
+<h3 data-number="30.3.1" class="anchored" data-anchor-id="verificando-as-tabelas-criadas"><span class="header-section-number">30.3.1</span> Verificando as tabelas criadas</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> table_name</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.<span class="kw">tables</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  table_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> table_name;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>8 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">table_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">aluno</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">centro</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">curso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">disciplina</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">escola</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">matricula_disciplina</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ministra</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">professor</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="o-que-acontece-se-a-ordem-for-invertida" class="level3" data-number="30.3.2">
+<h3 data-number="30.3.2" class="anchored" data-anchor-id="o-que-acontece-se-a-ordem-for-invertida"><span class="header-section-number">30.3.2</span> O que acontece se a ordem for invertida?</h3>
+<p>Se tentarmos criar <code>escola</code> antes de <code>centro</code>, o banco de dados retornará um erro:</p>
 <pre><code>ERROR: relation "centro" does not exist</code></pre>
-<p>Isso ocorre porque a restrição <code>REFERENCES centro(nome_centro)</code> exige que a tabela <code>centro</code> já exista no momento da criação.</p>
+<p>Isso ocorre porque <code>REFERENCES centro(centro)</code> exige que <code>centro</code> já exista.</p>
 </section>
 </section>
 <section id="alter-table" class="level2" data-number="30.4">
 <h2 data-number="30.4" class="anchored" data-anchor-id="alter-table"><span class="header-section-number">30.4</span> ALTER TABLE</h2>
 <p>O comando <code>ALTER TABLE</code> modifica a estrutura de uma tabela já existente:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma nova coluna</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ADD</span> <span class="kw">COLUMN</span> email <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover uma coluna</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">DROP</span> <span class="kw">COLUMN</span> email;</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alterar o tipo de uma coluna (sintaxe varia por SGBD)</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ALTER</span> <span class="kw">COLUMN</span> salario <span class="kw">TYPE</span> <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>);</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma restrição</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> aluno <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_carga <span class="kw">CHECK</span> (carga_total <span class="op">&gt;=</span> <span class="dv">0</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma nova coluna</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ADD</span> <span class="kw">COLUMN</span> email <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover uma coluna</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">DROP</span> <span class="kw">COLUMN</span> email;</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar uma restrição</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> disciplina <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_semestre <span class="kw">CHECK</span> (semestre <span class="kw">BETWEEN</span> <span class="dv">1</span> <span class="kw">AND</span> <span class="dv">10</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="drop-table" class="level2" data-number="30.5">
 <h2 data-number="30.5" class="anchored" data-anchor-id="drop-table"><span class="header-section-number">30.5</span> DROP TABLE</h2>
 <p>O comando <code>DROP TABLE</code> remove uma tabela e todos os seus dados permanentemente:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove a tabela e todos os seus dados</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> aluno;</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove apenas se a tabela existir (evita erro)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove a tabela e todos os seus dados</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> disciplina;</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remove apenas se a tabela existir (evita erro)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -680,7 +752,7 @@ Aviso
 </div>
 <div class="callout-body-container callout-body">
 <p><code>DROP TABLE</code> é uma operação irreversível. Todos os dados da tabela são perdidos permanentemente. Use com cautela em ambientes de produção.</p>
-<p>Além disso, se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará (ou removerá as tabelas dependentes, se <code>CASCADE</code> for especificado).</p>
+<p>Se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará — a menos que <code>CASCADE</code> seja especificado.</p>
 </div>
 </div>
 

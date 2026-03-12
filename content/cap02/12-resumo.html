@@ -483,20 +483,20 @@ window.Quarto = {
 <ol type="1">
 <li><p><strong>Schema vs.&nbsp;Instância</strong>: qual é a diferença entre o schema e a instância de um banco de dados? Dê um exemplo concreto usando a relação <code>professor</code> da UnDF.</p></li>
 <li><p><strong>Tuplas não ordenadas</strong>: por que a ordem das tuplas é irrelevante no modelo relacional? Qual consequência prática isso tem ao recuperar dados de um banco de dados?</p></li>
-<li><p><strong>Chaves</strong>: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação <code>disciplina</code><span class="math inline">\((\underline{id\_disciplina},\ titulo,\ nome\_centro,\ carga\_horaria)\)</span>, identifique:</p>
+<li><p><strong>Chaves</strong>: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação <span class="math inline">\(disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)\)</span>, identifique:</p>
 <ol type="a">
 <li>Duas superchaves distintas</li>
 <li>A(s) chave(s) candidata(s)</li>
 <li>A chave primária mais adequada e justifique sua escolha</li>
 </ol></li>
-<li><p><strong>Seleção</strong>: escreva uma expressão de álgebra relacional para encontrar os <strong>nomes</strong> de todos os professores do COCHCMA. Indique quais operações são necessárias e em que ordem.</p></li>
-<li><p><strong>Projeção e composição</strong>: escreva uma expressão para encontrar os <strong>títulos</strong> de todas as disciplinas com carga horária superior a 60 horas. Use a composição de seleção e projeção.</p></li>
-<li><p><strong>Produto cartesiano vs.&nbsp;junção</strong>: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas <code>professor</code> e <code>centro</code>.</p></li>
-<li><p><strong>Agregação</strong>: usando a notação de funções de agregação (<span class="math inline">\(\gamma\)</span>), escreva a expressão para obter o <strong>total de carga horária</strong> de disciplinas por centro (equivalente ao <code>GROUP BY nome_centro</code> no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.</p></li>
+<li><p><strong>Seleção</strong>: escreva uma expressão de álgebra relacional para encontrar os <strong>nomes</strong> de todos os professores da escola ESETI. Indique quais operações são necessárias e em que ordem.</p></li>
+<li><p><strong>Projeção e composição</strong>: escreva uma expressão para encontrar os <strong>códigos</strong> de todas as disciplinas de ENS com carga horária superior a 120 horas. Use a composição de seleção e projeção.</p></li>
+<li><p><strong>Produto cartesiano vs.&nbsp;junção</strong>: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas <code>professor</code> e <code>escola</code>.</p></li>
+<li><p><strong>Agregação</strong>: usando a notação de funções de agregação (<span class="math inline">\(\gamma\)</span>), escreva a expressão para obter a <strong>carga horária média</strong> de disciplinas por curso (equivalente ao <code>GROUP BY sigla_curso</code> no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.</p></li>
 <li><p><strong>Operações de conjunto</strong>: explique a diferença entre <span class="math inline">\(\cup\)</span>, <span class="math inline">\(\cap\)</span> e <span class="math inline">\(-\)</span>. Quais são os requisitos para que essas operações sejam válidas? Escreva expressões de álgebra relacional para:</p>
 <ol type="a">
-<li>Encontrar os ids de alunos que são do COETI <strong>ou</strong> do COCBS</li>
-<li>Encontrar os ids de professores que <strong>não</strong> pertencem ao COEMAG</li>
+<li>Encontrar os códigos de disciplinas que são de ENS <strong>ou</strong> de ECO</li>
+<li>Encontrar os códigos de disciplinas que <strong>não</strong> pertencem ao curso de PED</li>
 </ol></li>
 </ol>
 

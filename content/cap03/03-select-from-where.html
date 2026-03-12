@@ -107,6 +107,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -433,8 +462,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#forma-geral" id="toc-forma-geral" class="nav-link active" data-scroll-target="#forma-geral"><span class="header-section-number">31.1</span> Forma Geral</a></li>
   <li><a href="#correspondência-com-a-álgebra-relacional" id="toc-correspondência-com-a-álgebra-relacional" class="nav-link" data-scroll-target="#correspondência-com-a-álgebra-relacional"><span class="header-section-number">31.2</span> Correspondência com a Álgebra Relacional</a></li>
-  <li><a href="#exemplo-1-nomes-dos-professores-do-coeti" id="toc-exemplo-1-nomes-dos-professores-do-coeti" class="nav-link" data-scroll-target="#exemplo-1-nomes-dos-professores-do-coeti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores do COETI</a></li>
-  <li><a href="#exemplo-2-nomes-e-salários-dos-professores-do-cochcma" id="toc-exemplo-2-nomes-e-salários-dos-professores-do-cochcma" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-salários-dos-professores-do-cochcma"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Salários dos Professores do COCHCMA</a></li>
+  <li><a href="#exemplo-1-nomes-dos-professores-da-eseti" id="toc-exemplo-1-nomes-dos-professores-da-eseti" class="nav-link" data-scroll-target="#exemplo-1-nomes-dos-professores-da-eseti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores da ESETI</a></li>
+  <li><a href="#exemplo-2-nomes-e-escolas-dos-professores-da-eema" id="toc-exemplo-2-nomes-e-escolas-dos-professores-da-eema" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-escolas-dos-professores-da-eema"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Escolas dos Professores da EEMA</a></li>
   <li><a href="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas" id="toc-exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="nav-link" data-scroll-target="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</a></li>
   <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</a></li>
   </ul>
@@ -495,167 +524,147 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td><code>SELECT A1, A2</code></td>
-<td>Projeção (π)</td>
+<td>Projeção (<span class="math inline">\(\Pi\)</span>)</td>
 <td>Escolhe quais colunas exibir</td>
 </tr>
 <tr class="even">
 <td><code>WHERE condição</code></td>
-<td>Seleção (σ)</td>
+<td>Seleção (<span class="math inline">\(\sigma\)</span>)</td>
 <td>Filtra as linhas que satisfazem a condição</td>
 </tr>
 <tr class="odd">
 <td><code>FROM r1, r2</code></td>
-<td>Produto cartesiano (×)</td>
+<td>Produto cartesiano (<span class="math inline">\(\times\)</span>)</td>
 <td>Combina as tabelas listadas</td>
 </tr>
 </tbody>
 </table>
-<p>A consulta <code>SELECT A FROM r WHERE condição</code> equivale a: <strong>π<sub>A</sub>(σ<sub>condição</sub>(r))</strong></p>
+<p>A consulta <code>SELECT A FROM r WHERE condição</code> equivale a: <span class="math inline">\(\Pi_A(\sigma_{cond}(r))\)</span></p>
 </div>
 </section>
-<section id="exemplo-1-nomes-dos-professores-do-coeti" class="level2" data-number="31.3">
-<h2 data-number="31.3" class="anchored" data-anchor-id="exemplo-1-nomes-dos-professores-do-coeti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores do COETI</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores estão lotados no Centro de Engenharia, Tecnologia e Inovação?</span></span>
+<section id="exemplo-1-nomes-dos-professores-da-eseti" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="exemplo-1-nomes-dos-professores-da-eseti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores da ESETI</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores estão lotados na Escola Superior de Engenharias, Tecnologia e Inovação?</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
+<th style="text-align: left;">nome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
+<td style="text-align: left;">Gustavo Costa</td>
 </tr>
 <tr class="even">
-<td>Lucas</td>
+<td style="text-align: left;">Helena Carvalho</td>
 </tr>
 <tr class="odd">
-<td>Pedro</td>
-</tr>
-<tr class="even">
-<td>Mariana</td>
+<td style="text-align: left;">Igor Melo</td>
 </tr>
 </tbody>
 </table>
-<p>O banco contém 4 professores vinculados ao COETI: Carlos (id 10101), Lucas (45565), Pedro (83821) e Mariana (98345).</p>
+</div>
+</div>
 </section>
-<section id="exemplo-2-nomes-e-salários-dos-professores-do-cochcma" class="level2" data-number="31.4">
-<h2 data-number="31.4" class="anchored" data-anchor-id="exemplo-2-nomes-e-salários-dos-professores-do-cochcma"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Salários dos Professores do COCHCMA</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores pertencem ao COCHCMA e quais são seus salários?</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<section id="exemplo-2-nomes-e-escolas-dos-professores-da-eema" class="level2" data-number="31.4">
+<h2 data-number="31.4" class="anchored" data-anchor-id="exemplo-2-nomes-e-escolas-dos-professores-da-eema"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Escolas dos Professores da EEMA</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores pertencem à Escola de Educação, Magistério e Arte?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COCHCMA'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'EEMA'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>salario</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Ana</td>
-<td>90000.00</td>
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">EEMA</td>
 </tr>
 <tr class="even">
-<td>Fernanda</td>
-<td>60000.00</td>
-</tr>
-<tr class="odd">
-<td>Juliana</td>
-<td>62000.00</td>
-</tr>
-<tr class="even">
-<td>Rafael</td>
-<td>80000.00</td>
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">EEMA</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </section>
 <section id="exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="level2" data-number="31.5">
 <h2 data-number="31.5" class="anchored" data-anchor-id="exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</h2>
-<p>Quando duas ou mais tabelas são listadas na cláusula <code>FROM</code>, o SQL produz o <strong>produto cartesiano</strong> entre elas — ou seja, cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com <code>WHERE</code> para ser significativo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nomes dos professores junto com os dados do centro ao qual pertencem</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> professor.nome, centro.predio, centro.orcamento</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor, centro</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  professor.nome_centro <span class="op">=</span> centro.nome_centro;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado (primeiras linhas):</strong></p>
-<table class="caption-top table">
+<p>Quando duas ou mais tabelas são listadas na cláusula <code>FROM</code>, o SQL produz o <strong>produto cartesiano</strong> entre elas — cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com <code>WHERE</code> para ser significativo.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nomes dos professores com os dados da escola e do centro ao qual pertencem</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola, e.centro</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor p, escola e</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola <span class="op">=</span> e.escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 69%">
+<col style="width: 10%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>predio</th>
-<th>orcamento</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">nome_escola</th>
+<th style="text-align: left;">centro</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>Lago Norte</td>
-<td>185000.00</td>
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
+<td style="text-align: left;">COEMAG</td>
 </tr>
 <tr class="even">
-<td>Ana</td>
-<td>Buritis</td>
-<td>170000.00</td>
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
+<td style="text-align: left;">COEMAG</td>
 </tr>
 <tr class="odd">
-<td>João</td>
-<td>Ceilândia</td>
-<td>80000.00</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">COETI</td>
 </tr>
 <tr class="even">
-<td>Marcos</td>
-<td>Samambaia</td>
-<td>160000.00</td>
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">COETI</td>
 </tr>
 <tr class="odd">
-<td>Fernanda</td>
-<td>Buritis</td>
-<td>170000.00</td>
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">COETI</td>
 </tr>
 <tr class="even">
-<td>Roberto</td>
-<td>Samambaia</td>
-<td>160000.00</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: left;">Escola Superior de Gestão</td>
+<td style="text-align: left;">COCHCMA</td>
 </tr>
 <tr class="odd">
-<td>Lucas</td>
-<td>Lago Norte</td>
-<td>185000.00</td>
-</tr>
-<tr class="even">
-<td>Juliana</td>
-<td>Buritis</td>
-<td>170000.00</td>
-</tr>
-<tr class="odd">
-<td>Rafael</td>
-<td>Buritis</td>
-<td>170000.00</td>
-</tr>
-<tr class="even">
-<td>Beatriz</td>
-<td>Samambaia</td>
-<td>160000.00</td>
-</tr>
-<tr class="odd">
-<td>Pedro</td>
-<td>Lago Norte</td>
-<td>185000.00</td>
-</tr>
-<tr class="even">
-<td>Mariana</td>
-<td>Lago Norte</td>
-<td>185000.00</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: left;">Escola Superior de Gestão</td>
+<td style="text-align: left;">COCHCMA</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -666,18 +675,18 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A condição <code>professor.nome_centro = centro.nome_centro</code> na cláusula <code>WHERE</code> funciona como uma <strong>junção natural</strong> entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 12 professores × 4 centros = 48 linhas, a maioria sem sentido.</p>
+<p>A condição <code>p.escola = e.escola</code> na cláusula <code>WHERE</code> funciona como uma <strong>junção</strong> entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.</p>
 <p>A sintaxe com <code>JOIN</code> explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.</p>
 </div>
 </div>
 </section>
 <section id="notação-com-qualificador-de-tabela" class="level2" data-number="31.6">
 <h2 data-number="31.6" class="anchored" data-anchor-id="notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</h2>
-<p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>nome_centro</code> em <code>professor</code> e <code>centro</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>professor.nome_centro   <span class="co">-- coluna nome_centro da tabela professor</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>centro.nome_centro      <span class="co">-- coluna nome_centro da tabela centro</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>escola</code> em <code>professor</code> e em <code>escola</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela ou alias:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p.escola   <span class="co">-- coluna escola da tabela professor (alias p)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>e.escola   <span class="co">-- coluna escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sem o qualificador, o SQL lançará um erro de ambiguidade:</p>
-<pre><code>ERROR: column reference "nome_centro" is ambiguous</code></pre>
+<pre><code>ERROR: column reference "escola" is ambiguous</code></pre>
 
 
 </section>

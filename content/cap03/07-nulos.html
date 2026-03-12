@@ -476,8 +476,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="conceito">
 <p><strong>NULL</strong> é um valor especial em SQL que indica a <strong>ausência de informação</strong>. Um valor nulo pode significar:</p>
 <ul>
-<li><strong>Desconhecido</strong>: o valor existe, mas não é conhecido (ex.: o salário de um novo professor ainda não foi definido).</li>
-<li><strong>Inaplicável</strong>: o atributo não se aplica a essa entidade (ex.: um campo “cônjuge” para alguém solteiro).</li>
+<li><strong>Desconhecido</strong>: o valor existe, mas não é conhecido (ex.: a nota de uma disciplina ainda não lançada).</li>
+<li><strong>Inaplicável</strong>: o atributo não se aplica a essa entidade (ex.: horário de uma disciplina ainda não agendada).</li>
 <li><strong>Inexistente</strong>: a informação simplesmente não está disponível.</li>
 </ul>
 </div>
@@ -495,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>NULL + 1000</code></td>
+<td><code>NULL + 60</code></td>
 <td><code>NULL</code></td>
 </tr>
 <tr class="even">
@@ -503,26 +503,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><code>NULL</code></td>
 </tr>
 <tr class="odd">
-<td><code>60000 + NULL</code></td>
+<td><code>120 + NULL</code></td>
 <td><code>NULL</code></td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Se o salário de um professor fosse <code>NULL</code>, a consulta abaixo retornaria <code>NULL</code> como salário reajustado:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="op">*</span> <span class="fl">1.10</span> <span class="kw">AS</span> salario_reajustado</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome <span class="op">=</span> <span class="st">'Carlos'</span>;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Se salario fosse NULL, salario_reajustado também seria NULL</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Se a nota de um aluno em uma disciplina fosse <code>NULL</code> (ainda não lançada), a média calculada com essa nota também seria <code>NULL</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_matricula, <span class="fu">AVG</span>(nota) <span class="kw">AS</span> media</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> cod_matricula;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos com alguma nota NULL teriam resultado influenciado (NULL ignorado na média)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando notas nulas — disciplinas com nota ainda não registrada:</p>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar se existem notas nulas no banco atual</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> notas_nulas</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nota <span class="kw">IS</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">notas_nulas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar se existem horários nulos em ministra (dado opcional)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> horarios_nulos</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  horario <span class="kw">IS</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">horarios_nulos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </section>
 <section id="comparações-com-null-lógica-de-três-valores" class="level2" data-number="35.3">
 <h2 data-number="35.3" class="anchored" data-anchor-id="comparações-com-null-lógica-de-três-valores"><span class="header-section-number">35.3</span> Comparações com NULL: Lógica de Três Valores</h2>
 <p>Em álgebra booleana clássica, uma comparação retorna <code>TRUE</code> ou <code>FALSE</code>. Em SQL, comparações com NULL retornam um terceiro resultado: <strong>UNKNOWN</strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&lt;&gt;</span> <span class="dv">5</span>       <span class="co">-- UNKNOWN</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&gt;</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="kw">NULL</span>     <span class="co">-- UNKNOWN (!)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&lt;&gt;</span> <span class="dv">5</span>       <span class="co">-- UNKNOWN</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">&gt;</span> <span class="dv">5</span>        <span class="co">-- UNKNOWN</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="op">=</span> <span class="kw">NULL</span>     <span class="co">-- UNKNOWN (!)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -566,20 +609,15 @@ Aviso
 </tr>
 <tr class="even">
 <td>UNKNOWN</td>
-<td>TRUE</td>
+<td>UNKNOWN</td>
 <td>UNKNOWN</td>
 </tr>
 <tr class="odd">
 <td>UNKNOWN</td>
-<td>UNKNOWN</td>
-<td>UNKNOWN</td>
+<td>FALSE</td>
+<td>FALSE</td>
 </tr>
 <tr class="even">
-<td>UNKNOWN</td>
-<td>FALSE</td>
-<td>FALSE</td>
-</tr>
-<tr class="odd">
 <td>FALSE</td>
 <td>qualquer</td>
 <td>FALSE</td>
@@ -623,29 +661,6 @@ Aviso
 </tr>
 </tbody>
 </table>
-<p><strong>NOT:</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>A</th>
-<th>NOT A</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>TRUE</td>
-<td>FALSE</td>
-</tr>
-<tr class="even">
-<td>FALSE</td>
-<td>TRUE</td>
-</tr>
-<tr class="odd">
-<td>UNKNOWN</td>
-<td>UNKNOWN</td>
-</tr>
-</tbody>
-</table>
 <div class="conceito">
 <p>A cláusula <code>WHERE</code> retém apenas as linhas para as quais a condição é avaliada como <strong>TRUE</strong>. Linhas com resultado <strong>UNKNOWN</strong> são <strong>descartadas</strong>, da mesma forma que linhas com resultado FALSE.</p>
 </div>
@@ -654,31 +669,119 @@ Aviso
 <section id="is-null-e-is-not-null" class="level2" data-number="35.4">
 <h2 data-number="35.4" class="anchored" data-anchor-id="is-null-e-is-not-null"><span class="header-section-number">35.4</span> IS NULL e IS NOT NULL</h2>
 <p>Para verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores cujo salário é desconhecido (nulo)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores com salário informado</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>No banco de dados atual da UnDF, nenhum professor tem salário nulo — todos têm valores definidos. Mas considere um cenário hipotético onde Carlos ainda não tivesse salário definido:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem IS NOT NULL: Carlos poderia aparecer ou não (resultado imprevisível)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span>;</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com IS NOT NULL: garante que a comparação é feita apenas para valores conhecidos</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span> <span class="kw">AND</span> salario <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Registros de ministra com horário informado</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_disciplina, ano, semestre, turma, horario</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  horario <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cod_disciplina</th>
+<th style="text-align: right;">ano</th>
+<th style="text-align: right;">semestre</th>
+<th style="text-align: left;">turma</th>
+<th style="text-align: left;">horario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">2f-19:00-21:30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">2f-19:00-21:30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">3f-19:00-21:30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">3f-19:00-21:30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PED-403</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">2f-19:00-22:20</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Registros de ministra sem horário</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_disciplina, ano, semestre, turma</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  horario <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>0 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cod_disciplina</th>
+<th style="text-align: right;">ano</th>
+<th style="text-align: right;">semestre</th>
+<th style="text-align: left;">turma</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 <section id="null-em-funções-de-agregação" class="level2" data-number="35.5">
 <h2 data-number="35.5" class="anchored" data-anchor-id="null-em-funções-de-agregação"><span class="header-section-number">35.5</span> NULL em Funções de Agregação</h2>
 <p>As funções de agregação (<code>AVG</code>, <code>SUM</code>, <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>) <strong>ignoram</strong> valores nulos em sua computação:</p>
 <div class="exemplo">
-<p>Suponha que a tabela tivesse 3 professores com salários <code>65000</code>, <code>NULL</code> e <code>75000</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">FROM</span> professor;</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado: (65000 + 75000) / 2 = 70000</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- O NULL é ignorado; o denominador é 2, não 3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Suponha que a tabela <code>matricula_disciplina</code> tivesse 3 notas: <code>9.0</code>, <code>NULL</code> e <code>7.4</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(nota) <span class="kw">FROM</span> matricula_disciplina <span class="kw">WHERE</span> cod_matricula <span class="op">=</span> <span class="st">'2023002001'</span>;</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado: (9.0 + 7.4) / 2 = 8.2</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- O NULL é ignorado; o denominador é 2, não 3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Exceção: <code>COUNT(*)</code> conta <strong>todas</strong> as linhas, incluindo aquelas com valores nulos em qualquer coluna.</p>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- COUNT(*) conta todas as linhas; COUNT(nota) ignora notas nulas</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>)    <span class="kw">AS</span> total_registros,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(nota) <span class="kw">AS</span> registros_com_nota</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">total_registros</th>
+<th style="text-align: right;">registros_com_nota</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">58</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </section>
 <section id="boas-práticas" class="level2" data-number="35.6">

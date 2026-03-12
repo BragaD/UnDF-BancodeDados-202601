@@ -444,15 +444,16 @@ Descreve <em>quais</em> dados estão armazenados no banco e os relacionamentos e
 </dd>
 </dl>
 <pre><code>type professor = record
-    id          : string;
-    nome        : string;
-    nome_centro : string;
-    salario     : integer;
+    matricula_prof : string;
+    nome           : string;
+    escola         : string;
+    ch_semanal     : integer;
+    salario        : real;
 end;</code></pre>
 <dl>
 <dt><strong>Nível de visão</strong> (<em>view level</em>)</dt>
 <dd>
-Os programas de aplicação ocultam detalhes dos tipos de dados. As visões também podem ocultar informações (como o salário de um funcionário) por razões de segurança.
+Os programas de aplicação ocultam detalhes dos tipos de dados. As visões também podem ocultar informações (como o salário de um professor) por razões de segurança.
 </dd>
 </dl>
 <pre><code>┌────────────────────────────────────────┐

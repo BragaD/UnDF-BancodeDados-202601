@@ -431,6 +431,7 @@ window.Quarto = {
   <li><a href="#relação-professor" id="toc-relação-professor" class="nav-link" data-scroll-target="#relação-professor"><span class="header-section-number">18.2.1</span> Relação <code>professor</code></a></li>
   <li><a href="#relação-centro" id="toc-relação-centro" class="nav-link" data-scroll-target="#relação-centro"><span class="header-section-number">18.2.2</span> Relação <code>centro</code></a></li>
   <li><a href="#relação-disciplina" id="toc-relação-disciplina" class="nav-link" data-scroll-target="#relação-disciplina"><span class="header-section-number">18.2.3</span> Relação <code>disciplina</code></a></li>
+  <li><a href="#relação-ministra" id="toc-relação-ministra" class="nav-link" data-scroll-target="#relação-ministra"><span class="header-section-number">18.2.4</span> Relação <code>ministra</code></a></li>
   </ul></li>
   <li><a href="#chave-estrangeira" id="toc-chave-estrangeira" class="nav-link" data-scroll-target="#chave-estrangeira"><span class="header-section-number">18.3</span> Chave Estrangeira</a></li>
   </ul>
@@ -485,51 +486,63 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id</th>
+<th>matricula_prof</th>
 <th>nome</th>
-<th>nome_centro</th>
-<th>salario</th>
+<th>escola</th>
+<th style="text-align: right;">ch_semanal</th>
+<th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
+<td>PROF20230032</td>
+<td>Helena Carvalho</td>
+<td>ESETI</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>22222</td>
-<td>Marcos</td>
-<td>COCBS</td>
-<td>95000</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6500</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><span class="math inline">\(\{id\}\)</span> é <strong>superclave</strong>: cada professor tem um <code>id</code> único.</li>
-<li><span class="math inline">\(\{id, nome\}\)</span> é <strong>superclave</strong>: a combinação também identifica unicamente, mas é redundante.</li>
+<li><span class="math inline">\(\{matricula\_prof\}\)</span> é <strong>superclave</strong>: cada professor tem uma matrícula única.</li>
+<li><span class="math inline">\(\{matricula\_prof, nome\}\)</span> é <strong>superclave</strong>: a combinação também identifica unicamente, mas é redundante.</li>
 <li><span class="math inline">\(\{nome\}\)</span> <strong>não é superclave</strong>: poderiam existir dois professores com o mesmo nome.</li>
-<li><span class="math inline">\(\{id\}\)</span> é <strong>chave candidata</strong>: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).</li>
-<li><span class="math inline">\(\{id\}\)</span> é escolhida como <strong>chave primária</strong>.</li>
+<li><span class="math inline">\(\{matricula\_prof\}\)</span> é <strong>chave candidata</strong>: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).</li>
+<li><span class="math inline">\(\{matricula\_prof\}\)</span> é escolhida como <strong>chave primária</strong>.</li>
 </ul>
 </section>
 <section id="relação-centro" class="level3" data-number="18.2.2">
 <h3 data-number="18.2.2" class="anchored" data-anchor-id="relação-centro"><span class="header-section-number">18.2.2</span> Relação <code>centro</code></h3>
 <ul>
-<li><span class="math inline">\(\{nome\_centro\}\)</span> é chave candidata e chave primária — cada centro tem um nome único.</li>
+<li><span class="math inline">\(\{centro\}\)</span> é chave candidata e chave primária — cada centro tem um código único.</li>
 </ul>
 </section>
 <section id="relação-disciplina" class="level3" data-number="18.2.3">
 <h3 data-number="18.2.3" class="anchored" data-anchor-id="relação-disciplina"><span class="header-section-number">18.2.3</span> Relação <code>disciplina</code></h3>
 <ul>
-<li><span class="math inline">\(\{id\_disciplina\}\)</span> é chave candidata e chave primária.</li>
+<li><span class="math inline">\(\{codigo\}\)</span> é chave candidata e chave primária.</li>
+</ul>
+</section>
+<section id="relação-ministra" class="level3" data-number="18.2.4">
+<h3 data-number="18.2.4" class="anchored" data-anchor-id="relação-ministra"><span class="header-section-number">18.2.4</span> Relação <code>ministra</code></h3>
+<p>A relação <code>ministra</code> registra que um professor ministra uma disciplina em um determinado ano, semestre e turma. Não existe uma coluna única que identifique cada tupla — a chave primária é <strong>composta</strong>:</p>
+<p><span class="math display">\[ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)\]</span></p>
+<ul>
+<li><span class="math inline">\(\{cod\_disciplina, ano, semestre, turma\}\)</span> é a chave primária composta.</li>
 </ul>
 </section>
 </section>
@@ -539,13 +552,13 @@ window.Quarto = {
 <p>Uma <strong>chave estrangeira</strong> (<em>foreign key</em>) é um conjunto de atributos em uma relação cujos valores devem corresponder a valores da chave primária de outra relação. A relação que contém a chave estrangeira é chamada de <strong>relação referenciante</strong>; a relação que contém a chave primária correspondente é chamada de <strong>relação referenciada</strong>.</p>
 </div>
 <div class="exemplo">
-<p>O atributo <code>nome_centro</code> em <code>professor</code> é uma chave estrangeira que referencia <code>nome_centro</code> em <code>centro</code>:</p>
+<p>O atributo <code>escola</code> em <code>professor</code> é uma chave estrangeira que referencia <code>escola</code> em <code>escola</code>:</p>
 <ul>
 <li><strong>Relação referenciante</strong>: <code>professor</code></li>
-<li><strong>Relação referenciada</strong>: <code>centro</code></li>
-<li><strong>Restrição</strong>: todo valor de <code>professor.nome_centro</code> deve existir em <code>centro.nome_centro</code></li>
+<li><strong>Relação referenciada</strong>: <code>escola</code></li>
+<li><strong>Restrição</strong>: todo valor de <code>professor.escola</code> deve existir em <code>escola.escola</code></li>
 </ul>
-<p>Isso garante que não seja possível cadastrar um professor em um centro inexistente. Da mesma forma, <code>disciplina.nome_centro</code> e <code>aluno.nome_centro</code> são chaves estrangeiras que referenciam <code>centro</code>.</p>
+<p>Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, <code>curso.escola</code> e <code>aluno.sigla_curso</code> são chaves estrangeiras que referenciam suas respectivas tabelas.</p>
 </div>
 <p>A restrição imposta por uma chave estrangeira é chamada de <strong>restrição de integridade referencial</strong> (<em>referential integrity constraint</em>) e é uma das formas como o SGBD preserva a consistência dos dados.</p>
 

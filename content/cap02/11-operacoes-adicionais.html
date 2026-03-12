@@ -472,9 +472,9 @@ window.Quarto = {
 <p>Atribui à variável temporária <span class="math inline">\(x\)</span> o resultado da expressão <span class="math inline">\(E\)</span>. A variável pode ser usada nas expressões seguintes como se fosse uma relação, mas <strong>não altera o banco de dados</strong>.</p>
 </div>
 <div class="exemplo">
-<p>Para encontrar os professores que são do COETI <strong>ou</strong> do COCBS, em vez de escrever tudo em uma linha:</p>
-<p><span class="math display">\[COETI \leftarrow \sigma_{nome\_centro = \text{"COETI"}}(professor)\]</span> <span class="math display">\[COCBS \leftarrow \sigma_{nome\_centro = \text{"COCBS"}}(professor)\]</span> <span class="math display">\[COETI \cup COCBS\]</span></p>
-<p>Isso é equivalente a: <span class="math display">\[\sigma_{nome\_centro = \text{"COETI"}}(professor)\ \cup\ \sigma_{nome\_centro = \text{"COCBS"}}(professor)\]</span></p>
+<p>Para encontrar os professores que são da ESETI <strong>ou</strong> da ESG, em vez de escrever tudo em uma linha:</p>
+<p><span class="math display">\[ESETI \leftarrow \sigma_{escola = \text{"ESETI"}}(professor)\]</span> <span class="math display">\[ESG \leftarrow \sigma_{escola = \text{"ESG"}}(professor)\]</span> <span class="math display">\[ESETI \cup ESG\]</span></p>
+<p>Isso é equivalente a: <span class="math display">\[\sigma_{escola = \text{"ESETI"}}(professor)\ \cup\ \sigma_{escola = \text{"ESG"}}(professor)\]</span></p>
 <p>mas muito mais legível.</p>
 </div>
 </section>
@@ -489,54 +489,68 @@ window.Quarto = {
 <p>Retorna o resultado de <span class="math inline">\(E\)</span> com o nome <span class="math inline">\(x\)</span> e com os atributos renomeados para <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span>.</p>
 </div>
 <div class="exemplo">
-<p>Para encontrar pares de professores do mesmo centro (autojunção), precisamos de dois “aliases” para <code>professor</code>. Usamos <span class="math inline">\(p1.id &lt; p2.id\)</span> para evitar pares duplicados e auto-pares:</p>
-<p><span class="math display">\[P1 \leftarrow \rho_{p1}(professor)\]</span> <span class="math display">\[P2 \leftarrow \rho_{p2}(professor)\]</span> <span class="math display">\[\Pi_{p1.nome,\ p2.nome,\ p1.nome\_centro}(\sigma_{p1.nome\_centro = p2.nome\_centro\ \wedge\ p1.id &lt; p2.id}(P1 \times P2))\]</span></p>
-<p>Usando a versão reduzida da tabela <code>professor</code> com 6 tuplas:</p>
+<p>Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois “aliases” para <code>professor</code>. Usamos <span class="math inline">\(p1.matricula\_prof &lt; p2.matricula\_prof\)</span> para evitar pares duplicados e auto-pares:</p>
+<p><span class="math display">\[P1 \leftarrow \rho_{p1}(professor)\]</span> <span class="math display">\[P2 \leftarrow \rho_{p2}(professor)\]</span> <span class="math display">\[\Pi_{p1.nome,\ p2.nome,\ p1.escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof &lt; p2.matricula\_prof}(P1 \times P2))\]</span></p>
+<p>Usando a tabela <code>professor</code> com 7 tuplas:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id</th>
+<th>matricula_prof</th>
 <th>nome</th>
-<th>nome_centro</th>
-<th>salario</th>
+<th>escola</th>
+<th style="text-align: right;">ch_semanal</th>
+<th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
+<td>PROF20230006</td>
+<td>Felipe Araujo</td>
+<td>EEMA</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td>15151</td>
-<td>João</td>
-<td>COEMAG</td>
-<td>40000</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>32343</td>
-<td>Fernanda</td>
-<td>COCHCMA</td>
-<td>60000</td>
+<td>PROF20230032</td>
+<td>Helena Carvalho</td>
+<td>ESETI</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
+<td>PROF20230033</td>
+<td>Igor Melo</td>
+<td>ESETI</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td>83821</td>
-<td>Pedro</td>
-<td>COETI</td>
-<td>92000</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6500</td>
+</tr>
+<tr class="odd">
+<td>PROF20230043</td>
+<td>Carla Pinto</td>
+<td>ESG</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6600</td>
 </tr>
 </tbody>
 </table>
@@ -546,33 +560,38 @@ window.Quarto = {
 <tr class="header">
 <th>p1.nome</th>
 <th>p2.nome</th>
-<th>nome_centro</th>
+<th>escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>Lucas</td>
-<td>COETI</td>
+<td>Eduarda Souza</td>
+<td>Felipe Araujo</td>
+<td>EEMA</td>
 </tr>
 <tr class="even">
-<td>Carlos</td>
-<td>Pedro</td>
-<td>COETI</td>
+<td>Gustavo Costa</td>
+<td>Helena Carvalho</td>
+<td>ESETI</td>
 </tr>
 <tr class="odd">
-<td>Lucas</td>
-<td>Pedro</td>
-<td>COETI</td>
+<td>Gustavo Costa</td>
+<td>Igor Melo</td>
+<td>ESETI</td>
 </tr>
 <tr class="even">
-<td>Ana</td>
-<td>Fernanda</td>
-<td>COCHCMA</td>
+<td>Helena Carvalho</td>
+<td>Igor Melo</td>
+<td>ESETI</td>
+</tr>
+<tr class="odd">
+<td>Bruno Teixeira</td>
+<td>Carla Pinto</td>
+<td>ESG</td>
 </tr>
 </tbody>
 </table>
-<p>Os pares são únicos e não contêm auto-pares graças à condição <span class="math inline">\(p1.id &lt; p2.id\)</span>. João (único professor do COEMAG) não forma nenhum par.</p>
+<p>Os pares são únicos e não contêm auto-pares graças à condição <span class="math inline">\(p1.matricula\_prof &lt; p2.matricula\_prof\)</span>. A ESETI contribui com 3 pares (3 professores, <span class="math inline">\(\binom{3}{2} = 3\)</span>), enquanto EEMA e ESG contribuem com 1 par cada.</p>
 </div>
 </section>
 <section id="funções-de-agregação-gamma" class="level2" data-number="26.3">
@@ -618,138 +637,49 @@ window.Quarto = {
 <h3 data-number="26.3.1" class="anchored" data-anchor-id="exemplo-1-sem-agrupamento"><span class="header-section-number">26.3.1</span> Exemplo 1: Sem Agrupamento</h3>
 <p>Salário médio de todos os professores:</p>
 <p><span class="math display">\[\gamma_{\text{avg}(salario)}(professor)\]</span></p>
-<p>Tabela de entrada:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>id</th>
-<th>nome</th>
-<th>nome_centro</th>
-<th>salario</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-</tr>
-<tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-</tr>
-<tr class="odd">
-<td>15151</td>
-<td>João</td>
-<td>COEMAG</td>
-<td>40000</td>
-</tr>
-<tr class="even">
-<td>22222</td>
-<td>Marcos</td>
-<td>COCBS</td>
-<td>95000</td>
-</tr>
-<tr class="odd">
-<td>32343</td>
-<td>Fernanda</td>
-<td>COCHCMA</td>
-<td>60000</td>
-</tr>
-<tr class="even">
-<td>33456</td>
-<td>Roberto</td>
-<td>COCBS</td>
-<td>87000</td>
-</tr>
-<tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-</tr>
-<tr class="even">
-<td>58583</td>
-<td>Juliana</td>
-<td>COCHCMA</td>
-<td>62000</td>
-</tr>
-<tr class="odd">
-<td>76543</td>
-<td>Rafael</td>
-<td>COCHCMA</td>
-<td>80000</td>
-</tr>
-<tr class="even">
-<td>76766</td>
-<td>Beatriz</td>
-<td>COCBS</td>
-<td>72000</td>
-</tr>
-<tr class="odd">
-<td>83821</td>
-<td>Pedro</td>
-<td>COETI</td>
-<td>92000</td>
-</tr>
-<tr class="even">
-<td>98345</td>
-<td>Mariana</td>
-<td>COETI</td>
-<td>80000</td>
-</tr>
-</tbody>
-</table>
 <p>Resultado:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>avg(salario)</th>
+<th style="text-align: right;">avg(salario)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>74833</td>
+<td style="text-align: right;">5114.29</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="exemplo-2-com-agrupamento" class="level3" data-number="26.3.2">
 <h3 data-number="26.3.2" class="anchored" data-anchor-id="exemplo-2-com-agrupamento"><span class="header-section-number">26.3.2</span> Exemplo 2: Com Agrupamento</h3>
-<p>Salário médio por centro (equivalente a <code>GROUP BY nome_centro</code>):</p>
-<p><span class="math display">\[{}_{nome\_centro}\ \gamma_{\text{avg}(salario)}(professor)\]</span></p>
+<p>Salário médio por escola (equivalente a <code>GROUP BY escola</code>):</p>
+<p><span class="math display">\[{}_{escola}\ \gamma_{\text{avg}(salario)}(professor)\]</span></p>
 <p>Resultado:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>avg(salario)</th>
+<th>escola</th>
+<th style="text-align: right;">avg(salario)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COETI</td>
-<td>78000</td>
+<td>EEMA</td>
+<td style="text-align: right;">4800.00</td>
 </tr>
 <tr class="even">
-<td>COCBS</td>
-<td>84667</td>
+<td>ESETI</td>
+<td style="text-align: right;">4366.67</td>
 </tr>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>73000</td>
-</tr>
-<tr class="even">
-<td>COEMAG</td>
-<td>40000</td>
+<td>ESG</td>
+<td style="text-align: right;">6550.00</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>O agrupamento por <code>nome_centro</code> faz com que a função <code>avg</code> seja calculada <strong>separadamente</strong> para cada grupo de tuplas com o mesmo valor de <code>nome_centro</code>.</p>
+<p>O agrupamento por <code>escola</code> faz com que a função <code>avg</code> seja calculada <strong>separadamente</strong> para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.</p>
 </div>
 
 

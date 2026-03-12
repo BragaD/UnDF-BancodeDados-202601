@@ -472,139 +472,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="37.1" class="anchored" data-anchor-id="in-e-not-in"><span class="header-section-number">37.1</span> IN e NOT IN</h2>
 <p>O predicado <code>IN</code> verifica se um valor pertence ao conjunto retornado por uma subconsulta.</p>
 <div class="exemplo">
-<p><strong>Professores em centros com orçamento acima de R$ 150.000:</strong></p>
-<p>Os centros com orçamento &gt; 150.000 são: COETI (185.000), COCHCMA (170.000) e COCBS (160.000). Apenas o COEMAG (80.000) fica fora.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 1 (subconsulta): encontra os centros com orçamento &gt; 150.000</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 2 (consulta principal): retorna professores desses centros</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">IN</span> (</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  orcamento <span class="op">&gt;</span> <span class="dv">150000</span></span>
+<p><strong>Alunos matriculados em disciplinas de Engenharia de Software:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 1 (subconsulta): códigos das disciplinas de ENS</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Passo 2 (consulta principal): alunos que cursaram essas disciplinas</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.nome, a.sigla_curso</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  a.matricula <span class="kw">IN</span> (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> md.cod_matricula</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   matricula_disciplina md</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  md.cod_disciplina <span class="kw">LIKE</span> <span class="st">'ENS%'</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome_centro, nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado</strong> (todos exceto João, do COEMAG):</p>
-<table class="caption-top table">
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>nome_centro</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">sigla_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Marcos</td>
-<td>COCBS</td>
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: left;">ENS</td>
 </tr>
 <tr class="even">
-<td>Roberto</td>
-<td>COCBS</td>
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: left;">ENS</td>
 </tr>
 <tr class="odd">
-<td>Beatriz</td>
-<td>COCBS</td>
+<td style="text-align: left;">Juliana Nunes</td>
+<td style="text-align: left;">ENS</td>
 </tr>
 <tr class="even">
-<td>Ana</td>
-<td>COCHCMA</td>
+<td style="text-align: left;">Larissa Araújo</td>
+<td style="text-align: left;">ENS</td>
 </tr>
 <tr class="odd">
-<td>Fernanda</td>
-<td>COCHCMA</td>
-</tr>
-<tr class="even">
-<td>Juliana</td>
-<td>COCHCMA</td>
-</tr>
-<tr class="odd">
-<td>Rafael</td>
-<td>COCHCMA</td>
-</tr>
-<tr class="even">
-<td>Carlos</td>
-<td>COETI</td>
-</tr>
-<tr class="odd">
-<td>Lucas</td>
-<td>COETI</td>
-</tr>
-<tr class="even">
-<td>Pedro</td>
-<td>COETI</td>
-</tr>
-<tr class="odd">
-<td>Mariana</td>
-<td>COETI</td>
+<td style="text-align: left;">Matheus Silva</td>
+<td style="text-align: left;">ENS</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <div class="exemplo">
-<p><strong>NOT IN: professores que não são do COEMAG (via subconsulta):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, nome_centro</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado</strong> (11 professores, excluindo João):</p>
-<table class="caption-top table">
+<p><strong>NOT IN: disciplinas que nenhum aluno cursou:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  codigo <span class="kw">NOT</span> <span class="kw">IN</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> cod_disciplina</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>8 records</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>nome_centro</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Ana</td>
-<td>COCHCMA</td>
+<td style="text-align: left;">ECO-601</td>
+<td style="text-align: left;">Economia Brasileira</td>
 </tr>
 <tr class="even">
-<td>Beatriz</td>
-<td>COCBS</td>
+<td style="text-align: left;">ECO-602</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
 </tr>
 <tr class="odd">
-<td>Carlos</td>
-<td>COETI</td>
+<td style="text-align: left;">ECO-801</td>
+<td style="text-align: left;">Monografia</td>
 </tr>
 <tr class="even">
-<td>Fernanda</td>
-<td>COCHCMA</td>
+<td style="text-align: left;">ECO-802</td>
+<td style="text-align: left;">Desenvolvimento Econômico</td>
 </tr>
 <tr class="odd">
-<td>Juliana</td>
-<td>COCHCMA</td>
+<td style="text-align: left;">ENS-801</td>
+<td style="text-align: left;">Bases da Engenharia de Software 8</td>
 </tr>
 <tr class="even">
-<td>Lucas</td>
-<td>COETI</td>
+<td style="text-align: left;">ENS-802</td>
+<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
 </tr>
 <tr class="odd">
-<td>Marcos</td>
-<td>COCBS</td>
+<td style="text-align: left;">PED-803</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
 </tr>
 <tr class="even">
-<td>Mariana</td>
-<td>COETI</td>
-</tr>
-<tr class="odd">
-<td>Pedro</td>
-<td>COETI</td>
-</tr>
-<tr class="even">
-<td>Rafael</td>
-<td>COCHCMA</td>
-</tr>
-<tr class="odd">
-<td>Roberto</td>
-<td>COCBS</td>
+<td style="text-align: left;">PED-804</td>
+<td style="text-align: left;">Estatística Aplicada</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </div>
 </section>
 <section id="some-e-all" class="level2" data-number="37.2">
@@ -618,284 +588,373 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>O predicado <code>= SOME</code> é equivalente a <code>IN</code>.</p>
 </div>
 <div class="exemplo">
-<p><strong>Professores com salário maior que pelo menos um professor do COEMAG (<code>&gt; SOME</code>):</strong></p>
-<p>O único professor do COEMAG é João, com salário de R$ 40.000. Portanto, qualquer professor com salário &gt; 40.000 satisfaz a condição.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="kw">SOME</span> (</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> salario</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
+<p><strong>Disciplinas com carga horária maior que pelo menos uma disciplina de PED (<code>&gt; SOME</code>):</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;</span> <span class="kw">SOME</span> (</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> carga_horaria</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  sigla_curso <span class="op">=</span> <span class="st">'PED'</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado</strong> (todos exceto João, cujo salário é exatamente igual ao limite):</p>
-<table class="caption-top table">
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> sigla_curso <span class="op">&lt;&gt;</span> <span class="st">'PED'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 50%">
+<col style="width: 17%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>salario</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>65000.00</td>
+<td style="text-align: left;">ECO-202</td>
+<td style="text-align: left;">Culturas Digitais</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">60</td>
 </tr>
 <tr class="even">
-<td>Fernanda</td>
-<td>60000.00</td>
+<td style="text-align: left;">ECO-201</td>
+<td style="text-align: left;">História Econômica Geral</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td>Juliana</td>
-<td>62000.00</td>
+<td style="text-align: left;">ECO-401</td>
+<td style="text-align: left;">Microeconomia 2</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>Beatriz</td>
-<td>72000.00</td>
+<td style="text-align: left;">ECO-601</td>
+<td style="text-align: left;">Economia Brasileira</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td>Lucas</td>
-<td>75000.00</td>
+<td style="text-align: left;">ECO-602</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>Rafael</td>
-<td>80000.00</td>
+<td style="text-align: left;">ECO-802</td>
+<td style="text-align: left;">Desenvolvimento Econômico</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">90</td>
 </tr>
 <tr class="odd">
-<td>Mariana</td>
-<td>80000.00</td>
+<td style="text-align: left;">ECO-402</td>
+<td style="text-align: left;">Macroeconomia 2</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">95</td>
 </tr>
 <tr class="even">
-<td>Roberto</td>
-<td>87000.00</td>
+<td style="text-align: left;">ECO-801</td>
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">100</td>
 </tr>
 <tr class="odd">
-<td>Ana</td>
-<td>90000.00</td>
+<td style="text-align: left;">ENS-801</td>
+<td style="text-align: left;">Bases da Engenharia de Software 8</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td>Pedro</td>
-<td>92000.00</td>
-</tr>
-<tr class="odd">
-<td>Marcos</td>
-<td>95000.00</td>
+<td style="text-align: left;">ENS-202</td>
+<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">120</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <div class="exemplo">
-<p><strong>Professores com salário maior que TODOS os professores do COEMAG (<code>&gt; ALL</code>):</strong></p>
-<p>Como há apenas um professor no COEMAG (João, R$ 40.000), <code>&gt; ALL</code> equivale a <code>&gt; 40000</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="kw">ALL</span> (</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> salario</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span></span>
+<p><strong>Disciplinas com carga horária maior que TODAS as disciplinas de ECO (<code>&gt; ALL</code>):</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;</span> <span class="kw">ALL</span> (</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> carga_horaria</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  sigla_curso <span class="op">=</span> <span class="st">'ECO'</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado</strong> — os mesmos 11 professores com salário acima de R$ 40.000.</p>
-<table class="caption-top table">
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 55%">
+<col style="width: 15%">
+<col style="width: 18%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>salario</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>65000.00</td>
+<td style="text-align: left;">ENS-402</td>
+<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td>Fernanda</td>
-<td>60000.00</td>
+<td style="text-align: left;">ENS-202</td>
+<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>…</td>
-<td>…</td>
+<td style="text-align: left;">ENS-602</td>
+<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td>Marcos</td>
-<td>95000.00</td>
+<td style="text-align: left;">ENS-201</td>
+<td style="text-align: left;">Bases da Engenharia de Software 2</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-601</td>
+<td style="text-align: left;">Bases da Engenharia de Software 6</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-802</td>
+<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-401</td>
+<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">180</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </div>
 </section>
 <section id="exists-e-not-exists" class="level2" data-number="37.3">
 <h2 data-number="37.3" class="anchored" data-anchor-id="exists-e-not-exists"><span class="header-section-number">37.3</span> EXISTS e NOT EXISTS</h2>
 <p><code>EXISTS</code> verifica se a subconsulta retorna ao menos uma linha. É frequentemente usado com <strong>subconsultas correlacionadas</strong>, em que a subconsulta referencia colunas da consulta externa.</p>
 <div class="exemplo">
-<p><strong>EXISTS: centros que têm pelo menos um professor com salário acima de R$ 80.000:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, predio</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   centro c</span>
+<p><strong>EXISTS: cursos que têm pelo menos uma disciplina com carga horária acima de 150 h:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> c.sigla_curso, c.nome_curso</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   curso c</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">EXISTS</span> (</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor p</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  p.nome_centro <span class="op">=</span> c.nome_centro   <span class="co">-- correlação com a consulta externa</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  p.salario <span class="op">&gt;</span> <span class="dv">80000</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina d</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  d.sigla_curso <span class="op">=</span> c.sigla_curso   <span class="co">-- correlação com a consulta externa</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  d.carga_horaria <span class="op">&gt;</span> <span class="dv">150</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>predio</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: left;">nome_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCBS</td>
-<td>Samambaia</td>
-</tr>
-<tr class="even">
-<td>COCHCMA</td>
-<td>Buritis</td>
-</tr>
-<tr class="odd">
-<td>COETI</td>
-<td>Lago Norte</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: left;">Engenharia de Software</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>COCBS: Marcos (95.000) e Roberto (87.000) — satisfaz.</li>
-<li>COCHCMA: Ana (90.000) — satisfaz.</li>
-<li>COETI: Pedro (92.000) — satisfaz.</li>
-<li>COEMAG: João (40.000) — não satisfaz; excluído.</li>
-</ul>
+</div>
+</div>
 </div>
 <div class="exemplo">
-<p><strong>NOT EXISTS: alunos que não têm carga total (carga_total = 0):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos cuja carga_total é zero (nunca cursaram nenhuma disciplina)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span> (</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   aluno a2</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  a2.<span class="kw">id</span> <span class="op">=</span> aluno.<span class="kw">id</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  a2.carga_total <span class="op">&gt;</span> <span class="dv">0</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Uma forma mais direta para este caso específico:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_total <span class="op">=</span> <span class="dv">0</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<p><strong>NOT EXISTS: alunos que não têm nenhuma reprovação:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.nome, a.sigla_curso</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span> (</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   matricula_disciplina md</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  md.cod_matricula <span class="op">=</span> a.matricula</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  md.aprovado <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.sigla_curso, a.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">sigla_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Henrique</td>
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Camila Teixeira</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gabriel Ribeiro</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lucas Santos</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rodrigo Lima</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: left;">ENS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pedro Carvalho</td>
+<td style="text-align: left;">ENS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Amanda Moreira</td>
+<td style="text-align: left;">PED</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carolina Lima</td>
+<td style="text-align: left;">PED</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Letícia Souza</td>
+<td style="text-align: left;">PED</td>
 </tr>
 </tbody>
 </table>
-<p>Henrique (id 70557) é o único aluno com <code>carga_total = 0</code>.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="subconsulta-no-from" class="level2" data-number="37.4">
 <h2 data-number="37.4" class="anchored" data-anchor-id="subconsulta-no-from"><span class="header-section-number">37.4</span> Subconsulta no FROM</h2>
 <p>Uma subconsulta pode ser usada como se fosse uma tabela na cláusula <code>FROM</code>. Ela deve receber um alias.</p>
 <div class="exemplo">
-<p><strong>Centros com salário médio acima de R$ 70.000:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- A subconsulta calcula a média por centro; a consulta externa filtra</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> media_por_centro.nome_centro, media_por_centro.media</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> media_por_centro</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  media_por_centro.media <span class="op">&gt;</span> <span class="dv">70000</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_por_centro.media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<p><strong>Cursos com carga horária média por disciplina acima de 70 h:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- A subconsulta calcula a média por curso; a consulta externa filtra</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> media_por_curso.sigla_curso,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(media_por_curso.media, <span class="dv">2</span>) <span class="kw">AS</span> media_carga</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso, <span class="fu">AVG</span>(carga_horaria) <span class="kw">AS</span> media</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> media_por_curso</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  media_por_curso.media <span class="op">&gt;</span> <span class="dv">70</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_por_curso.media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>media</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">media_carga</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCBS</td>
-<td>84666.67</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">137.50</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>78000.00</td>
-</tr>
-<tr class="odd">
-<td>COCHCMA</td>
-<td>73000.00</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">80.63</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </div>
 </section>
 <section id="with-expressões-de-tabela-comuns-cte" class="level2" data-number="37.5">
 <h2 data-number="37.5" class="anchored" data-anchor-id="with-expressões-de-tabela-comuns-cte"><span class="header-section-number">37.5</span> WITH: Expressões de Tabela Comuns (CTE)</h2>
 <p>A cláusula <code>WITH</code> define uma <strong>CTE</strong> (<em>Common Table Expression</em>), que é uma subconsulta nomeada e reutilizável na consulta principal. CTEs tornam consultas complexas mais legíveis.</p>
 <div class="exemplo">
-<p><strong>Carga horária total por centro e filtro de centros com mais de 200 horas:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Define a CTE com a soma de carga horária por centro</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> carga_por_centro <span class="kw">AS</span> (</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome_centro, <span class="fu">SUM</span>(carga_horaria) <span class="kw">AS</span> total_horas</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usa a CTE como se fosse uma tabela</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, total_horas</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   carga_por_centro</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  total_horas <span class="op">&gt;</span> <span class="dv">200</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_horas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<p><strong>Cursos com carga horária total e número de disciplinas:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Define a CTE com estatísticas por curso</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> stats_curso <span class="kw">AS</span> (</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">COUNT</span>(<span class="op">*</span>)         <span class="kw">AS</span> n_disciplinas,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">SUM</span>(carga_horaria)  <span class="kw">AS</span> carga_total,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">AVG</span>(carga_horaria)  <span class="kw">AS</span> carga_media</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usa a CTE junto com a tabela curso para obter o nome completo</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> c.nome_curso, s.n_disciplinas, s.carga_total,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(s.carga_media, <span class="dv">1</span>) <span class="kw">AS</span> carga_media</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   stats_curso s</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   curso c <span class="kw">USING</span> (sigla_curso)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> s.carga_total <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>total_horas</th>
+<th style="text-align: left;">nome_curso</th>
+<th style="text-align: right;">n_disciplinas</th>
+<th style="text-align: right;">carga_total</th>
+<th style="text-align: right;">carga_media</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCBS</td>
-<td>245</td>
+<td style="text-align: left;">Engenharia de Software</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1100</td>
+<td style="text-align: right;">137.5</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>260</td>
+<td style="text-align: left;">Ciências Econômicas</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">645</td>
+<td style="text-align: right;">80.6</td>
 </tr>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>180</td>
+<td style="text-align: left;">Pedagogia</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">510</td>
+<td style="text-align: right;">63.8</td>
 </tr>
 </tbody>
 </table>
-<p>Nota: COCHCMA tem 60 + 60 + 60 = 180 horas (abaixo de 200) e seria excluído. COETI tem 20 + 120 + 120 = 260, COCBS tem 105 + 70 + 70 = 245. COEMAG tem 60 + 60 + 60 = 180, também abaixo de 200.</p>
-<p><strong>Resultado corrigido:</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>nome_centro</th>
-<th>total_horas</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>COETI</td>
-<td>260</td>
-</tr>
-<tr class="even">
-<td>COCBS</td>
-<td>245</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
 </div>
 <div class="conceito">
 <p><strong>Vantagens das CTEs com <code>WITH</code>:</strong></p>

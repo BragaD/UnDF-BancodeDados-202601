@@ -470,17 +470,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="7.1" class="anchored" data-anchor-id="ddl-data-definition-language"><span class="header-section-number">7.1</span> DDL — Data Definition Language</h2>
 <p>Notação de especificação para definir o schema do banco de dados. Exemplo:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor (</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    salario     <span class="dt">NUMERIC</span>(<span class="dv">8</span>,<span class="dv">2</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    nome           <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    escola         <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ch_semanal     <span class="dt">INTEGER</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    salario        <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O compilador DDL gera um conjunto de <em>templates</em> de tabelas armazenados em um <strong>dicionário de dados</strong> (<em>data dictionary</em>). O dicionário de dados contém <strong>metadados</strong> (dados sobre dados):</p>
 <ul>
 <li>Schema do banco de dados</li>
 <li>Restrições de integridade
 <ul>
-<li>Chave primária (<code>id</code> identifica unicamente cada professor)</li>
+<li>Chave primária (<code>matricula_prof</code> identifica unicamente cada professor)</li>
 </ul></li>
 <li>Autorizações — quem pode acessar o quê</li>
 </ul>
@@ -514,10 +515,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sql" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="sql"><span class="header-section-number">7.3</span> SQL</h2>
-<p>A linguagem de consulta SQL é <strong>não-procedural</strong>. Uma consulta recebe como entrada uma ou mais tabelas e sempre retorna uma única tabela. Exemplo para encontrar todos os professores do COETI:</p>
+<p>A linguagem de consulta SQL é <strong>não-procedural</strong>. Uma consulta recebe como entrada uma ou mais tabelas e sempre retorna uma única tabela. Exemplo para encontrar todos os professores da ESETI:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

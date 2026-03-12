@@ -473,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>As principais aplicações de banco de dados nos diferentes setores</li>
 <li>As limitações de sistemas baseados em arquivos e como SGBDs as resolvem</li>
 <li>Os principais modelos de dados, com ênfase no <strong>modelo relacional</strong> (Ted Codd, 1970)</li>
-<li>As tabelas do banco universitário: <code>professor</code>, <code>aluno</code>, <code>disciplina</code>, <code>departamento</code></li>
+<li>As tabelas do banco universitário: <code>centro</code>, <code>escola</code>, <code>curso</code>, <code>professor</code>, <code>aluno</code>, <code>disciplina</code>, <code>ministra</code>, <code>matricula_disciplina</code></li>
 <li>A arquitetura em três níveis de abstração: físico, lógico e visão</li>
 <li>Schemas e instâncias; independência de dados física</li>
 <li>A <strong>DDL</strong> para definição do schema e a <strong>DML</strong> (SQL) para consulta e atualização</li>
@@ -491,9 +491,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Compare DML <strong>procedural</strong> e <strong>declarativa</strong>. Qual a vantagem da abordagem declarativa?</p></li>
 <li><p>Em uma arquitetura de <strong>três camadas</strong>, qual é a função de cada camada? Por que essa separação é vantajosa para o desenvolvimento de software?</p></li>
 <li><p>Considere a seguinte consulta SQL:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> salario <span class="op">&gt;</span> <span class="dv">70000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Quais etapas o processador de consultas executa para responder essa consulta?</p></li>
 <li><p>Qual foi a contribuição de Ted Codd para a história dos bancos de dados? Em que década ela ocorreu?</p></li>
 <li><p>Quais são os quatro componentes do gerenciador de armazenamento? Descreva a função de cada um.</p></li>

@@ -521,156 +521,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="agregação-sem-group-by" class="level2" data-number="36.2">
 <h2 data-number="36.2" class="anchored" data-anchor-id="agregação-sem-group-by"><span class="header-section-number">36.2</span> Agregação Sem GROUP BY</h2>
 <p>Quando nenhuma cláusula <code>GROUP BY</code> é especificada, a função agrega <strong>todas as linhas</strong> da tabela (ou do subconjunto filtrado pelo <code>WHERE</code>).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio de todos os professores da UnDF</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media_salarial</span>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio de todos os professores</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
 <thead>
 <tr class="header">
-<th>media_salarial</th>
+<th style="text-align: right;">media_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>74833.33</td>
+<td style="text-align: right;">5114.29</td>
 </tr>
 </tbody>
 </table>
-<p>O cálculo: (65000 + 90000 + 40000 + 95000 + 60000 + 87000 + 75000 + 62000 + 80000 + 72000 + 92000 + 80000) / 12 = 898000 / 12 ≈ 74833.33</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos professores há na universidade?</span></span>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos professores há no banco?</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_professores</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
 <thead>
 <tr class="header">
-<th>total_professores</th>
+<th style="text-align: right;">total_professores</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>12</td>
+<td style="text-align: right;">7</td>
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos centros distintos têm professores?</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> nome_centro) <span class="kw">AS</span> centros_com_professor</span>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantas escolas distintas têm professores?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> escola) <span class="kw">AS</span> escolas_com_professor</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
 <thead>
 <tr class="header">
-<th>centros_com_professor</th>
+<th style="text-align: right;">escolas_com_professor</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>4</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maior e menor salário</span></span>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maior e menor salário entre os professores</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">MAX</span>(salario) <span class="kw">AS</span> maior_salario,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MIN</span>(salario) <span class="kw">AS</span> menor_salario</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
 <thead>
 <tr class="header">
-<th>maior_salario</th>
-<th>menor_salario</th>
+<th style="text-align: right;">maior_salario</th>
+<th style="text-align: right;">menor_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>95000.00</td>
-<td>40000.00</td>
+<td style="text-align: right;">6700</td>
+<td style="text-align: right;">3100</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </section>
 <section id="group-by-agrupando-por-categoria" class="level2" data-number="36.3">
 <h2 data-number="36.3" class="anchored" data-anchor-id="group-by-agrupando-por-categoria"><span class="header-section-number">36.3</span> GROUP BY: Agrupando por Categoria</h2>
 <p>A cláusula <code>GROUP BY</code> divide as linhas em grupos e aplica a função de agregação a cada grupo separadamente.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio por centro acadêmico</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio, total e número de professores por escola</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(salario)           <span class="kw">AS</span> total_salarios,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)               <span class="kw">AS</span> n_professores</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>media</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">media_salario</th>
+<th style="text-align: right;">total_salarios</th>
+<th style="text-align: right;">n_professores</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCBS</td>
-<td>84666.67</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6550.00</td>
+<td style="text-align: right;">13100</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>78000.00</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">4800.00</td>
+<td style="text-align: right;">9600</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>73000.00</td>
-</tr>
-<tr class="even">
-<td>COEMAG</td>
-<td>40000.00</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">4366.67</td>
+<td style="text-align: right;">13100</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
-<p>Cálculo por centro:</p>
-<ul>
-<li><strong>COCBS</strong>: (95000 + 87000 + 72000) / 3 = 254000 / 3 ≈ 84666.67</li>
-<li><strong>COETI</strong>: (65000 + 75000 + 92000 + 80000) / 4 = 312000 / 4 = 78000.00</li>
-<li><strong>COCHCMA</strong>: (90000 + 60000 + 62000 + 80000) / 4 = 292000 / 4 = 73000.00</li>
-<li><strong>COEMAG</strong>: 40000 / 1 = 40000.00</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Número de professores e maior salário por centro</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)     <span class="kw">AS</span> qtd_professores,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(salario) <span class="kw">AS</span> maior_salario</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> qtd_professores <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Número de disciplinas por curso</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_disciplinas</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n_disciplinas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>qtd_professores</th>
-<th>maior_salario</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">n_disciplinas</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>4</td>
-<td>90000.00</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">8</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>4</td>
-<td>92000.00</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">8</td>
 </tr>
 <tr class="odd">
-<td>COCBS</td>
-<td>3</td>
-<td>95000.00</td>
-</tr>
-<tr class="even">
-<td>COEMAG</td>
-<td>1</td>
-<td>40000.00</td>
+<td style="text-align: left;">PED</td>
+<td style="text-align: right;">8</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <section id="erro-comum-atributo-fora-do-group-by" class="level3" data-number="36.3.1">
 <h3 data-number="36.3.1" class="anchored" data-anchor-id="erro-comum-atributo-fora-do-group-by"><span class="header-section-number">36.3.1</span> Erro Comum: Atributo Fora do GROUP BY</h3>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -685,12 +697,12 @@ Aviso
 <div class="callout-body-container callout-body">
 <p>Todo atributo listado no <code>SELECT</code> que <strong>não</strong> é uma função de agregação <strong>deve</strong> aparecer no <code>GROUP BY</code>. O exemplo abaixo causaria erro:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- INCORRETO: 'nome' não está no GROUP BY</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, nome, <span class="fu">AVG</span>(salario)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, nome, <span class="fu">AVG</span>(salario)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola;</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: column "professor.nome" must appear in the GROUP BY clause</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">--        or be used in an aggregate function</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A razão: para cada grupo (um centro), há vários nomes de professores. O banco não sabe qual nome retornar.</p>
+<p>A razão: para cada grupo (uma escola), há vários nomes de professores. O banco não sabe qual nome retornar.</p>
 </div>
 </div>
 </section>
@@ -710,65 +722,74 @@ Aviso
 <li><code>ORDER BY</code> — ordena o resultado</li>
 </ol>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros com salário médio acima de R$ 70.000</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escolas com salário médio acima de 4000</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">70000</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado</strong> (COEMAG com média de R$ 40.000 é excluído):</p>
-<table class="caption-top table">
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">4000</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>media</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">media_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCBS</td>
-<td>84666.67</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6550.00</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>78000.00</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">4800.00</td>
 </tr>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>73000.00</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">4366.67</td>
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Centros com pelo menos 3 professores, ordenados pelo número de professores</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> qtd</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">3</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> qtd <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+</div>
+</div>
+<p>ESETI tem média de R$ 4.366,67 e é excluída pelo <code>HAVING</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Cursos com pelo menos 2 disciplinas de semestre 4 ou mais avançado</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> disciplinas_avancadas</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  semestre <span class="op">&gt;=</span> <span class="dv">4</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> disciplinas_avancadas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>qtd</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">disciplinas_avancadas</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COCHCMA</td>
-<td>4</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
-<td>COETI</td>
-<td>4</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="odd">
-<td>COCBS</td>
-<td>3</td>
+<td style="text-align: left;">PED</td>
+<td style="text-align: right;">6</td>
 </tr>
 </tbody>
 </table>
-<p>COEMAG (1 professor) é excluído pelo <code>HAVING COUNT(*) &gt;= 3</code>.</p>
+</div>
+</div>
 </section>
 <section id="where-vs.-having" class="level2" data-number="36.5">
 <h2 data-number="36.5" class="anchored" data-anchor-id="where-vs.-having"><span class="header-section-number">36.5</span> WHERE vs.&nbsp;HAVING</h2>
@@ -798,30 +819,40 @@ Aviso
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- WHERE filtra antes: considera apenas COETI e COCBS, depois agrupa</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_centro, <span class="fu">AVG</span>(salario) <span class="kw">AS</span> media</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="kw">IN</span> (<span class="st">'COETI'</span>, <span class="st">'COCBS'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> nome_centro;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado:</strong></p>
-<table class="caption-top table">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- WHERE filtra antes: considera apenas professores de 40h,</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- depois agrupa por escola e filtra com média &gt; 6000</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  ch_semanal <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">6000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>nome_centro</th>
-<th>media</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">media_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>COETI</td>
-<td>78000.00</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">6400</td>
 </tr>
 <tr class="even">
-<td>COCBS</td>
-<td>84666.67</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">6700</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6550</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 
 
 </section>

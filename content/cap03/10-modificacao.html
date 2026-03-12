@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#update-simples" id="toc-update-simples" class="nav-link" data-scroll-target="#update-simples"><span class="header-section-number">38.3.1</span> UPDATE simples</a></li>
   <li><a href="#update-condicional" id="toc-update-condicional" class="nav-link" data-scroll-target="#update-condicional"><span class="header-section-number">38.3.2</span> UPDATE condicional</a></li>
-  <li><a href="#update-com-case-reajuste-escalonado" id="toc-update-com-case-reajuste-escalonado" class="nav-link" data-scroll-target="#update-com-case-reajuste-escalonado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste escalonado</a></li>
+  <li><a href="#update-com-case-reajuste-diferenciado" id="toc-update-com-case-reajuste-diferenciado" class="nav-link" data-scroll-target="#update-com-case-reajuste-diferenciado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste diferenciado</a></li>
   <li><a href="#update-com-subconsulta" id="toc-update-com-subconsulta" class="nav-link" data-scroll-target="#update-com-subconsulta"><span class="header-section-number">38.3.4</span> UPDATE com subconsulta</a></li>
   </ul></li>
   <li><a href="#resumo-dos-comandos-de-modificação" id="toc-resumo-dos-comandos-de-modificação" class="nav-link" data-scroll-target="#resumo-dos-comandos-de-modificação"><span class="header-section-number">38.4</span> Resumo dos Comandos de Modificação</a></li>
@@ -487,109 +487,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="38.1.1" class="anchored" data-anchor-id="inserção-de-uma-única-linha"><span class="header-section-number">38.1.1</span> Inserção de uma única linha</h3>
 <p>A forma mais simples insere uma linha com valores explícitos:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Inserir um novo centro na UnDF</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (nome_centro, predio, orcamento)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'COMAT'</span>, <span class="st">'Plano Piloto'</span>, <span class="fl">120000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Quando os valores são fornecidos na mesma ordem das colunas da tabela, a lista de colunas pode ser omitida — mas é considerada boa prática sempre especificá-la:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Forma equivalente (sem lista de colunas — menos recomendada)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'COMAT'</span>, <span class="st">'Plano Piloto'</span>, <span class="fl">120000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ao inserir um professor vinculado ao novo centro:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (<span class="kw">id</span>, nome, nome_centro, salario)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'11111'</span>, <span class="st">'Vanessa'</span>, <span class="st">'COMAT'</span>, <span class="fl">55000.00</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (centro, nome_centro)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'COLAB'</span>, <span class="st">'Centro de Laboratórios Avançados'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ao inserir uma escola vinculada ao novo centro:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> escola (escola, nome_escola, centro)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="st">'ELAB'</span>, <span class="st">'Escola de Laboratórios'</span>, <span class="st">'COLAB'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="insert-com-select" class="level3" data-number="38.1.2">
 <h3 data-number="38.1.2" class="anchored" data-anchor-id="insert-com-select"><span class="header-section-number">38.1.2</span> INSERT com SELECT</h3>
-<p>É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela <code>professor_historico</code> com a mesma estrutura de <code>professor</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Criar tabela histórica (estrutura idêntica a professor)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor_historico (</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          <span class="dt">CHAR</span>(<span class="dv">5</span>)       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    salario     <span class="dt">NUMERIC</span>(<span class="dv">8</span>, <span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Copiar para o histórico os professores com salário acima de R$ 90.000</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor_historico (<span class="kw">id</span>, nome, nome_centro, salario)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span>, nome, nome_centro, salario</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="dv">90000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Linhas inseridas</strong> (professores com salário &gt; 90.000):</p>
-<table class="caption-top table">
+<p>É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela <code>disciplina_historico</code> com a mesma estrutura de <code>disciplina</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Criar tabela histórica (estrutura idêntica a disciplina)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> disciplina_historico (</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    codigo          <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    nome_disciplina <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    sigla_curso     <span class="dt">VARCHAR</span>(<span class="dv">5</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    semestre        <span class="dt">INTEGER</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    carga_horaria   <span class="dt">INTEGER</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Copiar para o histórico as disciplinas com carga horária acima de 150 h</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> disciplina_historico</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;</span> <span class="dv">150</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando o que seria inserido:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas que seriam copiadas para o histórico (carga &gt; 150 h)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="op">&gt;</span> <span class="dv">150</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 55%">
+<col style="width: 15%">
+<col style="width: 18%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>id</th>
-<th>nome</th>
-<th>nome_centro</th>
-<th>salario</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>22222</td>
-<td>Marcos</td>
-<td>COCBS</td>
-<td>95000.00</td>
+<td style="text-align: left;">ENS-401</td>
+<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td>83821</td>
-<td>Pedro</td>
-<td>COETI</td>
-<td>92000.00</td>
+<td style="text-align: left;">ENS-802</td>
+<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">160</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </section>
 </section>
 <section id="delete-excluindo-dados" class="level2" data-number="38.2">
 <h2 data-number="38.2" class="anchored" data-anchor-id="delete-excluindo-dados"><span class="header-section-number">38.2</span> DELETE: Excluindo Dados</h2>
 <section id="delete-simples" class="level3" data-number="38.2.1">
 <h3 data-number="38.2.1" class="anchored" data-anchor-id="delete-simples"><span class="header-section-number">38.2.1</span> DELETE simples</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover o professor João (único professor do COEMAG)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> professor</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COEMAG'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Essa operação remove a linha de João (id 15151) permanentemente.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover disciplinas de semestres ímpares (não fazem parte da nossa amostra)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> disciplina</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  semestre % <span class="dv">2</span> <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="delete-com-subconsulta" class="level3" data-number="38.2.2">
 <h3 data-number="38.2.2" class="anchored" data-anchor-id="delete-com-subconsulta"><span class="header-section-number">38.2.2</span> DELETE com subconsulta</h3>
 <p>Para condições mais complexas, o <code>WHERE</code> pode conter subconsultas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover professores com salário abaixo da média geral</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Média atual: (65000+90000+40000+95000+60000+87000+75000+62000+80000+72000+92000+80000)/12 ≈ 74833</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> professor</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&lt;</span> (</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="fu">AVG</span>(salario)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Professores removidos</strong> (salário &lt; 74833.33):</p>
-<table class="caption-top table">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover matrículas de alunos com nota abaixo de 5.0 em todas as disciplinas</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> matricula_disciplina</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  cod_matricula <span class="kw">IN</span> (</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> cod_matricula</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> cod_matricula</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">HAVING</span> <span class="fu">AVG</span>(nota) <span class="op">&lt;</span> <span class="fl">5.0</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando quais alunos seriam afetados:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos com média abaixo de 5.0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_matricula, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(nota), <span class="dv">2</span>) <span class="kw">AS</span> media</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> cod_matricula</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(nota) <span class="op">&lt;</span> <span class="fl">5.0</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>salario</th>
+<th style="text-align: left;">cod_matricula</th>
+<th style="text-align: right;">media</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>65000.00</td>
+<td style="text-align: left;">2024002002</td>
+<td style="text-align: right;">4.9</td>
 </tr>
 <tr class="even">
-<td>João</td>
-<td>40000.00</td>
-</tr>
-<tr class="odd">
-<td>Fernanda</td>
-<td>60000.00</td>
-</tr>
-<tr class="even">
-<td>Juliana</td>
-<td>62000.00</td>
-</tr>
-<tr class="odd">
-<td>Beatriz</td>
-<td>72000.00</td>
+<td style="text-align: left;">2025002002</td>
+<td style="text-align: right;">4.0</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -600,9 +611,7 @@ Aviso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Atenção ao comportamento da subconsulta em DELETE:</strong></p>
-<p>Alguns SGBDs (como MySQL) <strong>não permitem</strong> que a subconsulta referencie a mesma tabela que está sendo modificada. Em PostgreSQL, isso é permitido, pois o banco computa a subconsulta com o estado da tabela <strong>antes</strong> de iniciar as exclusões.</p>
-<p>Para máxima portabilidade, use uma CTE ou subconsulta no <code>FROM</code> quando necessário.</p>
+<p><strong>DELETE sem WHERE remove todas as linhas da tabela.</strong> Sempre verifique com um <code>SELECT</code> primeiro quais linhas serão afetadas antes de executar o <code>DELETE</code>.</p>
 </div>
 </div>
 </section>
@@ -611,160 +620,228 @@ Aviso
 <h2 data-number="38.3" class="anchored" data-anchor-id="update-atualizando-dados"><span class="header-section-number">38.3</span> UPDATE: Atualizando Dados</h2>
 <section id="update-simples" class="level3" data-number="38.3.1">
 <h3 data-number="38.3.1" class="anchored" data-anchor-id="update-simples"><span class="header-section-number">38.3.1</span> UPDATE simples</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aplicar reajuste de 5% para todos os professores</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.05</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Renomear um curso (corrigir nome)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> curso</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    nome_curso <span class="op">=</span> <span class="st">'Engenharia de Software (Bacharelado)'</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  sigla_curso <span class="op">=</span> <span class="st">'ENS'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="update-condicional" class="level3" data-number="38.3.2">
 <h3 data-number="38.3.2" class="anchored" data-anchor-id="update-condicional"><span class="header-section-number">38.3.2</span> UPDATE condicional</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aumentar 10% para professores do COETI</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.10</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Antes e depois (professores do COETI):</strong></p>
-<table class="caption-top table">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aumentar carga horária das disciplinas de semestre 8 em 10%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> disciplina</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    carga_horaria <span class="op">=</span> <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.10</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  semestre <span class="op">=</span> <span class="dv">8</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando o que seria alterado:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas de semestre 8 e como ficariam com +10% de carga horária</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       carga_horaria                          <span class="kw">AS</span> carga_atual,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.10</span>)            <span class="kw">AS</span> carga_nova</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  semestre <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 58%">
+<col style="width: 16%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>salario antes</th>
-<th>salario depois</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">carga_atual</th>
+<th style="text-align: right;">carga_nova</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>65000.00</td>
-<td>71500.00</td>
+<td style="text-align: left;">ECO-801</td>
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110</td>
 </tr>
 <tr class="even">
-<td>Lucas</td>
-<td>75000.00</td>
-<td>82500.00</td>
+<td style="text-align: left;">ECO-802</td>
+<td style="text-align: left;">Desenvolvimento Econômico</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">99</td>
 </tr>
 <tr class="odd">
-<td>Pedro</td>
-<td>92000.00</td>
-<td>101200.00</td>
+<td style="text-align: left;">ENS-801</td>
+<td style="text-align: left;">Bases da Engenharia de Software 8</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110</td>
 </tr>
 <tr class="even">
-<td>Mariana</td>
-<td>80000.00</td>
-<td>88000.00</td>
+<td style="text-align: left;">ENS-802</td>
+<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">176</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PED-803</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">66</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-804</td>
+<td style="text-align: left;">Estatística Aplicada</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">55</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </section>
-<section id="update-com-case-reajuste-escalonado" class="level3" data-number="38.3.3">
-<h3 data-number="38.3.3" class="anchored" data-anchor-id="update-com-case-reajuste-escalonado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste escalonado</h3>
+<section id="update-com-case-reajuste-diferenciado" class="level3" data-number="38.3.3">
+<h3 data-number="38.3.3" class="anchored" data-anchor-id="update-com-case-reajuste-diferenciado"><span class="header-section-number">38.3.3</span> UPDATE com CASE: reajuste diferenciado</h3>
 <p>Quando diferentes grupos de linhas precisam de atualizações diferentes, o <code>CASE</code> permite aplicar regras distintas em um único comando:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Reajuste diferenciado por faixa salarial:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">--   Salário &lt;= R$ 70.000 → aumento de 10%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   Salário &gt;  R$ 70.000 → aumento de 5%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    salario <span class="op">=</span> <span class="cf">CASE</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">WHEN</span> salario <span class="op">&lt;=</span> <span class="dv">70000</span> <span class="cf">THEN</span> salario <span class="op">*</span> <span class="fl">1.10</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">ELSE</span>                      salario <span class="op">*</span> <span class="fl">1.05</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Resultado para todos os professores:</strong></p>
-<table class="caption-top table">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ajuste de carga horária por faixa:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">--   Disciplinas com carga &lt;= 60 h → aumentar 20%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">--   Disciplinas com carga &gt; 60 h  → aumentar 10%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> disciplina</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    carga_horaria <span class="op">=</span> <span class="cf">CASE</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">WHEN</span> carga_horaria <span class="op">&lt;=</span> <span class="dv">60</span> <span class="cf">THEN</span> <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.20</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">ELSE</span>                          <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.10</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">END</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando o efeito por faixa:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular o ajuste sem alterar o banco</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, sigla_curso, carga_horaria <span class="kw">AS</span> atual,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="cf">CASE</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> carga_horaria <span class="op">&lt;=</span> <span class="dv">60</span> <span class="cf">THEN</span> <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.20</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>           <span class="cf">ELSE</span>                          <span class="fu">ROUND</span>(carga_horaria <span class="op">*</span> <span class="fl">1.10</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="cf">END</span> <span class="kw">AS</span> proposto</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso, semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th>nome</th>
-<th>nome_centro</th>
-<th>salario antes</th>
-<th>salario depois</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">atual</th>
+<th style="text-align: right;">proposto</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000.00</td>
-<td>71500.00</td>
+<td style="text-align: left;">ECO-201</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">83</td>
 </tr>
 <tr class="even">
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000.00</td>
-<td>94500.00</td>
+<td style="text-align: left;">ECO-202</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">72</td>
 </tr>
 <tr class="odd">
-<td>João</td>
-<td>COEMAG</td>
-<td>40000.00</td>
-<td>44000.00</td>
+<td style="text-align: left;">ECO-401</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">83</td>
 </tr>
 <tr class="even">
-<td>Marcos</td>
-<td>COCBS</td>
-<td>95000.00</td>
-<td>99750.00</td>
+<td style="text-align: left;">ECO-402</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">105</td>
 </tr>
 <tr class="odd">
-<td>Fernanda</td>
-<td>COCHCMA</td>
-<td>60000.00</td>
-<td>66000.00</td>
+<td style="text-align: left;">ECO-601</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">83</td>
 </tr>
 <tr class="even">
-<td>Roberto</td>
-<td>COCBS</td>
-<td>87000.00</td>
-<td>91350.00</td>
+<td style="text-align: left;">ECO-602</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">83</td>
 </tr>
 <tr class="odd">
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000.00</td>
-<td>78750.00</td>
+<td style="text-align: left;">ECO-801</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110</td>
 </tr>
 <tr class="even">
-<td>Juliana</td>
-<td>COCHCMA</td>
-<td>62000.00</td>
-<td>68200.00</td>
+<td style="text-align: left;">ECO-802</td>
+<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">99</td>
 </tr>
 <tr class="odd">
-<td>Rafael</td>
-<td>COCHCMA</td>
-<td>80000.00</td>
-<td>84000.00</td>
+<td style="text-align: left;">ENS-201</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">165</td>
 </tr>
 <tr class="even">
-<td>Beatriz</td>
-<td>COCBS</td>
-<td>72000.00</td>
-<td>75600.00</td>
-</tr>
-<tr class="odd">
-<td>Pedro</td>
-<td>COETI</td>
-<td>92000.00</td>
-<td>96600.00</td>
-</tr>
-<tr class="even">
-<td>Mariana</td>
-<td>COETI</td>
-<td>80000.00</td>
-<td>84000.00</td>
+<td style="text-align: left;">ENS-202</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">132</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <div class="conceito">
 <p><strong>Vantagem do CASE em UPDATE:</strong></p>
-<p>O uso de um único <code>UPDATE</code> com <code>CASE</code> garante que o reajuste seja calculado com base nos <strong>valores originais</strong> — não há risco de um professor receber o primeiro reajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois <code>UPDATE</code>s separados.</p>
+<p>O uso de um único <code>UPDATE</code> com <code>CASE</code> garante que o ajuste seja calculado com base nos <strong>valores originais</strong> — não há risco de uma linha receber o primeiro ajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois <code>UPDATE</code>s separados.</p>
 </div>
 </section>
 <section id="update-com-subconsulta" class="level3" data-number="38.3.4">
 <h3 data-number="38.3.4" class="anchored" data-anchor-id="update-com-subconsulta"><span class="header-section-number">38.3.4</span> UPDATE com subconsulta</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Atualizar o orçamento do COETI para ser igual ao dobro da média dos outros centros</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> centro</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    orcamento <span class="op">=</span> (</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dv">2</span> <span class="op">*</span> <span class="fu">AVG</span>(orcamento)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  nome_centro <span class="op">&lt;&gt;</span> <span class="st">'COETI'</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_centro <span class="op">=</span> <span class="st">'COETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Marcar como aprovadas todas as matrículas com nota &gt;= 6.0</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> matricula_disciplina</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    aprovado <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nota <span class="op">&gt;=</span> <span class="fl">6.0</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  aprovado <span class="kw">IS</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verificando o estado atual:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Distribuição de aprovados e reprovados</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> aprovado,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">AS</span> n_registros,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(nota), <span class="dv">2</span>) <span class="kw">AS</span> nota_media</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> aprovado</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> aprovado;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">aprovado</th>
+<th style="text-align: right;">n_registros</th>
+<th style="text-align: right;">nota_media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">7.47</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 </section>
 <section id="resumo-dos-comandos-de-modificação" class="level2" data-number="38.4">
@@ -786,7 +863,7 @@ Aviso
 <tr class="odd">
 <td><code>INSERT INTO ... VALUES</code></td>
 <td>Insere linhas com valores explícitos</td>
-<td>Respeit restrições (PK, FK, NOT NULL, CHECK)</td>
+<td>Respeitar restrições (PK, FK, NOT NULL, CHECK)</td>
 </tr>
 <tr class="even">
 <td><code>INSERT INTO ... SELECT</code></td>

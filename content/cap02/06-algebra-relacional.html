@@ -523,9 +523,10 @@ window.Quarto = {
 </section>
 <section id="expressões-de-álgebra-relacional" class="level2" data-number="21.2">
 <h2 data-number="21.2" class="anchored" data-anchor-id="expressões-de-álgebra-relacional"><span class="header-section-number">21.2</span> Expressões de Álgebra Relacional</h2>
-<p>A composição de operações permite construir <strong>expressões de álgebra relacional</strong> complexas. Por exemplo, para encontrar os nomes dos professores do COETI com salário superior a 80 000:</p>
-<p><span class="math display">\[\Pi_{nome}\!\left(\sigma_{nome\_centro = \text{"COETI"} \,\wedge\, salario &gt; 80000}(professor)\right)\]</span></p>
-<p>Nessa expressão: 1. <span class="math inline">\(\sigma\)</span> filtra as tuplas relevantes 2. <span class="math inline">\(\Pi\)</span> projeta apenas o atributo <code>nome</code> 3. O resultado é uma nova relação contendo somente os nomes desejados</p>
+<p>A composição de operações permite construir <strong>expressões de álgebra relacional</strong> complexas. Por exemplo, para encontrar os nomes dos professores da ESETI e os títulos das disciplinas de ENS com carga horária acima de 120 h:</p>
+<p><span class="math display">\[\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)\]</span></p>
+<p><span class="math display">\[\Pi_{codigo,\ nome\_disciplina}\!\left(\sigma_{sigla\_curso = \text{"ENS"} \,\wedge\, carga\_horaria &gt; 120}(disciplina)\right)\]</span></p>
+<p>Nessas expressões: 1. <span class="math inline">\(\sigma\)</span> filtra as tuplas relevantes 2. <span class="math inline">\(\Pi\)</span> projeta apenas os atributos desejados 3. O resultado é uma nova relação — que pode ser usada como entrada de novas operações</p>
 <p>Nas seções seguintes, cada operador é apresentado em detalhe com exemplos usando as tabelas da UnDF.</p>
 
 

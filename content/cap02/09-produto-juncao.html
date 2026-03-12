@@ -433,7 +433,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#junção-bowtie" id="toc-junção-bowtie" class="nav-link" data-scroll-target="#junção-bowtie"><span class="header-section-number">24.2</span> Junção (<span class="math inline">\(\bowtie\)</span>)</a>
   <ul>
-  <li><a href="#exemplo-professores-com-suas-turmas" id="toc-exemplo-professores-com-suas-turmas" class="nav-link" data-scroll-target="#exemplo-professores-com-suas-turmas"><span class="header-section-number">24.2.1</span> Exemplo: Professores com Suas Turmas</a></li>
+  <li><a href="#exemplo-professores-com-suas-disciplinas" id="toc-exemplo-professores-com-suas-disciplinas" class="nav-link" data-scroll-target="#exemplo-professores-com-suas-disciplinas"><span class="header-section-number">24.2.1</span> Exemplo: Professores com Suas Disciplinas</a></li>
   <li><a href="#vantagem-da-junção" id="toc-vantagem-da-junção" class="nav-link" data-scroll-target="#vantagem-da-junção"><span class="header-section-number">24.2.2</span> Vantagem da Junção</a></li>
   </ul></li>
   </ul>
@@ -476,7 +476,7 @@ window.Quarto = {
 </div>
 <section id="qualificação-de-atributos" class="level3" data-number="24.1.1">
 <h3 data-number="24.1.1" class="anchored" data-anchor-id="qualificação-de-atributos"><span class="header-section-number">24.1.1</span> Qualificação de Atributos</h3>
-<p>Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular <span class="math inline">\(professor \times ministra\)</span>, o atributo <code>id_professor</code> aparece em <code>ministra</code> e <code>id</code> em <code>professor</code>; ambos referem-se ao mesmo conceito e a junção os conectará pelo predicado <code>professor.id = ministra.id_professor</code>.</p>
+<p>Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular <span class="math inline">\(professor \times ministra\)</span>, o atributo <code>escola</code> aparece em <code>professor</code> e o atributo <code>matricula_prof</code> aparece em ambas; a junção os conectará pelo predicado <code>professor.matricula_prof = ministra.matricula_prof</code>.</p>
 </section>
 <section id="tabelas-utilizadas-nos-exemplos" class="level3" data-number="24.1.2">
 <h3 data-number="24.1.2" class="anchored" data-anchor-id="tabelas-utilizadas-nos-exemplos"><span class="header-section-number">24.1.2</span> Tabelas utilizadas nos exemplos</h3>
@@ -484,72 +484,61 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id</th>
+<th>matricula_prof</th>
 <th>nome</th>
-<th>nome_centro</th>
-<th>salario</th>
+<th>escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
 </tr>
 <tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
 </tr>
 <tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
 </tr>
 </tbody>
 </table>
-<p>Tabela <code>ministra</code> (4 tuplas):</p>
+<p>Tabela <code>ministra</code> (3 tuplas — 2023, semestre 2, turma A):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>id_professor</th>
-<th>id_disciplina</th>
-<th>id_turma</th>
-<th>semestre</th>
-<th>ano</th>
+<th>cod_disciplina</th>
+<th style="text-align: right;">ano</th>
+<th style="text-align: right;">semestre</th>
+<th>turma</th>
+<th>matricula_prof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>BES 301</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>ENS-201</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>PROF20230031</td>
 </tr>
 <tr class="even">
-<td>10101</td>
-<td>BES 601</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PED-203</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>PROF20230005</td>
 </tr>
 <tr class="odd">
-<td>12121</td>
-<td>MTI 101</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
-</tr>
-<tr class="even">
-<td>45565</td>
-<td>BES 101</td>
-<td>1</td>
-<td>Segundo</td>
-<td>2025</td>
+<td>ECO-201</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>PROF20230042</td>
 </tr>
 </tbody>
 </table>
@@ -557,169 +546,103 @@ window.Quarto = {
 <section id="exemplo-professor-times-ministra" class="level3" data-number="24.1.3">
 <h3 data-number="24.1.3" class="anchored" data-anchor-id="exemplo-professor-times-ministra"><span class="header-section-number">24.1.3</span> Exemplo: <span class="math inline">\(professor \times ministra\)</span></h3>
 <p><span class="math display">\[professor \times ministra\]</span></p>
-<p>O produto cartesiano gera <span class="math inline">\(3 \times 4 = 12\)</span> tuplas — todas as combinações possíveis entre as 3 tuplas de <code>professor</code> e as 4 de <code>ministra</code>, independentemente de qualquer correspondência semântica:</p>
+<p>O produto cartesiano gera <span class="math inline">\(3 \times 3 = 9\)</span> tuplas — todas as combinações possíveis entre as 3 tuplas de <code>professor</code> e as 3 de <code>ministra</code>, independentemente de qualquer correspondência semântica:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>professor.id</th>
+<th>professor.matricula_prof</th>
 <th>professor.nome</th>
-<th>professor.nome_centro</th>
-<th>professor.salario</th>
-<th>ministra.id_professor</th>
-<th>ministra.id_disciplina</th>
-<th>ministra.id_turma</th>
-<th>ministra.semestre</th>
-<th>ministra.ano</th>
+<th>professor.escola</th>
+<th>ministra.cod_disciplina</th>
+<th style="text-align: right;">ministra.ano</th>
+<th>ministra.matricula_prof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>10101</td>
-<td>BES 301</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td>ENS-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230031</td>
 </tr>
 <tr class="even">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>10101</td>
-<td>BES 601</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td>PED-203</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230005</td>
 </tr>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>12121</td>
-<td>MTI 101</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td>ECO-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230042</td>
 </tr>
 <tr class="even">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>45565</td>
-<td>BES 101</td>
-<td>1</td>
-<td>Segundo</td>
-<td>2025</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
+<td>ENS-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230031</td>
 </tr>
 <tr class="odd">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-<td>10101</td>
-<td>BES 301</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
+<td>PED-203</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230005</td>
 </tr>
 <tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-<td>10101</td>
-<td>BES 601</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
+<td>ECO-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230042</td>
 </tr>
 <tr class="odd">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-<td>12121</td>
-<td>MTI 101</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td>ENS-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230031</td>
 </tr>
 <tr class="even">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-<td>45565</td>
-<td>BES 101</td>
-<td>1</td>
-<td>Segundo</td>
-<td>2025</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td>PED-203</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230005</td>
 </tr>
 <tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-<td>10101</td>
-<td>BES 301</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
-</tr>
-<tr class="even">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-<td>10101</td>
-<td>BES 601</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
-</tr>
-<tr class="odd">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-<td>12121</td>
-<td>MTI 101</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
-</tr>
-<tr class="even">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-<td>45565</td>
-<td>BES 101</td>
-<td>1</td>
-<td>Segundo</td>
-<td>2025</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td>ECO-201</td>
+<td style="text-align: right;">2023</td>
+<td>PROF20230042</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Das 12 tuplas, apenas 4 são semanticamente válidas (aquelas em que <code>professor.id = ministra.id_professor</code>). As demais 8 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.</p>
+<p>Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que <code>professor.matricula_prof = ministra.matricula_prof</code>). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.</p>
 </div>
 </section>
 </section>
@@ -730,81 +653,56 @@ window.Quarto = {
 <p><span class="math display">\[r \bowtie_\theta s = \sigma_\theta(r \times s)\]</span></p>
 <p>onde <span class="math inline">\(\theta\)</span> é o <strong>predicado de junção</strong>. A junção é equivalente a fazer o produto cartesiano e depois filtrar com <span class="math inline">\(\sigma_\theta\)</span>.</p>
 </div>
-<section id="exemplo-professores-com-suas-turmas" class="level3" data-number="24.2.1">
-<h3 data-number="24.2.1" class="anchored" data-anchor-id="exemplo-professores-com-suas-turmas"><span class="header-section-number">24.2.1</span> Exemplo: Professores com Suas Turmas</h3>
-<p>Para associar cada professor às turmas que ministra:</p>
-<p><span class="math display">\[professor \bowtie_{professor.id\ =\ ministra.id\_professor} ministra\]</span></p>
+<section id="exemplo-professores-com-suas-disciplinas" class="level3" data-number="24.2.1">
+<h3 data-number="24.2.1" class="anchored" data-anchor-id="exemplo-professores-com-suas-disciplinas"><span class="header-section-number">24.2.1</span> Exemplo: Professores com Suas Disciplinas</h3>
+<p>Para associar cada professor às disciplinas que ministra em 2023:</p>
+<p><span class="math display">\[professor \bowtie_{professor.matricula\_prof\ =\ ministra.matricula\_prof} ministra\]</span></p>
 <p>Esta expressão é equivalente a:</p>
-<p><span class="math display">\[\sigma_{professor.id\ =\ ministra.id\_professor}(professor \times ministra)\]</span></p>
-<p>Resultado (apenas as 4 tuplas válidas do produto cartesiano de 12):</p>
+<p><span class="math display">\[\sigma_{professor.matricula\_prof\ =\ ministra.matricula\_prof}(professor \times ministra)\]</span></p>
+<p>Resultado (apenas as 3 tuplas válidas do produto cartesiano de 9):</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>professor.id</th>
+<th>professor.matricula_prof</th>
 <th>professor.nome</th>
-<th>professor.nome_centro</th>
-<th>professor.salario</th>
-<th>ministra.id_disciplina</th>
-<th>ministra.id_turma</th>
-<th>ministra.semestre</th>
-<th>ministra.ano</th>
+<th>professor.escola</th>
+<th>ministra.cod_disciplina</th>
+<th style="text-align: right;">ministra.ano</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>BES 301</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td>ENS-201</td>
+<td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td>10101</td>
-<td>Carlos</td>
-<td>COETI</td>
-<td>65000</td>
-<td>BES 601</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
+<td>PROF20230005</td>
+<td>Eduarda Souza</td>
+<td>EEMA</td>
+<td>PED-203</td>
+<td style="text-align: right;">2023</td>
 </tr>
 <tr class="odd">
-<td>12121</td>
-<td>Ana</td>
-<td>COCHCMA</td>
-<td>90000</td>
-<td>MTI 101</td>
-<td>1</td>
-<td>Primeiro</td>
-<td>2026</td>
-</tr>
-<tr class="even">
-<td>45565</td>
-<td>Lucas</td>
-<td>COETI</td>
-<td>75000</td>
-<td>BES 101</td>
-<td>1</td>
-<td>Segundo</td>
-<td>2025</td>
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td>ECO-201</td>
+<td style="text-align: right;">2023</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>A junção filtrou as 8 combinações sem sentido e manteve exatamente as 4 tuplas onde o professor corresponde ao registro de ministração. O atributo <code>ministra.id_professor</code> é redundante no resultado e pode ser eliminado com uma projeção.</p>
+<p>A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo <code>ministra.matricula_prof</code> é redundante no resultado e pode ser eliminado com uma projeção.</p>
 </div>
 </section>
 <section id="vantagem-da-junção" class="level3" data-number="24.2.2">
