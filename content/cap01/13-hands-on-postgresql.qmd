@@ -161,11 +161,6 @@ CREATE TABLE IF NOT EXISTS professor (
     ch_semanal     INTEGER        NOT NULL,
     salario        NUMERIC(10,2)  NOT NULL
 );
-
--- Garante compatibilidade caso a tabela já existisse com outro schema
-ALTER TABLE professor
-    DROP COLUMN IF EXISTS ano_ingresso,
-    ADD  COLUMN IF NOT EXISTS salario NUMERIC(10,2);
 ```
 
 ### Tabela `aluno`
