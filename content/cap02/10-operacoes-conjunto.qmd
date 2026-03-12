@@ -17,36 +17,52 @@ Em outras palavras, as relações devem "ter a mesma forma" para que faz sentido
 
 Definimos duas relações auxiliares a partir da tabela `disciplina`:
 
-$$A \leftarrow \Pi_{id\_disciplina}(\sigma_{nome\_centro = \text{"COETI"}}(disciplina))$$
+$$A \leftarrow \Pi_{codigo}(\sigma_{sigla\_curso = \text{"PED"}}(disciplina))$$
 
-$$B \leftarrow \Pi_{id\_disciplina}(\sigma_{carga\_horaria \geq 60}(disciplina))$$
+$$B \leftarrow \Pi_{codigo}(\sigma_{carga\_horaria \geq 60}(disciplina))$$
 
-Relação $A$ — disciplinas do COETI:
+Relação $A$ — disciplinas de Pedagogia (8 disciplinas):
 
-| id_disciplina |
+| codigo  |
 |---|
-| BES 101 |
-| BES 301 |
-| BES 601 |
+| PED-203 |
+| PED-204 |
+| PED-403 |
+| PED-404 |
+| PED-603 |
+| PED-604 |
+| PED-803 |
+| PED-804 |
 
-Relação $B$ — disciplinas com carga horária $\geq 60$:
+Relação $B$ — disciplinas com carga horária $\geq 60$ h (22 disciplinas — todas exceto PED-604 = 40 h e PED-804 = 50 h):
 
-| id_disciplina |
-|---|
-| MTI 101 |
-| MTI 202 |
-| MTI 402 |
-| BES 301 |
-| BES 601 |
-| NUT 101 |
-| NUT 401 |
-| NUT 701 |
-| PED 101 |
-| PED 301 |
-| PED 601 |
+| codigo  | (carga_horaria) |
+|---|---:|
+| ECO-201 | 75 |
+| ECO-202 | 60 |
+| ECO-401 | 75 |
+| ECO-402 | 95 |
+| ECO-601 | 75 |
+| ECO-602 | 75 |
+| ECO-801 | 100 |
+| ECO-802 | 90 |
+| ENS-201 | 150 |
+| ENS-202 | 120 |
+| ENS-401 | 180 |
+| ENS-402 | 120 |
+| ENS-601 | 150 |
+| ENS-602 | 120 |
+| ENS-801 | 100 |
+| ENS-802 | 160 |
+| PED-203 | 60 |
+| PED-204 | 60 |
+| PED-403 | 80 |
+| PED-404 | 80 |
+| PED-603 | 80 |
+| PED-803 | 60 |
 
 ::: {.callout-note}
-Note que BES 101 (20 h) **não** aparece em $B$, e que BES 301 e BES 601 aparecem em **ambas** as relações.
+PED-604 (40 h) e PED-804 (50 h) **não** aparecem em $B$, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em **ambas** as relações.
 :::
 
 ## União ($\cup$)
@@ -59,25 +75,10 @@ Retorna todas as tuplas que pertencem a $r$, a $s$ ou a ambas. Duplicatas são e
 
 $$A \cup B$$
 
-Resultado — disciplinas do COETI **ou** com carga horária $\geq 60$:
-
-| id_disciplina |
-|---|
-| BES 101 |
-| BES 301 |
-| BES 601 |
-| MTI 101 |
-| MTI 202 |
-| MTI 402 |
-| NUT 101 |
-| NUT 401 |
-| NUT 701 |
-| PED 101 |
-| PED 301 |
-| PED 601 |
+Resultado — disciplinas de Pedagogia **ou** com carga horária $\geq 60$ h (24 disciplinas — o conjunto completo da amostra):
 
 ::: {.exemplo}
-BES 301 e BES 601 pertencem às duas relações, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente.
+PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem às duas relações, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via $A$.
 :::
 
 ## Interseção ($\cap$)
@@ -90,15 +91,19 @@ Retorna apenas as tuplas que pertencem **simultaneamente** a $r$ e a $s$.
 
 $$A \cap B$$
 
-Resultado — disciplinas do COETI **que também** têm carga horária $\geq 60$:
+Resultado — disciplinas de Pedagogia **que também** têm carga horária $\geq 60$ h:
 
-| id_disciplina |
+| codigo  |
 |---|
-| BES 301 |
-| BES 601 |
+| PED-203 |
+| PED-204 |
+| PED-403 |
+| PED-404 |
+| PED-603 |
+| PED-803 |
 
 ::: {.exemplo}
-BES 101 (20 h) está em $A$ mas não em $B$, por isso é excluída. As demais disciplinas de $B$ não estão em $A$, também excluídas. Apenas BES 301 e BES 601 satisfazem as duas condições.
+PED-604 (40 h) e PED-804 (50 h) estão em $A$ mas não em $B$, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.
 :::
 
 ::: {.callout-note}
@@ -115,20 +120,21 @@ Retorna as tuplas que pertencem a $r$ mas **não** pertencem a $s$.
 
 $$A - B$$
 
-Resultado — disciplinas do COETI com carga horária $< 60$:
+Resultado — disciplinas de Pedagogia com carga horária $< 60$ h:
 
-| id_disciplina |
+| codigo  |
 |---|
-| BES 101 |
+| PED-604 |
+| PED-804 |
 
 ::: {.exemplo}
-Das três disciplinas do COETI, apenas BES 101 (20 h) não satisfaz $carga\_horaria \geq 60$ e portanto não está em $B$. É a única que permanece após a diferença.
+Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem $carga\_horaria \geq 60$ h e portanto não estão em $B$. São as únicas que permanecem após a diferença.
 :::
 
 ## Resumo Comparativo
 
 | Operação | Símbolo | Resultado com $A$ e $B$ |
 |---|---|---|
-| União | $A \cup B$ | 12 disciplinas (todo o catálogo) |
-| Interseção | $A \cap B$ | 2 disciplinas (BES 301, BES 601) |
-| Diferença | $A - B$ | 1 disciplina (BES 101) |
+| União | $A \cup B$ | 24 disciplinas (catálogo completo) |
+| Interseção | $A \cap B$ | 6 disciplinas de PED com carga ≥ 60 h |
+| Diferença | $A - B$ | 2 disciplinas de PED com carga < 60 h |

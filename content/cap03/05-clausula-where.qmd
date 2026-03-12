@@ -1,5 +1,20 @@
 # Cláusulas WHERE e ORDER BY
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 ## WHERE: Filtrando Linhas
 
 A cláusula `WHERE` especifica quais linhas devem aparecer no resultado. Ela aceita expressões lógicas compostas por comparações, conectivos booleanos e predicados especiais.
@@ -8,80 +23,62 @@ A cláusula `WHERE` especifica quais linhas devem aparecer no resultado. Ela ace
 
 | Operador | Significado | Exemplo |
 |---|---|---|
-| `=` | igual | `nome_centro = 'COETI'` |
-| `<>` ou `!=` | diferente | `salario <> 90000` |
-| `<` | menor que | `salario < 60000` |
-| `>` | maior que | `salario > 80000` |
-| `<=` | menor ou igual | `carga_total <= 500` |
+| `=` | igual | `escola = 'ESETI'` |
+| `<>` ou `!=` | diferente | `semestre <> 2` |
+| `<` | menor que | `carga_horaria < 60` |
+| `>` | maior que | `carga_horaria > 100` |
+| `<=` | menor ou igual | `semestre <= 4` |
 | `>=` | maior ou igual | `carga_horaria >= 60` |
 
 ### Conectivos Lógicos: AND, OR, NOT
 
-```sql
--- Professores do COETI com salário maior que R$ 75.000
-SELECT nome, salario
-FROM   professor
-WHERE  nome_centro = 'COETI'
-  AND  salario > 75000;
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas de ENS com carga horária acima de 150 horas
+SELECT codigo, nome_disciplina, carga_horaria
+FROM   disciplina
+WHERE  sigla_curso = 'ENS'
+  AND  carga_horaria > 150;
 ```
 
-**Resultado:**
-
-| nome | salario |
-|---|---|
-| Pedro | 92000.00 |
-| Mariana | 80000.00 |
-
-```sql
--- Professores do COCBS ou com salário acima de 85.000
-SELECT nome, nome_centro, salario
-FROM   professor
-WHERE  nome_centro = 'COCBS'
-   OR  salario > 85000;
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas de PED ou com carga horária acima de 150 horas
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  sigla_curso = 'PED'
+   OR  carga_horaria > 150
+ORDER BY carga_horaria DESC;
 ```
 
-**Resultado:**
-
-| nome | nome_centro | salario |
-|---|---|---|
-| Ana | COCHCMA | 90000.00 |
-| Marcos | COCBS | 95000.00 |
-| Roberto | COCBS | 87000.00 |
-| Beatriz | COCBS | 72000.00 |
-| Pedro | COETI | 92000.00 |
-
-```sql
--- Professores que NÃO são do COCHCMA
-SELECT nome, nome_centro
-FROM   professor
-WHERE  NOT nome_centro = 'COCHCMA';
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas que NÃO são de ECO
+SELECT codigo, nome_disciplina, sigla_curso
+FROM   disciplina
+WHERE  NOT sigla_curso = 'ECO'
+ORDER BY sigla_curso, codigo;
 ```
 
 ## BETWEEN
 
 O predicado `BETWEEN` verifica se um valor está dentro de um intervalo fechado (inclusive os extremos):
 
-```sql
--- Professores com salário entre R$ 70.000 e R$ 90.000 (inclusive)
-SELECT nome, salario
-FROM   professor
-WHERE  salario BETWEEN 70000 AND 90000
-ORDER BY salario;
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas com carga horária entre 100 e 160 horas (inclusive)
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  carga_horaria BETWEEN 100 AND 160
+ORDER BY carga_horaria;
 ```
 
-**Resultado:**
-
-| nome | salario |
-|---|---|
-| Beatriz | 72000.00 |
-| Lucas | 75000.00 |
-| Rafael | 80000.00 |
-| Mariana | 80000.00 |
-| Roberto | 87000.00 |
-| Ana | 90000.00 |
-
 ::: {.conceito}
-`salario BETWEEN 70000 AND 90000` é equivalente a `salario >= 70000 AND salario <= 90000`. A versão com `BETWEEN` é mais legível.
+`carga_horaria BETWEEN 100 AND 160` é equivalente a `carga_horaria >= 100 AND carga_horaria <= 160`. A versão com `BETWEEN` é mais legível.
 
 O predicado `NOT BETWEEN` exclui o intervalo.
 :::
@@ -95,104 +92,58 @@ O predicado `LIKE` permite filtrar strings usando **padrões**. Dois caracteres 
 | `%` | Qualquer sequência de zero ou mais caracteres |
 | `_` | Exatamente um caractere qualquer |
 
-::: {.exemplo}
-```sql
--- Disciplinas cujo título começa com "Introdução"
-SELECT titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas cujo nome começa com "Bases"
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  titulo LIKE 'Introdução%';
+WHERE  nome_disciplina LIKE 'Bases%';
 ```
 
-**Resultado:**
-
-| titulo |
-|---|
-| Introdução à Pesquisa Científica |
-| Introdução à Engenharia de Software |
-
-```sql
--- Disciplinas cujo título contém a palavra "Bases"
-SELECT titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas cujo nome contém a palavra "Projeto"
+SELECT codigo, nome_disciplina, sigla_curso
 FROM   disciplina
-WHERE  titulo LIKE '%Bases%';
+WHERE  nome_disciplina LIKE '%Projeto%';
 ```
 
-**Resultado:**
-
-| titulo |
-|---|
-| Bases da Engenharia de Software 3 |
-
-```sql
--- Disciplinas cujo id começa com "BES"
-SELECT id_disciplina, titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas cujo código começa com "ENS"
+SELECT codigo, nome_disciplina, semestre, carga_horaria
 FROM   disciplina
-WHERE  id_disciplina LIKE 'BES%';
+WHERE  codigo LIKE 'ENS%'
+ORDER BY semestre;
 ```
-
-**Resultado:**
-
-| id_disciplina | titulo |
-|---|---|
-| BES 101 | Introdução à Engenharia de Software |
-| BES 301 | Bases da Engenharia de Software 3 |
-| BES 601 | Projeto Aplicado 6: Machine Learning |
-:::
 
 ::: {.callout-note}
-Por padrão, `LIKE` é **sensível a maiúsculas e minúsculas** (case-sensitive) na maioria dos SGBDs. Para buscas sem distinção de caixa, alguns SGBDs oferecem `ILIKE` (PostgreSQL) ou a função `LOWER()`.
+Por padrão, `LIKE` é **sensível a maiúsculas e minúsculas** na maioria dos SGBDs. Para buscas sem distinção de caixa, use `ILIKE` (PostgreSQL) ou a função `LOWER()`.
 :::
 
 ## ORDER BY: Ordenando o Resultado
 
 A cláusula `ORDER BY` especifica a ordem em que as linhas são retornadas. Por padrão, a ordem é crescente (`ASC`); para ordem decrescente, usa-se `DESC`.
 
-```sql
--- Professores ordenados por salário, do maior para o menor
-SELECT nome, nome_centro, salario
-FROM   professor
-ORDER BY salario DESC;
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas ordenadas por carga horária, da maior para a menor
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+ORDER BY carga_horaria DESC;
 ```
-
-**Resultado:**
-
-| nome | nome_centro | salario |
-|---|---|---|
-| Marcos | COCBS | 95000.00 |
-| Pedro | COETI | 92000.00 |
-| Ana | COCHCMA | 90000.00 |
-| Roberto | COCBS | 87000.00 |
-| Rafael | COCHCMA | 80000.00 |
-| Mariana | COETI | 80000.00 |
-| Lucas | COETI | 75000.00 |
-| Beatriz | COCBS | 72000.00 |
-| Juliana | COCHCMA | 62000.00 |
-| Fernanda | COCHCMA | 60000.00 |
-| Carlos | COETI | 65000.00 |
-| João | COEMAG | 40000.00 |
 
 É possível ordenar por múltiplas colunas. O critério secundário é aplicado quando há empate no critério primário:
 
-```sql
--- Professores ordenados por centro (alfabético) e, dentro do mesmo centro, por salário decrescente
-SELECT nome, nome_centro, salario
-FROM   professor
-ORDER BY nome_centro ASC, salario DESC;
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas ordenadas por curso (alfabético) e, dentro do mesmo curso, por carga horária decrescente
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+ORDER BY sigla_curso ASC, carga_horaria DESC;
 ```
-
-**Resultado:**
-
-| nome | nome_centro | salario |
-|---|---|---|
-| Marcos | COCBS | 95000.00 |
-| Roberto | COCBS | 87000.00 |
-| Beatriz | COCBS | 72000.00 |
-| Ana | COCHCMA | 90000.00 |
-| Rafael | COCHCMA | 80000.00 |
-| Juliana | COCHCMA | 62000.00 |
-| Fernanda | COCHCMA | 60000.00 |
-| João | COEMAG | 40000.00 |
-| Pedro | COETI | 92000.00 |
-| Mariana | COETI | 80000.00 |
-| Lucas | COETI | 75000.00 |
-| Carlos | COETI | 65000.00 |

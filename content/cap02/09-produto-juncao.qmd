@@ -12,50 +12,46 @@ O resultado contém todas as tuplas $(t_r, t_s)$ onde $t_r$ é uma tupla de $r$ 
 
 ### Qualificação de Atributos
 
-Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular $professor \times ministra$, o atributo `id_professor` aparece em `ministra` e `id` em `professor`; ambos referem-se ao mesmo conceito e a junção os conectará pelo predicado `professor.id = ministra.id_professor`.
+Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular $professor \times ministra$, o atributo `escola` aparece em `professor` e o atributo `matricula_prof` aparece em ambas; a junção os conectará pelo predicado `professor.matricula_prof = ministra.matricula_prof`.
 
 ### Tabelas utilizadas nos exemplos
 
 Versão reduzida de `professor` (3 tuplas):
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 45565 | Lucas | COETI | 75000 |
+| matricula_prof | nome | escola |
+|---|---|---|
+| PROF20230031 | Gustavo Costa  | ESETI |
+| PROF20230005 | Eduarda Souza  | EEMA  |
+| PROF20230042 | Bruno Teixeira | ESG   |
 
-Tabela `ministra` (4 tuplas):
+Tabela `ministra` (3 tuplas — 2023, semestre 2, turma A):
 
-| id_professor | id_disciplina | id_turma | semestre | ano |
-|---|---|---|---|---|
-| 10101 | BES 301 | 1 | Primeiro | 2026 |
-| 10101 | BES 601 | 1 | Primeiro | 2026 |
-| 12121 | MTI 101 | 1 | Primeiro | 2026 |
-| 45565 | BES 101 | 1 | Segundo | 2025 |
+| cod_disciplina | ano | semestre | turma | matricula_prof |
+|---|---:|---:|---|---|
+| ENS-201 | 2023 | 2 | A | PROF20230031 |
+| PED-203 | 2023 | 2 | A | PROF20230005 |
+| ECO-201 | 2023 | 2 | A | PROF20230042 |
 
 ### Exemplo: $professor \times ministra$
 
 $$professor \times ministra$$
 
-O produto cartesiano gera $3 \times 4 = 12$ tuplas — todas as combinações possíveis entre as 3 tuplas de `professor` e as 4 de `ministra`, independentemente de qualquer correspondência semântica:
+O produto cartesiano gera $3 \times 3 = 9$ tuplas — todas as combinações possíveis entre as 3 tuplas de `professor` e as 3 de `ministra`, independentemente de qualquer correspondência semântica:
 
-| professor.id | professor.nome | professor.nome_centro | professor.salario | ministra.id_professor | ministra.id_disciplina | ministra.id_turma | ministra.semestre | ministra.ano |
-|---|---|---|---|---|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
-| 10101 | Carlos | COETI | 65000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
-| 10101 | Carlos | COETI | 65000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
-| 10101 | Carlos | COETI | 65000 | 45565 | BES 101 | 1 | Segundo | 2025 |
-| 12121 | Ana | COCHCMA | 90000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
-| 12121 | Ana | COCHCMA | 90000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
-| 12121 | Ana | COCHCMA | 90000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
-| 12121 | Ana | COCHCMA | 90000 | 45565 | BES 101 | 1 | Segundo | 2025 |
-| 45565 | Lucas | COETI | 75000 | 10101 | BES 301 | 1 | Primeiro | 2026 |
-| 45565 | Lucas | COETI | 75000 | 10101 | BES 601 | 1 | Primeiro | 2026 |
-| 45565 | Lucas | COETI | 75000 | 12121 | MTI 101 | 1 | Primeiro | 2026 |
-| 45565 | Lucas | COETI | 75000 | 45565 | BES 101 | 1 | Segundo | 2025 |
+| professor.matricula_prof | professor.nome | professor.escola | ministra.cod_disciplina | ministra.ano | ministra.matricula_prof |
+|---|---|---|---|---:|---|
+| PROF20230031 | Gustavo Costa  | ESETI | ENS-201 | 2023 | PROF20230031 |
+| PROF20230031 | Gustavo Costa  | ESETI | PED-203 | 2023 | PROF20230005 |
+| PROF20230031 | Gustavo Costa  | ESETI | ECO-201 | 2023 | PROF20230042 |
+| PROF20230005 | Eduarda Souza  | EEMA  | ENS-201 | 2023 | PROF20230031 |
+| PROF20230005 | Eduarda Souza  | EEMA  | PED-203 | 2023 | PROF20230005 |
+| PROF20230005 | Eduarda Souza  | EEMA  | ECO-201 | 2023 | PROF20230042 |
+| PROF20230042 | Bruno Teixeira | ESG   | ENS-201 | 2023 | PROF20230031 |
+| PROF20230042 | Bruno Teixeira | ESG   | PED-203 | 2023 | PROF20230005 |
+| PROF20230042 | Bruno Teixeira | ESG   | ECO-201 | 2023 | PROF20230042 |
 
 ::: {.exemplo}
-Das 12 tuplas, apenas 4 são semanticamente válidas (aquelas em que `professor.id = ministra.id_professor`). As demais 8 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.
+Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que `professor.matricula_prof = ministra.matricula_prof`). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.
 :::
 
 ## Junção ($\bowtie$)
@@ -68,27 +64,26 @@ $$r \bowtie_\theta s = \sigma_\theta(r \times s)$$
 onde $\theta$ é o **predicado de junção**. A junção é equivalente a fazer o produto cartesiano e depois filtrar com $\sigma_\theta$.
 :::
 
-### Exemplo: Professores com Suas Turmas
+### Exemplo: Professores com Suas Disciplinas
 
-Para associar cada professor às turmas que ministra:
+Para associar cada professor às disciplinas que ministra em 2023:
 
-$$professor \bowtie_{professor.id\ =\ ministra.id\_professor} ministra$$
+$$professor \bowtie_{professor.matricula\_prof\ =\ ministra.matricula\_prof} ministra$$
 
 Esta expressão é equivalente a:
 
-$$\sigma_{professor.id\ =\ ministra.id\_professor}(professor \times ministra)$$
+$$\sigma_{professor.matricula\_prof\ =\ ministra.matricula\_prof}(professor \times ministra)$$
 
-Resultado (apenas as 4 tuplas válidas do produto cartesiano de 12):
+Resultado (apenas as 3 tuplas válidas do produto cartesiano de 9):
 
-| professor.id | professor.nome | professor.nome_centro | professor.salario | ministra.id_disciplina | ministra.id_turma | ministra.semestre | ministra.ano |
-|---|---|---|---|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 | BES 301 | 1 | Primeiro | 2026 |
-| 10101 | Carlos | COETI | 65000 | BES 601 | 1 | Primeiro | 2026 |
-| 12121 | Ana | COCHCMA | 90000 | MTI 101 | 1 | Primeiro | 2026 |
-| 45565 | Lucas | COETI | 75000 | BES 101 | 1 | Segundo | 2025 |
+| professor.matricula_prof | professor.nome | professor.escola | ministra.cod_disciplina | ministra.ano |
+|---|---|---|---|---:|
+| PROF20230031 | Gustavo Costa  | ESETI | ENS-201 | 2023 |
+| PROF20230005 | Eduarda Souza  | EEMA  | PED-203 | 2023 |
+| PROF20230042 | Bruno Teixeira | ESG   | ECO-201 | 2023 |
 
 ::: {.exemplo}
-A junção filtrou as 8 combinações sem sentido e manteve exatamente as 4 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.id_professor` é redundante no resultado e pode ser eliminado com uma projeção.
+A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.matricula_prof` é redundante no resultado e pode ser eliminado com uma projeção.
 :::
 
 ### Vantagem da Junção

@@ -17,145 +17,113 @@ Convenções:
 
 ```{dot}
 digraph schema {
-  graph [rankdir=LR, splines=ortho, nodesep=0.7, ranksep=1.4, bgcolor=white, fontname="Times New Roman"];
+  graph [rankdir=LR, splines=ortho, nodesep=0.8, ranksep=1.6, bgcolor=white, fontname="Times New Roman"];
   node  [shape=plaintext, fontname="Times New Roman"];
   edge  [arrowhead=normal, arrowsize=0.7];
-
-  matriculado [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>matriculado</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>nota</I></TD></TR>
-    </TABLE>
-  >];
-
-  aluno [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>aluno</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>carga_total</I></TD></TR>
-    </TABLE>
-  >];
-
-  turma [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>turma</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>predio</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>numero_sala</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>id_horario</I></TD></TR>
-    </TABLE>
-  >];
-
-  horario [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>horario</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_horario</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>dia_semana</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>hora_inicio</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>hora_fim</I></TD></TR>
-    </TABLE>
-  >];
-
-  sala [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>sala</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>predio</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>numero_sala</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>capacidade</I></TD></TR>
-    </TABLE>
-  >];
-
-  ministra [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>ministra</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_professor</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
-    </TABLE>
-  >];
-
-  disciplina [label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>disciplina</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>titulo</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
-    </TABLE>
-  >];
 
   centro [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>centro</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>nome_centro</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>predio</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>orcamento</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
     </TABLE>
   >];
 
-  prereq [label=<
+  escola [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>prereq</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_prereq</I></U></TD></TR>
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>escola</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>centro</I></TD></TR>
+    </TABLE>
+  >];
+
+  curso [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>curso</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>sigla_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>n_semestres</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>tipo_curso</I></TD></TR>
     </TABLE>
   >];
 
   professor [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>professor</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>matricula_prof</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>salario</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>ch_semanal</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
     </TABLE>
   >];
 
-  orientador [label=<
+  aluno [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
-      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>orientador</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>id_professor</I></TD></TR>
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>aluno</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
     </TABLE>
   >];
 
-  // Ranks para aproximar o layout original
-  { rank=same; matriculado; aluno; }
-  { rank=same; turma; disciplina; centro; orientador; }
-  { rank=same; sala; horario; prereq; professor; }
-  { rank=same; ministra; }
+  disciplina [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>disciplina</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_disciplina</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>semestre</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
+    </TABLE>
+  >];
 
-  // Setas (chaves estrangeiras)
-  matriculado -> aluno
-  matriculado -> turma
+  ministra [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>ministra</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>matricula_prof</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>horario</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sala</I></TD></TR>
+    </TABLE>
+  >];
 
-  turma -> disciplina
-  turma -> sala
-  turma -> horario
+  matricula_disciplina [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>matricula_disciplina</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nota</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>aprovado</I></TD></TR>
+    </TABLE>
+  >];
 
-  ministra -> turma
-  ministra -> professor
+  // Layout: centro e escola à esquerda, entidades no meio, associações à direita
+  { rank=same; centro; escola; }
+  { rank=same; curso; professor; }
+  { rank=same; aluno; disciplina; }
+  { rank=same; ministra; matricula_disciplina; }
 
-  disciplina -> centro
-  aluno -> centro
-  professor -> centro
-
-  orientador -> aluno
-  orientador -> professor
-
-  prereq -> disciplina
+  // Chaves estrangeiras
+  escola               -> centro
+  curso                -> escola
+  professor            -> escola
+  aluno                -> curso
+  disciplina           -> curso
+  ministra             -> disciplina
+  ministra             -> professor
+  matricula_disciplina -> ministra
+  matricula_disciplina -> aluno
 }
 ```
 
@@ -163,7 +131,7 @@ digraph schema {
 
 - **Atributo sublinhado** = chave primária (identifica unicamente cada tupla)
 - **Seta** = chave estrangeira (o atributo referencia a chave primária da tabela apontada)
-- `centro` é a relação central: `professor`, `disciplina` e `aluno` referenciam `nome_centro`
-- `secao` conecta `disciplina`, `sala` e `horario`
-- `ministra` e `matriculado` são relações de associação (many-to-many)
-- `prereq` é auto-referencial: ambas as colunas referenciam `disciplina(id_disciplina)`
+- `centro` e `escola` formam a hierarquia organizacional da UnDF
+- `curso` e `professor` referenciam `escola`; `aluno` e `disciplina` referenciam `curso`
+- `ministra` é a relação de associação entre `professor` e `disciplina` (com chave composta de 4 atributos)
+- `matricula_disciplina` registra as matrículas de alunos em turmas específicas e referencia tanto `ministra` quanto `aluno`

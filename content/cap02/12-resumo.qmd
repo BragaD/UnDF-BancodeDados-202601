@@ -25,19 +25,19 @@ Neste capítulo estudamos os fundamentos do **modelo relacional**:
 
 2. **Tuplas não ordenadas**: por que a ordem das tuplas é irrelevante no modelo relacional? Qual consequência prática isso tem ao recuperar dados de um banco de dados?
 
-3. **Chaves**: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação `disciplina`$(\underline{id\_disciplina},\ titulo,\ nome\_centro,\ carga\_horaria)$, identifique:
+3. **Chaves**: explique com suas próprias palavras a diferença entre superclave, chave candidata e chave primária. Usando a relação $disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)$, identifique:
    a. Duas superchaves distintas
    b. A(s) chave(s) candidata(s)
    c. A chave primária mais adequada e justifique sua escolha
 
-4. **Seleção**: escreva uma expressão de álgebra relacional para encontrar os **nomes** de todos os professores do COCHCMA. Indique quais operações são necessárias e em que ordem.
+4. **Seleção**: escreva uma expressão de álgebra relacional para encontrar os **nomes** de todos os professores da escola ESETI. Indique quais operações são necessárias e em que ordem.
 
-5. **Projeção e composição**: escreva uma expressão para encontrar os **títulos** de todas as disciplinas com carga horária superior a 60 horas. Use a composição de seleção e projeção.
+5. **Projeção e composição**: escreva uma expressão para encontrar os **códigos** de todas as disciplinas de ENS com carga horária superior a 120 horas. Use a composição de seleção e projeção.
 
-6. **Produto cartesiano vs. junção**: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas `professor` e `centro`.
+6. **Produto cartesiano vs. junção**: qual a diferença entre produto cartesiano e junção? Quando se prefere usar a junção? Dê um exemplo usando as tabelas `professor` e `escola`.
 
-7. **Agregação**: usando a notação de funções de agregação ($\gamma$), escreva a expressão para obter o **total de carga horária** de disciplinas por centro (equivalente ao `GROUP BY nome_centro` no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.
+7. **Agregação**: usando a notação de funções de agregação ($\gamma$), escreva a expressão para obter a **carga horária média** de disciplinas por curso (equivalente ao `GROUP BY sigla_curso` no SQL). Mostre o resultado esperado com base nas tabelas da UnDF.
 
 8. **Operações de conjunto**: explique a diferença entre $\cup$, $\cap$ e $-$. Quais são os requisitos para que essas operações sejam válidas? Escreva expressões de álgebra relacional para:
-   a. Encontrar os ids de alunos que são do COETI **ou** do COCBS
-   b. Encontrar os ids de professores que **não** pertencem ao COEMAG
+   a. Encontrar os códigos de disciplinas que são de ENS **ou** de ECO
+   b. Encontrar os códigos de disciplinas que **não** pertencem ao curso de PED

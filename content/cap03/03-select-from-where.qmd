@@ -1,5 +1,20 @@
 # Estrutura Básica: SELECT-FROM-WHERE
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 A consulta SQL mais fundamental é composta por três cláusulas obrigatórias: `SELECT`, `FROM` e `WHERE`. Essa estrutura corresponde diretamente às operações da álgebra relacional estudadas no Capítulo 2.
 
 ## Forma Geral
@@ -17,96 +32,65 @@ Cada cláusula da consulta SQL corresponde a uma operação da álgebra relacion
 
 | Cláusula SQL | Operação equivalente | Descrição |
 |---|---|---|
-| `SELECT A1, A2` | Projeção (π) | Escolhe quais colunas exibir |
-| `WHERE condição` | Seleção (σ) | Filtra as linhas que satisfazem a condição |
-| `FROM r1, r2` | Produto cartesiano (×) | Combina as tabelas listadas |
+| `SELECT A1, A2` | Projeção ($\Pi$) | Escolhe quais colunas exibir |
+| `WHERE condição` | Seleção ($\sigma$) | Filtra as linhas que satisfazem a condição |
+| `FROM r1, r2` | Produto cartesiano ($\times$) | Combina as tabelas listadas |
 
-A consulta `SELECT A FROM r WHERE condição` equivale a: **π~A~(σ~condição~(r))**
+A consulta `SELECT A FROM r WHERE condição` equivale a: $\Pi_A(\sigma_{cond}(r))$
 :::
 
-## Exemplo 1: Nomes dos Professores do COETI
+## Exemplo 1: Nomes dos Professores da ESETI
 
-```sql
--- Quais professores estão lotados no Centro de Engenharia, Tecnologia e Inovação?
+```{sql}
+--| connection: con
+--| eval: true
+-- Quais professores estão lotados na Escola Superior de Engenharias, Tecnologia e Inovação?
 SELECT nome
 FROM   professor
-WHERE  nome_centro = 'COETI';
+WHERE  escola = 'ESETI';
 ```
 
-**Resultado:**
+## Exemplo 2: Nomes e Escolas dos Professores da EEMA
 
-| nome |
-|---|
-| Carlos |
-| Lucas |
-| Pedro |
-| Mariana |
-
-O banco contém 4 professores vinculados ao COETI: Carlos (id 10101), Lucas (45565), Pedro (83821) e Mariana (98345).
-
-## Exemplo 2: Nomes e Salários dos Professores do COCHCMA
-
-```sql
--- Quais professores pertencem ao COCHCMA e quais são seus salários?
-SELECT nome, salario
+```{sql}
+--| connection: con
+--| eval: true
+-- Quais professores pertencem à Escola de Educação, Magistério e Arte?
+SELECT nome, escola
 FROM   professor
-WHERE  nome_centro = 'COCHCMA';
+WHERE  escola = 'EEMA';
 ```
-
-**Resultado:**
-
-| nome | salario |
-|---|---|
-| Ana | 90000.00 |
-| Fernanda | 60000.00 |
-| Juliana | 62000.00 |
-| Rafael | 80000.00 |
 
 ## Exemplo 3: Produto Cartesiano com Múltiplas Tabelas
 
-Quando duas ou mais tabelas são listadas na cláusula `FROM`, o SQL produz o **produto cartesiano** entre elas — ou seja, cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com `WHERE` para ser significativo.
+Quando duas ou mais tabelas são listadas na cláusula `FROM`, o SQL produz o **produto cartesiano** entre elas — cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com `WHERE` para ser significativo.
 
-```sql
--- Nomes dos professores junto com os dados do centro ao qual pertencem
-SELECT professor.nome, centro.predio, centro.orcamento
-FROM   professor, centro
-WHERE  professor.nome_centro = centro.nome_centro;
+```{sql}
+--| connection: con
+--| eval: true
+-- Nomes dos professores com os dados da escola e do centro ao qual pertencem
+SELECT p.nome, e.nome_escola, e.centro
+FROM   professor p, escola e
+WHERE  p.escola = e.escola;
 ```
 
-**Resultado (primeiras linhas):**
-
-| nome | predio | orcamento |
-|---|---|---|
-| Carlos | Lago Norte | 185000.00 |
-| Ana | Buritis | 170000.00 |
-| João | Ceilândia | 80000.00 |
-| Marcos | Samambaia | 160000.00 |
-| Fernanda | Buritis | 170000.00 |
-| Roberto | Samambaia | 160000.00 |
-| Lucas | Lago Norte | 185000.00 |
-| Juliana | Buritis | 170000.00 |
-| Rafael | Buritis | 170000.00 |
-| Beatriz | Samambaia | 160000.00 |
-| Pedro | Lago Norte | 185000.00 |
-| Mariana | Lago Norte | 185000.00 |
-
 ::: {.callout-note}
-A condição `professor.nome_centro = centro.nome_centro` na cláusula `WHERE` funciona como uma **junção natural** entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 12 professores × 4 centros = 48 linhas, a maioria sem sentido.
+A condição `p.escola = e.escola` na cláusula `WHERE` funciona como uma **junção** entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.
 
 A sintaxe com `JOIN` explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.
 :::
 
 ## Notação com Qualificador de Tabela
 
-Quando o mesmo nome de coluna aparece em mais de uma tabela (como `nome_centro` em `professor` e `centro`), é necessário **qualificar** o nome da coluna com o nome da tabela:
+Quando o mesmo nome de coluna aparece em mais de uma tabela (como `escola` em `professor` e em `escola`), é necessário **qualificar** o nome da coluna com o nome da tabela ou alias:
 
 ```sql
-professor.nome_centro   -- coluna nome_centro da tabela professor
-centro.nome_centro      -- coluna nome_centro da tabela centro
+p.escola   -- coluna escola da tabela professor (alias p)
+e.escola   -- coluna escola da tabela escola (alias e)
 ```
 
 Sem o qualificador, o SQL lançará um erro de ambiguidade:
 
 ```
-ERROR: column reference "nome_centro" is ambiguous
+ERROR: column reference "escola" is ambiguous
 ```

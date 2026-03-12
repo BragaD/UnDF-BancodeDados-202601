@@ -1,54 +1,51 @@
 # Cláusula SELECT
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 A cláusula `SELECT` determina **quais colunas** (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.
 
 ## DISTINCT: Eliminando Duplicatas
 
 Por padrão, o SQL **não** elimina linhas duplicadas no resultado — comportamento chamado de `ALL`. Para remover duplicatas, usa-se a palavra-chave `DISTINCT`.
 
-```sql
--- Sem DISTINCT: lista todos os centros, um por professor (com repetição)
-SELECT nome_centro
+```{sql}
+--| connection: con
+--| eval: true
+-- Sem DISTINCT: lista a escola de cada professor (com repetição)
+SELECT escola
 FROM   professor;
 ```
 
-| nome_centro |
-|---|
-| COETI |
-| COCHCMA |
-| COEMAG |
-| COCBS |
-| COCHCMA |
-| COCBS |
-| COETI |
-| COCHCMA |
-| COCHCMA |
-| COCBS |
-| COETI |
-| COETI |
-
-```sql
--- Com DISTINCT: cada centro aparece apenas uma vez
-SELECT DISTINCT nome_centro
+```{sql}
+--| connection: con
+--| eval: true
+-- Com DISTINCT: cada escola aparece apenas uma vez
+SELECT DISTINCT escola
 FROM   professor;
 ```
 
-**Resultado:**
-
-| nome_centro |
-|---|
-| COETI |
-| COCBS |
-| COCHCMA |
-| COEMAG |
-
-Os 12 professores são distribuídos entre 4 centros distintos. `DISTINCT` eliminará as repetições.
+Os 7 professores são distribuídos entre 3 escolas distintas. `DISTINCT` elimina as repetições.
 
 ## SELECT *
 
 O asterisco `*` seleciona **todas as colunas** da tabela:
 
-```sql
+```{sql}
+--| connection: con
+--| eval: true
 -- Retorna todas as colunas de professor
 SELECT *
 FROM   professor;
@@ -60,20 +57,14 @@ Embora prático para exploração, o uso de `SELECT *` em aplicações de produ�
 
 A cláusula `SELECT` pode conter expressões aritméticas com os operadores `+`, `-`, `*` e `/`:
 
-```sql
--- Simular um reajuste de 10% nos salários sem alterar o banco
-SELECT nome, salario, salario * 1.10 AS salario_reajustado
+```{sql}
+--| connection: con
+--| eval: true
+-- Simular um reajuste de 10% no salário dos professores sem alterar o banco
+SELECT nome, escola, salario,
+       ROUND(salario * 1.10, 2) AS salario_reajustado
 FROM   professor;
 ```
-
-**Resultado (primeiras linhas):**
-
-| nome | salario | salario_reajustado |
-|---|---|---|
-| Carlos | 65000.00 | 71500.00 |
-| Ana | 90000.00 | 99000.00 |
-| João | 40000.00 | 44000.00 |
-| Marcos | 95000.00 | 104500.00 |
 
 ::: {.callout-note}
 A expressão `salario * 1.10` **não altera** o banco de dados. Ela cria uma coluna calculada apenas no resultado da consulta. Para alterar os dados de fato, seria necessário usar `UPDATE` (ver seção 3.10).
@@ -83,59 +74,39 @@ A expressão `salario * 1.10` **não altera** o banco de dados. Ela cria uma col
 
 A palavra-chave `AS` permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de **alias**:
 
-```sql
--- Alias em coluna: renomeia a coluna calculada
-SELECT nome AS professor, salario * 1.10 AS salario_reajustado
-FROM   professor AS p
-WHERE  p.nome_centro = 'COETI';
+```{sql}
+--| connection: con
+--| eval: true
+-- Alias em coluna: renomeia colunas no resultado
+SELECT nome AS professor, escola AS lotacao
+FROM   professor
+WHERE  escola = 'ESETI';
 ```
 
-**Resultado:**
+Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas:
 
-| professor | salario_reajustado |
-|---|---|
-| Carlos | 71500.00 |
-| Lucas | 82500.00 |
-| Pedro | 101200.00 |
-| Mariana | 88000.00 |
-
-Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas, pois permitem abreviar os qualificadores:
-
-```sql
--- Alias de tabela: p no lugar de professor
-SELECT p.nome, c.predio
-FROM   professor AS p, centro AS c
-WHERE  p.nome_centro = c.nome_centro
-  AND  p.nome_centro = 'COCBS';
+```{sql}
+--| connection: con
+--| eval: true
+-- Alias de tabela: p para professor, e para escola
+SELECT p.nome, e.nome_escola
+FROM   professor AS p, escola AS e
+WHERE  p.escola = e.escola
+  AND  p.escola = 'ESG';
 ```
-
-**Resultado:**
-
-| nome | predio |
-|---|---|
-| Marcos | Samambaia |
-| Roberto | Samambaia |
-| Beatriz | Samambaia |
 
 ## Literais no SELECT
 
 É possível incluir valores literais (constantes) na cláusula `SELECT`:
 
-```sql
+```{sql}
+--| connection: con
+--| eval: true
 -- Adiciona uma coluna com o texto fixo 'UnDF'
-SELECT 'UnDF' AS instituicao, nome, nome_centro
+SELECT 'UnDF' AS instituicao, nome, escola
 FROM   professor
-WHERE  nome_centro = 'COETI';
+WHERE  escola = 'ESETI';
 ```
-
-**Resultado:**
-
-| instituicao | nome | nome_centro |
-|---|---|---|
-| UnDF | Carlos | COETI |
-| UnDF | Lucas | COETI |
-| UnDF | Pedro | COETI |
-| UnDF | Mariana | COETI |
 
 ::: {.conceito}
 **Resumo da cláusula SELECT:**

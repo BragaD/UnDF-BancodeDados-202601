@@ -22,25 +22,33 @@ Seja $R$ o schema de uma relação e $K \subseteq R$ um subconjunto de seus atri
 
 ### Relação `professor`
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 22222 | Marcos | COCBS | 95000 |
+| matricula_prof | nome | escola | ch_semanal | salario |
+|---|---|---|---:|---:|
+| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
 
-- $\{id\}$ é **superclave**: cada professor tem um `id` único.
-- $\{id, nome\}$ é **superclave**: a combinação também identifica unicamente, mas é redundante.
+- $\{matricula\_prof\}$ é **superclave**: cada professor tem uma matrícula única.
+- $\{matricula\_prof, nome\}$ é **superclave**: a combinação também identifica unicamente, mas é redundante.
 - $\{nome\}$ **não é superclave**: poderiam existir dois professores com o mesmo nome.
-- $\{id\}$ é **chave candidata**: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).
-- $\{id\}$ é escolhida como **chave primária**.
+- $\{matricula\_prof\}$ é **chave candidata**: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).
+- $\{matricula\_prof\}$ é escolhida como **chave primária**.
 
 ### Relação `centro`
 
-- $\{nome\_centro\}$ é chave candidata e chave primária — cada centro tem um nome único.
+- $\{centro\}$ é chave candidata e chave primária — cada centro tem um código único.
 
 ### Relação `disciplina`
 
-- $\{id\_disciplina\}$ é chave candidata e chave primária.
+- $\{codigo\}$ é chave candidata e chave primária.
+
+### Relação `ministra`
+
+A relação `ministra` registra que um professor ministra uma disciplina em um determinado ano, semestre e turma. Não existe uma coluna única que identifique cada tupla — a chave primária é **composta**:
+
+$$ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)$$
+
+- $\{cod\_disciplina, ano, semestre, turma\}$ é a chave primária composta.
 
 ## Chave Estrangeira
 
@@ -49,13 +57,13 @@ Uma **chave estrangeira** (*foreign key*) é um conjunto de atributos em uma rel
 :::
 
 ::: {.exemplo}
-O atributo `nome_centro` em `professor` é uma chave estrangeira que referencia `nome_centro` em `centro`:
+O atributo `escola` em `professor` é uma chave estrangeira que referencia `escola` em `escola`:
 
 - **Relação referenciante**: `professor`
-- **Relação referenciada**: `centro`
-- **Restrição**: todo valor de `professor.nome_centro` deve existir em `centro.nome_centro`
+- **Relação referenciada**: `escola`
+- **Restrição**: todo valor de `professor.escola` deve existir em `escola.escola`
 
-Isso garante que não seja possível cadastrar um professor em um centro inexistente. Da mesma forma, `disciplina.nome_centro` e `aluno.nome_centro` são chaves estrangeiras que referenciam `centro`.
+Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, `curso.escola` e `aluno.sigla_curso` são chaves estrangeiras que referenciam suas respectivas tabelas.
 :::
 
 A restrição imposta por uma chave estrangeira é chamada de **restrição de integridade referencial** (*referential integrity constraint*) e é uma das formas como o SGBD preserva a consistência dos dados.

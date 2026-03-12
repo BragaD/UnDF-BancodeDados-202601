@@ -1,12 +1,27 @@
 # Valores Nulos
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 ## O que é NULL?
 
 ::: {.conceito}
 **NULL** é um valor especial em SQL que indica a **ausência de informação**. Um valor nulo pode significar:
 
-- **Desconhecido**: o valor existe, mas não é conhecido (ex.: o salário de um novo professor ainda não foi definido).
-- **Inaplicável**: o atributo não se aplica a essa entidade (ex.: um campo "cônjuge" para alguém solteiro).
+- **Desconhecido**: o valor existe, mas não é conhecido (ex.: a nota de uma disciplina ainda não lançada).
+- **Inaplicável**: o atributo não se aplica a essa entidade (ex.: horário de uma disciplina ainda não agendada).
 - **Inexistente**: a informação simplesmente não está disponível.
 :::
 
@@ -18,20 +33,40 @@ Qualquer operação aritmética envolvendo NULL retorna NULL:
 
 | Expressão | Resultado |
 |---|---|
-| `NULL + 1000` | `NULL` |
+| `NULL + 60` | `NULL` |
 | `NULL * 1.10` | `NULL` |
-| `60000 + NULL` | `NULL` |
+| `120 + NULL` | `NULL` |
 
 ::: {.exemplo}
-Se o salário de um professor fosse `NULL`, a consulta abaixo retornaria `NULL` como salário reajustado:
+Se a nota de um aluno em uma disciplina fosse `NULL` (ainda não lançada), a média calculada com essa nota também seria `NULL`:
 
 ```sql
-SELECT nome, salario * 1.10 AS salario_reajustado
-FROM   professor
-WHERE  nome = 'Carlos';
--- Se salario fosse NULL, salario_reajustado também seria NULL
+SELECT cod_matricula, AVG(nota) AS media
+FROM   matricula_disciplina
+GROUP BY cod_matricula;
+-- Alunos com alguma nota NULL teriam resultado influenciado (NULL ignorado na média)
 ```
+
+Verificando notas nulas — disciplinas com nota ainda não registrada:
 :::
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Verificar se existem notas nulas no banco atual
+SELECT COUNT(*) AS notas_nulas
+FROM   matricula_disciplina
+WHERE  nota IS NULL;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Verificar se existem horários nulos em ministra (dado opcional)
+SELECT COUNT(*) AS horarios_nulos
+FROM   ministra
+WHERE  horario IS NULL;
+```
 
 ## Comparações com NULL: Lógica de Três Valores
 
@@ -59,7 +94,6 @@ A lógica de três valores do SQL define como `AND`, `OR` e `NOT` se comportam q
 | TRUE | TRUE | TRUE |
 | TRUE | UNKNOWN | UNKNOWN |
 | TRUE | FALSE | FALSE |
-| UNKNOWN | TRUE | UNKNOWN |
 | UNKNOWN | UNKNOWN | UNKNOWN |
 | UNKNOWN | FALSE | FALSE |
 | FALSE | qualquer | FALSE |
@@ -74,14 +108,6 @@ A lógica de três valores do SQL define como `AND`, `OR` e `NOT` se comportam q
 | UNKNOWN | FALSE | UNKNOWN |
 | FALSE | FALSE | FALSE |
 
-**NOT:**
-
-| A | NOT A |
-|---|---|
-| TRUE | FALSE |
-| FALSE | TRUE |
-| UNKNOWN | UNKNOWN |
-
 ::: {.conceito}
 A cláusula `WHERE` retém apenas as linhas para as quais a condição é avaliada como **TRUE**. Linhas com resultado **UNKNOWN** são **descartadas**, da mesma forma que linhas com resultado FALSE.
 :::
@@ -90,26 +116,24 @@ A cláusula `WHERE` retém apenas as linhas para as quais a condição é avalia
 
 Para verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:
 
-```sql
--- Professores cujo salário é desconhecido (nulo)
-SELECT nome
-FROM   professor
-WHERE  salario IS NULL;
-
--- Professores com salário informado
-SELECT nome
-FROM   professor
-WHERE  salario IS NOT NULL;
+```{sql}
+--| connection: con
+--| eval: true
+-- Registros de ministra com horário informado
+SELECT cod_disciplina, ano, semestre, turma, horario
+FROM   ministra
+WHERE  horario IS NOT NULL
+LIMIT 5;
 ```
 
-No banco de dados atual da UnDF, nenhum professor tem salário nulo — todos têm valores definidos. Mas considere um cenário hipotético onde Carlos ainda não tivesse salário definido:
-
-```sql
--- Sem IS NOT NULL: Carlos poderia aparecer ou não (resultado imprevisível)
-SELECT nome FROM professor WHERE salario > 70000;
-
--- Com IS NOT NULL: garante que a comparação é feita apenas para valores conhecidos
-SELECT nome FROM professor WHERE salario > 70000 AND salario IS NOT NULL;
+```{sql}
+--| connection: con
+--| eval: true
+-- Registros de ministra sem horário
+SELECT cod_disciplina, ano, semestre, turma
+FROM   ministra
+WHERE  horario IS NULL
+LIMIT 5;
 ```
 
 ## NULL em Funções de Agregação
@@ -117,16 +141,25 @@ SELECT nome FROM professor WHERE salario > 70000 AND salario IS NOT NULL;
 As funções de agregação (`AVG`, `SUM`, `COUNT`, `MIN`, `MAX`) **ignoram** valores nulos em sua computação:
 
 ::: {.exemplo}
-Suponha que a tabela tivesse 3 professores com salários `65000`, `NULL` e `75000`:
+Suponha que a tabela `matricula_disciplina` tivesse 3 notas: `9.0`, `NULL` e `7.4`:
 
 ```sql
-SELECT AVG(salario) FROM professor;
--- Resultado: (65000 + 75000) / 2 = 70000
+SELECT AVG(nota) FROM matricula_disciplina WHERE cod_matricula = '2023002001';
+-- Resultado: (9.0 + 7.4) / 2 = 8.2
 -- O NULL é ignorado; o denominador é 2, não 3
 ```
 
 Exceção: `COUNT(*)` conta **todas** as linhas, incluindo aquelas com valores nulos em qualquer coluna.
 :::
+
+```{sql}
+--| connection: con
+--| eval: true
+-- COUNT(*) conta todas as linhas; COUNT(nota) ignora notas nulas
+SELECT COUNT(*)    AS total_registros,
+       COUNT(nota) AS registros_com_nota
+FROM   matricula_disciplina;
+```
 
 ## Boas Práticas
 

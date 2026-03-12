@@ -1,5 +1,20 @@
 # Operações de Conjunto em SQL
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 SQL suporta operações de conjunto equivalentes às da álgebra relacional: **união**, **interseção** e **diferença**. Essas operações combinam os resultados de duas consultas e exigem que ambas retornem o mesmo número de colunas, com tipos compatíveis.
 
 ## Os Três Operadores
@@ -7,114 +22,97 @@ SQL suporta operações de conjunto equivalentes às da álgebra relacional: **u
 ::: {.conceito}
 | Operador SQL | Álgebra Relacional | Descrição |
 |---|---|---|
-| `UNION` | ∪ (união) | Linhas que aparecem em **pelo menos uma** das consultas |
-| `INTERSECT` | ∩ (interseção) | Linhas que aparecem **nas duas** consultas |
-| `EXCEPT` | − (diferença) | Linhas da **primeira** consulta que **não** aparecem na segunda |
+| `UNION` | $\cup$ (união) | Linhas que aparecem em **pelo menos uma** das consultas |
+| `INTERSECT` | $\cap$ (interseção) | Linhas que aparecem **nas duas** consultas |
+| `EXCEPT` | $-$ (diferença) | Linhas da **primeira** consulta que **não** aparecem na segunda |
 
 Por padrão, todas as três operações **eliminam duplicatas** do resultado. Para manter duplicatas, adicione `ALL`: `UNION ALL`, `INTERSECT ALL`, `EXCEPT ALL`.
 :::
 
 ## Exemplos com as Disciplinas da UnDF
 
-Para demonstrar as operações, usaremos dois conjuntos:
+Para demonstrar as operações, usamos dois conjuntos:
 
-- **Conjunto A**: disciplinas do COETI → BES 101, BES 301, BES 601
-- **Conjunto B**: disciplinas com carga horária ≥ 60 horas → MTI 101, MTI 202, MTI 402, BES 301, BES 601, NUT 101, NUT 401, NUT 701, PED 101, PED 301, PED 601
+- **Conjunto A**: disciplinas de Pedagogia (PED) — 8 disciplinas
+- **Conjunto B**: disciplinas com carga horária ≥ 60 horas — 22 disciplinas (todas exceto PED-604 = 40 h e PED-804 = 50 h)
 
-### UNION: Disciplinas do COETI ou com carga horária ≥ 60 h
+### UNION: Disciplinas de PED ou com carga horária ≥ 60 h
 
-```sql
--- Disciplinas do COETI
-SELECT id_disciplina, titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Conjunto A: disciplinas de Pedagogia
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  nome_centro = 'COETI'
+WHERE  sigla_curso = 'PED'
 
 UNION
 
--- Disciplinas com carga horária igual ou superior a 60 horas
-SELECT id_disciplina, titulo
+-- Conjunto B: disciplinas com carga horária >= 60 horas
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  carga_horaria >= 60;
+WHERE  carga_horaria >= 60
+
+ORDER BY codigo;
 ```
 
-**Resultado** (BES 101 aparece uma só vez, mesmo estando em ambos os conjuntos):
-
-| id_disciplina | titulo |
-|---|---|
-| BES 101 | Introdução à Engenharia de Software |
-| BES 301 | Bases da Engenharia de Software 3 |
-| BES 601 | Projeto Aplicado 6: Machine Learning |
-| MTI 101 | Introdução à Pesquisa Científica |
-| MTI 202 | Gestão de Pessoas na Adm. Pública |
-| MTI 402 | Políticas Públicas e Sociais |
-| NUT 101 | Bioquímica e Biofísica |
-| NUT 401 | Epidemiologia Geral |
-| NUT 701 | Nutrição em Saúde Coletiva |
-| PED 101 | História da Educação |
-| PED 301 | Jogos e Brincadeiras na Infância |
-| PED 601 | Alfabetização e Práticas de Letramento |
-
 ::: {.callout-note}
-`BES 101` tem carga horária de apenas 20 horas, portanto está no conjunto A mas não no conjunto B. Ainda assim, aparece no resultado da `UNION` porque basta estar em um dos dois lados.
+PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem aos dois conjuntos, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via conjunto A.
 :::
 
-### INTERSECT: Disciplinas do COETI E com carga horária ≥ 60 h
+### INTERSECT: Disciplinas de PED E com carga horária ≥ 60 h
 
-```sql
--- Disciplinas do COETI que também têm carga horária >= 60 horas
-SELECT id_disciplina, titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas de PED que também têm carga horária >= 60 horas
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  nome_centro = 'COETI'
+WHERE  sigla_curso = 'PED'
 
 INTERSECT
 
-SELECT id_disciplina, titulo
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  carga_horaria >= 60;
+WHERE  carga_horaria >= 60
+
+ORDER BY codigo;
 ```
 
-**Resultado** (apenas as disciplinas que satisfazem **ambas** as condições):
+PED-604 (40 h) e PED-804 (50 h) satisfazem apenas o primeiro lado — são excluídas do resultado.
 
-| id_disciplina | titulo |
-|---|---|
-| BES 301 | Bases da Engenharia de Software 3 |
-| BES 601 | Projeto Aplicado 6: Machine Learning |
+### EXCEPT: Disciplinas de PED que NÃO têm carga horária ≥ 60 h
 
-`BES 101` (carga horária = 20 h) é excluída, pois não satisfaz a condição de carga horária ≥ 60 h.
-
-### EXCEPT: Disciplinas do COETI que NÃO têm carga horária ≥ 60 h
-
-```sql
--- Disciplinas do COETI que não possuem carga horária >= 60 horas
-SELECT id_disciplina, titulo
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas de PED com carga horária inferior a 60 horas
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  nome_centro = 'COETI'
+WHERE  sigla_curso = 'PED'
 
 EXCEPT
 
-SELECT id_disciplina, titulo
+SELECT codigo, nome_disciplina, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria >= 60;
 ```
 
-**Resultado:**
-
-| id_disciplina | titulo |
-|---|---|
-| BES 101 | Introdução à Engenharia de Software |
-
-Apenas `BES 101` (20 horas) está no conjunto A e não está no conjunto B.
+Apenas PED-604 (40 h) e PED-804 (50 h) pertencem ao conjunto A mas não ao conjunto B.
 
 ## UNION ALL: Mantendo Duplicatas
 
-```sql
--- Todos os nomes de centros de alunos e professores (com repetição)
-SELECT nome_centro FROM aluno
+```{sql}
+--| connection: con
+--| eval: true
+-- Todos os sigla_curso de disciplinas e alunos (com repetição)
+SELECT sigla_curso FROM disciplina
 UNION ALL
-SELECT nome_centro FROM professor;
+SELECT sigla_curso FROM aluno
+ORDER BY sigla_curso;
 ```
 
-O resultado terá 12 + 12 = 24 linhas, com muitas repetições. Use `UNION ALL` quando a presença de duplicatas é intencional (por exemplo, ao contar ocorrências).
+O resultado tem 24 + 18 = 42 linhas, com muitas repetições. Use `UNION ALL` quando a presença de duplicatas é intencional (por exemplo, ao contar ocorrências totais).
 
 ## Compatibilidade de Esquema
 

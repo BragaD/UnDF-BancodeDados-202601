@@ -1,5 +1,20 @@
 # Definição de Dados (DDL)
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 A DDL (*Data Definition Language*) permite criar e modificar a estrutura de um banco de dados. Nesta seção, veremos os tipos de dados disponíveis em SQL e os comandos `CREATE TABLE`, `ALTER TABLE` e `DROP TABLE`.
 
 ## Tipos de Domínio em SQL
@@ -8,11 +23,11 @@ Cada coluna de uma tabela deve ter um **tipo de dado** que determina quais valor
 
 | Tipo | Descrição | Exemplo |
 |---|---|---|
-| `CHAR(n)` | String de comprimento fixo com exatamente *n* caracteres | `CHAR(5)` para um código como `'10101'` |
+| `CHAR(n)` | String de comprimento fixo com exatamente *n* caracteres | `CHAR(1)` para turma `'A'` |
 | `VARCHAR(n)` | String de comprimento variável com até *n* caracteres | `VARCHAR(50)` para nomes |
 | `INT` ou `INTEGER` | Número inteiro (tipicamente 4 bytes) | `42`, `-7` |
 | `SMALLINT` | Número inteiro menor (tipicamente 2 bytes) | `32767` |
-| `NUMERIC(p, d)` | Número decimal com *p* dígitos no total e *d* após a vírgula | `NUMERIC(8,2)` para `65000.00` |
+| `NUMERIC(p, d)` | Número decimal com *p* dígitos no total e *d* após a vírgula | `NUMERIC(4,1)` para nota `9.5` |
 | `REAL` | Número de ponto flutuante de precisão simples | `3.14` |
 | `FLOAT(n)` | Ponto flutuante com pelo menos *n* dígitos de precisão | `FLOAT(10)` |
 | `DATE` | Data no formato `AAAA-MM-DD` | `'2026-03-10'` |
@@ -50,66 +65,118 @@ CREATE TABLE nome_da_tabela (
 
 ## Criando as Tabelas da UnDF
 
-As tabelas devem ser criadas na ordem correta: primeiro `centro`, pois as outras tabelas referenciam essa tabela por meio de chaves estrangeiras.
+As tabelas devem ser criadas na ordem correta: primeiro as que não têm dependências, depois as que referenciam outras por chave estrangeira.
 
 ::: {.exemplo}
 **Tabela `centro`** — sem chaves estrangeiras, criada primeiro:
 
 ```sql
--- Centros acadêmicos da UnDF
 CREATE TABLE centro (
-    nome_centro VARCHAR(10)    PRIMARY KEY,
-    predio      VARCHAR(50)    NOT NULL,
-    orcamento   NUMERIC(10, 2) NOT NULL
+    centro      VARCHAR(10)  PRIMARY KEY,
+    nome_centro VARCHAR(100) NOT NULL
 );
 ```
 
-**Tabela `professor`** — referencia `centro`:
+**Tabela `escola`** — referencia `centro`:
 
 ```sql
--- Professores vinculados a cada centro
+CREATE TABLE escola (
+    escola      VARCHAR(10)  PRIMARY KEY,
+    nome_escola VARCHAR(100) NOT NULL,
+    centro      VARCHAR(10)  REFERENCES centro(centro)
+);
+```
+
+**Tabela `curso`** — referencia `escola`:
+
+```sql
+CREATE TABLE curso (
+    sigla_curso   VARCHAR(5)   PRIMARY KEY,
+    nome_curso    VARCHAR(100) NOT NULL,
+    escola        VARCHAR(10)  REFERENCES escola(escola),
+    n_semestres   INTEGER      NOT NULL,
+    carga_horaria INTEGER      NOT NULL,
+    tipo_curso    VARCHAR(20)  NOT NULL
+);
+```
+
+**Tabela `professor`** — referencia `escola`:
+
+```sql
 CREATE TABLE professor (
-    id          CHAR(5)       PRIMARY KEY,
-    nome        VARCHAR(50)   NOT NULL,
-    nome_centro VARCHAR(10)   REFERENCES centro(nome_centro),
-    salario     NUMERIC(8, 2) NOT NULL
+    matricula_prof VARCHAR(15)    PRIMARY KEY,
+    nome           VARCHAR(50)    NOT NULL,
+    escola         VARCHAR(10)    REFERENCES escola(escola),
+    ch_semanal     INTEGER        NOT NULL,
+    salario        NUMERIC(10,2)  NOT NULL
 );
 ```
 
-**Tabela `disciplina`** — referencia `centro` e exige carga horária positiva:
+**Tabela `disciplina`** — referencia `curso` e exige carga horária positiva:
 
 ```sql
--- Disciplinas oferecidas por cada centro
 CREATE TABLE disciplina (
-    id_disciplina VARCHAR(10)  PRIMARY KEY,
-    titulo        VARCHAR(100) NOT NULL,
-    nome_centro   VARCHAR(10)  REFERENCES centro(nome_centro),
-    carga_horaria INTEGER      NOT NULL CHECK (carga_horaria > 0)
+    codigo          VARCHAR(10)  PRIMARY KEY,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    sigla_curso     VARCHAR(5)   REFERENCES curso(sigla_curso),
+    semestre        INTEGER      NOT NULL,
+    carga_horaria   INTEGER      NOT NULL CHECK (carga_horaria > 0)
 );
 ```
 
-**Tabela `aluno`** — referencia `centro` e define carga total com valor padrão zero:
+**Tabela `ministra`** — chave primária composta, referencia `disciplina` e `professor`:
 
 ```sql
--- Alunos matriculados na UnDF
-CREATE TABLE aluno (
-    id          CHAR(5)     PRIMARY KEY,
-    nome        VARCHAR(50) NOT NULL,
-    nome_centro VARCHAR(10) REFERENCES centro(nome_centro),
-    carga_total INTEGER     NOT NULL DEFAULT 0
+CREATE TABLE ministra (
+    cod_disciplina VARCHAR(10) REFERENCES disciplina(codigo),
+    ano            INTEGER     NOT NULL,
+    semestre       INTEGER     NOT NULL,
+    turma          CHAR(1)     NOT NULL,
+    matricula_prof VARCHAR(15) REFERENCES professor(matricula_prof),
+    horario        VARCHAR(20),
+    sala           VARCHAR(20),
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma)
+);
+```
+
+**Tabela `matricula_disciplina`** — chave primária composta com chave estrangeira composta:
+
+```sql
+CREATE TABLE matricula_disciplina (
+    cod_disciplina VARCHAR(10) NOT NULL,
+    ano            INTEGER     NOT NULL,
+    semestre       INTEGER     NOT NULL,
+    turma          CHAR(1)     NOT NULL,
+    cod_matricula  VARCHAR(15) REFERENCES aluno(matricula),
+    nota           NUMERIC(4,1),
+    aprovado       SMALLINT,
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma, cod_matricula),
+    FOREIGN KEY (cod_disciplina, ano, semestre, turma)
+        REFERENCES ministra(cod_disciplina, ano, semestre, turma)
 );
 ```
 :::
 
+### Verificando as tabelas criadas
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT table_name
+FROM   information_schema.tables
+WHERE  table_schema = 'public'
+ORDER BY table_name;
+```
+
 ### O que acontece se a ordem for invertida?
 
-Se tentarmos criar `professor` antes de `centro`, o banco de dados retornará um erro semelhante a:
+Se tentarmos criar `escola` antes de `centro`, o banco de dados retornará um erro:
 
 ```
 ERROR: relation "centro" does not exist
 ```
 
-Isso ocorre porque a restrição `REFERENCES centro(nome_centro)` exige que a tabela `centro` já exista no momento da criação.
+Isso ocorre porque `REFERENCES centro(centro)` exige que `centro` já exista.
 
 ## ALTER TABLE
 
@@ -122,11 +189,8 @@ ALTER TABLE professor ADD COLUMN email VARCHAR(100);
 -- Remover uma coluna
 ALTER TABLE professor DROP COLUMN email;
 
--- Alterar o tipo de uma coluna (sintaxe varia por SGBD)
-ALTER TABLE professor ALTER COLUMN salario TYPE NUMERIC(10, 2);
-
 -- Adicionar uma restrição
-ALTER TABLE aluno ADD CONSTRAINT chk_carga CHECK (carga_total >= 0);
+ALTER TABLE disciplina ADD CONSTRAINT chk_semestre CHECK (semestre BETWEEN 1 AND 10);
 ```
 
 ## DROP TABLE
@@ -135,14 +199,14 @@ O comando `DROP TABLE` remove uma tabela e todos os seus dados permanentemente:
 
 ```sql
 -- Remove a tabela e todos os seus dados
-DROP TABLE aluno;
+DROP TABLE disciplina;
 
 -- Remove apenas se a tabela existir (evita erro)
-DROP TABLE IF EXISTS aluno;
+DROP TABLE IF EXISTS disciplina;
 ```
 
 ::: {.callout-warning}
 `DROP TABLE` é uma operação irreversível. Todos os dados da tabela são perdidos permanentemente. Use com cautela em ambientes de produção.
 
-Além disso, se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará (ou removerá as tabelas dependentes, se `CASCADE` for especificado).
+Se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará — a menos que `CASCADE` seja especificado.
 :::

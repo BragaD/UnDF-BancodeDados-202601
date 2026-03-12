@@ -25,20 +25,15 @@ Um sistema de banco de dados é uma coleção de dados inter-relacionados e um c
 
 Todos os dados são armazenados em diversas tabelas. Abaixo, um exemplo de dados tabulares no modelo relacional:
 
-| id    | nome     | nome_centro | salario |
-|-------|----------|-------------|--------:|
-| 10101 | Carlos   | COETI      | 65000   |
-| 12121 | Ana      | COCHCMA    | 90000   |
-| 15151 | João     | COEMAG     | 40000   |
-| 22222 | Marcos   | COCBS      | 95000   |
-| 32343 | Fernanda | COCHCMA    | 60000   |
-| 33456 | Roberto  | COCBS      | 87000   |
-| 45565 | Lucas    | COETI      | 75000   |
-| 58583 | Juliana  | COCHCMA    | 62000   |
-| 76543 | Rafael   | COCHCMA    | 80000   |
-| 76766 | Beatriz  | COCBS      | 72000   |
-| 83821 | Pedro    | COETI      | 92000   |
-| 98345 | Mariana  | COETI      | 80000   |
+| matricula_prof | nome | escola | ch_semanal | salario |
+|---|---|---|---:|---:|
+| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
+| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
+| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
+| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
+| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
 
 : Tabela `professor` {.striped}
 
@@ -50,49 +45,53 @@ O banco de dados universitário utilizado ao longo deste material é composto pe
 
 **Tabela `centro`**
 
-| nome_centro | predio        | orcamento |
-|------------|---------------|----------:|
-| COCBS      | Samambaia   | 160000    |
-| COETI      | Lago Norte | 185000    |
-| COCHCMA    | Buritis    | 170000    |
-| COEMAG     | Ceilândia   | 80000     |
+| centro  | nome_centro |
+|---------|-------------|
+| COCHCMA | Ciências Humanas, Cidadania e Meio Ambiente |
+| COEMAG  | Centro de Educação, Magistério e Artes |
+| COETI   | Centro de Engenharias, Tecnologia e Inovação |
 
 : {.striped}
 
-**Tabela `disciplina`**
+**Tabela `escola`**
 
-| id_disciplina | titulo                                 | nome_centro | carga_horaria |
-|---------------|----------------------------------------|-------------|:-------------:|
-| MTI 101       | Introdução à Pesquisa Científica       | COCHCMA     | 60            |
-| MTI 202       | Gestão de Pessoas na Adm. Pública      | COCHCMA     | 60            |
-| MTI 402       | Políticas Públicas e Sociais           | COCHCMA     | 60            |
-| BES 101       | Introdução à Engenharia de Software    | COETI       | 20            |
-| BES 301       | Bases da Engenharia de Software 3      | COETI       | 120           |
-| BES 601       | Projeto Aplicado 6: Machine Learning   | COETI       | 120           |
-| NUT 101       | Bioquímica e Biofísica                 | COCBS       | 105           |
-| NUT 401       | Epidemiologia Geral                    | COCBS       | 70            |
-| NUT 701       | Nutrição em Saúde Coletiva             | COCBS       | 70            |
-| PED 101       | História da Educação                   | COEMAG      | 60            |
-| PED 301       | Jogos e Brincadeiras na Infância       | COEMAG      | 60            |
-| PED 601       | Alfabetização e Práticas de Letramento | COEMAG      | 60            |
+| escola | nome_escola | centro |
+|---|---|---|
+| ESG   | Escola Superior de Gestão | COCHCMA |
+| EEMA  | Escola de Educação, Magistério e Arte | COEMAG |
+| ESETI | Escola Superior de Engenharias, Tecnologia e Inovação | COETI |
 
 : {.striped}
 
-**Tabela `aluno`**
+**Tabela `curso`**
 
-| id    | nome     | nome_centro | carga_total |
-|-------|----------|-------------|:----------:|
-| 00128 | Thiago   | COETI      | 1000        |
-| 12345 | Larissa  | COETI      | 205         |
-| 19991 | Gabriel  | COCHCMA    | 300        |
-| 23121 | Amanda   | COCHCMA    | 2100        |
-| 44553 | Felipe   | COCBS      | 340         |
-| 45678 | Camila   | COCBS      | 460         |
-| 54321 | Diego    | COETI      | 1240         |
-| 55739 | Bruna    | COEMAG     | 1100         |
-| 70557 | Henrique | COCBS      | 0          |
-| 76543 | Natália  | COETI      | 360         |
-| 76653 | Eduardo  | COETI      | 340         |
-| 98988 | Isabela  | COCBS      | 450        |
+| sigla_curso | nome_curso | escola | n_semestres | carga_horaria | tipo_curso |
+|---|---|---|---:|---:|---|
+| ECO | Ciências Econômicas    | ESG   | 8 | 3000 | bacharelado |
+| ENS | Engenharia de Software | ESETI | 8 | 3200 | bacharelado |
+| PED | Pedagogia              | EEMA  | 8 | 3410 | licenciatura |
+
+: {.striped}
+
+**Tabela `aluno`** (amostra)
+
+| matricula  | nome | sigla_curso | ano_ingresso |
+|---|---|---|---:|
+| 2023002001 | Matheus Silva   | ENS | 2023 |
+| 2023002002 | Larissa Araújo  | ENS | 2023 |
+| 2024002001 | Pedro Carvalho  | ENS | 2024 |
+| 2023007001 | Beatriz Carvalho | ECO | 2023 |
+| 2023009001 | Amanda Moreira  | PED | 2023 |
+
+: {.striped}
+
+**Tabela `disciplina`** (amostra)
+
+| codigo  | nome_disciplina | sigla_curso | semestre | carga_horaria |
+|---|---|---|---:|---:|
+| ENS-201 | Bases da Engenharia de Software 2 | ENS | 2 | 150 |
+| ENS-202 | Projeto Aplicado 2 (site WEB)     | ENS | 2 | 120 |
+| ECO-201 | História Econômica Geral          | ECO | 2 |  75 |
+| PED-203 | Desenvolvimento Humano            | PED | 2 |  60 |
 
 : {.striped}

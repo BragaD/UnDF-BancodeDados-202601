@@ -1,5 +1,20 @@
 # Funções de Agregação
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 As funções de agregação calculam um único valor a partir de um conjunto de linhas. São amplamente usadas para obter estatísticas sobre os dados.
 
 ## As Cinco Funções Básicas
@@ -21,103 +36,65 @@ Todas as funções, exceto `COUNT(*)`, **ignoram valores nulos**.
 
 Quando nenhuma cláusula `GROUP BY` é especificada, a função agrega **todas as linhas** da tabela (ou do subconjunto filtrado pelo `WHERE`).
 
-```sql
--- Salário médio de todos os professores da UnDF
-SELECT AVG(salario) AS media_salarial
+```{sql}
+--| connection: con
+--| eval: true
+-- Salário médio de todos os professores
+SELECT ROUND(AVG(salario), 2) AS media_salario
 FROM   professor;
 ```
 
-**Resultado:**
-
-| media_salarial |
-|---|
-| 74833.33 |
-
-O cálculo: (65000 + 90000 + 40000 + 95000 + 60000 + 87000 + 75000 + 62000 + 80000 + 72000 + 92000 + 80000) / 12 = 898000 / 12 ≈ 74833.33
-
-```sql
--- Quantos professores há na universidade?
+```{sql}
+--| connection: con
+--| eval: true
+-- Quantos professores há no banco?
 SELECT COUNT(*) AS total_professores
 FROM   professor;
 ```
 
-**Resultado:**
-
-| total_professores |
-|---|
-| 12 |
-
-```sql
--- Quantos centros distintos têm professores?
-SELECT COUNT(DISTINCT nome_centro) AS centros_com_professor
+```{sql}
+--| connection: con
+--| eval: true
+-- Quantas escolas distintas têm professores?
+SELECT COUNT(DISTINCT escola) AS escolas_com_professor
 FROM   professor;
 ```
 
-**Resultado:**
-
-| centros_com_professor |
-|---|
-| 4 |
-
-```sql
--- Maior e menor salário
+```{sql}
+--| connection: con
+--| eval: true
+-- Maior e menor salário entre os professores
 SELECT MAX(salario) AS maior_salario,
        MIN(salario) AS menor_salario
 FROM   professor;
 ```
 
-**Resultado:**
-
-| maior_salario | menor_salario |
-|---|---|
-| 95000.00 | 40000.00 |
-
 ## GROUP BY: Agrupando por Categoria
 
 A cláusula `GROUP BY` divide as linhas em grupos e aplica a função de agregação a cada grupo separadamente.
 
-```sql
--- Salário médio por centro acadêmico
-SELECT nome_centro, AVG(salario) AS media
+```{sql}
+--| connection: con
+--| eval: true
+-- Salário médio, total e número de professores por escola
+SELECT escola,
+       ROUND(AVG(salario), 2) AS media_salario,
+       SUM(salario)           AS total_salarios,
+       COUNT(*)               AS n_professores
 FROM   professor
-GROUP BY nome_centro
-ORDER BY media DESC;
+GROUP BY escola
+ORDER BY media_salario DESC;
 ```
 
-**Resultado:**
-
-| nome_centro | media |
-|---|---|
-| COCBS | 84666.67 |
-| COETI | 78000.00 |
-| COCHCMA | 73000.00 |
-| COEMAG | 40000.00 |
-
-Cálculo por centro:
-
-- **COCBS**: (95000 + 87000 + 72000) / 3 = 254000 / 3 ≈ 84666.67
-- **COETI**: (65000 + 75000 + 92000 + 80000) / 4 = 312000 / 4 = 78000.00
-- **COCHCMA**: (90000 + 60000 + 62000 + 80000) / 4 = 292000 / 4 = 73000.00
-- **COEMAG**: 40000 / 1 = 40000.00
-
-```sql
--- Número de professores e maior salário por centro
-SELECT nome_centro,
-       COUNT(*)     AS qtd_professores,
-       MAX(salario) AS maior_salario
-FROM   professor
-GROUP BY nome_centro
-ORDER BY qtd_professores DESC;
+```{sql}
+--| connection: con
+--| eval: true
+-- Número de disciplinas por curso
+SELECT sigla_curso, COUNT(*) AS n_disciplinas
+FROM   disciplina
+GROUP BY sigla_curso
+ORDER BY n_disciplinas DESC;
 ```
-
-**Resultado:**
-
-| nome_centro | qtd_professores | maior_salario |
-|---|---|---|
-| COCHCMA | 4 | 90000.00 |
-| COETI | 4 | 92000.00 |
-| COCBS | 3 | 95000.00 |
-| COEMAG | 1 | 40000.00 |
 
 ### Erro Comum: Atributo Fora do GROUP BY
 
@@ -126,14 +103,14 @@ Todo atributo listado no `SELECT` que **não** é uma função de agregação **
 
 ```sql
 -- INCORRETO: 'nome' não está no GROUP BY
-SELECT nome_centro, nome, AVG(salario)
+SELECT escola, nome, AVG(salario)
 FROM   professor
-GROUP BY nome_centro;
+GROUP BY escola;
 -- ERROR: column "professor.nome" must appear in the GROUP BY clause
 --        or be used in an aggregate function
 ```
 
-A razão: para cada grupo (um centro), há vários nomes de professores. O banco não sabe qual nome retornar.
+A razão: para cada grupo (uma escola), há vários nomes de professores. O banco não sabe qual nome retornar.
 :::
 
 ## HAVING: Filtrando Grupos
@@ -152,41 +129,30 @@ A cláusula `HAVING` filtra os **grupos** resultantes do `GROUP BY`, da mesma fo
 7. `ORDER BY` — ordena o resultado
 :::
 
-```sql
--- Centros com salário médio acima de R$ 70.000
-SELECT nome_centro, AVG(salario) AS media
+```{sql}
+--| connection: con
+--| eval: true
+-- Escolas com salário médio acima de 4000
+SELECT escola, ROUND(AVG(salario), 2) AS media_salario
 FROM   professor
-GROUP BY nome_centro
-HAVING AVG(salario) > 70000
-ORDER BY media DESC;
+GROUP BY escola
+HAVING AVG(salario) > 4000
+ORDER BY media_salario DESC;
 ```
 
-**Resultado** (COEMAG com média de R$ 40.000 é excluído):
+ESETI tem média de R$ 4.366,67 e é excluída pelo `HAVING`.
 
-| nome_centro | media |
-|---|---|
-| COCBS | 84666.67 |
-| COETI | 78000.00 |
-| COCHCMA | 73000.00 |
-
-```sql
--- Centros com pelo menos 3 professores, ordenados pelo número de professores
-SELECT nome_centro, COUNT(*) AS qtd
-FROM   professor
-GROUP BY nome_centro
-HAVING COUNT(*) >= 3
-ORDER BY qtd DESC;
+```{sql}
+--| connection: con
+--| eval: true
+-- Cursos com pelo menos 2 disciplinas de semestre 4 ou mais avançado
+SELECT sigla_curso, COUNT(*) AS disciplinas_avancadas
+FROM   disciplina
+WHERE  semestre >= 4
+GROUP BY sigla_curso
+HAVING COUNT(*) >= 2
+ORDER BY disciplinas_avancadas DESC;
 ```
-
-**Resultado:**
-
-| nome_centro | qtd |
-|---|---|
-| COCHCMA | 4 |
-| COETI | 4 |
-| COCBS | 3 |
-
-COEMAG (1 professor) é excluído pelo `HAVING COUNT(*) >= 3`.
 
 ## WHERE vs. HAVING
 
@@ -196,17 +162,14 @@ COEMAG (1 professor) é excluído pelo `HAVING COUNT(*) >= 3`.
 | Executado | Antes do GROUP BY | Depois do GROUP BY |
 | Pode usar agregação? | Não | Sim |
 
-```sql
--- WHERE filtra antes: considera apenas COETI e COCBS, depois agrupa
-SELECT nome_centro, AVG(salario) AS media
+```{sql}
+--| connection: con
+--| eval: true
+-- WHERE filtra antes: considera apenas professores de 40h,
+-- depois agrupa por escola e filtra com média > 6000
+SELECT escola, ROUND(AVG(salario), 2) AS media_salario
 FROM   professor
-WHERE  nome_centro IN ('COETI', 'COCBS')
-GROUP BY nome_centro;
+WHERE  ch_semanal = 40
+GROUP BY escola
+HAVING AVG(salario) > 6000;
 ```
-
-**Resultado:**
-
-| nome_centro | media |
-|---|---|
-| COETI | 78000.00 |
-| COCBS | 84666.67 |

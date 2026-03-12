@@ -34,49 +34,49 @@ Neste capítulo, cobrimos os fundamentos da linguagem SQL, da definição de dad
 
 ## Exercícios
 
-Os exercícios abaixo usam as tabelas `centro`, `professor`, `disciplina` e `aluno` da UnDF com os dados apresentados ao longo deste capítulo.
+Os exercícios abaixo usam as tabelas `escola`, `curso`, `professor`, `disciplina`, `aluno` e `matricula_disciplina` da UnDF com os dados apresentados ao longo deste capítulo.
 
 ---
 
-**Exercício 1.** Liste os nomes de todos os alunos do COCBS em ordem alfabética.
+**Exercício 1.** Liste os nomes de todos os alunos do curso de Pedagogia (`PED`) em ordem alfabética.
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `WHERE nome_centro = 'COCBS'` e `ORDER BY nome ASC`.
+Use `WHERE sigla_curso = 'PED'` e `ORDER BY nome ASC`.
 :::
 
 ---
 
-**Exercício 2.** Qual é o total de carga horária das disciplinas oferecidas pelo COETI?
+**Exercício 2.** Qual é a carga horária total e a carga horária média das disciplinas oferecidas pelo curso de Engenharia de Software (`ENS`)?
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `SUM(carga_horaria)` com `WHERE nome_centro = 'COETI'`.
+Use `SUM(carga_horaria)` e `AVG(carga_horaria)` com `WHERE sigla_curso = 'ENS'`.
 :::
 
 ---
 
-**Exercício 3.** Quais centros têm orçamento acima da média de todos os centros? Exiba o nome do centro e seu orçamento, em ordem decrescente de orçamento.
+**Exercício 3.** Quais cursos têm carga horária média por disciplina acima da média geral de todas as disciplinas? Exiba a sigla do curso e a média, em ordem decrescente.
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-A média pode ser calculada com uma subconsulta: `WHERE orcamento > (SELECT AVG(orcamento) FROM centro)`.
+A média geral pode ser calculada com uma subconsulta: `HAVING AVG(carga_horaria) > (SELECT AVG(carga_horaria) FROM disciplina)`.
 :::
 
 ---
 
-**Exercício 4.** Liste os professores que pertencem ao mesmo centro que pelo menos uma disciplina com carga horária superior a 100 horas. Exiba o nome do professor, o centro e o salário.
+**Exercício 4.** Liste os professores que pertencem à mesma escola que pelo menos uma disciplina com carga horária superior a 150 horas. Exiba o nome do professor e a escola.
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `IN` com uma subconsulta que seleciona `nome_centro` de `disciplina WHERE carga_horaria > 100`.
+Use `IN` com uma subconsulta que seleciona `escola` das disciplinas via a relação `curso` para encontrar as escolas relevantes. Ou junte `professor` com `curso` e `disciplina` usando `JOIN`.
 :::
 
 ---
 
-**Exercício 5.** Para cada centro, retorne o nome do professor com o maior salário. Exiba o nome do centro, o nome do professor e o salário.
+**Exercício 5.** Para cada escola, retorne o nome do professor com maior carga horária semanal (`ch_semanal`). Exiba o nome da escola, o nome do professor e a carga horária semanal.
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use uma subconsulta correlacionada no `WHERE` para comparar o salário com o `MAX(salario)` do mesmo centro, ou use uma CTE com `WITH`.
+Use uma CTE com `WITH` para calcular `MAX(ch_semanal)` por escola, depois junte com `professor` para obter o nome.
 :::

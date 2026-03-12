@@ -1,5 +1,20 @@
 # Modificação do Banco de Dados
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 Além de consultar dados com `SELECT`, o SQL permite **modificar** o conteúdo de um banco de dados por meio de três comandos DML: `INSERT` (inserir), `DELETE` (excluir) e `UPDATE` (atualizar).
 
 ## INSERT: Inserindo Dados
@@ -10,94 +25,89 @@ A forma mais simples insere uma linha com valores explícitos:
 
 ```sql
 -- Inserir um novo centro na UnDF
-INSERT INTO centro (nome_centro, predio, orcamento)
-VALUES ('COMAT', 'Plano Piloto', 120000.00);
+INSERT INTO centro (centro, nome_centro)
+VALUES ('COLAB', 'Centro de Laboratórios Avançados');
 ```
 
-Quando os valores são fornecidos na mesma ordem das colunas da tabela, a lista de colunas pode ser omitida — mas é considerada boa prática sempre especificá-la:
+Ao inserir uma escola vinculada ao novo centro:
 
 ```sql
--- Forma equivalente (sem lista de colunas — menos recomendada)
-INSERT INTO centro
-VALUES ('COMAT', 'Plano Piloto', 120000.00);
-```
-
-Ao inserir um professor vinculado ao novo centro:
-
-```sql
-INSERT INTO professor (id, nome, nome_centro, salario)
-VALUES ('11111', 'Vanessa', 'COMAT', 55000.00);
+INSERT INTO escola (escola, nome_escola, centro)
+VALUES ('ELAB', 'Escola de Laboratórios', 'COLAB');
 ```
 
 ### INSERT com SELECT
 
-É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela `professor_historico` com a mesma estrutura de `professor`:
+É possível inserir dados copiados de outra tabela com base em uma consulta. Suponha a existência de uma tabela `disciplina_historico` com a mesma estrutura de `disciplina`:
 
 ```sql
--- Criar tabela histórica (estrutura idêntica a professor)
-CREATE TABLE professor_historico (
-    id          CHAR(5)       PRIMARY KEY,
-    nome        VARCHAR(50)   NOT NULL,
-    nome_centro VARCHAR(10),
-    salario     NUMERIC(8, 2) NOT NULL
+-- Criar tabela histórica (estrutura idêntica a disciplina)
+CREATE TABLE disciplina_historico (
+    codigo          VARCHAR(10) PRIMARY KEY,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    sigla_curso     VARCHAR(5),
+    semestre        INTEGER,
+    carga_horaria   INTEGER
 );
 
--- Copiar para o histórico os professores com salário acima de R$ 90.000
-INSERT INTO professor_historico (id, nome, nome_centro, salario)
-SELECT id, nome, nome_centro, salario
-FROM   professor
-WHERE  salario > 90000;
+-- Copiar para o histórico as disciplinas com carga horária acima de 150 h
+INSERT INTO disciplina_historico
+SELECT *
+FROM   disciplina
+WHERE  carga_horaria > 150;
 ```
 
-**Linhas inseridas** (professores com salário > 90.000):
+Verificando o que seria inserido:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 22222 | Marcos | COCBS | 95000.00 |
-| 83821 | Pedro | COETI | 92000.00 |
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas que seriam copiadas para o histórico (carga > 150 h)
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  carga_horaria > 150
+ORDER BY carga_horaria DESC;
+```
 
 ## DELETE: Excluindo Dados
 
 ### DELETE simples
 
 ```sql
--- Remover o professor João (único professor do COEMAG)
-DELETE FROM professor
-WHERE  nome_centro = 'COEMAG';
+-- Remover disciplinas de semestres ímpares (não fazem parte da nossa amostra)
+DELETE FROM disciplina
+WHERE  semestre % 2 = 1;
 ```
-
-Essa operação remove a linha de João (id 15151) permanentemente.
 
 ### DELETE com subconsulta
 
 Para condições mais complexas, o `WHERE` pode conter subconsultas:
 
 ```sql
--- Remover professores com salário abaixo da média geral
--- Média atual: (65000+90000+40000+95000+60000+87000+75000+62000+80000+72000+92000+80000)/12 ≈ 74833
-DELETE FROM professor
-WHERE  salario < (
-    SELECT AVG(salario)
-    FROM   professor
+-- Remover matrículas de alunos com nota abaixo de 5.0 em todas as disciplinas
+DELETE FROM matricula_disciplina
+WHERE  cod_matricula IN (
+    SELECT cod_matricula
+    FROM   matricula_disciplina
+    GROUP BY cod_matricula
+    HAVING AVG(nota) < 5.0
 );
 ```
 
-**Professores removidos** (salário < 74833.33):
+Verificando quais alunos seriam afetados:
 
-| nome | salario |
-|---|---|
-| Carlos | 65000.00 |
-| João | 40000.00 |
-| Fernanda | 60000.00 |
-| Juliana | 62000.00 |
-| Beatriz | 72000.00 |
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos com média abaixo de 5.0
+SELECT cod_matricula, ROUND(AVG(nota), 2) AS media
+FROM   matricula_disciplina
+GROUP BY cod_matricula
+HAVING AVG(nota) < 5.0;
+```
 
 ::: {.callout-warning}
-**Atenção ao comportamento da subconsulta em DELETE:**
-
-Alguns SGBDs (como MySQL) **não permitem** que a subconsulta referencie a mesma tabela que está sendo modificada. Em PostgreSQL, isso é permitido, pois o banco computa a subconsulta com o estado da tabela **antes** de iniciar as exclusões.
-
-Para máxima portabilidade, use uma CTE ou subconsulta no `FROM` quando necessário.
+**DELETE sem WHERE remove todas as linhas da tabela.** Sempre verifique com um `SELECT` primeiro quais linhas serão afetadas antes de executar o `DELETE`.
 :::
 
 ## UPDATE: Atualizando Dados
@@ -105,85 +115,100 @@ Para máxima portabilidade, use uma CTE ou subconsulta no `FROM` quando necessá
 ### UPDATE simples
 
 ```sql
--- Aplicar reajuste de 5% para todos os professores
-UPDATE professor
-SET    salario = salario * 1.05;
+-- Renomear um curso (corrigir nome)
+UPDATE curso
+SET    nome_curso = 'Engenharia de Software (Bacharelado)'
+WHERE  sigla_curso = 'ENS';
 ```
 
 ### UPDATE condicional
 
 ```sql
--- Aumentar 10% para professores do COETI
-UPDATE professor
-SET    salario = salario * 1.10
-WHERE  nome_centro = 'COETI';
+-- Aumentar carga horária das disciplinas de semestre 8 em 10%
+UPDATE disciplina
+SET    carga_horaria = ROUND(carga_horaria * 1.10)
+WHERE  semestre = 8;
 ```
 
-**Antes e depois (professores do COETI):**
+Verificando o que seria alterado:
 
-| nome | salario antes | salario depois |
-|---|---|---|
-| Carlos | 65000.00 | 71500.00 |
-| Lucas | 75000.00 | 82500.00 |
-| Pedro | 92000.00 | 101200.00 |
-| Mariana | 80000.00 | 88000.00 |
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas de semestre 8 e como ficariam com +10% de carga horária
+SELECT codigo, nome_disciplina,
+       carga_horaria                          AS carga_atual,
+       ROUND(carga_horaria * 1.10)            AS carga_nova
+FROM   disciplina
+WHERE  semestre = 8
+ORDER BY sigla_curso;
+```
 
-### UPDATE com CASE: reajuste escalonado
+### UPDATE com CASE: reajuste diferenciado
 
 Quando diferentes grupos de linhas precisam de atualizações diferentes, o `CASE` permite aplicar regras distintas em um único comando:
 
 ```sql
--- Reajuste diferenciado por faixa salarial:
---   Salário <= R$ 70.000 → aumento de 10%
---   Salário >  R$ 70.000 → aumento de 5%
-UPDATE professor
-SET    salario = CASE
-                    WHEN salario <= 70000 THEN salario * 1.10
-                    ELSE                      salario * 1.05
-                END;
+-- Ajuste de carga horária por faixa:
+--   Disciplinas com carga <= 60 h → aumentar 20%
+--   Disciplinas com carga > 60 h  → aumentar 10%
+UPDATE disciplina
+SET    carga_horaria = CASE
+                          WHEN carga_horaria <= 60 THEN ROUND(carga_horaria * 1.20)
+                          ELSE                          ROUND(carga_horaria * 1.10)
+                       END;
 ```
 
-**Resultado para todos os professores:**
+Verificando o efeito por faixa:
 
-| nome | nome_centro | salario antes | salario depois |
-|---|---|---|---|
-| Carlos | COETI | 65000.00 | 71500.00 |
-| Ana | COCHCMA | 90000.00 | 94500.00 |
-| João | COEMAG | 40000.00 | 44000.00 |
-| Marcos | COCBS | 95000.00 | 99750.00 |
-| Fernanda | COCHCMA | 60000.00 | 66000.00 |
-| Roberto | COCBS | 87000.00 | 91350.00 |
-| Lucas | COETI | 75000.00 | 78750.00 |
-| Juliana | COCHCMA | 62000.00 | 68200.00 |
-| Rafael | COCHCMA | 80000.00 | 84000.00 |
-| Beatriz | COCBS | 72000.00 | 75600.00 |
-| Pedro | COETI | 92000.00 | 96600.00 |
-| Mariana | COETI | 80000.00 | 84000.00 |
+```{sql}
+--| connection: con
+--| eval: true
+-- Simular o ajuste sem alterar o banco
+SELECT codigo, sigla_curso, carga_horaria AS atual,
+       CASE
+           WHEN carga_horaria <= 60 THEN ROUND(carga_horaria * 1.20)
+           ELSE                          ROUND(carga_horaria * 1.10)
+       END AS proposto
+FROM   disciplina
+ORDER BY sigla_curso, semestre;
+```
 
 ::: {.conceito}
 **Vantagem do CASE em UPDATE:**
 
-O uso de um único `UPDATE` com `CASE` garante que o reajuste seja calculado com base nos **valores originais** — não há risco de um professor receber o primeiro reajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois `UPDATE`s separados.
+O uso de um único `UPDATE` com `CASE` garante que o ajuste seja calculado com base nos **valores originais** — não há risco de uma linha receber o primeiro ajuste e depois entrar na faixa errada do segundo. Isso é diferente de usar dois `UPDATE`s separados.
 :::
 
 ### UPDATE com subconsulta
 
 ```sql
--- Atualizar o orçamento do COETI para ser igual ao dobro da média dos outros centros
-UPDATE centro
-SET    orcamento = (
-    SELECT 2 * AVG(orcamento)
-    FROM   centro
-    WHERE  nome_centro <> 'COETI'
-)
-WHERE  nome_centro = 'COETI';
+-- Marcar como aprovadas todas as matrículas com nota >= 6.0
+UPDATE matricula_disciplina
+SET    aprovado = 1
+WHERE  nota >= 6.0
+  AND  aprovado IS NULL;
+```
+
+Verificando o estado atual:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Distribuição de aprovados e reprovados
+SELECT aprovado,
+       COUNT(*)           AS n_registros,
+       ROUND(AVG(nota), 2) AS nota_media
+FROM   matricula_disciplina
+GROUP BY aprovado
+ORDER BY aprovado;
 ```
 
 ## Resumo dos Comandos de Modificação
 
 | Comando | Ação | Cuidado |
 |---|---|---|
-| `INSERT INTO ... VALUES` | Insere linhas com valores explícitos | Respeit restrições (PK, FK, NOT NULL, CHECK) |
+| `INSERT INTO ... VALUES` | Insere linhas com valores explícitos | Respeitar restrições (PK, FK, NOT NULL, CHECK) |
 | `INSERT INTO ... SELECT` | Insere linhas copiadas de uma consulta | A consulta deve retornar colunas compatíveis |
 | `DELETE FROM ... WHERE` | Remove linhas que satisfazem a condição | Sem `WHERE`, remove **todas** as linhas |
 | `UPDATE ... SET ... WHERE` | Atualiza colunas das linhas que satisfazem a condição | Sem `WHERE`, atualiza **todas** as linhas |

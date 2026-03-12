@@ -18,57 +18,62 @@ Os predicados podem usar:
 
 - **Operadores de comparação**: $=$, $\neq$, $>$, $\geq$, $<$, $\leq$
 - **Conectivos lógicos**: $\wedge$ (e), $\vee$ (ou), $\neg$ (não)
-- **Comparação entre atributos**: $\sigma_{predio = nome\_centro}(centro)$
+- **Comparação entre atributos**: $\sigma_{escola = nome\_escola}(escola)$
 
-## Exemplo 1: Professores do COETI
+## Exemplo 1: Professores da ESETI
 
 Considere a relação `professor`:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 15151 | João | COEMAG | 40000 |
-| 22222 | Marcos | COCBS | 95000 |
-| 32343 | Fernanda | COCHCMA | 60000 |
-| 33456 | Roberto | COCBS | 87000 |
-| 45565 | Lucas | COETI | 75000 |
-| 58583 | Juliana | COCHCMA | 62000 |
-| 76543 | Rafael | COCHCMA | 80000 |
-| 76766 | Beatriz | COCBS | 72000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula_prof | nome | escola | ch_semanal |
+|---|---|---|---:|
+| PROF20230005 | Eduarda Souza   | EEMA  | 40 |
+| PROF20230006 | Felipe Araujo   | EEMA  | 40 |
+| PROF20230031 | Gustavo Costa   | ESETI | 40 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 |
+| PROF20230033 | Igor Melo       | ESETI | 40 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 |
+| PROF20230043 | Carla Pinto     | ESG   | 40 |
 
-A expressão $\sigma_{nome\_centro = \text{"COETI"}}(professor)$ retorna:
+A expressão $\sigma_{escola = \text{"ESETI"}}(professor)$ retorna:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 45565 | Lucas | COETI | 75000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula_prof | nome | escola | ch_semanal |
+|---|---|---|---:|
+| PROF20230031 | Gustavo Costa   | ESETI | 40 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 |
+| PROF20230033 | Igor Melo       | ESETI | 40 |
 
 ::: {.exemplo}
-Apenas as tuplas onde `nome_centro = "COETI"` foram mantidas. O schema do resultado é idêntico ao schema de `professor`.
+Apenas as tuplas onde `escola = "ESETI"` foram mantidas. O schema do resultado é idêntico ao schema de `professor`.
 :::
 
 ## Exemplo 2: Predicado Composto
 
-Para selecionar professores do COETI **e** com salário superior a 75 000, usa-se o conectivo $\wedge$:
+Para selecionar alunos do curso de Engenharia de Software **e** com ingresso em 2024, usa-se o conectivo $\wedge$:
 
-$$\sigma_{nome\_centro = \text{"COETI"} \,\wedge\, salario > 75000}(professor)$$
+$$\sigma_{sigla\_curso = \text{"ENS"} \,\wedge\, ano\_ingresso = 2024}(aluno)$$
+
+Relação `aluno` (amostra):
+
+| matricula  | nome | sigla_curso | ano_ingresso |
+|---|---|---|---:|
+| 2023002001 | Matheus Silva   | ENS | 2023 |
+| 2023002002 | Larissa Araújo  | ENS | 2023 |
+| 2024002001 | Pedro Carvalho  | ENS | 2024 |
+| 2024002002 | Isabela Freitas | ENS | 2024 |
+| 2023007001 | Beatriz Carvalho | ECO | 2023 |
+| 2023009001 | Amanda Moreira  | PED | 2023 |
 
 Resultado:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula  | nome | sigla_curso | ano_ingresso |
+|---|---|---|---:|
+| 2024002001 | Pedro Carvalho  | ENS | 2024 |
+| 2024002002 | Isabela Freitas | ENS | 2024 |
 
 ## Exemplo 3: Comparação Entre Atributos
 
-O predicado pode também comparar dois atributos da mesma relação. Por exemplo, para encontrar centros cujo nome coincide com o prédio onde estão instalados:
+O predicado pode também comparar dois atributos da mesma relação. Por exemplo, para encontrar disciplinas cujo código corresponde ao nome do curso ao qual pertencem (verificação de consistência):
 
-$$\sigma_{predio = nome\_centro}(centro)$$
+$$\sigma_{semestre > 6}(disciplina)$$
 
-Neste caso, o predicado $predio = nome\_centro$ compara o valor de dois atributos da mesma tupla.
+Neste caso, o predicado $semestre > 6$ filtra as disciplinas das fases finais do curso.

@@ -1,5 +1,20 @@
 # Subconsultas
 
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
 Uma **subconsulta** (ou *subquery*) é uma consulta SQL aninhada dentro de outra consulta. Ela pode aparecer na cláusula `WHERE`, na cláusula `FROM` ou na cláusula `SELECT`. Subconsultas permitem expressar perguntas complexas que não podem ser respondidas com uma única consulta simples.
 
 ## IN e NOT IN
@@ -7,69 +22,38 @@ Uma **subconsulta** (ou *subquery*) é uma consulta SQL aninhada dentro de outra
 O predicado `IN` verifica se um valor pertence ao conjunto retornado por uma subconsulta.
 
 ::: {.exemplo}
-**Professores em centros com orçamento acima de R$ 150.000:**
+**Alunos matriculados em disciplinas de Engenharia de Software:**
 
-Os centros com orçamento > 150.000 são: COETI (185.000), COCHCMA (170.000) e COCBS (160.000). Apenas o COEMAG (80.000) fica fora.
-
-```sql
--- Passo 1 (subconsulta): encontra os centros com orçamento > 150.000
--- Passo 2 (consulta principal): retorna professores desses centros
-SELECT nome, nome_centro
-FROM   professor
-WHERE  nome_centro IN (
-    SELECT nome_centro
-    FROM   centro
-    WHERE  orcamento > 150000
+```{sql}
+--| connection: con
+--| eval: true
+-- Passo 1 (subconsulta): códigos das disciplinas de ENS
+-- Passo 2 (consulta principal): alunos que cursaram essas disciplinas
+SELECT DISTINCT a.nome, a.sigla_curso
+FROM   aluno a
+WHERE  a.matricula IN (
+    SELECT md.cod_matricula
+    FROM   matricula_disciplina md
+    WHERE  md.cod_disciplina LIKE 'ENS%'
 )
-ORDER BY nome_centro, nome;
+ORDER BY a.nome;
 ```
-
-**Resultado** (todos exceto João, do COEMAG):
-
-| nome | nome_centro |
-|---|---|
-| Marcos | COCBS |
-| Roberto | COCBS |
-| Beatriz | COCBS |
-| Ana | COCHCMA |
-| Fernanda | COCHCMA |
-| Juliana | COCHCMA |
-| Rafael | COCHCMA |
-| Carlos | COETI |
-| Lucas | COETI |
-| Pedro | COETI |
-| Mariana | COETI |
 :::
 
 ::: {.exemplo}
-**NOT IN: professores que não são do COEMAG (via subconsulta):**
+**NOT IN: disciplinas que nenhum aluno cursou:**
 
-```sql
-SELECT nome, nome_centro
-FROM   professor
-WHERE  nome_centro NOT IN (
-    SELECT nome_centro
-    FROM   centro
-    WHERE  nome_centro = 'COEMAG'
+```{sql}
+--| connection: con
+--| eval: true
+SELECT codigo, nome_disciplina
+FROM   disciplina
+WHERE  codigo NOT IN (
+    SELECT DISTINCT cod_disciplina
+    FROM   matricula_disciplina
 )
-ORDER BY nome;
+ORDER BY codigo;
 ```
-
-**Resultado** (11 professores, excluindo João):
-
-| nome | nome_centro |
-|---|---|
-| Ana | COCHCMA |
-| Beatriz | COCBS |
-| Carlos | COETI |
-| Fernanda | COCHCMA |
-| Juliana | COCHCMA |
-| Lucas | COETI |
-| Marcos | COCBS |
-| Mariana | COETI |
-| Pedro | COETI |
-| Rafael | COCHCMA |
-| Roberto | COCBS |
 :::
 
 ## SOME e ALL
@@ -84,62 +68,38 @@ O predicado `= SOME` é equivalente a `IN`.
 :::
 
 ::: {.exemplo}
-**Professores com salário maior que pelo menos um professor do COEMAG (`> SOME`):**
+**Disciplinas com carga horária maior que pelo menos uma disciplina de PED (`> SOME`):**
 
-O único professor do COEMAG é João, com salário de R$ 40.000. Portanto, qualquer professor com salário > 40.000 satisfaz a condição.
-
-```sql
-SELECT nome, salario
-FROM   professor
-WHERE  salario > SOME (
-    SELECT salario
-    FROM   professor
-    WHERE  nome_centro = 'COEMAG'
+```{sql}
+--| connection: con
+--| eval: true
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  carga_horaria > SOME (
+    SELECT carga_horaria
+    FROM   disciplina
+    WHERE  sigla_curso = 'PED'
 )
-ORDER BY salario;
+  AND sigla_curso <> 'PED'
+ORDER BY carga_horaria;
 ```
-
-**Resultado** (todos exceto João, cujo salário é exatamente igual ao limite):
-
-| nome | salario |
-|---|---|
-| Carlos | 65000.00 |
-| Fernanda | 60000.00 |
-| Juliana | 62000.00 |
-| Beatriz | 72000.00 |
-| Lucas | 75000.00 |
-| Rafael | 80000.00 |
-| Mariana | 80000.00 |
-| Roberto | 87000.00 |
-| Ana | 90000.00 |
-| Pedro | 92000.00 |
-| Marcos | 95000.00 |
 :::
 
 ::: {.exemplo}
-**Professores com salário maior que TODOS os professores do COEMAG (`> ALL`):**
+**Disciplinas com carga horária maior que TODAS as disciplinas de ECO (`> ALL`):**
 
-Como há apenas um professor no COEMAG (João, R$ 40.000), `> ALL` equivale a `> 40000`.
-
-```sql
-SELECT nome, salario
-FROM   professor
-WHERE  salario > ALL (
-    SELECT salario
-    FROM   professor
-    WHERE  nome_centro = 'COEMAG'
+```{sql}
+--| connection: con
+--| eval: true
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  carga_horaria > ALL (
+    SELECT carga_horaria
+    FROM   disciplina
+    WHERE  sigla_curso = 'ECO'
 )
-ORDER BY salario;
+ORDER BY carga_horaria;
 ```
-
-**Resultado** — os mesmos 11 professores com salário acima de R$ 40.000.
-
-| nome | salario |
-|---|---|
-| Carlos | 65000.00 |
-| Fernanda | 60000.00 |
-| ... | ... |
-| Marcos | 95000.00 |
 :::
 
 ## EXISTS e NOT EXISTS
@@ -147,63 +107,38 @@ ORDER BY salario;
 `EXISTS` verifica se a subconsulta retorna ao menos uma linha. É frequentemente usado com **subconsultas correlacionadas**, em que a subconsulta referencia colunas da consulta externa.
 
 ::: {.exemplo}
-**EXISTS: centros que têm pelo menos um professor com salário acima de R$ 80.000:**
+**EXISTS: cursos que têm pelo menos uma disciplina com carga horária acima de 150 h:**
 
-```sql
-SELECT nome_centro, predio
-FROM   centro c
+```{sql}
+--| connection: con
+--| eval: true
+SELECT c.sigla_curso, c.nome_curso
+FROM   curso c
 WHERE  EXISTS (
     SELECT 1
-    FROM   professor p
-    WHERE  p.nome_centro = c.nome_centro   -- correlação com a consulta externa
-      AND  p.salario > 80000
+    FROM   disciplina d
+    WHERE  d.sigla_curso = c.sigla_curso   -- correlação com a consulta externa
+      AND  d.carga_horaria > 150
 );
 ```
-
-**Resultado:**
-
-| nome_centro | predio |
-|---|---|
-| COCBS | Samambaia |
-| COCHCMA | Buritis |
-| COETI | Lago Norte |
-
-- COCBS: Marcos (95.000) e Roberto (87.000) — satisfaz.
-- COCHCMA: Ana (90.000) — satisfaz.
-- COETI: Pedro (92.000) — satisfaz.
-- COEMAG: João (40.000) — não satisfaz; excluído.
 :::
 
 ::: {.exemplo}
-**NOT EXISTS: alunos que não têm carga total (carga_total = 0):**
+**NOT EXISTS: alunos que não têm nenhuma reprovação:**
 
-```sql
--- Alunos cuja carga_total é zero (nunca cursaram nenhuma disciplina)
-SELECT nome
-FROM   aluno
+```{sql}
+--| connection: con
+--| eval: true
+SELECT a.nome, a.sigla_curso
+FROM   aluno a
 WHERE  NOT EXISTS (
     SELECT 1
-    FROM   aluno a2
-    WHERE  a2.id = aluno.id
-      AND  a2.carga_total > 0
-);
+    FROM   matricula_disciplina md
+    WHERE  md.cod_matricula = a.matricula
+      AND  md.aprovado = 0
+)
+ORDER BY a.sigla_curso, a.nome;
 ```
-
-Uma forma mais direta para este caso específico:
-
-```sql
-SELECT nome
-FROM   aluno
-WHERE  carga_total = 0;
-```
-
-**Resultado:**
-
-| nome |
-|---|
-| Henrique |
-
-Henrique (id 70557) é o único aluno com `carga_total = 0`.
 :::
 
 ## Subconsulta no FROM
@@ -211,27 +146,22 @@ Henrique (id 70557) é o único aluno com `carga_total = 0`.
 Uma subconsulta pode ser usada como se fosse uma tabela na cláusula `FROM`. Ela deve receber um alias.
 
 ::: {.exemplo}
-**Centros com salário médio acima de R$ 70.000:**
+**Cursos com carga horária média por disciplina acima de 70 h:**
 
-```sql
--- A subconsulta calcula a média por centro; a consulta externa filtra
-SELECT media_por_centro.nome_centro, media_por_centro.media
+```{sql}
+--| connection: con
+--| eval: true
+-- A subconsulta calcula a média por curso; a consulta externa filtra
+SELECT media_por_curso.sigla_curso,
+       ROUND(media_por_curso.media, 2) AS media_carga
 FROM (
-    SELECT nome_centro, AVG(salario) AS media
-    FROM   professor
-    GROUP BY nome_centro
-) AS media_por_centro
-WHERE  media_por_centro.media > 70000
-ORDER BY media_por_centro.media DESC;
+    SELECT sigla_curso, AVG(carga_horaria) AS media
+    FROM   disciplina
+    GROUP BY sigla_curso
+) AS media_por_curso
+WHERE  media_por_curso.media > 70
+ORDER BY media_por_curso.media DESC;
 ```
-
-**Resultado:**
-
-| nome_centro | media |
-|---|---|
-| COCBS | 84666.67 |
-| COETI | 78000.00 |
-| COCHCMA | 73000.00 |
 :::
 
 ## WITH: Expressões de Tabela Comuns (CTE)
@@ -239,38 +169,27 @@ ORDER BY media_por_centro.media DESC;
 A cláusula `WITH` define uma **CTE** (*Common Table Expression*), que é uma subconsulta nomeada e reutilizável na consulta principal. CTEs tornam consultas complexas mais legíveis.
 
 ::: {.exemplo}
-**Carga horária total por centro e filtro de centros com mais de 200 horas:**
+**Cursos com carga horária total e número de disciplinas:**
 
-```sql
--- Define a CTE com a soma de carga horária por centro
-WITH carga_por_centro AS (
-    SELECT nome_centro, SUM(carga_horaria) AS total_horas
+```{sql}
+--| connection: con
+--| eval: true
+-- Define a CTE com estatísticas por curso
+WITH stats_curso AS (
+    SELECT sigla_curso,
+           COUNT(*)         AS n_disciplinas,
+           SUM(carga_horaria)  AS carga_total,
+           AVG(carga_horaria)  AS carga_media
     FROM   disciplina
-    GROUP BY nome_centro
+    GROUP BY sigla_curso
 )
--- Usa a CTE como se fosse uma tabela
-SELECT nome_centro, total_horas
-FROM   carga_por_centro
-WHERE  total_horas > 200
-ORDER BY total_horas DESC;
+-- Usa a CTE junto com a tabela curso para obter o nome completo
+SELECT c.nome_curso, s.n_disciplinas, s.carga_total,
+       ROUND(s.carga_media, 1) AS carga_media
+FROM   stats_curso s
+JOIN   curso c USING (sigla_curso)
+ORDER BY s.carga_total DESC;
 ```
-
-**Resultado:**
-
-| nome_centro | total_horas |
-|---|---|
-| COCBS | 245 |
-| COETI | 260 |
-| COCHCMA | 180 |
-
-Nota: COCHCMA tem 60 + 60 + 60 = 180 horas (abaixo de 200) e seria excluído. COETI tem 20 + 120 + 120 = 260, COCBS tem 105 + 70 + 70 = 245. COEMAG tem 60 + 60 + 60 = 180, também abaixo de 200.
-
-**Resultado corrigido:**
-
-| nome_centro | total_horas |
-|---|---|
-| COETI | 260 |
-| COCBS | 245 |
 :::
 
 ::: {.conceito}

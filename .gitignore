@@ -26,6 +26,10 @@ renv/staging/
 
 # slides
 slides-db-book/
+matriz-curricular/
+
+# dados scripts
+dados/*.py
 
 # VSCode
 .vscode/

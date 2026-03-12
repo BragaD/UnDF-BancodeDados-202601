@@ -9,7 +9,7 @@ Neste capítulo vimos:
 - As principais aplicações de banco de dados nos diferentes setores
 - As limitações de sistemas baseados em arquivos e como SGBDs as resolvem
 - Os principais modelos de dados, com ênfase no **modelo relacional** (Ted Codd, 1970)
-- As tabelas do banco universitário: `professor`, `aluno`, `disciplina`, `departamento`
+- As tabelas do banco universitário: `centro`, `escola`, `curso`, `professor`, `aluno`, `disciplina`, `ministra`, `matricula_disciplina`
 - A arquitetura em três níveis de abstração: físico, lógico e visão
 - Schemas e instâncias; independência de dados física
 - A **DDL** para definição do schema e a **DML** (SQL) para consulta e atualização
@@ -32,9 +32,9 @@ Neste capítulo vimos:
 6. Considere a seguinte consulta SQL:
 
    ```sql
-   SELECT nome, salario
+   SELECT nome, escola
    FROM professor
-   WHERE salario > 70000;
+   WHERE escola = 'ESETI';
    ```
 
    Quais etapas o processador de consultas executa para responder essa consulta?

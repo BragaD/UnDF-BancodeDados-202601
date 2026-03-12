@@ -6,10 +6,11 @@ Notação de especificação para definir o schema do banco de dados. Exemplo:
 
 ```sql
 CREATE TABLE professor (
-    id          CHAR(5),
-    nome        VARCHAR(20),
-    nome_centro VARCHAR(10),
-    salario     NUMERIC(8,2)
+    matricula_prof VARCHAR(15),
+    nome           VARCHAR(50),
+    escola         VARCHAR(10),
+    ch_semanal     INTEGER,
+    salario        NUMERIC(10,2)
 );
 ```
 
@@ -17,7 +18,7 @@ O compilador DDL gera um conjunto de *templates* de tabelas armazenados em um **
 
 - Schema do banco de dados
 - Restrições de integridade
-  - Chave primária (`id` identifica unicamente cada professor)
+  - Chave primária (`matricula_prof` identifica unicamente cada professor)
 - Autorizações — quem pode acessar o quê
 
 ## DML — Data Manipulation Language
@@ -33,12 +34,12 @@ DMLs declarativas são geralmente mais fáceis de aprender e usar. DMLs declarat
 
 ## SQL
 
-A linguagem de consulta SQL é **não-procedural**. Uma consulta recebe como entrada uma ou mais tabelas e sempre retorna uma única tabela. Exemplo para encontrar todos os professores do COETI:
+A linguagem de consulta SQL é **não-procedural**. Uma consulta recebe como entrada uma ou mais tabelas e sempre retorna uma única tabela. Exemplo para encontrar todos os professores da ESETI:
 
 ```sql
 SELECT nome
 FROM professor
-WHERE nome_centro = 'COETI';
+WHERE escola = 'ESETI';
 ```
 
 ::: {.callout-note}

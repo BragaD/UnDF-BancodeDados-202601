@@ -13,14 +13,14 @@ Atribui à variável temporária $x$ o resultado da expressão $E$. A variável 
 :::
 
 ::: {.exemplo}
-Para encontrar os professores que são do COETI **ou** do COCBS, em vez de escrever tudo em uma linha:
+Para encontrar os professores que são da ESETI **ou** da ESG, em vez de escrever tudo em uma linha:
 
-$$COETI \leftarrow \sigma_{nome\_centro = \text{"COETI"}}(professor)$$
-$$COCBS \leftarrow \sigma_{nome\_centro = \text{"COCBS"}}(professor)$$
-$$COETI \cup COCBS$$
+$$ESETI \leftarrow \sigma_{escola = \text{"ESETI"}}(professor)$$
+$$ESG \leftarrow \sigma_{escola = \text{"ESG"}}(professor)$$
+$$ESETI \cup ESG$$
 
 Isso é equivalente a:
-$$\sigma_{nome\_centro = \text{"COETI"}}(professor)\ \cup\ \sigma_{nome\_centro = \text{"COCBS"}}(professor)$$
+$$\sigma_{escola = \text{"ESETI"}}(professor)\ \cup\ \sigma_{escola = \text{"ESG"}}(professor)$$
 
 mas muito mais legível.
 :::
@@ -42,33 +42,35 @@ Retorna o resultado de $E$ com o nome $x$ e com os atributos renomeados para $A_
 :::
 
 ::: {.exemplo}
-Para encontrar pares de professores do mesmo centro (autojunção), precisamos de dois "aliases" para `professor`. Usamos $p1.id < p2.id$ para evitar pares duplicados e auto-pares:
+Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois "aliases" para `professor`. Usamos $p1.matricula\_prof < p2.matricula\_prof$ para evitar pares duplicados e auto-pares:
 
 $$P1 \leftarrow \rho_{p1}(professor)$$
 $$P2 \leftarrow \rho_{p2}(professor)$$
-$$\Pi_{p1.nome,\ p2.nome,\ p1.nome\_centro}(\sigma_{p1.nome\_centro = p2.nome\_centro\ \wedge\ p1.id < p2.id}(P1 \times P2))$$
+$$\Pi_{p1.nome,\ p2.nome,\ p1.escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof < p2.matricula\_prof}(P1 \times P2))$$
 
-Usando a versão reduzida da tabela `professor` com 6 tuplas:
+Usando a tabela `professor` com 7 tuplas:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 15151 | João     | COEMAG     | 40000   |
-| 32343 | Fernanda | COCHCMA | 60000 |
-| 45565 | Lucas | COETI | 75000 |
-| 83821 | Pedro | COETI | 92000 |
+| matricula_prof | nome | escola | ch_semanal | salario |
+|---|---|---|---:|---:|
+| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
+| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
+| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
+| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
+| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
 
 Resultado:
 
-| p1.nome | p2.nome | nome_centro |
+| p1.nome | p2.nome | escola |
 |---|---|---|
-| Carlos | Lucas | COETI |
-| Carlos | Pedro | COETI |
-| Lucas | Pedro | COETI |
-| Ana | Fernanda | COCHCMA |
+| Eduarda Souza   | Felipe Araujo   | EEMA  |
+| Gustavo Costa   | Helena Carvalho | ESETI |
+| Gustavo Costa   | Igor Melo       | ESETI |
+| Helena Carvalho | Igor Melo       | ESETI |
+| Bruno Teixeira  | Carla Pinto     | ESG   |
 
-Os pares são únicos e não contêm auto-pares graças à condição $p1.id < p2.id$. João (único professor do COEMAG) não forma nenhum par.
+Os pares são únicos e não contêm auto-pares graças à condição $p1.matricula\_prof < p2.matricula\_prof$. A ESETI contribui com 3 pares (3 professores, $\binom{3}{2} = 3$), enquanto EEMA e ESG contribuem com 1 par cada.
 :::
 
 ## Funções de Agregação ($\gamma$)
@@ -99,44 +101,26 @@ Salário médio de todos os professores:
 
 $$\gamma_{\text{avg}(salario)}(professor)$$
 
-Tabela de entrada:
-
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 15151 | João | COEMAG | 40000 |
-| 22222 | Marcos | COCBS | 95000 |
-| 32343 | Fernanda | COCHCMA | 60000 |
-| 33456 | Roberto | COCBS | 87000 |
-| 45565 | Lucas | COETI | 75000 |
-| 58583 | Juliana | COCHCMA | 62000 |
-| 76543 | Rafael | COCHCMA | 80000 |
-| 76766 | Beatriz | COCBS | 72000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
-
 Resultado:
 
 | avg(salario) |
-|---|
-| 74833 |
+|---:|
+| 5114.29 |
 
 ### Exemplo 2: Com Agrupamento
 
-Salário médio por centro (equivalente a `GROUP BY nome_centro`):
+Salário médio por escola (equivalente a `GROUP BY escola`):
 
-$${}_{nome\_centro}\ \gamma_{\text{avg}(salario)}(professor)$$
+$${}_{escola}\ \gamma_{\text{avg}(salario)}(professor)$$
 
 Resultado:
 
-| nome_centro | avg(salario) |
-|---|---|
-| COETI | 78000 |
-| COCBS | 84667 |
-| COCHCMA | 73000 |
-| COEMAG | 40000 |
+| escola | avg(salario) |
+|---|---:|
+| EEMA  | 4800.00 |
+| ESETI | 4366.67 |
+| ESG   | 6550.00 |
 
 ::: {.exemplo}
-O agrupamento por `nome_centro` faz com que a função `avg` seja calculada **separadamente** para cada grupo de tuplas com o mesmo valor de `nome_centro`.
+O agrupamento por `escola` faz com que a função `avg` seja calculada **separadamente** para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.
 :::

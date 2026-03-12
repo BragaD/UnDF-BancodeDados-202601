@@ -1,20 +1,12 @@
 # Hands-on: PostgreSQL na Prática
 
-Nesta seção vamos instalar o PostgreSQL, criar o banco de dados universitário da UnDF e popular as tabelas com os dados que vimos ao longo do capítulo.
+Nesta seção vamos instalar o PostgreSQL, criar o banco de dados `curso` da UnDF e popular as tabelas com os dados reais que utilizamos ao longo do material.
 
 ## Instalação do PostgreSQL
 
 ::: {.panel-tabset}
 
 ### Linux (Ubuntu/Debian)
-
-```{r}
-#| echo: false
-#| eval: false
-system("sudo apt update && sudo apt install -y postgresql postgresql-contrib")
-system("sudo systemctl start postgresql && sudo systemctl enable postgresql")
-system("sudo systemctl status postgresql")
-```
 
 ```bash
 sudo apt update
@@ -36,14 +28,6 @@ sudo -u postgres psql
 
 ### macOS
 
-```{r}
-#| echo: false
-#| eval: false
-system("brew install postgresql@16")
-system("brew services start postgresql@16")
-system('echo \'export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"\' >> ~/.zshrc && source ~/.zshrc')
-```
-
 Com [Homebrew](https://brew.sh) instalado:
 
 ```bash
@@ -64,12 +48,6 @@ psql postgres
 
 ### Windows
 
-```{r}
-#| echo: false
-#| eval: false
-system("psql --version")
-```
-
 1. Acesse [postgresql.org/download/windows](https://www.postgresql.org/download/windows/) e baixe o instalador EDB.
 2. Execute o instalador e siga o assistente. Anote a **senha** definida para o usuário `postgres`.
 3. O **pgAdmin 4** (interface gráfica) é instalado junto e pode ser usado no lugar do terminal.
@@ -82,61 +60,92 @@ Para usar o terminal `psql`, abra o **SQL Shell (psql)** pelo Menu Iniciar e pre
 
 ## Criando o Banco de Dados
 
-```{r}
-#| label: create-db
-#| echo: false
-#| eval: true
-#| message: false
-system('psql -U postgres -c "CREATE DATABASE undf;"')
-```
-
 Conecte-se ao console do PostgreSQL e crie o banco:
 
 ```sql
-CREATE DATABASE undf;
+CREATE DATABASE curso;
 ```
 
 Em seguida, conecte-se a ele:
+
+```sql
+\c curso
+```
+
+::: {.callout-note}
+No pgAdmin (Windows/Mac), clique com o botão direito em **Databases → Create → Database**, informe o nome `curso` e clique em *Save*. Depois abra o **Query Tool** para executar os comandos SQL.
+:::
 
 ```{r}
 #| label: setup
 #| echo: false
 #| eval: true
+#| message: false
 
 suppressWarnings(library(DBI))
 suppressWarnings(library(RPostgres))
 
-con <- dbConnect(
-  RPostgres::Postgres(),
-  dbname   = "undf",
-  host     = "localhost",
-  port     = 5432,
-  user     = "postgres",
-  password = "postgres"
+con <- tryCatch(
+    dbConnect(
+        RPostgres::Postgres(),
+        dbname   = "curso",
+        host     = "localhost",
+        port     = 5432,
+        user     = "postgres",
+        password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+    ),
+    error = function(e) {
+        stop(
+            paste(
+                "Falha ao conectar no banco 'curso'.",
+                "Verifique se o PostgreSQL esta em execucao e se a senha do usuario 'postgres' esta correta.",
+                "Opcionalmente, defina a variavel de ambiente POSTGRES_PASSWORD antes do render."
+            ),
+            call. = FALSE
+        )
+    }
 )
 ```
 
-```sql
-\c undf
-```
-
-::: {.callout-note}
-No pgAdmin (Windows/Mac), clique com o botão direito em **Databases → Create → Database**, informe o nome `undf` e clique em *Save*. Depois abra o **Query Tool** para executar os comandos SQL.
-:::
-
 ## Criando as Tabelas
 
-As tabelas devem ser criadas na ordem correta: primeiro `centro`, pois as demais referenciam ela por chave estrangeira.
+As tabelas devem ser criadas na ordem correta: primeiro as referenciadas (sem dependências), depois as que referenciam outras.
 
 ### Tabela `centro`
 
 ```{sql}
 --| connection: con
 --| eval: true
-CREATE TABLE centro (
-    nome_centro VARCHAR(10)   PRIMARY KEY,
-    predio      VARCHAR(50)   NOT NULL,
-    orcamento   NUMERIC(10,2) NOT NULL
+CREATE TABLE IF NOT EXISTS centro (
+    centro     VARCHAR(10)  PRIMARY KEY,
+    nome_centro VARCHAR(100) NOT NULL
+);
+```
+
+### Tabela `escola`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE IF NOT EXISTS escola (
+    escola      VARCHAR(10)  PRIMARY KEY,
+    nome_escola VARCHAR(100) NOT NULL,
+    centro      VARCHAR(10)  REFERENCES centro(centro)
+);
+```
+
+### Tabela `curso`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE IF NOT EXISTS curso (
+    sigla_curso   VARCHAR(5)   PRIMARY KEY,
+    nome_curso    VARCHAR(100) NOT NULL,
+    escola        VARCHAR(10)  REFERENCES escola(escola),
+    n_semestres   INTEGER      NOT NULL,
+    carga_horaria INTEGER      NOT NULL,
+    tipo_curso    VARCHAR(20)  NOT NULL
 );
 ```
 
@@ -145,11 +154,30 @@ CREATE TABLE centro (
 ```{sql}
 --| connection: con
 --| eval: true
-CREATE TABLE professor (
-    id          CHAR(5)      PRIMARY KEY,
-    nome        VARCHAR(50)  NOT NULL,
-    nome_centro VARCHAR(10)  REFERENCES centro(nome_centro),
-    salario     NUMERIC(8,2) NOT NULL
+CREATE TABLE IF NOT EXISTS professor (
+    matricula_prof VARCHAR(15)    PRIMARY KEY,
+    nome           VARCHAR(50)    NOT NULL,
+    escola         VARCHAR(10)    REFERENCES escola(escola),
+    ch_semanal     INTEGER        NOT NULL,
+    salario        NUMERIC(10,2)  NOT NULL
+);
+
+-- Garante compatibilidade caso a tabela já existisse com outro schema
+ALTER TABLE professor
+    DROP COLUMN IF EXISTS ano_ingresso,
+    ADD  COLUMN IF NOT EXISTS salario NUMERIC(10,2);
+```
+
+### Tabela `aluno`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE IF NOT EXISTS aluno (
+    matricula    VARCHAR(15)  PRIMARY KEY,
+    nome         VARCHAR(50)  NOT NULL,
+    sigla_curso  VARCHAR(5)   REFERENCES curso(sigla_curso),
+    ano_ingresso INTEGER      NOT NULL
 );
 ```
 
@@ -158,45 +186,93 @@ CREATE TABLE professor (
 ```{sql}
 --| connection: con
 --| eval: true
-CREATE TABLE disciplina (
-    id_disciplina VARCHAR(10)  PRIMARY KEY,
-    titulo        VARCHAR(100) NOT NULL,
-    nome_centro   VARCHAR(10)  REFERENCES centro(nome_centro),
-    carga_horaria INTEGER      NOT NULL CHECK (carga_horaria > 0)
+CREATE TABLE IF NOT EXISTS disciplina (
+    codigo         VARCHAR(10)  PRIMARY KEY,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    sigla_curso    VARCHAR(5)   REFERENCES curso(sigla_curso),
+    semestre       INTEGER      NOT NULL,
+    carga_horaria  INTEGER      NOT NULL
 );
 ```
 
-### Tabela `aluno`
+### Tabela `ministra`
 
 ```{sql}
 --| connection: con
 --| eval: true
-CREATE TABLE aluno (
-    id          CHAR(5)     PRIMARY KEY,
-    nome        VARCHAR(50) NOT NULL,
-    nome_centro VARCHAR(10) REFERENCES centro(nome_centro),
-    carga_total INTEGER     NOT NULL DEFAULT 0
+CREATE TABLE IF NOT EXISTS ministra (
+    cod_disciplina  VARCHAR(10)  REFERENCES disciplina(codigo),
+    ano             INTEGER      NOT NULL,
+    semestre        INTEGER      NOT NULL,
+    turma           CHAR(1)      NOT NULL,
+    matricula_prof  VARCHAR(15)  REFERENCES professor(matricula_prof),
+    horario         VARCHAR(50),
+    sala            VARCHAR(20),
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma)
 );
 ```
 
-Para confirmar que as tabelas foram criadas:
+### Tabela `matricula_disciplina`
 
-```sql
-\dt
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE IF NOT EXISTS matricula_disciplina (
+    cod_disciplina VARCHAR(10) NOT NULL,
+    ano            INTEGER     NOT NULL,
+    semestre       INTEGER     NOT NULL,
+    turma          CHAR(1)     NOT NULL,
+    cod_matricula  VARCHAR(15) REFERENCES aluno(matricula),
+    nota           NUMERIC(4,1),
+    aprovado       SMALLINT,
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma, cod_matricula),
+    FOREIGN KEY (cod_disciplina, ano, semestre, turma)
+        REFERENCES ministra(cod_disciplina, ano, semestre, turma)
+);
 ```
 
-## Inserindo os Dados
+## Carregando os Dados
+
+Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves estrangeiras):
+
+```{sql}
+--| connection: con
+--| eval: true
+TRUNCATE matricula_disciplina, ministra, disciplina,
+         aluno, professor, curso, escola, centro CASCADE;
+```
 
 ### Centros
 
 ```{sql}
 --| connection: con
 --| eval: true
-INSERT INTO centro (nome_centro, predio, orcamento) VALUES
-    ('COCBS',   'Samambaia',  160000),
-    ('COETI',   'Lago Norte', 185000),
-    ('COCHCMA', 'Buritis',    170000),
-    ('COEMAG',  'Ceilândia',   80000);
+INSERT INTO centro (centro, nome_centro) VALUES
+    ('COCHCMA', 'CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE'),
+    ('COEMAG',  'CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES'),
+    ('COETI',   'CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO');
+```
+
+### Escolas
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO escola (escola, nome_escola, centro) VALUES
+    ('ESG',   'Escola Superior de Gestão',                               'COCHCMA'),
+    ('EEMA',  'Escola de Educação, Magistério e Arte',                   'COEMAG'),
+    ('ESETI', 'Escola Superior de Engenharias, Tecnologia e Inovação',   'COETI');
+```
+
+### Cursos
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO curso (sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso) VALUES
+    ('ENS', 'Engenharia de Software', 'ESETI', 8, 3200, 'bacharelado'),
+    ('ECO', 'Ciências Econômicas',    'ESG',   8, 3000, 'bacharelado'),
+    ('PED', 'Pedagogia',              'EEMA',  8, 3410, 'licenciatura');
 ```
 
 ### Professores
@@ -204,39 +280,14 @@ INSERT INTO centro (nome_centro, predio, orcamento) VALUES
 ```{sql}
 --| connection: con
 --| eval: true
-INSERT INTO professor (id, nome, nome_centro, salario) VALUES
-    ('10101', 'Carlos',   'COETI',   65000),
-    ('12121', 'Ana',      'COCHCMA', 90000),
-    ('15151', 'João',     'COEMAG',  40000),
-    ('22222', 'Marcos',   'COCBS',   95000),
-    ('32343', 'Fernanda', 'COCHCMA', 60000),
-    ('33456', 'Roberto',  'COCBS',   87000),
-    ('45565', 'Lucas',    'COETI',   75000),
-    ('58583', 'Juliana',  'COCHCMA', 62000),
-    ('76543', 'Rafael',   'COCHCMA', 80000),
-    ('76766', 'Beatriz',  'COCBS',   72000),
-    ('83821', 'Pedro',    'COETI',   92000),
-    ('98345', 'Mariana',  'COETI',   80000);
-```
-
-### Disciplinas
-
-```{sql}
---| connection: con
---| eval: true
-INSERT INTO disciplina (id_disciplina, titulo, nome_centro, carga_horaria) VALUES
-    ('MTI 101', 'Introdução à Pesquisa Científica',       'COCHCMA', 60),
-    ('MTI 202', 'Gestão de Pessoas na Adm. Pública',      'COCHCMA', 60),
-    ('MTI 402', 'Políticas Públicas e Sociais',           'COCHCMA', 60),
-    ('BES 101', 'Introdução à Engenharia de Software',    'COETI',   20),
-    ('BES 301', 'Bases da Engenharia de Software 3',      'COETI',  120),
-    ('BES 601', 'Projeto Aplicado 6: Machine Learning',   'COETI',  120),
-    ('NUT 101', 'Bioquímica e Biofísica',                 'COCBS',  105),
-    ('NUT 401', 'Epidemiologia Geral',                    'COCBS',   70),
-    ('NUT 701', 'Nutrição em Saúde Coletiva',             'COCBS',   70),
-    ('PED 101', 'História da Educação',                   'COEMAG',  60),
-    ('PED 301', 'Jogos e Brincadeiras na Infância',       'COEMAG',  60),
-    ('PED 601', 'Alfabetização e Práticas de Letramento', 'COEMAG',  60);
+INSERT INTO professor (matricula_prof, nome, escola, ch_semanal, salario) VALUES
+    ('PROF20230005', 'Eduarda Souza',   'EEMA',  20, 3200),
+    ('PROF20230006', 'Felipe Araujo',   'EEMA',  40, 6400),
+    ('PROF20230031', 'Gustavo Costa',   'ESETI', 20, 3300),
+    ('PROF20230032', 'Helena Carvalho', 'ESETI', 40, 6700),
+    ('PROF20230033', 'Igor Melo',       'ESETI', 20, 3100),
+    ('PROF20230042', 'Bruno Teixeira',  'ESG',   40, 6500),
+    ('PROF20230043', 'Carla Pinto',     'ESG',   40, 6600);
 ```
 
 ### Alunos
@@ -244,80 +295,221 @@ INSERT INTO disciplina (id_disciplina, titulo, nome_centro, carga_horaria) VALUE
 ```{sql}
 --| connection: con
 --| eval: true
-INSERT INTO aluno (id, nome, nome_centro, carga_total) VALUES
-    ('00128', 'Thiago',   'COETI',   1000),
-    ('12345', 'Larissa',  'COETI',    205),
-    ('19991', 'Gabriel',  'COCHCMA',  300),
-    ('23121', 'Amanda',   'COCHCMA', 2100),
-    ('44553', 'Felipe',   'COCBS',    340),
-    ('45678', 'Camila',   'COCBS',    460),
-    ('54321', 'Diego',    'COETI',   1240),
-    ('55739', 'Bruna',    'COEMAG',  1100),
-    ('70557', 'Henrique', 'COCBS',      0),
-    ('76543', 'Natália',  'COETI',    360),
-    ('76653', 'Eduardo',  'COETI',    340),
-    ('98988', 'Isabela',  'COCBS',    450);
+INSERT INTO aluno (matricula, nome, sigla_curso, ano_ingresso) VALUES
+    ('2023007001', 'Beatriz Carvalho', 'ECO', 2023),
+    ('2023007002', 'Lucas Santos',     'ECO', 2023),
+    ('2024007001', 'Gabriel Ribeiro',  'ECO', 2024),
+    ('2024007002', 'Fernanda Martins', 'ECO', 2024),
+    ('2025007001', 'Rodrigo Lima',     'ECO', 2025),
+    ('2025007002', 'Camila Teixeira',  'ECO', 2025),
+    ('2023002001', 'Matheus Silva',    'ENS', 2023),
+    ('2023002002', 'Larissa Araújo',   'ENS', 2023),
+    ('2024002001', 'Pedro Carvalho',   'ENS', 2024),
+    ('2024002002', 'Isabela Freitas',  'ENS', 2024),
+    ('2025002001', 'Diego Correia',    'ENS', 2025),
+    ('2025002002', 'Juliana Nunes',    'ENS', 2025),
+    ('2023009001', 'Amanda Moreira',   'PED', 2023),
+    ('2023009002', 'Thiago Gomes',     'PED', 2023),
+    ('2024009001', 'Carolina Lima',    'PED', 2024),
+    ('2024009002', 'Rafael Costa',     'PED', 2024),
+    ('2025009001', 'Vinícius Pereira', 'PED', 2025),
+    ('2025009002', 'Letícia Souza',    'PED', 2025);
+```
+
+### Disciplinas
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO disciplina (codigo, nome_disciplina, sigla_curso, semestre, carga_horaria) VALUES
+    ('ECO-201', 'História Econômica Geral',            'ECO', 2,  75),
+    ('ECO-202', 'Culturas Digitais',                   'ECO', 2,  60),
+    ('ECO-401', 'Microeconomia 2',                     'ECO', 4,  75),
+    ('ECO-402', 'Macroeconomia 2',                     'ECO', 4,  95),
+    ('ECO-601', 'Economia Brasileira',                 'ECO', 6,  75),
+    ('ECO-602', 'Orçamento e Finanças Públicas',       'ECO', 6,  75),
+    ('ECO-801', 'Monografia',                          'ECO', 8, 100),
+    ('ECO-802', 'Desenvolvimento Econômico',           'ECO', 8,  90),
+    ('ENS-201', 'Bases da Engenharia de Software 2',                   'ENS', 2, 150),
+    ('ENS-202', 'Projeto Aplicado 2 (site WEB)',                       'ENS', 2, 120),
+    ('ENS-401', 'Bases da Engenharia de Software 4',                   'ENS', 4, 180),
+    ('ENS-402', 'Projeto Aplicado 4 (blockchain)',                     'ENS', 4, 120),
+    ('ENS-601', 'Bases da Engenharia de Software 6',                   'ENS', 6, 150),
+    ('ENS-602', 'Projeto Aplicado 6 (Machine Learning)',               'ENS', 6, 120),
+    ('ENS-801', 'Bases da Engenharia de Software 8',                   'ENS', 8, 100),
+    ('ENS-802', 'Projeto Aplicado 8 (Sistema em Tempo Real)',          'ENS', 8, 160),
+    ('PED-203', 'Desenvolvimento Humano',              'PED', 2,  60),
+    ('PED-204', 'Didática Geral',                      'PED', 2,  60),
+    ('PED-403', 'Eletiva I',                           'PED', 4,  80),
+    ('PED-404', 'Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC', 'PED', 4, 80),
+    ('PED-603', 'Eletiva II',                          'PED', 6,  80),
+    ('PED-604', 'Educação do Campo, Indígena e Quilombola', 'PED', 6, 40),
+    ('PED-803', 'Tecnologia Educacional - Design',     'PED', 8,  60),
+    ('PED-804', 'Estatística Aplicada',                'PED', 8,  50);
+```
+
+### Turmas ministradas
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO ministra (cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala) VALUES
+    ('PED-203', 2023, 2, 'A', 'PROF20230005', '2f-19:00-21:30',               'EEMA-SALA-003'),
+    ('PED-204', 2023, 2, 'A', 'PROF20230005', '2f-19:00-21:30',               'EEMA-SALA-004'),
+    ('PED-203', 2024, 2, 'A', 'PROF20230005', '3f-19:00-21:30',               'EEMA-SALA-003'),
+    ('PED-204', 2024, 2, 'A', 'PROF20230005', '3f-19:00-21:30',               'EEMA-SALA-004'),
+    ('PED-403', 2024, 2, 'A', 'PROF20230005', '2f-19:00-22:20',               'EEMA-SALA-001'),
+    ('PED-404', 2024, 2, 'A', 'PROF20230005', '2f-19:00-22:20',               'EEMA-SALA-002'),
+    ('PED-203', 2025, 2, 'A', 'PROF20230005', '3f-19:00-21:30',               'EEMA-SALA-001'),
+    ('PED-204', 2025, 2, 'A', 'PROF20230006', '3f-19:00-21:30',               'EEMA-SALA-002'),
+    ('PED-403', 2025, 2, 'A', 'PROF20230005', '2f-19:00-22:20',               'EEMA-SALA-003'),
+    ('PED-404', 2025, 2, 'A', 'PROF20230005', '2f-19:00-22:20',               'EEMA-SALA-004'),
+    ('PED-603', 2025, 2, 'A', 'PROF20230005', '2f-19:00-22:20',               'EEMA-SALA-001'),
+    ('PED-604', 2025, 2, 'A', 'PROF20230005', '2f-19:00-20:40',               'EEMA-SALA-046'),
+    ('ENS-201', 2023, 2, 'A', 'PROF20230031', '2f-13:45-16:55/4f-13:45-16:50', 'ESETI-SALA-001'),
+    ('ENS-202', 2023, 2, 'A', 'PROF20230031', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-003'),
+    ('ENS-201', 2024, 2, 'A', 'PROF20230031', '2f-13:45-16:55/4f-13:45-16:50', 'ESETI-SALA-003'),
+    ('ENS-202', 2024, 2, 'A', 'PROF20230032', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-006'),
+    ('ENS-401', 2024, 2, 'A', 'PROF20230031', '2f-13:45-17:30/4f-13:45-17:30', 'ESETI-SALA-001'),
+    ('ENS-402', 2024, 2, 'A', 'PROF20230032', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-005'),
+    ('ENS-201', 2025, 2, 'A', 'PROF20230031', '2f-13:45-16:55/4f-13:45-16:50', 'ESETI-SALA-005'),
+    ('ENS-202', 2025, 2, 'A', 'PROF20230032', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-010'),
+    ('ENS-401', 2025, 2, 'A', 'PROF20230031', '2f-13:45-17:30/4f-13:45-17:30', 'ESETI-SALA-001'),
+    ('ENS-402', 2025, 2, 'A', 'PROF20230033', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-008'),
+    ('ENS-601', 2025, 2, 'A', 'PROF20230032', '2f-13:45-16:55/4f-13:45-16:50', 'ESETI-SALA-003'),
+    ('ENS-602', 2025, 2, 'A', 'PROF20230033', '2f-13:45-16:15/4f-13:45-16:15', 'ESETI-SALA-007'),
+    ('ECO-201', 2023, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-005'),
+    ('ECO-202', 2023, 2, 'A', 'PROF20230042', '2f-7:30-10:00',                'ESG-SALA-012'),
+    ('ECO-201', 2024, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-013'),
+    ('ECO-202', 2024, 2, 'A', 'PROF20230042', '3f-10:00-12:30',               'ESG-SALA-001'),
+    ('ECO-401', 2024, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-009'),
+    ('ECO-402', 2024, 2, 'A', 'PROF20230042', '2f-7:30-11:30',                'ESG-SALA-001'),
+    ('ECO-201', 2025, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-025'),
+    ('ECO-202', 2025, 2, 'A', 'PROF20230043', '3f-10:00-12:30',               'ESG-SALA-007'),
+    ('ECO-401', 2025, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-021'),
+    ('ECO-402', 2025, 2, 'A', 'PROF20230042', '2f-7:30-11:30',                'ESG-SALA-005'),
+    ('ECO-601', 2025, 2, 'A', 'PROF20230042', '2f-7:30-10:40',                'ESG-SALA-015'),
+    ('ECO-602', 2025, 2, 'A', 'PROF20230043', '2f-7:30-10:40',                'ESG-SALA-016');
+```
+
+### Matrículas em disciplinas
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado) VALUES
+    ('ENS-201', 2023, 2, 'A', '2023002001', 9.0, 1),
+    ('ENS-202', 2023, 2, 'A', '2023002001', 7.4, 1),
+    ('ENS-401', 2024, 2, 'A', '2023002001', 7.5, 1),
+    ('ENS-402', 2024, 2, 'A', '2023002001', 6.6, 1),
+    ('ENS-601', 2025, 2, 'A', '2023002001', 4.1, 0),
+    ('ENS-602', 2025, 2, 'A', '2023002001', 8.7, 1),
+    ('ENS-201', 2023, 2, 'A', '2023002002', 6.1, 1),
+    ('ENS-202', 2023, 2, 'A', '2023002002', 6.3, 1),
+    ('ENS-401', 2024, 2, 'A', '2023002002', 9.0, 1),
+    ('ENS-402', 2024, 2, 'A', '2023002002', 8.6, 1),
+    ('ENS-601', 2025, 2, 'A', '2023002002', 0.3, 0),
+    ('ENS-602', 2025, 2, 'A', '2023002002', 7.7, 1),
+    ('ENS-201', 2024, 2, 'A', '2024002002', 4.3, 0),
+    ('ENS-202', 2024, 2, 'A', '2024002002', 7.2, 1),
+    ('ENS-401', 2025, 2, 'A', '2024002002', 7.7, 1),
+    ('ENS-402', 2025, 2, 'A', '2024002002', 0.4, 0),
+    ('ENS-201', 2025, 2, 'A', '2025002001', 6.1, 1),
+    ('ENS-202', 2025, 2, 'A', '2025002001', 6.8, 1),
+    ('ENS-201', 2025, 2, 'A', '2025002002', 1.9, 0),
+    ('ENS-202', 2025, 2, 'A', '2025002002', 6.1, 1),
+    ('ECO-201', 2023, 2, 'A', '2023007001', 9.8, 1),
+    ('ECO-202', 2023, 2, 'A', '2023007001', 8.8, 1),
+    ('ECO-201', 2024, 2, 'A', '2024007001', 7.9, 1),
+    ('ECO-202', 2024, 2, 'A', '2024007001', 8.5, 1),
+    ('ECO-401', 2025, 2, 'A', '2024007001', 6.1, 1),
+    ('ECO-402', 2025, 2, 'A', '2024007001', 6.5, 1),
+    ('ECO-201', 2024, 2, 'A', '2024007002', 3.4, 0),
+    ('ECO-202', 2024, 2, 'A', '2024007002', 6.4, 1),
+    ('ECO-401', 2025, 2, 'A', '2024007002', 6.1, 1),
+    ('ECO-402', 2025, 2, 'A', '2024007002', 7.7, 1),
+    ('ECO-201', 2025, 2, 'A', '2025007001', 7.1, 1),
+    ('ECO-202', 2025, 2, 'A', '2025007001', 6.1, 1),
+    ('ECO-201', 2025, 2, 'A', '2025007002', 6.1, 1),
+    ('ECO-202', 2025, 2, 'A', '2025007002', 9.9, 1),
+    ('PED-203', 2023, 2, 'A', '2023009001', 8.4, 1),
+    ('PED-204', 2023, 2, 'A', '2023009001', 8.2, 1),
+    ('PED-403', 2024, 2, 'A', '2023009001', 8.5, 1),
+    ('PED-404', 2024, 2, 'A', '2023009001', 8.8, 1),
+    ('PED-603', 2025, 2, 'A', '2023009001', 6.1, 1),
+    ('PED-604', 2025, 2, 'A', '2023009001', 6.2, 1),
+    ('PED-203', 2023, 2, 'A', '2023009002', 6.3, 1),
+    ('PED-204', 2023, 2, 'A', '2023009002', 6.8, 1),
+    ('PED-403', 2024, 2, 'A', '2023009002', 6.1, 1),
+    ('PED-404', 2024, 2, 'A', '2023009002',10.0, 1),
+    ('PED-603', 2025, 2, 'A', '2023009002', 1.3, 0),
+    ('PED-604', 2025, 2, 'A', '2023009002', 6.1, 1),
+    ('PED-203', 2024, 2, 'A', '2024009001', 7.0, 1),
+    ('PED-204', 2024, 2, 'A', '2024009001', 9.7, 1),
+    ('PED-403', 2025, 2, 'A', '2024009001', 9.2, 1),
+    ('PED-404', 2025, 2, 'A', '2024009001', 6.1, 1),
+    ('PED-203', 2024, 2, 'A', '2024009002', 7.1, 1),
+    ('PED-204', 2024, 2, 'A', '2024009002', 8.7, 1),
+    ('PED-403', 2025, 2, 'A', '2024009002', 7.6, 1),
+    ('PED-404', 2025, 2, 'A', '2024009002', 7.6, 1),
+    ('PED-203', 2025, 2, 'A', '2025009001', 6.1, 1),
+    ('PED-204', 2025, 2, 'A', '2025009001', 7.0, 1),
+    ('PED-203', 2025, 2, 'A', '2025009002', 8.4, 1),
+    ('PED-204', 2025, 2, 'A', '2025009002', 7.4, 1);
 ```
 
 ## Verificando os Dados
 
-### Todos os centros
+### Todos os cursos
 
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT * FROM centro;
+SELECT sigla_curso, nome_curso, escola, tipo_curso
+FROM curso
+ORDER BY sigla_curso;
 ```
 
-### Professores do COETI com salário acima de 70 000
+### Professores por escola
 
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT nome, salario
+SELECT escola, COUNT(*) AS n_professores
 FROM professor
-WHERE nome_centro = 'COETI'
-  AND salario > 70000;
+GROUP BY escola
+ORDER BY escola;
 ```
 
-### Carga horária total por centro
+### Disciplinas com carga horária acima de 100 h
 
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT nome_centro, SUM(carga_horaria) AS total_horas
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
 FROM disciplina
-GROUP BY nome_centro
-ORDER BY total_horas DESC;
+WHERE carga_horaria > 100
+ORDER BY carga_horaria DESC;
 ```
 
-### Alunos com mais de 500 h acumuladas
+### Alunos de Engenharia de Software ingressantes em 2023
 
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT nome, nome_centro, carga_total
+SELECT matricula, nome, ano_ingresso
 FROM aluno
-WHERE carga_total > 500
-ORDER BY carga_total DESC;
+WHERE sigla_curso = 'ENS' AND ano_ingresso = 2023;
 ```
 
 ::: {.callout-tip}
 ## Desfazendo tudo (reset)
 
-Para remover todas as tabelas e começar do zero:
+Para remover todas as tabelas e recriar do zero:
 
-```{sql}
---| connection: con
---| eval: true
-DROP TABLE aluno, disciplina, professor, centro;
-```
-
-A ordem importa: tabelas com chaves estrangeiras devem ser removidas antes da referenciada, ou use `CASCADE`:
-
-```{sql}
---| connection: con
---| eval: false
-DROP TABLE centro CASCADE;
+```sql
+DROP TABLE IF EXISTS matricula_disciplina, ministra,
+                     disciplina, aluno, professor,
+                     curso, escola, centro CASCADE;
 ```
 :::

@@ -23,13 +23,15 @@ Além dos seis operadores básicos, operações adicionais — como junção ($\
 
 ## Expressões de Álgebra Relacional
 
-A composição de operações permite construir **expressões de álgebra relacional** complexas. Por exemplo, para encontrar os nomes dos professores do COETI com salário superior a 80 000:
+A composição de operações permite construir **expressões de álgebra relacional** complexas. Por exemplo, para encontrar os nomes dos professores da ESETI e os títulos das disciplinas de ENS com carga horária acima de 120 h:
 
-$$\Pi_{nome}\!\left(\sigma_{nome\_centro = \text{"COETI"} \,\wedge\, salario > 80000}(professor)\right)$$
+$$\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)$$
 
-Nessa expressão:
+$$\Pi_{codigo,\ nome\_disciplina}\!\left(\sigma_{sigla\_curso = \text{"ENS"} \,\wedge\, carga\_horaria > 120}(disciplina)\right)$$
+
+Nessas expressões:
 1. $\sigma$ filtra as tuplas relevantes
-2. $\Pi$ projeta apenas o atributo `nome`
-3. O resultado é uma nova relação contendo somente os nomes desejados
+2. $\Pi$ projeta apenas os atributos desejados
+3. O resultado é uma nova relação — que pode ser usada como entrada de novas operações
 
 Nas seções seguintes, cada operador é apresentado em detalhe com exemplos usando as tabelas da UnDF.

@@ -1,0 +1,18 @@
+sigla_curso; nome_curso; escola; n_semestres; carga_horaria; tipo_curso
+CC; Ciência da Computação; ESETI; 8; 3400; bacharelado
+ENS; Engenharia de Software; ESETI; 8; 3200; bacharelado
+SI; Sistemas de Informação; ESETI; 8; 3000; bacharelado
+SS; Serviço Social; ESCHCMA; 8; 3075; bacharelado
+NUT; Nutrição; ESCS; 11; 4050; bacharelado
+PSI; Psicologia; ESCHCMA; 10; 4040; bacharelado
+ECO; Ciências Econômicas; ESG; 8; 3000; bacharelado
+MAT; Matemática; EEMA; 8; 3280; licenciatura
+PED; Pedagogia; EEMA; 8; 3410; licenciatura
+LPOR; Letras Português; EEMA; 8; 3645; licenciatura
+LING; Letras Inglês; EEMA; 8; 3555; licenciatura
+GTI; Gestão da Tecnologia da Informação; ESG; 5; 2000; tecnológico
+GPUB; Gestão Pública; ESG; 4; 1680; tecnológico
+GAM; Gestão Ambiental; ESG; 4; 1620; tecnológico
+PCUL; Produção Cultural; EEMA; 6; 2420; tecnológico
+ACEN; Atuação Cênica; EEMA; 6; 2430; tecnológico
+DAN; Dança; EEMA; 6; 2400; tecnológico

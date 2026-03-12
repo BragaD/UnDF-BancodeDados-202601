@@ -1,0 +1,25 @@
+codigo;nome_disciplina;sigla_curso;semestre;carga_horaria
+ECO-201;História Econômica Geral;ECO;2;75
+ECO-202;Culturas Digitais;ECO;2;60
+ECO-401;Microeconomia 2;ECO;4;75
+ECO-402;Macroeconomia 2;ECO;4;95
+ECO-601;Economia Brasileira;ECO;6;75
+ECO-602;Orçamento e Finanças Públicas;ECO;6;75
+ECO-801;Monografia;ECO;8;100
+ECO-802;Desenvolvimento Econômico;ECO;8;90
+ENS-201;Bases da Engenharia de Software 2;ENS;2;150
+ENS-202;Projeto Aplicado 2 (site WEB);ENS;2;120
+ENS-401;Bases da Engenharia de Software 4;ENS;4;180
+ENS-402;Projeto Aplicado 4 (blockchain);ENS;4;120
+ENS-601;Bases da Engenharia de Software 6;ENS;6;150
+ENS-602;Projeto Aplicado 6 (Machine Learning);ENS;6;120
+ENS-801;Bases da Engenharia de Software 8;ENS;8;100
+ENS-802;Projeto Aplicado 8 (Sistema em Tempo Real);ENS;8;160
+PED-203;Desenvolvimento Humano;PED;2;60
+PED-204;Didática Geral;PED;2;60
+PED-403;Eletiva I;PED;4;80
+PED-404;Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC;PED;4;80
+PED-603;Eletiva II;PED;6;80
+PED-604;Educação do Campo, Indígena e Quilombola;PED;6;40
+PED-803;Tecnologia Educacional - Design;PED;8;60
+PED-804;Estatística Aplicada;PED;8;50

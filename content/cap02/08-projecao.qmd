@@ -14,58 +14,47 @@ Como o resultado é uma **relação** (um conjunto), linhas duplicadas são auto
 
 ## Exemplo 1: Projeção Simples
 
-Para obter apenas `id`, `nome` e `salario` de todos os professores — omitindo `nome_centro`:
+Para obter apenas `matricula_prof` e `nome` de todos os professores — omitindo `escola` e `ch_semanal`:
 
-$$\Pi_{id,\ nome,\ salario}(professor)$$
+$$\Pi_{matricula\_prof,\ nome}(professor)$$
 
 Relação original `professor`:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 15151 | João | COEMAG | 40000 |
-| 22222 | Marcos | COCBS | 95000 |
-| 32343 | Fernanda | COCHCMA | 60000 |
-| 33456 | Roberto | COCBS | 87000 |
-| 45565 | Lucas | COETI | 75000 |
-| 58583 | Juliana | COCHCMA | 62000 |
-| 76543 | Rafael | COCHCMA | 80000 |
-| 76766 | Beatriz | COCBS | 72000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula_prof | nome | escola | ch_semanal |
+|---|---|---|---:|
+| PROF20230005 | Eduarda Souza   | EEMA  | 40 |
+| PROF20230006 | Felipe Araujo   | EEMA  | 40 |
+| PROF20230031 | Gustavo Costa   | ESETI | 40 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 |
+| PROF20230033 | Igor Melo       | ESETI | 40 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 |
+| PROF20230043 | Carla Pinto     | ESG   | 40 |
 
-Resultado de $\Pi_{id,\ nome,\ salario}(professor)$:
+Resultado de $\Pi_{matricula\_prof,\ nome}(professor)$:
 
-| id | nome | salario |
-|---|---|---|
-| 10101 | Carlos | 65000 |
-| 12121 | Ana | 90000 |
-| 15151 | João | 40000 |
-| 22222 | Marcos | 95000 |
-| 32343 | Fernanda | 60000 |
-| 33456 | Roberto | 87000 |
-| 45565 | Lucas | 75000 |
-| 58583 | Juliana | 62000 |
-| 76543 | Rafael | 80000 |
-| 76766 | Beatriz | 72000 |
-| 83821 | Pedro | 92000 |
-| 98345 | Mariana | 80000 |
+| matricula_prof | nome |
+|---|---|
+| PROF20230005 | Eduarda Souza   |
+| PROF20230006 | Felipe Araujo   |
+| PROF20230031 | Gustavo Costa   |
+| PROF20230032 | Helena Carvalho |
+| PROF20230033 | Igor Melo       |
+| PROF20230042 | Bruno Teixeira  |
+| PROF20230043 | Carla Pinto     |
 
 ## Eliminação de Duplicatas
 
-Se projetarmos apenas `nome_centro` de `professor`, o resultado terá somente os valores distintos:
+Se projetarmos apenas `escola` de `professor`, o resultado terá somente os valores distintos:
 
-$$\Pi_{nome\_centro}(professor)$$
+$$\Pi_{escola}(professor)$$
 
-| nome_centro |
+| escola |
 |---|
-| COETI |
-| COCBS |
-| COCHCMA |
-| COEMAG |
+| EEMA  |
+| ESETI |
+| ESG   |
 
-Mesmo que `COETI` apareça em quatro tuplas (Carlos, Lucas, Pedro e Mariana), o resultado contém cada valor apenas uma vez.
+Mesmo que `ESETI` apareça em três tuplas (Gustavo, Helena e Igor), o resultado contém cada valor apenas uma vez.
 
 ## Composição de Operações
 
@@ -76,25 +65,23 @@ Como o resultado de qualquer operação é uma relação, operações podem ser 
 :::
 
 ::: {.exemplo}
-Para obter os nomes de todos os professores do COETI, combina-se seleção e projeção:
+Para obter os nomes de todos os professores da ESETI, combina-se seleção e projeção:
 
-$$\Pi_{nome}\!\left(\sigma_{nome\_centro = \text{"COETI"}}(professor)\right)$$
+$$\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)$$
 
-**Passo 1** — Seleção $\sigma_{nome\_centro = \text{"COETI"}}(professor)$:
+**Passo 1** — Seleção $\sigma_{escola = \text{"ESETI"}}(professor)$:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 45565 | Lucas | COETI | 75000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula_prof | nome | escola | ch_semanal |
+|---|---|---|---:|
+| PROF20230031 | Gustavo Costa   | ESETI | 40 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 |
+| PROF20230033 | Igor Melo       | ESETI | 40 |
 
 **Passo 2** — Projeção $\Pi_{nome}(\cdot)$:
 
 | nome |
 |---|
-| Carlos |
-| Lucas |
-| Pedro |
-| Mariana |
+| Gustavo Costa   |
+| Helena Carvalho |
+| Igor Melo       |
 :::

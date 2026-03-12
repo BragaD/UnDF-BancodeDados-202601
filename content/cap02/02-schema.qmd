@@ -10,16 +10,20 @@ O **schema** de um banco de dados é a sua estrutura lógica — a descrição d
 
 Representa-se o schema de uma relação pelo nome da relação seguido dos seus atributos entre parênteses:
 
-$$professor(\underline{id},\ nome,\ nome\_centro,\ salario)$$
+$$professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)$$
 
 O atributo sublinhado indica a chave primária (conceito detalhado na próxima seção).
 
-O banco de dados da UnDF possui quatro relações com os seguintes schemas:
+O banco de dados da UnDF possui oito relações com os seguintes schemas:
 
-- $professor(\underline{id},\ nome,\ nome\_centro,\ salario)$
-- $aluno(\underline{id},\ nome,\ nome\_centro,\ carga\_total)$
-- $disciplina(\underline{id\_disciplina},\ titulo,\ nome\_centro,\ carga\_horaria)$
-- $centro(\underline{nome\_centro},\ predio,\ orcamento)$
+- $centro(\underline{centro},\ nome\_centro)$
+- $escola(\underline{escola},\ nome\_escola,\ centro)$
+- $curso(\underline{sigla\_curso},\ nome\_curso,\ escola,\ n\_semestres,\ carga\_horaria,\ tipo\_curso)$
+- $professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)$
+- $aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)$
+- $disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)$
+- $ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)$
+- $matricula\_disciplina(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ \underline{cod\_matricula},\ nota,\ aprovado)$
 
 ## Instância do Banco de Dados
 
@@ -32,22 +36,17 @@ A instância muda continuamente à medida que dados são inseridos, alterados ou
 ::: {.exemplo}
 A tabela a seguir é uma instância do schema `professor`:
 
-| id | nome | nome_centro | salario |
-|---|---|---|---|
-| 10101 | Carlos | COETI | 65000 |
-| 12121 | Ana | COCHCMA | 90000 |
-| 15151 | João | COEMAG | 40000 |
-| 22222 | Marcos | COCBS | 95000 |
-| 32343 | Fernanda | COCHCMA | 60000 |
-| 33456 | Roberto | COCBS | 87000 |
-| 45565 | Lucas | COETI | 75000 |
-| 58583 | Juliana | COCHCMA | 62000 |
-| 76543 | Rafael | COCHCMA | 80000 |
-| 76766 | Beatriz | COCBS | 72000 |
-| 83821 | Pedro | COETI | 92000 |
-| 98345 | Mariana | COETI | 80000 |
+| matricula_prof | nome | escola | ch_semanal | salario |
+|---|---|---|---:|---:|
+| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
+| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
+| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
+| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
+| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
+| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
+| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
 
-Amanhã, após a contratação de um novo professor, essa instância terá treze tuplas — mas o schema continuará sendo exatamente o mesmo.
+Amanhã, após a contratação de um novo professor, essa instância terá oito tuplas — mas o schema continuará sendo exatamente o mesmo.
 :::
 
 ## Analogia com Programação
