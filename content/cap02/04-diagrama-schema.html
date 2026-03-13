@@ -72,6 +72,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -399,6 +428,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#o-que-é-um-diagrama-de-schema" id="toc-o-que-é-um-diagrama-de-schema" class="nav-link active" data-scroll-target="#o-que-é-um-diagrama-de-schema"><span class="header-section-number">19.1</span> O que é um Diagrama de Schema?</a></li>
   <li><a href="#diagrama-do-banco-de-dados-da-undf" id="toc-diagrama-do-banco-de-dados-da-undf" class="nav-link" data-scroll-target="#diagrama-do-banco-de-dados-da-undf"><span class="header-section-number">19.2</span> Diagrama do Banco de Dados da UnDF</a></li>
   <li><a href="#leitura-do-diagrama" id="toc-leitura-do-diagrama" class="nav-link" data-scroll-target="#leitura-do-diagrama"><span class="header-section-number">19.3</span> Leitura do Diagrama</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">19.4</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -653,6 +683,55 @@ ul.task-list li input[type="checkbox"] {
 <li><code>matricula_disciplina</code> registra as matrículas de alunos em turmas específicas e referencia tanto <code>ministra</code> quanto <code>aluno</code></li>
 <li><code>prereq</code> é uma relação de <strong>autorreferência</strong> sobre <code>disciplina</code>: ambos os atributos da chave composta (<code>codigo</code> e <code>prereq_codigo</code>) são chaves estrangeiras que apontam para a mesma tabela <code>disciplina</code></li>
 </ul>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">19.4</span> Para Praticar</h2>
+<p><strong>1. Leitura do diagrama.</strong> Com base no diagrama de schema:</p>
+<ol type="a">
+<li>Quais tabelas possuem <strong>chave primária composta</strong> (mais de um atributo sublinhado)?</li>
+<li>Quantas tabelas referenciam diretamente <code>disciplina</code> por chave estrangeira?</li>
+<li>Qual é o “caminho” de chaves estrangeiras de <code>matricula_disciplina</code> até <code>centro</code>?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>ministra</code> (4 atributos: cod_disciplina, ano, semestre, turma), <code>matricula_disciplina</code> (5 atributos) e <code>prereq</code> (2 atributos).</p></li>
+<li><p>Três: <code>ministra</code> (via cod_disciplina), <code>prereq</code> (via codigo) e <code>prereq</code> (via prereq_codigo) — ou seja, <code>ministra</code> e <code>prereq</code> referenciam <code>disciplina</code>.</p></li>
+<li><p><code>matricula_disciplina</code> → <code>ministra</code> → <code>disciplina</code> → <code>curso</code> → <code>escola</code> → <code>centro</code>. São 5 saltos.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Diagrama de uma nova tabela.</strong> A UnDF deseja registrar as <strong>salas de aula</strong> do campus. Cada sala pertence a uma escola e possui número, capacidade e tipo (<code>laboratorio</code>, <code>auditorio</code>, <code>sala_aula</code>). Escreva o schema dessa nova relação e indique qual FK ela teria.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[sala(\underline{id\_sala},\ numero,\ capacidade,\ tipo,\ escola)\]</span></p>
+<p>A chave estrangeira seria <code>escola → escola.escola</code>. A tabela <code>ministra</code> poderia então referenciar <code>sala.id_sala</code> em vez de armazenar o nome da sala como VARCHAR.</p>
+</div>
+</div>
+</div>
 
 
 </section>

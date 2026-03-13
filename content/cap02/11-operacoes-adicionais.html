@@ -432,6 +432,7 @@ window.Quarto = {
   <li><a href="#exemplo-1-sem-agrupamento" id="toc-exemplo-1-sem-agrupamento" class="nav-link" data-scroll-target="#exemplo-1-sem-agrupamento"><span class="header-section-number">26.3.1</span> Exemplo 1: Sem Agrupamento</a></li>
   <li><a href="#exemplo-2-com-agrupamento" id="toc-exemplo-2-com-agrupamento" class="nav-link" data-scroll-target="#exemplo-2-com-agrupamento"><span class="header-section-number">26.3.2</span> Exemplo 2: Com Agrupamento</a></li>
   </ul></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">26.4</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -681,9 +682,71 @@ window.Quarto = {
 <div class="exemplo">
 <p>O agrupamento por <code>escola</code> faz com que a função <code>avg</code> seja calculada <strong>separadamente</strong> para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.</p>
 </div>
-
-
+<hr>
 </section>
+</section>
+<section id="para-praticar" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">26.4</span> Para Praticar</h2>
+<p><strong>1. Agregação sem grupo.</strong> Calcule o valor de <span class="math inline">\(\gamma_{\text{count}(*)}(prereq)\)</span> e <span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))\)</span>. O que cada resultado representa?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(\gamma_{\text{count}(*)}(prereq)\)</span> = <strong>16</strong> — total de pares de pré-requisito no banco.</li>
+<li><span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))\)</span> = <strong>8</strong> — número de disciplinas do curso ENS.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Renomeação necessária.</strong> Por que a expressão abaixo é ambígua sem renomeação?</p>
+<p><span class="math display">\[\Pi_{nome\_1,\ nome\_2,\ escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof &lt; p2.matricula\_prof}(professor \times professor))\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Quando multiplicamos <code>professor</code> por si mesmo sem renomear, o resultado tem dois atributos chamados <code>nome</code>, dois chamados <code>escola</code>, dois chamados <code>matricula_prof</code> etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: <span class="math inline">\(\rho_{p1}(professor)\)</span> e <span class="math inline">\(\rho_{p2}(professor)\)</span>, criando atributos qualificados como <span class="math inline">\(p1.nome\)</span> e <span class="math inline">\(p2.nome\)</span>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. HAVING em álgebra.</strong> Escreva a expressão de álgebra relacional equivalente a: “escolas com salário médio acima de 5.000”. Use a notação com <span class="math inline">\(\gamma\)</span> e <span class="math inline">\(\sigma\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\sigma_{\text{avg\_sal} &gt; 5000}\!\left({}_{escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)\]</span></p>
+<p>O <span class="math inline">\(\sigma\)</span> externo filtra os grupos produzidos pelo <span class="math inline">\(\gamma\)</span> — é exatamente o que o SQL faz com <code>HAVING</code>. Apenas ESG (média = 6.550) satisfaz a condição.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

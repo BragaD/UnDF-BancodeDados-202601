@@ -433,6 +433,7 @@ window.Quarto = {
   <li><a href="#interseção-cap" id="toc-interseção-cap" class="nav-link" data-scroll-target="#interseção-cap"><span class="header-section-number">25.3</span> Interseção (<span class="math inline">\(\cap\)</span>)</a></li>
   <li><a href="#diferença--" id="toc-diferença--" class="nav-link" data-scroll-target="#diferença--"><span class="header-section-number">25.4</span> Diferença (<span class="math inline">\(-\)</span>)</a></li>
   <li><a href="#resumo-comparativo" id="toc-resumo-comparativo" class="nav-link" data-scroll-target="#resumo-comparativo"><span class="header-section-number">25.5</span> Resumo Comparativo</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">25.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -747,6 +748,68 @@ Nota
 </tr>
 </tbody>
 </table>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">25.6</span> Para Praticar</h2>
+<p><strong>1. Comutatividade e não-comutatividade.</strong> Das três operações de conjunto, quais são comutativas? Verifique com um exemplo concreto que <span class="math inline">\(A - B \neq B - A\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\cup\)</span> e <span class="math inline">\(\cap\)</span> são <strong>comutativas</strong> (<span class="math inline">\(A \cup B = B \cup A\)</span> e <span class="math inline">\(A \cap B = B \cap A\)</span>). A diferença <span class="math inline">\(-\)</span> <strong>não</strong> é comutativa.</p>
+<p>Exemplo: seja <span class="math inline">\(A\)</span> = disciplinas de PED (8 tuplas) e <span class="math inline">\(B\)</span> = disciplinas com carga ≥ 60 h (22 tuplas). - <span class="math inline">\(A - B\)</span> = disciplinas de PED com carga &lt; 60 h = {PED-604, PED-804} → <strong>2 tuplas</strong> - <span class="math inline">\(B - A\)</span> = disciplinas com carga ≥ 60 h que <strong>não</strong> são de PED = 22 − 6 = <strong>16 tuplas</strong></p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Equivalência.</strong> Prove que <span class="math inline">\(A \cap B\)</span> é equivalente a <span class="math inline">\(A - (A - B)\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(A - B\)</span> = elementos em A que não estão em B.</li>
+<li><span class="math inline">\(A - (A - B)\)</span> = elementos de A que <strong>não</strong> estão em “<span class="math inline">\(A - B\)</span>” = elementos de A que estão em B = <span class="math inline">\(A \cap B\)</span>. ✓</li>
+</ul>
+<p>Essa equivalência mostra que <span class="math inline">\(\cap\)</span> pode ser derivado dos operadores básicos <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\Pi\)</span> e <span class="math inline">\(-\)</span> — por isso a interseção não precisa ser um operador primitivo da álgebra relacional.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. União de relações com schemas diferentes.</strong> Podemos calcular <span class="math inline">\(\Pi_{nome}(professor) \cup \Pi_{nome}(aluno)\)</span>? O que o resultado representaria?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Sim</strong>, pois ambas as relações têm o mesmo schema após a projeção: um único atributo <code>nome</code> do tipo texto. O resultado seria uma relação contendo todos os nomes distintos de professores e alunos em uma única coluna. Se um aluno e um professor tivessem o mesmo nome, apareceriam apenas uma vez (a união elimina duplicatas). Em SQL: <code>SELECT nome FROM professor UNION SELECT nome FROM aluno</code>.</p>
+</div>
+</div>
+</div>
 
 
 </section>

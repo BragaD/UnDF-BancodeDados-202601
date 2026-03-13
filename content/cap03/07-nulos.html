@@ -440,6 +440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#is-null-e-is-not-null" id="toc-is-null-e-is-not-null" class="nav-link" data-scroll-target="#is-null-e-is-not-null"><span class="header-section-number">35.4</span> IS NULL e IS NOT NULL</a></li>
   <li><a href="#null-em-funções-de-agregação" id="toc-null-em-funções-de-agregação" class="nav-link" data-scroll-target="#null-em-funções-de-agregação"><span class="header-section-number">35.5</span> NULL em Funções de Agregação</a></li>
   <li><a href="#boas-práticas" id="toc-boas-práticas" class="nav-link" data-scroll-target="#boas-práticas"><span class="header-section-number">35.6</span> Boas Práticas</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">35.7</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -791,6 +792,117 @@ Aviso
 <li>Ao escrever condições que envolvem colunas que podem ser nulas, inclua verificações explícitas com <code>IS NULL</code> ou <code>IS NOT NULL</code>.</li>
 <li>Nunca compare com <code>= NULL</code>; use sempre <code>IS NULL</code>.</li>
 </ul>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="35.7">
+<h2 data-number="35.7" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">35.7</span> Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- NULL em aritmética: qualquer operação com NULL resulta em NULL</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_matricula,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       nota,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       nota <span class="op">+</span> <span class="dv">1</span>     <span class="kw">AS</span> nota_mais_1,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       nota <span class="op">*</span> <span class="dv">2</span>     <span class="kw">AS</span> nota_dobro</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nota <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>0 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cod_matricula</th>
+<th style="text-align: right;">nota</th>
+<th style="text-align: right;">nota_mais_1</th>
+<th style="text-align: right;">nota_dobro</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- COALESCE: substituir NULL por um valor padrão</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_disciplina, ano, semestre, turma,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COALESCE</span>(horario, <span class="st">'Horário não definido'</span>) <span class="kw">AS</span> horario_exibido,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COALESCE</span>(sala,    <span class="st">'Sala não definida'</span>)    <span class="kw">AS</span> sala_exibida</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  horario <span class="kw">IS</span> <span class="kw">NULL</span> <span class="kw">OR</span> sala <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>0 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">cod_disciplina</th>
+<th style="text-align: right;">ano</th>
+<th style="text-align: right;">semestre</th>
+<th style="text-align: left;">turma</th>
+<th style="text-align: left;">horario_exibido</th>
+<th style="text-align: left;">sala_exibida</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Armadilha: comparar com NULL usando = sempre retorna NULL (nunca TRUE)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- A consulta abaixo retorna ZERO linhas, mesmo que existam notas nulas!</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> resultado_incorreto</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nota <span class="op">=</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">resultado_incorreto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Forma correta: usar IS NULL</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> resultado_correto</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nota <span class="kw">IS</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">resultado_correto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Armadilha clássica:</strong> <code>WHERE coluna = NULL</code> nunca retorna linhas — a comparação com <code>NULL</code> usando <code>=</code> sempre resulta em <code>NULL</code> (desconhecido), não <code>TRUE</code>. Use sempre <code>IS NULL</code> ou <code>IS NOT NULL</code>.</p>
+</div>
+</div>
 
 
 </section>

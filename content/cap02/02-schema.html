@@ -428,6 +428,7 @@ window.Quarto = {
   <li><a href="#schema-do-banco-de-dados" id="toc-schema-do-banco-de-dados" class="nav-link active" data-scroll-target="#schema-do-banco-de-dados"><span class="header-section-number">17.1</span> Schema do Banco de Dados</a></li>
   <li><a href="#instância-do-banco-de-dados" id="toc-instância-do-banco-de-dados" class="nav-link" data-scroll-target="#instância-do-banco-de-dados"><span class="header-section-number">17.2</span> Instância do Banco de Dados</a></li>
   <li><a href="#analogia-com-programação" id="toc-analogia-com-programação" class="nav-link" data-scroll-target="#analogia-com-programação"><span class="header-section-number">17.3</span> Analogia com Programação</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">17.4</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -587,6 +588,127 @@ window.Quarto = {
 </tbody>
 </table>
 <p>Assim como o tipo de uma variável não muda durante a execução do programa mas o seu valor muda o tempo todo, o schema de um banco de dados é estável enquanto a instância está em constante evolução.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">17.4</span> Para Praticar</h2>
+<p><strong>1. Schema ou instância?</strong> Classifique cada operação abaixo como alteração de <strong>schema</strong>, de <strong>instância</strong> ou <strong>nenhuma das duas</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Tipo de alteração</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inserir um novo aluno na tabela <code>aluno</code></td>
+<td>?</td>
+</tr>
+<tr class="even">
+<td>Adicionar a coluna <code>email</code> à tabela <code>professor</code></td>
+<td>?</td>
+</tr>
+<tr class="odd">
+<td>Executar um <code>SELECT</code> para listar disciplinas</td>
+<td>?</td>
+</tr>
+<tr class="even">
+<td>Remover a tabela <code>prereq</code> do banco</td>
+<td>?</td>
+</tr>
+<tr class="odd">
+<td>Atualizar o salário de um professor</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inserir um novo aluno</td>
+<td>Instância</td>
+</tr>
+<tr class="even">
+<td>Adicionar coluna <code>email</code></td>
+<td>Schema</td>
+</tr>
+<tr class="odd">
+<td><code>SELECT</code> para listar disciplinas</td>
+<td>Nenhuma</td>
+</tr>
+<tr class="even">
+<td>Remover a tabela <code>prereq</code></td>
+<td>Schema</td>
+</tr>
+<tr class="odd">
+<td>Atualizar salário</td>
+<td>Instância</td>
+</tr>
+</tbody>
+</table>
+<p>Schema muda com DDL (<code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>); instância muda com DML (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>); consultas não alteram nada.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Schema implica instância?</strong> É possível existir um schema sem nenhuma instância? E uma instância sem schema?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Schema sem instância:</strong> sim — uma tabela recém-criada com <code>CREATE TABLE</code> e zero linhas tem schema mas instância vazia. <strong>Instância sem schema:</strong> não é possível em bancos relacionais — toda instância deve obedecer ao schema definido previamente. O schema é a “planta”, a instância é o “edifício”.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Novo atributo, schema ou instância?</strong> O schema de <code>aluno</code> é:</p>
+<p><span class="math display">\[aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)\]</span></p>
+<p>Se a UnDF decidir registrar também o <strong>e-mail institucional</strong> de cada aluno, o que muda — schema ou instância? Escreva o novo schema.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Muda o <strong>schema</strong> — é preciso adicionar um atributo. O novo schema seria:</p>
+<p><span class="math display">\[aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso,\ email)\]</span></p>
+<p>Após essa mudança de schema, a instância precisaria ser atualizada (via <code>UPDATE</code>) para popular o novo campo — caso contrário, os valores ficariam <code>null</code>.</p>
+</div>
+</div>
+</div>
 
 
 </section>

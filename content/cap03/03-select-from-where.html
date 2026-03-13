@@ -467,6 +467,7 @@ window.Quarto = {
   <li><a href="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas" id="toc-exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="nav-link" data-scroll-target="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</a></li>
   <li><a href="#exemplo-4-junção-com-autorreferência-pré-requisitos" id="toc-exemplo-4-junção-com-autorreferência-pré-requisitos" class="nav-link" data-scroll-target="#exemplo-4-junção-com-autorreferência-pré-requisitos"><span class="header-section-number">31.6</span> Exemplo 4: Junção com Autorreferência (Pré-requisitos)</a></li>
   <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela"><span class="header-section-number">31.7</span> Notação com Qualificador de Tabela</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">31.8</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -758,6 +759,179 @@ Nota
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>e.escola   <span class="co">-- coluna escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sem o qualificador, o SQL lançará um erro de ambiguidade:</p>
 <pre><code>ERROR: column reference "escola" is ambiguous</code></pre>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="31.8">
+<h2 data-number="31.8" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">31.8</span> Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Três tabelas em cadeia: nome do professor, escola e centro</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola, c.nome_centro</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor p, escola e, centro c</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola  <span class="op">=</span> e.escola</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  e.centro  <span class="op">=</span> c.centro</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> c.centro, p.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 46%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">nome_escola</th>
+<th style="text-align: left;">nome_centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: left;">Escola Superior de Gestão</td>
+<td style="text-align: left;">CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: left;">Escola Superior de Gestão</td>
+<td style="text-align: left;">CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
+<td style="text-align: left;">CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
+<td style="text-align: left;">CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Produto cartesiano completo: quantas linhas gera professor × escola?</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (7 × 3 = 21 — sem filtro WHERE)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_produto_cartesiano</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor, escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">total_produto_cartesiano</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos cujo ano de ingresso coincide com o semestre da disciplina que cursaram</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (caso limite: comparação entre atributos de tabelas diferentes)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.nome, a.ano_ingresso, md.cod_disciplina</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a, matricula_disciplina md</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  a.matricula      <span class="op">=</span> md.cod_matricula</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  a.ano_ingresso   <span class="op">=</span> md.ano</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">ano_ingresso</th>
+<th style="text-align: left;">cod_disciplina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Amanda Moreira</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">PED-203</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Amanda Moreira</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">PED-204</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ECO-201</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ECO-202</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Camila Teixeira</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">ECO-201</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Camila Teixeira</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">ECO-202</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carolina Lima</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: left;">PED-203</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carolina Lima</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: left;">PED-204</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">ENS-201</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">ENS-202</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A última consulta compara <code>aluno.ano_ingresso</code> com <code>matricula_disciplina.ano</code> — um predicado entre atributos de tabelas diferentes, perfeitamente válido em SQL. Ela retorna alunos que cursaram disciplinas no mesmo ano em que ingressaram no curso.</p>
+</div>
+</div>
 
 
 </section>

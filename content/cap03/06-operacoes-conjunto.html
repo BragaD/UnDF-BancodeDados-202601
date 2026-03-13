@@ -469,6 +469,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#union-all-mantendo-duplicatas" id="toc-union-all-mantendo-duplicatas" class="nav-link" data-scroll-target="#union-all-mantendo-duplicatas"><span class="header-section-number">34.3</span> UNION ALL: Mantendo Duplicatas</a></li>
   <li><a href="#compatibilidade-de-esquema" id="toc-compatibilidade-de-esquema" class="nav-link" data-scroll-target="#compatibilidade-de-esquema"><span class="header-section-number">34.4</span> Compatibilidade de Esquema</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">34.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -809,6 +810,137 @@ Nota
 <li>Tipos de dados <strong>compatíveis</strong> em cada posição correspondente</li>
 </ol>
 <p>Os nomes das colunas no resultado final são determinados pela <strong>primeira</strong> consulta.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">34.5</span> Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXCEPT: disciplinas que possuem pré-requisito mas nenhum aluno cursou</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (aparece em prereq, mas não em matricula_disciplina como prereq_codigo cursado)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.codigo, d.nome_disciplina</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.codigo <span class="kw">IN</span> (<span class="kw">SELECT</span> codigo <span class="kw">FROM</span> prereq)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPT</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.codigo, d.nome_disciplina</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.codigo <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> cod_disciplina <span class="kw">FROM</span> matricula_disciplina)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ECO-601</td>
+<td style="text-align: left;">Economia Brasileira</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ECO-602</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ECO-801</td>
+<td style="text-align: left;">Monografia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-801</td>
+<td style="text-align: left;">Bases da Engenharia de Software 8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-802</td>
+<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-803</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- INTERSECT: disciplinas que têm pré-requisito E foram cursadas por algum aluno</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo <span class="kw">FROM</span> prereq</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">INTERSECT</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> cod_disciplina <span class="kw">FROM</span> matricula_disciplina</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">codigo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ECO-401</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-401</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-402</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-601</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-602</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-403</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PED-603</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- UNION ALL vs UNION: efeito das duplicatas</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- UNION ALL conta todas as ocorrências; UNION apenas valores distintos</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UNION (sem dup.)'</span> <span class="kw">AS</span> operacao, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_linhas</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso <span class="kw">FROM</span> curso</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso <span class="kw">FROM</span> disciplina</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>) t</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UNION ALL (com dup.)'</span>, <span class="fu">COUNT</span>(<span class="op">*</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso <span class="kw">FROM</span> curso</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> sigla_curso <span class="kw">FROM</span> disciplina</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>) t;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">operacao</th>
+<th style="text-align: right;">n_linhas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">UNION (sem dup.)</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UNION ALL (com dup.)</td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
 </section>

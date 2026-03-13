@@ -434,6 +434,7 @@ window.Quarto = {
   <li><a href="#relação-ministra" id="toc-relação-ministra" class="nav-link" data-scroll-target="#relação-ministra"><span class="header-section-number">18.2.4</span> Relação <code>ministra</code></a></li>
   </ul></li>
   <li><a href="#chave-estrangeira" id="toc-chave-estrangeira" class="nav-link" data-scroll-target="#chave-estrangeira"><span class="header-section-number">18.3</span> Chave Estrangeira</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">18.4</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -561,6 +562,81 @@ window.Quarto = {
 <p>Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, <code>curso.escola</code> e <code>aluno.sigla_curso</code> são chaves estrangeiras que referenciam suas respectivas tabelas.</p>
 </div>
 <p>A restrição imposta por uma chave estrangeira é chamada de <strong>restrição de integridade referencial</strong> (<em>referential integrity constraint</em>) e é uma das formas como o SGBD preserva a consistência dos dados.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">18.4</span> Para Praticar</h2>
+<p><strong>1. Superchaves de <code>disciplina</code>.</strong> O schema da relação <code>disciplina</code> é:</p>
+<p><span class="math display">\[disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)\]</span></p>
+<p>Das combinações abaixo, quais são superchaves? Quais são chaves candidatas?</p>
+<ol type="a">
+<li><span class="math inline">\(\{codigo\}\)</span></li>
+<li><span class="math inline">\(\{nome\_disciplina\}\)</span></li>
+<li><span class="math inline">\(\{codigo,\ semestre\}\)</span></li>
+<li><span class="math inline">\(\{sigla\_curso,\ semestre,\ nome\_disciplina\}\)</span></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> <span class="math inline">\(\{codigo\}\)</span> — <strong>superclave e chave candidata</strong>: identifica unicamente cada disciplina e é minimal.</li>
+<li><strong>(b)</strong> <span class="math inline">\(\{nome\_disciplina\}\)</span> — <strong>não é superclave</strong>: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: “Eletiva I” em PED-403 e uma hipotética em outro curso).</li>
+<li><strong>(c)</strong> <span class="math inline">\(\{codigo,\ semestre\}\)</span> — <strong>superclave mas não candidata</strong>: redundante, pois <code>codigo</code> já identifica unicamente.</li>
+<li><strong>(d)</strong> <span class="math inline">\(\{sigla\_curso,\ semestre,\ nome\_disciplina\}\)</span> — <strong>pode ser superclave</strong> se nomes forem únicos por curso/semestre, mas não é minimal.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. NULL em chave primária.</strong> Por que o valor <code>null</code> não é permitido em atributos da chave primária?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A chave primária deve identificar <strong>unicamente</strong> cada tupla. Se um atributo de PK for <code>null</code>, não é possível determinar se duas tuplas com <code>null</code> representam o mesmo objeto ou objetos diferentes (pois <code>null ≠ null</code> no modelo relacional). Por isso, o SQL impõe implicitamente <code>NOT NULL</code> em todo atributo de chave primária.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Chave estrangeira autorreferencial.</strong> A tabela <code>prereq</code> tem duas FKs que apontam para a mesma tabela <code>disciplina</code>:</p>
+<ul>
+<li><code>prereq.codigo</code> → <code>disciplina.codigo</code></li>
+<li><code>prereq.prereq_codigo</code> → <code>disciplina.codigo</code></li>
+</ul>
+<p>O que aconteceria se tentássemos inserir a tupla <code>('ENS-201', 'ENS-201')</code> em <code>prereq</code>? Essa inserção violaria alguma restrição?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A tupla <code>('ENS-201', 'ENS-201')</code> <strong>não viola</strong> nenhuma restrição de FK (ENS-201 existe em <code>disciplina</code>) nem de PK (é uma combinação única). No entanto, ela criaria um <strong>ciclo de pré-requisito</strong>: ENS-201 seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição <code>CHECK (codigo &lt;&gt; prereq_codigo)</code>.</p>
+</div>
+</div>
+</div>
 
 
 </section>

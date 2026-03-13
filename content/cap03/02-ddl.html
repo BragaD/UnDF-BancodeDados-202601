@@ -443,6 +443,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#alter-table" id="toc-alter-table" class="nav-link" data-scroll-target="#alter-table"><span class="header-section-number">30.4</span> ALTER TABLE</a></li>
   <li><a href="#drop-table" id="toc-drop-table" class="nav-link" data-scroll-target="#drop-table"><span class="header-section-number">30.5</span> DROP TABLE</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">30.6</span> Para Praticar</a>
+  <ul>
+  <li><a href="#adicionando-e-removendo-colunas" id="toc-adicionando-e-removendo-colunas" class="nav-link" data-scroll-target="#adicionando-e-removendo-colunas"><span class="header-section-number">30.6.1</span> Adicionando e removendo colunas</a></li>
+  <li><a href="#restrição-check" id="toc-restrição-check" class="nav-link" data-scroll-target="#restrição-check"><span class="header-section-number">30.6.2</span> Restrição CHECK</a></li>
+  <li><a href="#o-que-acontece-com-not-null-em-coluna-existente" id="toc-o-que-acontece-com-not-null-em-coluna-existente" class="nav-link" data-scroll-target="#o-que-acontece-com-not-null-em-coluna-existente"><span class="header-section-number">30.6.3</span> O que acontece com NOT NULL em coluna existente?</a></li>
+  <li><a href="#verificando-a-estrutura-de-uma-tabela" id="toc-verificando-a-estrutura-de-uma-tabela" class="nav-link" data-scroll-target="#verificando-a-estrutura-de-uma-tabela"><span class="header-section-number">30.6.4</span> Verificando a estrutura de uma tabela</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -764,8 +771,90 @@ Aviso
 <p>Se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará — a menos que <code>CASCADE</code> seja especificado.</p>
 </div>
 </div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="30.6">
+<h2 data-number="30.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">30.6</span> Para Praticar</h2>
+<section id="adicionando-e-removendo-colunas" class="level3" data-number="30.6.1">
+<h3 data-number="30.6.1" class="anchored" data-anchor-id="adicionando-e-removendo-colunas"><span class="header-section-number">30.6.1</span> Adicionando e removendo colunas</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar email à tabela professor</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">ADD</span> <span class="kw">COLUMN</span> email <span class="dt">VARCHAR</span>(<span class="dv">100</span>);</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remover a coluna email novamente</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> professor <span class="kw">DROP</span> <span class="kw">COLUMN</span> email;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="restrição-check" class="level3" data-number="30.6.2">
+<h3 data-number="30.6.2" class="anchored" data-anchor-id="restrição-check"><span class="header-section-number">30.6.2</span> Restrição CHECK</h3>
+<p>O SQL permite validar valores na inserção com <code>CHECK</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adicionar restrição: semestre deve ser entre 1 e 10</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> disciplina</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_semestre <span class="kw">CHECK</span> (semestre <span class="kw">BETWEEN</span> <span class="dv">1</span> <span class="kw">AND</span> <span class="dv">10</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="o-que-acontece-com-not-null-em-coluna-existente" class="level3" data-number="30.6.3">
+<h3 data-number="30.6.3" class="anchored" data-anchor-id="o-que-acontece-com-not-null-em-coluna-existente"><span class="header-section-number">30.6.3</span> O que acontece com NOT NULL em coluna existente?</h3>
+<p>Se tentarmos adicionar <code>NOT NULL</code> a uma coluna que já possui valores nulos, o banco retorna erro:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Isso falharia se horario tiver valores NULL em ministra</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> ministra <span class="kw">ALTER</span> <span class="kw">COLUMN</span> horario <span class="kw">SET</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: column "horario" of relation "ministra" contains null values</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A solução é primeiro preencher os valores nulos antes de aplicar a restrição.</p>
+</section>
+<section id="verificando-a-estrutura-de-uma-tabela" class="level3" data-number="30.6.4">
+<h3 data-number="30.6.4" class="anchored" data-anchor-id="verificando-a-estrutura-de-uma-tabela"><span class="header-section-number">30.6.4</span> Verificando a estrutura de uma tabela</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Inspecionar colunas, tipos e restrições da tabela professor</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column_name, data_type, is_nullable, column_default</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.<span class="kw">columns</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  table_name <span class="op">=</span> <span class="st">'professor'</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> ordinal_position;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">column_name</th>
+<th style="text-align: left;">data_type</th>
+<th style="text-align: left;">is_nullable</th>
+<th style="text-align: left;">column_default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">matricula_prof</td>
+<td style="text-align: left;">character varying</td>
+<td style="text-align: left;">NO</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nome</td>
+<td style="text-align: left;">character varying</td>
+<td style="text-align: left;">NO</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">escola</td>
+<td style="text-align: left;">character varying</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ch_semanal</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">NO</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">salario</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">NO</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

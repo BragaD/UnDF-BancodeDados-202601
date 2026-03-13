@@ -666,6 +666,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/01-estrutura.html#para-praticar",
+    "href": "content/cap02/01-estrutura.html#para-praticar",
+    "title": "16  Estrutura do Banco de Dados Relacional",
+    "section": "16.5 Para Praticar",
+    "text": "16.5 Para Praticar\n1. Atomicidade violada. Considere a seguinte proposta de tabela:\n\n\n\nmatricula\nnome\ndisciplinas_cursadas\n\n\n\n\n2023002001\nMatheus Silva\nENS-201, ENS-202\n\n\n\nPor que esse design viola o modelo relacional? Como corrigi-lo?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nO atributo disciplinas_cursadas armazena uma lista de valores — não é atômico. O modelo relacional exige atomicidade: cada célula deve conter um único valor indivisível. A solução correta é usar a tabela matricula_disciplina, onde cada par (aluno, disciplina) ocupa uma tupla separada.\n\n\n\n\n2. Duas instâncias, mesma relação? As duas tabelas abaixo representam a mesma relação?\nTabela A:\n\n\n\nmatricula_prof\nnome\nescola\n\n\n\n\nPROF20230031\nGustavo Costa\nESETI\n\n\nPROF20230042\nBruno Teixeira\nESG\n\n\n\nTabela B:\n\n\n\nescola\nnome\nmatricula_prof\n\n\n\n\nESG\nBruno Teixeira\nPROF20230042\n\n\nESETI\nGustavo Costa\nPROF20230031\n\n\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nSim. As duas tabelas representam a mesma relação. No modelo relacional, nem a ordem das tuplas nem a ordem dos atributos têm significado formal — uma relação é um conjunto de tuplas, e conjuntos não têm sequência.\n\n\n\n\n3. Aridade do banco. Consulte o schema da UnDF e preencha:\n\n\n\nTabela\nAridade\nNº de tuplas na amostra\n\n\n\n\ncentro\n?\n?\n\n\nprofessor\n?\n?\n\n\nprereq\n?\n?\n\n\nministra\n?\n?\n\n\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n\n\nTabela\nAridade\nNº de tuplas\n\n\n\n\ncentro\n2\n3\n\n\nprofessor\n5\n7\n\n\nprereq\n2\n16\n\n\nministra\n7\n36",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Estrutura do Banco de Dados Relacional</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/02-schema.html",
     "href": "content/cap02/02-schema.html",
     "title": "17  Schema e Instância",
@@ -704,6 +715,17 @@
     "title": "17  Schema e Instância",
     "section": "17.3 Analogia com Programação",
     "text": "17.3 Analogia com Programação\nA distinção entre schema e instância tem um paralelo direto com conceitos de linguagens de programação:\n\n\n\n\n\n\n\nConceito em BD\nAnalogia em programação\n\n\n\n\nSchema de uma relação\nDeclaração de tipo de uma variável (ex: struct Professor)\n\n\nInstância de uma relação\nValor atual da variável em tempo de execução\n\n\nSchema do banco de dados\nConjunto de todas as declarações de tipos do programa\n\n\nInstância do banco de dados\nEstado da memória do programa em um dado instante\n\n\n\nAssim como o tipo de uma variável não muda durante a execução do programa mas o seu valor muda o tempo todo, o schema de um banco de dados é estável enquanto a instância está em constante evolução.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/02-schema.html#para-praticar",
+    "href": "content/cap02/02-schema.html#para-praticar",
+    "title": "17  Schema e Instância",
+    "section": "17.4 Para Praticar",
+    "text": "17.4 Para Praticar\n1. Schema ou instância? Classifique cada operação abaixo como alteração de schema, de instância ou nenhuma das duas:\n\n\n\nOperação\nTipo de alteração\n\n\n\n\nInserir um novo aluno na tabela aluno\n?\n\n\nAdicionar a coluna email à tabela professor\n?\n\n\nExecutar um SELECT para listar disciplinas\n?\n\n\nRemover a tabela prereq do banco\n?\n\n\nAtualizar o salário de um professor\n?\n\n\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n\n\nOperação\nTipo\n\n\n\n\nInserir um novo aluno\nInstância\n\n\nAdicionar coluna email\nSchema\n\n\nSELECT para listar disciplinas\nNenhuma\n\n\nRemover a tabela prereq\nSchema\n\n\nAtualizar salário\nInstância\n\n\n\nSchema muda com DDL (CREATE, ALTER, DROP); instância muda com DML (INSERT, UPDATE, DELETE); consultas não alteram nada.\n\n\n\n\n2. Schema implica instância? É possível existir um schema sem nenhuma instância? E uma instância sem schema?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nSchema sem instância: sim — uma tabela recém-criada com CREATE TABLE e zero linhas tem schema mas instância vazia. Instância sem schema: não é possível em bancos relacionais — toda instância deve obedecer ao schema definido previamente. O schema é a “planta”, a instância é o “edifício”.\n\n\n\n\n3. Novo atributo, schema ou instância? O schema de aluno é:\n\\[aluno(\\underline{matricula},\\ nome,\\ sigla\\_curso,\\ ano\\_ingresso)\\]\nSe a UnDF decidir registrar também o e-mail institucional de cada aluno, o que muda — schema ou instância? Escreva o novo schema.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nMuda o schema — é preciso adicionar um atributo. O novo schema seria:\n\\[aluno(\\underline{matricula},\\ nome,\\ sigla\\_curso,\\ ano\\_ingresso,\\ email)\\]\nApós essa mudança de schema, a instância precisaria ser atualizada (via UPDATE) para popular o novo campo — caso contrário, os valores ficariam null.",
     "crumbs": [
       "Capítulo 2: Modelo Relacional",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Schema e Instância</span>"
@@ -754,6 +776,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/03-chaves.html#para-praticar",
+    "href": "content/cap02/03-chaves.html#para-praticar",
+    "title": "18  Chaves",
+    "section": "18.4 Para Praticar",
+    "text": "18.4 Para Praticar\n1. Superchaves de disciplina. O schema da relação disciplina é:\n\\[disciplina(\\underline{codigo},\\ nome\\_disciplina,\\ sigla\\_curso,\\ semestre,\\ carga\\_horaria)\\]\nDas combinações abaixo, quais são superchaves? Quais são chaves candidatas?\n\n\\(\\{codigo\\}\\)\n\\(\\{nome\\_disciplina\\}\\)\n\\(\\{codigo,\\ semestre\\}\\)\n\\(\\{sigla\\_curso,\\ semestre,\\ nome\\_disciplina\\}\\)\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n(a) \\(\\{codigo\\}\\) — superclave e chave candidata: identifica unicamente cada disciplina e é minimal.\n(b) \\(\\{nome\\_disciplina\\}\\) — não é superclave: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: “Eletiva I” em PED-403 e uma hipotética em outro curso).\n(c) \\(\\{codigo,\\ semestre\\}\\) — superclave mas não candidata: redundante, pois codigo já identifica unicamente.\n(d) \\(\\{sigla\\_curso,\\ semestre,\\ nome\\_disciplina\\}\\) — pode ser superclave se nomes forem únicos por curso/semestre, mas não é minimal.\n\n\n\n\n\n2. NULL em chave primária. Por que o valor null não é permitido em atributos da chave primária?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nA chave primária deve identificar unicamente cada tupla. Se um atributo de PK for null, não é possível determinar se duas tuplas com null representam o mesmo objeto ou objetos diferentes (pois null ≠ null no modelo relacional). Por isso, o SQL impõe implicitamente NOT NULL em todo atributo de chave primária.\n\n\n\n\n3. Chave estrangeira autorreferencial. A tabela prereq tem duas FKs que apontam para a mesma tabela disciplina:\n\nprereq.codigo → disciplina.codigo\nprereq.prereq_codigo → disciplina.codigo\n\nO que aconteceria se tentássemos inserir a tupla ('ENS-201', 'ENS-201') em prereq? Essa inserção violaria alguma restrição?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nA tupla ('ENS-201', 'ENS-201') não viola nenhuma restrição de FK (ENS-201 existe em disciplina) nem de PK (é uma combinação única). No entanto, ela criaria um ciclo de pré-requisito: ENS-201 seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição CHECK (codigo &lt;&gt; prereq_codigo).",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Chaves</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/04-diagrama-schema.html",
     "href": "content/cap02/04-diagrama-schema.html",
     "title": "19  Diagrama de Schema",
@@ -792,6 +825,17 @@
     "title": "19  Diagrama de Schema",
     "section": "19.3 Leitura do Diagrama",
     "text": "19.3 Leitura do Diagrama\n\nAtributo sublinhado = chave primária (identifica unicamente cada tupla)\nSeta = chave estrangeira (o atributo referencia a chave primária da tabela apontada)\ncentro e escola formam a hierarquia organizacional da UnDF\ncurso e professor referenciam escola; aluno e disciplina referenciam curso\nministra é a relação de associação entre professor e disciplina (com chave composta de 4 atributos)\nmatricula_disciplina registra as matrículas de alunos em turmas específicas e referencia tanto ministra quanto aluno\nprereq é uma relação de autorreferência sobre disciplina: ambos os atributos da chave composta (codigo e prereq_codigo) são chaves estrangeiras que apontam para a mesma tabela disciplina",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/04-diagrama-schema.html#para-praticar",
+    "href": "content/cap02/04-diagrama-schema.html#para-praticar",
+    "title": "19  Diagrama de Schema",
+    "section": "19.4 Para Praticar",
+    "text": "19.4 Para Praticar\n1. Leitura do diagrama. Com base no diagrama de schema:\n\nQuais tabelas possuem chave primária composta (mais de um atributo sublinhado)?\nQuantas tabelas referenciam diretamente disciplina por chave estrangeira?\nQual é o “caminho” de chaves estrangeiras de matricula_disciplina até centro?\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\nministra (4 atributos: cod_disciplina, ano, semestre, turma), matricula_disciplina (5 atributos) e prereq (2 atributos).\nTrês: ministra (via cod_disciplina), prereq (via codigo) e prereq (via prereq_codigo) — ou seja, ministra e prereq referenciam disciplina.\nmatricula_disciplina → ministra → disciplina → curso → escola → centro. São 5 saltos.\n\n\n\n\n\n2. Diagrama de uma nova tabela. A UnDF deseja registrar as salas de aula do campus. Cada sala pertence a uma escola e possui número, capacidade e tipo (laboratorio, auditorio, sala_aula). Escreva o schema dessa nova relação e indique qual FK ela teria.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[sala(\\underline{id\\_sala},\\ numero,\\ capacidade,\\ tipo,\\ escola)\\]\nA chave estrangeira seria escola → escola.escola. A tabela ministra poderia então referenciar sala.id_sala em vez de armazenar o nome da sala como VARCHAR.",
     "crumbs": [
       "Capítulo 2: Modelo Relacional",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>Diagrama de Schema</span>"
@@ -875,6 +919,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/06-algebra-relacional.html#para-praticar",
+    "href": "content/cap02/06-algebra-relacional.html#para-praticar",
+    "title": "21  Álgebra Relacional",
+    "section": "21.3 Para Praticar",
+    "text": "21.3 Para Praticar\n1. Composição de operações. Escreva uma expressão de álgebra relacional para encontrar os nomes de todos os alunos do curso de Pedagogia (PED) ingressantes em 2023.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\Pi_{nome}\\!\\left(\\sigma_{sigla\\_curso = \\text{\"PED\"}\\ \\wedge\\ ano\\_ingresso = 2023}(aluno)\\right)\\]\n\n\n\n\n2. Ordem importa? As duas expressões abaixo são equivalentes? Qual é mais eficiente e por quê?\nExpressão A: \\(\\Pi_{nome}\\!\\left(\\sigma_{escola = \\text{\"ESETI\"}}(professor)\\right)\\)\nExpressão B: \\(\\sigma_{escola = \\text{\"ESETI\"}}\\!\\left(\\Pi_{nome}(professor)\\right)\\)\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nNão são equivalentes. A Expressão A aplica \\(\\sigma\\) primeiro (mantendo o atributo escola disponível para o filtro) e depois projeta apenas nome — resultado correto: nomes dos professores da ESETI.\nA Expressão B é inválida: \\(\\Pi_{nome}(professor)\\) elimina a coluna escola antes da seleção, tornando o predicado \\(escola = \\text{\"ESETI\"}\\) inaplicável.\nEm álgebra relacional, \\(\\sigma\\) deve poder acessar os atributos usados no predicado. A “otimização” de aplicar projeção cedo só é válida quando se mantêm os atributos necessários para as seleções seguintes.\n\n\n\n\n3. Resultado vazio. O que acontece quando um operador recebe uma relação vazia como entrada? Por exemplo:\n\\[\\sigma_{semestre &gt; 10}(disciplina)\\]\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nO resultado é uma relação vazia — uma tabela com zero tuplas mas com o mesmo schema de disciplina. Relações vazias são perfeitamente válidas e podem ser usadas como entrada de outras operações (ex.: \\(\\emptyset \\cup r = r\\); \\(\\emptyset \\times r = \\emptyset\\)).",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Álgebra Relacional</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/07-selecao.html",
     "href": "content/cap02/07-selecao.html",
     "title": "22  Operação de Seleção",
@@ -941,6 +996,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/07-selecao.html#para-praticar",
+    "href": "content/cap02/07-selecao.html#para-praticar",
+    "title": "22  Operação de Seleção",
+    "section": "22.6 Para Praticar",
+    "text": "22.6 Para Praticar\n1. Predicado com OR. Escreva a expressão para encontrar todos os professores que são da EEMA ou têm salário acima de 6.000. Quais tuplas o resultado conteria?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\sigma_{escola = \\text{\"EEMA\"}\\ \\vee\\ salario &gt; 6000}(professor)\\]\nResultado (7 professores verificados): - EEMA: Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios) - ESETI: Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério) - ESG: Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário\nTotal: 5 tuplas (Eduarda, Felipe, Helena, Bruno, Carla).\n\n\n\n\n2. Predicado composto. Escreva uma expressão para selecionar as disciplinas do curso ENS com carga horária entre 120 h e 160 h (inclusive).\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\sigma_{sigla\\_curso = \\text{\"ENS\"}\\ \\wedge\\ carga\\_horaria \\geq 120\\ \\wedge\\ carga\\_horaria \\leq 160}(disciplina)\\]\nResultado: ENS-202 (120h), ENS-402 (120h), ENS-601 (150h), ENS-602 (120h), ENS-801 (100h? não — 100 &lt; 120), ENS-802 (160h).\nDisciplinas resultantes: ENS-202, ENS-401 (180h? não — 180 &gt; 160), ENS-402, ENS-601, ENS-602, ENS-802 = 5 tuplas.\n\n\n\n\n3. Seleção sobre resultado de outra operação. É válido aplicar \\(\\sigma\\) sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde professor.escola = escola.escola e escola.centro = 'COETI'.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\sigma_{professor.escola = escola.escola\\ \\wedge\\ escola.centro = \\text{\"COETI\"}}(professor \\times escola)\\]\nIsso é exatamente uma junção com filtro adicional — equivale a \\(professor \\bowtie_{professor.escola = escola.escola} \\sigma_{centro = \\text{\"COETI\"}}(escola)\\), que retorna apenas os professores da ESETI (vinculada ao COETI).",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Operação de Seleção</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/08-projecao.html",
     "href": "content/cap02/08-projecao.html",
     "title": "23  Operação de Projeção",
@@ -996,6 +1062,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/08-projecao.html#para-praticar",
+    "href": "content/cap02/08-projecao.html#para-praticar",
+    "title": "23  Operação de Projeção",
+    "section": "23.5 Para Praticar",
+    "text": "23.5 Para Praticar\n1. Idempotência da projeção. A projeção é idempotente quando aplicada sobre o mesmo conjunto de atributos:\n\\[\\Pi_A\\!\\left(\\Pi_{A,B}(r)\\right) = \\Pi_A(r)\\]\nMas o que acontece se tentarmos \\(\\Pi_{A,B}\\!\\left(\\Pi_A(r)\\right)\\) quando \\(B \\notin A\\)?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nA expressão é inválida: \\(\\Pi_A(r)\\) elimina o atributo \\(B\\), que passa a não existir na relação resultante. Tentar projetar \\(B\\) de uma relação que não o possui é um erro de schema. Isso ilustra que a projeção é destrutiva em relação aos atributos não selecionados.\n\n\n\n\n2. Quantas tuplas? Calcule o número de tuplas esperado em cada resultado:\n\n\\(\\Pi_{escola}(professor)\\) — a tabela professor tem 7 tuplas distribuídas em 3 escolas\n\\(\\Pi_{sigla\\_curso}(disciplina)\\) — 24 disciplinas distribuídas em 3 cursos\n\\(\\Pi_{matricula\\_prof, escola}(professor)\\) — 7 tuplas, combinação de atributos\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n3 tuplas — a projeção elimina duplicatas; há exatamente 3 valores distintos de escola.\n3 tuplas — idem; 3 cursos distintos.\n7 tuplas — como matricula_prof é a chave primária, cada combinação (matricula_prof, escola) já é única. A projeção não elimina nenhuma tupla.\n\nObservação: a projeção sobre a chave primária nunca elimina tuplas — o número é preservado.\n\n\n\n\n3. Projeção e junção. Após fazer a junção \\(professor \\bowtie_{professor.escola = escola.escola} escola\\), queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\Pi_{professor.nome,\\ escola.nome\\_escola}\\!\\left(professor \\bowtie_{professor.escola = escola.escola} escola\\right)\\]\nO resultado tem 7 tuplas (uma por professor), com os atributos nome e nome_escola.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Operação de Projeção</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/09-produto-juncao.html",
     "href": "content/cap02/09-produto-juncao.html",
     "title": "24  Produto Cartesiano e Junção",
@@ -1023,6 +1100,17 @@
     "title": "24  Produto Cartesiano e Junção",
     "section": "24.2 Junção (\\(\\bowtie\\))",
     "text": "24.2 Junção (\\(\\bowtie\\))\nA junção combina seleção e produto cartesiano em uma única operação conveniente, retornando apenas as combinações de tuplas que satisfazem um predicado.\n\n\\[r \\bowtie_\\theta s = \\sigma_\\theta(r \\times s)\\]\nonde \\(\\theta\\) é o predicado de junção. A junção é equivalente a fazer o produto cartesiano e depois filtrar com \\(\\sigma_\\theta\\).\n\n\n24.2.1 Exemplo: Professores com Suas Disciplinas\nPara associar cada professor às disciplinas que ministra em 2023:\n\\[professor \\bowtie_{professor.matricula\\_prof\\ =\\ ministra.matricula\\_prof} ministra\\]\nEsta expressão é equivalente a:\n\\[\\sigma_{professor.matricula\\_prof\\ =\\ ministra.matricula\\_prof}(professor \\times ministra)\\]\nResultado (apenas as 3 tuplas válidas do produto cartesiano de 9):\n\n\n\n\n\n\n\n\n\n\nprofessor.matricula_prof\nprofessor.nome\nprofessor.escola\nministra.cod_disciplina\nministra.ano\n\n\n\n\nPROF20230031\nGustavo Costa\nESETI\nENS-201\n2023\n\n\nPROF20230005\nEduarda Souza\nEEMA\nPED-203\n2023\n\n\nPROF20230042\nBruno Teixeira\nESG\nECO-201\n2023\n\n\n\n\nA junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo ministra.matricula_prof é redundante no resultado e pode ser eliminado com uma projeção.\n\n\n\n24.2.2 Junção com Autorreferência: Pré-requisitos\nA relação prereq conecta disciplinas entre si: cada tupla indica que codigo exige prereq_codigo como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação disciplina — trata-se de uma autorreferência.\nPara obter os nomes da disciplina e do seu pré-requisito é necessário juntar prereq com disciplina duas vezes, usando renomeação para distinguir as duas instâncias:\n\\[D \\leftarrow \\rho_d(disciplina)\\] \\[P \\leftarrow \\rho_p(disciplina)\\] \\[\\Pi_{d.nome\\_disciplina,\\ p.nome\\_disciplina}\\!\\left(\\sigma_{prereq.codigo = d.codigo\\ \\wedge\\ prereq.prereq\\_codigo = p.codigo}(prereq \\times D \\times P)\\right)\\]\nVersão compacta com junções encadeadas:\n\\[prereq \\bowtie_{prereq.codigo = d.codigo} \\rho_d(disciplina) \\bowtie_{prereq.prereq\\_codigo = p.codigo} \\rho_p(disciplina)\\]\nTabela prereq (amostra — ENS):\n\n\n\ncodigo\nprereq_codigo\n\n\n\n\nENS-401\nENS-201\n\n\nENS-402\nENS-202\n\n\nENS-601\nENS-401\n\n\nENS-601\nENS-402\n\n\nENS-602\nENS-402\n\n\nENS-801\nENS-601\n\n\nENS-802\nENS-601\n\n\nENS-802\nENS-602\n\n\n\nResultado após a junção (ENS — nomes completos):\n\n\n\n\n\n\n\nd.nome_disciplina\np.nome_disciplina\n\n\n\n\nBases da Engenharia de Software 4\nBases da Engenharia de Software 2\n\n\nProjeto Aplicado 4 (blockchain)\nProjeto Aplicado 2 (site WEB)\n\n\nBases da Engenharia de Software 6\nBases da Engenharia de Software 4\n\n\nBases da Engenharia de Software 6\nProjeto Aplicado 4 (blockchain)\n\n\nProjeto Aplicado 6 (Machine Learning)\nProjeto Aplicado 4 (blockchain)\n\n\nBases da Engenharia de Software 8\nBases da Engenharia de Software 6\n\n\nProjeto Aplicado 8 (Sistema em Tempo Real)\nBases da Engenharia de Software 6\n\n\nProjeto Aplicado 8 (Sistema em Tempo Real)\nProjeto Aplicado 6 (Machine Learning)\n\n\n\n\nENS-601 (Bases 6) tem dois pré-requisitos (ENS-401 e ENS-402), o que gera duas tuplas no resultado com o mesmo valor em d.nome_disciplina. Isso é esperado — a relação registra pares, não listas.\n\n\n\n24.2.3 Vantagem da Junção\nA notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>Produto Cartesiano e Junção</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/09-produto-juncao.html#para-praticar",
+    "href": "content/cap02/09-produto-juncao.html#para-praticar",
+    "title": "24  Produto Cartesiano e Junção",
+    "section": "24.3 Para Praticar",
+    "text": "24.3 Para Praticar\n1. Contagem no produto cartesiano. Sem executar a operação, calcule quantas tuplas teriam os seguintes produtos cartesianos:\n\n\\(aluno \\times curso\\)\n\\(disciplina \\times prereq\\)\n\\(professor \\times professor\\)\n\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n\\(18 \\times 3 = 54\\) tuplas\n\\(24 \\times 16 = 384\\) tuplas\n\\(7 \\times 7 = 49\\) tuplas (autojunção — inclui o par de cada professor consigo mesmo)\n\n\n\n\n\n2. Junção que retorna vazio. O que acontece quando o predicado de junção não é satisfeito por nenhum par de tuplas? Construa um exemplo hipotético e descreva o resultado.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nO resultado é uma relação vazia com o schema combinado das duas relações. Exemplo: se tentarmos \\(professor \\bowtie_{professor.escola = \\text{\"XPTO\"}} escola\\), nenhum professor pertence à escola “XPTO”, portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.\n\n\n\n\n3. Junção transitiva de pré-requisitos. Escreva uma expressão de álgebra relacional para encontrar os pré-requisitos de pré-requisitos de ENS-801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de ENS-801.\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nPrimeiro, encontramos os pré-requisitos diretos de ENS-801: \\[P1 \\leftarrow \\sigma_{codigo = \\text{\"ENS-801\"}}(prereq)\\]\nDepois, para cada prereq_codigo de P1, buscamos seus próprios pré-requisitos: \\[\\Pi_{prereq.prereq\\_codigo}\\!\\left(\\sigma_{P1.prereq\\_codigo = prereq.codigo}(P1 \\times prereq)\\right)\\]\nENS-801 → {ENS-601, ENS-602}. ENS-601 → {ENS-401, ENS-402}; ENS-602 → {ENS-402}. Resultado: {ENS-401, ENS-402}.",
     "crumbs": [
       "Capítulo 2: Modelo Relacional",
       "<span class='chapter-number'>24</span>  <span class='chapter-title'>Produto Cartesiano e Junção</span>"
@@ -1095,6 +1183,17 @@
     ]
   },
   {
+    "objectID": "content/cap02/10-operacoes-conjunto.html#para-praticar",
+    "href": "content/cap02/10-operacoes-conjunto.html#para-praticar",
+    "title": "25  Operações de Conjunto",
+    "section": "25.6 Para Praticar",
+    "text": "25.6 Para Praticar\n1. Comutatividade e não-comutatividade. Das três operações de conjunto, quais são comutativas? Verifique com um exemplo concreto que \\(A - B \\neq B - A\\).\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\(\\cup\\) e \\(\\cap\\) são comutativas (\\(A \\cup B = B \\cup A\\) e \\(A \\cap B = B \\cap A\\)). A diferença \\(-\\) não é comutativa.\nExemplo: seja \\(A\\) = disciplinas de PED (8 tuplas) e \\(B\\) = disciplinas com carga ≥ 60 h (22 tuplas). - \\(A - B\\) = disciplinas de PED com carga &lt; 60 h = {PED-604, PED-804} → 2 tuplas - \\(B - A\\) = disciplinas com carga ≥ 60 h que não são de PED = 22 − 6 = 16 tuplas\n\n\n\n\n2. Equivalência. Prove que \\(A \\cap B\\) é equivalente a \\(A - (A - B)\\).\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n\\(A - B\\) = elementos em A que não estão em B.\n\\(A - (A - B)\\) = elementos de A que não estão em “\\(A - B\\)” = elementos de A que estão em B = \\(A \\cap B\\). ✓\n\nEssa equivalência mostra que \\(\\cap\\) pode ser derivado dos operadores básicos \\(\\sigma\\), \\(\\Pi\\) e \\(-\\) — por isso a interseção não precisa ser um operador primitivo da álgebra relacional.\n\n\n\n\n3. União de relações com schemas diferentes. Podemos calcular \\(\\Pi_{nome}(professor) \\cup \\Pi_{nome}(aluno)\\)? O que o resultado representaria?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nSim, pois ambas as relações têm o mesmo schema após a projeção: um único atributo nome do tipo texto. O resultado seria uma relação contendo todos os nomes distintos de professores e alunos em uma única coluna. Se um aluno e um professor tivessem o mesmo nome, apareceriam apenas uma vez (a união elimina duplicatas). Em SQL: SELECT nome FROM professor UNION SELECT nome FROM aluno.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
     "objectID": "content/cap02/11-operacoes-adicionais.html",
     "href": "content/cap02/11-operacoes-adicionais.html",
     "title": "26  Operações Adicionais",
@@ -1133,6 +1232,17 @@
     "title": "26  Operações Adicionais",
     "section": "26.3 Funções de Agregação (\\(\\gamma\\))",
     "text": "26.3 Funções de Agregação (\\(\\gamma\\))\nAs funções de agregação operam sobre multiconjuntos de valores de uma coluna e produzem um único valor sumarizado.\nFunções disponíveis:\n\n\n\nFunção\nDescrição\n\n\n\n\n\\(\\text{avg}\\)\nMédia aritmética\n\n\n\\(\\text{min}\\)\nValor mínimo\n\n\n\\(\\text{max}\\)\nValor máximo\n\n\n\\(\\text{sum}\\)\nSoma total\n\n\n\\(\\text{count}\\)\nContagem de valores\n\n\n\n\nA notação geral da operação de agregação é:\n\\[{}_{G_1, G_2, \\ldots, G_n}\\ \\gamma_{F_1(A_1),\\ F_2(A_2),\\ \\ldots}(r)\\]\nonde \\(G_1, \\ldots, G_n\\) são os atributos de agrupamento (equivalente ao GROUP BY do SQL) e \\(F_i(A_i)\\) são as funções de agregação aplicadas aos atributos \\(A_i\\).\n\n\n26.3.1 Exemplo 1: Sem Agrupamento\nSalário médio de todos os professores:\n\\[\\gamma_{\\text{avg}(salario)}(professor)\\]\nResultado:\n\n\n\navg(salario)\n\n\n\n\n5114.29\n\n\n\n\n\n26.3.2 Exemplo 2: Com Agrupamento\nSalário médio por escola (equivalente a GROUP BY escola):\n\\[{}_{escola}\\ \\gamma_{\\text{avg}(salario)}(professor)\\]\nResultado:\n\n\n\nescola\navg(salario)\n\n\n\n\nEEMA\n4800.00\n\n\nESETI\n4366.67\n\n\nESG\n6550.00\n\n\n\n\nO agrupamento por escola faz com que a função avg seja calculada separadamente para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.",
+    "crumbs": [
+      "Capítulo 2: Modelo Relacional",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap02/11-operacoes-adicionais.html#para-praticar",
+    "href": "content/cap02/11-operacoes-adicionais.html#para-praticar",
+    "title": "26  Operações Adicionais",
+    "section": "26.4 Para Praticar",
+    "text": "26.4 Para Praticar\n1. Agregação sem grupo. Calcule o valor de \\(\\gamma_{\\text{count}(*)}(prereq)\\) e \\(\\gamma_{\\text{count}(*)}(\\sigma_{sigla\\_curso = \\text{\"ENS\"}}(disciplina))\\). O que cada resultado representa?\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\n\\(\\gamma_{\\text{count}(*)}(prereq)\\) = 16 — total de pares de pré-requisito no banco.\n\\(\\gamma_{\\text{count}(*)}(\\sigma_{sigla\\_curso = \\text{\"ENS\"}}(disciplina))\\) = 8 — número de disciplinas do curso ENS.\n\n\n\n\n\n2. Renomeação necessária. Por que a expressão abaixo é ambígua sem renomeação?\n\\[\\Pi_{nome\\_1,\\ nome\\_2,\\ escola}(\\sigma_{p1.escola = p2.escola\\ \\wedge\\ p1.matricula\\_prof &lt; p2.matricula\\_prof}(professor \\times professor))\\]\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\nQuando multiplicamos professor por si mesmo sem renomear, o resultado tem dois atributos chamados nome, dois chamados escola, dois chamados matricula_prof etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: \\(\\rho_{p1}(professor)\\) e \\(\\rho_{p2}(professor)\\), criando atributos qualificados como \\(p1.nome\\) e \\(p2.nome\\).\n\n\n\n\n3. HAVING em álgebra. Escreva a expressão de álgebra relacional equivalente a: “escolas com salário médio acima de 5.000”. Use a notação com \\(\\gamma\\) e \\(\\sigma\\).\n\n\n\n\n\n\nDicaResposta\n\n\n\n\n\n\\[\\sigma_{\\text{avg\\_sal} &gt; 5000}\\!\\left({}_{escola}\\ \\gamma_{\\text{avg}(salario)\\ \\text{as}\\ \\text{avg\\_sal}}(professor)\\right)\\]\nO \\(\\sigma\\) externo filtra os grupos produzidos pelo \\(\\gamma\\) — é exatamente o que o SQL faz com HAVING. Apenas ESG (média = 6.550) satisfaz a condição.",
     "crumbs": [
       "Capítulo 2: Modelo Relacional",
       "<span class='chapter-number'>26</span>  <span class='chapter-title'>Operações Adicionais</span>"
@@ -1293,6 +1403,17 @@
     ]
   },
   {
+    "objectID": "content/cap03/02-ddl.html#para-praticar",
+    "href": "content/cap03/02-ddl.html#para-praticar",
+    "title": "30  Definição de Dados (DDL)",
+    "section": "30.6 Para Praticar",
+    "text": "30.6 Para Praticar\n\n30.6.1 Adicionando e removendo colunas\n-- Adicionar email à tabela professor\nALTER TABLE professor ADD COLUMN email VARCHAR(100);\n\n-- Remover a coluna email novamente\nALTER TABLE professor DROP COLUMN email;\n\n\n30.6.2 Restrição CHECK\nO SQL permite validar valores na inserção com CHECK:\n-- Adicionar restrição: semestre deve ser entre 1 e 10\nALTER TABLE disciplina\n    ADD CONSTRAINT chk_semestre CHECK (semestre BETWEEN 1 AND 10);\n\n\n30.6.3 O que acontece com NOT NULL em coluna existente?\nSe tentarmos adicionar NOT NULL a uma coluna que já possui valores nulos, o banco retorna erro:\n-- Isso falharia se horario tiver valores NULL em ministra\nALTER TABLE ministra ALTER COLUMN horario SET NOT NULL;\n-- ERROR: column \"horario\" of relation \"ministra\" contains null values\nA solução é primeiro preencher os valores nulos antes de aplicar a restrição.\n\n\n30.6.4 Verificando a estrutura de uma tabela\n\n-- Inspecionar colunas, tipos e restrições da tabela professor\nSELECT column_name, data_type, is_nullable, column_default\nFROM   information_schema.columns\nWHERE  table_name = 'professor'\nORDER BY ordinal_position;\n\n\n5 records\n\n\ncolumn_name\ndata_type\nis_nullable\ncolumn_default\n\n\n\n\nmatricula_prof\ncharacter varying\nNO\nNA\n\n\nnome\ncharacter varying\nNO\nNA\n\n\nescola\ncharacter varying\nYES\nNA\n\n\nch_semanal\ninteger\nNO\nNA\n\n\nsalario\nnumeric\nNO\nNA",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Definição de Dados (DDL)</span>"
+    ]
+  },
+  {
     "objectID": "content/cap03/03-select-from-where.html",
     "href": "content/cap03/03-select-from-where.html",
     "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
@@ -1381,6 +1502,17 @@
     ]
   },
   {
+    "objectID": "content/cap03/03-select-from-where.html#para-praticar",
+    "href": "content/cap03/03-select-from-where.html#para-praticar",
+    "title": "31  Estrutura Básica: SELECT-FROM-WHERE",
+    "section": "31.8 Para Praticar",
+    "text": "31.8 Para Praticar\n\n-- Três tabelas em cadeia: nome do professor, escola e centro\nSELECT p.nome, e.nome_escola, c.nome_centro\nFROM   professor p, escola e, centro c\nWHERE  p.escola  = e.escola\n  AND  e.centro  = c.centro\nORDER BY c.centro, p.nome;\n\n\n7 records\n\n\n\n\n\n\n\nnome\nnome_escola\nnome_centro\n\n\n\n\nBruno Teixeira\nEscola Superior de Gestão\nCIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE\n\n\nCarla Pinto\nEscola Superior de Gestão\nCIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE\n\n\nEduarda Souza\nEscola de Educação, Magistério e Arte\nCENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES\n\n\nFelipe Araujo\nEscola de Educação, Magistério e Arte\nCENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES\n\n\nGustavo Costa\nEscola Superior de Engenharias, Tecnologia e Inovação\nCENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO\n\n\nHelena Carvalho\nEscola Superior de Engenharias, Tecnologia e Inovação\nCENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO\n\n\nIgor Melo\nEscola Superior de Engenharias, Tecnologia e Inovação\nCENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO\n\n\n\n\n\n\n-- Produto cartesiano completo: quantas linhas gera professor × escola?\n-- (7 × 3 = 21 — sem filtro WHERE)\nSELECT COUNT(*) AS total_produto_cartesiano\nFROM   professor, escola;\n\n\n1 records\n\n\ntotal_produto_cartesiano\n\n\n\n\n21\n\n\n\n\n\n\n-- Alunos cujo ano de ingresso coincide com o semestre da disciplina que cursaram\n-- (caso limite: comparação entre atributos de tabelas diferentes)\nSELECT DISTINCT a.nome, a.ano_ingresso, md.cod_disciplina\nFROM   aluno a, matricula_disciplina md\nWHERE  a.matricula      = md.cod_matricula\n  AND  a.ano_ingresso   = md.ano\nORDER BY a.nome;\n\n\nDisplaying records 1 - 10\n\n\nnome\nano_ingresso\ncod_disciplina\n\n\n\n\nAmanda Moreira\n2023\nPED-203\n\n\nAmanda Moreira\n2023\nPED-204\n\n\nBeatriz Carvalho\n2023\nECO-201\n\n\nBeatriz Carvalho\n2023\nECO-202\n\n\nCamila Teixeira\n2025\nECO-201\n\n\nCamila Teixeira\n2025\nECO-202\n\n\nCarolina Lima\n2024\nPED-203\n\n\nCarolina Lima\n2024\nPED-204\n\n\nDiego Correia\n2025\nENS-201\n\n\nDiego Correia\n2025\nENS-202\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nA última consulta compara aluno.ano_ingresso com matricula_disciplina.ano — um predicado entre atributos de tabelas diferentes, perfeitamente válido em SQL. Ela retorna alunos que cursaram disciplinas no mesmo ano em que ingressaram no curso.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>SELECT-FROM-WHERE</span>"
+    ]
+  },
+  {
     "objectID": "content/cap03/04-clausula-select.html",
     "href": "content/cap03/04-clausula-select.html",
     "title": "32  Cláusula SELECT",
@@ -1430,6 +1562,17 @@
     "title": "32  Cláusula SELECT",
     "section": "32.5 Literais no SELECT",
     "text": "32.5 Literais no SELECT\nÉ possível incluir valores literais (constantes) na cláusula SELECT:\n\n-- Adiciona uma coluna com o texto fixo 'UnDF'\nSELECT 'UnDF' AS instituicao, nome, escola\nFROM   professor\nWHERE  escola = 'ESETI';\n\n\n3 records\n\n\ninstituicao\nnome\nescola\n\n\n\n\nUnDF\nGustavo Costa\nESETI\n\n\nUnDF\nHelena Carvalho\nESETI\n\n\nUnDF\nIgor Melo\nESETI\n\n\n\n\n\n\nResumo da cláusula SELECT:\n\nSELECT coluna — projeta uma coluna específica\nSELECT DISTINCT coluna — elimina duplicatas\nSELECT * — projeta todas as colunas\nSELECT expressão AS alias — projeta uma expressão com nome alternativo\nSELECT 'literal' AS alias — inclui uma constante no resultado",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/04-clausula-select.html#para-praticar",
+    "href": "content/cap03/04-clausula-select.html#para-praticar",
+    "title": "32  Cláusula SELECT",
+    "section": "32.6 Para Praticar",
+    "text": "32.6 Para Praticar\n\n-- CASE no SELECT: categorizar professores por regime de trabalho\nSELECT nome, ch_semanal, salario,\n       CASE\n           WHEN ch_semanal = 40 THEN 'Regime integral'\n           WHEN ch_semanal = 20 THEN 'Regime parcial'\n           ELSE                      'Outro'\n       END AS regime\nFROM   professor\nORDER BY ch_semanal DESC, nome;\n\n\n7 records\n\n\nnome\nch_semanal\nsalario\nregime\n\n\n\n\nBruno Teixeira\n40\n6500\nRegime integral\n\n\nCarla Pinto\n40\n6600\nRegime integral\n\n\nFelipe Araujo\n40\n6400\nRegime integral\n\n\nHelena Carvalho\n40\n6700\nRegime integral\n\n\nEduarda Souza\n20\n3200\nRegime parcial\n\n\nGustavo Costa\n20\n3300\nRegime parcial\n\n\nIgor Melo\n20\n3100\nRegime parcial\n\n\n\n\n\n\n-- Concatenação de strings: montar identificação completa da turma\nSELECT cod_disciplina || '/' || CAST(ano AS TEXT) || '-' || CAST(semestre AS TEXT) || turma AS id_turma,\n       matricula_prof,\n       sala\nFROM   ministra\nORDER BY id_turma;\n\n\nDisplaying records 1 - 10\n\n\nid_turma\nmatricula_prof\nsala\n\n\n\n\nECO-201/2023-2A\nPROF20230042\nESG-SALA-005\n\n\nECO-201/2024-2A\nPROF20230042\nESG-SALA-013\n\n\nECO-201/2025-2A\nPROF20230042\nESG-SALA-025\n\n\nECO-202/2023-2A\nPROF20230042\nESG-SALA-012\n\n\nECO-202/2024-2A\nPROF20230042\nESG-SALA-001\n\n\nECO-202/2025-2A\nPROF20230043\nESG-SALA-007\n\n\nECO-401/2024-2A\nPROF20230042\nESG-SALA-009\n\n\nECO-401/2025-2A\nPROF20230042\nESG-SALA-021\n\n\nECO-402/2024-2A\nPROF20230042\nESG-SALA-001\n\n\nECO-402/2025-2A\nPROF20230042\nESG-SALA-005\n\n\n\n\n\n\n-- DISTINCT com múltiplas colunas: combinações únicas de escola e ch_semanal\nSELECT DISTINCT escola, ch_semanal\nFROM   professor\nORDER BY escola, ch_semanal;\n\n\n5 records\n\n\nescola\nch_semanal\n\n\n\n\nEEMA\n20\n\n\nEEMA\n40\n\n\nESETI\n20\n\n\nESETI\n40\n\n\nESG\n40\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nDISTINCT com múltiplas colunas elimina duplicatas de combinações — não de cada coluna individualmente. A consulta acima retorna cada par (escola, ch_semanal) único.",
     "crumbs": [
       "Capítulo 3: Introdução ao SQL",
       "<span class='chapter-number'>32</span>  <span class='chapter-title'>Cláusula SELECT</span>"
@@ -1491,6 +1634,17 @@
     ]
   },
   {
+    "objectID": "content/cap03/05-clausula-where.html#para-praticar",
+    "href": "content/cap03/05-clausula-where.html#para-praticar",
+    "title": "33  Cláusulas WHERE e ORDER BY",
+    "section": "33.5 Para Praticar",
+    "text": "33.5 Para Praticar\n\n-- NOT BETWEEN: disciplinas fora do intervalo central de carga horária\nSELECT codigo, nome_disciplina, sigla_curso, carga_horaria\nFROM   disciplina\nWHERE  carga_horaria NOT BETWEEN 60 AND 120\nORDER BY carga_horaria;\n\n\n6 records\n\n\n\n\n\n\n\n\ncodigo\nnome_disciplina\nsigla_curso\ncarga_horaria\n\n\n\n\nPED-604\nEducação do Campo, Indígena e Quilombola\nPED\n40\n\n\nPED-804\nEstatística Aplicada\nPED\n50\n\n\nENS-201\nBases da Engenharia de Software 2\nENS\n150\n\n\nENS-601\nBases da Engenharia de Software 6\nENS\n150\n\n\nENS-802\nProjeto Aplicado 8 (Sistema em Tempo Real)\nENS\n160\n\n\nENS-401\nBases da Engenharia de Software 4\nENS\n180\n\n\n\n\n\n\n-- LIKE com sublinhado: códigos onde o 5º caractere é exatamente '2'\n-- Ex.: ENS-201, ECO-201, PED-203 — o padrão 'xxx-2__' captura sem 10 (ENS-201 = E,N,S,-,2,0,1)\nSELECT codigo, nome_disciplina, semestre\nFROM   disciplina\nWHERE  codigo LIKE '___-2%'\nORDER BY codigo;\n\n\n6 records\n\n\ncodigo\nnome_disciplina\nsemestre\n\n\n\n\nECO-201\nHistória Econômica Geral\n2\n\n\nECO-202\nCulturas Digitais\n2\n\n\nENS-201\nBases da Engenharia de Software 2\n2\n\n\nENS-202\nProjeto Aplicado 2 (site WEB)\n2\n\n\nPED-203\nDesenvolvimento Humano\n2\n\n\nPED-204\nDidática Geral\n2\n\n\n\n\n\n\n-- IN com lista literal: cursos específicos sem usar LIKE\nSELECT sigla_curso, nome_curso, tipo_curso\nFROM   curso\nWHERE  tipo_curso IN ('bacharelado', 'licenciatura')\nORDER BY tipo_curso, sigla_curso;\n\n\n3 records\n\n\nsigla_curso\nnome_curso\ntipo_curso\n\n\n\n\nECO\nCiências Econômicas\nbacharelado\n\n\nENS\nEngenharia de Software\nbacharelado\n\n\nPED\nPedagogia\nlicenciatura\n\n\n\n\n\n\n-- Combinação de AND/OR com parênteses: a precedência importa!\n-- Sem parênteses, AND tem precedência sobre OR\nSELECT nome, escola, salario\nFROM   professor\nWHERE  (escola = 'ESETI' OR escola = 'EEMA')\n  AND  salario &gt; 5000\nORDER BY escola, salario DESC;\n\n\n2 records\n\n\nnome\nescola\nsalario\n\n\n\n\nFelipe Araujo\nEEMA\n6400\n\n\nHelena Carvalho\nESETI\n6700\n\n\n\n\n\n\n\n\n\n\n\nAviso\n\n\n\nAtenção à precedência: AND tem precedência sobre OR. A expressão a OR b AND c é interpretada como a OR (b AND c), não (a OR b) AND c. Use parênteses sempre que combinar AND e OR para garantir a intenção correta.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>33</span>  <span class='chapter-title'>WHERE e ORDER BY</span>"
+    ]
+  },
+  {
     "objectID": "content/cap03/06-operacoes-conjunto.html",
     "href": "content/cap03/06-operacoes-conjunto.html",
     "title": "34  Operações de Conjunto em SQL",
@@ -1540,6 +1694,17 @@
     "title": "34  Operações de Conjunto em SQL",
     "section": "34.4 Compatibilidade de Esquema",
     "text": "34.4 Compatibilidade de Esquema\nAs duas consultas combinadas por UNION, INTERSECT ou EXCEPT devem ter:\n\nO mesmo número de colunas no SELECT\nTipos de dados compatíveis em cada posição correspondente\n\nOs nomes das colunas no resultado final são determinados pela primeira consulta.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/06-operacoes-conjunto.html#para-praticar",
+    "href": "content/cap03/06-operacoes-conjunto.html#para-praticar",
+    "title": "34  Operações de Conjunto em SQL",
+    "section": "34.5 Para Praticar",
+    "text": "34.5 Para Praticar\n\n-- EXCEPT: disciplinas que possuem pré-requisito mas nenhum aluno cursou\n-- (aparece em prereq, mas não em matricula_disciplina como prereq_codigo cursado)\nSELECT d.codigo, d.nome_disciplina\nFROM   disciplina d\nWHERE  d.codigo IN (SELECT codigo FROM prereq)\nEXCEPT\nSELECT d.codigo, d.nome_disciplina\nFROM   disciplina d\nWHERE  d.codigo IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)\nORDER BY codigo;\n\n\n6 records\n\n\ncodigo\nnome_disciplina\n\n\n\n\nECO-601\nEconomia Brasileira\n\n\nECO-602\nOrçamento e Finanças Públicas\n\n\nECO-801\nMonografia\n\n\nENS-801\nBases da Engenharia de Software 8\n\n\nENS-802\nProjeto Aplicado 8 (Sistema em Tempo Real)\n\n\nPED-803\nTecnologia Educacional - Design\n\n\n\n\n\n\n-- INTERSECT: disciplinas que têm pré-requisito E foram cursadas por algum aluno\nSELECT codigo FROM prereq\nINTERSECT\nSELECT DISTINCT cod_disciplina FROM matricula_disciplina\nORDER BY codigo;\n\n\n7 records\n\n\ncodigo\n\n\n\n\nECO-401\n\n\nENS-401\n\n\nENS-402\n\n\nENS-601\n\n\nENS-602\n\n\nPED-403\n\n\nPED-603\n\n\n\n\n\n\n-- UNION ALL vs UNION: efeito das duplicatas\n-- UNION ALL conta todas as ocorrências; UNION apenas valores distintos\nSELECT 'UNION (sem dup.)' AS operacao, COUNT(*) AS n_linhas\nFROM (\n    SELECT sigla_curso FROM curso\n    UNION\n    SELECT sigla_curso FROM disciplina\n) t\nUNION ALL\nSELECT 'UNION ALL (com dup.)', COUNT(*)\nFROM (\n    SELECT sigla_curso FROM curso\n    UNION ALL\n    SELECT sigla_curso FROM disciplina\n) t;\n\n\n2 records\n\n\noperacao\nn_linhas\n\n\n\n\nUNION (sem dup.)\n3\n\n\nUNION ALL (com dup.)\n27",
     "crumbs": [
       "Capítulo 3: Introdução ao SQL",
       "<span class='chapter-number'>34</span>  <span class='chapter-title'>Operações de Conjunto</span>"
@@ -1623,6 +1788,17 @@
     ]
   },
   {
+    "objectID": "content/cap03/07-nulos.html#para-praticar",
+    "href": "content/cap03/07-nulos.html#para-praticar",
+    "title": "35  Valores Nulos",
+    "section": "35.7 Para Praticar",
+    "text": "35.7 Para Praticar\n\n-- NULL em aritmética: qualquer operação com NULL resulta em NULL\nSELECT cod_matricula,\n       nota,\n       nota + 1     AS nota_mais_1,\n       nota * 2     AS nota_dobro\nFROM   matricula_disciplina\nWHERE  nota IS NULL\nLIMIT 5;\n\n\n0 records\n\n\ncod_matricula\nnota\nnota_mais_1\nnota_dobro\n\n\n\n\n\n\n\n\n-- COALESCE: substituir NULL por um valor padrão\nSELECT cod_disciplina, ano, semestre, turma,\n       COALESCE(horario, 'Horário não definido') AS horario_exibido,\n       COALESCE(sala,    'Sala não definida')    AS sala_exibida\nFROM   ministra\nWHERE  horario IS NULL OR sala IS NULL\nLIMIT 10;\n\n\n0 records\n\n\ncod_disciplina\nano\nsemestre\nturma\nhorario_exibido\nsala_exibida\n\n\n\n\n\n\n\n\n-- Armadilha: comparar com NULL usando = sempre retorna NULL (nunca TRUE)\n-- A consulta abaixo retorna ZERO linhas, mesmo que existam notas nulas!\nSELECT COUNT(*) AS resultado_incorreto\nFROM   matricula_disciplina\nWHERE  nota = NULL;\n\n\n1 records\n\n\nresultado_incorreto\n\n\n\n\n0\n\n\n\n\n\n\n-- Forma correta: usar IS NULL\nSELECT COUNT(*) AS resultado_correto\nFROM   matricula_disciplina\nWHERE  nota IS NULL;\n\n\n1 records\n\n\nresultado_correto\n\n\n\n\n0\n\n\n\n\n\n\n\n\n\n\n\nAviso\n\n\n\nArmadilha clássica: WHERE coluna = NULL nunca retorna linhas — a comparação com NULL usando = sempre resulta em NULL (desconhecido), não TRUE. Use sempre IS NULL ou IS NOT NULL.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>35</span>  <span class='chapter-title'>Valores Nulos</span>"
+    ]
+  },
+  {
     "objectID": "content/cap03/08-agregacao.html",
     "href": "content/cap03/08-agregacao.html",
     "title": "36  Funções de Agregação",
@@ -1683,6 +1859,17 @@
     "title": "36  Funções de Agregação",
     "section": "36.5 WHERE vs. HAVING",
     "text": "36.5 WHERE vs. HAVING\n\n\n\nAspecto\nWHERE\nHAVING\n\n\n\n\nOpera sobre\nLinhas individuais\nGrupos\n\n\nExecutado\nAntes do GROUP BY\nDepois do GROUP BY\n\n\nPode usar agregação?\nNão\nSim\n\n\n\n\n-- WHERE filtra antes: considera apenas professores de 40h,\n-- depois agrupa por escola e filtra com média &gt; 6000\nSELECT escola, ROUND(AVG(salario), 2) AS media_salario\nFROM   professor\nWHERE  ch_semanal = 40\nGROUP BY escola\nHAVING AVG(salario) &gt; 6000;\n\n\n3 records\n\n\nescola\nmedia_salario\n\n\n\n\nEEMA\n6400\n\n\nESETI\n6700\n\n\nESG\n6550",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/08-agregacao.html#para-praticar",
+    "href": "content/cap03/08-agregacao.html#para-praticar",
+    "title": "36  Funções de Agregação",
+    "section": "36.6 Para Praticar",
+    "text": "36.6 Para Praticar\n\n-- GROUP BY com múltiplas colunas: distribuição por escola e regime\nSELECT escola, ch_semanal,\n       COUNT(*)            AS n_professores,\n       SUM(salario)        AS total_salarios,\n       ROUND(AVG(salario), 2) AS media_salario\nFROM   professor\nGROUP BY escola, ch_semanal\nORDER BY escola, ch_semanal;\n\n\n5 records\n\n\nescola\nch_semanal\nn_professores\ntotal_salarios\nmedia_salario\n\n\n\n\nEEMA\n20\n1\n3200\n3200\n\n\nEEMA\n40\n1\n6400\n6400\n\n\nESETI\n20\n2\n6400\n3200\n\n\nESETI\n40\n1\n6700\n6700\n\n\nESG\n40\n2\n13100\n6550\n\n\n\n\n\n\n-- HAVING com COUNT: cursos com mais de 6 disciplinas cadastradas\nSELECT sigla_curso, COUNT(*) AS n_disciplinas,\n       MIN(carga_horaria) AS menor_carga,\n       MAX(carga_horaria) AS maior_carga\nFROM   disciplina\nGROUP BY sigla_curso\nHAVING COUNT(*) &gt; 6\nORDER BY n_disciplinas DESC;\n\n\n3 records\n\n\nsigla_curso\nn_disciplinas\nmenor_carga\nmaior_carga\n\n\n\n\nENS\n8\n100\n180\n\n\nECO\n8\n60\n100\n\n\nPED\n8\n40\n80\n\n\n\n\n\n\n-- Alunos com pelo menos uma reprovação: comparar COUNT(*) com COUNT(aprovado=0)\n-- Usando filtro dentro do COUNT com FILTER (SQL padrão)\nSELECT cod_matricula,\n       COUNT(*)                                    AS total_disciplinas,\n       COUNT(*) FILTER (WHERE aprovado = 0)        AS reprovacoes,\n       COUNT(*) FILTER (WHERE aprovado = 1)        AS aprovacoes,\n       ROUND(AVG(nota), 2)                         AS media_geral\nFROM   matricula_disciplina\nGROUP BY cod_matricula\nHAVING COUNT(*) FILTER (WHERE aprovado = 0) &gt; 0\nORDER BY reprovacoes DESC;\n\n\n6 records\n\n\n\n\n\n\n\n\n\ncod_matricula\ntotal_disciplinas\nreprovacoes\naprovacoes\nmedia_geral\n\n\n\n\n2024002002\n4\n2\n2\n4.90\n\n\n2024007002\n4\n1\n3\n5.90\n\n\n2023002002\n6\n1\n5\n6.33\n\n\n2023009002\n6\n1\n5\n6.10\n\n\n2025002002\n2\n1\n1\n4.00\n\n\n2023002001\n6\n1\n5\n7.22\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nCOUNT(*) FILTER (WHERE condição) é uma extensão SQL:2003 suportada pelo PostgreSQL. Ela conta apenas as linhas que satisfazem a condição dentro do grupo — equivale a COUNT(CASE WHEN cond THEN 1 END), mas mais legível.",
     "crumbs": [
       "Capítulo 3: Introdução ao SQL",
       "<span class='chapter-number'>36</span>  <span class='chapter-title'>Funções de Agregação</span>"
@@ -1755,6 +1942,17 @@
     ]
   },
   {
+    "objectID": "content/cap03/09-subconsultas.html#para-praticar",
+    "href": "content/cap03/09-subconsultas.html#para-praticar",
+    "title": "37  Subconsultas",
+    "section": "37.6 Para Praticar",
+    "text": "37.6 Para Praticar\n\n-- Subconsulta escalar no SELECT: mostrar a diferença do salário em relação à média\nSELECT nome, escola, salario,\n       ROUND(salario - (SELECT AVG(salario) FROM professor), 2) AS dif_media\nFROM   professor\nORDER BY dif_media DESC;\n\n\n7 records\n\n\nnome\nescola\nsalario\ndif_media\n\n\n\n\nHelena Carvalho\nESETI\n6700\n1585.71\n\n\nCarla Pinto\nESG\n6600\n1485.71\n\n\nBruno Teixeira\nESG\n6500\n1385.71\n\n\nFelipe Araujo\nEEMA\n6400\n1285.71\n\n\nGustavo Costa\nESETI\n3300\n-1814.29\n\n\nEduarda Souza\nEEMA\n3200\n-1914.29\n\n\nIgor Melo\nESETI\n3100\n-2014.29\n\n\n\n\n\n\n-- ALL: professores com salário maior que TODOS os professores de 20h\nSELECT nome, escola, salario\nFROM   professor\nWHERE  salario &gt; ALL (\n    SELECT salario\n    FROM   professor\n    WHERE  ch_semanal = 20\n)\nORDER BY salario DESC;\n\n\n4 records\n\n\nnome\nescola\nsalario\n\n\n\n\nHelena Carvalho\nESETI\n6700\n\n\nCarla Pinto\nESG\n6600\n\n\nBruno Teixeira\nESG\n6500\n\n\nFelipe Araujo\nEEMA\n6400\n\n\n\n\n\n\n-- WITH RECURSIVE: encontrar todos os pré-requisitos transitivos de ENS-801\n-- (pré-requisitos diretos e indiretos — cadeia completa)\nWITH RECURSIVE cadeia AS (\n    -- Caso base: pré-requisitos diretos de ENS-801\n    SELECT prereq_codigo AS disciplina, 1 AS nivel\n    FROM   prereq\n    WHERE  codigo = 'ENS-801'\n    UNION\n    -- Caso recursivo: pré-requisitos dos pré-requisitos\n    SELECT p.prereq_codigo, c.nivel + 1\n    FROM   prereq p\n    JOIN   cadeia c ON p.codigo = c.disciplina\n)\nSELECT c.disciplina AS prereq_transitivo, c.nivel, d.nome_disciplina\nFROM   cadeia c\nJOIN   disciplina d ON d.codigo = c.disciplina\nORDER BY c.nivel, c.disciplina;\n\n\n5 records\n\n\nprereq_transitivo\nnivel\nnome_disciplina\n\n\n\n\nENS-601\n1\nBases da Engenharia de Software 6\n\n\nENS-401\n2\nBases da Engenharia de Software 4\n\n\nENS-402\n2\nProjeto Aplicado 4 (blockchain)\n\n\nENS-201\n3\nBases da Engenharia de Software 2\n\n\nENS-202\n3\nProjeto Aplicado 2 (site WEB)\n\n\n\n\n\n\nWITH RECURSIVE permite escrever consultas que percorrem estruturas hierárquicas ou grafos — como a cadeia de pré-requisitos. O PostgreSQL suporta esse recurso; outros SGBDs podem ter sintaxe ligeiramente diferente. O resultado mostra todos os pré-requisitos (diretos e indiretos) de ENS-801 com o nível de profundidade na cadeia.",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>37</span>  <span class='chapter-title'>Subconsultas</span>"
+    ]
+  },
+  {
     "objectID": "content/cap03/10-modificacao.html",
     "href": "content/cap03/10-modificacao.html",
     "title": "38  Modificação do Banco de Dados",
@@ -1804,6 +2002,17 @@
     "title": "38  Modificação do Banco de Dados",
     "section": "38.4 Resumo dos Comandos de Modificação",
     "text": "38.4 Resumo dos Comandos de Modificação\n\n\n\n\n\n\n\n\nComando\nAção\nCuidado\n\n\n\n\nINSERT INTO ... VALUES\nInsere linhas com valores explícitos\nRespeitar restrições (PK, FK, NOT NULL, CHECK)\n\n\nINSERT INTO ... SELECT\nInsere linhas copiadas de uma consulta\nA consulta deve retornar colunas compatíveis\n\n\nDELETE FROM ... WHERE\nRemove linhas que satisfazem a condição\nSem WHERE, remove todas as linhas\n\n\nUPDATE ... SET ... WHERE\nAtualiza colunas das linhas que satisfazem a condição\nSem WHERE, atualiza todas as linhas",
+    "crumbs": [
+      "Capítulo 3: Introdução ao SQL",
+      "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap03/10-modificacao.html#para-praticar",
+    "href": "content/cap03/10-modificacao.html#para-praticar",
+    "title": "38  Modificação do Banco de Dados",
+    "section": "38.5 Para Praticar",
+    "text": "38.5 Para Praticar\n\n-- Simular: quais professores seriam afetados por um reajuste de 15%\n-- para quem tem salário abaixo da média?\nSELECT nome, escola, salario AS atual,\n       ROUND(salario * 1.15, 2) AS apos_reajuste\nFROM   professor\nWHERE  salario &lt; (SELECT AVG(salario) FROM professor)\nORDER BY salario;\n\n\n3 records\n\n\nnome\nescola\natual\napos_reajuste\n\n\n\n\nIgor Melo\nESETI\n3100\n3565\n\n\nEduarda Souza\nEEMA\n3200\n3680\n\n\nGustavo Costa\nESETI\n3300\n3795\n\n\n\n\n\n\n-- Simular: disciplinas que seriam removidas se excluíssemos as sem pré-requisitos\n-- e sem matrícula (seguras para remover)\nSELECT d.codigo, d.nome_disciplina, d.sigla_curso\nFROM   disciplina d\nWHERE  d.codigo NOT IN (SELECT codigo        FROM prereq)\n  AND  d.codigo NOT IN (SELECT prereq_codigo FROM prereq)\n  AND  d.codigo NOT IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)\nORDER BY d.sigla_curso, d.codigo;\n\n\n2 records\n\n\ncodigo\nnome_disciplina\nsigla_curso\n\n\n\n\nECO-802\nDesenvolvimento Econômico\nECO\n\n\nPED-804\nEstatística Aplicada\nPED\n\n\n\n\n\n-- Violação de FK: tentar deletar uma disciplina que tem pré-requisitos\n-- Isso geraria erro:\nDELETE FROM disciplina WHERE codigo = 'ENS-201';\n-- ERROR: update or delete on table \"disciplina\" violates foreign key constraint\n-- \"prereq_prereq_codigo_fkey\" on table \"prereq\"\n-- DETAIL: Key (codigo)=(ENS-201) is still referenced from table \"prereq\".\n\n-- Solução: deletar os pré-requisitos primeiro, ou usar CASCADE\nDELETE FROM prereq       WHERE codigo = 'ENS-201' OR prereq_codigo = 'ENS-201';\nDELETE FROM disciplina   WHERE codigo = 'ENS-201';\n-- (não executar — apenas ilustrativo)\n\n\n\n\n\n\nAviso\n\n\n\nOrdem importa no DELETE com FKs. Ao remover dados em tabelas com chaves estrangeiras, é preciso excluir primeiro as linhas das tabelas referenciantes antes das referenciadas. Alternativamente, defina a FK com ON DELETE CASCADE para que o banco faça isso automaticamente — mas use com cautela em produção.",
     "crumbs": [
       "Capítulo 3: Introdução ao SQL",
       "<span class='chapter-number'>38</span>  <span class='chapter-title'>Modificação do Banco de Dados</span>"

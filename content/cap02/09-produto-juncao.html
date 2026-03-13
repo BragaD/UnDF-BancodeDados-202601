@@ -437,6 +437,7 @@ window.Quarto = {
   <li><a href="#junção-com-autorreferência-pré-requisitos" id="toc-junção-com-autorreferência-pré-requisitos" class="nav-link" data-scroll-target="#junção-com-autorreferência-pré-requisitos"><span class="header-section-number">24.2.2</span> Junção com Autorreferência: Pré-requisitos</a></li>
   <li><a href="#vantagem-da-junção" id="toc-vantagem-da-junção" class="nav-link" data-scroll-target="#vantagem-da-junção"><span class="header-section-number">24.2.3</span> Vantagem da Junção</a></li>
   </ul></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">24.3</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -810,9 +811,77 @@ window.Quarto = {
 <section id="vantagem-da-junção" class="level3" data-number="24.2.3">
 <h3 data-number="24.2.3" class="anchored" data-anchor-id="vantagem-da-junção"><span class="header-section-number">24.2.3</span> Vantagem da Junção</h3>
 <p>A notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.</p>
-
-
+<hr>
 </section>
+</section>
+<section id="para-praticar" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">24.3</span> Para Praticar</h2>
+<p><strong>1. Contagem no produto cartesiano.</strong> Sem executar a operação, calcule quantas tuplas teriam os seguintes produtos cartesianos:</p>
+<ol type="a">
+<li><span class="math inline">\(aluno \times curso\)</span></li>
+<li><span class="math inline">\(disciplina \times prereq\)</span></li>
+<li><span class="math inline">\(professor \times professor\)</span></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><span class="math inline">\(18 \times 3 = 54\)</span> tuplas</li>
+<li><span class="math inline">\(24 \times 16 = 384\)</span> tuplas</li>
+<li><span class="math inline">\(7 \times 7 = 49\)</span> tuplas (autojunção — inclui o par de cada professor consigo mesmo)</li>
+</ol>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Junção que retorna vazio.</strong> O que acontece quando o predicado de junção não é satisfeito por nenhum par de tuplas? Construa um exemplo hipotético e descreva o resultado.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O resultado é uma <strong>relação vazia</strong> com o schema combinado das duas relações. Exemplo: se tentarmos <span class="math inline">\(professor \bowtie_{professor.escola = \text{"XPTO"}} escola\)</span>, nenhum professor pertence à escola “XPTO”, portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Junção transitiva de pré-requisitos.</strong> Escreva uma expressão de álgebra relacional para encontrar os <strong>pré-requisitos de pré-requisitos</strong> de ENS-801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de ENS-801.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Primeiro, encontramos os pré-requisitos diretos de ENS-801: <span class="math display">\[P1 \leftarrow \sigma_{codigo = \text{"ENS-801"}}(prereq)\]</span></p>
+<p>Depois, para cada prereq_codigo de P1, buscamos seus próprios pré-requisitos: <span class="math display">\[\Pi_{prereq.prereq\_codigo}\!\left(\sigma_{P1.prereq\_codigo = prereq.codigo}(P1 \times prereq)\right)\]</span></p>
+<p>ENS-801 → {ENS-601, ENS-602}. ENS-601 → {ENS-401, ENS-402}; ENS-602 → {ENS-402}. Resultado: <strong>{ENS-401, ENS-402}</strong>.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

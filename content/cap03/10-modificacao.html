@@ -449,6 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#update-com-subconsulta" id="toc-update-com-subconsulta" class="nav-link" data-scroll-target="#update-com-subconsulta"><span class="header-section-number">38.3.4</span> UPDATE com subconsulta</a></li>
   </ul></li>
   <li><a href="#resumo-dos-comandos-de-modificação" id="toc-resumo-dos-comandos-de-modificação" class="nav-link" data-scroll-target="#resumo-dos-comandos-de-modificação"><span class="header-section-number">38.4</span> Resumo dos Comandos de Modificação</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">38.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -882,6 +883,110 @@ Aviso
 </tr>
 </tbody>
 </table>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="38.5">
+<h2 data-number="38.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">38.5</span> Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular: quais professores seriam afetados por um reajuste de 15%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- para quem tem salário abaixo da média?</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola, salario <span class="kw">AS</span> atual,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(salario <span class="op">*</span> <span class="fl">1.15</span>, <span class="dv">2</span>) <span class="kw">AS</span> apos_reajuste</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&lt;</span> (<span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">FROM</span> professor)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">atual</th>
+<th style="text-align: right;">apos_reajuste</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">3100</td>
+<td style="text-align: right;">3565</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">3200</td>
+<td style="text-align: right;">3680</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">3795</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular: disciplinas que seriam removidas se excluíssemos as sem pré-requisitos</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- e sem matrícula (seguras para remover)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.codigo, d.nome_disciplina, d.sigla_curso</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.codigo <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> codigo        <span class="kw">FROM</span> prereq)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  d.codigo <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> prereq_codigo <span class="kw">FROM</span> prereq)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  d.codigo <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> cod_disciplina <span class="kw">FROM</span> matricula_disciplina)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.sigla_curso, d.codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">codigo</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: left;">sigla_curso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ECO-802</td>
+<td style="text-align: left;">Desenvolvimento Econômico</td>
+<td style="text-align: left;">ECO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PED-804</td>
+<td style="text-align: left;">Estatística Aplicada</td>
+<td style="text-align: left;">PED</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Violação de FK: tentar deletar uma disciplina que tem pré-requisitos</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Isso geraria erro:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> disciplina <span class="kw">WHERE</span> codigo <span class="op">=</span> <span class="st">'ENS-201'</span>;</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: update or delete on table "disciplina" violates foreign key constraint</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- "prereq_prereq_codigo_fkey" on table "prereq"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- DETAIL: Key (codigo)=(ENS-201) is still referenced from table "prereq".</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Solução: deletar os pré-requisitos primeiro, ou usar CASCADE</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> prereq       <span class="kw">WHERE</span> codigo <span class="op">=</span> <span class="st">'ENS-201'</span> <span class="kw">OR</span> prereq_codigo <span class="op">=</span> <span class="st">'ENS-201'</span>;</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> disciplina   <span class="kw">WHERE</span> codigo <span class="op">=</span> <span class="st">'ENS-201'</span>;</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- (não executar — apenas ilustrativo)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Ordem importa no DELETE com FKs.</strong> Ao remover dados em tabelas com chaves estrangeiras, é preciso excluir primeiro as linhas das tabelas <strong>referenciantes</strong> antes das <strong>referenciadas</strong>. Alternativamente, defina a FK com <code>ON DELETE CASCADE</code> para que o banco faça isso automaticamente — mas use com cautela em produção.</p>
+</div>
+</div>
 
 
 </section>

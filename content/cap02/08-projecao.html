@@ -429,6 +429,7 @@ window.Quarto = {
   <li><a href="#exemplo-1-projeção-simples" id="toc-exemplo-1-projeção-simples" class="nav-link" data-scroll-target="#exemplo-1-projeção-simples"><span class="header-section-number">23.2</span> Exemplo 1: Projeção Simples</a></li>
   <li><a href="#eliminação-de-duplicatas" id="toc-eliminação-de-duplicatas" class="nav-link" data-scroll-target="#eliminação-de-duplicatas"><span class="header-section-number">23.3</span> Eliminação de Duplicatas</a></li>
   <li><a href="#composição-de-operações" id="toc-composição-de-operações" class="nav-link" data-scroll-target="#composição-de-operações"><span class="header-section-number">23.4</span> Composição de Operações</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">23.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -651,6 +652,76 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="23.5">
+<h2 data-number="23.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">23.5</span> Para Praticar</h2>
+<p><strong>1. Idempotência da projeção.</strong> A projeção é idempotente quando aplicada sobre o mesmo conjunto de atributos:</p>
+<p><span class="math display">\[\Pi_A\!\left(\Pi_{A,B}(r)\right) = \Pi_A(r)\]</span></p>
+<p>Mas o que acontece se tentarmos <span class="math inline">\(\Pi_{A,B}\!\left(\Pi_A(r)\right)\)</span> quando <span class="math inline">\(B \notin A\)</span>?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A expressão é <strong>inválida</strong>: <span class="math inline">\(\Pi_A(r)\)</span> elimina o atributo <span class="math inline">\(B\)</span>, que passa a não existir na relação resultante. Tentar projetar <span class="math inline">\(B\)</span> de uma relação que não o possui é um erro de schema. Isso ilustra que a projeção é destrutiva em relação aos atributos não selecionados.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Quantas tuplas?</strong> Calcule o número de tuplas esperado em cada resultado:</p>
+<ol type="a">
+<li><span class="math inline">\(\Pi_{escola}(professor)\)</span> — a tabela <code>professor</code> tem 7 tuplas distribuídas em 3 escolas</li>
+<li><span class="math inline">\(\Pi_{sigla\_curso}(disciplina)\)</span> — 24 disciplinas distribuídas em 3 cursos</li>
+<li><span class="math inline">\(\Pi_{matricula\_prof, escola}(professor)\)</span> — 7 tuplas, combinação de atributos</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><strong>3 tuplas</strong> — a projeção elimina duplicatas; há exatamente 3 valores distintos de <code>escola</code>.</li>
+<li><strong>3 tuplas</strong> — idem; 3 cursos distintos.</li>
+<li><strong>7 tuplas</strong> — como <code>matricula_prof</code> é a chave primária, cada combinação (matricula_prof, escola) já é única. A projeção não elimina nenhuma tupla.</li>
+</ol>
+<p><em>Observação:</em> a projeção sobre a chave primária nunca elimina tuplas — o número é preservado.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Projeção e junção.</strong> Após fazer a junção <span class="math inline">\(professor \bowtie_{professor.escola = escola.escola} escola\)</span>, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.escola = escola.escola} escola\right)\]</span></p>
+<p>O resultado tem 7 tuplas (uma por professor), com os atributos <code>nome</code> e <code>nome_escola</code>.</p>
+</div>
+</div>
 </div>
 
 

@@ -400,6 +400,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#domínio-dos-atributos" id="toc-domínio-dos-atributos" class="nav-link" data-scroll-target="#domínio-dos-atributos"><span class="header-section-number">16.2</span> Domínio dos Atributos</a></li>
   <li><a href="#o-valor-nulo-null" id="toc-o-valor-nulo-null" class="nav-link" data-scroll-target="#o-valor-nulo-null"><span class="header-section-number">16.3</span> O Valor Nulo (<code>null</code>)</a></li>
   <li><a href="#tuplas-não-ordenadas" id="toc-tuplas-não-ordenadas" class="nav-link" data-scroll-target="#tuplas-não-ordenadas"><span class="header-section-number">16.4</span> Tuplas Não Ordenadas</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">16.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -560,6 +561,185 @@ ul.task-list li input[type="checkbox"] {
 <p>A tabela <code>professor</code> apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por <code>nome</code>, por <code>escola</code> ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.</p>
 </div>
 <p>Da mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenção sempre usemos uma ordem consistente.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">16.5</span> Para Praticar</h2>
+<p><strong>1. Atomicidade violada.</strong> Considere a seguinte proposta de tabela:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>matricula</th>
+<th>nome</th>
+<th>disciplinas_cursadas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2023002001</td>
+<td>Matheus Silva</td>
+<td>ENS-201, ENS-202</td>
+</tr>
+</tbody>
+</table>
+<p>Por que esse design viola o modelo relacional? Como corrigi-lo?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O atributo <code>disciplinas_cursadas</code> armazena uma <strong>lista</strong> de valores — não é atômico. O modelo relacional exige atomicidade: cada célula deve conter um único valor indivisível. A solução correta é usar a tabela <code>matricula_disciplina</code>, onde cada par (aluno, disciplina) ocupa uma tupla separada.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Duas instâncias, mesma relação?</strong> As duas tabelas abaixo representam a mesma relação?</p>
+<p><strong>Tabela A:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>matricula_prof</th>
+<th>nome</th>
+<th>escola</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+</tr>
+<tr class="even">
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela B:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>escola</th>
+<th>nome</th>
+<th>matricula_prof</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ESG</td>
+<td>Bruno Teixeira</td>
+<td>PROF20230042</td>
+</tr>
+<tr class="even">
+<td>ESETI</td>
+<td>Gustavo Costa</td>
+<td>PROF20230031</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Sim.</strong> As duas tabelas representam a mesma relação. No modelo relacional, nem a ordem das tuplas nem a ordem dos atributos têm significado formal — uma relação é um conjunto de tuplas, e conjuntos não têm sequência.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Aridade do banco.</strong> Consulte o schema da UnDF e preencha:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabela</th>
+<th style="text-align: right;">Aridade</th>
+<th style="text-align: right;">Nº de tuplas na amostra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>centro</code></td>
+<td style="text-align: right;">?</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr class="even">
+<td><code>professor</code></td>
+<td style="text-align: right;">?</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr class="odd">
+<td><code>prereq</code></td>
+<td style="text-align: right;">?</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr class="even">
+<td><code>ministra</code></td>
+<td style="text-align: right;">?</td>
+<td style="text-align: right;">?</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tabela</th>
+<th style="text-align: right;">Aridade</th>
+<th style="text-align: right;">Nº de tuplas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>centro</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td><code>professor</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td><code>prereq</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td><code>ministra</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">36</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 
 
 </section>

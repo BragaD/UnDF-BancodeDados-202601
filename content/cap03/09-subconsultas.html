@@ -436,6 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exists-e-not-exists" id="toc-exists-e-not-exists" class="nav-link" data-scroll-target="#exists-e-not-exists"><span class="header-section-number">37.3</span> EXISTS e NOT EXISTS</a></li>
   <li><a href="#subconsulta-no-from" id="toc-subconsulta-no-from" class="nav-link" data-scroll-target="#subconsulta-no-from"><span class="header-section-number">37.4</span> Subconsulta no FROM</a></li>
   <li><a href="#with-expressões-de-tabela-comuns-cte" id="toc-with-expressões-de-tabela-comuns-cte" class="nav-link" data-scroll-target="#with-expressões-de-tabela-comuns-cte"><span class="header-section-number">37.5</span> WITH: Expressões de Tabela Comuns (CTE)</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">37.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -1133,6 +1134,180 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Permitem reutilizar a mesma subconsulta várias vezes na consulta principal.</li>
 <li>Em alguns SGBDs, podem ser usadas recursivamente para consultas hierárquicas (<code>WITH RECURSIVE</code>).</li>
 </ul>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="37.6">
+<h2 data-number="37.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">37.6</span> Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Subconsulta escalar no SELECT: mostrar a diferença do salário em relação à média</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola, salario,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(salario <span class="op">-</span> (<span class="kw">SELECT</span> <span class="fu">AVG</span>(salario) <span class="kw">FROM</span> professor), <span class="dv">2</span>) <span class="kw">AS</span> dif_media</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> dif_media <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">salario</th>
+<th style="text-align: right;">dif_media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">6700</td>
+<td style="text-align: right;">1585.71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6600</td>
+<td style="text-align: right;">1485.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6500</td>
+<td style="text-align: right;">1385.71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">6400</td>
+<td style="text-align: right;">1285.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">-1814.29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">3200</td>
+<td style="text-align: right;">-1914.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">3100</td>
+<td style="text-align: right;">-2014.29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ALL: professores com salário maior que TODOS os professores de 20h</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola, salario</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  salario <span class="op">&gt;</span> <span class="kw">ALL</span> (</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> salario</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  ch_semanal <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>4 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">escola</th>
+<th style="text-align: right;">salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">6700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6600</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">6400</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- WITH RECURSIVE: encontrar todos os pré-requisitos transitivos de ENS-801</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (pré-requisitos diretos e indiretos — cadeia completa)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE cadeia <span class="kw">AS</span> (</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso base: pré-requisitos diretos de ENS-801</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> prereq_codigo <span class="kw">AS</span> disciplina, <span class="dv">1</span> <span class="kw">AS</span> nivel</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereq</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  codigo <span class="op">=</span> <span class="st">'ENS-801'</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso recursivo: pré-requisitos dos pré-requisitos</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> p.prereq_codigo, c.nivel <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereq p</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   cadeia c <span class="kw">ON</span> p.codigo <span class="op">=</span> c.disciplina</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> c.disciplina <span class="kw">AS</span> prereq_transitivo, c.nivel, d.nome_disciplina</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   cadeia c</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d <span class="kw">ON</span> d.codigo <span class="op">=</span> c.disciplina</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> c.nivel, c.disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">prereq_transitivo</th>
+<th style="text-align: right;">nivel</th>
+<th style="text-align: left;">nome_disciplina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENS-601</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Bases da Engenharia de Software 6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-401</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-402</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENS-201</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bases da Engenharia de Software 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENS-202</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="conceito">
+<p><code>WITH RECURSIVE</code> permite escrever consultas que percorrem estruturas hierárquicas ou grafos — como a cadeia de pré-requisitos. O PostgreSQL suporta esse recurso; outros SGBDs podem ter sintaxe ligeiramente diferente. O resultado mostra todos os pré-requisitos (diretos e indiretos) de ENS-801 com o nível de profundidade na cadeia.</p>
 </div>
 
 
