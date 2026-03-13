@@ -465,7 +465,8 @@ window.Quarto = {
   <li><a href="#exemplo-1-nomes-dos-professores-da-eseti" id="toc-exemplo-1-nomes-dos-professores-da-eseti" class="nav-link" data-scroll-target="#exemplo-1-nomes-dos-professores-da-eseti"><span class="header-section-number">31.3</span> Exemplo 1: Nomes dos Professores da ESETI</a></li>
   <li><a href="#exemplo-2-nomes-e-escolas-dos-professores-da-eema" id="toc-exemplo-2-nomes-e-escolas-dos-professores-da-eema" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-escolas-dos-professores-da-eema"><span class="header-section-number">31.4</span> Exemplo 2: Nomes e Escolas dos Professores da EEMA</a></li>
   <li><a href="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas" id="toc-exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="nav-link" data-scroll-target="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas"><span class="header-section-number">31.5</span> Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</a></li>
-  <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</a></li>
+  <li><a href="#exemplo-4-junção-com-autorreferência-pré-requisitos" id="toc-exemplo-4-junção-com-autorreferência-pré-requisitos" class="nav-link" data-scroll-target="#exemplo-4-junção-com-autorreferência-pré-requisitos"><span class="header-section-number">31.6</span> Exemplo 4: Junção com Autorreferência (Pré-requisitos)</a></li>
+  <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela"><span class="header-section-number">31.7</span> Notação com Qualificador de Tabela</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -680,11 +681,81 @@ Nota
 </div>
 </div>
 </section>
-<section id="notação-com-qualificador-de-tabela" class="level2" data-number="31.6">
-<h2 data-number="31.6" class="anchored" data-anchor-id="notação-com-qualificador-de-tabela"><span class="header-section-number">31.6</span> Notação com Qualificador de Tabela</h2>
+<section id="exemplo-4-junção-com-autorreferência-pré-requisitos" class="level2" data-number="31.6">
+<h2 data-number="31.6" class="anchored" data-anchor-id="exemplo-4-junção-com-autorreferência-pré-requisitos"><span class="header-section-number">31.6</span> Exemplo 4: Junção com Autorreferência (Pré-requisitos)</h2>
+<p>Quando uma tabela referencia a si mesma, precisamos incluí-la <strong>duas vezes</strong> na cláusula <code>FROM</code> com aliases distintos. A tabela <code>prereq</code> tem duas FKs para <code>disciplina</code> — usamos <code>d</code> para a disciplina e <code>p</code> para o pré-requisito:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nome de cada disciplina e de seu(s) pré-requisito(s)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.nome_disciplina <span class="kw">AS</span> disciplina,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       p.nome_disciplina <span class="kw">AS</span> prereq</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereq pr, disciplina d, disciplina p</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  pr.codigo        <span class="op">=</span> d.codigo</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  pr.prereq_codigo <span class="op">=</span> p.codigo</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.sigla_curso, d.codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">disciplina</th>
+<th style="text-align: left;">prereq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Microeconomia 2</td>
+<td style="text-align: left;">História Econômica Geral</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Economia Brasileira</td>
+<td style="text-align: left;">Microeconomia 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+<td style="text-align: left;">Macroeconomia 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: left;">Economia Brasileira</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: left;">Bases da Engenharia de Software 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bases da Engenharia de Software 6</td>
+<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Engenharia de Software 6</td>
+<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
+<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="notação-com-qualificador-de-tabela" class="level2" data-number="31.7">
+<h2 data-number="31.7" class="anchored" data-anchor-id="notação-com-qualificador-de-tabela"><span class="header-section-number">31.7</span> Notação com Qualificador de Tabela</h2>
 <p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>escola</code> em <code>professor</code> e em <code>escola</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela ou alias:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p.escola   <span class="co">-- coluna escola da tabela professor (alias p)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>e.escola   <span class="co">-- coluna escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p.escola   <span class="co">-- coluna escola da tabela professor (alias p)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>e.escola   <span class="co">-- coluna escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sem o qualificador, o SQL lançará um erro de ambiguidade:</p>
 <pre><code>ERROR: column reference "escola" is ambiguous</code></pre>
 

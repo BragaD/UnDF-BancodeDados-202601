@@ -434,7 +434,8 @@ window.Quarto = {
   <li><a href="#junção-bowtie" id="toc-junção-bowtie" class="nav-link" data-scroll-target="#junção-bowtie"><span class="header-section-number">24.2</span> Junção (<span class="math inline">\(\bowtie\)</span>)</a>
   <ul>
   <li><a href="#exemplo-professores-com-suas-disciplinas" id="toc-exemplo-professores-com-suas-disciplinas" class="nav-link" data-scroll-target="#exemplo-professores-com-suas-disciplinas"><span class="header-section-number">24.2.1</span> Exemplo: Professores com Suas Disciplinas</a></li>
-  <li><a href="#vantagem-da-junção" id="toc-vantagem-da-junção" class="nav-link" data-scroll-target="#vantagem-da-junção"><span class="header-section-number">24.2.2</span> Vantagem da Junção</a></li>
+  <li><a href="#junção-com-autorreferência-pré-requisitos" id="toc-junção-com-autorreferência-pré-requisitos" class="nav-link" data-scroll-target="#junção-com-autorreferência-pré-requisitos"><span class="header-section-number">24.2.2</span> Junção com Autorreferência: Pré-requisitos</a></li>
+  <li><a href="#vantagem-da-junção" id="toc-vantagem-da-junção" class="nav-link" data-scroll-target="#vantagem-da-junção"><span class="header-section-number">24.2.3</span> Vantagem da Junção</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -705,8 +706,109 @@ window.Quarto = {
 <p>A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo <code>ministra.matricula_prof</code> é redundante no resultado e pode ser eliminado com uma projeção.</p>
 </div>
 </section>
-<section id="vantagem-da-junção" class="level3" data-number="24.2.2">
-<h3 data-number="24.2.2" class="anchored" data-anchor-id="vantagem-da-junção"><span class="header-section-number">24.2.2</span> Vantagem da Junção</h3>
+<section id="junção-com-autorreferência-pré-requisitos" class="level3" data-number="24.2.2">
+<h3 data-number="24.2.2" class="anchored" data-anchor-id="junção-com-autorreferência-pré-requisitos"><span class="header-section-number">24.2.2</span> Junção com Autorreferência: Pré-requisitos</h3>
+<p>A relação <code>prereq</code> conecta disciplinas entre si: cada tupla indica que <code>codigo</code> exige <code>prereq_codigo</code> como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação <code>disciplina</code> — trata-se de uma <strong>autorreferência</strong>.</p>
+<p>Para obter os <strong>nomes</strong> da disciplina e do seu pré-requisito é necessário juntar <code>prereq</code> com <code>disciplina</code> <strong>duas vezes</strong>, usando renomeação para distinguir as duas instâncias:</p>
+<p><span class="math display">\[D \leftarrow \rho_d(disciplina)\]</span> <span class="math display">\[P \leftarrow \rho_p(disciplina)\]</span> <span class="math display">\[\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.codigo = d.codigo\ \wedge\ prereq.prereq\_codigo = p.codigo}(prereq \times D \times P)\right)\]</span></p>
+<p>Versão compacta com junções encadeadas:</p>
+<p><span class="math display">\[prereq \bowtie_{prereq.codigo = d.codigo} \rho_d(disciplina) \bowtie_{prereq.prereq\_codigo = p.codigo} \rho_p(disciplina)\]</span></p>
+<p>Tabela <code>prereq</code> (amostra — ENS):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>codigo</th>
+<th>prereq_codigo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ENS-401</td>
+<td>ENS-201</td>
+</tr>
+<tr class="even">
+<td>ENS-402</td>
+<td>ENS-202</td>
+</tr>
+<tr class="odd">
+<td>ENS-601</td>
+<td>ENS-401</td>
+</tr>
+<tr class="even">
+<td>ENS-601</td>
+<td>ENS-402</td>
+</tr>
+<tr class="odd">
+<td>ENS-602</td>
+<td>ENS-402</td>
+</tr>
+<tr class="even">
+<td>ENS-801</td>
+<td>ENS-601</td>
+</tr>
+<tr class="odd">
+<td>ENS-802</td>
+<td>ENS-601</td>
+</tr>
+<tr class="even">
+<td>ENS-802</td>
+<td>ENS-602</td>
+</tr>
+</tbody>
+</table>
+<p>Resultado após a junção (ENS — nomes completos):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>d.nome_disciplina</th>
+<th>p.nome_disciplina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bases da Engenharia de Software 4</td>
+<td>Bases da Engenharia de Software 2</td>
+</tr>
+<tr class="even">
+<td>Projeto Aplicado 4 (blockchain)</td>
+<td>Projeto Aplicado 2 (site WEB)</td>
+</tr>
+<tr class="odd">
+<td>Bases da Engenharia de Software 6</td>
+<td>Bases da Engenharia de Software 4</td>
+</tr>
+<tr class="even">
+<td>Bases da Engenharia de Software 6</td>
+<td>Projeto Aplicado 4 (blockchain)</td>
+</tr>
+<tr class="odd">
+<td>Projeto Aplicado 6 (Machine Learning)</td>
+<td>Projeto Aplicado 4 (blockchain)</td>
+</tr>
+<tr class="even">
+<td>Bases da Engenharia de Software 8</td>
+<td>Bases da Engenharia de Software 6</td>
+</tr>
+<tr class="odd">
+<td>Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td>Bases da Engenharia de Software 6</td>
+</tr>
+<tr class="even">
+<td>Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td>Projeto Aplicado 6 (Machine Learning)</td>
+</tr>
+</tbody>
+</table>
+<div class="exemplo">
+<p><code>ENS-601</code> (Bases 6) tem <strong>dois</strong> pré-requisitos (ENS-401 e ENS-402), o que gera duas tuplas no resultado com o mesmo valor em <code>d.nome_disciplina</code>. Isso é esperado — a relação registra pares, não listas.</p>
+</div>
+</section>
+<section id="vantagem-da-junção" class="level3" data-number="24.2.3">
+<h3 data-number="24.2.3" class="anchored" data-anchor-id="vantagem-da-junção"><span class="header-section-number">24.2.3</span> Vantagem da Junção</h3>
 <p>A notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.</p>
 
 
