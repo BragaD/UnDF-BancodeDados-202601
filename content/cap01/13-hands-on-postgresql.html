@@ -872,6 +872,11 @@ Nota
 <span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009002'</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
 <span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009002'</span>, <span class="fl">7.4</span>, <span class="dv">1</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/caminho/para/matricula_disciplina.csv'</span> DELIMITER <span class="st">';'</span> CSV <span class="kw">HEADER</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 </section>
 <section id="verificando-os-dados" class="level2" data-number="14.5">
@@ -879,9 +884,9 @@ Nota
 <section id="todos-os-cursos" class="level3" data-number="14.5.1">
 <h3 data-number="14.5.1" class="anchored" data-anchor-id="todos-os-cursos"><span class="header-section-number">14.5.1</span> Todos os cursos</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, escola, tipo_curso</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> curso</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, escola, tipo_curso</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> curso</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
@@ -920,10 +925,10 @@ Nota
 <section id="professores-por-escola" class="level3" data-number="14.5.2">
 <h3 data-number="14.5.2" class="anchored" data-anchor-id="professores-por-escola"><span class="header-section-number">14.5.2</span> Professores por escola</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_professores</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_professores</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
@@ -954,10 +959,10 @@ Nota
 <section id="disciplinas-com-carga-horária-acima-de-100-h" class="level3" data-number="14.5.3">
 <h3 data-number="14.5.3" class="anchored" data-anchor-id="disciplinas-com-carga-horária-acima-de-100-h"><span class="header-section-number">14.5.3</span> Disciplinas com carga horária acima de 100 h</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> disciplina</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> carga_horaria <span class="op">&gt;</span> <span class="dv">100</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> disciplina</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> carga_horaria <span class="op">&gt;</span> <span class="dv">100</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>7 records</caption>
@@ -1026,9 +1031,9 @@ Nota
 <section id="alunos-de-engenharia-de-software-ingressantes-em-2023" class="level3" data-number="14.5.4">
 <h3 data-number="14.5.4" class="anchored" data-anchor-id="alunos-de-engenharia-de-software-ingressantes-em-2023"><span class="header-section-number">14.5.4</span> Alunos de Engenharia de Software ingressantes em 2023</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> matricula, nome, ano_ingresso</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> aluno</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> sigla_curso <span class="op">=</span> <span class="st">'ENS'</span> <span class="kw">AND</span> ano_ingresso <span class="op">=</span> <span class="dv">2023</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> matricula, nome, ano_ingresso</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> aluno</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> sigla_curso <span class="op">=</span> <span class="st">'ENS'</span> <span class="kw">AND</span> ano_ingresso <span class="op">=</span> <span class="dv">2023</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
@@ -1065,9 +1070,9 @@ Nota
 </div>
 <div class="callout-body-container callout-body">
 <p>Para remover todas as tabelas e recriar do zero:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> matricula_disciplina, ministra,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                     disciplina, aluno, professor,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                     curso, escola, centro <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> matricula_disciplina, ministra,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                     disciplina, aluno, professor,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                     curso, escola, centro <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 
