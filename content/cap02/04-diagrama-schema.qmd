@@ -57,7 +57,7 @@ digraph schema {
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>ch_semanal</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>salario</I></TD></TR>
     </TABLE>
   >];
 
@@ -108,11 +108,19 @@ digraph schema {
     </TABLE>
   >];
 
+  prereq [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>prereq</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>prereq_codigo</I></U></TD></TR>
+    </TABLE>
+  >];
+
   // Layout: centro e escola à esquerda, entidades no meio, associações à direita
   { rank=same; centro; escola; }
   { rank=same; curso; professor; }
   { rank=same; aluno; disciplina; }
-  { rank=same; ministra; matricula_disciplina; }
+  { rank=same; ministra; matricula_disciplina; prereq; }
 
   // Chaves estrangeiras
   escola               -> centro
@@ -124,6 +132,8 @@ digraph schema {
   ministra             -> professor
   matricula_disciplina -> ministra
   matricula_disciplina -> aluno
+  prereq               -> disciplina [label="codigo"]
+  prereq               -> disciplina [label="prereq_codigo"]
 }
 ```
 
@@ -135,3 +145,4 @@ digraph schema {
 - `curso` e `professor` referenciam `escola`; `aluno` e `disciplina` referenciam `curso`
 - `ministra` é a relação de associação entre `professor` e `disciplina` (com chave composta de 4 atributos)
 - `matricula_disciplina` registra as matrículas de alunos em turmas específicas e referencia tanto `ministra` quanto `aluno`
+- `prereq` é uma relação de **autorreferência** sobre `disciplina`: ambos os atributos da chave composta (`codigo` e `prereq_codigo`) são chaves estrangeiras que apontam para a mesma tabela `disciplina`

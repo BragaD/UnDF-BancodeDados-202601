@@ -207,6 +207,18 @@ CREATE TABLE IF NOT EXISTS ministra (
 );
 ```
 
+### Tabela `prereq`
+
+```{sql}
+--| connection: con
+--| eval: true
+CREATE TABLE IF NOT EXISTS prereq (
+    codigo        VARCHAR(10) REFERENCES disciplina(codigo),
+    prereq_codigo VARCHAR(10) REFERENCES disciplina(codigo),
+    PRIMARY KEY (codigo, prereq_codigo)
+);
+```
+
 ### Tabela `matricula_disciplina`
 
 ```{sql}
@@ -233,7 +245,7 @@ Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves e
 ```{sql}
 --| connection: con
 --| eval: true
-TRUNCATE matricula_disciplina, ministra, disciplina,
+TRUNCATE matricula_disciplina, ministra, prereq, disciplina,
          aluno, professor, curso, escola, centro CASCADE;
 ```
 
@@ -341,6 +353,30 @@ INSERT INTO disciplina (codigo, nome_disciplina, sigla_curso, semestre, carga_ho
     ('PED-604', 'Educação do Campo, Indígena e Quilombola', 'PED', 6, 40),
     ('PED-803', 'Tecnologia Educacional - Design',     'PED', 8,  60),
     ('PED-804', 'Estatística Aplicada',                'PED', 8,  50);
+```
+
+### Pré-requisitos
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO prereq (codigo, prereq_codigo) VALUES
+    ('ENS-401', 'ENS-201'),
+    ('ENS-402', 'ENS-202'),
+    ('ENS-601', 'ENS-401'),
+    ('ENS-601', 'ENS-402'),
+    ('ENS-602', 'ENS-402'),
+    ('ENS-801', 'ENS-601'),
+    ('ENS-802', 'ENS-601'),
+    ('ENS-802', 'ENS-602'),
+    ('ECO-401', 'ECO-201'),
+    ('ECO-601', 'ECO-401'),
+    ('ECO-602', 'ECO-402'),
+    ('ECO-801', 'ECO-601'),
+    ('ECO-801', 'ECO-602'),
+    ('PED-403', 'PED-203'),
+    ('PED-603', 'PED-403'),
+    ('PED-803', 'PED-603');
 ```
 
 ### Turmas ministradas

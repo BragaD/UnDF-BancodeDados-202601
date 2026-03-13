@@ -101,6 +101,7 @@ Os exemplos dos capítulos 1, 2 e 3 usam dados reais carregados de CSVs em `dado
 | `aluno` | `matricula` (PK), `nome`, `sigla_curso` (FK→curso), `ano_ingresso` |
 | `disciplina` | `codigo` (PK), `nome_disciplina`, `sigla_curso` (FK→curso), `semestre`, `carga_horaria` |
 | `ministra` | `cod_disciplina`, `ano`, `semestre`, `turma` (PK composta), `matricula_prof` (FK→professor) |
+| `prereq` | `codigo` (PK+FK→disciplina), `prereq_codigo` (PK+FK→disciplina) |
 | `matricula_disciplina` | `cod_disciplina`, `ano`, `semestre`, `turma`, `cod_matricula` (PK composta), `nota`, `aprovado` |
 
 ### Dados de referência

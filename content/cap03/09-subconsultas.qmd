@@ -56,6 +56,22 @@ ORDER BY codigo;
 ```
 :::
 
+::: {.exemplo}
+**NOT IN: disciplinas sem nenhum pré-requisito:**
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT codigo, nome_disciplina, sigla_curso, semestre
+FROM   disciplina
+WHERE  codigo NOT IN (
+    SELECT codigo
+    FROM   prereq
+)
+ORDER BY sigla_curso, semestre;
+```
+:::
+
 ## SOME e ALL
 
 `SOME` e `ALL` comparam um valor com cada elemento do conjunto retornado pela subconsulta.
@@ -105,6 +121,23 @@ ORDER BY carga_horaria;
 ## EXISTS e NOT EXISTS
 
 `EXISTS` verifica se a subconsulta retorna ao menos uma linha. É frequentemente usado com **subconsultas correlacionadas**, em que a subconsulta referencia colunas da consulta externa.
+
+::: {.exemplo}
+**EXISTS: disciplinas que têm ao menos um pré-requisito:**
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT d.codigo, d.nome_disciplina, d.sigla_curso
+FROM   disciplina d
+WHERE  EXISTS (
+    SELECT 1
+    FROM   prereq p
+    WHERE  p.codigo = d.codigo
+)
+ORDER BY d.sigla_curso, d.codigo;
+```
+:::
 
 ::: {.exemplo}
 **EXISTS: cursos que têm pelo menos uma disciplina com carga horária acima de 150 h:**

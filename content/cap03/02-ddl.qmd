@@ -124,6 +124,16 @@ CREATE TABLE disciplina (
 );
 ```
 
+**Tabela `prereq`** — pré-requisitos entre disciplinas; chave primária composta e duas FKs para `disciplina`:
+
+```sql
+CREATE TABLE prereq (
+    codigo        VARCHAR(10) REFERENCES disciplina(codigo),
+    prereq_codigo VARCHAR(10) REFERENCES disciplina(codigo),
+    PRIMARY KEY (codigo, prereq_codigo)
+);
+```
+
 **Tabela `ministra`** — chave primária composta, referencia `disciplina` e `professor`:
 
 ```sql

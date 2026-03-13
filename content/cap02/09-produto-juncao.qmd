@@ -86,6 +86,50 @@ Resultado (apenas as 3 tuplas válidas do produto cartesiano de 9):
 A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.matricula_prof` é redundante no resultado e pode ser eliminado com uma projeção.
 :::
 
+### Junção com Autorreferência: Pré-requisitos
+
+A relação `prereq` conecta disciplinas entre si: cada tupla indica que `codigo` exige `prereq_codigo` como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação `disciplina` — trata-se de uma **autorreferência**.
+
+Para obter os **nomes** da disciplina e do seu pré-requisito é necessário juntar `prereq` com `disciplina` **duas vezes**, usando renomeação para distinguir as duas instâncias:
+
+$$D \leftarrow \rho_d(disciplina)$$
+$$P \leftarrow \rho_p(disciplina)$$
+$$\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.codigo = d.codigo\ \wedge\ prereq.prereq\_codigo = p.codigo}(prereq \times D \times P)\right)$$
+
+Versão compacta com junções encadeadas:
+
+$$prereq \bowtie_{prereq.codigo = d.codigo} \rho_d(disciplina) \bowtie_{prereq.prereq\_codigo = p.codigo} \rho_p(disciplina)$$
+
+Tabela `prereq` (amostra — ENS):
+
+| codigo  | prereq_codigo |
+|---------|---------------|
+| ENS-401 | ENS-201 |
+| ENS-402 | ENS-202 |
+| ENS-601 | ENS-401 |
+| ENS-601 | ENS-402 |
+| ENS-602 | ENS-402 |
+| ENS-801 | ENS-601 |
+| ENS-802 | ENS-601 |
+| ENS-802 | ENS-602 |
+
+Resultado após a junção (ENS — nomes completos):
+
+| d.nome_disciplina | p.nome_disciplina |
+|---|---|
+| Bases da Engenharia de Software 4 | Bases da Engenharia de Software 2 |
+| Projeto Aplicado 4 (blockchain) | Projeto Aplicado 2 (site WEB) |
+| Bases da Engenharia de Software 6 | Bases da Engenharia de Software 4 |
+| Bases da Engenharia de Software 6 | Projeto Aplicado 4 (blockchain) |
+| Projeto Aplicado 6 (Machine Learning) | Projeto Aplicado 4 (blockchain) |
+| Bases da Engenharia de Software 8 | Bases da Engenharia de Software 6 |
+| Projeto Aplicado 8 (Sistema em Tempo Real) | Bases da Engenharia de Software 6 |
+| Projeto Aplicado 8 (Sistema em Tempo Real) | Projeto Aplicado 6 (Machine Learning) |
+
+::: {.exemplo}
+`ENS-601` (Bases 6) tem **dois** pré-requisitos (ENS-401 e ENS-402), o que gera duas tuplas no resultado com o mesmo valor em `d.nome_disciplina`. Isso é esperado — a relação registra pares, não listas.
+:::
+
 ### Vantagem da Junção
 
 A notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.
