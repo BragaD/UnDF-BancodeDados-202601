@@ -146,3 +146,33 @@ digraph schema {
 - `ministra` é a relação de associação entre `professor` e `disciplina` (com chave composta de 4 atributos)
 - `matricula_disciplina` registra as matrículas de alunos em turmas específicas e referencia tanto `ministra` quanto `aluno`
 - `prereq` é uma relação de **autorreferência** sobre `disciplina`: ambos os atributos da chave composta (`codigo` e `prereq_codigo`) são chaves estrangeiras que apontam para a mesma tabela `disciplina`
+
+---
+
+## Para Praticar
+
+**1. Leitura do diagrama.** Com base no diagrama de schema:
+
+a. Quais tabelas possuem **chave primária composta** (mais de um atributo sublinhado)?
+b. Quantas tabelas referenciam diretamente `disciplina` por chave estrangeira?
+c. Qual é o "caminho" de chaves estrangeiras de `matricula_disciplina` até `centro`?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+a. `ministra` (4 atributos: cod_disciplina, ano, semestre, turma), `matricula_disciplina` (5 atributos) e `prereq` (2 atributos).
+
+b. Três: `ministra` (via cod_disciplina), `prereq` (via codigo) e `prereq` (via prereq_codigo) — ou seja, `ministra` e `prereq` referenciam `disciplina`.
+
+c. `matricula_disciplina` → `ministra` → `disciplina` → `curso` → `escola` → `centro`. São 5 saltos.
+:::
+
+---
+
+**2. Diagrama de uma nova tabela.** A UnDF deseja registrar as **salas de aula** do campus. Cada sala pertence a uma escola e possui número, capacidade e tipo (`laboratorio`, `auditorio`, `sala_aula`). Escreva o schema dessa nova relação e indique qual FK ela teria.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$sala(\underline{id\_sala},\ numero,\ capacidade,\ tipo,\ escola)$$
+
+A chave estrangeira seria `escola → escola.escola`. A tabela `ministra` poderia então referenciar `sala.id_sala` em vez de armazenar o nome da sala como VARCHAR.
+:::

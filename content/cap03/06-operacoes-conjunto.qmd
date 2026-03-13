@@ -122,3 +122,52 @@ As duas consultas combinadas por `UNION`, `INTERSECT` ou `EXCEPT` devem ter:
 2. Tipos de dados **compatíveis** em cada posição correspondente
 
 Os nomes das colunas no resultado final são determinados pela **primeira** consulta.
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- EXCEPT: disciplinas que possuem pré-requisito mas nenhum aluno cursou
+-- (aparece em prereq, mas não em matricula_disciplina como prereq_codigo cursado)
+SELECT d.codigo, d.nome_disciplina
+FROM   disciplina d
+WHERE  d.codigo IN (SELECT codigo FROM prereq)
+EXCEPT
+SELECT d.codigo, d.nome_disciplina
+FROM   disciplina d
+WHERE  d.codigo IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)
+ORDER BY codigo;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- INTERSECT: disciplinas que têm pré-requisito E foram cursadas por algum aluno
+SELECT codigo FROM prereq
+INTERSECT
+SELECT DISTINCT cod_disciplina FROM matricula_disciplina
+ORDER BY codigo;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- UNION ALL vs UNION: efeito das duplicatas
+-- UNION ALL conta todas as ocorrências; UNION apenas valores distintos
+SELECT 'UNION (sem dup.)' AS operacao, COUNT(*) AS n_linhas
+FROM (
+    SELECT sigla_curso FROM curso
+    UNION
+    SELECT sigla_curso FROM disciplina
+) t
+UNION ALL
+SELECT 'UNION ALL (com dup.)', COUNT(*)
+FROM (
+    SELECT sigla_curso FROM curso
+    UNION ALL
+    SELECT sigla_curso FROM disciplina
+) t;
+```

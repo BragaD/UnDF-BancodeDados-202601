@@ -63,3 +63,66 @@ A tabela `professor` apresentada acima poderia igualmente ser exibida com as tup
 :::
 
 Da mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenção sempre usemos uma ordem consistente.
+
+---
+
+## Para Praticar
+
+**1. Atomicidade violada.** Considere a seguinte proposta de tabela:
+
+| matricula | nome | disciplinas_cursadas |
+|---|---|---|
+| 2023002001 | Matheus Silva | ENS-201, ENS-202 |
+
+Por que esse design viola o modelo relacional? Como corrigi-lo?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O atributo `disciplinas_cursadas` armazena uma **lista** de valores — não é atômico. O modelo relacional exige atomicidade: cada célula deve conter um único valor indivisível. A solução correta é usar a tabela `matricula_disciplina`, onde cada par (aluno, disciplina) ocupa uma tupla separada.
+:::
+
+---
+
+**2. Duas instâncias, mesma relação?** As duas tabelas abaixo representam a mesma relação?
+
+**Tabela A:**
+
+| matricula_prof | nome | escola |
+|---|---|---|
+| PROF20230031 | Gustavo Costa | ESETI |
+| PROF20230042 | Bruno Teixeira | ESG |
+
+**Tabela B:**
+
+| escola | nome | matricula_prof |
+|---|---|---|
+| ESG | Bruno Teixeira | PROF20230042 |
+| ESETI | Gustavo Costa | PROF20230031 |
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Sim.** As duas tabelas representam a mesma relação. No modelo relacional, nem a ordem das tuplas nem a ordem dos atributos têm significado formal — uma relação é um conjunto de tuplas, e conjuntos não têm sequência.
+:::
+
+---
+
+**3. Aridade do banco.** Consulte o schema da UnDF e preencha:
+
+| Tabela | Aridade | Nº de tuplas na amostra |
+|---|---:|---:|
+| `centro` | ? | ? |
+| `professor` | ? | ? |
+| `prereq` | ? | ? |
+| `ministra` | ? | ? |
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+| Tabela | Aridade | Nº de tuplas |
+|---|---:|---:|
+| `centro` | 2 | 3 |
+| `professor` | 5 | 7 |
+| `prereq` | 2 | 16 |
+| `ministra` | 7 | 36 |
+
+:::

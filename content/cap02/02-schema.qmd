@@ -61,3 +61,57 @@ A distinção entre schema e instância tem um paralelo direto com conceitos de 
 | Instância do banco de dados | Estado da memória do programa em um dado instante |
 
 Assim como o tipo de uma variável não muda durante a execução do programa mas o seu valor muda o tempo todo, o schema de um banco de dados é estável enquanto a instância está em constante evolução.
+
+---
+
+## Para Praticar
+
+**1. Schema ou instância?** Classifique cada operação abaixo como alteração de **schema**, de **instância** ou **nenhuma das duas**:
+
+| Operação | Tipo de alteração |
+|---|---|
+| Inserir um novo aluno na tabela `aluno` | ? |
+| Adicionar a coluna `email` à tabela `professor` | ? |
+| Executar um `SELECT` para listar disciplinas | ? |
+| Remover a tabela `prereq` do banco | ? |
+| Atualizar o salário de um professor | ? |
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+| Operação | Tipo |
+|---|---|
+| Inserir um novo aluno | Instância |
+| Adicionar coluna `email` | Schema |
+| `SELECT` para listar disciplinas | Nenhuma |
+| Remover a tabela `prereq` | Schema |
+| Atualizar salário | Instância |
+
+Schema muda com DDL (`CREATE`, `ALTER`, `DROP`); instância muda com DML (`INSERT`, `UPDATE`, `DELETE`); consultas não alteram nada.
+:::
+
+---
+
+**2. Schema implica instância?** É possível existir um schema sem nenhuma instância? E uma instância sem schema?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Schema sem instância:** sim — uma tabela recém-criada com `CREATE TABLE` e zero linhas tem schema mas instância vazia. **Instância sem schema:** não é possível em bancos relacionais — toda instância deve obedecer ao schema definido previamente. O schema é a "planta", a instância é o "edifício".
+:::
+
+---
+
+**3. Novo atributo, schema ou instância?** O schema de `aluno` é:
+
+$$aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)$$
+
+Se a UnDF decidir registrar também o **e-mail institucional** de cada aluno, o que muda — schema ou instância? Escreva o novo schema.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Muda o **schema** — é preciso adicionar um atributo. O novo schema seria:
+
+$$aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso,\ email)$$
+
+Após essa mudança de schema, a instância precisaria ser atualizada (via `UPDATE`) para popular o novo campo — caso contrário, os valores ficariam `null`.
+:::

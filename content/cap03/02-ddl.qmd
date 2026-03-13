@@ -220,3 +220,51 @@ DROP TABLE IF EXISTS disciplina;
 
 Se outras tabelas referenciam a tabela removida por chave estrangeira, o comando falhará — a menos que `CASCADE` seja especificado.
 :::
+
+---
+
+## Para Praticar
+
+### Adicionando e removendo colunas
+
+```sql
+-- Adicionar email à tabela professor
+ALTER TABLE professor ADD COLUMN email VARCHAR(100);
+
+-- Remover a coluna email novamente
+ALTER TABLE professor DROP COLUMN email;
+```
+
+### Restrição CHECK
+
+O SQL permite validar valores na inserção com `CHECK`:
+
+```sql
+-- Adicionar restrição: semestre deve ser entre 1 e 10
+ALTER TABLE disciplina
+    ADD CONSTRAINT chk_semestre CHECK (semestre BETWEEN 1 AND 10);
+```
+
+### O que acontece com NOT NULL em coluna existente?
+
+Se tentarmos adicionar `NOT NULL` a uma coluna que já possui valores nulos, o banco retorna erro:
+
+```sql
+-- Isso falharia se horario tiver valores NULL em ministra
+ALTER TABLE ministra ALTER COLUMN horario SET NOT NULL;
+-- ERROR: column "horario" of relation "ministra" contains null values
+```
+
+A solução é primeiro preencher os valores nulos antes de aplicar a restrição.
+
+### Verificando a estrutura de uma tabela
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Inspecionar colunas, tipos e restrições da tabela professor
+SELECT column_name, data_type, is_nullable, column_default
+FROM   information_schema.columns
+WHERE  table_name = 'professor'
+ORDER BY ordinal_position;
+```

@@ -166,3 +166,55 @@ FROM   matricula_disciplina;
 - Ao projetar tabelas, use `NOT NULL` nas colunas que **sempre** devem ter um valor.
 - Ao escrever condições que envolvem colunas que podem ser nulas, inclua verificações explícitas com `IS NULL` ou `IS NOT NULL`.
 - Nunca compare com `= NULL`; use sempre `IS NULL`.
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- NULL em aritmética: qualquer operação com NULL resulta em NULL
+SELECT cod_matricula,
+       nota,
+       nota + 1     AS nota_mais_1,
+       nota * 2     AS nota_dobro
+FROM   matricula_disciplina
+WHERE  nota IS NULL
+LIMIT 5;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- COALESCE: substituir NULL por um valor padrão
+SELECT cod_disciplina, ano, semestre, turma,
+       COALESCE(horario, 'Horário não definido') AS horario_exibido,
+       COALESCE(sala,    'Sala não definida')    AS sala_exibida
+FROM   ministra
+WHERE  horario IS NULL OR sala IS NULL
+LIMIT 10;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Armadilha: comparar com NULL usando = sempre retorna NULL (nunca TRUE)
+-- A consulta abaixo retorna ZERO linhas, mesmo que existam notas nulas!
+SELECT COUNT(*) AS resultado_incorreto
+FROM   matricula_disciplina
+WHERE  nota = NULL;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Forma correta: usar IS NULL
+SELECT COUNT(*) AS resultado_correto
+FROM   matricula_disciplina
+WHERE  nota IS NULL;
+```
+
+::: {.callout-warning}
+**Armadilha clássica:** `WHERE coluna = NULL` nunca retorna linhas — a comparação com `NULL` usando `=` sempre resulta em `NULL` (desconhecido), não `TRUE`. Use sempre `IS NULL` ou `IS NOT NULL`.
+:::

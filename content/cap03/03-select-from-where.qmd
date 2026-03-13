@@ -110,3 +110,43 @@ Sem o qualificador, o SQL lançará um erro de ambiguidade:
 ```
 ERROR: column reference "escola" is ambiguous
 ```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Três tabelas em cadeia: nome do professor, escola e centro
+SELECT p.nome, e.nome_escola, c.nome_centro
+FROM   professor p, escola e, centro c
+WHERE  p.escola  = e.escola
+  AND  e.centro  = c.centro
+ORDER BY c.centro, p.nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Produto cartesiano completo: quantas linhas gera professor × escola?
+-- (7 × 3 = 21 — sem filtro WHERE)
+SELECT COUNT(*) AS total_produto_cartesiano
+FROM   professor, escola;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos cujo ano de ingresso coincide com o semestre da disciplina que cursaram
+-- (caso limite: comparação entre atributos de tabelas diferentes)
+SELECT DISTINCT a.nome, a.ano_ingresso, md.cod_disciplina
+FROM   aluno a, matricula_disciplina md
+WHERE  a.matricula      = md.cod_matricula
+  AND  a.ano_ingresso   = md.ano
+ORDER BY a.nome;
+```
+
+::: {.callout-note}
+A última consulta compara `aluno.ano_ingresso` com `matricula_disciplina.ano` — um predicado entre atributos de tabelas diferentes, perfeitamente válido em SQL. Ela retorna alunos que cursaram disciplinas no mesmo ano em que ingressaram no curso.
+:::

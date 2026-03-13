@@ -147,3 +147,54 @@ SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
 FROM   disciplina
 ORDER BY sigla_curso ASC, carga_horaria DESC;
 ```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- NOT BETWEEN: disciplinas fora do intervalo central de carga horária
+SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+FROM   disciplina
+WHERE  carga_horaria NOT BETWEEN 60 AND 120
+ORDER BY carga_horaria;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- LIKE com sublinhado: códigos onde o 5º caractere é exatamente '2'
+-- Ex.: ENS-201, ECO-201, PED-203 — o padrão 'xxx-2__' captura sem 10 (ENS-201 = E,N,S,-,2,0,1)
+SELECT codigo, nome_disciplina, semestre
+FROM   disciplina
+WHERE  codigo LIKE '___-2%'
+ORDER BY codigo;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- IN com lista literal: cursos específicos sem usar LIKE
+SELECT sigla_curso, nome_curso, tipo_curso
+FROM   curso
+WHERE  tipo_curso IN ('bacharelado', 'licenciatura')
+ORDER BY tipo_curso, sigla_curso;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Combinação de AND/OR com parênteses: a precedência importa!
+-- Sem parênteses, AND tem precedência sobre OR
+SELECT nome, escola, salario
+FROM   professor
+WHERE  (escola = 'ESETI' OR escola = 'EEMA')
+  AND  salario > 5000
+ORDER BY escola, salario DESC;
+```
+
+::: {.callout-warning}
+**Atenção à precedência:** `AND` tem precedência sobre `OR`. A expressão `a OR b AND c` é interpretada como `a OR (b AND c)`, não `(a OR b) AND c`. Use parênteses sempre que combinar `AND` e `OR` para garantir a intenção correta.
+:::

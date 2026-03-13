@@ -232,3 +232,57 @@ ORDER BY s.carga_total DESC;
 - Permitem reutilizar a mesma subconsulta várias vezes na consulta principal.
 - Em alguns SGBDs, podem ser usadas recursivamente para consultas hierárquicas (`WITH RECURSIVE`).
 :::
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Subconsulta escalar no SELECT: mostrar a diferença do salário em relação à média
+SELECT nome, escola, salario,
+       ROUND(salario - (SELECT AVG(salario) FROM professor), 2) AS dif_media
+FROM   professor
+ORDER BY dif_media DESC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- ALL: professores com salário maior que TODOS os professores de 20h
+SELECT nome, escola, salario
+FROM   professor
+WHERE  salario > ALL (
+    SELECT salario
+    FROM   professor
+    WHERE  ch_semanal = 20
+)
+ORDER BY salario DESC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- WITH RECURSIVE: encontrar todos os pré-requisitos transitivos de ENS-801
+-- (pré-requisitos diretos e indiretos — cadeia completa)
+WITH RECURSIVE cadeia AS (
+    -- Caso base: pré-requisitos diretos de ENS-801
+    SELECT prereq_codigo AS disciplina, 1 AS nivel
+    FROM   prereq
+    WHERE  codigo = 'ENS-801'
+    UNION
+    -- Caso recursivo: pré-requisitos dos pré-requisitos
+    SELECT p.prereq_codigo, c.nivel + 1
+    FROM   prereq p
+    JOIN   cadeia c ON p.codigo = c.disciplina
+)
+SELECT c.disciplina AS prereq_transitivo, c.nivel, d.nome_disciplina
+FROM   cadeia c
+JOIN   disciplina d ON d.codigo = c.disciplina
+ORDER BY c.nivel, c.disciplina;
+```
+
+::: {.conceito}
+`WITH RECURSIVE` permite escrever consultas que percorrem estruturas hierárquicas ou grafos — como a cadeia de pré-requisitos. O PostgreSQL suporta esse recurso; outros SGBDs podem ter sintaxe ligeiramente diferente. O resultado mostra todos os pré-requisitos (diretos e indiretos) de ENS-801 com o nível de profundidade na cadeia.
+:::

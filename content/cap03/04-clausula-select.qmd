@@ -117,3 +117,45 @@ WHERE  escola = 'ESETI';
 - `SELECT expressão AS alias` — projeta uma expressão com nome alternativo
 - `SELECT 'literal' AS alias` — inclui uma constante no resultado
 :::
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- CASE no SELECT: categorizar professores por regime de trabalho
+SELECT nome, ch_semanal, salario,
+       CASE
+           WHEN ch_semanal = 40 THEN 'Regime integral'
+           WHEN ch_semanal = 20 THEN 'Regime parcial'
+           ELSE                      'Outro'
+       END AS regime
+FROM   professor
+ORDER BY ch_semanal DESC, nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Concatenação de strings: montar identificação completa da turma
+SELECT cod_disciplina || '/' || CAST(ano AS TEXT) || '-' || CAST(semestre AS TEXT) || turma AS id_turma,
+       matricula_prof,
+       sala
+FROM   ministra
+ORDER BY id_turma;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- DISTINCT com múltiplas colunas: combinações únicas de escola e ch_semanal
+SELECT DISTINCT escola, ch_semanal
+FROM   professor
+ORDER BY escola, ch_semanal;
+```
+
+::: {.callout-note}
+`DISTINCT` com múltiplas colunas elimina duplicatas de **combinações** — não de cada coluna individualmente. A consulta acima retorna cada par (escola, ch_semanal) único.
+:::

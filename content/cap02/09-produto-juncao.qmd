@@ -133,3 +133,44 @@ Resultado após a junção (ENS — nomes completos):
 ### Vantagem da Junção
 
 A notação de junção é mais compacta e mais próxima da intenção semântica da consulta. Na prática, o otimizador do SGBD trata a junção de forma mais eficiente do que calcular explicitamente o produto cartesiano completo para depois descartá-lo com uma seleção.
+
+---
+
+## Para Praticar
+
+**1. Contagem no produto cartesiano.** Sem executar a operação, calcule quantas tuplas teriam os seguintes produtos cartesianos:
+
+a. $aluno \times curso$
+b. $disciplina \times prereq$
+c. $professor \times professor$
+
+::: {.callout-tip collapse="true"}
+## Resposta
+a. $18 \times 3 = 54$ tuplas
+b. $24 \times 16 = 384$ tuplas
+c. $7 \times 7 = 49$ tuplas (autojunção — inclui o par de cada professor consigo mesmo)
+:::
+
+---
+
+**2. Junção que retorna vazio.** O que acontece quando o predicado de junção não é satisfeito por nenhum par de tuplas? Construa um exemplo hipotético e descreva o resultado.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O resultado é uma **relação vazia** com o schema combinado das duas relações. Exemplo: se tentarmos $professor \bowtie_{professor.escola = \text{"XPTO"}} escola$, nenhum professor pertence à escola "XPTO", portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.
+:::
+
+---
+
+**3. Junção transitiva de pré-requisitos.** Escreva uma expressão de álgebra relacional para encontrar os **pré-requisitos de pré-requisitos** de ENS-801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de ENS-801.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Primeiro, encontramos os pré-requisitos diretos de ENS-801:
+$$P1 \leftarrow \sigma_{codigo = \text{"ENS-801"}}(prereq)$$
+
+Depois, para cada prereq_codigo de P1, buscamos seus próprios pré-requisitos:
+$$\Pi_{prereq.prereq\_codigo}\!\left(\sigma_{P1.prereq\_codigo = prereq.codigo}(P1 \times prereq)\right)$$
+
+ENS-801 → {ENS-601, ENS-602}. ENS-601 → {ENS-401, ENS-402}; ENS-602 → {ENS-402}. Resultado: **{ENS-401, ENS-402}**.
+:::

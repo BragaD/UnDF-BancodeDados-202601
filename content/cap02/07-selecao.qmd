@@ -77,3 +77,45 @@ O predicado pode também comparar dois atributos da mesma relação. Por exemplo
 $$\sigma_{semestre > 6}(disciplina)$$
 
 Neste caso, o predicado $semestre > 6$ filtra as disciplinas das fases finais do curso.
+
+---
+
+## Para Praticar
+
+**1. Predicado com OR.** Escreva a expressão para encontrar todos os professores que são da EEMA **ou** têm salário acima de 6.000. Quais tuplas o resultado conteria?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\sigma_{escola = \text{"EEMA"}\ \vee\ salario > 6000}(professor)$$
+
+Resultado (7 professores verificados):
+- EEMA: Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios)
+- ESETI: Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério)
+- ESG: Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário
+
+Total: **5 tuplas** (Eduarda, Felipe, Helena, Bruno, Carla).
+:::
+
+---
+
+**2. Predicado composto.** Escreva uma expressão para selecionar as disciplinas do curso ENS com carga horária entre 120 h e 160 h (inclusive).
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\sigma_{sigla\_curso = \text{"ENS"}\ \wedge\ carga\_horaria \geq 120\ \wedge\ carga\_horaria \leq 160}(disciplina)$$
+
+Resultado: ENS-202 (120h), ENS-402 (120h), ENS-601 (150h), ENS-602 (120h), ENS-801 (100h? não — 100 < 120), ENS-802 (160h).
+
+Disciplinas resultantes: ENS-202, ENS-401 (180h? não — 180 > 160), ENS-402, ENS-601, ENS-602, ENS-802 = **5 tuplas**.
+:::
+
+---
+
+**3. Seleção sobre resultado de outra operação.** É válido aplicar $\sigma$ sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde `professor.escola = escola.escola` e `escola.centro = 'COETI'`.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\sigma_{professor.escola = escola.escola\ \wedge\ escola.centro = \text{"COETI"}}(professor \times escola)$$
+
+Isso é exatamente uma **junção com filtro adicional** — equivale a $professor \bowtie_{professor.escola = escola.escola} \sigma_{centro = \text{"COETI"}}(escola)$, que retorna apenas os professores da ESETI (vinculada ao COETI).
+:::

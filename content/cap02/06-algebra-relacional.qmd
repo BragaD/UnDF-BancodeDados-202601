@@ -35,3 +35,42 @@ Nessas expressões:
 3. O resultado é uma nova relação — que pode ser usada como entrada de novas operações
 
 Nas seções seguintes, cada operador é apresentado em detalhe com exemplos usando as tabelas da UnDF.
+
+---
+
+## Para Praticar
+
+**1. Composição de operações.** Escreva uma expressão de álgebra relacional para encontrar os **nomes** de todos os alunos do curso de Pedagogia (`PED`) ingressantes em 2023.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\Pi_{nome}\!\left(\sigma_{sigla\_curso = \text{"PED"}\ \wedge\ ano\_ingresso = 2023}(aluno)\right)$$
+:::
+
+---
+
+**2. Ordem importa?** As duas expressões abaixo são equivalentes? Qual é mais eficiente e por quê?
+
+**Expressão A:** $\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)$
+
+**Expressão B:** $\sigma_{escola = \text{"ESETI"}}\!\left(\Pi_{nome}(professor)\right)$
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Não são equivalentes.** A Expressão A aplica $\sigma$ primeiro (mantendo o atributo `escola` disponível para o filtro) e depois projeta apenas `nome` — resultado correto: nomes dos professores da ESETI.
+
+A Expressão B **é inválida**: $\Pi_{nome}(professor)$ elimina a coluna `escola` antes da seleção, tornando o predicado $escola = \text{"ESETI"}$ inaplicável.
+
+Em álgebra relacional, $\sigma$ deve poder acessar os atributos usados no predicado. A "otimização" de aplicar projeção cedo só é válida quando se mantêm os atributos necessários para as seleções seguintes.
+:::
+
+---
+
+**3. Resultado vazio.** O que acontece quando um operador recebe uma relação vazia como entrada? Por exemplo:
+
+$$\sigma_{semestre > 10}(disciplina)$$
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O resultado é uma **relação vazia** — uma tabela com zero tuplas mas com o mesmo schema de `disciplina`. Relações vazias são perfeitamente válidas e podem ser usadas como entrada de outras operações (ex.: $\emptyset \cup r = r$; $\emptyset \times r = \emptyset$).
+:::

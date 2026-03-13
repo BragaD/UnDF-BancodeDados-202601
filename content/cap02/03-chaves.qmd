@@ -67,3 +67,49 @@ Isso garante que não seja possível cadastrar um professor em uma escola inexis
 :::
 
 A restrição imposta por uma chave estrangeira é chamada de **restrição de integridade referencial** (*referential integrity constraint*) e é uma das formas como o SGBD preserva a consistência dos dados.
+
+---
+
+## Para Praticar
+
+**1. Superchaves de `disciplina`.** O schema da relação `disciplina` é:
+
+$$disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)$$
+
+Das combinações abaixo, quais são superchaves? Quais são chaves candidatas?
+
+a. $\{codigo\}$
+b. $\{nome\_disciplina\}$
+c. $\{codigo,\ semestre\}$
+d. $\{sigla\_curso,\ semestre,\ nome\_disciplina\}$
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** $\{codigo\}$ — **superclave e chave candidata**: identifica unicamente cada disciplina e é minimal.
+- **(b)** $\{nome\_disciplina\}$ — **não é superclave**: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: "Eletiva I" em PED-403 e uma hipotética em outro curso).
+- **(c)** $\{codigo,\ semestre\}$ — **superclave mas não candidata**: redundante, pois `codigo` já identifica unicamente.
+- **(d)** $\{sigla\_curso,\ semestre,\ nome\_disciplina\}$ — **pode ser superclave** se nomes forem únicos por curso/semestre, mas não é minimal.
+:::
+
+---
+
+**2. NULL em chave primária.** Por que o valor `null` não é permitido em atributos da chave primária?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+A chave primária deve identificar **unicamente** cada tupla. Se um atributo de PK for `null`, não é possível determinar se duas tuplas com `null` representam o mesmo objeto ou objetos diferentes (pois `null ≠ null` no modelo relacional). Por isso, o SQL impõe implicitamente `NOT NULL` em todo atributo de chave primária.
+:::
+
+---
+
+**3. Chave estrangeira autorreferencial.** A tabela `prereq` tem duas FKs que apontam para a mesma tabela `disciplina`:
+
+- `prereq.codigo` → `disciplina.codigo`
+- `prereq.prereq_codigo` → `disciplina.codigo`
+
+O que aconteceria se tentássemos inserir a tupla `('ENS-201', 'ENS-201')` em `prereq`? Essa inserção violaria alguma restrição?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+A tupla `('ENS-201', 'ENS-201')` **não viola** nenhuma restrição de FK (ENS-201 existe em `disciplina`) nem de PK (é uma combinação única). No entanto, ela criaria um **ciclo de pré-requisito**: ENS-201 seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição `CHECK (codigo <> prereq_codigo)`.
+:::

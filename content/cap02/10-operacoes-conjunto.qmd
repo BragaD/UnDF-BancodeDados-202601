@@ -138,3 +138,39 @@ Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem
 | União | $A \cup B$ | 24 disciplinas (catálogo completo) |
 | Interseção | $A \cap B$ | 6 disciplinas de PED com carga ≥ 60 h |
 | Diferença | $A - B$ | 2 disciplinas de PED com carga < 60 h |
+
+---
+
+## Para Praticar
+
+**1. Comutatividade e não-comutatividade.** Das três operações de conjunto, quais são comutativas? Verifique com um exemplo concreto que $A - B \neq B - A$.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$\cup$ e $\cap$ são **comutativas** ($A \cup B = B \cup A$ e $A \cap B = B \cap A$). A diferença $-$ **não** é comutativa.
+
+Exemplo: seja $A$ = disciplinas de PED (8 tuplas) e $B$ = disciplinas com carga ≥ 60 h (22 tuplas).
+- $A - B$ = disciplinas de PED com carga < 60 h = {PED-604, PED-804} → **2 tuplas**
+- $B - A$ = disciplinas com carga ≥ 60 h que **não** são de PED = 22 − 6 = **16 tuplas**
+:::
+
+---
+
+**2. Equivalência.** Prove que $A \cap B$ é equivalente a $A - (A - B)$.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- $A - B$ = elementos em A que não estão em B.
+- $A - (A - B)$ = elementos de A que **não** estão em "$A - B$" = elementos de A que estão em B = $A \cap B$. ✓
+
+Essa equivalência mostra que $\cap$ pode ser derivado dos operadores básicos $\sigma$, $\Pi$ e $-$ — por isso a interseção não precisa ser um operador primitivo da álgebra relacional.
+:::
+
+---
+
+**3. União de relações com schemas diferentes.** Podemos calcular $\Pi_{nome}(professor) \cup \Pi_{nome}(aluno)$? O que o resultado representaria?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Sim**, pois ambas as relações têm o mesmo schema após a projeção: um único atributo `nome` do tipo texto. O resultado seria uma relação contendo todos os nomes distintos de professores e alunos em uma única coluna. Se um aluno e um professor tivessem o mesmo nome, apareceriam apenas uma vez (a união elimina duplicatas). Em SQL: `SELECT nome FROM professor UNION SELECT nome FROM aluno`.
+:::

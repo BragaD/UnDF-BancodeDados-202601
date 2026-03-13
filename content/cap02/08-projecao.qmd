@@ -85,3 +85,46 @@ $$\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)$$
 | Helena Carvalho |
 | Igor Melo       |
 :::
+
+---
+
+## Para Praticar
+
+**1. Idempotência da projeção.** A projeção é idempotente quando aplicada sobre o mesmo conjunto de atributos:
+
+$$\Pi_A\!\left(\Pi_{A,B}(r)\right) = \Pi_A(r)$$
+
+Mas o que acontece se tentarmos $\Pi_{A,B}\!\left(\Pi_A(r)\right)$ quando $B \notin A$?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+A expressão é **inválida**: $\Pi_A(r)$ elimina o atributo $B$, que passa a não existir na relação resultante. Tentar projetar $B$ de uma relação que não o possui é um erro de schema. Isso ilustra que a projeção é destrutiva em relação aos atributos não selecionados.
+:::
+
+---
+
+**2. Quantas tuplas?** Calcule o número de tuplas esperado em cada resultado:
+
+a. $\Pi_{escola}(professor)$ — a tabela `professor` tem 7 tuplas distribuídas em 3 escolas
+b. $\Pi_{sigla\_curso}(disciplina)$ — 24 disciplinas distribuídas em 3 cursos
+c. $\Pi_{matricula\_prof, escola}(professor)$ — 7 tuplas, combinação de atributos
+
+::: {.callout-tip collapse="true"}
+## Resposta
+a. **3 tuplas** — a projeção elimina duplicatas; há exatamente 3 valores distintos de `escola`.
+b. **3 tuplas** — idem; 3 cursos distintos.
+c. **7 tuplas** — como `matricula_prof` é a chave primária, cada combinação (matricula_prof, escola) já é única. A projeção não elimina nenhuma tupla.
+
+*Observação:* a projeção sobre a chave primária nunca elimina tuplas — o número é preservado.
+:::
+
+---
+
+**3. Projeção e junção.** Após fazer a junção $professor \bowtie_{professor.escola = escola.escola} escola$, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.escola = escola.escola} escola\right)$$
+
+O resultado tem 7 tuplas (uma por professor), com os atributos `nome` e `nome_escola`.
+:::

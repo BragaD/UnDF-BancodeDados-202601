@@ -173,3 +173,53 @@ WHERE  ch_semanal = 40
 GROUP BY escola
 HAVING AVG(salario) > 6000;
 ```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- GROUP BY com múltiplas colunas: distribuição por escola e regime
+SELECT escola, ch_semanal,
+       COUNT(*)            AS n_professores,
+       SUM(salario)        AS total_salarios,
+       ROUND(AVG(salario), 2) AS media_salario
+FROM   professor
+GROUP BY escola, ch_semanal
+ORDER BY escola, ch_semanal;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- HAVING com COUNT: cursos com mais de 6 disciplinas cadastradas
+SELECT sigla_curso, COUNT(*) AS n_disciplinas,
+       MIN(carga_horaria) AS menor_carga,
+       MAX(carga_horaria) AS maior_carga
+FROM   disciplina
+GROUP BY sigla_curso
+HAVING COUNT(*) > 6
+ORDER BY n_disciplinas DESC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos com pelo menos uma reprovação: comparar COUNT(*) com COUNT(aprovado=0)
+-- Usando filtro dentro do COUNT com FILTER (SQL padrão)
+SELECT cod_matricula,
+       COUNT(*)                                    AS total_disciplinas,
+       COUNT(*) FILTER (WHERE aprovado = 0)        AS reprovacoes,
+       COUNT(*) FILTER (WHERE aprovado = 1)        AS aprovacoes,
+       ROUND(AVG(nota), 2)                         AS media_geral
+FROM   matricula_disciplina
+GROUP BY cod_matricula
+HAVING COUNT(*) FILTER (WHERE aprovado = 0) > 0
+ORDER BY reprovacoes DESC;
+```
+
+::: {.callout-note}
+`COUNT(*) FILTER (WHERE condição)` é uma extensão SQL:2003 suportada pelo PostgreSQL. Ela conta apenas as linhas que satisfazem a condição dentro do grupo — equivale a `COUNT(CASE WHEN cond THEN 1 END)`, mas mais legível.
+:::

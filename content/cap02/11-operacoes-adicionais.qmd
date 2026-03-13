@@ -124,3 +124,37 @@ Resultado:
 ::: {.exemplo}
 O agrupamento por `escola` faz com que a função `avg` seja calculada **separadamente** para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.
 :::
+
+---
+
+## Para Praticar
+
+**1. Agregação sem grupo.** Calcule o valor de $\gamma_{\text{count}(*)}(prereq)$ e $\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))$. O que cada resultado representa?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- $\gamma_{\text{count}(*)}(prereq)$ = **16** — total de pares de pré-requisito no banco.
+- $\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))$ = **8** — número de disciplinas do curso ENS.
+:::
+
+---
+
+**2. Renomeação necessária.** Por que a expressão abaixo é ambígua sem renomeação?
+
+$$\Pi_{nome\_1,\ nome\_2,\ escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof < p2.matricula\_prof}(professor \times professor))$$
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Quando multiplicamos `professor` por si mesmo sem renomear, o resultado tem dois atributos chamados `nome`, dois chamados `escola`, dois chamados `matricula_prof` etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: $\rho_{p1}(professor)$ e $\rho_{p2}(professor)$, criando atributos qualificados como $p1.nome$ e $p2.nome$.
+:::
+
+---
+
+**3. HAVING em álgebra.** Escreva a expressão de álgebra relacional equivalente a: "escolas com salário médio acima de 5.000". Use a notação com $\gamma$ e $\sigma$.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+$$\sigma_{\text{avg\_sal} > 5000}\!\left({}_{escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)$$
+
+O $\sigma$ externo filtra os grupos produzidos pelo $\gamma$ — é exatamente o que o SQL faz com `HAVING`. Apenas ESG (média = 6.550) satisfaz a condição.
+:::

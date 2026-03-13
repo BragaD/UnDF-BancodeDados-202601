@@ -212,3 +212,50 @@ ORDER BY aprovado;
 | `INSERT INTO ... SELECT` | Insere linhas copiadas de uma consulta | A consulta deve retornar colunas compatíveis |
 | `DELETE FROM ... WHERE` | Remove linhas que satisfazem a condição | Sem `WHERE`, remove **todas** as linhas |
 | `UPDATE ... SET ... WHERE` | Atualiza colunas das linhas que satisfazem a condição | Sem `WHERE`, atualiza **todas** as linhas |
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Simular: quais professores seriam afetados por um reajuste de 15%
+-- para quem tem salário abaixo da média?
+SELECT nome, escola, salario AS atual,
+       ROUND(salario * 1.15, 2) AS apos_reajuste
+FROM   professor
+WHERE  salario < (SELECT AVG(salario) FROM professor)
+ORDER BY salario;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Simular: disciplinas que seriam removidas se excluíssemos as sem pré-requisitos
+-- e sem matrícula (seguras para remover)
+SELECT d.codigo, d.nome_disciplina, d.sigla_curso
+FROM   disciplina d
+WHERE  d.codigo NOT IN (SELECT codigo        FROM prereq)
+  AND  d.codigo NOT IN (SELECT prereq_codigo FROM prereq)
+  AND  d.codigo NOT IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)
+ORDER BY d.sigla_curso, d.codigo;
+```
+
+```sql
+-- Violação de FK: tentar deletar uma disciplina que tem pré-requisitos
+-- Isso geraria erro:
+DELETE FROM disciplina WHERE codigo = 'ENS-201';
+-- ERROR: update or delete on table "disciplina" violates foreign key constraint
+-- "prereq_prereq_codigo_fkey" on table "prereq"
+-- DETAIL: Key (codigo)=(ENS-201) is still referenced from table "prereq".
+
+-- Solução: deletar os pré-requisitos primeiro, ou usar CASCADE
+DELETE FROM prereq       WHERE codigo = 'ENS-201' OR prereq_codigo = 'ENS-201';
+DELETE FROM disciplina   WHERE codigo = 'ENS-201';
+-- (não executar — apenas ilustrativo)
+```
+
+::: {.callout-warning}
+**Ordem importa no DELETE com FKs.** Ao remover dados em tabelas com chaves estrangeiras, é preciso excluir primeiro as linhas das tabelas **referenciantes** antes das **referenciadas**. Alternativamente, defina a FK com `ON DELETE CASCADE` para que o banco faça isso automaticamente — mas use com cautela em produção.
+:::
