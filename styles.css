@@ -18,6 +18,90 @@
   border-radius: 0 4px 4px 0;
 }
 
+/* ── Diagramas Graphviz — escala total ── */
+.cell-output-display svg,
+.quarto-figure svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Spoiler protegido por senha ── */
+.spoiler-content {
+  display: none;
+}
+
+.spoiler-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  padding: 1.5em;
+  border: 1px dashed #aaa;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.spoiler-icon {
+  font-size: 2em;
+}
+
+.spoiler-hint {
+  margin: 0;
+  color: #555;
+  font-size: 0.95em;
+}
+
+.spoiler-input-group {
+  display: flex;
+  gap: 0.4em;
+}
+
+.spoiler-input {
+  padding: 0.4em 0.7em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95em;
+  width: 180px;
+}
+
+.spoiler-btn {
+  padding: 0.4em 1em;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95em;
+}
+
+.spoiler-btn:hover {
+  background-color: #1976D2;
+}
+
+.spoiler-error {
+  display: none;
+  color: #c0392b;
+  font-size: 0.88em;
+  margin: 0;
+}
+
+/* Dark mode */
+.quarto-dark .spoiler-lock {
+  background-color: #1a2f3e;
+  border-color: #3a5a70;
+}
+
+.quarto-dark .spoiler-hint {
+  color: #aac4d8;
+}
+
+.quarto-dark .spoiler-input {
+  background-color: #0f1e2e;
+  border-color: #3a5a70;
+  color: #dce8f5;
+}
+
 /* ── Dark mode ── */
 
 /* Caixas .conceito e .exemplo no tema escuro */

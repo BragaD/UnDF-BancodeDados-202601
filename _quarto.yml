@@ -155,6 +155,7 @@ format:
       dark: darkly
     css: styles.css
     number-sections: false
+    include-after-body: spoiler.html
     toc: true
     toc-depth: 4
     toc-title: "Nesta página"

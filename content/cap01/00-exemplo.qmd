@@ -93,3 +93,387 @@ Releia o texto acima sublinhando os **substantivos** — eles geralmente revelam
 
 Exemplo da primeira frase relevante: *"os professores da UnDF são identificados por uma matrícula institucional... o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário"* → entidade `professor` com atributos matrícula (PK), nome, escola (FK), ch_semanal, salário.
 :::
+
+---
+
+## Gabarito
+
+::: {.callout-warning}
+## Antes de ver o gabarito
+
+Tente desenvolver os modelos de forma independente antes de consultar as respostas. O objetivo é exercitar o raciocínio de projeto — não há uma única resposta correta, mas há escolhas mais justificáveis do que outras.
+:::
+
+### Modelo Conceitual — Conjuntos de Entidades e Atributos
+
+::: {.spoiler data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
+
+| Entidade | Atributos | Chave Primária |
+|---|---|---|
+| `centro` | codigo, nome_centro | codigo |
+| `escola` | codigo, nome_escola, **centro** (FK) | codigo |
+| `curso` | sigla, nome_curso, **escola** (FK), n_semestres, carga_horaria_total, modalidade | sigla |
+| `professor` | matricula_prof, nome, **escola** (FK), ch_semanal, salario | matricula_prof |
+| `aluno` | matricula, nome, ano_ingresso, **sigla_curso** (FK) | matricula |
+| `disciplina` | codigo, nome, **sigla_curso** (FK), semestre_recomendado, carga_horaria | codigo |
+
+:::
+
+### Modelo Conceitual — Relacionamentos e Cardinalidades
+
+::: {.spoiler data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
+
+| Relacionamento | Entidades | Cardinalidade | Participação |
+|---|---|---|---|
+| `pertence_a` | escola → centro | N:1 | Total em escola (toda escola tem um centro) |
+| `ofertado_por` | curso → escola | N:1 | Total em curso |
+| `lotado_em` | professor → escola | N:1 | Total em professor |
+| `matriculado_em` | aluno → curso | N:1 | Total em aluno (todo aluno tem um curso) |
+| `compoe` | disciplina → curso | N:1 | Total em disciplina |
+| `prereq` | disciplina ↔ disciplina | N:N autorreferencial | Parcial (algumas disciplinas não têm pré-requisitos) |
+| `ministra` | professor ↔ disciplina | N:N | Parcial nos dois lados; atributos: ano, semestre, turma, horario, sala |
+| `cursa` | aluno ↔ `ministra` (agregação) | N:N | Parcial; atributos: nota, aprovado |
+
+**Nota sobre agregação:** `cursa` associa `aluno` ao relacionamento `ministra` — não a `disciplina` diretamente. Isso é necessário para registrar em qual turma específica (professor + disciplina + ano + semestre) o aluno se matriculou.
+
+**Nota sobre `prereq`:** é um relacionamento autorreferencial sobre `disciplina`, com dois papéis distintos — "disciplina que exige" e "disciplina exigida".
+
+**Diagrama ER:**
+
+```{dot}
+//| fig-width: 14
+//| fig-height: 10
+//| out-width: "100%"
+digraph er_undf_gabarito {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white,
+         splines=ortho, nodesep=1.0, ranksep=1.6];
+  node  [fontname="Times New Roman", fontsize=10];
+  edge  [fontsize=9];
+
+  /* Entidades */
+  centro     [shape=rectangle, style=filled, fillcolor="#AED6F1", label="centro"];
+  escola     [shape=rectangle, style=filled, fillcolor="#AED6F1", label="escola"];
+  curso      [shape=rectangle, style=filled, fillcolor="#AED6F1", label="curso"];
+  professor  [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  aluno      [shape=rectangle, style=filled, fillcolor="#AED6F1", label="aluno"];
+  disciplina [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+
+  /* Relacionamentos */
+  pertence_a     [shape=diamond, style=filled, fillcolor="#F9E79F", label="pertence_a"];
+  ofertado_por   [shape=diamond, style=filled, fillcolor="#F9E79F", label="ofertado_por"];
+  lotado_em      [shape=diamond, style=filled, fillcolor="#F9E79F", label="lotado_em"];
+  matriculado_em [shape=diamond, style=filled, fillcolor="#F9E79F", label="matriculado_em"];
+  compoe         [shape=diamond, style=filled, fillcolor="#F9E79F", label="compoe"];
+  ministra_r     [shape=diamond, style=filled, fillcolor="#F9E79F", label="ministra"];
+  prereq_r       [shape=diamond, style=filled, fillcolor="#F9E79F", label="prereq"];
+  cursa_r        [shape=diamond, style=filled, fillcolor="#FAD7A0", label="cursa\n(agregação)"];
+
+  /* Atributos de ministra */
+  ano_m      [shape=ellipse, label="ano"];
+  sem_m      [shape=ellipse, label="semestre"];
+  turma_m    [shape=ellipse, label="turma"];
+  horario_m  [shape=ellipse, label="horario"];
+  sala_m     [shape=ellipse, label="sala"];
+
+  /* Atributos de cursa */
+  nota_c     [shape=ellipse, label="nota"];
+  aprov_c    [shape=ellipse, label="aprovado"];
+
+  /* N:1 — seta = lado "um" */
+  escola     -> pertence_a     [arrowhead=none, label="N"];
+  pertence_a -> centro         [label="1"];
+
+  curso      -> ofertado_por   [arrowhead=none, label="N"];
+  ofertado_por -> escola       [label="1"];
+
+  professor  -> lotado_em      [arrowhead=none, label="N"];
+  lotado_em  -> escola         [label="1"];
+
+  aluno      -> matriculado_em [arrowhead=none, style=bold, label="N"];
+  matriculado_em -> curso      [label="1"];
+
+  disciplina -> compoe         [arrowhead=none, label="N"];
+  compoe     -> curso          [label="1"];
+
+  /* N:N */
+  professor  -> ministra_r     [arrowhead=none, label="N"];
+  ministra_r -> disciplina     [arrowhead=none, label="N"];
+
+  ministra_r -> ano_m;
+  ministra_r -> sem_m;
+  ministra_r -> turma_m;
+  ministra_r -> horario_m;
+  ministra_r -> sala_m;
+
+  /* prereq autorreferencial */
+  disciplina -> prereq_r [arrowhead=none, label="disciplina"];
+  prereq_r -> disciplina [arrowhead=none, label="pré-requisito"];
+
+  /* cursa: agregação — aluno ↔ ministra */
+  aluno      -> cursa_r    [arrowhead=none, label="N"];
+  cursa_r    -> ministra_r [arrowhead=none, label="N"];
+  cursa_r    -> nota_c;
+  cursa_r    -> aprov_c;
+}
+```
+
+:::
+
+
+### Modelo Lógico — Schemas Relacionais
+
+::: {.spoiler data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
+
+```
+centro(centro, nome_centro)
+  PK: centro
+
+escola(escola, nome_escola, centro)
+  PK: escola
+  FK: centro → centro(centro)
+
+curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
+  PK: sigla_curso
+  FK: escola → escola(escola)
+
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  PK: matricula_prof
+  FK: escola → escola(escola)
+
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+  PK: matricula
+  FK: sigla_curso → curso(sigla_curso)
+
+disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
+  PK: codigo
+  FK: sigla_curso → curso(sigla_curso)
+
+prereq(codigo, prereq_codigo)
+  PK: (codigo, prereq_codigo)
+  FK: codigo → disciplina(codigo)
+  FK: prereq_codigo → disciplina(codigo)
+
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+  FK: cod_disciplina → disciplina(codigo)
+  FK: matricula_prof → professor(matricula_prof)
+
+matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
+  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
+  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
+  FK: cod_matricula → aluno(matricula)
+```
+
+**Decisões de projeto:**
+
+- Os relacionamentos N:1 (`pertence_a`, `ofertado_por`, `lotado_em`, `compoe`, `matriculado_em`) foram absorvidos como FKs nas tabelas do lado N — não geraram tabelas próprias.
+- `prereq` gerou tabela própria por ser N:N autorreferencial.
+- `ministra` gerou tabela própria por ser N:N com atributos.
+- `matricula_disciplina` representa a agregação `cursa`: referencia a PK composta de `ministra` e a PK de `aluno`.
+
+**Diagrama de Schema:**
+
+```{dot}
+//| fig-width: 18
+//| fig-height: 10
+//| out-width: "100%"
+digraph schema_undf_gabarito {
+  graph [rankdir=LR, splines=ortho, nodesep=0.7, ranksep=2.2,
+         bgcolor=white, fontname="Times New Roman"];
+  node  [shape=plaintext, fontname="Times New Roman"];
+  edge  [arrowhead=normal, arrowsize=0.7];
+
+  centro [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>centro</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
+    </TABLE>
+  >];
+
+  escola [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>escola</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>centro</I></TD></TR>
+    </TABLE>
+  >];
+
+  curso [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>curso</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>sigla_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>n_semestres</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>tipo_curso</I></TD></TR>
+    </TABLE>
+  >];
+
+  professor [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>professor</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>matricula_prof</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>ch_semanal</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>salario</I></TD></TR>
+    </TABLE>
+  >];
+
+  aluno [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>aluno</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
+    </TABLE>
+  >];
+
+  disciplina [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>disciplina</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nome_disciplina</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>semestre</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
+    </TABLE>
+  >];
+
+  prereq [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>prereq</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>prereq_codigo</I></U></TD></TR>
+    </TABLE>
+  >];
+
+  ministra [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>ministra</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>matricula_prof</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>horario</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sala</I></TD></TR>
+    </TABLE>
+  >];
+
+  mat_disc [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
+      <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>matricula_disciplina</B></I></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>cod_matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>nota</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>aprovado</I></TD></TR>
+    </TABLE>
+  >];
+
+  /* FKs */
+  escola    -> centro     [label="centro"];
+  curso     -> escola     [label="escola"];
+  professor -> escola     [label="escola"];
+  aluno     -> curso      [label="sigla_curso"];
+  disciplina -> curso     [label="sigla_curso"];
+  prereq    -> disciplina [label="codigo"];
+  prereq    -> disciplina [label="prereq_codigo"];
+  ministra  -> disciplina [label="cod_disciplina"];
+  ministra  -> professor  [label="matricula_prof"];
+  mat_disc  -> ministra   [label="(cod_disc,ano,sem,turma)"];
+  mat_disc  -> aluno      [label="cod_matricula"];
+}
+```
+
+:::
+
+
+### Modelo Lógico — DDL (estrutura das tabelas)
+
+::: {.spoiler data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
+
+```sql
+CREATE TABLE centro (
+    centro      VARCHAR(10)  PRIMARY KEY,
+    nome_centro VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE escola (
+    escola      VARCHAR(10)  PRIMARY KEY,
+    nome_escola VARCHAR(100) NOT NULL,
+    centro      VARCHAR(10)  NOT NULL REFERENCES centro(centro)
+);
+
+CREATE TABLE curso (
+    sigla_curso   VARCHAR(10)  PRIMARY KEY,
+    nome_curso    VARCHAR(100) NOT NULL,
+    escola        VARCHAR(10)  NOT NULL REFERENCES escola(escola),
+    n_semestres   INTEGER      NOT NULL,
+    carga_horaria INTEGER      NOT NULL,
+    tipo_curso    VARCHAR(20)  NOT NULL
+);
+
+CREATE TABLE professor (
+    matricula_prof VARCHAR(15)   PRIMARY KEY,
+    nome           VARCHAR(100)  NOT NULL,
+    escola         VARCHAR(10)   NOT NULL REFERENCES escola(escola),
+    ch_semanal     INTEGER       NOT NULL,
+    salario        NUMERIC(10,2) NOT NULL
+);
+
+CREATE TABLE aluno (
+    matricula    VARCHAR(20)  PRIMARY KEY,
+    nome         VARCHAR(100) NOT NULL,
+    sigla_curso  VARCHAR(10)  NOT NULL REFERENCES curso(sigla_curso),
+    ano_ingresso INTEGER      NOT NULL
+);
+
+CREATE TABLE disciplina (
+    codigo          VARCHAR(10)  PRIMARY KEY,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    sigla_curso     VARCHAR(10)  NOT NULL REFERENCES curso(sigla_curso),
+    semestre        INTEGER      NOT NULL,
+    carga_horaria   INTEGER      NOT NULL
+);
+
+CREATE TABLE prereq (
+    codigo        VARCHAR(10) REFERENCES disciplina(codigo),
+    prereq_codigo VARCHAR(10) REFERENCES disciplina(codigo),
+    PRIMARY KEY (codigo, prereq_codigo)
+);
+
+CREATE TABLE ministra (
+    cod_disciplina VARCHAR(10) NOT NULL REFERENCES disciplina(codigo),
+    ano            INTEGER     NOT NULL,
+    semestre       INTEGER     NOT NULL,
+    turma          VARCHAR(5)  NOT NULL,
+    matricula_prof VARCHAR(15) NOT NULL REFERENCES professor(matricula_prof),
+    horario        VARCHAR(50),
+    sala           VARCHAR(20),
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma)
+);
+
+CREATE TABLE matricula_disciplina (
+    cod_disciplina VARCHAR(10) NOT NULL,
+    ano            INTEGER     NOT NULL,
+    semestre       INTEGER     NOT NULL,
+    turma          VARCHAR(5)  NOT NULL,
+    cod_matricula  VARCHAR(20) NOT NULL REFERENCES aluno(matricula),
+    nota           NUMERIC(4,1),
+    aprovado       SMALLINT,
+    PRIMARY KEY (cod_disciplina, ano, semestre, turma, cod_matricula),
+    FOREIGN KEY (cod_disciplina, ano, semestre, turma)
+        REFERENCES ministra(cod_disciplina, ano, semestre, turma)
+);
+```
+
+:::
+
