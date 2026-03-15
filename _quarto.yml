@@ -16,6 +16,7 @@ book:
   navbar:
     logo: images/logo-undf.png
     logo-alt: "Logo UnDF"
+    title: "Bases da Engenharia de Software 4 — Banco de Dados"
   date: today
   date-format: "DD/MM/YYYY"
   chapters:
