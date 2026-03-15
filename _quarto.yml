@@ -22,6 +22,8 @@ book:
       chapters:
         - href: content/cap01/index.qmd
           text: "Visão Geral"
+        - href: content/cap01/00-exemplo.qmd
+          text: "O Problema: Sistema Acadêmico da UnDF"
         - href: content/cap01/01-o-que-e-bd.qmd
           text: "O que é um Banco de Dados?"
         - href: content/cap01/02-aplicacoes.qmd
@@ -101,6 +103,36 @@ book:
         - href: content/cap03/10-modificacao.qmd
           text: "Modificação do Banco de Dados"
         - href: content/cap03/11-resumo.qmd
+          text: "Resumo e Exercícios"
+    - part: "Capítulo 4: Projeto com o Modelo ER"
+      chapters:
+        - href: content/cap04/index.qmd
+          text: "Visão Geral"
+        - href: content/cap04/01-fases-projeto.qmd
+          text: "Fases do Projeto"
+        - href: content/cap04/02-entidades.qmd
+          text: "Conjuntos de Entidades"
+        - href: content/cap04/03-relacionamentos.qmd
+          text: "Conjuntos de Relacionamentos"
+        - href: content/cap04/04-atributos.qmd
+          text: "Tipos de Atributos"
+        - href: content/cap04/05-cardinalidade.qmd
+          text: "Cardinalidade e Participação"
+        - href: content/cap04/06-entidades-fracas.qmd
+          text: "Entidades Fracas"
+        - href: content/cap04/07-diagrama-er-undf.qmd
+          text: "Diagrama ER da UnDF"
+        - href: content/cap04/08-conversao-relacional.qmd
+          text: "Conversão ER → Relacional"
+        - href: content/cap04/09-especializacao.qmd
+          text: "Especialização e Generalização"
+        - href: content/cap04/10-agregacao.qmd
+          text: "Agregação"
+        - href: content/cap04/11-decisoes-projeto.qmd
+          text: "Decisões de Projeto"
+        - href: content/cap04/12-notacoes.qmd
+          text: "Notações Alternativas"
+        - href: content/cap04/13-resumo.qmd
           text: "Resumo e Exercícios"
 
 page-navigation: true

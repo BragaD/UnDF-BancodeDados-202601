@@ -1,0 +1,151 @@
+# Cardinalidade e Participação
+
+## Restrições de Cardinalidade
+
+::: {.conceito}
+**Cardinalidade** (*mapping cardinality*) expressa o número máximo de entidades a que outra entidade pode se associar por meio de um relacionamento. Para relacionamentos binários, os tipos possíveis são:
+
+| Cardinalidade | Significado |
+|---|---|
+| **1:1** (um para um) | Cada entidade em A associa-se a no máximo uma em B, e vice-versa |
+| **1:N** (um para muitos) | Uma entidade em A associa-se a várias em B; cada entidade em B associa-se a no máximo uma em A |
+| **N:1** (muitos para um) | Inverso do 1:N |
+| **N:N** (muitos para muitos) | Entidades em A associam-se a várias em B, e vice-versa |
+:::
+
+## Notação no Diagrama ER
+
+Na notação ER tradicional:
+
+- **Seta** (→): o lado "um" — a entidade participa no máximo uma vez
+- **Linha** (—): o lado "muitos" — a entidade pode participar múltiplas vezes
+
+```{dot}
+digraph er_card {
+  graph [rankdir=LR, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=1.2, ranksep=2.0];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  subgraph cluster_1n {
+    label="1:N — um professor lotado em uma escola\n(vários professores por escola)";
+    labeljust=l; fontsize=10; style=dashed; color=gray;
+    p1 [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+    r1 [shape=diamond, style=filled, fillcolor="#F9E79F", label="lotado_em"];
+    e1 [shape=rectangle, style=filled, fillcolor="#AED6F1", label="escola"];
+    p1 -> r1 [arrowhead=none];
+    r1 -> e1;
+  }
+
+  subgraph cluster_nn {
+    label="N:N — professor ministra disciplina";
+    labeljust=l; fontsize=10; style=dashed; color=gray;
+    p2 [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+    r2 [shape=diamond, style=filled, fillcolor="#F9E79F", label="ministra"];
+    d2 [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+    p2 -> r2 [arrowhead=none];
+    r2 -> d2 [arrowhead=none];
+  }
+}
+```
+
+## Cardinalidades no Banco da UnDF
+
+| Relacionamento | Cardinalidade | Justificativa |
+|---|---|---|
+| `escola` — `pertence_a` — `centro` | N:1 | Uma escola pertence a um centro; um centro pode ter várias escolas |
+| `curso` — `ofertado_por` — `escola` | N:1 | Um curso é ofertado por uma escola; uma escola pode ter vários cursos |
+| `professor` — `lotado_em` — `escola` | N:1 | Um professor é lotado em uma escola; uma escola pode ter vários professores |
+| `aluno` — `matriculado_em` — `curso` | N:1 | Um aluno está matriculado em um curso; um curso tem vários alunos |
+| `disciplina` — `compoe` — `curso` | N:1 | Uma disciplina pertence a um curso; um curso tem várias disciplinas |
+| `professor` — `ministra` — `disciplina` | N:N | Um professor ministra várias disciplinas; uma disciplina pode ser ministrada por vários professores |
+| `disciplina` — `prereq` — `disciplina` | N:N | Uma disciplina pode ter vários pré-requisitos; uma disciplina pode ser pré-requisito de várias outras |
+
+## Participação Total e Parcial
+
+Além da cardinalidade máxima, é importante especificar se a participação é **obrigatória** ou **opcional**:
+
+::: {.conceito}
+- **Participação total** (linha dupla no diagrama): toda entidade do conjunto deve participar de ao menos um relacionamento. É uma restrição de existência.
+- **Participação parcial** (linha simples): algumas entidades podem não participar de nenhum relacionamento.
+:::
+
+::: {.exemplo}
+No relacionamento `matriculado_em` entre `aluno` e `curso`:
+
+- **Aluno** tem participação **total**: todo aluno cadastrado deve estar matriculado em algum curso.
+- **Curso** tem participação **parcial** em relação a alunos: um curso pode existir sem ter alunos matriculados ainda (ex.: curso recém-criado).
+
+No relacionamento `ministra` entre `professor` e `disciplina`:
+
+- **Professor** tem participação **parcial**: pode existir um professor cadastrado que ainda não ministrou nenhuma disciplina.
+- **Disciplina** tem participação **parcial**: uma disciplina pode existir na grade curricular sem ter turma aberta naquele semestre.
+:::
+
+## Notação l..h (Mínimo e Máximo)
+
+Uma notação mais precisa especifica o mínimo $l$ e o máximo $h$ de participações de cada entidade:
+
+::: {.conceito}
+A restrição $l..h$ em uma aresta indica que cada entidade participa em no mínimo $l$ e no máximo $h$ relacionamentos:
+
+- $l = 0$: participação parcial
+- $l = 1$: participação total
+- $h = 1$: cardinalidade "um"
+- $h = *$: cardinalidade "muitos" (sem limite superior)
+:::
+
+::: {.exemplo}
+Para o relacionamento `ministra` entre `professor` e `disciplina`:
+
+- `professor` com restrição $0..*$: um professor pode não ministrar nenhuma disciplina (mínimo 0) e pode ministrar várias (máximo ilimitado)
+- `disciplina` com restrição $0..*$: uma disciplina pode não ter turma aberta (mínimo 0) e pode ter múltiplas turmas/professores (máximo ilimitado)
+
+Para `aluno` no relacionamento `matriculado_em`:
+
+- $1..1$: cada aluno está matriculado em exatamente um curso (mínimo e máximo 1)
+:::
+
+---
+
+## Para Praticar
+
+**1. Identificar cardinalidade.** Para cada relacionamento abaixo, determine a cardinalidade (1:1, 1:N ou N:N) e justifique:
+
+a. Entre `turma` e `sala` em um sistema acadêmico (uma turma é realizada em uma sala, uma sala pode abrigar várias turmas ao longo do dia)
+b. Entre `aluno` e `curso` no banco da UnDF (política: um aluno cursa exatamente um curso por vez)
+c. Entre `professor` e `disciplina` via `ministra` no banco da UnDF
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** N:1: muitas turmas podem usar a mesma sala (em horários diferentes); cada turma ocorre em uma sala.
+- **(b)** N:1: muitos alunos estão em um curso; cada aluno está em exatamente um curso.
+- **(c)** N:N: um professor ministra várias disciplinas ao longo do tempo; uma disciplina pode ser ministrada por professores diferentes em semestres diferentes.
+:::
+
+---
+
+**2. Participação total e integridade referencial.** A participação total de `aluno` em `matriculado_em` (todo aluno deve estar matriculado em um curso) tem um equivalente direto em SQL. Qual é ele?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+É a restrição `NOT NULL` na coluna de chave estrangeira `sigla_curso` da tabela `aluno`. Se `sigla_curso NOT NULL`, então todo aluno obrigatoriamente referencia um curso — o que implementa a participação total. Já a participação parcial corresponde a uma coluna FK que aceita `NULL`.
+:::
+
+---
+
+**3. Cardinalidade 1:1 na prática.** Suponha que a UnDF implantasse a regra "cada escola tem exatamente um coordenador, que é um professor daquela escola, e cada professor pode coordenar no máximo uma escola". Qual seria a cardinalidade do relacionamento `coordena` entre `professor` e `escola`? Como isso seria implementado no esquema relacional?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Cardinalidade 1:1**: um professor coordena no máximo uma escola; uma escola é coordenada por no máximo um professor.
+
+**Implementação**: adicionar uma coluna `matricula_coordenador VARCHAR(15) REFERENCES professor(matricula_prof) UNIQUE` na tabela `escola`. A constraint `UNIQUE` garante que o mesmo professor não coordene duas escolas. Alternativamente, adicionar `escola_coordenada VARCHAR(10) REFERENCES escola(escola) UNIQUE` em `professor`, deixando `NULL` para professores não coordenadores.
+:::
+
+---
+
+**4. Armadilha da cardinalidade N:N.** Por que não é possível representar um relacionamento N:N entre `professor` e `disciplina` adicionando apenas uma coluna FK em um dos lados?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Se adicionarmos `matricula_prof FK` em `disciplina`, cada disciplina poderia referenciar apenas **um** professor — o que limita a cardinalidade para N:1 (muitas disciplinas para um professor). Para N:N, é necessário uma **tabela de junção** (`ministra`) com FK para ambos os lados, permitindo registrar múltiplas combinações professor–disciplina sem restrição de cardinalidade.
+:::

@@ -1,0 +1,179 @@
+# Decisões de Projeto
+
+O modelo ER oferece flexibilidade — muitas situações do mundo real podem ser modeladas de formas diferentes, todas tecnicamente corretas. Esta seção apresenta as principais decisões de projeto e critérios para escolher entre alternativas.
+
+## Entidade vs. Atributo
+
+::: {.conceito}
+A decisão de modelar algo como **entidade** ou como **atributo** depende de:
+- Quantas propriedades próprias o conceito tem?
+- Pode o mesmo valor ser associado a múltiplas entidades?
+- Há necessidade de múltiplos valores (multivalorado)?
+:::
+
+### Quando usar entidade
+
+Use entidade quando o conceito:
+- Tem atributos próprios relevantes além do nome/valor
+- É referenciado por múltiplas outras entidades (seria duplicado como atributo)
+- Precisa participar de outros relacionamentos
+
+::: {.exemplo}
+**`escola` como entidade vs. atributo de `professor`**
+
+Se modelarmos a escola como atributo de `professor`, poderíamos ter:
+
+```
+professor(matricula_prof, nome, nome_escola, ...)
+```
+
+Mas isso perde:
+- Os atributos próprios da escola (`nome_escola`, `centro`)
+- A referência compartilhada (7 professores duplicariam o nome da escola)
+- A possibilidade de consultar escolas sem professores
+
+Como `escola` tem atributos próprios e é compartilhada por múltiplas entidades, deve ser uma **entidade**.
+:::
+
+### Quando usar atributo
+
+Use atributo quando o conceito:
+- É uma propriedade simples e específica da entidade (não compartilhada)
+- Não tem subpropriedades relevantes
+- Não precisa participar de outros relacionamentos
+
+::: {.exemplo}
+O `salario` de um professor é um atributo simples — não tem propriedades próprias, não é compartilhado entre professores, e não participa de relacionamentos. Manter como atributo de `professor` é a escolha certa.
+:::
+
+## Entidade vs. Relacionamento
+
+::: {.conceito}
+Use **relacionamento** para descrever uma **ação ou associação** entre entidades.
+Use **entidade** quando o conceito tem existência própria e atributos independentes.
+:::
+
+::: {.exemplo}
+**`ministra` como relacionamento vs. entidade**
+
+`ministra` poderia ser modelado como entidade independente com atributos `ano`, `semestre`, `turma`, `horario`, `sala`. No banco da UnDF, essa é exatamente a abordagem escolhida para `ministra` na tabela homônima — principalmente porque `matricula_disciplina` precisa referenciar cada oferta individualmente.
+
+Como regra geral: se o conceito é uma **ação** entre entidades (ministrar, comprar, avaliar) e tem atributos descritivos, pode ser representado como relacionamento com atributos. Se precisar ser referenciado por outras entidades ou relacionamentos (como na agregação), é melhor tratá-lo como entidade.
+:::
+
+## Relacionamento Binário vs. N-ário
+
+### Quando usar n-ário
+
+Use relacionamento n-ário (n > 2) quando a associação entre $n$ entidades é genuinamente simultânea — quando a remoção de qualquer participante muda o significado do relacionamento.
+
+::: {.exemplo}
+`orienta(professor, aluno, projeto)` é ternário porque precisamos saber **qual professor orienta qual aluno em qual projeto**. Saber apenas que um professor orienta um aluno (sem o projeto) ou que um aluno participa de um projeto (sem o professor) não é suficiente.
+:::
+
+### Convertendo n-ário para binário
+
+Qualquer relacionamento n-ário pode ser convertido para um conjunto de relacionamentos binários através de uma **entidade artificial**:
+
+::: {.conceito}
+Para converter um relacionamento ternário $R$ entre entidades $A$, $B$ e $C$:
+
+1. Criar uma entidade artificial $E$ com um atributo identificador gerado
+2. Criar três relacionamentos binários: $R_A$ (entre $E$ e $A$), $R_B$ (entre $E$ e $B$), $R_C$ (entre $E$ e $C$)
+3. Mover os atributos de $R$ para $E$
+:::
+
+::: {.example}
+Converter `orienta(professor, aluno, projeto)` em binários:
+
+```
+orientacao(id_orientacao, ...)   -- entidade artificial
+
+orienta_professor(id_orientacao, matricula_prof)
+orienta_aluno(id_orientacao, matricula_aluno)
+orienta_projeto(id_orientacao, id_projeto)
+```
+
+**Limitação**: a conversão nem sempre preserva as restrições de integridade do relacionamento original. Por exemplo, se a restrição for "cada par (aluno, projeto) tem exatamente um professor orientador", é difícil de expressar apenas com os três relacionamentos binários separados.
+:::
+
+## Erros Comuns em Diagramas ER
+
+### Erro 1: Informação duplicada
+
+::: {.callout-warning}
+Incluir como atributo de uma entidade a mesma informação que já está capturada por um relacionamento.
+
+**Errado**: `professor` com atributo `nome_escola` E relacionamento `lotado_em` com `escola`
+**Correto**: remover `nome_escola` de `professor` (o relacionamento já captura essa informação)
+:::
+
+### Erro 2: Usar relacionamento quando deveria ser atributo
+
+::: {.callout-warning}
+Criar um conjunto de entidades para algo que é simplesmente um valor:
+
+**Errado**: entidade `salario` com atributo `valor`, relacionamento `recebe` entre `professor` e `salario`
+**Correto**: `salario` como atributo numérico de `professor`
+:::
+
+### Erro 3: Perda de informação em relacionamentos de alta cardinalidade
+
+::: {.callout-warning}
+Usar um relacionamento 1:N quando o domínio exige N:N, o que impede registrar múltiplas associações:
+
+**Errado**: relacionamento 1:N entre `professor` e `disciplina` (implica que cada disciplina tem um único professor permanente)
+**Correto**: N:N via `ministra`, permitindo múltiplas ofertas com professores diferentes
+:::
+
+## Decisões de Projeto Resumidas
+
+| Decisão | Critério |
+|---|---|
+| Entidade vs. Atributo | Tem atributos próprios? É compartilhado? → Entidade |
+| Entidade vs. Relacionamento | É uma ação entre entidades? → Relacionamento |
+| Binário vs. N-ário | Remoção de um participante muda o significado? → N-ário |
+| Forte vs. Fraco | Tem PK própria independente? → Forte |
+| Especialização | Há subgrupos com atributos/relacionamentos exclusivos? |
+| Agregação | Um relacionamento precisa participar de outro relacionamento? |
+
+---
+
+## Para Praticar
+
+**1. Entidade ou atributo?** Um sistema de e-commerce precisa registrar o endereço de entrega de cada pedido. O mesmo cliente pode ter diferentes endereços para pedidos diferentes. Deve-se modelar `endereco` como atributo de `pedido` ou como entidade separada?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Depende dos requisitos:
+
+- **Atributo** (simples): se o endereço é específico de cada pedido e não precisa ser reutilizado. Colunas `rua`, `numero`, `cidade`, `cep` diretamente em `pedido`.
+- **Entidade** (com relacionamento): se o cliente tem uma **lista de endereços cadastrados** e seleciona um para cada pedido. Entidade `endereco(id_endereco, rua, numero, cidade, cep)` com relacionamento `tem_endereco` entre `cliente` e `endereco`, e FK `id_endereco` em `pedido` apontando para o endereço escolhido.
+
+A segunda opção permite que o cliente reutilize endereços e evita digitação repetida.
+:::
+
+---
+
+**2. Identificar o erro.** Um projetista cria o seguinte ER: entidade `curso` com atributo `nome_escola`, E relacionamento `ofertado_por` entre `curso` e `escola`. Qual o erro e como corrigir?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O atributo `nome_escola` em `curso` é **redundante** — o relacionamento `ofertado_por` já captura a associação entre `curso` e `escola`. Armazenar o nome da escola em `curso` duplica a informação e cria risco de inconsistência (se o nome da escola mudar, precisa ser atualizado em `escola` e em todos os `curso`).
+
+**Correção**: remover o atributo `nome_escola` de `curso`. O relacionamento `ofertado_por` (N:1) é suficiente; na conversão relacional, vira a FK `escola` em `curso`.
+:::
+
+---
+
+**3. Binário vs. ternário.** Um sistema de biblioteca registra que "um usuário pegou emprestado um exemplar de um livro". Justifique se o relacionamento `emprestimo` deve ser binário (usuario–exemplar) ou ternário (usuario–exemplar–livro).
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Binário** (usuario–exemplar) é suficiente e preferível:
+
+- Um exemplar **é** de um livro (via FK `exemplar.isbn → livro.isbn`). A informação de qual livro é emprestado já está implícita no exemplar.
+- Adicionar `livro` no relacionamento seria redundante — seria possível derivar de `exemplar`.
+
+Usar ternário implicaria em redundância e risco de inconsistência: o livro indicado no relacionamento poderia não corresponder ao livro do exemplar. O relacionamento binário `emprestimo(id_usuario, numero_tombamento, data_retirada, data_devolucao)` é correto e suficiente.
+:::

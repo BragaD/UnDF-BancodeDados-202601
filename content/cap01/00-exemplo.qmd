@@ -1,0 +1,95 @@
+# O Problema: Sistema Acadêmico da UnDF
+
+::: {.callout-note}
+## Sobre este arquivo
+
+Este documento descreve, em texto corrido, os requisitos de informação de uma universidade fictícia. Ao longo do curso, você desenvolverá o **modelo conceitual** (diagrama ER) e o **modelo lógico** (schemas relacionais) que resolvem esse problema — e verá esses modelos sendo implementados e consultados em SQL com dados reais.
+
+Use este texto como ponto de partida: leia com atenção, identifique as entidades, os atributos e as relações entre elas, e tente esboçar um modelo antes de avançar para os próximos capítulos.
+:::
+
+---
+
+## Descrição do Problema
+
+A **Universidade do Distrito Federal (UnDF)** está modernizando seu sistema de gestão acadêmica. O sistema legado armazena informações em planilhas espalhadas por departamentos, sem integração, causando inconsistências frequentes — cursos cadastrados em uma planilha sem professores associados em outra, alunos vinculados a disciplinas inexistentes, turmas sem registro de sala. A reitoria decidiu migrar para um banco de dados relacional centralizado.
+
+A equipe de TI coletou os requisitos com os coordenadores acadêmicos e o registro de alunos. O resultado está descrito a seguir.
+
+---
+
+### Estrutura Organizacional
+
+A UnDF está organizada em **centros acadêmicos**, cada um com um código curto (como "COETI" ou "COEMAG") e um nome completo que descreve sua área de atuação. Cada centro agrupa um conjunto de **escolas** — unidades acadêmicas menores, também identificadas por um código e um nome. Uma escola pertence a exatamente um centro, e um centro pode abrigar diversas escolas.
+
+Cada escola é responsável por oferecer um ou mais **cursos de graduação**. Todo curso tem um nome completo, uma sigla identificadora única na universidade (como "ENS" para Engenharia de Software), um número de semestres previsto para conclusão, uma carga horária total em horas e uma modalidade — bacharelado, licenciatura ou tecnólogo. Um curso é vinculado a uma única escola; uma escola pode ofertar vários cursos.
+
+---
+
+### Corpo Docente
+
+Os **professores** da UnDF são identificados por uma matrícula institucional (no formato "PROFaaaannnn"). Além da matrícula, o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal em horas (tipicamente 20 ou 40 horas semanais) e o salário bruto mensal.
+
+Um professor é lotado em exatamente uma escola — independentemente de quais disciplinas ele ministra. Professores de escolas diferentes podem, em princípio, ministrar disciplinas de qualquer curso, embora na prática isso raramente ocorra.
+
+---
+
+### Corpo Discente
+
+Os **alunos** são identificados por uma matrícula própria. O sistema deve guardar o nome completo, o ano de ingresso na universidade e o curso ao qual o aluno está vinculado. Cada aluno é matriculado em exatamente um curso. Um curso pode ter nenhum, um ou muitos alunos matriculados.
+
+---
+
+### Grade Curricular
+
+A grade curricular de cada curso é composta por **disciplinas**. Cada disciplina tem um código único na universidade (formado pela sigla do curso e um número, como "ENS-201"), um nome, o semestre recomendado de oferta dentro do curso (1º, 2º, 4º semestre etc.) e uma carga horária em horas.
+
+Uma disciplina pertence a exatamente um curso; um curso é composto por diversas disciplinas. Não existem disciplinas compartilhadas entre cursos: se dois cursos abordam o mesmo conteúdo, cada um tem sua própria disciplina com código distinto.
+
+Algumas disciplinas têm **pré-requisitos**: para se matricular em determinada disciplina, o aluno precisa ter cursado e sido aprovado em uma ou mais disciplinas anteriores do mesmo curso. Uma disciplina pode ter zero, um ou vários pré-requisitos. Da mesma forma, uma disciplina pode ser pré-requisito de zero, uma ou várias outras disciplinas do curso. Pré-requisitos são sempre disciplinas do mesmo curso e de semestres anteriores ao da disciplina que os exige.
+
+---
+
+### Oferta de Turmas
+
+A cada semestre letivo, cada escola define quais disciplinas serão ofertadas e quem as ministrará. Uma **turma** é identificada pela combinação de disciplina, ano letivo, semestre (1 ou 2) e um identificador de turma (como "A" ou "B", para quando há mais de uma turma da mesma disciplina no mesmo semestre). Uma turma tem um horário semanal (ex.: "SEG/QUA 08:00-10:00") e uma sala.
+
+Cada turma é ministrada por exatamente um professor. Um professor pode ministrar múltiplas turmas ao longo do semestre — de disciplinas iguais ou diferentes. Uma disciplina pode ter turmas ministradas por professores diferentes em semestres diferentes (e até turmas simultâneas com professores distintos no mesmo semestre, quando há mais de uma turma).
+
+---
+
+### Matrículas em Disciplinas
+
+Os alunos se matriculam nas turmas oferecidas. Para cada matrícula em uma turma, o sistema registra a nota final obtida pelo aluno (um valor real entre 0 e 10, com uma casa decimal) e se o aluno foi aprovado ou reprovado naquela turma. Um aluno pode se matricular em múltiplas turmas no mesmo semestre e pode cursar a mesma disciplina em semestres diferentes (em caso de reprovação ou reopção). Uma turma pode ter nenhum, um ou muitos alunos matriculados.
+
+---
+
+## O que Você Deve Produzir
+
+Com base nessa descrição, você será capaz de desenvolver, ao longo deste curso:
+
+**Modelo Conceitual (Capítulo 4 — Modelo ER)**
+
+- Identificar todos os **conjuntos de entidades** e seus atributos (incluindo quais são chaves, quais são multivalorados, quais são deriváveis)
+- Identificar todos os **conjuntos de relacionamentos**, suas cardinalidades (1:1, 1:N ou N:N) e se a participação é total ou parcial
+- Reconhecer onde há **entidades fracas**, **especializações** ou necessidade de **agregação**
+- Desenhar o **diagrama ER** completo
+
+**Modelo Lógico (Capítulo 2 — Modelo Relacional)**
+
+- Converter o diagrama ER em **schemas relacionais**, definindo tabelas, atributos, chaves primárias e chaves estrangeiras
+- Representar o schema resultante em um **diagrama de schema** com as relações entre tabelas
+
+**Implementação (Capítulo 3 — SQL)**
+
+- Escrever o **DDL** completo: `CREATE TABLE` com tipos de dados, `NOT NULL`, `PRIMARY KEY`, `FOREIGN KEY`
+- Popular o banco com dados de exemplo usando `INSERT INTO`
+- Escrever consultas que respondam perguntas de negócio: quais alunos estão reprovados, quais professores ministram mais disciplinas, quais disciplinas têm pré-requisito em cascata
+
+::: {.callout-tip}
+## Dica para começar
+
+Releia o texto acima sublinhando os **substantivos** — eles geralmente revelam os conjuntos de entidades. Em seguida, identifique os **verbos** que conectam esses substantivos — eles revelam os relacionamentos. Por fim, procure os **adjetivos e complementos** associados a cada substantivo — eles revelam os atributos.
+
+Exemplo da primeira frase relevante: *"os professores da UnDF são identificados por uma matrícula institucional... o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário"* → entidade `professor` com atributos matrícula (PK), nome, escola (FK), ch_semanal, salário.
+:::

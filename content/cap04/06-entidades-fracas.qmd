@@ -1,0 +1,128 @@
+# Entidades Fracas
+
+## O Problema da Identificação
+
+Em alguns domínios, um conjunto de entidades não tem atributos suficientes para identificar unicamente cada entidade por conta própria. A identidade dessas entidades depende de outra entidade.
+
+::: {.conceito}
+Um **conjunto de entidades fraco** (*weak entity set*) é aquele cuja existência depende de outro conjunto de entidades — o **conjunto de entidades identificador** (*identifying entity set*).
+
+Em vez de uma chave primária completa, o conjunto fraco possui um **discriminador** (ou *partial key*): um subconjunto de atributos que identifica unicamente a entidade **dentro do grupo de entidades associadas à mesma entidade identificadora**.
+
+A chave primária completa do conjunto fraco é formada pela chave primária da entidade identificadora mais o discriminador.
+:::
+
+O relacionamento que conecta o conjunto fraco ao identificador é chamado de **relacionamento identificador** (*identifying relationship*).
+
+## Notação no Diagrama ER
+
+::: {.conceito}
+- **Retângulo com borda dupla**: conjunto de entidades fraco
+- **Losango com borda dupla**: relacionamento identificador
+- **Atributo sublinhado com linha tracejada**: discriminador (partial key)
+:::
+
+## Exemplo: Dependente de Funcionário
+
+Um exemplo clássico é o conjunto de entidades `dependente` em um sistema de RH. Um dependente é identificado pelo nome **dentro do contexto de um funcionário** — dois funcionários diferentes podem ter dependentes com o mesmo nome, mas para o mesmo funcionário os nomes devem ser distintos.
+
+```{dot}
+graph er_fraco {
+  graph [rankdir=LR, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=1.0, ranksep=2.0];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  funcionario [shape=rectangle, style=filled, fillcolor="#AED6F1", label="funcionario"];
+  tem         [shape=diamond, peripheries=2, style=filled, fillcolor="#F9E79F", label="tem"];
+  dependente  [shape=rectangle, peripheries=2, style=filled, fillcolor="#D5E8D4", label="dependente"];
+
+  id_func    [shape=ellipse, label="id_funcionario (PK)"];
+  nome_dep   [shape=ellipse, style=dashed, label="nome_dep"];
+  parentesco [shape=ellipse, label="parentesco"];
+
+  funcionario -- id_func;
+  funcionario -- tem [style=bold];
+  tem -- dependente [style=bold];
+  dependente -- nome_dep;
+  dependente -- parentesco;
+}
+```
+
+A chave primária de `dependente` é **(id_funcionario, nome_dep)** — o discriminador `nome_dep` sozinho não é suficiente.
+
+## Turmas como Entidade Fraca (Contexto Acadêmico)
+
+No contexto acadêmico, uma **turma** pode ser modelada como entidade fraca em relação à disciplina. Uma turma é identificada dentro do contexto de uma disciplina, ano e semestre:
+
+| Entidade identificadora | Conjunto fraco | Discriminador | Chave primária completa |
+|---|---|---|---|
+| `disciplina` | `turma` | `ano, semestre, id_turma` | `(codigo_disciplina, ano, semestre, id_turma)` |
+
+::: {.callout-note}
+No banco da UnDF, optamos por não modelar `turma` como entidade fraca explícita. Em vez disso, usamos a tabela `ministra` com chave composta `(cod_disciplina, ano, semestre, turma)` — uma decisão de projeto lógico válida, equivalente ao resultado final da conversão ER→Relacional de uma entidade fraca.
+:::
+
+## Quando Usar Entidade Fraca
+
+Use entidade fraca quando:
+
+1. A entidade não tem atributos que a identifiquem unicamente **por si só**
+2. A entidade **depende existencialmente** de outra — se a entidade identificadora for excluída, as entidades fracas correspondentes perdem o sentido
+3. O discriminador identifica unicamente **dentro do escopo** da entidade identificadora
+
+::: {.callout-warning}
+**Não confunda** entidade fraca com entidade que simplesmente tem uma chave estrangeira. `professor` referencia `escola` via FK, mas `professor` tem sua própria chave primária (`matricula_prof`) independente — não é uma entidade fraca. Uma entidade fraca genuinamente **não teria como ser identificada** sem sua entidade identificadora.
+:::
+
+---
+
+## Para Praticar
+
+**1. Identificar entidade fraca.** Para cada par abaixo, determine se o primeiro conjunto é entidade fraca em relação ao segundo:
+
+a. `capitulo` em relação a `livro` (um capítulo é identificado pelo número dentro de um livro)
+b. `aluno` em relação a `curso` (um aluno é identificado por matrícula própria)
+c. `item_pedido` em relação a `pedido` (um item é identificado pelo número de linha dentro do pedido)
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Sim, entidade fraca. O capítulo 3 do livro A e o capítulo 3 do livro B são entidades diferentes, mas ambos têm discriminador "3". A PK seria `(isbn_livro, numero_capitulo)`.
+- **(b)** Não. `aluno` tem `matricula` própria que o identifica independentemente de `curso`. A FK `sigla_curso` é apenas uma referência, não uma dependência identificacional.
+- **(c)** Sim, entidade fraca. A "linha 2" do pedido #1001 e a "linha 2" do pedido #1002 são entidades diferentes. A PK seria `(numero_pedido, numero_linha)`.
+:::
+
+---
+
+**2. Chave primária de entidade fraca.** No exemplo do `dependente`, qual seria a chave primária completa na tabela relacional resultante? Escreva o schema.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+```
+dependente(id_funcionario, nome_dep, parentesco)
+PK: (id_funcionario, nome_dep)
+FK: id_funcionario → funcionario(id_funcionario)
+```
+O discriminador `nome_dep` por si só não é PK — dois funcionários diferentes podem ter um dependente chamado "Ana". A PK composta garante unicidade: para **cada funcionário**, o nome do dependente é único.
+:::
+
+---
+
+**3. Exclusão em cascata.** Uma consequência da dependência existencial de entidades fracas é que, quando a entidade identificadora é excluída, as entidades fracas associadas devem ser excluídas também. Como isso se implementa em SQL?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Com a cláusula `ON DELETE CASCADE` na restrição de chave estrangeira:
+
+```sql
+CREATE TABLE dependente (
+    id_funcionario  INTEGER,
+    nome_dep        VARCHAR(50),
+    parentesco      VARCHAR(20),
+    PRIMARY KEY (id_funcionario, nome_dep),
+    FOREIGN KEY (id_funcionario)
+        REFERENCES funcionario(id_funcionario)
+        ON DELETE CASCADE
+);
+```
+
+Ao excluir um funcionário, todos os seus dependentes são automaticamente excluídos — refletindo a dependência existencial modelada no ER.
+:::

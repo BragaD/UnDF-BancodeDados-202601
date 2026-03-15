@@ -1,0 +1,165 @@
+# Especialização e Generalização
+
+## Especialização
+
+Em alguns domínios, um conjunto de entidades contém subgrupos com características distintas — atributos adicionais ou participação em relacionamentos específicos que não se aplicam a todas as entidades do conjunto.
+
+::: {.conceito}
+**Especialização** é um processo *top-down*: a partir de um conjunto de entidades de nível superior, definimos **subconjuntos de entidades** de nível inferior que possuem atributos ou relacionamentos exclusivos.
+
+A relação entre nível superior e inferior é representada pelo triângulo **ISA** ("is a" — "é um") no diagrama ER.
+
+**Herança de atributos**: entidades de nível inferior herdam todos os atributos e relacionamentos do nível superior, e acrescentam os seus próprios.
+:::
+
+::: {.exemplo}
+No contexto da UnDF, poderíamos especializar `aluno` em:
+
+- `aluno_graduacao`: atributos adicionais `semestre_atual`, `coeficiente_rendimento`
+- `aluno_pos_graduacao`: atributos adicionais `orientador`, `nivel` (mestrado/doutorado)
+
+```{dot}
+digraph er_especializacao {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white,
+         splines=false, nodesep=0.8, ranksep=1.0];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  aluno [shape=rectangle, style=filled, fillcolor="#AED6F1", label="aluno"];
+  isa   [shape=triangle, label="ISA", style=filled, fillcolor="#FAD7A0"];
+  grad  [shape=rectangle, style=filled, fillcolor="#D5E8D4", label="aluno_graduacao"];
+  pos   [shape=rectangle, style=filled, fillcolor="#D5E8D4", label="aluno_pos_graduacao"];
+
+  aluno -> isa [arrowhead=none];
+  isa -> grad;
+  isa -> pos;
+}
+```
+
+`aluno_graduacao` herda `matricula`, `nome`, `sigla_curso` e `ano_ingresso` de `aluno`, além de ter `semestre_atual` e `coeficiente_rendimento`.
+:::
+
+## Generalização
+
+::: {.conceito}
+**Generalização** é o processo inverso — *bottom-up*: identificar atributos comuns entre múltiplos conjuntos de entidades e agrupá-los em um conjunto de entidades de nível superior.
+
+Especialização e generalização são inversões uma da outra e representadas da mesma forma no diagrama ER.
+:::
+
+::: {.exemplo}
+Se o sistema tivesse conjuntos `professor_horista` e `professor_efetivo` com atributos comuns (`nome`, `escola`), poderíamos generalizá-los em `professor`, mantendo os atributos específicos nos subconjuntos:
+
+- `professor_horista`: `valor_hora`, `horas_contratadas`
+- `professor_efetivo`: `data_posse`, `cargo`
+:::
+
+## Restrições de Especialização
+
+### Disjunção
+
+::: {.conceito}
+- **Disjunta** (*disjoint*): uma entidade do nível superior pode pertencer a **no máximo um** subconjunto. Indicada pela palavra "disjoint" no diagrama.
+- **Sobreposta** (*overlapping*): uma entidade pode pertencer a **múltiplos** subconjuntos simultaneamente.
+:::
+
+::: {.exemplo}
+- `aluno_graduacao` e `aluno_pos_graduacao` são **disjuntos**: um aluno é de graduação ou de pós, não ambos simultaneamente (na maioria das instituições).
+- Em um sistema de funcionários, `funcionario_de_campo` e `funcionario_com_acesso_sistema` seriam **sobrepostos**: um funcionário pode ser de campo e ter acesso ao sistema ao mesmo tempo.
+:::
+
+### Completude
+
+::: {.conceito}
+- **Total**: toda entidade do nível superior deve pertencer a pelo menos um subconjunto. Indicada por linha dupla entre o conjunto superior e o triângulo ISA.
+- **Parcial** (default): algumas entidades do nível superior podem não pertencer a nenhum subconjunto.
+:::
+
+::: {.exemplo}
+No banco da UnDF:
+- Se todo aluno for necessariamente de graduação ou de pós-graduação, a especialização é **total**.
+- Se houver alunos que não se enquadram em nenhuma categoria (ex.: alunos especiais), a especialização é **parcial**.
+:::
+
+## Representação em Esquemas Relacionais
+
+Há dois métodos para converter especialização em tabelas:
+
+### Método 1: Schema para cada nível
+
+```
+-- Nível superior
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+
+-- Nível inferior (apenas atributos locais + PK herdada)
+aluno_graduacao(matricula, semestre_atual, coeficiente_rendimento)
+  FK: matricula → aluno(matricula)
+
+aluno_pos_graduacao(matricula, orientador, nivel)
+  FK: matricula → aluno(matricula)
+```
+
+**Vantagem**: sem redundância — atributos comuns em um único lugar.
+**Desvantagem**: consultar todos os dados de um aluno requer JOIN entre as tabelas.
+
+### Método 2: Schema completo para cada subconjunto
+
+```
+aluno_graduacao(matricula, nome, sigla_curso, ano_ingresso,
+                semestre_atual, coeficiente_rendimento)
+
+aluno_pos_graduacao(matricula, nome, sigla_curso, ano_ingresso,
+                    orientador, nivel)
+```
+
+**Vantagem**: todas as informações em uma única tabela — sem JOIN para acessar dados completos.
+**Desvantagem**: atributos comuns (`nome`, `sigla_curso`) armazenados repetidamente se uma entidade pertence a ambos os subconjuntos (no caso de especialização sobreposta).
+
+---
+
+## Para Praticar
+
+**1. Identificar tipo de especialização.** Para cada par abaixo, determine se a especialização é total/parcial e disjunta/sobreposta:
+
+a. `veiculo` → `carro`, `moto`, `caminhão` (no contexto de uma frota, todo veículo é de um tipo)
+b. `funcionario` → `gerente`, `analista` (um funcionário pode ser gerente de um departamento e analista de outro)
+c. `produto` → `produto_perecivel`, `produto_duravel` (todo produto é um ou outro, nunca ambos)
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Total e disjunta: todo veículo é de exatamente um tipo.
+- **(b)** Parcial e sobreposta: nem todo funcionário é gerente ou analista; e pode ser ambos.
+- **(c)** Total e disjunta: todo produto é perecível ou durável, nunca ambos.
+:::
+
+---
+
+**2. Escolha do método de conversão.** Para a especialização total e disjunta de `veiculo` em `carro` e `moto`, qual método de conversão você escolheria e por quê?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O **Método 2** (schema completo por subconjunto) é adequado quando a especialização é **total e disjunta**:
+
+```
+carro(placa, marca, modelo, numero_portas, tipo_combustivel)
+moto(placa, marca, modelo, cilindrada, tem_sidecar)
+```
+
+Como todo veículo é necessariamente carro ou moto (total) e nunca ambos (disjunto), não há risco de redundância entre subconjuntos. A ausência de uma tabela `veiculo` genérica simplifica as consultas, pois os dados completos de qualquer veículo estão em uma única tabela.
+:::
+
+---
+
+**3. Herança e JOIN.** Com o Método 1 (schema por nível), escreva uma consulta SQL que retorna o nome e o semestre atual de todos os alunos de graduação do curso ENS.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+```sql
+SELECT a.nome, g.semestre_atual
+FROM   aluno a
+JOIN   aluno_graduacao g ON a.matricula = g.matricula
+WHERE  a.sigla_curso = 'ENS'
+ORDER BY a.nome;
+```
+
+O JOIN é necessário porque `nome` e `sigla_curso` estão em `aluno` (nível superior), enquanto `semestre_atual` está em `aluno_graduacao` (nível inferior). Esse é o custo do Método 1.
+:::

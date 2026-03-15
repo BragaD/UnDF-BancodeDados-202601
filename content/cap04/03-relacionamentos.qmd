@@ -1,0 +1,171 @@
+# Conjuntos de Relacionamentos
+
+## Definição
+
+::: {.conceito}
+Um **relacionamento** é uma associação entre duas ou mais entidades.
+
+Um **conjunto de relacionamentos** (*relationship set*) é uma relação matemática entre $n \geq 2$ conjuntos de entidades:
+
+$$\{(e_1, e_2, \ldots, e_n) \mid e_1 \in E_1,\ e_2 \in E_2,\ \ldots,\ e_n \in E_n\}$$
+
+onde cada $(e_1, e_2, \ldots, e_n)$ é um relacionamento individual.
+:::
+
+::: {.exemplo}
+No banco da UnDF, o conjunto de relacionamentos `ministra` associa entidades de `professor` e `disciplina`:
+
+$$ministra \subseteq professor \times disciplina$$
+
+Cada par (Gustavo Costa, ENS-201) é um relacionamento que significa "Gustavo ministra ENS-201".
+:::
+
+## Atributos de Relacionamentos
+
+Assim como conjuntos de entidades, conjuntos de relacionamentos podem ter **atributos próprios** — informações que descrevem a associação em si, não as entidades participantes.
+
+::: {.exemplo}
+O relacionamento `ministra` entre `professor` e `disciplina` tem os atributos:
+
+| Atributo | Descrição |
+|---|---|
+| `ano` | Ano letivo em que a turma foi oferecida |
+| `semestre` | Semestre (1 ou 2) |
+| `turma` | Identificador da turma (A, B…) |
+| `horario` | Horário semanal das aulas |
+| `sala` | Sala onde as aulas ocorrem |
+
+Esses atributos não pertencem nem ao professor nem à disciplina — pertencem ao **ato de ministrar** aquela disciplina naquele contexto específico.
+:::
+
+## Representação em Diagrama ER
+
+::: {.conceito}
+Na notação ER:
+- **Losango**: representa um conjunto de relacionamentos
+- **Linhas**: conectam o losango aos retângulos dos conjuntos de entidades participantes
+- **Elipses** ligadas ao losango: atributos do relacionamento
+:::
+
+```{dot}
+graph er_relacionamento {
+  graph [rankdir=LR, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=1.0];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  professor  [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  disciplina [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+  ministra   [shape=diamond,   style=filled, fillcolor="#F9E79F", label="ministra"];
+
+  ano      [shape=ellipse, label="ano"];
+  semestre [shape=ellipse, label="semestre"];
+  turma    [shape=ellipse, label="turma"];
+  horario  [shape=ellipse, label="horario"];
+  sala     [shape=ellipse, label="sala"];
+
+  professor  -- ministra;
+  ministra   -- disciplina;
+  ministra   -- ano;
+  ministra   -- semestre;
+  ministra   -- turma;
+  ministra   -- horario;
+  ministra   -- sala;
+}
+```
+
+## Papéis (*Roles*)
+
+Quando o mesmo conjunto de entidades participa mais de uma vez em um relacionamento, os papéis (*roles*) explicitam o significado de cada participação.
+
+::: {.exemplo}
+O relacionamento `prereq` em `disciplina` é **autorreferencial** — uma disciplina é pré-requisito de outra:
+
+```{dot}
+graph er_roles {
+  graph [rankdir=LR, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=1.2];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  disciplina [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+  prereq     [shape=diamond,   style=filled, fillcolor="#F9E79F", label="prereq"];
+
+  disciplina -- prereq [label="disciplina", fontsize=9];
+  prereq     -- disciplina [label="pré-requisito", fontsize=9];
+}
+```
+
+Os rótulos "disciplina" e "pré-requisito" são os **papéis** — indicam qual papel cada participação de `disciplina` desempenha no relacionamento.
+:::
+
+## Grau de um Relacionamento
+
+::: {.conceito}
+O **grau** de um relacionamento é o número de conjuntos de entidades que participam dele:
+
+- **Binário** (grau 2): o mais comum. Envolve exatamente dois conjuntos de entidades.
+- **Ternário** (grau 3): envolve três conjuntos de entidades simultaneamente.
+- **N-ário**: envolve $n$ conjuntos de entidades (raro na prática).
+:::
+
+A grande maioria dos relacionamentos em sistemas reais é binária. Relacionamentos ternários aparecem quando a associação entre duas entidades depende de uma terceira.
+
+::: {.exemplo}
+Se quiséssemos registrar que um aluno é orientado por um professor em um projeto específico, o relacionamento `orienta` seria ternário entre `aluno`, `professor` e `projeto`:
+
+```{dot}
+graph er_ternario {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=0.8];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  aluno     [shape=rectangle, style=filled, fillcolor="#AED6F1", label="aluno"];
+  professor [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  projeto   [shape=rectangle, style=filled, fillcolor="#AED6F1", label="projeto"];
+  orienta   [shape=diamond,   style=filled, fillcolor="#F9E79F", label="orienta"];
+
+  aluno     -- orienta;
+  professor -- orienta;
+  projeto   -- orienta;
+}
+```
+
+Não há como dividir `orienta` em dois relacionamentos binários sem perder informação: saber que um professor orienta um aluno e que um professor orienta um projeto não é suficiente para saber quem orienta quem em qual projeto.
+:::
+
+---
+
+## Para Praticar
+
+**1. Atributo de entidade ou de relacionamento?** No relacionamento `ministra` entre `professor` e `disciplina`, a `sala` onde as aulas ocorrem deve ser atributo do relacionamento ou da entidade `disciplina`? Justifique.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+`sala` deve ser atributo do **relacionamento** `ministra`. A mesma disciplina (ENS-201) pode ser oferecida em salas diferentes em semestres distintos, por professores diferentes. A sala não é uma propriedade intrínseca da disciplina — é uma propriedade da oferta específica daquela disciplina naquele semestre/turma. Colocar `sala` em `disciplina` forçaria a escolha de uma sala única e permanente, o que não corresponde à realidade.
+:::
+
+---
+
+**2. Autorreferência e papéis.** Na tabela `prereq` do banco da UnDF, o par `(ENS-601, ENS-401)` significa que ENS-401 é pré-requisito de ENS-601. Qual é o papel de ENS-601 e qual é o papel de ENS-401 nessa tupla?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **ENS-601** exerce o papel de **disciplina** (a que tem o pré-requisito).
+- **ENS-401** exerce o papel de **pré-requisito** (a que precisa ser cursada antes).
+
+Na tabela, a coluna `codigo` armazena quem tem o pré-requisito e `prereq_codigo` armazena quem é o pré-requisito.
+:::
+
+---
+
+**3. Grau do relacionamento.** Analise o seguinte requisito: "Registrar que um aluno cursou uma disciplina em uma turma específica (identificada por disciplina, ano, semestre e turma) e obteve uma nota". Qual o grau do relacionamento `cursa`? Quais os conjuntos de entidades envolvidos?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O relacionamento `cursa` associa `aluno` à turma de uma disciplina. A "turma" (identificada por disciplina+ano+semestre+turma) é ela própria um relacionamento (`ministra`) e não uma entidade simples. Isso caracteriza **agregação** — veremos na seção 4.10. Uma simplificação possível é tratar `cursa` como binário entre `aluno` e uma entidade `oferta` (representando a turma), com atributos `nota` e `aprovado`.
+:::
+
+---
+
+**4. Limites do relacionamento binário.** Suponha que queiramos registrar que um professor supervisionou a entrega de um projeto por um aluno em uma disciplina específica. Por que um único relacionamento binário professor–aluno não é suficiente?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Um relacionamento binário professor–aluno diria apenas "este professor supervisionou este aluno", sem especificar **em qual disciplina** ocorreu a supervisão. Se um professor supervisiona o mesmo aluno em duas disciplinas diferentes, não haveria como distinguir as duas supervisões. É necessário um relacionamento ternário professor–aluno–disciplina, ou uma modelagem com agregação.
+:::

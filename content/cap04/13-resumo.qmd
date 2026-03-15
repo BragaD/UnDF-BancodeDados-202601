@@ -1,0 +1,181 @@
+# Resumo e Exercícios
+
+## Conceitos Principais
+
+O **modelo Entidade-Relacionamento (ER)** é a ferramenta padrão para o projeto conceitual de bancos de dados. Os conceitos centrais são:
+
+| Conceito | Notação ER | Conversão Relacional |
+|---|---|---|
+| Conjunto de entidades forte | Retângulo | Tabela com atributos da entidade |
+| Conjunto de entidades fraco | Retângulo duplo | Tabela com PK da entidade identificadora + discriminador |
+| Relacionamento | Losango | Tabela própria (N:N) ou FK embutida (N:1) |
+| Atributo simples | Elipse | Coluna |
+| Atributo composto | Elipse com sub-elipses | Uma coluna por componente |
+| Atributo multivalorado | Elipse dupla | Tabela separada com FK |
+| Atributo derivado | Elipse tracejada | Não armazenado |
+| Cardinalidade 1:N | Seta para o "um" | FK embutida no lado N |
+| Cardinalidade N:N | Linhas nos dois lados | Tabela de junção |
+| Participação total | Linha dupla | FK com NOT NULL |
+| Especialização/Generalização | Triângulo ISA | Schema por nível ou por subconjunto |
+| Agregação | Caixa tracejada ao redor do relacionamento | Schema do relacionamento externo referencia PK do relacionamento base |
+
+## Processo de Projeto
+
+```
+Requisitos → Diagrama ER → Schemas Relacionais → DDL → Banco de Dados
+   (análise)   (conceitual)    (lógico)        (físico)
+```
+
+1. **Identificar** conjuntos de entidades e relacionamentos
+2. **Classificar** atributos (simples, composto, multivalorado, derivado)
+3. **Definir** cardinalidades e participações
+4. **Verificar** se há entidades fracas, especializações ou necessidade de agregação
+5. **Converter** para schemas relacionais usando as regras sistemáticas
+6. **Aplicar** normalização (Capítulo 7) para garantir qualidade do schema
+
+---
+
+## Exercícios
+
+**1. ER de uma locadora de veículos.** Uma locadora possui veículos (placa, modelo, ano, categoria: econômico/executivo/SUV) e clientes (CPF, nome, CNH, telefones). Um cliente pode fazer várias locações; cada locação envolve um veículo, tem data de retirada, data de devolução prevista e km_inicial. Ao devolver, registra-se km_final e valor_cobrado.
+
+a. Identifique os conjuntos de entidades, relacionamentos, atributos e cardinalidades.
+b. Desenhe (ou descreva) o diagrama ER.
+c. Converta para schemas relacionais.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+**a. Identificação:**
+
+- Entidades: `veiculo`(placa PK, modelo, ano, categoria), `cliente`(cpf PK, nome, cnh)
+- Atributo multivalorado: `telefone` de `cliente`
+- Relacionamento: `locacao` entre `cliente` e `veiculo` (N:N: um cliente faz várias locações; um veículo é locado várias vezes)
+- Atributos de `locacao`: data_retirada, data_devolucao_prevista, km_inicial, km_final (pode ser NULL se ainda não devolvido), valor_cobrado (NULL se em aberto)
+- Cardinalidade: N:N (um cliente pode ter múltiplas locações simultâneas? Se não, N:1 por período)
+
+**b. Diagrama (descrição):**
+- Retângulo `veiculo` com atributos placa(PK), modelo, ano, categoria
+- Retângulo `cliente` com atributos cpf(PK), nome, cnh; elipse dupla para telefone
+- Losango `locacao` conectando os dois com linhas (N dos dois lados)
+- Elipses de `locacao`: data_retirada, data_devolucao_prevista, km_inicial, km_final, valor_cobrado
+
+**c. Schemas:**
+```
+veiculo(placa, modelo, ano, categoria)
+  PK: placa
+
+cliente(cpf, nome, cnh)
+  PK: cpf
+
+telefone_cliente(cpf, telefone)
+  PK: (cpf, telefone)
+  FK: cpf → cliente(cpf)
+
+locacao(id_locacao, cpf_cliente, placa_veiculo, data_retirada,
+        data_devolucao_prevista, km_inicial, km_final, valor_cobrado)
+  PK: id_locacao
+  FK: cpf_cliente → cliente(cpf)
+  FK: placa_veiculo → veiculo(placa)
+```
+:::
+
+---
+
+**2. Entidade fraca: capítulos de livro.** Uma editora possui `livro`(isbn, titulo, ano, editora) e cada livro tem `capitulo`s identificados pelo número dentro do livro (cap. 1, 2, 3...), com atributos título_capitulo e numero_paginas.
+
+a. `capitulo` é entidade fraca ou forte? Justifique.
+b. Escreva o schema relacional de `capitulo`.
+c. Qual restrição SQL garante que ao excluir um livro, seus capítulos sejam excluídos automaticamente?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+**a.** `capitulo` é **entidade fraca** em relação a `livro`. O número do capítulo (discriminador) identifica unicamente o capítulo **dentro de um livro**, mas dois livros podem ter um "capítulo 3" — não há como distingui-los sem saber a qual livro pertencem. O capítulo não existe sem o livro.
+
+**b.**
+```
+capitulo(isbn, numero_capitulo, titulo_capitulo, numero_paginas)
+  PK: (isbn, numero_capitulo)
+  FK: isbn → livro(isbn) ON DELETE CASCADE
+```
+
+**c.** A cláusula `ON DELETE CASCADE` na FK garante que, ao excluir um livro, todos os seus capítulos sejam automaticamente excluídos — refletindo a dependência existencial do conjunto de entidades fraco.
+:::
+
+---
+
+**3. Especialização e herança.** A UnDF decide diferenciar professores em dois tipos: `professor_efetivo` (com atributos data_posse, regime_juridico) e `professor_substituto` (com atributos data_inicio_contrato, data_fim_contrato). Todo professor é de um dos dois tipos.
+
+a. Que tipo de especialização é essa (total/parcial, disjunta/sobreposta)?
+b. Qual método de conversão você escolheria? Escreva os schemas.
+c. Escreva uma consulta SQL (sem executar) que lista todos os professores efetivos da ESETI com suas datas de posse.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+**a.** Total e disjunta: todo professor é efetivo ou substituto (total), e nenhum professor é os dois ao mesmo tempo (disjunta).
+
+**b.** Com especialização total e disjunta, o Método 1 (schema por nível) é apropriado:
+
+```
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  PK: matricula_prof
+
+professor_efetivo(matricula_prof, data_posse, regime_juridico)
+  PK: matricula_prof
+  FK: matricula_prof → professor(matricula_prof)
+
+professor_substituto(matricula_prof, data_inicio_contrato, data_fim_contrato)
+  PK: matricula_prof
+  FK: matricula_prof → professor(matricula_prof)
+```
+
+**c.**
+```sql
+SELECT p.nome, e.data_posse, e.regime_juridico
+FROM   professor p
+JOIN   professor_efetivo e ON p.matricula_prof = e.matricula_prof
+WHERE  p.escola = 'ESETI'
+ORDER BY p.nome;
+```
+:::
+
+---
+
+**4. Diagrama ER → Relacional com agregação.** Um sistema de avaliação de estágios funciona assim: uma empresa oferece vagas de estágio; um aluno candidata-se a uma vaga (relacionamento `candidatura`); um coordenador avalia cada candidatura com uma nota e um parecer.
+
+a. Identifique onde a agregação é necessária.
+b. Escreva os schemas relacionais completos.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+**a.** A agregação é necessária porque o coordenador avalia a **candidatura** (relacionamento entre aluno e vaga) — não o aluno ou a vaga isoladamente. O relacionamento `candidatura` precisa ser "entificado" para que `avaliacao` possa referenciá-lo.
+
+**b.**
+```
+empresa(cnpj, nome, setor)
+  PK: cnpj
+
+vaga(id_vaga, descricao, cnpj_empresa, salario_estagio)
+  PK: id_vaga
+  FK: cnpj_empresa → empresa(cnpj)
+
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+  PK: matricula
+
+candidatura(id_candidatura, matricula_aluno, id_vaga, data_candidatura)
+  PK: id_candidatura
+  FK: matricula_aluno → aluno(matricula)
+  FK: id_vaga → vaga(id_vaga)
+
+coordenador(matricula_coord, nome, departamento)
+  PK: matricula_coord
+
+avaliacao(id_candidatura, matricula_coord, nota, parecer, data_avaliacao)
+  PK: (id_candidatura, matricula_coord)
+  FK: id_candidatura → candidatura(id_candidatura)
+  FK: matricula_coord → coordenador(matricula_coord)
+```
+:::

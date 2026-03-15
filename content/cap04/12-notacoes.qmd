@@ -1,0 +1,172 @@
+# Notações Alternativas
+
+O diagrama ER apresentado neste capítulo usa a **notação de Chen** (1976). Na prática, existem outras notações amplamente usadas em ferramentas de modelagem e em engenharia de software.
+
+## Comparação de Notações
+
+| Notação | Uso típico | Caractísticas |
+|---|---|---|
+| **Chen** | Acadêmico, livros-texto | Losangos para relacionamentos, elipses para atributos |
+| **IDEF1X / Crow's Foot** | Ferramentas CASE, modelagem física | Atributos dentro das caixas, pés de corvo para "muitos" |
+| **UML (Diagrama de Classes)** | Engenharia de software | Herança nativa, operações, multiplicidades |
+
+## Crow's Foot (IDEF1X)
+
+A notação *crow's foot* (pé de corvo) é a mais usada em ferramentas de modelagem de dados como MySQL Workbench, dbdiagram.io e DBeaver.
+
+::: {.conceito}
+Na notação crow's foot:
+- **Retângulos** representam entidades (com atributos listados internamente)
+- **Linhas** conectam entidades (sem losangos)
+- **Símbolos nas extremidades** indicam cardinalidade e participação:
+  - `|` — exatamente um (participação total, lado "um")
+  - `O` — zero (participação parcial)
+  - `<` — muitos (pé de corvo)
+
+Os símbolos são combinados:
+- `|<` — um ou mais (total, muitos)
+- `O<` — zero ou mais (parcial, muitos)
+- `||` — exatamente um (total, um)
+- `O|` — zero ou um (parcial, um)
+:::
+
+## Equivalências: ER (Chen) × Crow's Foot
+
+| Conceito ER (Chen) | Crow's Foot |
+|---|---|
+| 1:N, participação parcial no N | `||` no lado 1, `O<` no lado N |
+| 1:N, participação total no N | `||` no lado 1, `|<` no lado N |
+| N:N | `O<` nos dois lados |
+| 1:1 | `||` nos dois lados (ou com O para parcial) |
+
+::: {.exemplo}
+O relacionamento `professor` (N:1, parcial) com `escola` (1, parcial):
+
+**Chen**: professor —— lotado_em —→ escola (linha simples dos dois lados, seta para escola)
+
+**Crow's Foot**:
+```
+professor |o---||  escola
+```
+- Lado `professor`: `|o` — zero ou um (um professor pode existir sem estar lotado? Não neste caso; seria `|`|)
+- Lado `escola`: `||` — exatamente uma escola por professor; `o<` — uma escola pode ter zero ou mais professores
+
+Para o banco da UnDF (todo professor tem escola, uma escola pode ter 0 ou mais professores):
+```
+professor ||---o<  escola
+```
+:::
+
+## UML — Diagramas de Classes
+
+O UML (*Unified Modeling Language*) usa **diagramas de classes** para modelagem conceitual. É a linguagem padrão em engenharia de software.
+
+::: {.conceito}
+Em diagramas de classes UML:
+- **Retângulos com três compartimentos**: nome da classe (topo), atributos (meio), operações (base)
+- **Linhas de associação**: sem losangos; o nome da associação aparece sobre a linha
+- **Multiplicidade**: expressa na forma `min..max` nas extremidades das linhas
+  - `1` ou `1..1` — exatamente um
+  - `0..1` — zero ou um
+  - `*` ou `0..*` — zero ou mais
+  - `1..*` — um ou mais
+- **Generalização**: seta com ponta aberta (triângulo) apontando para o nível superior
+:::
+
+## Correspondências ER × UML
+
+| Elemento ER | Equivalente UML |
+|---|---|
+| Conjunto de entidades | Classe |
+| Atributo | Atributo da classe |
+| Relacionamento binário | Associação com nome |
+| Cardinalidade 1:N | Multiplicidade `1` num lado, `*` no outro |
+| Participação total | Multiplicidade mínima ≥ 1 |
+| Especialização/Generalização | Herança (seta de generalização) |
+| Relacionamento com atributos | Classe de associação (*association class*) |
+
+::: {.exemplo}
+O relacionamento `ministra` entre `professor` e `disciplina` com atributos:
+
+**ER (Chen)**: `professor` —— ◇`ministra`(ano, semestre, turma, horario, sala) —— `disciplina`
+
+**UML**:
+```
+Professor           Disciplina
+───────────         ──────────
+matricula_prof      codigo
+nome           *─────────── ─────────────* nome_disciplina
+escola         ministra                    sigla_curso
+ch_semanal     ┄┄┄┄┄┄┄┄┄
+salario        ano
+               semestre
+               turma
+               horario
+               sala
+```
+
+Na UML, `ministra` seria uma **classe de associação** com os atributos do relacionamento.
+:::
+
+## Inversão na Leitura de Cardinalidade
+
+::: {.callout-warning}
+**Atenção à inversão de posição**: na notação UML, a multiplicidade aparece do **lado oposto** ao da notação ER (Chen).
+
+- **ER (Chen)**: a cardinalidade é colocada **próxima à entidade** que ela restringe
+- **UML**: a multiplicidade é colocada **próxima à entidade** do lado contrário ao que ela descreve
+
+Exemplo: em ER, `1` próximo a `escola` significa "um professor está em uma escola". Em UML, `1` no lado de `escola` significa "cada professor se associa a 1 escola" — o significado é o mesmo, mas a posição é diferente. Sempre leia as multiplicidades no contexto de ambas as extremidades.
+:::
+
+---
+
+## Para Praticar
+
+**1. Traduzir para crow's foot.** Traduza os seguintes relacionamentos da UnDF para notação crow's foot (escreva as linhas com símbolos como `||`, `o<`, `|<`, `o|`):
+
+a. `aluno` matriculado_em `curso` (todo aluno está em exatamente um curso; um curso pode ter zero ou mais alunos)
+b. `professor` ministra `disciplina` (um professor pode ministrar zero ou mais disciplinas; uma disciplina pode ser ministrada por zero ou mais professores)
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** `aluno ||---o< curso`
+  - Lado `aluno`: `||` — exatamente um curso por aluno
+  - Lado `curso`: `o<` — zero ou mais alunos por curso
+
+- **(b)** `professor o<---o< disciplina`
+  - Lado `professor` (lido da perspectiva de `disciplina`): `o<` — zero ou mais professores por disciplina
+  - Lado `disciplina` (lido da perspectiva de `professor`): `o<` — zero ou mais disciplinas por professor
+:::
+
+---
+
+**2. Ler multiplicidade UML.** Dado o seguinte trecho de um diagrama de classes UML:
+
+```
+Aluno 1..* ─── cursa ─── 0..* Disciplina
+```
+
+O que essa multiplicidade significa para `Aluno` e para `Disciplina`?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **Do lado de `Disciplina`**: a multiplicidade `1..*` diz que, para cada `Disciplina`, há **um ou mais** `Aluno`s cursando — ou seja, uma disciplina só é registrada se tiver ao menos um aluno.
+- **Do lado de `Aluno`**: a multiplicidade `0..*` diz que, para cada `Aluno`, pode haver **zero ou mais** `Disciplina`s cursadas — um aluno pode existir sem ter cursado nenhuma disciplina ainda.
+
+Na notação UML, a multiplicidade fica no lado **oposto** ao da entidade que ela descreve: `1..*` próximo a `Disciplina` descreve **quantas disciplinas** cada aluno pode cursar? Não — descreve quantos alunos cada disciplina tem. Esse é o ponto de confusão mais comum ao ler UML.
+:::
+
+---
+
+**3. Classe de associação.** Em UML, o relacionamento `ministra` com atributos `ano`, `semestre`, `turma`, `horario` e `sala` deve ser representado como **classe de associação**. Por quê essa construção é necessária, e o que aconteceria se tentássemos colocar esses atributos diretamente em `Professor` ou em `Disciplina`?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Os atributos `ano`, `semestre`, `turma`, `horario` e `sala` descrevem **a associação em si** — não pertencem ao professor nem à disciplina individualmente:
+
+- Um mesmo professor pode ministrar ENS-201 em 2024/1 (sala 201) e ENS-401 em 2024/2 (sala 301). Colocar `sala` em `Professor` permitiria apenas uma sala por professor.
+- A mesma disciplina pode ser ministrada por professores diferentes com horários diferentes. Colocar `horario` em `Disciplina` impediria múltiplas ofertas.
+
+A **classe de associação** em UML existe exatamente para esse caso: atributos que descrevem uma associação N:N e não podem ser colocados em nenhuma das classes extremas. Ela gera, na conversão relacional, uma tabela de junção com os atributos — exatamente o que é `ministra` no banco da UnDF.
+:::

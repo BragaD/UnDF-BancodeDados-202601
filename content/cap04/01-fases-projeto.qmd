@@ -1,0 +1,113 @@
+# Fases do Projeto de Banco de Dados
+
+O desenvolvimento de um banco de dados passa por fases bem definidas, desde a compreensão dos requisitos até a implementação física. Pular etapas costuma gerar problemas difíceis de corrigir depois que o sistema já está em produção.
+
+## As Três Fases
+
+::: {.conceito}
+**Fase 1 — Projeto Conceitual**
+
+Caracterizar completamente as necessidades de dados dos usuários do sistema. O resultado é uma especificação dos requisitos do banco de dados, geralmente expressa como um **diagrama ER**, independente de qualquer tecnologia ou SGBD específico.
+:::
+
+::: {.conceito}
+**Fase 2 — Projeto Lógico**
+
+Traduzir o modelo conceitual para um esquema que possa ser implementado em um SGBD. No modelo relacional, isso significa converter o diagrama ER em um conjunto de relações (tabelas). Dois tipos de decisões precisam ser tomadas:
+
+- **Decisões de negócio**: quais atributos devem ser registrados?
+- **Decisões de informática**: como distribuir os atributos entre as tabelas?
+:::
+
+::: {.conceito}
+**Fase 3 — Projeto Físico**
+
+Decidir a organização física dos dados: estruturas de índice, particionamento, configuração de armazenamento. O objetivo é otimizar o desempenho para as cargas de trabalho esperadas.
+:::
+
+## Alternativas de Projeto e Armadilhas
+
+Na fase de projeto lógico, há frequentemente múltiplas alternativas válidas. Dois problemas graves a evitar:
+
+::: {.callout-warning}
+### Redundância
+
+Um projeto ruim pode armazenar a mesma informação em múltiplos lugares. Isso leva a **inconsistência**: se um valor é atualizado em um lugar mas não nos outros, os dados ficam contraditórios.
+
+**Exemplo**: armazenar o nome da escola dentro da tabela `professor` além de mantê-lo na tabela `escola`. Se o nome da escola mudar, é necessário atualizar todos os professores associados — e esquecer um causa inconsistência.
+:::
+
+::: {.callout-warning}
+### Incompletude
+
+Um projeto inadequado pode tornar impossível representar certos aspectos do domínio.
+
+**Exemplo**: se o sistema só permite registrar um número de telefone por professor, professores com múltiplos contatos ficam sem representação adequada.
+:::
+
+## Abordagens de Projeto
+
+Duas abordagens formais são amplamente usadas:
+
+| Abordagem | Quando usar |
+|---|---|
+| **Modelo ER** (este capítulo) | Projeto conceitual: capturar entidades, relacionamentos e restrições |
+| **Teoria de Normalização** (Capítulo 7) | Projeto lógico: formalizar o que torna um esquema relacional "bom" |
+
+As duas abordagens são complementares: o ER captura o mundo real de forma expressiva; a normalização garante que o esquema relacional resultante não tenha anomalias de atualização ou redundâncias desnecessárias.
+
+## Exemplo: Projeto da UnDF
+
+O banco de dados da UnDF passou pelas três fases:
+
+1. **Conceitual**: identificar que a universidade possui centros, escolas, cursos, professores, alunos e disciplinas — e como esses objetos se relacionam.
+2. **Lógico**: converter para 8 relações (`centro`, `escola`, `curso`, `professor`, `aluno`, `disciplina`, `ministra`, `matricula_disciplina`), definindo chaves primárias e estrangeiras.
+3. **Físico**: decidir índices (ex.: índice em `professor.escola` para acelerar buscas por escola), configuração de partições, etc.
+
+---
+
+## Para Praticar
+
+**1. Classificar decisões de projeto.** Para cada decisão abaixo, indique se é de projeto conceitual, lógico ou físico:
+
+a. Criar um índice na coluna `nota` de `matricula_disciplina`
+b. Modelar que cada disciplina pertence a exatamente um curso
+c. Representar disciplinas e pré-requisitos em tabelas separadas em vez de em uma única tabela com coluna `prereq`
+d. Decidir que `sigla_curso` será a chave primária de `curso`
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Físico — índice é uma decisão de armazenamento e desempenho.
+- **(b)** Conceitual — é uma restrição do mundo real, capturada no ER.
+- **(c)** Lógico — é sobre como distribuir atributos entre esquemas relacionais.
+- **(d)** Lógico — escolha de chave primária para implementação no SGBD.
+:::
+
+---
+
+**2. Identificar redundância.** Um projetista propõe a seguinte tabela única para substituir `professor` e `escola`:
+
+| matricula_prof | nome_prof | escola | nome_escola | centro |
+|---|---|---|---|---|
+| PROF20230031 | Gustavo Costa | ESETI | Escola Superior de Engenharias... | COETI |
+| PROF20230032 | Helena Carvalho | ESETI | Escola Superior de Engenharias... | COETI |
+| PROF20230042 | Bruno Teixeira | ESG | Escola Superior de Gestão | COCHCMA |
+
+Quais problemas esse projeto causa?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **Redundância**: `nome_escola` e `centro` repetem-se para cada professor da mesma escola. Com 3 professores na ESETI, o nome completo da escola é armazenado 3 vezes.
+- **Anomalia de atualização**: se o nome da ESETI mudar, é necessário atualizar todas as linhas de professores dessa escola — e esquecer uma causa inconsistência.
+- **Anomalia de exclusão**: se todos os professores de uma escola forem excluídos, perde-se também a informação sobre a escola.
+- **Anomalia de inserção**: não é possível cadastrar uma escola sem que ela tenha pelo menos um professor.
+:::
+
+---
+
+**3. Caso limítrofe — incompletude.** Um sistema de matrículas registra apenas `cod_disciplina` e `cod_matricula` para cada matrícula em disciplina. Que informação importante está faltando, e qual problema isso causaria em um cenário real?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Faltam: `ano`, `semestre` e `turma`. Um aluno pode cursar a mesma disciplina em semestres diferentes (reprovação ou reopção). Sem esses atributos, é impossível distinguir matrículas em turmas diferentes da mesma disciplina — e também é impossível armazenar a nota de cada cursada separadamente.
+:::

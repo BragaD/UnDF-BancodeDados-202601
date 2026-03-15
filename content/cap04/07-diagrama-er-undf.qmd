@@ -1,0 +1,166 @@
+# Diagrama ER da UnDF
+
+Aplicando os conceitos das seções anteriores, podemos construir o diagrama ER completo do banco de dados da UnDF. Este diagrama captura todos os conjuntos de entidades, relacionamentos, cardinalidades e participações do sistema.
+
+## Visão Geral do Domínio
+
+O banco da UnDF representa:
+
+- **Centros** acadêmicos, cada um com várias **escolas**
+- **Escolas**, cada uma ofertando vários **cursos** e alocando vários **professores**
+- **Cursos**, cada um composto por várias **disciplinas** e com vários **alunos** matriculados
+- **Professores** que ministram **disciplinas** em turmas específicas
+- **Alunos** que cursam essas turmas, obtendo notas
+- **Pré-requisitos** entre disciplinas do mesmo curso
+
+## Diagrama ER Completo
+
+```{dot}
+digraph er_undf {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white,
+         splines=ortho, nodesep=0.6, ranksep=1.2];
+  node  [fontname="Times New Roman", fontsize=10];
+  edge  [fontsize=9];
+
+  /* ── Conjuntos de Entidades ── */
+  centro     [shape=rectangle, style=filled, fillcolor="#AED6F1", label="centro"];
+  escola     [shape=rectangle, style=filled, fillcolor="#AED6F1", label="escola"];
+  curso      [shape=rectangle, style=filled, fillcolor="#AED6F1", label="curso"];
+  professor  [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  aluno      [shape=rectangle, style=filled, fillcolor="#AED6F1", label="aluno"];
+  disciplina [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+
+  /* ── Relacionamentos ── */
+  pertence_a     [shape=diamond, style=filled, fillcolor="#F9E79F", label="pertence_a"];
+  ofertado_por   [shape=diamond, style=filled, fillcolor="#F9E79F", label="ofertado_por"];
+  lotado_em      [shape=diamond, style=filled, fillcolor="#F9E79F", label="lotado_em"];
+  matriculado_em [shape=diamond, style=filled, fillcolor="#F9E79F", label="matriculado_em"];
+  compoe         [shape=diamond, style=filled, fillcolor="#F9E79F", label="compoe"];
+  ministra       [shape=diamond, style=filled, fillcolor="#F9E79F", label="ministra"];
+  prereq_r       [shape=diamond, style=filled, fillcolor="#F9E79F", label="prereq"];
+
+  /* ── Atributos de ministra ── */
+  ano      [shape=ellipse, label="ano"];
+  semestre [shape=ellipse, label="semestre"];
+  turma_a  [shape=ellipse, label="turma"];
+  horario  [shape=ellipse, label="horario"];
+  sala     [shape=ellipse, label="sala"];
+
+  /* ── Cardinalidades: seta = "um", linha = "muitos" ── */
+
+  /* escola N:1 centro */
+  escola -> pertence_a [arrowhead=none, label="N"];
+  pertence_a -> centro [label="1"];
+
+  /* curso N:1 escola */
+  curso -> ofertado_por [arrowhead=none, label="N"];
+  ofertado_por -> escola [label="1"];
+
+  /* professor N:1 escola */
+  professor -> lotado_em [arrowhead=none, label="N"];
+  lotado_em -> escola [label="1"];
+
+  /* aluno N:1 curso (total em aluno) */
+  aluno -> matriculado_em [arrowhead=none, style=bold, label="N"];
+  matriculado_em -> curso [label="1"];
+
+  /* disciplina N:1 curso */
+  disciplina -> compoe [arrowhead=none, label="N"];
+  compoe -> curso [label="1"];
+
+  /* professor N:N disciplina */
+  professor -> ministra [arrowhead=none, label="N"];
+  ministra -> disciplina [arrowhead=none, label="N"];
+
+  /* atributos de ministra */
+  ministra -> ano;
+  ministra -> semestre;
+  ministra -> turma_a;
+  ministra -> horario;
+  ministra -> sala;
+
+  /* prereq: self-ref disciplina N:N */
+  disciplina -> prereq_r [arrowhead=none, label="disciplina"];
+  prereq_r -> disciplina [arrowhead=none, label="pré-requisito"];
+}
+```
+
+## Legenda e Observações
+
+| Elemento | Notação | Exemplos no diagrama |
+|---|---|---|
+| Entidade forte | Retângulo azul | `centro`, `escola`, `professor` |
+| Relacionamento | Losango amarelo | `ministra`, `pertence_a` |
+| Seta (→) | Lado "um" da cardinalidade | `pertence_a` → `centro` |
+| Linha (—) | Lado "muitos" | `escola` — `pertence_a` |
+| Linha dupla (bold) | Participação total | `aluno` ==`matriculado_em` |
+| Elipse | Atributo do relacionamento | `ano`, `semestre`, `sala` |
+
+### Notas sobre o diagrama
+
+**Cardinalidades:**
+
+- `pertence_a`, `ofertado_por`, `lotado_em`, `compoe`: todos N:1 — muitos do lado esquerdo para um do lado direito
+- `matriculado_em`: N:1, com participação **total** em `aluno` (todo aluno deve estar matriculado em um curso)
+- `ministra`: N:N — um professor ministra várias disciplinas; uma disciplina pode ser ministrada por vários professores
+- `prereq`: N:N autorreferencial — uma disciplina pode ter múltiplos pré-requisitos e ser pré-requisito de múltiplas outras
+
+**Agregação (não mostrada no diagrama simplificado):**
+
+O relacionamento `cursa` entre `aluno` e o relacionamento `ministra` (com atributos `nota` e `aprovado`) é uma instância de **agregação** — veremos na seção 4.10 como representar isso formalmente.
+
+## Verificação do Diagrama
+
+Uma maneira de verificar a correção do diagrama ER é confrontar cada relacionamento com os dados reais:
+
+| Relacionamento | Instâncias no banco |
+|---|---|
+| `pertence_a` | ESETI→COETI, EEMA→COEMAG, ESG→COCHCMA (3 pares) |
+| `lotado_em` | 7 professores distribuídos por 3 escolas |
+| `ministra` | 36 tuplas em `ministra` (7 professores × disciplinas ao longo de semestres) |
+| `prereq` | 16 pares de pré-requisito entre 24 disciplinas |
+
+---
+
+## Para Praticar
+
+**1. Leitura do diagrama.** Com base no diagrama ER da UnDF, responda:
+
+a. Um professor pode ser lotado em mais de uma escola?
+b. Uma disciplina pode pertencer a mais de um curso?
+c. Um aluno pode estar matriculado em zero cursos?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Não. A cardinalidade N:1 em `lotado_em` indica que cada professor está lotado em exatamente uma escola.
+- **(b)** Não. A cardinalidade N:1 em `compoe` indica que cada disciplina pertence a exatamente um curso. (Disciplinas de mesmo nome em cursos diferentes teriam códigos distintos.)
+- **(c)** Não. A linha dupla (bold) em `aluno` → `matriculado_em` indica participação total: todo aluno deve estar matriculado em ao menos um curso.
+:::
+
+---
+
+**2. Adicionar ao diagrama.** O sistema da UnDF precisa registrar os **monitores** de cada disciplina: um monitor é um aluno que auxilia o professor em uma turma específica. Como você adicionaria essa informação ao diagrama ER? Qual a cardinalidade?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Adicionar um relacionamento `monitora` entre `aluno` e o relacionamento `ministra` (ou entre `aluno`, `professor` e `disciplina` se for ternário). A cardinalidade mais realista:
+
+- Um aluno pode monitorar múltiplas turmas: N no lado `aluno`
+- Uma turma pode ter múltiplos monitores: N no lado `ministra`
+
+Isso caracteriza N:N, possivelmente com atributo `periodo` (início e fim da monitoria). A implementação seria uma tabela `monitora(matricula, cod_disciplina, ano, semestre, turma, data_inicio, data_fim)` com FKs para `aluno` e `ministra`.
+:::
+
+---
+
+**3. Diagrama alternativo.** Outro projetista propõe eliminar a entidade `centro` e adicionar `nome_centro` como atributo de `escola`. Quais seriam as consequências dessa decisão?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Consequências:**
+- **Redundância**: o nome do centro (ex.: "COETI") seria armazenado uma vez para cada escola que pertence a ele. Se houvesse múltiplas escolas no mesmo centro, o nome repetiria.
+- **Anomalia de atualização**: mudar o nome de um centro exigiria atualizar múltiplas linhas de escola.
+- **Perda de informação**: dados próprios do centro (ex.: diretor, endereço, orçamento) não teriam onde ser armazenados.
+
+Manter `centro` como entidade separada evita esses problemas e permite registrar informações adicionais sobre os centros no futuro.
+:::

@@ -1,0 +1,170 @@
+# Agregação
+
+## O Problema
+
+O modelo ER básico não permite que um relacionamento participe diretamente de outro relacionamento. Mas há situações em que precisamos exatamente disso.
+
+::: {.exemplo}
+No banco da UnDF, registramos que um aluno cursou uma turma de uma disciplina com uma nota. A "turma" não é simplesmente uma entidade — é descrita por um relacionamento (`ministra`) entre `professor` e `disciplina`, com atributos `ano`, `semestre` e `turma`.
+
+Queremos associar `aluno` a essa "turma" (e registrar `nota` e `aprovado`). Mas `aluno` seria associado ao **relacionamento** `ministra`, não a uma entidade.
+:::
+
+## Solução: Agregação
+
+::: {.conceito}
+**Agregação** (*aggregation*) é uma abstração que trata um relacionamento como uma entidade de nível superior. O relacionamento (e os conjuntos de entidades que ele conecta) é "encaixotado" em uma nova entidade, que pode então participar de outros relacionamentos.
+
+A caixa de agregação é representada no diagrama ER por um retângulo tracejado ao redor do relacionamento e das entidades que ele conecta.
+:::
+
+## Diagrama ER com Agregação: UnDF
+
+```{dot}
+digraph er_agregacao {
+  graph [rankdir=LR, fontname="Times New Roman", bgcolor=white,
+         splines=false, nodesep=0.7, ranksep=1.4];
+  node  [fontname="Times New Roman", fontsize=10];
+
+  /* Entidades */
+  professor  [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  disciplina [shape=rectangle, style=filled, fillcolor="#AED6F1", label="disciplina"];
+  aluno      [shape=rectangle, style=filled, fillcolor="#AED6F1", label="aluno"];
+
+  /* Relacionamento ministra (agregado) */
+  ministra [shape=diamond, style=filled, fillcolor="#F9E79F", label="ministra"];
+
+  /* Relacionamento cursa — liga aluno à agregação */
+  cursa [shape=diamond, style=filled, fillcolor="#F9E79F", label="cursa"];
+
+  /* Atributos de cursa */
+  nota     [shape=ellipse, label="nota"];
+  aprovado [shape=ellipse, label="aprovado"];
+
+  /* Atributos de ministra */
+  ano      [shape=ellipse, label="ano"];
+  semestre [shape=ellipse, label="semestre"];
+  turma_a  [shape=ellipse, label="turma"];
+
+  /* Ligações ministra */
+  professor  -> ministra [arrowhead=none, label="N"];
+  ministra   -> disciplina [arrowhead=none, label="N"];
+  ministra   -> ano;
+  ministra   -> semestre;
+  ministra   -> turma_a;
+
+  /* Agregação: cursa liga aluno à "entidade" ministra */
+  aluno -> cursa [arrowhead=none, label="N"];
+  cursa -> ministra [arrowhead=none, label="N"];
+  cursa -> nota;
+  cursa -> aprovado;
+}
+```
+
+## Quando Usar Agregação
+
+Use agregação quando:
+
+1. Um relacionamento precisa participar de outro relacionamento
+2. Há informação que descreve a participação de uma entidade em um relacionamento (e não em uma das entidades envolvidas)
+3. O relacionamento "base" deve existir independentemente da participação da entidade externa
+
+::: {.callout-note}
+No caso da UnDF: uma oferta de turma (`ministra`) pode existir mesmo sem nenhum aluno matriculado nela. Um aluno pode se matricular nessa oferta (cursa), mas a oferta preexiste. Isso justifica a separação: `ministra` é o relacionamento base; `cursa` é a agregação que conecta `aluno` a ele.
+:::
+
+## Conversão para Esquema Relacional
+
+Para representar agregação em esquemas relacionais:
+
+::: {.conceito}
+Cria-se um schema para o relacionamento externo contendo:
+- A chave primária do **relacionamento agregado** (como FK)
+- A chave primária de cada **entidade adicional** participante (como FK)
+- Os atributos próprios do relacionamento externo
+:::
+
+::: {.exemplo}
+O relacionamento `cursa` com a agregação `ministra` no banco da UnDF:
+
+```
+-- Schema do relacionamento agregado (já existente):
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+
+-- Schema da agregação (relacionamento externo):
+matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
+  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
+  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
+  FK: cod_matricula → aluno(matricula)
+```
+
+O schema `ministra` não é redundante — ele é necessário para registrar as ofertas de turmas independentemente das matrículas dos alunos.
+:::
+
+## Agregação vs. Ternário
+
+Uma alternativa à agregação seria um relacionamento **ternário** entre `professor`, `disciplina` e `aluno`. A diferença:
+
+| Abordagem | Semântica |
+|---|---|
+| **Ternário** (professor–disciplina–aluno) | Cada tripla (professor, disciplina, aluno) é registrada em conjunto |
+| **Agregação** (ministra + aluno) | A oferta `ministra` existe independentemente; `aluno` se associa a ela |
+
+A agregação é mais rica: permite registrar que uma turma foi oferecida mas não teve matriculados, ou que uma nota foi registrada para uma oferta específica de um professor específico. O ternário puro não captura a existência da oferta sem aluno.
+
+---
+
+## Para Praticar
+
+**1. Identificar necessidade de agregação.** Para cada situação, determine se a agregação é necessária ou se um relacionamento binário/ternário simples é suficiente:
+
+a. Registrar que um funcionário trabalha em um projeto durante um período (data início, data fim)
+b. Registrar que um médico avaliou o resultado de um exame feito por um paciente (onde o exame tem data, tipo e resultado)
+c. Registrar que um cliente comprou um produto com um desconto específico
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Relacionamento binário simples `trabalha_em` entre `funcionario` e `projeto`, com atributos `data_inicio` e `data_fim`. Não precisa de agregação.
+- **(b)** Agregação necessária: `avalia` entre `médico` e o relacionamento `fez_exame` (entre `paciente` e `tipo_exame`). O exame existe independentemente da avaliação do médico.
+- **(c)** Relacionamento ternário ou binário `compra` entre `cliente`, `produto` e `pedido`, com atributo `desconto`. Pode-se resolver sem agregação dependendo do modelo.
+:::
+
+---
+
+**2. Conversão da agregação.** Dado o cenário: alunos fazem projetos sob orientação de professores. Um projeto pode ter múltiplos alunos orientados pelo mesmo professor. Defina: (a) o relacionamento base `orienta` entre `professor` e `projeto`; (b) o relacionamento externo `participa` entre `aluno` e a agregação `orienta` (com atributo `papel`). Escreva os schemas relacionais.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+```
+projeto(id_projeto, titulo, data_inicio, data_fim)
+  PK: id_projeto
+
+orienta(matricula_prof, id_projeto)
+  PK: (matricula_prof, id_projeto)
+  FK: matricula_prof → professor(matricula_prof)
+  FK: id_projeto → projeto(id_projeto)
+
+participa(matricula_prof, id_projeto, matricula_aluno, papel)
+  PK: (matricula_prof, id_projeto, matricula_aluno)
+  FK: (matricula_prof, id_projeto) → orienta(...)
+  FK: matricula_aluno → aluno(matricula)
+```
+
+O atributo `papel` descreve o papel do aluno naquela orientação específica (ex.: "bolsista", "voluntário").
+:::
+
+---
+
+**3. Armadilha: omitir a agregação.** Se representarmos `cursa` como relacionamento ternário direto `(professor, disciplina, aluno)` em vez de usar agregação, que informação se perde?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Um relacionamento ternário `(professor, disciplina, aluno)` força que **todo registro inclua um aluno** — não é possível registrar que uma turma foi oferecida sem alunos matriculados.
+
+Com a agregação (`ministra` existe independentemente; `matricula_disciplina` referencia `ministra`), é possível:
+1. Registrar uma oferta de turma sem nenhum aluno
+2. Saber exatamente em qual oferta específica (professor+disciplina+ano+semestre+turma) o aluno se matriculou, mesmo se o professor mudar entre semestres
+
+O ternário puro perderia essas distinções.
+:::

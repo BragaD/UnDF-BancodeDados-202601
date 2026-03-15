@@ -1,0 +1,144 @@
+# Tipos de Atributos
+
+Os atributos descrevem as propriedades de entidades e relacionamentos. Há vários tipos, cada um com implicações distintas para a modelagem e para a conversão em esquemas relacionais.
+
+## Classificação dos Atributos
+
+### Simples vs. Composto
+
+::: {.conceito}
+- **Atributo simples**: não pode ser dividido em subpartes. É atômico.
+- **Atributo composto**: pode ser decomposto em subatributos com significado próprio.
+:::
+
+::: {.exemplo}
+O atributo `nome` de um aluno pode ser modelado como **composto**:
+
+```
+nome
+├── primeiro_nome
+├── nome_do_meio   (opcional)
+└── sobrenome
+```
+
+Se o sistema precisar ordenar alunos por sobrenome ou gerar etiquetas formais com "Nome, Sobrenome", vale a pena decompor. Se o nome for tratado como um bloco único, mantê-lo simples é mais prático.
+
+No banco da UnDF, `nome` é mantido como atributo simples (string completa), pois não há necessidade de consultar partes do nome separadamente.
+:::
+
+### Monovalorado vs. Multivalorado
+
+::: {.conceito}
+- **Atributo monovalorado**: admite um único valor para cada entidade.
+- **Atributo multivalorado**: pode ter múltiplos valores para a mesma entidade. Representado no diagrama ER por uma **elipse com borda dupla**.
+:::
+
+::: {.exemplo}
+Um professor pode ter vários números de telefone. Se modelarmos `telefone` como atributo de `professor`, ele seria **multivalorado** — cada professor pode ter 0, 1 ou muitos telefones.
+
+No diagrama ER, isso é representado por uma elipse com borda dupla:
+
+```{dot}
+graph er_multivalor {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white, splines=false, nodesep=0.9];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  professor [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+  tel       [shape=ellipse, peripheries=2, label="telefone"];
+  nome      [shape=ellipse, label="nome"];
+  matricula [shape=ellipse, label=<&#818;m&#818;a&#818;t&#818;r&#818;i&#818;c&#818;u&#818;l&#818;a&#818;_&#818;p&#818;r&#818;o&#818;f&#818;>];
+
+  professor -- matricula;
+  professor -- nome;
+  professor -- tel;
+}
+```
+
+Na conversão para esquema relacional, atributos multivalorados tornam-se tabelas separadas (seção 4.8).
+:::
+
+### Derivado
+
+::: {.conceito}
+**Atributo derivado**: seu valor pode ser calculado a partir de outros atributos. Representado no diagrama ER por uma **elipse com borda tracejada**.
+:::
+
+::: {.exemplo}
+O atributo `tempo_de_casa` de um professor pode ser derivado de `ano_ingresso` e da data atual. O atributo `total_alunos` de um curso pode ser derivado contando as tuplas em `aluno` com aquele `sigla_curso`.
+
+Atributos derivados **não são armazenados** no banco de dados — são calculados no momento da consulta. Aparecem no diagrama ER apenas para documentar que a informação é derivável.
+:::
+
+## Domínio
+
+::: {.conceito}
+O **domínio** de um atributo é o conjunto de valores permitidos para ele.
+:::
+
+| Atributo | Domínio |
+|---|---|
+| `ch_semanal` em `professor` | `{20, 40}` (valores inteiros positivos) |
+| `tipo_curso` em `curso` | `{'bacharelado', 'licenciatura', 'tecnólogo'}` |
+| `nota` em `matricula_disciplina` | Reais entre 0 e 10 |
+| `aprovado` em `matricula_disciplina` | `{0, 1}` (booleano) |
+| `nome` em `aluno` | Strings de até 100 caracteres |
+
+O domínio é especificado no DDL pelo tipo de dado da coluna e por restrições `CHECK`.
+
+## Resumo dos Tipos
+
+| Tipo | Notação ER | Conversão Relacional |
+|---|---|---|
+| Simples | Elipse normal | Coluna direta |
+| Composto | Elipse com sub-elipses | Uma coluna por componente (ou coluna única) |
+| Monovalorado | Elipse normal | Coluna direta |
+| Multivalorado | Elipse com borda dupla | Tabela separada com FK |
+| Derivado | Elipse tracejada | Não armazenado (calculado) |
+
+---
+
+## Para Praticar
+
+**1. Classificar atributos.** Para a entidade `aluno` com atributos abaixo, classifique cada um como simples/composto e monovalorado/multivalorado/derivado:
+
+a. `matricula`
+b. `nome` (composto de primeiro nome e sobrenome)
+c. `endereco` (composto de rua, número, cidade, CEP)
+d. `emails` (um aluno pode ter e-mail pessoal e institucional)
+e. `ano_ingresso`
+f. `semestres_cursados` (pode ser calculado a partir de `ano_ingresso`)
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **(a)** Simples, monovalorado — código único por aluno.
+- **(b)** Composto, monovalorado — tem subpartes, mas cada aluno tem um nome.
+- **(c)** Composto, monovalorado — tem subpartes (rua, número, cidade, CEP).
+- **(d)** Simples (cada e-mail), multivalorado — um aluno pode ter múltiplos e-mails.
+- **(e)** Simples, monovalorado — um único ano de ingresso.
+- **(f)** Derivado — calculado a partir de `ano_ingresso` e da data atual; não precisa ser armazenado.
+:::
+
+---
+
+**2. Atributo composto no SQL.** O banco da UnDF armazena `nome` como uma única coluna `VARCHAR(100)`. Se quiséssemos decompor em `primeiro_nome` e `sobrenome`, qual seria a vantagem e qual seria o custo?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Vantagem**: consultas como `ORDER BY sobrenome` ou geração de formatações formais ("Souza, Eduarda") ficariam mais simples e eficientes — sem precisar de `SPLIT_PART` ou funções de string.
+
+**Custo**: migração dos dados existentes (separar nome e sobrenome de 18 alunos e 7 professores), maior complexidade na entrada de dados, e nomes compostos (ex.: "Ana Maria de Souza") precisam de regras claras de decomposição. Para o porte atual do banco, o custo não se justifica.
+:::
+
+---
+
+**3. Armadilha do atributo multivalorado em SQL.** Um desenvolvedor resolve armazenar múltiplos telefones de professores concatenando-os em uma coluna: `telefones = '11-9999-0001,11-9888-0002'`. Quais problemas essa solução causa?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **Busca**: encontrar todos os professores com determinado número exige `LIKE '%11-9999-0001%'`, que não usa índices eficientemente.
+- **Atualização**: remover um número requer manipulação de string no código da aplicação.
+- **Integridade**: não há como impor que cada número seja válido (formato, unicidade).
+- **Normalização**: viola a 1ª Forma Normal — valores não são atômicos.
+
+A solução correta é uma tabela separada: `telefone_professor(matricula_prof FK, telefone VARCHAR(20))`.
+:::

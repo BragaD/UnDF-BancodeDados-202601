@@ -1,0 +1,129 @@
+# Conjuntos de Entidades
+
+## Entidade e Conjunto de Entidades
+
+::: {.conceito}
+Uma **entidade** é um objeto do mundo real distinguível de outros objetos. Pode ser concreta (uma pessoa, um prédio) ou abstrata (um curso, uma matrícula).
+
+Um **conjunto de entidades** (*entity set*) é a coleção de todas as entidades do mesmo tipo que compartilham as mesmas propriedades.
+:::
+
+Cada entidade é descrita por um conjunto de **atributos** — propriedades descritivas pertencentes a todos os membros do conjunto.
+
+::: {.exemplo}
+No banco da UnDF, temos os seguintes conjuntos de entidades:
+
+| Conjunto de Entidades | Atributos |
+|---|---|
+| `professor` | matricula_prof, nome, escola, ch_semanal, salario |
+| `aluno` | matricula, nome, sigla_curso, ano_ingresso |
+| `disciplina` | codigo, nome_disciplina, sigla_curso, semestre, carga_horaria |
+| `curso` | sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso |
+| `escola` | escola, nome_escola, centro |
+| `centro` | centro, nome_centro |
+:::
+
+## Chave Primária do Conjunto de Entidades
+
+Um subconjunto dos atributos cujos valores identificam unicamente cada entidade forma a **chave primária** do conjunto de entidades. Nos diagramas ER, os atributos da chave primária são sublinhados.
+
+::: {.exemplo}
+- `professor`: chave primária = `matricula_prof` (ex.: PROF20230031)
+- `aluno`: chave primária = `matricula` (ex.: ENS-2023-001)
+- `disciplina`: chave primária = `codigo` (ex.: ENS-201)
+- `curso`: chave primária = `sigla_curso` (ex.: ENS)
+:::
+
+## Representação em Diagrama ER
+
+Na notação ER tradicional:
+
+::: {.conceito}
+- **Retângulo**: representa um conjunto de entidades
+- **Elipses**: representam atributos, conectadas ao retângulo por linhas
+- **Atributo sublinhado**: indica que é parte da chave primária
+:::
+
+```{dot}
+graph er_entidade {
+  graph [rankdir=TB, fontname="Times New Roman", bgcolor=white, splines=false];
+  node  [fontname="Times New Roman", fontsize=11];
+
+  professor [shape=rectangle, style=filled, fillcolor="#AED6F1", label="professor"];
+
+  matricula_prof [shape=ellipse, label=<&#818;m&#818;a&#818;t&#818;r&#818;i&#818;c&#818;u&#818;l&#818;a&#818;_&#818;p&#818;r&#818;o&#818;f&#818;>];
+  nome    [shape=ellipse, label="nome"];
+  escola  [shape=ellipse, label="escola"];
+  ch      [shape=ellipse, label="ch_semanal"];
+  salario [shape=ellipse, label="salario"];
+
+  professor -- matricula_prof;
+  professor -- nome;
+  professor -- escola;
+  professor -- ch;
+  professor -- salario;
+}
+```
+
+::: {.callout-note}
+A elipse com atributo sublinhado representa a chave primária. Como o Graphviz não suporta sublinhado nativo em labels de elipse de forma simples, nos diagramas completos do capítulo usa-se a convenção de indicar a PK em negrito ou com asterisco quando necessário.
+:::
+
+## Instância vs. Conjunto
+
+É importante distinguir o **conjunto de entidades** (o tipo, definido no schema) da **instância** (os dados reais armazenados):
+
+| Conceito | Exemplo |
+|---|---|
+| Conjunto de entidades `professor` | Todos os professores da UnDF |
+| Entidade individual | Gustavo Costa (PROF20230031, ESETI, 40h, R$ 3.300) |
+
+O conjunto de entidades corresponde ao schema da tabela; cada entidade corresponde a uma linha (tupla) da tabela.
+
+---
+
+## Para Praticar
+
+**1. Identificar conjuntos de entidades.** Um sistema de biblioteca universitária precisa registrar: livros (ISBN, título, ano), exemplares físicos (número de tombamento, localização na estante), autores (nome, nacionalidade) e empréstimos (data de retirada, data de devolução, usuário). Quais são os conjuntos de entidades? Quais são os atributos de cada um?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+- **livro**: ISBN (PK), título, ano
+- **exemplar**: numero_tombamento (PK), localizacao
+- **autor**: id_autor (PK), nome, nacionalidade
+- **usuario**: id_usuario (PK), nome
+
+`emprestimo` é melhor modelado como um **relacionamento** entre exemplar e usuário, com atributos data_retirada e data_devolucao — não como uma entidade separada (embora ambas as abordagens sejam válidas, discutiremos isso na seção 4.11).
+:::
+
+---
+
+**2. Chave primária composta.** Por que o atributo `nome` não é adequado como chave primária do conjunto de entidades `professor`? Que problema surge se dois professores tiverem o mesmo nome?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O nome não é garantidamente único — dois professores diferentes podem ter o mesmo nome (ex.: dois "Carlos Silva" na mesma instituição). Se `nome` fosse a PK, seria impossível distingui-los no banco de dados. Por isso usa-se `matricula_prof`, que é atribuída pela instituição e garantidamente única.
+:::
+
+---
+
+**3. Entidade ou atributo?** Um projetista quer registrar os telefones de contato de cada professor. Ele propõe adicionar uma coluna `telefone VARCHAR(20)` à tabela `professor`. Qual o problema dessa abordagem quando um professor tem mais de um telefone?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+Uma coluna simples suporta apenas um valor — é um **atributo monovalorado**. Para múltiplos telefones, as alternativas são:
+
+1. Criar um conjunto de entidades separado `telefone_professor(matricula_prof, telefone)` com uma linha por número — **atributo multivalorado representado como entidade**.
+2. Modelar `telefone` como um **atributo multivalorado** no ER (elipse com borda dupla), que depois vira uma tabela separada na conversão relacional.
+
+Empurrar múltiplos valores em uma única coluna (ex.: "11-9999-0001, 11-9888-0002") viola a primeira forma normal e dificulta buscas e atualizações.
+:::
+
+---
+
+**4. Limites de um conjunto de entidades.** Considere `ministra` no banco da UnDF: um professor ministra uma disciplina em um determinado ano, semestre e turma. `ministra` deve ser modelado como conjunto de entidades ou como relacionamento?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+`ministra` é melhor modelado como um **relacionamento** entre `professor` e `disciplina`, com atributos `ano`, `semestre`, `turma`, `horario` e `sala`. Relacionamentos descrevem associações entre entidades; aqui, a associação "um professor ministra uma disciplina em dado contexto" é exatamente isso. Veremos essa modelagem na seção 4.3.
+:::

@@ -1,0 +1,237 @@
+# Conversão ER → Esquema Relacional
+
+Um diagrama ER é uma ferramenta conceitual. Para implementar o banco de dados, precisamos convertê-lo em **esquemas relacionais** (tabelas). As regras de conversão são sistemáticas.
+
+## Regra 1: Entidade Forte
+
+::: {.conceito}
+Cada **conjunto de entidades forte** gera um schema com os mesmos atributos. A chave primária do ER torna-se a chave primária da relação.
+:::
+
+::: {.exemplo}
+As entidades fortes da UnDF geram diretamente suas relações:
+
+```
+centro(centro, nome_centro)
+  PK: centro
+
+escola(escola, nome_escola, centro)
+  PK: escola
+
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  PK: matricula_prof
+```
+:::
+
+## Regra 2: Entidade Fraca
+
+::: {.conceito}
+Cada **conjunto de entidades fraco** gera um schema que inclui:
+- Todos os seus atributos (incluindo o discriminador)
+- A **chave primária da entidade identificadora**
+
+A chave primária da relação é a união da PK da entidade identificadora com o discriminador.
+:::
+
+::: {.exemplo}
+Se `turma` fosse modelada como entidade fraca de `disciplina` com discriminador `(ano, semestre, id_turma)`:
+
+```
+turma(cod_disciplina, ano, semestre, id_turma, horario, sala)
+  PK: (cod_disciplina, ano, semestre, id_turma)
+  FK: cod_disciplina → disciplina(codigo)
+```
+:::
+
+## Regra 3: Atributo Composto
+
+::: {.conceito}
+**Atributos compostos** são **achatados** (*flattened*): cria-se uma coluna separada para cada componente.
+:::
+
+::: {.exemplo}
+Se `nome` fosse composto em `(primeiro_nome, nome_do_meio, sobrenome)`:
+
+```
+-- Em vez de: nome VARCHAR(100)
+primeiro_nome VARCHAR(50)  NOT NULL,
+nome_do_meio  VARCHAR(50),
+sobrenome     VARCHAR(50)  NOT NULL
+```
+
+O prefixo do atributo composto pode ser omitido se não houver ambiguidade (usa-se `primeiro_nome` em vez de `nome_primeiro_nome`).
+:::
+
+## Regra 4: Atributo Multivalorado
+
+::: {.conceito}
+Um **atributo multivalorado** $M$ da entidade $E$ gera um schema separado $EM$ contendo:
+- A chave primária de $E$ (como chave estrangeira)
+- O atributo $M$
+
+A chave primária de $EM$ é a combinação da PK de $E$ com $M$.
+:::
+
+::: {.exemplo}
+Se `professor` tiver atributo multivalorado `telefone`:
+
+```
+telefone_professor(matricula_prof, telefone)
+  PK: (matricula_prof, telefone)
+  FK: matricula_prof → professor(matricula_prof)
+```
+
+Cada número de telefone vira uma tupla separada.
+:::
+
+## Regra 5: Relacionamento N:N
+
+::: {.conceito}
+Um relacionamento **N:N** gera um novo schema contendo:
+- A chave primária de cada entidade participante (como FKs)
+- Os atributos próprios do relacionamento
+
+A chave primária é a união das PKs das entidades participantes.
+:::
+
+::: {.exemplo}
+O relacionamento `ministra` (N:N entre `professor` e `disciplina`):
+
+```
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+  FK: cod_disciplina → disciplina(codigo)
+  FK: matricula_prof → professor(matricula_prof)
+```
+
+Nota: como `ministra` tem atributos `ano`, `semestre` e `turma`, a PK inclui esses atributos para distinguir ofertas da mesma disciplina em semestres diferentes.
+:::
+
+## Regra 6: Relacionamento N:1 (e 1:N)
+
+::: {.conceito}
+Em um relacionamento **N:1** com participação total no lado N, em vez de criar um schema separado, **adiciona-se a chave primária do lado "1" como atributo extra (FK) no schema do lado "N"**.
+
+Isso é mais eficiente e evita uma JOIN desnecessária.
+:::
+
+::: {.exemplo}
+O relacionamento `lotado_em` (professor N:1 escola) não precisa de tabela própria:
+
+```
+-- Sem otimização (schema separado):
+lotado_em(matricula_prof, escola)
+
+-- Com otimização (FK embutida em professor):
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  FK: escola → escola(escola)
+```
+
+O mesmo se aplica a `pertence_a`, `ofertado_por`, `compoe` e `matriculado_em`.
+:::
+
+::: {.callout-warning}
+Se a participação do lado N for **parcial** (alguns podem não ter o relacionamento), a coluna FK adicionada pode conter NULL. Isso é semanticamente correto, mas deve ser documentado. Se NULL não for desejado, pode-se criar um schema separado para o relacionamento.
+:::
+
+## Regra 7: Relacionamento 1:1
+
+Para relacionamentos **1:1**, a chave primária de qualquer um dos dois lados pode ser adicionada como FK no outro. A escolha normalmente cai no lado com participação total (evita NULLs).
+
+## Esquema Completo da UnDF
+
+Aplicando todas as regras ao diagrama ER da UnDF:
+
+```
+centro(centro, nome_centro)
+
+escola(escola, nome_escola, centro)
+  FK: centro → centro(centro)
+
+curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
+  FK: escola → escola(escola)
+
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  FK: escola → escola(escola)
+
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+  FK: sigla_curso → curso(sigla_curso)
+
+disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
+  FK: sigla_curso → curso(sigla_curso)
+
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+  FK: cod_disciplina → disciplina(codigo)
+  FK: matricula_prof → professor(matricula_prof)
+
+prereq(codigo, prereq_codigo)
+  PK: (codigo, prereq_codigo)
+  FK: codigo → disciplina(codigo)
+  FK: prereq_codigo → disciplina(codigo)
+
+matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
+  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
+  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
+  FK: cod_matricula → aluno(matricula)
+```
+
+---
+
+## Para Praticar
+
+**1. Aplicar as regras.** Dado o seguinte fragmento ER de uma biblioteca:
+
+- Entidade `livro`(ISBN, título, ano)
+- Entidade `autor`(id_autor, nome)
+- Relacionamento N:N `escreve` entre `autor` e `livro`, com atributo `ordem` (posição do autor na lista de autores)
+
+Escreva o schema relacional resultante.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+```
+livro(ISBN, titulo, ano)
+  PK: ISBN
+
+autor(id_autor, nome)
+  PK: id_autor
+
+escreve(id_autor, ISBN, ordem)
+  PK: (id_autor, ISBN)
+  FK: id_autor → autor(id_autor)
+  FK: ISBN → livro(ISBN)
+```
+
+O atributo `ordem` fica no schema de `escreve`, pois descreve a posição do autor **naquele livro específico** — não é propriedade do autor nem do livro isoladamente.
+:::
+
+---
+
+**2. Redundância de schema.** Por que o schema do relacionamento `pertence_a` entre `escola` e `centro` é **redundante** quando `escola` já tem o atributo `centro`?
+
+::: {.callout-tip collapse="true"}
+## Resposta
+O relacionamento `pertence_a` (N:1) foi absorvido pelo schema de `escola` pela Regra 6: adicionou-se a FK `centro` diretamente em `escola`. Um schema separado `pertence_a(escola, centro)` conteria exatamente a mesma informação já presente na tabela `escola` — seria uma duplicação. Por isso, o schema de `pertence_a` é redundante e deve ser descartado.
+:::
+
+---
+
+**3. Atributo composto e consulta.** Se `endereco` de `aluno` fosse decomposto em `(rua, numero, cidade, cep)`, escreva uma consulta SQL que busca todos os alunos de Brasília. Compare com a versão onde `endereco` é uma coluna única.
+
+::: {.callout-tip collapse="true"}
+## Resposta
+**Com decomposição:**
+```sql
+SELECT nome FROM aluno WHERE cidade = 'Brasília';
+```
+Simples, eficiente, indexável.
+
+**Com coluna única:**
+```sql
+SELECT nome FROM aluno WHERE endereco LIKE '%Brasília%';
+```
+Ineficiente (sem uso de índice), frágil (pode pegar "Rua Brasília" erroneamente), e dependente do formato da string armazenada.
+
+A decomposição do atributo composto é sempre preferível quando buscas por partes do endereço são esperadas.
+:::

@@ -1,0 +1,40 @@
+# Projeto de Banco de Dados com o Modelo ER
+
+::: {.callout-note}
+Este capítulo é baseado no Capítulo 6 de @silberschatz2019.
+:::
+
+O projeto de um banco de dados começa muito antes de escrever a primeira linha de SQL. É necessário entender o que o sistema deve representar, identificar os objetos relevantes do mundo real e capturar as relações entre eles — tudo isso de forma independente de qualquer tecnologia específica.
+
+O **modelo Entidade-Relacionamento (ER)** é a ferramenta padrão para essa etapa conceitual. Ele permite especificar a estrutura lógica de um banco de dados por meio de três conceitos fundamentais: conjuntos de entidades, conjuntos de relacionamentos e atributos. O resultado é um **diagrama ER**, que comunica a estrutura do banco de dados de forma visual e independente de implementação.
+
+Ao final deste capítulo, você será capaz de:
+
+- Descrever as fases do projeto de banco de dados e as armadilhas a evitar
+- Identificar conjuntos de entidades, relacionamentos e atributos em um domínio de problema
+- Classificar atributos em simples, compostos, multivalorados e derivados
+- Representar cardinalidades (1:1, 1:N, N:N) e participação (total/parcial)
+- Modelar entidades fracas e seus relacionamentos identificadores
+- Construir um diagrama ER completo para um domínio real
+- Converter um diagrama ER em esquemas relacionais
+- Aplicar especialização, generalização e agregação quando apropriado
+- Tomar decisões de projeto fundamentadas: entidade vs. atributo, binário vs. n-ário
+- Reconhecer as notações alternativas UML e crow's foot
+
+## Seções
+
+| Seção | Tópico |
+|---|---|
+| [4.1](01-fases-projeto.qmd) | Fases do Projeto |
+| [4.2](02-entidades.qmd) | Conjuntos de Entidades |
+| [4.3](03-relacionamentos.qmd) | Conjuntos de Relacionamentos |
+| [4.4](04-atributos.qmd) | Tipos de Atributos |
+| [4.5](05-cardinalidade.qmd) | Cardinalidade e Participação |
+| [4.6](06-entidades-fracas.qmd) | Entidades Fracas |
+| [4.7](07-diagrama-er-undf.qmd) | Diagrama ER da UnDF |
+| [4.8](08-conversao-relacional.qmd) | Conversão ER → Relacional |
+| [4.9](09-especializacao.qmd) | Especialização e Generalização |
+| [4.10](10-agregacao.qmd) | Agregação |
+| [4.11](11-decisoes-projeto.qmd) | Decisões de Projeto |
+| [4.12](12-notacoes.qmd) | Notações Alternativas |
+| [Resumo](13-resumo.qmd) | Resumo e Exercícios |
