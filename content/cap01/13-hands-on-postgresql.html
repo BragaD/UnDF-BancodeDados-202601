@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>15&nbsp; Hands-on: PostgreSQL na Prática – Bases da Engenharia de Software 4</title>
+<title>Hands-on: PostgreSQL na Prática – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/13-hands-on-postgresql.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/13-hands-on-postgresql.html"><span class="chapter-title">Hands-on: PostgreSQL</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -165,92 +165,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+  <a href="../../content/cap01/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/00-exemplo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></span></a>
+  <a href="../../content/cap01/00-exemplo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O que é um Banco de Dados?</span></span></a>
+  <a href="../../content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">O que é um Banco de Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aplicações</span></span></a>
+  <a href="../../content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Aplicações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span></a>
+  <a href="../../content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por que não usar Arquivos?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
+  <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modelos de Dados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span></a>
+  <a href="../../content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão em Três Níveis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span></a>
+  <a href="../../content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Linguagens (DDL, DML, SQL)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
+  <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Projeto de Banco de Dados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/08-motor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span></a>
+  <a href="../../content/cap01/08-motor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motor de Banco de Dados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Arquiteturas</span></span></a>
+  <a href="../../content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Arquiteturas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Usuários e DBA</span></span></a>
+  <a href="../../content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Usuários e DBA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/11-historia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">História</span></span></a>
+  <a href="../../content/cap01/11-historia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">História</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  <a href="../../content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/13-hands-on-postgresql.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></span></a>
+  <a href="../../content/cap01/13-hands-on-postgresql.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Hands-on: PostgreSQL</span></a>
   </div>
 </li>
       </ul>
@@ -266,80 +251,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/01-estrutura.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span></a>
+  <a href="../../content/cap02/01-estrutura.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/02-schema.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Schema e Instância</span></span></a>
+  <a href="../../content/cap02/02-schema.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Schema e Instância</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/03-chaves.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Chaves</span></span></a>
+  <a href="../../content/cap02/03-chaves.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Chaves</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/04-diagrama-schema.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></span></a>
+  <a href="../../content/cap02/04-diagrama-schema.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama de Schema</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/05-linguagens-consulta.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Linguagens de Consulta Relacional</span></span></a>
+  <a href="../../content/cap02/05-linguagens-consulta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Linguagens de Consulta Relacional</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/06-algebra-relacional.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Álgebra Relacional</span></span></a>
+  <a href="../../content/cap02/06-algebra-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Álgebra Relacional</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/07-selecao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Operação de Seleção</span></span></a>
+  <a href="../../content/cap02/07-selecao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Operação de Seleção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/08-projecao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Operação de Projeção</span></span></a>
+  <a href="../../content/cap02/08-projecao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Operação de Projeção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/09-produto-juncao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Produto Cartesiano e Junção</span></span></a>
+  <a href="../../content/cap02/09-produto-juncao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Produto Cartesiano e Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/10-operacoes-conjunto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
+  <a href="../../content/cap02/10-operacoes-conjunto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Operações de Conjunto</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/11-operacoes-adicionais.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Operações Adicionais</span></span></a>
+  <a href="../../content/cap02/11-operacoes-adicionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Operações Adicionais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/12-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  <a href="../../content/cap02/12-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -355,74 +327,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/01-historia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span></a>
+  <a href="../../content/cap03/01-historia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">História e Partes do SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/02-ddl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span></a>
+  <a href="../../content/cap03/02-ddl.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Definição de Dados (DDL)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/03-select-from-where.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span></a>
+  <a href="../../content/cap03/03-select-from-where.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">SELECT-FROM-WHERE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span></a>
+  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cláusula SELECT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/05-clausula-where.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span></a>
+  <a href="../../content/cap03/05-clausula-where.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">WHERE e ORDER BY</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/06-operacoes-conjunto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
+  <a href="../../content/cap03/06-operacoes-conjunto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Operações de Conjunto</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/07-nulos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span></a>
+  <a href="../../content/cap03/07-nulos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Valores Nulos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/08-agregacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span></a>
+  <a href="../../content/cap03/08-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções de Agregação</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/09-subconsultas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Subconsultas</span></span></a>
+  <a href="../../content/cap03/09-subconsultas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Subconsultas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/10-modificacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></span></a>
+  <a href="../../content/cap03/10-modificacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modificação do Banco de Dados</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/11-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  <a href="../../content/cap03/11-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -438,86 +398,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+  <a href="../../content/cap04/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></span></a>
+  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></span></a>
+  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></span></a>
+  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Tipos de Atributos</span></span></a>
+  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></span></a>
+  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></span></a>
+  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></span></a>
+  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Conversão ER → Relacional</span></span></a>
+  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></span></a>
+  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></span></a>
+  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></span></a>
+  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></span></a>
+  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -532,38 +478,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#instalação-do-postgresql" id="toc-instalação-do-postgresql" class="nav-link active" data-scroll-target="#instalação-do-postgresql"><span class="header-section-number">15.1</span> Instalação do PostgreSQL</a></li>
-  <li><a href="#criando-o-banco-de-dados" id="toc-criando-o-banco-de-dados" class="nav-link" data-scroll-target="#criando-o-banco-de-dados"><span class="header-section-number">15.2</span> Criando o Banco de Dados</a></li>
-  <li><a href="#criando-as-tabelas" id="toc-criando-as-tabelas" class="nav-link" data-scroll-target="#criando-as-tabelas"><span class="header-section-number">15.3</span> Criando as Tabelas</a>
+  <li><a href="#instalação-do-postgresql" id="toc-instalação-do-postgresql" class="nav-link active" data-scroll-target="#instalação-do-postgresql">Instalação do PostgreSQL</a></li>
+  <li><a href="#criando-o-banco-de-dados" id="toc-criando-o-banco-de-dados" class="nav-link" data-scroll-target="#criando-o-banco-de-dados">Criando o Banco de Dados</a></li>
+  <li><a href="#criando-as-tabelas" id="toc-criando-as-tabelas" class="nav-link" data-scroll-target="#criando-as-tabelas">Criando as Tabelas</a>
   <ul>
-  <li><a href="#tabela-centro" id="toc-tabela-centro" class="nav-link" data-scroll-target="#tabela-centro"><span class="header-section-number">15.3.1</span> Tabela <code>centro</code></a></li>
-  <li><a href="#tabela-escola" id="toc-tabela-escola" class="nav-link" data-scroll-target="#tabela-escola"><span class="header-section-number">15.3.2</span> Tabela <code>escola</code></a></li>
-  <li><a href="#tabela-curso" id="toc-tabela-curso" class="nav-link" data-scroll-target="#tabela-curso"><span class="header-section-number">15.3.3</span> Tabela <code>curso</code></a></li>
-  <li><a href="#tabela-professor" id="toc-tabela-professor" class="nav-link" data-scroll-target="#tabela-professor"><span class="header-section-number">15.3.4</span> Tabela <code>professor</code></a></li>
-  <li><a href="#tabela-aluno" id="toc-tabela-aluno" class="nav-link" data-scroll-target="#tabela-aluno"><span class="header-section-number">15.3.5</span> Tabela <code>aluno</code></a></li>
-  <li><a href="#tabela-disciplina" id="toc-tabela-disciplina" class="nav-link" data-scroll-target="#tabela-disciplina"><span class="header-section-number">15.3.6</span> Tabela <code>disciplina</code></a></li>
-  <li><a href="#tabela-ministra" id="toc-tabela-ministra" class="nav-link" data-scroll-target="#tabela-ministra"><span class="header-section-number">15.3.7</span> Tabela <code>ministra</code></a></li>
-  <li><a href="#tabela-prereq" id="toc-tabela-prereq" class="nav-link" data-scroll-target="#tabela-prereq"><span class="header-section-number">15.3.8</span> Tabela <code>prereq</code></a></li>
-  <li><a href="#tabela-matricula_disciplina" id="toc-tabela-matricula_disciplina" class="nav-link" data-scroll-target="#tabela-matricula_disciplina"><span class="header-section-number">15.3.9</span> Tabela <code>matricula_disciplina</code></a></li>
+  <li><a href="#tabela-centro" id="toc-tabela-centro" class="nav-link" data-scroll-target="#tabela-centro">Tabela <code>centro</code></a></li>
+  <li><a href="#tabela-escola" id="toc-tabela-escola" class="nav-link" data-scroll-target="#tabela-escola">Tabela <code>escola</code></a></li>
+  <li><a href="#tabela-curso" id="toc-tabela-curso" class="nav-link" data-scroll-target="#tabela-curso">Tabela <code>curso</code></a></li>
+  <li><a href="#tabela-professor" id="toc-tabela-professor" class="nav-link" data-scroll-target="#tabela-professor">Tabela <code>professor</code></a></li>
+  <li><a href="#tabela-aluno" id="toc-tabela-aluno" class="nav-link" data-scroll-target="#tabela-aluno">Tabela <code>aluno</code></a></li>
+  <li><a href="#tabela-disciplina" id="toc-tabela-disciplina" class="nav-link" data-scroll-target="#tabela-disciplina">Tabela <code>disciplina</code></a></li>
+  <li><a href="#tabela-ministra" id="toc-tabela-ministra" class="nav-link" data-scroll-target="#tabela-ministra">Tabela <code>ministra</code></a></li>
+  <li><a href="#tabela-prereq" id="toc-tabela-prereq" class="nav-link" data-scroll-target="#tabela-prereq">Tabela <code>prereq</code></a></li>
+  <li><a href="#tabela-matricula_disciplina" id="toc-tabela-matricula_disciplina" class="nav-link" data-scroll-target="#tabela-matricula_disciplina">Tabela <code>matricula_disciplina</code></a></li>
   </ul></li>
-  <li><a href="#carregando-os-dados" id="toc-carregando-os-dados" class="nav-link" data-scroll-target="#carregando-os-dados"><span class="header-section-number">15.4</span> Carregando os Dados</a>
+  <li><a href="#carregando-os-dados" id="toc-carregando-os-dados" class="nav-link" data-scroll-target="#carregando-os-dados">Carregando os Dados</a>
   <ul>
-  <li><a href="#centros" id="toc-centros" class="nav-link" data-scroll-target="#centros"><span class="header-section-number">15.4.1</span> Centros</a></li>
-  <li><a href="#escolas" id="toc-escolas" class="nav-link" data-scroll-target="#escolas"><span class="header-section-number">15.4.2</span> Escolas</a></li>
-  <li><a href="#cursos" id="toc-cursos" class="nav-link" data-scroll-target="#cursos"><span class="header-section-number">15.4.3</span> Cursos</a></li>
-  <li><a href="#professores" id="toc-professores" class="nav-link" data-scroll-target="#professores"><span class="header-section-number">15.4.4</span> Professores</a></li>
-  <li><a href="#alunos" id="toc-alunos" class="nav-link" data-scroll-target="#alunos"><span class="header-section-number">15.4.5</span> Alunos</a></li>
-  <li><a href="#disciplinas" id="toc-disciplinas" class="nav-link" data-scroll-target="#disciplinas"><span class="header-section-number">15.4.6</span> Disciplinas</a></li>
-  <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos"><span class="header-section-number">15.4.7</span> Pré-requisitos</a></li>
-  <li><a href="#turmas-ministradas" id="toc-turmas-ministradas" class="nav-link" data-scroll-target="#turmas-ministradas"><span class="header-section-number">15.4.8</span> Turmas ministradas</a></li>
-  <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas"><span class="header-section-number">15.4.9</span> Matrículas em disciplinas</a></li>
+  <li><a href="#centros" id="toc-centros" class="nav-link" data-scroll-target="#centros">Centros</a></li>
+  <li><a href="#escolas" id="toc-escolas" class="nav-link" data-scroll-target="#escolas">Escolas</a></li>
+  <li><a href="#cursos" id="toc-cursos" class="nav-link" data-scroll-target="#cursos">Cursos</a></li>
+  <li><a href="#professores" id="toc-professores" class="nav-link" data-scroll-target="#professores">Professores</a></li>
+  <li><a href="#alunos" id="toc-alunos" class="nav-link" data-scroll-target="#alunos">Alunos</a></li>
+  <li><a href="#disciplinas" id="toc-disciplinas" class="nav-link" data-scroll-target="#disciplinas">Disciplinas</a></li>
+  <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos">Pré-requisitos</a></li>
+  <li><a href="#turmas-ministradas" id="toc-turmas-ministradas" class="nav-link" data-scroll-target="#turmas-ministradas">Turmas ministradas</a></li>
+  <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas">Matrículas em disciplinas</a></li>
   </ul></li>
-  <li><a href="#verificando-os-dados" id="toc-verificando-os-dados" class="nav-link" data-scroll-target="#verificando-os-dados"><span class="header-section-number">15.5</span> Verificando os Dados</a>
+  <li><a href="#verificando-os-dados" id="toc-verificando-os-dados" class="nav-link" data-scroll-target="#verificando-os-dados">Verificando os Dados</a>
   <ul>
-  <li><a href="#todos-os-cursos" id="toc-todos-os-cursos" class="nav-link" data-scroll-target="#todos-os-cursos"><span class="header-section-number">15.5.1</span> Todos os cursos</a></li>
-  <li><a href="#professores-por-escola" id="toc-professores-por-escola" class="nav-link" data-scroll-target="#professores-por-escola"><span class="header-section-number">15.5.2</span> Professores por escola</a></li>
-  <li><a href="#disciplinas-com-carga-horária-acima-de-100-h" id="toc-disciplinas-com-carga-horária-acima-de-100-h" class="nav-link" data-scroll-target="#disciplinas-com-carga-horária-acima-de-100-h"><span class="header-section-number">15.5.3</span> Disciplinas com carga horária acima de 100 h</a></li>
-  <li><a href="#alunos-de-engenharia-de-software-ingressantes-em-2023" id="toc-alunos-de-engenharia-de-software-ingressantes-em-2023" class="nav-link" data-scroll-target="#alunos-de-engenharia-de-software-ingressantes-em-2023"><span class="header-section-number">15.5.4</span> Alunos de Engenharia de Software ingressantes em 2023</a></li>
+  <li><a href="#todos-os-cursos" id="toc-todos-os-cursos" class="nav-link" data-scroll-target="#todos-os-cursos">Todos os cursos</a></li>
+  <li><a href="#professores-por-escola" id="toc-professores-por-escola" class="nav-link" data-scroll-target="#professores-por-escola">Professores por escola</a></li>
+  <li><a href="#disciplinas-com-carga-horária-acima-de-100-h" id="toc-disciplinas-com-carga-horária-acima-de-100-h" class="nav-link" data-scroll-target="#disciplinas-com-carga-horária-acima-de-100-h">Disciplinas com carga horária acima de 100 h</a></li>
+  <li><a href="#alunos-de-engenharia-de-software-ingressantes-em-2023" id="toc-alunos-de-engenharia-de-software-ingressantes-em-2023" class="nav-link" data-scroll-target="#alunos-de-engenharia-de-software-ingressantes-em-2023">Alunos de Engenharia de Software ingressantes em 2023</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -571,9 +517,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/13-hands-on-postgresql.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/13-hands-on-postgresql.html"><span class="chapter-title">Hands-on: PostgreSQL</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL na Prática</span></h1>
+<h1 class="title"><span class="chapter-title">Hands-on: PostgreSQL na Prática</span></h1>
 </div>
 
 
@@ -597,8 +543,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Nesta seção vamos instalar o PostgreSQL, criar o banco de dados <code>curso</code> da UnDF e popular as tabelas com os dados reais que utilizamos ao longo do material.</p>
-<section id="instalação-do-postgresql" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="instalação-do-postgresql"><span class="header-section-number">15.1</span> Instalação do PostgreSQL</h2>
+<section id="instalação-do-postgresql" class="level2">
+<h2 class="anchored" data-anchor-id="instalação-do-postgresql">Instalação do PostgreSQL</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Linux (Ubuntu/Debian)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Windows</a></li></ul>
 <div class="tab-content">
@@ -646,8 +592,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="criando-o-banco-de-dados" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="criando-o-banco-de-dados"><span class="header-section-number">15.2</span> Criando o Banco de Dados</h2>
+<section id="criando-o-banco-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="criando-o-banco-de-dados">Criando o Banco de Dados</h2>
 <p>Conecte-se ao console do PostgreSQL e crie o banco:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Em seguida, conecte-se a ele:</p>
@@ -666,11 +612,11 @@ Nota
 </div>
 </div>
 </section>
-<section id="criando-as-tabelas" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="criando-as-tabelas"><span class="header-section-number">15.3</span> Criando as Tabelas</h2>
+<section id="criando-as-tabelas" class="level2">
+<h2 class="anchored" data-anchor-id="criando-as-tabelas">Criando as Tabelas</h2>
 <p>As tabelas devem ser criadas na ordem correta: primeiro as referenciadas (sem dependências), depois as que referenciam outras.</p>
-<section id="tabela-centro" class="level3" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="tabela-centro"><span class="header-section-number">15.3.1</span> Tabela <code>centro</code></h3>
+<section id="tabela-centro" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-centro">Tabela <code>centro</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> centro (</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    centro     <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -678,8 +624,8 @@ Nota
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-escola" class="level3" data-number="15.3.2">
-<h3 data-number="15.3.2" class="anchored" data-anchor-id="tabela-escola"><span class="header-section-number">15.3.2</span> Tabela <code>escola</code></h3>
+<section id="tabela-escola" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-escola">Tabela <code>escola</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> escola (</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    escola      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -688,8 +634,8 @@ Nota
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-curso" class="level3" data-number="15.3.3">
-<h3 data-number="15.3.3" class="anchored" data-anchor-id="tabela-curso"><span class="header-section-number">15.3.3</span> Tabela <code>curso</code></h3>
+<section id="tabela-curso" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-curso">Tabela <code>curso</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> curso (</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sigla_curso   <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -701,8 +647,8 @@ Nota
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-professor" class="level3" data-number="15.3.4">
-<h3 data-number="15.3.4" class="anchored" data-anchor-id="tabela-professor"><span class="header-section-number">15.3.4</span> Tabela <code>professor</code></h3>
+<section id="tabela-professor" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-professor">Tabela <code>professor</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> professor (</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>)    <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -713,8 +659,8 @@ Nota
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-aluno" class="level3" data-number="15.3.5">
-<h3 data-number="15.3.5" class="anchored" data-anchor-id="tabela-aluno"><span class="header-section-number">15.3.5</span> Tabela <code>aluno</code></h3>
+<section id="tabela-aluno" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-aluno">Tabela <code>aluno</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> aluno (</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    matricula    <span class="dt">VARCHAR</span>(<span class="dv">15</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -724,8 +670,8 @@ Nota
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-disciplina" class="level3" data-number="15.3.6">
-<h3 data-number="15.3.6" class="anchored" data-anchor-id="tabela-disciplina"><span class="header-section-number">15.3.6</span> Tabela <code>disciplina</code></h3>
+<section id="tabela-disciplina" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-disciplina">Tabela <code>disciplina</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> disciplina (</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    codigo         <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -736,8 +682,8 @@ Nota
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-ministra" class="level3" data-number="15.3.7">
-<h3 data-number="15.3.7" class="anchored" data-anchor-id="tabela-ministra"><span class="header-section-number">15.3.7</span> Tabela <code>ministra</code></h3>
+<section id="tabela-ministra" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-ministra">Tabela <code>ministra</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> ministra (</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina  <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> disciplina(codigo),</span>
@@ -751,8 +697,8 @@ Nota
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-prereq" class="level3" data-number="15.3.8">
-<h3 data-number="15.3.8" class="anchored" data-anchor-id="tabela-prereq"><span class="header-section-number">15.3.8</span> Tabela <code>prereq</code></h3>
+<section id="tabela-prereq" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-prereq">Tabela <code>prereq</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> prereq (</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    codigo        <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
@@ -761,8 +707,8 @@ Nota
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="tabela-matricula_disciplina" class="level3" data-number="15.3.9">
-<h3 data-number="15.3.9" class="anchored" data-anchor-id="tabela-matricula_disciplina"><span class="header-section-number">15.3.9</span> Tabela <code>matricula_disciplina</code></h3>
+<section id="tabela-matricula_disciplina" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-matricula_disciplina">Tabela <code>matricula_disciplina</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> matricula_disciplina (</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
@@ -779,15 +725,15 @@ Nota
 </div>
 </section>
 </section>
-<section id="carregando-os-dados" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="carregando-os-dados"><span class="header-section-number">15.4</span> Carregando os Dados</h2>
+<section id="carregando-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="carregando-os-dados">Carregando os Dados</h2>
 <p>Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves estrangeiras):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">TRUNCATE</span> matricula_disciplina, ministra, prereq, disciplina,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         aluno, professor, curso, escola, centro <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="centros" class="level3" data-number="15.4.1">
-<h3 data-number="15.4.1" class="anchored" data-anchor-id="centros"><span class="header-section-number">15.4.1</span> Centros</h3>
+<section id="centros" class="level3">
+<h3 class="anchored" data-anchor-id="centros">Centros</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (centro, nome_centro) <span class="kw">VALUES</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'COCHCMA'</span>, <span class="st">'CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE'</span>),</span>
@@ -795,8 +741,8 @@ Nota
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'COETI'</span>,   <span class="st">'CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="escolas" class="level3" data-number="15.4.2">
-<h3 data-number="15.4.2" class="anchored" data-anchor-id="escolas"><span class="header-section-number">15.4.2</span> Escolas</h3>
+<section id="escolas" class="level3">
+<h3 class="anchored" data-anchor-id="escolas">Escolas</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> escola (escola, nome_escola, centro) <span class="kw">VALUES</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ESG'</span>,   <span class="st">'Escola Superior de Gestão'</span>,                               <span class="st">'COCHCMA'</span>),</span>
@@ -804,8 +750,8 @@ Nota
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ESETI'</span>, <span class="st">'Escola Superior de Engenharias, Tecnologia e Inovação'</span>,   <span class="st">'COETI'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="cursos" class="level3" data-number="15.4.3">
-<h3 data-number="15.4.3" class="anchored" data-anchor-id="cursos"><span class="header-section-number">15.4.3</span> Cursos</h3>
+<section id="cursos" class="level3">
+<h3 class="anchored" data-anchor-id="cursos">Cursos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso) <span class="kw">VALUES</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS'</span>, <span class="st">'Engenharia de Software'</span>, <span class="st">'ESETI'</span>, <span class="dv">8</span>, <span class="dv">3200</span>, <span class="st">'bacharelado'</span>),</span>
@@ -813,8 +759,8 @@ Nota
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED'</span>, <span class="st">'Pedagogia'</span>,              <span class="st">'EEMA'</span>,  <span class="dv">8</span>, <span class="dv">3410</span>, <span class="st">'licenciatura'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="professores" class="level3" data-number="15.4.4">
-<h3 data-number="15.4.4" class="anchored" data-anchor-id="professores"><span class="header-section-number">15.4.4</span> Professores</h3>
+<section id="professores" class="level3">
+<h3 class="anchored" data-anchor-id="professores">Professores</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (matricula_prof, nome, escola, ch_semanal, salario) <span class="kw">VALUES</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230005'</span>, <span class="st">'Eduarda Souza'</span>,   <span class="st">'EEMA'</span>,  <span class="dv">20</span>, <span class="dv">3200</span>),</span>
@@ -826,8 +772,8 @@ Nota
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230043'</span>, <span class="st">'Carla Pinto'</span>,     <span class="st">'ESG'</span>,   <span class="dv">40</span>, <span class="dv">6600</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="alunos" class="level3" data-number="15.4.5">
-<h3 data-number="15.4.5" class="anchored" data-anchor-id="alunos"><span class="header-section-number">15.4.5</span> Alunos</h3>
+<section id="alunos" class="level3">
+<h3 class="anchored" data-anchor-id="alunos">Alunos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (matricula, nome, sigla_curso, ano_ingresso) <span class="kw">VALUES</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023007001'</span>, <span class="st">'Beatriz Carvalho'</span>, <span class="st">'ECO'</span>, <span class="dv">2023</span>),</span>
@@ -850,8 +796,8 @@ Nota
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025009002'</span>, <span class="st">'Letícia Souza'</span>,    <span class="st">'PED'</span>, <span class="dv">2025</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="disciplinas" class="level3" data-number="15.4.6">
-<h3 data-number="15.4.6" class="anchored" data-anchor-id="disciplinas"><span class="header-section-number">15.4.6</span> Disciplinas</h3>
+<section id="disciplinas" class="level3">
+<h3 class="anchored" data-anchor-id="disciplinas">Disciplinas</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> disciplina (codigo, nome_disciplina, sigla_curso, semestre, carga_horaria) <span class="kw">VALUES</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="st">'História Econômica Geral'</span>,            <span class="st">'ECO'</span>, <span class="dv">2</span>,  <span class="dv">75</span>),</span>
@@ -880,8 +826,8 @@ Nota
 <span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-804'</span>, <span class="st">'Estatística Aplicada'</span>,                <span class="st">'PED'</span>, <span class="dv">8</span>,  <span class="dv">50</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="pré-requisitos" class="level3" data-number="15.4.7">
-<h3 data-number="15.4.7" class="anchored" data-anchor-id="pré-requisitos"><span class="header-section-number">15.4.7</span> Pré-requisitos</h3>
+<section id="pré-requisitos" class="level3">
+<h3 class="anchored" data-anchor-id="pré-requisitos">Pré-requisitos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> prereq (codigo, prereq_codigo) <span class="kw">VALUES</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="st">'ENS-201'</span>),</span>
@@ -902,8 +848,8 @@ Nota
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-803'</span>, <span class="st">'PED-603'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="turmas-ministradas" class="level3" data-number="15.4.8">
-<h3 data-number="15.4.8" class="anchored" data-anchor-id="turmas-ministradas"><span class="header-section-number">15.4.8</span> Turmas ministradas</h3>
+<section id="turmas-ministradas" class="level3">
+<h3 class="anchored" data-anchor-id="turmas-ministradas">Turmas ministradas</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ministra (cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala) <span class="kw">VALUES</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
@@ -944,8 +890,8 @@ Nota
 <span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-602'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230043'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-016'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="matrículas-em-disciplinas" class="level3" data-number="15.4.9">
-<h3 data-number="15.4.9" class="anchored" data-anchor-id="matrículas-em-disciplinas"><span class="header-section-number">15.4.9</span> Matrículas em disciplinas</h3>
+<section id="matrículas-em-disciplinas" class="level3">
+<h3 class="anchored" data-anchor-id="matrículas-em-disciplinas">Matrículas em disciplinas</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado) <span class="kw">VALUES</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
@@ -1014,10 +960,10 @@ Nota
 </div>
 </section>
 </section>
-<section id="verificando-os-dados" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="verificando-os-dados"><span class="header-section-number">15.5</span> Verificando os Dados</h2>
-<section id="todos-os-cursos" class="level3" data-number="15.5.1">
-<h3 data-number="15.5.1" class="anchored" data-anchor-id="todos-os-cursos"><span class="header-section-number">15.5.1</span> Todos os cursos</h3>
+<section id="verificando-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="verificando-os-dados">Verificando os Dados</h2>
+<section id="todos-os-cursos" class="level3">
+<h3 class="anchored" data-anchor-id="todos-os-cursos">Todos os cursos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, escola, tipo_curso</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> curso</span>
@@ -1057,8 +1003,8 @@ Nota
 </div>
 </div>
 </section>
-<section id="professores-por-escola" class="level3" data-number="15.5.2">
-<h3 data-number="15.5.2" class="anchored" data-anchor-id="professores-por-escola"><span class="header-section-number">15.5.2</span> Professores por escola</h3>
+<section id="professores-por-escola" class="level3">
+<h3 class="anchored" data-anchor-id="professores-por-escola">Professores por escola</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_professores</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
@@ -1091,8 +1037,8 @@ Nota
 </div>
 </div>
 </section>
-<section id="disciplinas-com-carga-horária-acima-de-100-h" class="level3" data-number="15.5.3">
-<h3 data-number="15.5.3" class="anchored" data-anchor-id="disciplinas-com-carga-horária-acima-de-100-h"><span class="header-section-number">15.5.3</span> Disciplinas com carga horária acima de 100 h</h3>
+<section id="disciplinas-com-carga-horária-acima-de-100-h" class="level3">
+<h3 class="anchored" data-anchor-id="disciplinas-com-carga-horária-acima-de-100-h">Disciplinas com carga horária acima de 100 h</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> disciplina</span>
@@ -1163,8 +1109,8 @@ Nota
 </div>
 </div>
 </section>
-<section id="alunos-de-engenharia-de-software-ingressantes-em-2023" class="level3" data-number="15.5.4">
-<h3 data-number="15.5.4" class="anchored" data-anchor-id="alunos-de-engenharia-de-software-ingressantes-em-2023"><span class="header-section-number">15.5.4</span> Alunos de Engenharia de Software ingressantes em 2023</h3>
+<section id="alunos-de-engenharia-de-software-ingressantes-em-2023" class="level3">
+<h3 class="anchored" data-anchor-id="alunos-de-engenharia-de-software-ingressantes-em-2023">Alunos de Engenharia de Software ingressantes em 2023</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> matricula, nome, ano_ingresso</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> aluno</span>
@@ -1665,12 +1611,12 @@ Nota
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../content/cap01/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Resumo e Exercícios</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../content/cap02/index.html" class="pagination-link" aria-label="Visão Geral">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Visão Geral</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Visão Geral</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
