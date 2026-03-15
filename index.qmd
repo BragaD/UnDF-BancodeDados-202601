@@ -1,6 +1,6 @@
 # Bem-vindo {.unnumbered}
 
-Este é o material de apoio da disciplina **Bases de Dados IV** do curso de **Bacharelado em Engenharia de Software** da UnDF.
+Este é o material de apoio da disciplina **Bases de Engenharia de Software IV - Banco de Dados** do curso de **Bacharelado em Engenharia de Software** da UnDF.
 
 ## Sobre a Disciplina
 
