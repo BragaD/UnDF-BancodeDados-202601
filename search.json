@@ -2397,7 +2397,7 @@
     "href": "content/cap04/05-cardinalidade.html#notação-no-diagrama-er",
     "title": "Cardinalidade e Participação",
     "section": "Notação no Diagrama ER",
-    "text": "Notação no Diagrama ER\nNa notação ER tradicional:\n\nSeta (→): o lado “um” — a entidade participa no máximo uma vez\nLinha (—): o lado “muitos” — a entidade pode participar múltiplas vezes\n\n\n\n\n\n\n\n\ner_card\n\n\ncluster_1n\n\n1:N — um professor lotado em uma escola\n(vários professores por escola)\n\n\ncluster_nn\n\nN:N — professor ministra disciplina\n\n\n\np1\n\nprofessor\n\n\n\nr1\n\nlotado_em\n\n\n\np1-&gt;r1\n\n\n\n\ne1\n\nescola\n\n\n\nr1-&gt;e1\n\n\n\n\n\np2\n\nprofessor\n\n\n\nr2\n\nministra\n\n\n\np2-&gt;r2\n\n\n\n\nd2\n\ndisciplina\n\n\n\nr2-&gt;d2",
+    "text": "Notação no Diagrama ER\nNa notação ER tradicional:\n\nSeta (→): o lado “um” — a entidade participa no máximo uma vez\nLinha (—): o lado “muitos” — a entidade pode participar múltiplas vezes\n\n\n\n\n\n\n\n\ner_card\n\n\ncluster_nn\n\nN:N — professor ministra disciplina\n\n\ncluster_1n\n\n1:N — um professor lotado em uma escola\n(vários professores por escola)\n\n\n\np1\n\nprofessor\n\n\n\nr1\n\nlotado_em\n\n\n\np1-&gt;r1\n\n\n\n\ne1\n\nescola\n\n\n\nr1-&gt;e1\n\n\n\n\n\np2\n\nprofessor\n\n\n\nr2\n\nministra\n\n\n\np2-&gt;r2\n\n\n\n\nd2\n\ndisciplina\n\n\n\nr2-&gt;d2",
     "crumbs": [
       "Capítulo 4: Projeto com o Modelo ER",
       "<span class='chapter-number'>46</span>  <span class='chapter-title'>Cardinalidade e Participação</span>"
