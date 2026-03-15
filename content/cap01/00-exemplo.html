@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -621,6 +656,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas">Matrículas em Disciplinas</a></li>
   </ul></li>
   <li><a href="#o-que-você-deve-produzir" id="toc-o-que-você-deve-produzir" class="nav-link" data-scroll-target="#o-que-você-deve-produzir">O que Você Deve Produzir</a></li>
+  <li><a href="#gabarito" id="toc-gabarito" class="nav-link" data-scroll-target="#gabarito">Gabarito</a>
+  <ul>
+  <li><a href="#modelo-conceitual-conjuntos-de-entidades-e-atributos" id="toc-modelo-conceitual-conjuntos-de-entidades-e-atributos" class="nav-link" data-scroll-target="#modelo-conceitual-conjuntos-de-entidades-e-atributos">Modelo Conceitual — Conjuntos de Entidades e Atributos</a></li>
+  <li><a href="#modelo-conceitual-relacionamentos-e-cardinalidades" id="toc-modelo-conceitual-relacionamentos-e-cardinalidades" class="nav-link" data-scroll-target="#modelo-conceitual-relacionamentos-e-cardinalidades">Modelo Conceitual — Relacionamentos e Cardinalidades</a></li>
+  <li><a href="#modelo-lógico-schemas-relacionais" id="toc-modelo-lógico-schemas-relacionais" class="nav-link" data-scroll-target="#modelo-lógico-schemas-relacionais">Modelo Lógico — Schemas Relacionais</a></li>
+  <li><a href="#modelo-lógico-ddl-estrutura-das-tabelas" id="toc-modelo-lógico-ddl-estrutura-das-tabelas" class="nav-link" data-scroll-target="#modelo-lógico-ddl-estrutura-das-tabelas">Modelo Lógico — DDL (estrutura das tabelas)</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -744,8 +786,769 @@ ul.task-list li input[type="checkbox"] {
 <p>Exemplo da primeira frase relevante: <em>“os professores da UnDF são identificados por uma matrícula institucional… o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário”</em> → entidade <code>professor</code> com atributos matrícula (PK), nome, escola (FK), ch_semanal, salário.</p>
 </div>
 </div>
+<hr>
+</section>
+<section id="gabarito" class="level2">
+<h2 class="anchored" data-anchor-id="gabarito">Gabarito</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Antes de ver o gabarito
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tente desenvolver os modelos de forma independente antes de consultar as respostas. O objetivo é exercitar o raciocínio de projeto — não há uma única resposta correta, mas há escolhas mais justificáveis do que outras.</p>
+</div>
+</div>
+<section id="modelo-conceitual-conjuntos-de-entidades-e-atributos" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-conceitual-conjuntos-de-entidades-e-atributos">Modelo Conceitual — Conjuntos de Entidades e Atributos</h3>
+<div class="spoiler" data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Entidade</th>
+<th>Atributos</th>
+<th>Chave Primária</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>centro</code></td>
+<td>codigo, nome_centro</td>
+<td>codigo</td>
+</tr>
+<tr class="even">
+<td><code>escola</code></td>
+<td>codigo, nome_escola, <strong>centro</strong> (FK)</td>
+<td>codigo</td>
+</tr>
+<tr class="odd">
+<td><code>curso</code></td>
+<td>sigla, nome_curso, <strong>escola</strong> (FK), n_semestres, carga_horaria_total, modalidade</td>
+<td>sigla</td>
+</tr>
+<tr class="even">
+<td><code>professor</code></td>
+<td>matricula_prof, nome, <strong>escola</strong> (FK), ch_semanal, salario</td>
+<td>matricula_prof</td>
+</tr>
+<tr class="odd">
+<td><code>aluno</code></td>
+<td>matricula, nome, ano_ingresso, <strong>sigla_curso</strong> (FK)</td>
+<td>matricula</td>
+</tr>
+<tr class="even">
+<td><code>disciplina</code></td>
+<td>codigo, nome, <strong>sigla_curso</strong> (FK), semestre_recomendado, carga_horaria</td>
+<td>codigo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="modelo-conceitual-relacionamentos-e-cardinalidades" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-conceitual-relacionamentos-e-cardinalidades">Modelo Conceitual — Relacionamentos e Cardinalidades</h3>
+<div class="spoiler" data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relacionamento</th>
+<th>Entidades</th>
+<th>Cardinalidade</th>
+<th>Participação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pertence_a</code></td>
+<td>escola → centro</td>
+<td>N:1</td>
+<td>Total em escola (toda escola tem um centro)</td>
+</tr>
+<tr class="even">
+<td><code>ofertado_por</code></td>
+<td>curso → escola</td>
+<td>N:1</td>
+<td>Total em curso</td>
+</tr>
+<tr class="odd">
+<td><code>lotado_em</code></td>
+<td>professor → escola</td>
+<td>N:1</td>
+<td>Total em professor</td>
+</tr>
+<tr class="even">
+<td><code>matriculado_em</code></td>
+<td>aluno → curso</td>
+<td>N:1</td>
+<td>Total em aluno (todo aluno tem um curso)</td>
+</tr>
+<tr class="odd">
+<td><code>compoe</code></td>
+<td>disciplina → curso</td>
+<td>N:1</td>
+<td>Total em disciplina</td>
+</tr>
+<tr class="even">
+<td><code>prereq</code></td>
+<td>disciplina ↔︎ disciplina</td>
+<td>N:N autorreferencial</td>
+<td>Parcial (algumas disciplinas não têm pré-requisitos)</td>
+</tr>
+<tr class="odd">
+<td><code>ministra</code></td>
+<td>professor ↔︎ disciplina</td>
+<td>N:N</td>
+<td>Parcial nos dois lados; atributos: ano, semestre, turma, horario, sala</td>
+</tr>
+<tr class="even">
+<td><code>cursa</code></td>
+<td>aluno ↔︎ <code>ministra</code> (agregação)</td>
+<td>N:N</td>
+<td>Parcial; atributos: nota, aprovado</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nota sobre agregação:</strong> <code>cursa</code> associa <code>aluno</code> ao relacionamento <code>ministra</code> — não a <code>disciplina</code> diretamente. Isso é necessário para registrar em qual turma específica (professor + disciplina + ano + semestre) o aluno se matriculou.</p>
+<p><strong>Nota sobre <code>prereq</code>:</strong> é um relacionamento autorreferencial sobre <code>disciplina</code>, com dois papéis distintos — “disciplina que exige” e “disciplina exigida”.</p>
+<p><strong>Diagrama ER:</strong></p>
+<div class="cell" data-fig-width="14" data-fig-height="10" data-out-width="100%" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="1344" height="960" viewbox="0.00 0.00 1033.53 1587.60" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1583.6)">
+<title>er_undf_gabarito</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-1583.6 1029.53,-1583.6 1029.53,4 -4,4"></polygon>
+<!-- centro -->
+<g id="node1" class="node">
+<title>centro</title>
+<polygon fill="#aed6f1" stroke="black" points="167.53,-36 113.53,-36 113.53,0 167.53,0 167.53,-36"></polygon>
+<text text-anchor="middle" x="140.53" y="-15" font-family="Times New Roman" font-size="10.00">centro</text>
+</g>
+<!-- escola -->
+<g id="node2" class="node">
+<title>escola</title>
+<polygon fill="#aed6f1" stroke="black" points="167.53,-361.6 113.53,-361.6 113.53,-325.6 167.53,-325.6 167.53,-361.6"></polygon>
+<text text-anchor="middle" x="140.53" y="-340.6" font-family="Times New Roman" font-size="10.00">escola</text>
+</g>
+<!-- pertence_a -->
+<g id="node7" class="node">
+<title>pertence_a</title>
+<polygon fill="#f9e79f" stroke="black" points="140.53,-198.8 90.17,-180.8 140.53,-162.8 190.89,-180.8 140.53,-198.8"></polygon>
+<text text-anchor="middle" x="140.53" y="-177.8" font-family="Times New Roman" font-size="10.00">pertence_a</text>
+</g>
+<!-- escola&#45;&gt;pertence_a -->
+<g id="edge1" class="edge">
+<title>escola-&gt;pertence_a</title>
+<path fill="none" stroke="black" d="M140.53,-325.56C140.53,-294.26 140.53,-230.27 140.53,-198.93"></path>
+<text text-anchor="middle" x="143.78" y="-259.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- curso -->
+<g id="node3" class="node">
+<title>curso</title>
+<polygon fill="#aed6f1" stroke="black" points="105.53,-687.2 51.53,-687.2 51.53,-651.2 105.53,-651.2 105.53,-687.2"></polygon>
+<text text-anchor="middle" x="78.53" y="-666.2" font-family="Times New Roman" font-size="10.00">curso</text>
+</g>
+<!-- ofertado_por -->
+<g id="node8" class="node">
+<title>ofertado_por</title>
+<polygon fill="#f9e79f" stroke="black" points="57.53,-524.4 -0.03,-506.4 57.53,-488.4 115.08,-506.4 57.53,-524.4"></polygon>
+<text text-anchor="middle" x="57.53" y="-503.4" font-family="Times New Roman" font-size="10.00">ofertado_por</text>
+</g>
+<!-- curso&#45;&gt;ofertado_por -->
+<g id="edge3" class="edge">
+<title>curso-&gt;ofertado_por</title>
+<path fill="none" stroke="black" d="M78.53,-651.16C78.53,-617.54 78.53,-546.22 78.53,-518.12"></path>
+<text text-anchor="middle" x="71.78" y="-585.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- professor -->
+<g id="node4" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="460.53,-1402.8 406.53,-1402.8 406.53,-1366.8 460.53,-1366.8 460.53,-1402.8"></polygon>
+<text text-anchor="middle" x="433.53" y="-1381.8" font-family="Times New Roman" font-size="10.00">professor</text>
+</g>
+<!-- lotado_em -->
+<g id="node9" class="node">
+<title>lotado_em</title>
+<polygon fill="#f9e79f" stroke="black" points="248.53,-1106.8 199.02,-1088.8 248.53,-1070.8 298.04,-1088.8 248.53,-1106.8"></polygon>
+<text text-anchor="middle" x="248.53" y="-1085.8" font-family="Times New Roman" font-size="10.00">lotado_em</text>
+</g>
+<!-- professor&#45;&gt;lotado_em -->
+<g id="edge5" class="edge">
+<title>professor-&gt;lotado_em</title>
+<path fill="none" stroke="black" d="M410.79,-1366.68C410.79,-1302.24 410.79,-1088 410.79,-1088 410.79,-1088 343.79,-1088 295.9,-1088"></path>
+<text text-anchor="middle" x="376.78" y="-1274.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- ministra_r -->
+<g id="node12" class="node">
+<title>ministra_r</title>
+<polygon fill="#f9e79f" stroke="black" points="551.53,-1200.8 510.07,-1182.8 551.53,-1164.8 592.98,-1182.8 551.53,-1200.8"></polygon>
+<text text-anchor="middle" x="551.53" y="-1179.8" font-family="Times New Roman" font-size="10.00">ministra</text>
+</g>
+<!-- professor&#45;&gt;ministra_r -->
+<g id="edge11" class="edge">
+<title>professor-&gt;ministra_r</title>
+<path fill="none" stroke="black" d="M437.29,-1366.57C437.29,-1318.32 437.29,-1191 437.29,-1191 437.29,-1191 495.35,-1191 528.68,-1191"></path>
+<text text-anchor="middle" x="521.78" y="-1274.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- aluno -->
+<g id="node5" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="360.53,-1579.6 306.53,-1579.6 306.53,-1543.6 360.53,-1543.6 360.53,-1579.6"></polygon>
+<text text-anchor="middle" x="333.53" y="-1558.6" font-family="Times New Roman" font-size="10.00">aluno</text>
+</g>
+<!-- matriculado_em -->
+<g id="node10" class="node">
+<title>matriculado_em</title>
+<polygon fill="#f9e79f" stroke="black" points="171.53,-1294.8 102.8,-1276.8 171.53,-1258.8 240.25,-1276.8 171.53,-1294.8"></polygon>
+<text text-anchor="middle" x="171.53" y="-1273.8" font-family="Times New Roman" font-size="10.00">matriculado_em</text>
+</g>
+<!-- aluno&#45;&gt;matriculado_em -->
+<g id="edge7" class="edge">
+<title>aluno-&gt;matriculado_em</title>
+<path fill="none" stroke="black" stroke-width="2" d="M319.81,-1543.3C319.81,-1480.27 319.81,-1276 319.81,-1276 319.81,-1276 277.03,-1276 237.43,-1276"></path>
+<text text-anchor="middle" x="295.78" y="-1477.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- cursa_r -->
+<g id="node14" class="node">
+<title>cursa_r</title>
+<polygon fill="#fad7a0" stroke="black" points="656.53,-1416.8 592.42,-1384.8 656.53,-1352.8 720.64,-1384.8 656.53,-1416.8"></polygon>
+<text text-anchor="middle" x="656.53" y="-1387.8" font-family="Times New Roman" font-size="10.00">cursa</text>
+<text text-anchor="middle" x="656.53" y="-1375.8" font-family="Times New Roman" font-size="10.00">(agregação)</text>
+</g>
+<!-- aluno&#45;&gt;cursa_r -->
+<g id="edge20" class="edge">
+<title>aluno-&gt;cursa_r</title>
+<path fill="none" stroke="black" d="M346.81,-1543.5C346.81,-1503.07 346.81,-1409 346.81,-1409 346.81,-1409 577.63,-1409 640.74,-1409"></path>
+<text text-anchor="middle" x="525.78" y="-1477.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- disciplina -->
+<g id="node6" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="387.91,-1012.8 333.15,-1012.8 333.15,-976.8 387.91,-976.8 387.91,-1012.8"></polygon>
+<text text-anchor="middle" x="360.53" y="-991.8" font-family="Times New Roman" font-size="10.00">disciplina</text>
+</g>
+<!-- compoe -->
+<g id="node11" class="node">
+<title>compoe</title>
+<polygon fill="#f9e79f" stroke="black" points="374.53,-850 333.97,-832 374.53,-814 415.08,-832 374.53,-850"></polygon>
+<text text-anchor="middle" x="374.53" y="-829" font-family="Times New Roman" font-size="10.00">compoe</text>
+</g>
+<!-- disciplina&#45;&gt;compoe -->
+<g id="edge9" class="edge">
+<title>disciplina-&gt;compoe</title>
+<path fill="none" stroke="black" d="M347.49,-976.76C347.49,-940.66 347.49,-861.07 347.49,-838.24"></path>
+<text text-anchor="middle" x="352.78" y="-910.7" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- prereq_r -->
+<g id="node13" class="node">
+<title>prereq_r</title>
+<polygon fill="#f9e79f" stroke="black" points="533.53,-850 498.38,-832 533.53,-814 568.68,-832 533.53,-850"></polygon>
+<text text-anchor="middle" x="533.53" y="-829" font-family="Times New Roman" font-size="10.00">prereq</text>
+</g>
+<!-- disciplina&#45;&gt;prereq_r -->
+<g id="edge18" class="edge">
+<title>disciplina-&gt;prereq_r</title>
+<path fill="none" stroke="black" d="M374.48,-976.56C374.48,-958.65 374.48,-934 374.48,-934 374.48,-934 508.42,-934 508.42,-934 508.42,-934 508.42,-857.98 508.42,-837.2"></path>
+<text text-anchor="middle" x="450.02" y="-910.7" font-family="Times,serif" font-size="9.00">disciplina</text>
+</g>
+<!-- pertence_a&#45;&gt;centro -->
+<g id="edge2" class="edge">
+<title>pertence_a-&gt;centro</title>
+<path fill="none" stroke="black" d="M140.53,-162.76C140.53,-162.76 140.53,-46.13 140.53,-46.13"></path>
+<polygon fill="black" stroke="black" points="144.03,-46.13 140.53,-36.13 137.03,-46.13 144.03,-46.13"></polygon>
+<text text-anchor="middle" x="142.78" y="-96.7" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- ofertado_por&#45;&gt;escola -->
+<g id="edge4" class="edge">
+<title>ofertado_por-&gt;escola</title>
+<path fill="none" stroke="black" d="M101.81,-502.03C101.81,-476.04 101.81,-343 101.81,-343 101.81,-343 103.22,-343 103.22,-343"></path>
+<polygon fill="black" stroke="black" points="103.22,-346.5 113.22,-343 103.22,-339.5 103.22,-346.5"></polygon>
+<text text-anchor="middle" x="119.78" y="-422.3" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- lotado_em&#45;&gt;escola -->
+<g id="edge6" class="edge">
+<title>lotado_em-&gt;escola</title>
+<path fill="none" stroke="black" d="M201.18,-1088C172.45,-1088 141.29,-1088 141.29,-1088 141.29,-1088 141.29,-371.63 141.29,-371.63"></path>
+<polygon fill="black" stroke="black" points="144.79,-371.63 141.29,-361.63 137.79,-371.63 144.79,-371.63"></polygon>
+<text text-anchor="middle" x="226.78" y="-747.9" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- matriculado_em&#45;&gt;curso -->
+<g id="edge8" class="edge">
+<title>matriculado_em-&gt;curso</title>
+<path fill="none" stroke="black" d="M110.29,-1274.83C110.29,-1237.11 110.29,-669 110.29,-669 110.29,-669 109.82,-669 109.82,-669"></path>
+<polygon fill="black" stroke="black" points="115.6,-665.5 105.6,-669 115.6,-672.5 115.6,-665.5"></polygon>
+<text text-anchor="middle" x="80.78" y="-992.1" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- compoe&#45;&gt;curso -->
+<g id="edge10" class="edge">
+<title>compoe-&gt;curso</title>
+<path fill="none" stroke="black" d="M335.95,-831C255.47,-831 77.1,-831 77.1,-831 77.1,-831 77.1,-697.45 77.1,-697.45"></path>
+<polygon fill="black" stroke="black" points="80.6,-697.45 77.1,-687.45 73.6,-697.45 80.6,-697.45"></polygon>
+<text text-anchor="middle" x="342.78" y="-747.9" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- ministra_r&#45;&gt;disciplina -->
+<g id="edge12" class="edge">
+<title>ministra_r-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M511.74,-1182C459.47,-1182 374.25,-1182 374.25,-1182 374.25,-1182 374.25,-1060.19 374.25,-1013.09"></path>
+<text text-anchor="middle" x="402.78" y="-1086.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- ano_m -->
+<g id="node15" class="node">
+<title>ano_m</title>
+<ellipse fill="none" stroke="black" cx="486.53" cy="-994.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="486.53" y="-991.8" font-family="Times New Roman" font-size="10.00">ano</text>
+</g>
+<!-- ministra_r&#45;&gt;ano_m -->
+<g id="edge13" class="edge">
+<title>ministra_r-&gt;ano_m</title>
+<path fill="none" stroke="black" d="M532.37,-1173C512.81,-1173 485.29,-1173 485.29,-1173 485.29,-1173 485.29,-1022.87 485.29,-1022.87"></path>
+<polygon fill="black" stroke="black" points="488.79,-1022.87 485.29,-1012.87 481.79,-1022.87 488.79,-1022.87"></polygon>
+</g>
+<!-- sem_m -->
+<g id="node16" class="node">
+<title>sem_m</title>
+<ellipse fill="none" stroke="black" cx="616.53" cy="-994.8" rx="30.82" ry="18"></ellipse>
+<text text-anchor="middle" x="616.53" y="-991.8" font-family="Times New Roman" font-size="10.00">semestre</text>
+</g>
+<!-- ministra_r&#45;&gt;sem_m -->
+<g id="edge14" class="edge">
+<title>ministra_r-&gt;sem_m</title>
+<path fill="none" stroke="black" d="M591.22,-1181.96C591.22,-1181.96 591.22,-1015.18 591.22,-1015.18"></path>
+<polygon fill="black" stroke="black" points="594.72,-1015.18 591.22,-1005.18 587.72,-1015.18 594.72,-1015.18"></polygon>
+</g>
+<!-- turma_m -->
+<g id="node17" class="node">
+<title>turma_m</title>
+<ellipse fill="none" stroke="black" cx="746.53" cy="-994.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="746.53" y="-991.8" font-family="Times New Roman" font-size="10.00">turma</text>
+</g>
+<!-- ministra_r&#45;&gt;turma_m -->
+<g id="edge15" class="edge">
+<title>ministra_r-&gt;turma_m</title>
+<path fill="none" stroke="black" d="M587.65,-1180.45C587.65,-1169.16 587.65,-1121 587.65,-1121 587.65,-1121 747.18,-1121 747.18,-1121 747.18,-1121 747.18,-1022.88 747.18,-1022.88"></path>
+<polygon fill="black" stroke="black" points="750.68,-1022.88 747.18,-1012.88 743.68,-1022.88 750.68,-1022.88"></polygon>
+</g>
+<!-- horario_m -->
+<g id="node18" class="node">
+<title>horario_m</title>
+<ellipse fill="none" stroke="black" cx="872.53" cy="-994.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="872.53" y="-991.8" font-family="Times New Roman" font-size="10.00">horario</text>
+</g>
+<!-- ministra_r&#45;&gt;horario_m -->
+<g id="edge16" class="edge">
+<title>ministra_r-&gt;horario_m</title>
+<path fill="none" stroke="black" d="M589.44,-1181.21C589.44,-1172.92 589.44,-1135 589.44,-1135 589.44,-1135 850.02,-1135 850.02,-1135 850.02,-1135 850.02,-1014.88 850.02,-1014.88"></path>
+<polygon fill="black" stroke="black" points="853.52,-1014.88 850.02,-1004.88 846.52,-1014.88 853.52,-1014.88"></polygon>
+</g>
+<!-- sala_m -->
+<g id="node19" class="node">
+<title>sala_m</title>
+<ellipse fill="none" stroke="black" cx="998.53" cy="-994.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="998.53" y="-991.8" font-family="Times New Roman" font-size="10.00">sala</text>
+</g>
+<!-- ministra_r&#45;&gt;sala_m -->
+<g id="edge17" class="edge">
+<title>ministra_r-&gt;sala_m</title>
+<path fill="none" stroke="black" d="M577.36,-1175.84C577.36,-1166.22 577.36,-1150 577.36,-1150 577.36,-1150 998.53,-1150 998.53,-1150 998.53,-1150 998.53,-1022.91 998.53,-1022.91"></path>
+<polygon fill="black" stroke="black" points="1002.03,-1022.91 998.53,-1012.91 995.03,-1022.91 1002.03,-1022.91"></polygon>
+</g>
+<!-- prereq_r&#45;&gt;disciplina -->
+<g id="edge19" class="edge">
+<title>prereq_r-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M503.31,-834.58C503.31,-846.06 503.31,-892 503.31,-892 503.31,-892 360.98,-892 360.98,-892 360.98,-892 360.98,-946.85 360.98,-976.42"></path>
+<text text-anchor="middle" x="567.77" y="-910.7" font-family="Times,serif" font-size="9.00">pré-requisito</text>
+</g>
+<!-- cursa_r&#45;&gt;ministra_r -->
+<g id="edge21" class="edge">
+<title>cursa_r-&gt;ministra_r</title>
+<path fill="none" stroke="black" d="M620.1,-1370.86C620.1,-1325.04 620.1,-1182 620.1,-1182 620.1,-1182 606.5,-1182 591.41,-1182"></path>
+<text text-anchor="middle" x="625.78" y="-1274.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- nota_c -->
+<g id="node20" class="node">
+<title>nota_c</title>
+<ellipse fill="none" stroke="black" cx="691.53" cy="-1182.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="691.53" y="-1179.8" font-family="Times New Roman" font-size="10.00">nota</text>
+</g>
+<!-- cursa_r&#45;&gt;nota_c -->
+<g id="edge22" class="edge">
+<title>cursa_r-&gt;nota_c</title>
+<path fill="none" stroke="black" d="M691.53,-1369.95C691.53,-1369.95 691.53,-1210.81 691.53,-1210.81"></path>
+<polygon fill="black" stroke="black" points="695.03,-1210.81 691.53,-1200.81 688.03,-1210.81 695.03,-1210.81"></polygon>
+</g>
+<!-- aprov_c -->
+<g id="node21" class="node">
+<title>aprov_c</title>
+<ellipse fill="none" stroke="black" cx="822.53" cy="-1182.8" rx="31.99" ry="18"></ellipse>
+<text text-anchor="middle" x="822.53" y="-1179.8" font-family="Times New Roman" font-size="10.00">aprovado</text>
+</g>
+<!-- cursa_r&#45;&gt;aprov_c -->
+<g id="edge23" class="edge">
+<title>cursa_r-&gt;aprov_c</title>
+<path fill="none" stroke="black" d="M719.28,-1384C766.29,-1384 822.53,-1384 822.53,-1384 822.53,-1384 822.53,-1211.01 822.53,-1211.01"></path>
+<polygon fill="black" stroke="black" points="826.03,-1211.01 822.53,-1201.01 819.03,-1211.01 826.03,-1211.01"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelo-lógico-schemas-relacionais" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-lógico-schemas-relacionais">Modelo Lógico — Schemas Relacionais</h3>
+<div class="spoiler" data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
+<pre><code>centro(centro, nome_centro)
+  PK: centro
+
+escola(escola, nome_escola, centro)
+  PK: escola
+  FK: centro → centro(centro)
+
+curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
+  PK: sigla_curso
+  FK: escola → escola(escola)
+
+professor(matricula_prof, nome, escola, ch_semanal, salario)
+  PK: matricula_prof
+  FK: escola → escola(escola)
+
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+  PK: matricula
+  FK: sigla_curso → curso(sigla_curso)
+
+disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
+  PK: codigo
+  FK: sigla_curso → curso(sigla_curso)
+
+prereq(codigo, prereq_codigo)
+  PK: (codigo, prereq_codigo)
+  FK: codigo → disciplina(codigo)
+  FK: prereq_codigo → disciplina(codigo)
+
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+  FK: cod_disciplina → disciplina(codigo)
+  FK: matricula_prof → professor(matricula_prof)
+
+matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
+  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
+  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
+  FK: cod_matricula → aluno(matricula)</code></pre>
+<p><strong>Decisões de projeto:</strong></p>
+<ul>
+<li>Os relacionamentos N:1 (<code>pertence_a</code>, <code>ofertado_por</code>, <code>lotado_em</code>, <code>compoe</code>, <code>matriculado_em</code>) foram absorvidos como FKs nas tabelas do lado N — não geraram tabelas próprias.</li>
+<li><code>prereq</code> gerou tabela própria por ser N:N autorreferencial.</li>
+<li><code>ministra</code> gerou tabela própria por ser N:N com atributos.</li>
+<li><code>matricula_disciplina</code> representa a agregação <code>cursa</code>: referencia a PK composta de <code>ministra</code> e a PK de <code>aluno</code>.</li>
+</ul>
+<p><strong>Diagrama de Schema:</strong></p>
+<div class="cell" data-fig-width="18" data-fig-height="10" data-out-width="100%" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="1728" height="960" viewbox="0.00 0.00 1886.97 457.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 453)">
+<title>schema_undf_gabarito</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-453 1882.97,-453 1882.97,4 -4,4"></polygon>
+<!-- centro -->
+<g id="node1" class="node">
+<title>centro</title>
+<polygon fill="white" stroke="transparent" points="1789.97,-94 1789.97,-162 1870.97,-162 1870.97,-94 1789.97,-94"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="1791.47,-139 1791.47,-161 1870.47,-161 1870.47,-139 1791.47,-139"></polygon>
+<text text-anchor="start" x="1812.69" y="-146.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">centro</text>
+<text text-anchor="start" x="1794.47" y="-124.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">centro</text>
+<text text-anchor="start" x="1794.42" y="-102.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_centro</text>
+<polygon fill="none" stroke="black" points="1789.97,-94 1789.97,-162 1870.97,-162 1870.97,-94 1789.97,-94"></polygon>
+</g>
+<!-- escola -->
+<g id="node2" class="node">
+<title>escola</title>
+<polygon fill="white" stroke="transparent" points="1499.99,-83 1499.99,-173 1580.99,-173 1580.99,-83 1499.99,-83"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="1501.49,-150 1501.49,-172 1580.49,-172 1580.49,-150 1501.49,-150"></polygon>
+<text text-anchor="start" x="1523.11" y="-157.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">escola</text>
+<text text-anchor="start" x="1504.49" y="-135.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">escola</text>
+<text text-anchor="start" x="1504.45" y="-113.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_escola</text>
+<text text-anchor="start" x="1504.49" y="-91.4" font-family="Times New Roman" font-style="italic" font-size="14.00">centro</text>
+<polygon fill="none" stroke="black" points="1499.99,-83 1499.99,-173 1580.99,-173 1580.99,-83 1499.99,-83"></polygon>
+</g>
+<!-- escola&#45;&gt;centro -->
+<g id="edge1" class="edge">
+<title>escola-&gt;centro</title>
+<path fill="none" stroke="black" d="M1589.03,-128C1589.03,-128 1774.78,-128 1774.78,-128"></path>
+<polygon fill="black" stroke="black" points="1774.78,-130.45 1781.78,-128 1774.78,-125.55 1774.78,-130.45"></polygon>
+<text text-anchor="middle" x="1685.48" y="-132.2" font-family="Times,serif" font-size="14.00">centro</text>
+</g>
+<!-- curso -->
+<g id="node3" class="node">
+<title>curso</title>
+<polygon fill="white" stroke="transparent" points="1201.01,-142 1201.01,-298 1291.01,-298 1291.01,-142 1201.01,-142"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="1202.01,-275 1202.01,-297 1290.01,-297 1290.01,-275 1202.01,-275"></polygon>
+<text text-anchor="start" x="1230.06" y="-282.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">curso</text>
+<text text-anchor="start" x="1205.01" y="-260.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">sigla_curso</text>
+<text text-anchor="start" x="1205.01" y="-238.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_curso</text>
+<text text-anchor="start" x="1205.01" y="-216.4" font-family="Times New Roman" font-style="italic" font-size="14.00">escola</text>
+<text text-anchor="start" x="1205.01" y="-194.4" font-family="Times New Roman" font-style="italic" font-size="14.00">n_semestres</text>
+<text text-anchor="start" x="1204.79" y="-172.4" font-family="Times New Roman" font-style="italic" font-size="14.00">carga_horaria</text>
+<text text-anchor="start" x="1205.01" y="-150.4" font-family="Times New Roman" font-style="italic" font-size="14.00">tipo_curso</text>
+<polygon fill="none" stroke="black" points="1201.01,-142 1201.01,-298 1291.01,-298 1291.01,-142 1201.01,-142"></polygon>
+</g>
+<!-- curso&#45;&gt;escola -->
+<g id="edge2" class="edge">
+<title>curso-&gt;escola</title>
+<path fill="none" stroke="black" d="M1299.34,-157.5C1299.34,-157.5 1484.95,-157.5 1484.95,-157.5"></path>
+<polygon fill="black" stroke="black" points="1484.95,-159.95 1491.95,-157.5 1484.95,-155.05 1484.95,-159.95"></polygon>
+<text text-anchor="middle" x="1395.5" y="-190.2" font-family="Times,serif" font-size="14.00">escola</text>
+</g>
+<!-- professor -->
+<g id="node4" class="node">
+<title>professor</title>
+<polygon fill="white" stroke="transparent" points="1014.01,-4 1014.01,-138 1106.01,-138 1106.01,-4 1014.01,-4"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="1015.01,-115 1015.01,-137 1105.01,-137 1105.01,-115 1015.01,-115"></polygon>
+<text text-anchor="start" x="1033.18" y="-122.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">professor</text>
+<text text-anchor="start" x="1017.62" y="-100.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">matricula_prof</text>
+<text text-anchor="start" x="1018.01" y="-78.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome</text>
+<text text-anchor="start" x="1018.01" y="-56.4" font-family="Times New Roman" font-style="italic" font-size="14.00">escola</text>
+<text text-anchor="start" x="1018.01" y="-34.4" font-family="Times New Roman" font-style="italic" font-size="14.00">ch_semanal</text>
+<text text-anchor="start" x="1018.01" y="-12.4" font-family="Times New Roman" font-style="italic" font-size="14.00">salario</text>
+<polygon fill="none" stroke="black" points="1014.01,-4 1014.01,-138 1106.01,-138 1106.01,-4 1014.01,-4"></polygon>
+</g>
+<!-- professor&#45;&gt;escola -->
+<g id="edge3" class="edge">
+<title>professor-&gt;escola</title>
+<path fill="none" stroke="black" d="M1114.19,-108.5C1114.19,-108.5 1484.9,-108.5 1484.9,-108.5"></path>
+<polygon fill="black" stroke="black" points="1484.9,-110.95 1491.9,-108.5 1484.9,-106.05 1484.9,-110.95"></polygon>
+<text text-anchor="middle" x="1246.01" y="-75.2" font-family="Times,serif" font-size="14.00">escola</text>
+</g>
+<!-- aluno -->
+<g id="node5" class="node">
+<title>aluno</title>
+<polygon fill="white" stroke="transparent" points="641.01,-333 641.01,-445 724.01,-445 724.01,-333 641.01,-333"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="642.51,-422 642.51,-444 723.51,-444 723.51,-422 642.51,-422"></polygon>
+<text text-anchor="start" x="666.28" y="-429.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">aluno</text>
+<text text-anchor="start" x="645.51" y="-407.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">matricula</text>
+<text text-anchor="start" x="645.51" y="-385.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome</text>
+<text text-anchor="start" x="645.51" y="-363.4" font-family="Times New Roman" font-style="italic" font-size="14.00">sigla_curso</text>
+<text text-anchor="start" x="645.29" y="-341.4" font-family="Times New Roman" font-style="italic" font-size="14.00">ano_ingresso</text>
+<polygon fill="none" stroke="black" points="641.01,-333 641.01,-445 724.01,-445 724.01,-333 641.01,-333"></polygon>
+</g>
+<!-- aluno&#45;&gt;curso -->
+<g id="edge4" class="edge">
+<title>aluno-&gt;curso</title>
+<path fill="none" stroke="black" d="M699.97,-328.99C699.97,-310.78 699.97,-295.5 699.97,-295.5 699.97,-295.5 1185.66,-295.5 1185.66,-295.5"></path>
+<polygon fill="black" stroke="black" points="1185.66,-297.95 1192.66,-295.5 1185.66,-293.05 1185.66,-297.95"></polygon>
+<text text-anchor="middle" x="869.01" y="-393.2" font-family="Times,serif" font-size="14.00">sigla_curso</text>
+</g>
+<!-- disciplina -->
+<g id="node6" class="node">
+<title>disciplina</title>
+<polygon fill="white" stroke="transparent" points="819.01,-151 819.01,-285 919.01,-285 919.01,-151 819.01,-151"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="820.01,-262 820.01,-284 918.01,-284 918.01,-262 820.01,-262"></polygon>
+<text text-anchor="start" x="841.01" y="-269.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">disciplina</text>
+<text text-anchor="start" x="823.01" y="-247.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">codigo</text>
+<text text-anchor="start" x="822.74" y="-225.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nome_disciplina</text>
+<text text-anchor="start" x="823.01" y="-203.4" font-family="Times New Roman" font-style="italic" font-size="14.00">sigla_curso</text>
+<text text-anchor="start" x="823.01" y="-181.4" font-family="Times New Roman" font-style="italic" font-size="14.00">semestre</text>
+<text text-anchor="start" x="823.01" y="-159.4" font-family="Times New Roman" font-style="italic" font-size="14.00">carga_horaria</text>
+<polygon fill="none" stroke="black" points="819.01,-151 819.01,-285 919.01,-285 919.01,-151 819.01,-151"></polygon>
+</g>
+<!-- disciplina&#45;&gt;curso -->
+<g id="edge5" class="edge">
+<title>disciplina-&gt;curso</title>
+<path fill="none" stroke="black" d="M927.09,-218C927.09,-218 1185.74,-218 1185.74,-218"></path>
+<polygon fill="black" stroke="black" points="1185.74,-220.45 1192.74,-218 1185.74,-215.55 1185.74,-220.45"></polygon>
+<text text-anchor="middle" x="1060.01" y="-223.2" font-family="Times,serif" font-size="14.00">sigla_curso</text>
+</g>
+<!-- prereq -->
+<g id="node7" class="node">
+<title>prereq</title>
+<polygon fill="white" stroke="transparent" points="455.01,-241 455.01,-309 545.01,-309 545.01,-241 455.01,-241"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="456.01,-286 456.01,-308 544.01,-308 544.01,-286 456.01,-286"></polygon>
+<text text-anchor="start" x="481.35" y="-293.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">prereq</text>
+<text text-anchor="start" x="459.01" y="-271.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">codigo</text>
+<text text-anchor="start" x="458.8" y="-249.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">prereq_codigo</text>
+<polygon fill="none" stroke="black" points="455.01,-241 455.01,-309 545.01,-309 545.01,-241 455.01,-241"></polygon>
+</g>
+<!-- prereq&#45;&gt;disciplina -->
+<g id="edge6" class="edge">
+<title>prereq-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M553.27,-254.33C553.27,-254.33 803.9,-254.33 803.9,-254.33"></path>
+<polygon fill="black" stroke="black" points="803.9,-256.78 810.9,-254.33 803.9,-251.88 803.9,-256.78"></polygon>
+<text text-anchor="middle" x="682.51" y="-293.2" font-family="Times,serif" font-size="14.00">codigo</text>
+</g>
+<!-- prereq&#45;&gt;disciplina -->
+<g id="edge7" class="edge">
+<title>prereq-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M553.27,-271.67C553.27,-271.67 803.9,-271.67 803.9,-271.67"></path>
+<polygon fill="black" stroke="black" points="803.9,-274.12 810.9,-271.67 803.9,-269.22 803.9,-274.12"></polygon>
+<text text-anchor="middle" x="682.51" y="-221.2" font-family="Times,serif" font-size="14.00">prereq_codigo</text>
+</g>
+<!-- ministra -->
+<g id="node8" class="node">
+<title>ministra</title>
+<polygon fill="white" stroke="transparent" points="454.01,-5 454.01,-183 546.01,-183 546.01,-5 454.01,-5"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="455.01,-160 455.01,-182 545.01,-182 545.01,-160 455.01,-160"></polygon>
+<text text-anchor="start" x="475.89" y="-167.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">ministra</text>
+<text text-anchor="start" x="458.01" y="-145.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">cod_disciplina</text>
+<text text-anchor="start" x="458.01" y="-123.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">ano</text>
+<text text-anchor="start" x="458.01" y="-101.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">semestre</text>
+<text text-anchor="start" x="458.01" y="-79.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">turma</text>
+<text text-anchor="start" x="457.62" y="-57.4" font-family="Times New Roman" font-style="italic" font-size="14.00">matricula_prof</text>
+<text text-anchor="start" x="458.01" y="-35.4" font-family="Times New Roman" font-style="italic" font-size="14.00">horario</text>
+<text text-anchor="start" x="458.01" y="-13.4" font-family="Times New Roman" font-style="italic" font-size="14.00">sala</text>
+<polygon fill="none" stroke="black" points="454.01,-5 454.01,-183 546.01,-183 546.01,-5 454.01,-5"></polygon>
+</g>
+<!-- ministra&#45;&gt;professor -->
+<g id="edge9" class="edge">
+<title>ministra-&gt;professor</title>
+<path fill="none" stroke="black" d="M554.21,-71.5C554.21,-71.5 998.78,-71.5 998.78,-71.5"></path>
+<polygon fill="black" stroke="black" points="998.78,-73.95 1005.78,-71.5 998.78,-69.05 998.78,-73.95"></polygon>
+<text text-anchor="middle" x="682.51" y="-75.2" font-family="Times,serif" font-size="14.00">matricula_prof</text>
+</g>
+<!-- ministra&#45;&gt;disciplina -->
+<g id="edge8" class="edge">
+<title>ministra-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M554.06,-167C554.06,-167 803.86,-167 803.86,-167"></path>
+<polygon fill="black" stroke="black" points="803.86,-169.45 810.86,-167 803.86,-164.55 803.86,-169.45"></polygon>
+<text text-anchor="middle" x="682.51" y="-148.2" font-family="Times,serif" font-size="14.00">cod_disciplina</text>
+</g>
+<!-- mat_disc -->
+<g id="node9" class="node">
+<title>mat_disc</title>
+<polygon fill="white" stroke="transparent" points="8,-153 8,-331 135,-331 135,-153 8,-153"></polygon>
+<polygon fill="#aed6f1" stroke="transparent" points="9.5,-308 9.5,-330 134.5,-330 134.5,-308 9.5,-308"></polygon>
+<text text-anchor="start" x="12.49" y="-315.4" font-family="Times New Roman" font-weight="bold" font-style="italic" font-size="14.00">matricula_disciplina</text>
+<text text-anchor="start" x="12.5" y="-293.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">cod_disciplina</text>
+<text text-anchor="start" x="12.5" y="-271.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">ano</text>
+<text text-anchor="start" x="12.5" y="-249.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">semestre</text>
+<text text-anchor="start" x="12.5" y="-227.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">turma</text>
+<text text-anchor="start" x="12.5" y="-205.4" font-family="Times New Roman" font-style="italic" text-decoration="underline" font-size="14.00">cod_matricula</text>
+<text text-anchor="start" x="12.5" y="-183.4" font-family="Times New Roman" font-style="italic" font-size="14.00">nota</text>
+<text text-anchor="start" x="12.5" y="-161.4" font-family="Times New Roman" font-style="italic" font-size="14.00">aprovado</text>
+<polygon fill="none" stroke="black" points="8,-153 8,-331 135,-331 135,-153 8,-153"></polygon>
+</g>
+<!-- mat_disc&#45;&gt;aluno -->
+<g id="edge11" class="edge">
+<title>mat_disc-&gt;aluno</title>
+<path fill="none" stroke="black" d="M143.03,-321C301.25,-321 666.97,-321 666.97,-321 666.97,-321 666.97,-321.8 666.97,-321.8"></path>
+<polygon fill="black" stroke="black" points="664.52,-321.8 666.97,-328.8 669.42,-321.8 664.52,-321.8"></polygon>
+<text text-anchor="middle" x="294.51" y="-393.2" font-family="Times,serif" font-size="14.00">cod_matricula</text>
+</g>
+<!-- mat_disc&#45;&gt;ministra -->
+<g id="edge10" class="edge">
+<title>mat_disc-&gt;ministra</title>
+<path fill="none" stroke="black" d="M143.22,-168C143.22,-168 438.74,-168 438.74,-168"></path>
+<polygon fill="black" stroke="black" points="438.74,-170.45 445.74,-168 438.74,-165.55 438.74,-170.45"></polygon>
+<text text-anchor="middle" x="294.51" y="-210.2" font-family="Times,serif" font-size="14.00">(cod_disc,ano,sem,turma)</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelo-lógico-ddl-estrutura-das-tabelas" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-lógico-ddl-estrutura-das-tabelas">Modelo Lógico — DDL (estrutura das tabelas)</h3>
+<div class="spoiler" data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> centro (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    centro      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> escola (</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    escola      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    nome_escola <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    centro      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> centro(centro)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> curso (</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    sigla_curso   <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    nome_curso    <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    escola        <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> escola(escola),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    n_semestres   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    tipo_curso    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> professor (</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>)   <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    nome           <span class="dt">VARCHAR</span>(<span class="dv">100</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    escola         <span class="dt">VARCHAR</span>(<span class="dv">10</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> escola(escola),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    ch_semanal     <span class="dt">INTEGER</span>       <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    salario        <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> aluno (</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    matricula    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    nome         <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    sigla_curso  <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> curso(sigla_curso),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    ano_ingresso <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> disciplina (</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    codigo          <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    nome_disciplina <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    sigla_curso     <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> curso(sigla_curso),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    semestre        <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    carga_horaria   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> prereq (</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    codigo        <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    prereq_codigo <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (codigo, prereq_codigo)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> ministra (</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> disciplina(codigo),</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    ano            <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    turma          <span class="dt">VARCHAR</span>(<span class="dv">5</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> professor(matricula_prof),</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    horario        <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    sala           <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> matricula_disciplina (</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    ano            <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    turma          <span class="dt">VARCHAR</span>(<span class="dv">5</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    cod_matricula  <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> aluno(matricula),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    nota           <span class="dt">NUMERIC</span>(<span class="dv">4</span>,<span class="dv">1</span>),</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    aprovado       <span class="dt">SMALLINT</span>,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma, cod_matricula),</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ministra(cod_disciplina, ano, semestre, turma)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
