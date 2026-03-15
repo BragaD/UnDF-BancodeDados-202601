@@ -13,6 +13,9 @@ book:
   site-url: "https://BragaD.github.io/UnDF-BancodeDados-202601"
   repo-url: "https://github.com/BragaD/UnDF-BancodeDados-202601"
   repo-actions: [issue]
+  navbar:
+    logo: images/logo-undf.png
+    logo-alt: "Logo UnDF"
   date: today
   date-format: "DD/MM/YYYY"
   chapters:
@@ -146,7 +149,9 @@ page-footer:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
     css: styles.css
     number-sections: false
     toc: true
