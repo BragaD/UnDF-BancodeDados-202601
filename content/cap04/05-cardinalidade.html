@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>46&nbsp; Cardinalidade e Participação – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/06-entidades-fracas.html" rel="next">
+<link href="../../content/cap04/04-atributos.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -92,6 +72,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -105,7 +114,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/05-cardinalidade.html"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +349,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -453,7 +462,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></span></a>
   </div>
 </li>
@@ -517,16 +526,21 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#restrições-de-cardinalidade" id="toc-restrições-de-cardinalidade" class="nav-link active" data-scroll-target="#restrições-de-cardinalidade"><span class="header-section-number">46.1</span> Restrições de Cardinalidade</a></li>
+  <li><a href="#notação-no-diagrama-er" id="toc-notação-no-diagrama-er" class="nav-link" data-scroll-target="#notação-no-diagrama-er"><span class="header-section-number">46.2</span> Notação no Diagrama ER</a></li>
+  <li><a href="#cardinalidades-no-banco-da-undf" id="toc-cardinalidades-no-banco-da-undf" class="nav-link" data-scroll-target="#cardinalidades-no-banco-da-undf"><span class="header-section-number">46.3</span> Cardinalidades no Banco da UnDF</a></li>
+  <li><a href="#participação-total-e-parcial" id="toc-participação-total-e-parcial" class="nav-link" data-scroll-target="#participação-total-e-parcial"><span class="header-section-number">46.4</span> Participação Total e Parcial</a></li>
+  <li><a href="#notação-l..h-mínimo-e-máximo" id="toc-notação-l..h-mínimo-e-máximo" class="nav-link" data-scroll-target="#notação-l..h-mínimo-e-máximo"><span class="header-section-number">46.5</span> Notação l..h (Mínimo e Máximo)</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">46.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/05-cardinalidade.html"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></h1>
 </div>
 
 
@@ -549,97 +563,320 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+<section id="restrições-de-cardinalidade" class="level2" data-number="46.1">
+<h2 data-number="46.1" class="anchored" data-anchor-id="restrições-de-cardinalidade"><span class="header-section-number">46.1</span> Restrições de Cardinalidade</h2>
+<div class="conceito">
+<p><strong>Cardinalidade</strong> (<em>mapping cardinality</em>) expressa o número máximo de entidades a que outra entidade pode se associar por meio de um relacionamento. Para relacionamentos binários, os tipos possíveis são:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Cardinalidade</th>
+<th>Significado</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td><strong>1:1</strong> (um para um)</td>
+<td>Cada entidade em A associa-se a no máximo uma em B, e vice-versa</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
+<td><strong>1:N</strong> (um para muitos)</td>
+<td>Uma entidade em A associa-se a várias em B; cada entidade em B associa-se a no máximo uma em A</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
+<td><strong>N:1</strong> (muitos para um)</td>
+<td>Inverso do 1:N</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><strong>N:N</strong> (muitos para muitos)</td>
+<td>Entidades em A associam-se a várias em B, e vice-versa</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+</div>
+</section>
+<section id="notação-no-diagrama-er" class="level2" data-number="46.2">
+<h2 data-number="46.2" class="anchored" data-anchor-id="notação-no-diagrama-er"><span class="header-section-number">46.2</span> Notação no Diagrama ER</h2>
+<p>Na notação ER tradicional:</p>
+<ul>
+<li><strong>Seta</strong> (→): o lado “um” — a entidade participa no máximo uma vez</li>
+<li><strong>Linha</strong> (—): o lado “muitos” — a entidade pode participar múltiplas vezes</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 552.95 218.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 214)">
+<title>er_card</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-214 548.95,-214 548.95,4 -4,4"></polygon>
+<g id="clust2" class="cluster">
+<title>cluster_nn</title>
+<polygon fill="white" stroke="gray" stroke-dasharray="5,2" points="8,-130 8,-202 536.95,-202 536.95,-130 8,-130"></polygon>
+<text text-anchor="middle" x="87.79" y="-189" font-family="Times New Roman" font-size="10.00">N:N — professor ministra disciplina</text>
+</g>
+<g id="clust1" class="cluster">
+<title>cluster_1n</title>
+<polygon fill="white" stroke="gray" stroke-dasharray="5,2" points="8,-8 8,-92 534.56,-92 534.56,-8 8,-8"></polygon>
+<text text-anchor="middle" x="100.7" y="-79" font-family="Times New Roman" font-size="10.00">1:N — um professor lotado em uma escola</text>
+<text text-anchor="middle" x="100.7" y="-67" font-family="Times New Roman" font-size="10.00">(vários professores por escola)</text>
+</g>
+<!-- p1 -->
+<g id="node1" class="node">
+<title>p1</title>
+<polygon fill="#aed6f1" stroke="black" points="72.9,-52 16.03,-52 16.03,-16 72.9,-16 72.9,-52"></polygon>
+<text text-anchor="middle" x="44.47" y="-30.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- r1 -->
+<g id="node2" class="node">
+<title>r1</title>
+<polygon fill="#f9e79f" stroke="black" points="271.56,-52 216.81,-34 271.56,-16 326.3,-34 271.56,-52"></polygon>
+<text text-anchor="middle" x="271.56" y="-30.7" font-family="Times New Roman" font-size="11.00">lotado_em</text>
+</g>
+<!-- p1&#45;&gt;r1 -->
+<g id="edge1" class="edge">
+<title>p1-&gt;r1</title>
+<path fill="none" stroke="black" d="M73.07,-34C108.75,-34 171.69,-34 216.93,-34"></path>
+</g>
+<!-- e1 -->
+<g id="node3" class="node">
+<title>e1</title>
+<polygon fill="#aed6f1" stroke="black" points="526.56,-52 472.56,-52 472.56,-16 526.56,-16 526.56,-52"></polygon>
+<text text-anchor="middle" x="499.56" y="-30.7" font-family="Times New Roman" font-size="11.00">escola</text>
+</g>
+<!-- r1&#45;&gt;e1 -->
+<g id="edge2" class="edge">
+<title>r1-&gt;e1</title>
+<path fill="none" stroke="black" d="M326.4,-34C368.35,-34 425.45,-34 462.16,-34"></path>
+<polygon fill="black" stroke="black" points="462.4,-37.5 472.4,-34 462.4,-30.5 462.4,-37.5"></polygon>
+</g>
+<!-- p2 -->
+<g id="node4" class="node">
+<title>p2</title>
+<polygon fill="#aed6f1" stroke="black" points="72.9,-174 16.03,-174 16.03,-138 72.9,-138 72.9,-174"></polygon>
+<text text-anchor="middle" x="44.47" y="-152.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- r2 -->
+<g id="node5" class="node">
+<title>r2</title>
+<polygon fill="#f9e79f" stroke="black" points="271.56,-174 225.98,-156 271.56,-138 317.13,-156 271.56,-174"></polygon>
+<text text-anchor="middle" x="271.56" y="-152.7" font-family="Times New Roman" font-size="11.00">ministra</text>
+</g>
+<!-- p2&#45;&gt;r2 -->
+<g id="edge3" class="edge">
+<title>p2-&gt;r2</title>
+<path fill="none" stroke="black" d="M73.07,-156C111.1,-156 180.08,-156 225.61,-156"></path>
+</g>
+<!-- d2 -->
+<g id="node6" class="node">
+<title>d2</title>
+<polygon fill="#aed6f1" stroke="black" points="528.83,-174 470.29,-174 470.29,-138 528.83,-138 528.83,-174"></polygon>
+<text text-anchor="middle" x="499.56" y="-152.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- r2&#45;&gt;d2 -->
+<g id="edge4" class="edge">
+<title>r2-&gt;d2</title>
+<path fill="none" stroke="black" d="M317.21,-156C362.62,-156 431.62,-156 470.1,-156"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
+</div>
+</section>
+<section id="cardinalidades-no-banco-da-undf" class="level2" data-number="46.3">
+<h2 data-number="46.3" class="anchored" data-anchor-id="cardinalidades-no-banco-da-undf"><span class="header-section-number">46.3</span> Cardinalidades no Banco da UnDF</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relacionamento</th>
+<th>Cardinalidade</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>escola</code> — <code>pertence_a</code> — <code>centro</code></td>
+<td>N:1</td>
+<td>Uma escola pertence a um centro; um centro pode ter várias escolas</td>
+</tr>
+<tr class="even">
+<td><code>curso</code> — <code>ofertado_por</code> — <code>escola</code></td>
+<td>N:1</td>
+<td>Um curso é ofertado por uma escola; uma escola pode ter vários cursos</td>
+</tr>
+<tr class="odd">
+<td><code>professor</code> — <code>lotado_em</code> — <code>escola</code></td>
+<td>N:1</td>
+<td>Um professor é lotado em uma escola; uma escola pode ter vários professores</td>
+</tr>
+<tr class="even">
+<td><code>aluno</code> — <code>matriculado_em</code> — <code>curso</code></td>
+<td>N:1</td>
+<td>Um aluno está matriculado em um curso; um curso tem vários alunos</td>
+</tr>
+<tr class="odd">
+<td><code>disciplina</code> — <code>compoe</code> — <code>curso</code></td>
+<td>N:1</td>
+<td>Uma disciplina pertence a um curso; um curso tem várias disciplinas</td>
+</tr>
+<tr class="even">
+<td><code>professor</code> — <code>ministra</code> — <code>disciplina</code></td>
+<td>N:N</td>
+<td>Um professor ministra várias disciplinas; uma disciplina pode ser ministrada por vários professores</td>
+</tr>
+<tr class="odd">
+<td><code>disciplina</code> — <code>prereq</code> — <code>disciplina</code></td>
+<td>N:N</td>
+<td>Uma disciplina pode ter vários pré-requisitos; uma disciplina pode ser pré-requisito de várias outras</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="participação-total-e-parcial" class="level2" data-number="46.4">
+<h2 data-number="46.4" class="anchored" data-anchor-id="participação-total-e-parcial"><span class="header-section-number">46.4</span> Participação Total e Parcial</h2>
+<p>Além da cardinalidade máxima, é importante especificar se a participação é <strong>obrigatória</strong> ou <strong>opcional</strong>:</p>
+<div class="conceito">
+<ul>
+<li><strong>Participação total</strong> (linha dupla no diagrama): toda entidade do conjunto deve participar de ao menos um relacionamento. É uma restrição de existência.</li>
+<li><strong>Participação parcial</strong> (linha simples): algumas entidades podem não participar de nenhum relacionamento.</li>
+</ul>
+</div>
+<div class="exemplo">
+<p>No relacionamento <code>matriculado_em</code> entre <code>aluno</code> e <code>curso</code>:</p>
+<ul>
+<li><strong>Aluno</strong> tem participação <strong>total</strong>: todo aluno cadastrado deve estar matriculado em algum curso.</li>
+<li><strong>Curso</strong> tem participação <strong>parcial</strong> em relação a alunos: um curso pode existir sem ter alunos matriculados ainda (ex.: curso recém-criado).</li>
+</ul>
+<p>No relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>:</p>
+<ul>
+<li><strong>Professor</strong> tem participação <strong>parcial</strong>: pode existir um professor cadastrado que ainda não ministrou nenhuma disciplina.</li>
+<li><strong>Disciplina</strong> tem participação <strong>parcial</strong>: uma disciplina pode existir na grade curricular sem ter turma aberta naquele semestre.</li>
+</ul>
+</div>
+</section>
+<section id="notação-l..h-mínimo-e-máximo" class="level2" data-number="46.5">
+<h2 data-number="46.5" class="anchored" data-anchor-id="notação-l..h-mínimo-e-máximo"><span class="header-section-number">46.5</span> Notação l..h (Mínimo e Máximo)</h2>
+<p>Uma notação mais precisa especifica o mínimo <span class="math inline">\(l\)</span> e o máximo <span class="math inline">\(h\)</span> de participações de cada entidade:</p>
+<div class="conceito">
+<p>A restrição <span class="math inline">\(l..h\)</span> em uma aresta indica que cada entidade participa em no mínimo <span class="math inline">\(l\)</span> e no máximo <span class="math inline">\(h\)</span> relacionamentos:</p>
+<ul>
+<li><span class="math inline">\(l = 0\)</span>: participação parcial</li>
+<li><span class="math inline">\(l = 1\)</span>: participação total</li>
+<li><span class="math inline">\(h = 1\)</span>: cardinalidade “um”</li>
+<li><span class="math inline">\(h = *\)</span>: cardinalidade “muitos” (sem limite superior)</li>
+</ul>
+</div>
+<div class="exemplo">
+<p>Para o relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>:</p>
+<ul>
+<li><code>professor</code> com restrição <span class="math inline">\(0..*\)</span>: um professor pode não ministrar nenhuma disciplina (mínimo 0) e pode ministrar várias (máximo ilimitado)</li>
+<li><code>disciplina</code> com restrição <span class="math inline">\(0..*\)</span>: uma disciplina pode não ter turma aberta (mínimo 0) e pode ter múltiplas turmas/professores (máximo ilimitado)</li>
+</ul>
+<p>Para <code>aluno</code> no relacionamento <code>matriculado_em</code>:</p>
+<ul>
+<li><span class="math inline">\(1..1\)</span>: cada aluno está matriculado em exatamente um curso (mínimo e máximo 1)</li>
+</ul>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="46.6">
+<h2 data-number="46.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">46.6</span> Para Praticar</h2>
+<p><strong>1. Identificar cardinalidade.</strong> Para cada relacionamento abaixo, determine a cardinalidade (1:1, 1:N ou N:N) e justifique:</p>
+<ol type="a">
+<li>Entre <code>turma</code> e <code>sala</code> em um sistema acadêmico (uma turma é realizada em uma sala, uma sala pode abrigar várias turmas ao longo do dia)</li>
+<li>Entre <code>aluno</code> e <code>curso</code> no banco da UnDF (política: um aluno cursa exatamente um curso por vez)</li>
+<li>Entre <code>professor</code> e <code>disciplina</code> via <code>ministra</code> no banco da UnDF</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> N:1: muitas turmas podem usar a mesma sala (em horários diferentes); cada turma ocorre em uma sala.</li>
+<li><strong>(b)</strong> N:1: muitos alunos estão em um curso; cada aluno está em exatamente um curso.</li>
+<li><strong>(c)</strong> N:N: um professor ministra várias disciplinas ao longo do tempo; uma disciplina pode ser ministrada por professores diferentes em semestres diferentes.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Participação total e integridade referencial.</strong> A participação total de <code>aluno</code> em <code>matriculado_em</code> (todo aluno deve estar matriculado em um curso) tem um equivalente direto em SQL. Qual é ele?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>É a restrição <code>NOT NULL</code> na coluna de chave estrangeira <code>sigla_curso</code> da tabela <code>aluno</code>. Se <code>sigla_curso NOT NULL</code>, então todo aluno obrigatoriamente referencia um curso — o que implementa a participação total. Já a participação parcial corresponde a uma coluna FK que aceita <code>NULL</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Cardinalidade 1:1 na prática.</strong> Suponha que a UnDF implantasse a regra “cada escola tem exatamente um coordenador, que é um professor daquela escola, e cada professor pode coordenar no máximo uma escola”. Qual seria a cardinalidade do relacionamento <code>coordena</code> entre <code>professor</code> e <code>escola</code>? Como isso seria implementado no esquema relacional?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Cardinalidade 1:1</strong>: um professor coordena no máximo uma escola; uma escola é coordenada por no máximo um professor.</p>
+<p><strong>Implementação</strong>: adicionar uma coluna <code>matricula_coordenador VARCHAR(15) REFERENCES professor(matricula_prof) UNIQUE</code> na tabela <code>escola</code>. A constraint <code>UNIQUE</code> garante que o mesmo professor não coordene duas escolas. Alternativamente, adicionar <code>escola_coordenada VARCHAR(10) REFERENCES escola(escola) UNIQUE</code> em <code>professor</code>, deixando <code>NULL</code> para professores não coordenadores.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>4. Armadilha da cardinalidade N:N.</strong> Por que não é possível representar um relacionamento N:N entre <code>professor</code> e <code>disciplina</code> adicionando apenas uma coluna FK em um dos lados?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Se adicionarmos <code>matricula_prof FK</code> em <code>disciplina</code>, cada disciplina poderia referenciar apenas <strong>um</strong> professor — o que limita a cardinalidade para N:1 (muitas disciplinas para um professor). Para N:N, é necessário uma <strong>tabela de junção</strong> (<code>ministra</code>) com FK para ambos os lados, permitindo registrar múltiplas combinações professor–disciplina sem restrição de cardinalidade.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1328,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/04-atributos.html" class="pagination-link" aria-label="Tipos de Atributos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Tipos de Atributos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/06-entidades-fracas.html" class="pagination-link" aria-label="Entidades Fracas">
+        <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

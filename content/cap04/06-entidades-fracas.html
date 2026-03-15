@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>47&nbsp; Entidades Fracas – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +66,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/07-diagrama-er-undf.html" rel="next">
+<link href="../../content/cap04/05-cardinalidade.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +120,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/06-entidades-fracas.html"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +355,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -459,7 +474,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></span></a>
   </div>
 </li>
@@ -517,16 +532,21 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#o-problema-da-identificação" id="toc-o-problema-da-identificação" class="nav-link active" data-scroll-target="#o-problema-da-identificação"><span class="header-section-number">47.1</span> O Problema da Identificação</a></li>
+  <li><a href="#notação-no-diagrama-er" id="toc-notação-no-diagrama-er" class="nav-link" data-scroll-target="#notação-no-diagrama-er"><span class="header-section-number">47.2</span> Notação no Diagrama ER</a></li>
+  <li><a href="#exemplo-dependente-de-funcionário" id="toc-exemplo-dependente-de-funcionário" class="nav-link" data-scroll-target="#exemplo-dependente-de-funcionário"><span class="header-section-number">47.3</span> Exemplo: Dependente de Funcionário</a></li>
+  <li><a href="#turmas-como-entidade-fraca-contexto-acadêmico" id="toc-turmas-como-entidade-fraca-contexto-acadêmico" class="nav-link" data-scroll-target="#turmas-como-entidade-fraca-contexto-acadêmico"><span class="header-section-number">47.4</span> Turmas como Entidade Fraca (Contexto Acadêmico)</a></li>
+  <li><a href="#quando-usar-entidade-fraca" id="toc-quando-usar-entidade-fraca" class="nav-link" data-scroll-target="#quando-usar-entidade-fraca"><span class="header-section-number">47.5</span> Quando Usar Entidade Fraca</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">47.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/06-entidades-fracas.html"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></h1>
 </div>
 
 
@@ -549,6 +569,137 @@ div.csl-indent {
 </header>
 
 
+<section id="o-problema-da-identificação" class="level2" data-number="47.1">
+<h2 data-number="47.1" class="anchored" data-anchor-id="o-problema-da-identificação"><span class="header-section-number">47.1</span> O Problema da Identificação</h2>
+<p>Em alguns domínios, um conjunto de entidades não tem atributos suficientes para identificar unicamente cada entidade por conta própria. A identidade dessas entidades depende de outra entidade.</p>
+<div class="conceito">
+<p>Um <strong>conjunto de entidades fraco</strong> (<em>weak entity set</em>) é aquele cuja existência depende de outro conjunto de entidades — o <strong>conjunto de entidades identificador</strong> (<em>identifying entity set</em>).</p>
+<p>Em vez de uma chave primária completa, o conjunto fraco possui um <strong>discriminador</strong> (ou <em>partial key</em>): um subconjunto de atributos que identifica unicamente a entidade <strong>dentro do grupo de entidades associadas à mesma entidade identificadora</strong>.</p>
+<p>A chave primária completa do conjunto fraco é formada pela chave primária da entidade identificadora mais o discriminador.</p>
+</div>
+<p>O relacionamento que conecta o conjunto fraco ao identificador é chamado de <strong>relacionamento identificador</strong> (<em>identifying relationship</em>).</p>
+</section>
+<section id="notação-no-diagrama-er" class="level2" data-number="47.2">
+<h2 data-number="47.2" class="anchored" data-anchor-id="notação-no-diagrama-er"><span class="header-section-number">47.2</span> Notação no Diagrama ER</h2>
+<div class="conceito">
+<ul>
+<li><strong>Retângulo com borda dupla</strong>: conjunto de entidades fraco</li>
+<li><strong>Losango com borda dupla</strong>: relacionamento identificador</li>
+<li><strong>Atributo sublinhado com linha tracejada</strong>: discriminador (partial key)</li>
+</ul>
+</div>
+</section>
+<section id="exemplo-dependente-de-funcionário" class="level2" data-number="47.3">
+<h2 data-number="47.3" class="anchored" data-anchor-id="exemplo-dependente-de-funcionário"><span class="header-section-number">47.3</span> Exemplo: Dependente de Funcionário</h2>
+<p>Um exemplo clássico é o conjunto de entidades <code>dependente</code> em um sistema de RH. Um dependente é identificado pelo nome <strong>dentro do contexto de um funcionário</strong> — dois funcionários diferentes podem ter dependentes com o mesmo nome, mas para o mesmo funcionário os nomes devem ser distintos.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 788.56 211.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 207)">
+<title>er_fraco</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-207 784.56,-207 784.56,4 -4,4"></polygon>
+<!-- funcionario -->
+<g id="node1" class="node">
+<title>funcionario</title>
+<polygon fill="#aed6f1" stroke="black" points="66.56,-92 0.15,-92 0.15,-56 66.56,-56 66.56,-92"></polygon>
+<text text-anchor="middle" x="33.35" y="-70.7" font-family="Times New Roman" font-size="11.00">funcionario</text>
+</g>
+<!-- tem -->
+<g id="node2" class="node">
+<title>tem</title>
+<polygon fill="#f9e79f" stroke="black" points="275.6,-149.19 247.24,-131 275.6,-112.81 303.95,-131 275.6,-149.19"></polygon>
+<polygon fill="none" stroke="black" points="275.6,-153.97 239.78,-131 275.6,-108.03 311.41,-131 275.6,-153.97"></polygon>
+<text text-anchor="middle" x="275.6" y="-127.7" font-family="Times New Roman" font-size="11.00">tem</text>
+</g>
+<!-- funcionario&#45;&#45;tem -->
+<g id="edge2" class="edge">
+<title>funcionario--tem</title>
+<path fill="none" stroke="black" stroke-width="2" d="M66.75,-81.69C115.04,-93.14 204.9,-114.46 248.94,-124.91"></path>
+</g>
+<!-- id_func -->
+<g id="node4" class="node">
+<title>id_func</title>
+<ellipse fill="none" stroke="black" cx="275.6" cy="-18" rx="64.79" ry="18"></ellipse>
+<text text-anchor="middle" x="275.6" y="-14.7" font-family="Times New Roman" font-size="11.00">id_funcionario (PK)</text>
+</g>
+<!-- funcionario&#45;&#45;id_func -->
+<g id="edge1" class="edge">
+<title>funcionario--id_func</title>
+<path fill="none" stroke="black" d="M66.75,-66.45C107.48,-56.95 177.8,-40.56 225.23,-29.51"></path>
+</g>
+<!-- dependente -->
+<g id="node3" class="node">
+<title>dependente</title>
+<polygon fill="#d5e8d4" stroke="black" points="554.62,-149 488.45,-149 488.45,-113 554.62,-113 554.62,-149"></polygon>
+<polygon fill="none" stroke="black" points="558.62,-153 484.45,-153 484.45,-109 558.62,-109 558.62,-153"></polygon>
+<text text-anchor="middle" x="521.53" y="-127.7" font-family="Times New Roman" font-size="11.00">dependente</text>
+</g>
+<!-- tem&#45;&#45;dependente -->
+<g id="edge3" class="edge">
+<title>tem--dependente</title>
+<path fill="none" stroke="black" stroke-width="2" d="M311.55,-131C357.52,-131 437.92,-131 484.46,-131"></path>
+</g>
+<!-- nome_dep -->
+<g id="node5" class="node">
+<title>nome_dep</title>
+<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="741.57" cy="-185" rx="38.49" ry="18"></ellipse>
+<text text-anchor="middle" x="741.57" y="-181.7" font-family="Times New Roman" font-size="11.00">nome_dep</text>
+</g>
+<!-- dependente&#45;&#45;nome_dep -->
+<g id="edge4" class="edge">
+<title>dependente--nome_dep</title>
+<path fill="none" stroke="black" d="M559.03,-140.04C600.37,-150.28 667.17,-166.82 707.18,-176.73"></path>
+</g>
+<!-- parentesco -->
+<g id="node6" class="node">
+<title>parentesco</title>
+<ellipse fill="none" stroke="black" cx="741.57" cy="-77" rx="38.99" ry="18"></ellipse>
+<text text-anchor="middle" x="741.57" y="-73.7" font-family="Times New Roman" font-size="11.00">parentesco</text>
+</g>
+<!-- dependente&#45;&#45;parentesco -->
+<g id="edge5" class="edge">
+<title>dependente--parentesco</title>
+<path fill="none" stroke="black" d="M559.03,-121.96C600.25,-111.75 666.78,-95.28 706.83,-85.36"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>A chave primária de <code>dependente</code> é <strong>(id_funcionario, nome_dep)</strong> — o discriminador <code>nome_dep</code> sozinho não é suficiente.</p>
+</section>
+<section id="turmas-como-entidade-fraca-contexto-acadêmico" class="level2" data-number="47.4">
+<h2 data-number="47.4" class="anchored" data-anchor-id="turmas-como-entidade-fraca-contexto-acadêmico"><span class="header-section-number">47.4</span> Turmas como Entidade Fraca (Contexto Acadêmico)</h2>
+<p>No contexto acadêmico, uma <strong>turma</strong> pode ser modelada como entidade fraca em relação à disciplina. Uma turma é identificada dentro do contexto de uma disciplina, ano e semestre:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Entidade identificadora</th>
+<th>Conjunto fraco</th>
+<th>Discriminador</th>
+<th>Chave primária completa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>disciplina</code></td>
+<td><code>turma</code></td>
+<td><code>ano, semestre, id_turma</code></td>
+<td><code>(codigo_disciplina, ano, semestre, id_turma)</code></td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -559,87 +710,112 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>No banco da UnDF, optamos por não modelar <code>turma</code> como entidade fraca explícita. Em vez disso, usamos a tabela <code>ministra</code> com chave composta <code>(cod_disciplina, ano, semestre, turma)</code> — uma decisão de projeto lógico válida, equivalente ao resultado final da conversão ER→Relacional de uma entidade fraca.</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
+</section>
+<section id="quando-usar-entidade-fraca" class="level2" data-number="47.5">
+<h2 data-number="47.5" class="anchored" data-anchor-id="quando-usar-entidade-fraca"><span class="header-section-number">47.5</span> Quando Usar Entidade Fraca</h2>
+<p>Use entidade fraca quando:</p>
+<ol type="1">
+<li>A entidade não tem atributos que a identifiquem unicamente <strong>por si só</strong></li>
+<li>A entidade <strong>depende existencialmente</strong> de outra — se a entidade identificadora for excluída, as entidades fracas correspondentes perdem o sentido</li>
+<li>O discriminador identifica unicamente <strong>dentro do escopo</strong> da entidade identificadora</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Não confunda</strong> entidade fraca com entidade que simplesmente tem uma chave estrangeira. <code>professor</code> referencia <code>escola</code> via FK, mas <code>professor</code> tem sua própria chave primária (<code>matricula_prof</code>) independente — não é uma entidade fraca. Uma entidade fraca genuinamente <strong>não teria como ser identificada</strong> sem sua entidade identificadora.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="47.6">
+<h2 data-number="47.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">47.6</span> Para Praticar</h2>
+<p><strong>1. Identificar entidade fraca.</strong> Para cada par abaixo, determine se o primeiro conjunto é entidade fraca em relação ao segundo:</p>
+<ol type="a">
+<li><code>capitulo</code> em relação a <code>livro</code> (um capítulo é identificado pelo número dentro de um livro)</li>
+<li><code>aluno</code> em relação a <code>curso</code> (um aluno é identificado por matrícula própria)</li>
+<li><code>item_pedido</code> em relação a <code>pedido</code> (um item é identificado pelo número de linha dentro do pedido)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+<li><strong>(a)</strong> Sim, entidade fraca. O capítulo 3 do livro A e o capítulo 3 do livro B são entidades diferentes, mas ambos têm discriminador “3”. A PK seria <code>(isbn_livro, numero_capitulo)</code>.</li>
+<li><strong>(b)</strong> Não. <code>aluno</code> tem <code>matricula</code> própria que o identifica independentemente de <code>curso</code>. A FK <code>sigla_curso</code> é apenas uma referência, não uma dependência identificacional.</li>
+<li><strong>(c)</strong> Sim, entidade fraca. A “linha 2” do pedido #1001 e a “linha 2” do pedido #1002 são entidades diferentes. A PK seria <code>(numero_pedido, numero_linha)</code>.</li>
 </ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
-</tr>
-</tbody>
-</table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Chave primária de entidade fraca.</strong> No exemplo do <code>dependente</code>, qual seria a chave primária completa na tabela relacional resultante? Escreva o schema.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>dependente(id_funcionario, nome_dep, parentesco)
+PK: (id_funcionario, nome_dep)
+FK: id_funcionario → funcionario(id_funcionario)</code></pre>
+<p>O discriminador <code>nome_dep</code> por si só não é PK — dois funcionários diferentes podem ter um dependente chamado “Ana”. A PK composta garante unicidade: para <strong>cada funcionário</strong>, o nome do dependente é único.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Exclusão em cascata.</strong> Uma consequência da dependência existencial de entidades fracas é que, quando a entidade identificadora é excluída, as entidades fracas associadas devem ser excluídas também. Como isso se implementa em SQL?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Com a cláusula <code>ON DELETE CASCADE</code> na restrição de chave estrangeira:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> dependente (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    id_funcionario  <span class="dt">INTEGER</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    nome_dep        <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    parentesco      <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_funcionario, nome_dep),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_funcionario)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> funcionario(id_funcionario)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ao excluir um funcionário, todos os seus dependentes são automaticamente excluídos — refletindo a dependência existencial modelada no ER.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1267,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/05-cardinalidade.html" class="pagination-link" aria-label="Cardinalidade e Participação">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/07-diagrama-er-undf.html" class="pagination-link" aria-label="Diagrama ER da UnDF">
+        <span class="nav-page-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

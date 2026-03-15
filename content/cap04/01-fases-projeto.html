@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>42&nbsp; Fases do Projeto de Banco de Dados – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/02-entidades.html" rel="next">
+<link href="../../content/cap04/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/01-fases-projeto.html"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -429,7 +409,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></span></a>
   </div>
 </li>
@@ -517,16 +497,20 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#as-três-fases" id="toc-as-três-fases" class="nav-link active" data-scroll-target="#as-três-fases"><span class="header-section-number">42.1</span> As Três Fases</a></li>
+  <li><a href="#alternativas-de-projeto-e-armadilhas" id="toc-alternativas-de-projeto-e-armadilhas" class="nav-link" data-scroll-target="#alternativas-de-projeto-e-armadilhas"><span class="header-section-number">42.2</span> Alternativas de Projeto e Armadilhas</a></li>
+  <li><a href="#abordagens-de-projeto" id="toc-abordagens-de-projeto" class="nav-link" data-scroll-target="#abordagens-de-projeto"><span class="header-section-number">42.3</span> Abordagens de Projeto</a></li>
+  <li><a href="#exemplo-projeto-da-undf" id="toc-exemplo-projeto-da-undf" class="nav-link" data-scroll-target="#exemplo-projeto-da-undf"><span class="header-section-number">42.4</span> Exemplo: Projeto da UnDF</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">42.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/01-fases-projeto.html"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto de Banco de Dados</span></h1>
 </div>
 
 
@@ -549,97 +533,210 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<p>O desenvolvimento de um banco de dados passa por fases bem definidas, desde a compreensão dos requisitos até a implementação física. Pular etapas costuma gerar problemas difíceis de corrigir depois que o sistema já está em produção.</p>
+<section id="as-três-fases" class="level2" data-number="42.1">
+<h2 data-number="42.1" class="anchored" data-anchor-id="as-três-fases"><span class="header-section-number">42.1</span> As Três Fases</h2>
+<div class="conceito">
+<p><strong>Fase 1 — Projeto Conceitual</strong></p>
+<p>Caracterizar completamente as necessidades de dados dos usuários do sistema. O resultado é uma especificação dos requisitos do banco de dados, geralmente expressa como um <strong>diagrama ER</strong>, independente de qualquer tecnologia ou SGBD específico.</p>
+</div>
+<div class="conceito">
+<p><strong>Fase 2 — Projeto Lógico</strong></p>
+<p>Traduzir o modelo conceitual para um esquema que possa ser implementado em um SGBD. No modelo relacional, isso significa converter o diagrama ER em um conjunto de relações (tabelas). Dois tipos de decisões precisam ser tomadas:</p>
+<ul>
+<li><strong>Decisões de negócio</strong>: quais atributos devem ser registrados?</li>
+<li><strong>Decisões de informática</strong>: como distribuir os atributos entre as tabelas?</li>
+</ul>
+</div>
+<div class="conceito">
+<p><strong>Fase 3 — Projeto Físico</strong></p>
+<p>Decidir a organização física dos dados: estruturas de índice, particionamento, configuração de armazenamento. O objetivo é otimizar o desempenho para as cargas de trabalho esperadas.</p>
+</div>
+</section>
+<section id="alternativas-de-projeto-e-armadilhas" class="level2" data-number="42.2">
+<h2 data-number="42.2" class="anchored" data-anchor-id="alternativas-de-projeto-e-armadilhas"><span class="header-section-number">42.2</span> Alternativas de Projeto e Armadilhas</h2>
+<p>Na fase de projeto lógico, há frequentemente múltiplas alternativas válidas. Dois problemas graves a evitar:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+<span class="screen-reader-only">Aviso</span>Redundância
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Um projeto ruim pode armazenar a mesma informação em múltiplos lugares. Isso leva a <strong>inconsistência</strong>: se um valor é atualizado em um lugar mas não nos outros, os dados ficam contraditórios.</p>
+<p><strong>Exemplo</strong>: armazenar o nome da escola dentro da tabela <code>professor</code> além de mantê-lo na tabela <code>escola</code>. Se o nome da escola mudar, é necessário atualizar todos os professores associados — e esquecer um causa inconsistência.</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Incompletude
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um projeto inadequado pode tornar impossível representar certos aspectos do domínio.</p>
+<p><strong>Exemplo</strong>: se o sistema só permite registrar um número de telefone por professor, professores com múltiplos contatos ficam sem representação adequada.</p>
+</div>
+</div>
+</section>
+<section id="abordagens-de-projeto" class="level2" data-number="42.3">
+<h2 data-number="42.3" class="anchored" data-anchor-id="abordagens-de-projeto"><span class="header-section-number">42.3</span> Abordagens de Projeto</h2>
+<p>Duas abordagens formais são amplamente usadas:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Abordagem</th>
+<th>Quando usar</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td><strong>Modelo ER</strong> (este capítulo)</td>
+<td>Projeto conceitual: capturar entidades, relacionamentos e restrições</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><strong>Teoria de Normalização</strong> (Capítulo 7)</td>
+<td>Projeto lógico: formalizar o que torna um esquema relacional “bom”</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p>As duas abordagens são complementares: o ER captura o mundo real de forma expressiva; a normalização garante que o esquema relacional resultante não tenha anomalias de atualização ou redundâncias desnecessárias.</p>
+</section>
+<section id="exemplo-projeto-da-undf" class="level2" data-number="42.4">
+<h2 data-number="42.4" class="anchored" data-anchor-id="exemplo-projeto-da-undf"><span class="header-section-number">42.4</span> Exemplo: Projeto da UnDF</h2>
+<p>O banco de dados da UnDF passou pelas três fases:</p>
+<ol type="1">
+<li><strong>Conceitual</strong>: identificar que a universidade possui centros, escolas, cursos, professores, alunos e disciplinas — e como esses objetos se relacionam.</li>
+<li><strong>Lógico</strong>: converter para 8 relações (<code>centro</code>, <code>escola</code>, <code>curso</code>, <code>professor</code>, <code>aluno</code>, <code>disciplina</code>, <code>ministra</code>, <code>matricula_disciplina</code>), definindo chaves primárias e estrangeiras.</li>
+<li><strong>Físico</strong>: decidir índices (ex.: índice em <code>professor.escola</code> para acelerar buscas por escola), configuração de partições, etc.</li>
+</ol>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="42.5">
+<h2 data-number="42.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">42.5</span> Para Praticar</h2>
+<p><strong>1. Classificar decisões de projeto.</strong> Para cada decisão abaixo, indique se é de projeto conceitual, lógico ou físico:</p>
+<ol type="a">
+<li>Criar um índice na coluna <code>nota</code> de <code>matricula_disciplina</code></li>
+<li>Modelar que cada disciplina pertence a exatamente um curso</li>
+<li>Representar disciplinas e pré-requisitos em tabelas separadas em vez de em uma única tabela com coluna <code>prereq</code></li>
+<li>Decidir que <code>sigla_curso</code> será a chave primária de <code>curso</code></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> Físico — índice é uma decisão de armazenamento e desempenho.</li>
+<li><strong>(b)</strong> Conceitual — é uma restrição do mundo real, capturada no ER.</li>
+<li><strong>(c)</strong> Lógico — é sobre como distribuir atributos entre esquemas relacionais.</li>
+<li><strong>(d)</strong> Lógico — escolha de chave primária para implementação no SGBD.</li>
+</ul>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Identificar redundância.</strong> Um projetista propõe a seguinte tabela única para substituir <code>professor</code> e <code>escola</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>matricula_prof</th>
+<th>nome_prof</th>
+<th>escola</th>
+<th>nome_escola</th>
+<th>centro</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PROF20230031</td>
+<td>Gustavo Costa</td>
+<td>ESETI</td>
+<td>Escola Superior de Engenharias…</td>
+<td>COETI</td>
+</tr>
+<tr class="even">
+<td>PROF20230032</td>
+<td>Helena Carvalho</td>
+<td>ESETI</td>
+<td>Escola Superior de Engenharias…</td>
+<td>COETI</td>
+</tr>
+<tr class="odd">
+<td>PROF20230042</td>
+<td>Bruno Teixeira</td>
+<td>ESG</td>
+<td>Escola Superior de Gestão</td>
+<td>COCHCMA</td>
+</tr>
+</tbody>
+</table>
+<p>Quais problemas esse projeto causa?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Redundância</strong>: <code>nome_escola</code> e <code>centro</code> repetem-se para cada professor da mesma escola. Com 3 professores na ESETI, o nome completo da escola é armazenado 3 vezes.</li>
+<li><strong>Anomalia de atualização</strong>: se o nome da ESETI mudar, é necessário atualizar todas as linhas de professores dessa escola — e esquecer uma causa inconsistência.</li>
+<li><strong>Anomalia de exclusão</strong>: se todos os professores de uma escola forem excluídos, perde-se também a informação sobre a escola.</li>
+<li><strong>Anomalia de inserção</strong>: não é possível cadastrar uma escola sem que ela tenha pelo menos um professor.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Caso limítrofe — incompletude.</strong> Um sistema de matrículas registra apenas <code>cod_disciplina</code> e <code>cod_matricula</code> para cada matrícula em disciplina. Que informação importante está faltando, e qual problema isso causaria em um cenário real?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Faltam: <code>ano</code>, <code>semestre</code> e <code>turma</code>. Um aluno pode cursar a mesma disciplina em semestres diferentes (reprovação ou reopção). Sem esses atributos, é impossível distinguir matrículas em turmas diferentes da mesma disciplina — e também é impossível armazenar a nota de cada cursada separadamente.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1188,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/index.html" class="pagination-link" aria-label="Visão Geral">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Visão Geral</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/02-entidades.html" class="pagination-link" aria-label="Conjuntos de Entidades">
+        <span class="nav-page-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

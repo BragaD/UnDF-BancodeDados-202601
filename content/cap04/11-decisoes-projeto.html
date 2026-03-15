@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>52&nbsp; Decisões de Projeto – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/12-notacoes.html" rel="next">
+<link href="../../content/cap04/10-agregacao.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -92,6 +72,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -105,7 +114,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/11-decisoes-projeto.html"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +349,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -489,7 +498,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></span></a>
   </div>
 </li>
@@ -517,16 +526,34 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#entidade-vs.-atributo" id="toc-entidade-vs.-atributo" class="nav-link active" data-scroll-target="#entidade-vs.-atributo"><span class="header-section-number">52.1</span> Entidade vs.&nbsp;Atributo</a>
+  <ul>
+  <li><a href="#quando-usar-entidade" id="toc-quando-usar-entidade" class="nav-link" data-scroll-target="#quando-usar-entidade"><span class="header-section-number">52.1.1</span> Quando usar entidade</a></li>
+  <li><a href="#quando-usar-atributo" id="toc-quando-usar-atributo" class="nav-link" data-scroll-target="#quando-usar-atributo"><span class="header-section-number">52.1.2</span> Quando usar atributo</a></li>
+  </ul></li>
+  <li><a href="#entidade-vs.-relacionamento" id="toc-entidade-vs.-relacionamento" class="nav-link" data-scroll-target="#entidade-vs.-relacionamento"><span class="header-section-number">52.2</span> Entidade vs.&nbsp;Relacionamento</a></li>
+  <li><a href="#relacionamento-binário-vs.-n-ário" id="toc-relacionamento-binário-vs.-n-ário" class="nav-link" data-scroll-target="#relacionamento-binário-vs.-n-ário"><span class="header-section-number">52.3</span> Relacionamento Binário vs.&nbsp;N-ário</a>
+  <ul>
+  <li><a href="#quando-usar-n-ário" id="toc-quando-usar-n-ário" class="nav-link" data-scroll-target="#quando-usar-n-ário"><span class="header-section-number">52.3.1</span> Quando usar n-ário</a></li>
+  <li><a href="#convertendo-n-ário-para-binário" id="toc-convertendo-n-ário-para-binário" class="nav-link" data-scroll-target="#convertendo-n-ário-para-binário"><span class="header-section-number">52.3.2</span> Convertendo n-ário para binário</a></li>
+  </ul></li>
+  <li><a href="#erros-comuns-em-diagramas-er" id="toc-erros-comuns-em-diagramas-er" class="nav-link" data-scroll-target="#erros-comuns-em-diagramas-er"><span class="header-section-number">52.4</span> Erros Comuns em Diagramas ER</a>
+  <ul>
+  <li><a href="#erro-1-informação-duplicada" id="toc-erro-1-informação-duplicada" class="nav-link" data-scroll-target="#erro-1-informação-duplicada"><span class="header-section-number">52.4.1</span> Erro 1: Informação duplicada</a></li>
+  <li><a href="#erro-2-usar-relacionamento-quando-deveria-ser-atributo" id="toc-erro-2-usar-relacionamento-quando-deveria-ser-atributo" class="nav-link" data-scroll-target="#erro-2-usar-relacionamento-quando-deveria-ser-atributo"><span class="header-section-number">52.4.2</span> Erro 2: Usar relacionamento quando deveria ser atributo</a></li>
+  <li><a href="#erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" id="toc-erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" class="nav-link" data-scroll-target="#erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade"><span class="header-section-number">52.4.3</span> Erro 3: Perda de informação em relacionamentos de alta cardinalidade</a></li>
+  </ul></li>
+  <li><a href="#decisões-de-projeto-resumidas" id="toc-decisões-de-projeto-resumidas" class="nav-link" data-scroll-target="#decisões-de-projeto-resumidas"><span class="header-section-number">52.5</span> Decisões de Projeto Resumidas</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">52.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/11-decisoes-projeto.html"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></h1>
 </div>
 
 
@@ -549,97 +576,237 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<p>O modelo ER oferece flexibilidade — muitas situações do mundo real podem ser modeladas de formas diferentes, todas tecnicamente corretas. Esta seção apresenta as principais decisões de projeto e critérios para escolher entre alternativas.</p>
+<section id="entidade-vs.-atributo" class="level2" data-number="52.1">
+<h2 data-number="52.1" class="anchored" data-anchor-id="entidade-vs.-atributo"><span class="header-section-number">52.1</span> Entidade vs.&nbsp;Atributo</h2>
+<div class="conceito">
+<p>A decisão de modelar algo como <strong>entidade</strong> ou como <strong>atributo</strong> depende de: - Quantas propriedades próprias o conceito tem? - Pode o mesmo valor ser associado a múltiplas entidades? - Há necessidade de múltiplos valores (multivalorado)?</p>
+</div>
+<section id="quando-usar-entidade" class="level3" data-number="52.1.1">
+<h3 data-number="52.1.1" class="anchored" data-anchor-id="quando-usar-entidade"><span class="header-section-number">52.1.1</span> Quando usar entidade</h3>
+<p>Use entidade quando o conceito: - Tem atributos próprios relevantes além do nome/valor - É referenciado por múltiplas outras entidades (seria duplicado como atributo) - Precisa participar de outros relacionamentos</p>
+<div class="exemplo">
+<p><strong><code>escola</code> como entidade vs.&nbsp;atributo de <code>professor</code></strong></p>
+<p>Se modelarmos a escola como atributo de <code>professor</code>, poderíamos ter:</p>
+<pre><code>professor(matricula_prof, nome, nome_escola, ...)</code></pre>
+<p>Mas isso perde: - Os atributos próprios da escola (<code>nome_escola</code>, <code>centro</code>) - A referência compartilhada (7 professores duplicariam o nome da escola) - A possibilidade de consultar escolas sem professores</p>
+<p>Como <code>escola</code> tem atributos próprios e é compartilhada por múltiplas entidades, deve ser uma <strong>entidade</strong>.</p>
+</div>
+</section>
+<section id="quando-usar-atributo" class="level3" data-number="52.1.2">
+<h3 data-number="52.1.2" class="anchored" data-anchor-id="quando-usar-atributo"><span class="header-section-number">52.1.2</span> Quando usar atributo</h3>
+<p>Use atributo quando o conceito: - É uma propriedade simples e específica da entidade (não compartilhada) - Não tem subpropriedades relevantes - Não precisa participar de outros relacionamentos</p>
+<div class="exemplo">
+<p>O <code>salario</code> de um professor é um atributo simples — não tem propriedades próprias, não é compartilhado entre professores, e não participa de relacionamentos. Manter como atributo de <code>professor</code> é a escolha certa.</p>
+</div>
+</section>
+</section>
+<section id="entidade-vs.-relacionamento" class="level2" data-number="52.2">
+<h2 data-number="52.2" class="anchored" data-anchor-id="entidade-vs.-relacionamento"><span class="header-section-number">52.2</span> Entidade vs.&nbsp;Relacionamento</h2>
+<div class="conceito">
+<p>Use <strong>relacionamento</strong> para descrever uma <strong>ação ou associação</strong> entre entidades. Use <strong>entidade</strong> quando o conceito tem existência própria e atributos independentes.</p>
+</div>
+<div class="exemplo">
+<p><strong><code>ministra</code> como relacionamento vs.&nbsp;entidade</strong></p>
+<p><code>ministra</code> poderia ser modelado como entidade independente com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code>, <code>sala</code>. No banco da UnDF, essa é exatamente a abordagem escolhida para <code>ministra</code> na tabela homônima — principalmente porque <code>matricula_disciplina</code> precisa referenciar cada oferta individualmente.</p>
+<p>Como regra geral: se o conceito é uma <strong>ação</strong> entre entidades (ministrar, comprar, avaliar) e tem atributos descritivos, pode ser representado como relacionamento com atributos. Se precisar ser referenciado por outras entidades ou relacionamentos (como na agregação), é melhor tratá-lo como entidade.</p>
+</div>
+</section>
+<section id="relacionamento-binário-vs.-n-ário" class="level2" data-number="52.3">
+<h2 data-number="52.3" class="anchored" data-anchor-id="relacionamento-binário-vs.-n-ário"><span class="header-section-number">52.3</span> Relacionamento Binário vs.&nbsp;N-ário</h2>
+<section id="quando-usar-n-ário" class="level3" data-number="52.3.1">
+<h3 data-number="52.3.1" class="anchored" data-anchor-id="quando-usar-n-ário"><span class="header-section-number">52.3.1</span> Quando usar n-ário</h3>
+<p>Use relacionamento n-ário (n &gt; 2) quando a associação entre <span class="math inline">\(n\)</span> entidades é genuinamente simultânea — quando a remoção de qualquer participante muda o significado do relacionamento.</p>
+<div class="exemplo">
+<p><code>orienta(professor, aluno, projeto)</code> é ternário porque precisamos saber <strong>qual professor orienta qual aluno em qual projeto</strong>. Saber apenas que um professor orienta um aluno (sem o projeto) ou que um aluno participa de um projeto (sem o professor) não é suficiente.</p>
+</div>
+</section>
+<section id="convertendo-n-ário-para-binário" class="level3" data-number="52.3.2">
+<h3 data-number="52.3.2" class="anchored" data-anchor-id="convertendo-n-ário-para-binário"><span class="header-section-number">52.3.2</span> Convertendo n-ário para binário</h3>
+<p>Qualquer relacionamento n-ário pode ser convertido para um conjunto de relacionamentos binários através de uma <strong>entidade artificial</strong>:</p>
+<div class="conceito">
+<p>Para converter um relacionamento ternário <span class="math inline">\(R\)</span> entre entidades <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> e <span class="math inline">\(C\)</span>:</p>
+<ol type="1">
+<li>Criar uma entidade artificial <span class="math inline">\(E\)</span> com um atributo identificador gerado</li>
+<li>Criar três relacionamentos binários: <span class="math inline">\(R_A\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(A\)</span>), <span class="math inline">\(R_B\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(B\)</span>), <span class="math inline">\(R_C\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(C\)</span>)</li>
+<li>Mover os atributos de <span class="math inline">\(R\)</span> para <span class="math inline">\(E\)</span></li>
+</ol>
+</div>
+<div class="example">
+<p>Converter <code>orienta(professor, aluno, projeto)</code> em binários:</p>
+<pre><code>orientacao(id_orientacao, ...)   -- entidade artificial
+
+orienta_professor(id_orientacao, matricula_prof)
+orienta_aluno(id_orientacao, matricula_aluno)
+orienta_projeto(id_orientacao, id_projeto)</code></pre>
+<p><strong>Limitação</strong>: a conversão nem sempre preserva as restrições de integridade do relacionamento original. Por exemplo, se a restrição for “cada par (aluno, projeto) tem exatamente um professor orientador”, é difícil de expressar apenas com os três relacionamentos binários separados.</p>
+</div>
+</section>
+</section>
+<section id="erros-comuns-em-diagramas-er" class="level2" data-number="52.4">
+<h2 data-number="52.4" class="anchored" data-anchor-id="erros-comuns-em-diagramas-er"><span class="header-section-number">52.4</span> Erros Comuns em Diagramas ER</h2>
+<section id="erro-1-informação-duplicada" class="level3" data-number="52.4.1">
+<h3 data-number="52.4.1" class="anchored" data-anchor-id="erro-1-informação-duplicada"><span class="header-section-number">52.4.1</span> Erro 1: Informação duplicada</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+Aviso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Incluir como atributo de uma entidade a mesma informação que já está capturada por um relacionamento.</p>
+<p><strong>Errado</strong>: <code>professor</code> com atributo <code>nome_escola</code> E relacionamento <code>lotado_em</code> com <code>escola</code> <strong>Correto</strong>: remover <code>nome_escola</code> de <code>professor</code> (o relacionamento já captura essa informação)</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+</section>
+<section id="erro-2-usar-relacionamento-quando-deveria-ser-atributo" class="level3" data-number="52.4.2">
+<h3 data-number="52.4.2" class="anchored" data-anchor-id="erro-2-usar-relacionamento-quando-deveria-ser-atributo"><span class="header-section-number">52.4.2</span> Erro 2: Usar relacionamento quando deveria ser atributo</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Criar um conjunto de entidades para algo que é simplesmente um valor:</p>
+<p><strong>Errado</strong>: entidade <code>salario</code> com atributo <code>valor</code>, relacionamento <code>recebe</code> entre <code>professor</code> e <code>salario</code> <strong>Correto</strong>: <code>salario</code> como atributo numérico de <code>professor</code></p>
+</div>
+</div>
+</section>
+<section id="erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" class="level3" data-number="52.4.3">
+<h3 data-number="52.4.3" class="anchored" data-anchor-id="erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade"><span class="header-section-number">52.4.3</span> Erro 3: Perda de informação em relacionamentos de alta cardinalidade</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Usar um relacionamento 1:N quando o domínio exige N:N, o que impede registrar múltiplas associações:</p>
+<p><strong>Errado</strong>: relacionamento 1:N entre <code>professor</code> e <code>disciplina</code> (implica que cada disciplina tem um único professor permanente) <strong>Correto</strong>: N:N via <code>ministra</code>, permitindo múltiplas ofertas com professores diferentes</p>
+</div>
+</div>
+</section>
+</section>
+<section id="decisões-de-projeto-resumidas" class="level2" data-number="52.5">
+<h2 data-number="52.5" class="anchored" data-anchor-id="decisões-de-projeto-resumidas"><span class="header-section-number">52.5</span> Decisões de Projeto Resumidas</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Decisão</th>
+<th>Critério</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td>Entidade vs.&nbsp;Atributo</td>
+<td>Tem atributos próprios? É compartilhado? → Entidade</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
+<td>Entidade vs.&nbsp;Relacionamento</td>
+<td>É uma ação entre entidades? → Relacionamento</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
+<td>Binário vs.&nbsp;N-ário</td>
+<td>Remoção de um participante muda o significado? → N-ário</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
+<td>Forte vs.&nbsp;Fraco</td>
+<td>Tem PK própria independente? → Forte</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
+<td>Especialização</td>
+<td>Há subgrupos com atributos/relacionamentos exclusivos?</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td>Agregação</td>
+<td>Um relacionamento precisa participar de outro relacionamento?</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="52.6">
+<h2 data-number="52.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">52.6</span> Para Praticar</h2>
+<p><strong>1. Entidade ou atributo?</strong> Um sistema de e-commerce precisa registrar o endereço de entrega de cada pedido. O mesmo cliente pode ter diferentes endereços para pedidos diferentes. Deve-se modelar <code>endereco</code> como atributo de <code>pedido</code> ou como entidade separada?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Depende dos requisitos:</p>
+<ul>
+<li><strong>Atributo</strong> (simples): se o endereço é específico de cada pedido e não precisa ser reutilizado. Colunas <code>rua</code>, <code>numero</code>, <code>cidade</code>, <code>cep</code> diretamente em <code>pedido</code>.</li>
+<li><strong>Entidade</strong> (com relacionamento): se o cliente tem uma <strong>lista de endereços cadastrados</strong> e seleciona um para cada pedido. Entidade <code>endereco(id_endereco, rua, numero, cidade, cep)</code> com relacionamento <code>tem_endereco</code> entre <code>cliente</code> e <code>endereco</code>, e FK <code>id_endereco</code> em <code>pedido</code> apontando para o endereço escolhido.</li>
+</ul>
+<p>A segunda opção permite que o cliente reutilize endereços e evita digitação repetida.</p>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Identificar o erro.</strong> Um projetista cria o seguinte ER: entidade <code>curso</code> com atributo <code>nome_escola</code>, E relacionamento <code>ofertado_por</code> entre <code>curso</code> e <code>escola</code>. Qual o erro e como corrigir?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O atributo <code>nome_escola</code> em <code>curso</code> é <strong>redundante</strong> — o relacionamento <code>ofertado_por</code> já captura a associação entre <code>curso</code> e <code>escola</code>. Armazenar o nome da escola em <code>curso</code> duplica a informação e cria risco de inconsistência (se o nome da escola mudar, precisa ser atualizado em <code>escola</code> e em todos os <code>curso</code>).</p>
+<p><strong>Correção</strong>: remover o atributo <code>nome_escola</code> de <code>curso</code>. O relacionamento <code>ofertado_por</code> (N:1) é suficiente; na conversão relacional, vira a FK <code>escola</code> em <code>curso</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Binário vs.&nbsp;ternário.</strong> Um sistema de biblioteca registra que “um usuário pegou emprestado um exemplar de um livro”. Justifique se o relacionamento <code>emprestimo</code> deve ser binário (usuario–exemplar) ou ternário (usuario–exemplar–livro).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Binário</strong> (usuario–exemplar) é suficiente e preferível:</p>
+<ul>
+<li>Um exemplar <strong>é</strong> de um livro (via FK <code>exemplar.isbn → livro.isbn</code>). A informação de qual livro é emprestado já está implícita no exemplar.</li>
+<li>Adicionar <code>livro</code> no relacionamento seria redundante — seria possível derivar de <code>exemplar</code>.</li>
+</ul>
+<p>Usar ternário implicaria em redundância e risco de inconsistência: o livro indicado no relacionamento poderia não corresponder ao livro do exemplar. O relacionamento binário <code>emprestimo(id_usuario, numero_tombamento, data_retirada, data_devolucao)</code> é correto e suficiente.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1258,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/10-agregacao.html" class="pagination-link" aria-label="Agregação">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/12-notacoes.html" class="pagination-link" aria-label="Notações Alternativas">
+        <span class="nav-page-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

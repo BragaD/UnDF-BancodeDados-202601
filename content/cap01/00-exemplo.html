@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>2&nbsp; O Problema: Sistema Acadêmico da UnDF – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap01/01-o-que-e-bd.html" rel="next">
+<link href="../../content/cap01/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/00-exemplo.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -156,7 +136,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap01/00-exemplo.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap01/00-exemplo.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></span></a>
   </div>
 </li>
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -517,16 +497,25 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#descrição-do-problema" id="toc-descrição-do-problema" class="nav-link active" data-scroll-target="#descrição-do-problema"><span class="header-section-number">2.1</span> Descrição do Problema</a>
+  <ul>
+  <li><a href="#estrutura-organizacional" id="toc-estrutura-organizacional" class="nav-link" data-scroll-target="#estrutura-organizacional"><span class="header-section-number">2.1.1</span> Estrutura Organizacional</a></li>
+  <li><a href="#corpo-docente" id="toc-corpo-docente" class="nav-link" data-scroll-target="#corpo-docente"><span class="header-section-number">2.1.2</span> Corpo Docente</a></li>
+  <li><a href="#corpo-discente" id="toc-corpo-discente" class="nav-link" data-scroll-target="#corpo-discente"><span class="header-section-number">2.1.3</span> Corpo Discente</a></li>
+  <li><a href="#grade-curricular" id="toc-grade-curricular" class="nav-link" data-scroll-target="#grade-curricular"><span class="header-section-number">2.1.4</span> Grade Curricular</a></li>
+  <li><a href="#oferta-de-turmas" id="toc-oferta-de-turmas" class="nav-link" data-scroll-target="#oferta-de-turmas"><span class="header-section-number">2.1.5</span> Oferta de Turmas</a></li>
+  <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas"><span class="header-section-number">2.1.6</span> Matrículas em Disciplinas</a></li>
+  </ul></li>
+  <li><a href="#o-que-você-deve-produzir" id="toc-o-que-você-deve-produzir" class="nav-link" data-scroll-target="#o-que-você-deve-produzir"><span class="header-section-number">2.2</span> O que Você Deve Produzir</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap01/index.html">Capítulo 1: Introdução</a></li><li class="breadcrumb-item"><a href="../../content/cap01/00-exemplo.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></h1>
 </div>
 
 
@@ -555,91 +544,93 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+<span class="screen-reader-only">Nota</span>Sobre este arquivo
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Este documento descreve, em texto corrido, os requisitos de informação de uma universidade fictícia. Ao longo do curso, você desenvolverá o <strong>modelo conceitual</strong> (diagrama ER) e o <strong>modelo lógico</strong> (schemas relacionais) que resolvem esse problema — e verá esses modelos sendo implementados e consultados em SQL com dados reais.</p>
+<p>Use este texto como ponto de partida: leia com atenção, identifique as entidades, os atributos e as relações entre elas, e tente esboçar um modelo antes de avançar para os próximos capítulos.</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
+<hr>
+<section id="descrição-do-problema" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="descrição-do-problema"><span class="header-section-number">2.1</span> Descrição do Problema</h2>
+<p>A <strong>Universidade do Distrito Federal (UnDF)</strong> está modernizando seu sistema de gestão acadêmica. O sistema legado armazena informações em planilhas espalhadas por departamentos, sem integração, causando inconsistências frequentes — cursos cadastrados em uma planilha sem professores associados em outra, alunos vinculados a disciplinas inexistentes, turmas sem registro de sala. A reitoria decidiu migrar para um banco de dados relacional centralizado.</p>
+<p>A equipe de TI coletou os requisitos com os coordenadores acadêmicos e o registro de alunos. O resultado está descrito a seguir.</p>
+<hr>
+<section id="estrutura-organizacional" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="estrutura-organizacional"><span class="header-section-number">2.1.1</span> Estrutura Organizacional</h3>
+<p>A UnDF está organizada em <strong>centros acadêmicos</strong>, cada um com um código curto (como “COETI” ou “COEMAG”) e um nome completo que descreve sua área de atuação. Cada centro agrupa um conjunto de <strong>escolas</strong> — unidades acadêmicas menores, também identificadas por um código e um nome. Uma escola pertence a exatamente um centro, e um centro pode abrigar diversas escolas.</p>
+<p>Cada escola é responsável por oferecer um ou mais <strong>cursos de graduação</strong>. Todo curso tem um nome completo, uma sigla identificadora única na universidade (como “ENS” para Engenharia de Software), um número de semestres previsto para conclusão, uma carga horária total em horas e uma modalidade — bacharelado, licenciatura ou tecnólogo. Um curso é vinculado a uma única escola; uma escola pode ofertar vários cursos.</p>
+<hr>
+</section>
+<section id="corpo-docente" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="corpo-docente"><span class="header-section-number">2.1.2</span> Corpo Docente</h3>
+<p>Os <strong>professores</strong> da UnDF são identificados por uma matrícula institucional (no formato “PROFaaaannnn”). Além da matrícula, o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal em horas (tipicamente 20 ou 40 horas semanais) e o salário bruto mensal.</p>
+<p>Um professor é lotado em exatamente uma escola — independentemente de quais disciplinas ele ministra. Professores de escolas diferentes podem, em princípio, ministrar disciplinas de qualquer curso, embora na prática isso raramente ocorra.</p>
+<hr>
+</section>
+<section id="corpo-discente" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="corpo-discente"><span class="header-section-number">2.1.3</span> Corpo Discente</h3>
+<p>Os <strong>alunos</strong> são identificados por uma matrícula própria. O sistema deve guardar o nome completo, o ano de ingresso na universidade e o curso ao qual o aluno está vinculado. Cada aluno é matriculado em exatamente um curso. Um curso pode ter nenhum, um ou muitos alunos matriculados.</p>
+<hr>
+</section>
+<section id="grade-curricular" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="grade-curricular"><span class="header-section-number">2.1.4</span> Grade Curricular</h3>
+<p>A grade curricular de cada curso é composta por <strong>disciplinas</strong>. Cada disciplina tem um código único na universidade (formado pela sigla do curso e um número, como “ENS-201”), um nome, o semestre recomendado de oferta dentro do curso (1º, 2º, 4º semestre etc.) e uma carga horária em horas.</p>
+<p>Uma disciplina pertence a exatamente um curso; um curso é composto por diversas disciplinas. Não existem disciplinas compartilhadas entre cursos: se dois cursos abordam o mesmo conteúdo, cada um tem sua própria disciplina com código distinto.</p>
+<p>Algumas disciplinas têm <strong>pré-requisitos</strong>: para se matricular em determinada disciplina, o aluno precisa ter cursado e sido aprovado em uma ou mais disciplinas anteriores do mesmo curso. Uma disciplina pode ter zero, um ou vários pré-requisitos. Da mesma forma, uma disciplina pode ser pré-requisito de zero, uma ou várias outras disciplinas do curso. Pré-requisitos são sempre disciplinas do mesmo curso e de semestres anteriores ao da disciplina que os exige.</p>
+<hr>
+</section>
+<section id="oferta-de-turmas" class="level3" data-number="2.1.5">
+<h3 data-number="2.1.5" class="anchored" data-anchor-id="oferta-de-turmas"><span class="header-section-number">2.1.5</span> Oferta de Turmas</h3>
+<p>A cada semestre letivo, cada escola define quais disciplinas serão ofertadas e quem as ministrará. Uma <strong>turma</strong> é identificada pela combinação de disciplina, ano letivo, semestre (1 ou 2) e um identificador de turma (como “A” ou “B”, para quando há mais de uma turma da mesma disciplina no mesmo semestre). Uma turma tem um horário semanal (ex.: “SEG/QUA 08:00-10:00”) e uma sala.</p>
+<p>Cada turma é ministrada por exatamente um professor. Um professor pode ministrar múltiplas turmas ao longo do semestre — de disciplinas iguais ou diferentes. Uma disciplina pode ter turmas ministradas por professores diferentes em semestres diferentes (e até turmas simultâneas com professores distintos no mesmo semestre, quando há mais de uma turma).</p>
+<hr>
+</section>
+<section id="matrículas-em-disciplinas" class="level3" data-number="2.1.6">
+<h3 data-number="2.1.6" class="anchored" data-anchor-id="matrículas-em-disciplinas"><span class="header-section-number">2.1.6</span> Matrículas em Disciplinas</h3>
+<p>Os alunos se matriculam nas turmas oferecidas. Para cada matrícula em uma turma, o sistema registra a nota final obtida pelo aluno (um valor real entre 0 e 10, com uma casa decimal) e se o aluno foi aprovado ou reprovado naquela turma. Um aluno pode se matricular em múltiplas turmas no mesmo semestre e pode cursar a mesma disciplina em semestres diferentes (em caso de reprovação ou reopção). Uma turma pode ter nenhum, um ou muitos alunos matriculados.</p>
+<hr>
+</section>
+</section>
+<section id="o-que-você-deve-produzir" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="o-que-você-deve-produzir"><span class="header-section-number">2.2</span> O que Você Deve Produzir</h2>
+<p>Com base nessa descrição, você será capaz de desenvolver, ao longo deste curso:</p>
+<p><strong>Modelo Conceitual (Capítulo 4 — Modelo ER)</strong></p>
 <ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+<li>Identificar todos os <strong>conjuntos de entidades</strong> e seus atributos (incluindo quais são chaves, quais são multivalorados, quais são deriváveis)</li>
+<li>Identificar todos os <strong>conjuntos de relacionamentos</strong>, suas cardinalidades (1:1, 1:N ou N:N) e se a participação é total ou parcial</li>
+<li>Reconhecer onde há <strong>entidades fracas</strong>, <strong>especializações</strong> ou necessidade de <strong>agregação</strong></li>
+<li>Desenhar o <strong>diagrama ER</strong> completo</li>
 </ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
-</tr>
-</tbody>
-</table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p><strong>Modelo Lógico (Capítulo 2 — Modelo Relacional)</strong></p>
+<ul>
+<li>Converter o diagrama ER em <strong>schemas relacionais</strong>, definindo tabelas, atributos, chaves primárias e chaves estrangeiras</li>
+<li>Representar o schema resultante em um <strong>diagrama de schema</strong> com as relações entre tabelas</li>
+</ul>
+<p><strong>Implementação (Capítulo 3 — SQL)</strong></p>
+<ul>
+<li>Escrever o <strong>DDL</strong> completo: <code>CREATE TABLE</code> com tipos de dados, <code>NOT NULL</code>, <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code></li>
+<li>Popular o banco com dados de exemplo usando <code>INSERT INTO</code></li>
+<li>Escrever consultas que respondam perguntas de negócio: quais alunos estão reprovados, quais professores ministram mais disciplinas, quais disciplinas têm pré-requisito em cascata</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica para começar
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>Releia o texto acima sublinhando os <strong>substantivos</strong> — eles geralmente revelam os conjuntos de entidades. Em seguida, identifique os <strong>verbos</strong> que conectam esses substantivos — eles revelam os relacionamentos. Por fim, procure os <strong>adjetivos e complementos</strong> associados a cada substantivo — eles revelam os atributos.</p>
+<p>Exemplo da primeira frase relevante: <em>“os professores da UnDF são identificados por uma matrícula institucional… o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário”</em> → entidade <code>professor</code> com atributos matrícula (PK), nome, escola (FK), ch_semanal, salário.</p>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1082,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap01/index.html" class="pagination-link" aria-label="Visão Geral">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Visão Geral</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap01/01-o-que-e-bd.html" class="pagination-link" aria-label="O que é um Banco de Dados?">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O que é um Banco de Dados?</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>44&nbsp; Conjuntos de Relacionamentos – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/04-atributos.html" rel="next">
+<link href="../../content/cap04/02-entidades.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -92,6 +72,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -105,7 +114,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-relacionamentos.html"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +349,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -441,7 +450,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></span></a>
   </div>
 </li>
@@ -517,16 +526,21 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição"><span class="header-section-number">44.1</span> Definição</a></li>
+  <li><a href="#atributos-de-relacionamentos" id="toc-atributos-de-relacionamentos" class="nav-link" data-scroll-target="#atributos-de-relacionamentos"><span class="header-section-number">44.2</span> Atributos de Relacionamentos</a></li>
+  <li><a href="#representação-em-diagrama-er" id="toc-representação-em-diagrama-er" class="nav-link" data-scroll-target="#representação-em-diagrama-er"><span class="header-section-number">44.3</span> Representação em Diagrama ER</a></li>
+  <li><a href="#papéis-roles" id="toc-papéis-roles" class="nav-link" data-scroll-target="#papéis-roles"><span class="header-section-number">44.4</span> Papéis (<em>Roles</em>)</a></li>
+  <li><a href="#grau-de-um-relacionamento" id="toc-grau-de-um-relacionamento" class="nav-link" data-scroll-target="#grau-de-um-relacionamento"><span class="header-section-number">44.5</span> Grau de um Relacionamento</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">44.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-relacionamentos.html"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></h1>
 </div>
 
 
@@ -549,97 +563,362 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="definição" class="level2" data-number="44.1">
+<h2 data-number="44.1" class="anchored" data-anchor-id="definição"><span class="header-section-number">44.1</span> Definição</h2>
+<div class="conceito">
+<p>Um <strong>relacionamento</strong> é uma associação entre duas ou mais entidades.</p>
+<p>Um <strong>conjunto de relacionamentos</strong> (<em>relationship set</em>) é uma relação matemática entre <span class="math inline">\(n \geq 2\)</span> conjuntos de entidades:</p>
+<p><span class="math display">\[\{(e_1, e_2, \ldots, e_n) \mid e_1 \in E_1,\ e_2 \in E_2,\ \ldots,\ e_n \in E_n\}\]</span></p>
+<p>onde cada <span class="math inline">\((e_1, e_2, \ldots, e_n)\)</span> é um relacionamento individual.</p>
 </div>
-<div class="callout-title-container flex-fill">
-Nota
+<div class="exemplo">
+<p>No banco da UnDF, o conjunto de relacionamentos <code>ministra</code> associa entidades de <code>professor</code> e <code>disciplina</code>:</p>
+<p><span class="math display">\[ministra \subseteq professor \times disciplina\]</span></p>
+<p>Cada par (Gustavo Costa, ENS-201) é um relacionamento que significa “Gustavo ministra ENS-201”.</p>
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+</section>
+<section id="atributos-de-relacionamentos" class="level2" data-number="44.2">
+<h2 data-number="44.2" class="anchored" data-anchor-id="atributos-de-relacionamentos"><span class="header-section-number">44.2</span> Atributos de Relacionamentos</h2>
+<p>Assim como conjuntos de entidades, conjuntos de relacionamentos podem ter <strong>atributos próprios</strong> — informações que descrevem a associação em si, não as entidades participantes.</p>
+<div class="exemplo">
+<p>O relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code> tem os atributos:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Atributo</th>
+<th>Descrição</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td><code>ano</code></td>
+<td>Ano letivo em que a turma foi oferecida</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
+<td><code>semestre</code></td>
+<td>Semestre (1 ou 2)</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
+<td><code>turma</code></td>
+<td>Identificador da turma (A, B…)</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
+<td><code>horario</code></td>
+<td>Horário semanal das aulas</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><code>sala</code></td>
+<td>Sala onde as aulas ocorrem</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p>Esses atributos não pertencem nem ao professor nem à disciplina — pertencem ao <strong>ato de ministrar</strong> aquela disciplina naquele contexto específico.</p>
+</div>
+</section>
+<section id="representação-em-diagrama-er" class="level2" data-number="44.3">
+<h2 data-number="44.3" class="anchored" data-anchor-id="representação-em-diagrama-er"><span class="header-section-number">44.3</span> Representação em Diagrama ER</h2>
+<div class="conceito">
+<p>Na notação ER: - <strong>Losango</strong>: representa um conjunto de relacionamentos - <strong>Linhas</strong>: conectam o losango aos retângulos dos conjuntos de entidades participantes - <strong>Elipses</strong> ligadas ao losango: atributos do relacionamento</p>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 295.42 584.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 580)">
+<title>er_relacionamento</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-580 291.42,-580 291.42,4 -4,4"></polygon>
+<!-- professor -->
+<g id="node1" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="56.9,-306 0.03,-306 0.03,-270 56.9,-270 56.9,-306"></polygon>
+<text text-anchor="middle" x="28.47" y="-284.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- ministra -->
+<g id="node3" class="node">
+<title>ministra</title>
+<polygon fill="#f9e79f" stroke="black" points="138.47,-306 92.89,-288 138.47,-270 184.05,-288 138.47,-306"></polygon>
+<text text-anchor="middle" x="138.47" y="-284.7" font-family="Times New Roman" font-size="11.00">ministra</text>
+</g>
+<!-- professor&#45;&#45;ministra -->
+<g id="edge1" class="edge">
+<title>professor--ministra</title>
+<path fill="none" stroke="black" d="M57,-288C67.88,-288 80.65,-288 92.78,-288"></path>
+</g>
+<!-- disciplina -->
+<g id="node2" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="282.99,-576 224.45,-576 224.45,-540 282.99,-540 282.99,-576"></polygon>
+<text text-anchor="middle" x="253.72" y="-554.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- ministra&#45;&#45;disciplina -->
+<g id="edge2" class="edge">
+<title>ministra--disciplina</title>
+<path fill="none" stroke="black" d="M145.89,-303.29C165.4,-349.81 223.99,-489.51 245.06,-539.75"></path>
+</g>
+<!-- ano -->
+<g id="node4" class="node">
+<title>ano</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-450" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-446.7" font-family="Times New Roman" font-size="11.00">ano</text>
+</g>
+<!-- ministra&#45;&#45;ano -->
+<g id="edge3" class="edge">
+<title>ministra--ano</title>
+<path fill="none" stroke="black" d="M149.13,-301.81C169.99,-331.65 219.17,-402.01 241.43,-433.85"></path>
+</g>
+<!-- semestre -->
+<g id="node5" class="node">
+<title>semestre</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-342" rx="33.91" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-338.7" font-family="Times New Roman" font-size="11.00">semestre</text>
+</g>
+<!-- ministra&#45;&#45;semestre -->
+<g id="edge4" class="edge">
+<title>ministra--semestre</title>
+<path fill="none" stroke="black" d="M159.72,-297.65C178.8,-306.76 207.45,-320.42 227.91,-330.17"></path>
+</g>
+<!-- turma -->
+<g id="node6" class="node">
+<title>turma</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-230.7" font-family="Times New Roman" font-size="11.00">turma</text>
+</g>
+<!-- ministra&#45;&#45;turma -->
+<g id="edge5" class="edge">
+<title>ministra--turma</title>
+<path fill="none" stroke="black" d="M159.72,-278.35C179.82,-268.76 210.54,-254.11 231.1,-244.31"></path>
+</g>
+<!-- horario -->
+<g id="node7" class="node">
+<title>horario</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-126" rx="29.6" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-122.7" font-family="Times New Roman" font-size="11.00">horario</text>
+</g>
+<!-- ministra&#45;&#45;horario -->
+<g id="edge6" class="edge">
+<title>ministra--horario</title>
+<path fill="none" stroke="black" d="M149.13,-274.19C169.88,-244.5 218.67,-174.71 241.08,-142.64"></path>
+</g>
+<!-- sala -->
+<g id="node8" class="node">
+<title>sala</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-14.7" font-family="Times New Roman" font-size="11.00">sala</text>
+</g>
+<!-- ministra&#45;&#45;sala -->
+<g id="edge7" class="edge">
+<title>ministra--sala</title>
+<path fill="none" stroke="black" d="M145.89,-272.71C165.54,-225.86 224.84,-84.47 245.51,-35.18"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
+</div>
+</section>
+<section id="papéis-roles" class="level2" data-number="44.4">
+<h2 data-number="44.4" class="anchored" data-anchor-id="papéis-roles"><span class="header-section-number">44.4</span> Papéis (<em>Roles</em>)</h2>
+<p>Quando o mesmo conjunto de entidades participa mais de uma vez em um relacionamento, os papéis (<em>roles</em>) explicitam o significado de cada participação.</p>
+<div class="exemplo">
+<p>O relacionamento <code>prereq</code> em <code>disciplina</code> é <strong>autorreferencial</strong> — uma disciplina é pré-requisito de outra:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 226.41 58.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 54)">
+<title>er_roles</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-54 222.41,-54 222.41,4 -4,4"></polygon>
+<!-- disciplina -->
+<g id="node1" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="58.66,-50 0.11,-50 0.11,-14 58.66,-14 58.66,-50"></polygon>
+<text text-anchor="middle" x="29.39" y="-28.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- prereq -->
+<g id="node2" class="node">
+<title>prereq</title>
+<polygon fill="#f9e79f" stroke="black" points="179.83,-50 141.18,-32 179.83,-14 218.49,-32 179.83,-50"></polygon>
+<text text-anchor="middle" x="179.83" y="-28.7" font-family="Times New Roman" font-size="11.00">prereq</text>
+</g>
+<!-- disciplina&#45;&#45;prereq -->
+<g id="edge1" class="edge">
+<title>disciplina--prereq</title>
+<path fill="none" stroke="black" d="M58.66,-32C82.04,-32 115.46,-32 141.13,-32"></path>
+<text text-anchor="middle" x="100.01" y="-34.7" font-family="Times,serif" font-size="9.00">disciplina</text>
+</g>
+<!-- prereq&#45;&#45;disciplina -->
+<g id="edge2" class="edge">
+<title>prereq--disciplina</title>
+<path fill="none" stroke="black" d="M141.13,-32C115.46,-32 82.04,-32 58.66,-32"></path>
+<text text-anchor="middle" x="100.01" y="-2.7" font-family="Times,serif" font-size="9.00">pré-requisito</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Os rótulos “disciplina” e “pré-requisito” são os <strong>papéis</strong> — indicam qual papel cada participação de <code>disciplina</code> desempenha no relacionamento.</p>
+</div>
+</section>
+<section id="grau-de-um-relacionamento" class="level2" data-number="44.5">
+<h2 data-number="44.5" class="anchored" data-anchor-id="grau-de-um-relacionamento"><span class="header-section-number">44.5</span> Grau de um Relacionamento</h2>
+<div class="conceito">
+<p>O <strong>grau</strong> de um relacionamento é o número de conjuntos de entidades que participam dele:</p>
+<ul>
+<li><strong>Binário</strong> (grau 2): o mais comum. Envolve exatamente dois conjuntos de entidades.</li>
+<li><strong>Ternário</strong> (grau 3): envolve três conjuntos de entidades simultaneamente.</li>
+<li><strong>N-ário</strong>: envolve <span class="math inline">\(n\)</span> conjuntos de entidades (raro na prática).</li>
+</ul>
+</div>
+<p>A grande maioria dos relacionamentos em sistemas reais é binária. Relacionamentos ternários aparecem quando a associação entre duas entidades depende de uma terceira.</p>
+<div class="exemplo">
+<p>Se quiséssemos registrar que um aluno é orientado por um professor em um projeto específico, o relacionamento <code>orienta</code> seria ternário entre <code>aluno</code>, <code>professor</code> e <code>projeto</code>:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 288.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>er_ternario</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 284,-112 284,4 -4,4"></polygon>
+<!-- aluno -->
+<g id="node1" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="54,-108 0,-108 0,-72 54,-72 54,-108"></polygon>
+<text text-anchor="middle" x="27" y="-86.7" font-family="Times New Roman" font-size="11.00">aluno</text>
+</g>
+<!-- orienta -->
+<g id="node4" class="node">
+<title>orienta</title>
+<polygon fill="#f9e79f" stroke="black" points="140,-36 99.06,-18 140,0 180.94,-18 140,-36"></polygon>
+<text text-anchor="middle" x="140" y="-14.7" font-family="Times New Roman" font-size="11.00">orienta</text>
+</g>
+<!-- aluno&#45;&#45;orienta -->
+<g id="edge1" class="edge">
+<title>aluno--orienta</title>
+<path fill="none" stroke="black" d="M54.07,-72.23C75.74,-58.8 105.44,-40.41 123.64,-29.13"></path>
+</g>
+<!-- professor -->
+<g id="node2" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="168.43,-108 111.57,-108 111.57,-72 168.43,-72 168.43,-108"></polygon>
+<text text-anchor="middle" x="140" y="-86.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- professor&#45;&#45;orienta -->
+<g id="edge2" class="edge">
+<title>professor--orienta</title>
+<path fill="none" stroke="black" d="M140,-71.7C140,-60.85 140,-46.92 140,-36.1"></path>
+</g>
+<!-- projeto -->
+<g id="node3" class="node">
+<title>projeto</title>
+<polygon fill="#aed6f1" stroke="black" points="280,-108 226,-108 226,-72 280,-72 280,-108"></polygon>
+<text text-anchor="middle" x="253" y="-86.7" font-family="Times New Roman" font-size="11.00">projeto</text>
+</g>
+<!-- projeto&#45;&#45;orienta -->
+<g id="edge3" class="edge">
+<title>projeto--orienta</title>
+<path fill="none" stroke="black" d="M225.93,-72.23C204.26,-58.8 174.56,-40.41 156.36,-29.13"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Não há como dividir <code>orienta</code> em dois relacionamentos binários sem perder informação: saber que um professor orienta um aluno e que um professor orienta um projeto não é suficiente para saber quem orienta quem em qual projeto.</p>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="44.6">
+<h2 data-number="44.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">44.6</span> Para Praticar</h2>
+<p><strong>1. Atributo de entidade ou de relacionamento?</strong> No relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>, a <code>sala</code> onde as aulas ocorrem deve ser atributo do relacionamento ou da entidade <code>disciplina</code>? Justifique.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>sala</code> deve ser atributo do <strong>relacionamento</strong> <code>ministra</code>. A mesma disciplina (ENS-201) pode ser oferecida em salas diferentes em semestres distintos, por professores diferentes. A sala não é uma propriedade intrínseca da disciplina — é uma propriedade da oferta específica daquela disciplina naquele semestre/turma. Colocar <code>sala</code> em <code>disciplina</code> forçaria a escolha de uma sala única e permanente, o que não corresponde à realidade.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Autorreferência e papéis.</strong> Na tabela <code>prereq</code> do banco da UnDF, o par <code>(ENS-601, ENS-401)</code> significa que ENS-401 é pré-requisito de ENS-601. Qual é o papel de ENS-601 e qual é o papel de ENS-401 nessa tupla?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>ENS-601</strong> exerce o papel de <strong>disciplina</strong> (a que tem o pré-requisito).</li>
+<li><strong>ENS-401</strong> exerce o papel de <strong>pré-requisito</strong> (a que precisa ser cursada antes).</li>
+</ul>
+<p>Na tabela, a coluna <code>codigo</code> armazena quem tem o pré-requisito e <code>prereq_codigo</code> armazena quem é o pré-requisito.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Grau do relacionamento.</strong> Analise o seguinte requisito: “Registrar que um aluno cursou uma disciplina em uma turma específica (identificada por disciplina, ano, semestre e turma) e obteve uma nota”. Qual o grau do relacionamento <code>cursa</code>? Quais os conjuntos de entidades envolvidos?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O relacionamento <code>cursa</code> associa <code>aluno</code> à turma de uma disciplina. A “turma” (identificada por disciplina+ano+semestre+turma) é ela própria um relacionamento (<code>ministra</code>) e não uma entidade simples. Isso caracteriza <strong>agregação</strong> — veremos na seção 4.10. Uma simplificação possível é tratar <code>cursa</code> como binário entre <code>aluno</code> e uma entidade <code>oferta</code> (representando a turma), com atributos <code>nota</code> e <code>aprovado</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>4. Limites do relacionamento binário.</strong> Suponha que queiramos registrar que um professor supervisionou a entrega de um projeto por um aluno em uma disciplina específica. Por que um único relacionamento binário professor–aluno não é suficiente?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Um relacionamento binário professor–aluno diria apenas “este professor supervisionou este aluno”, sem especificar <strong>em qual disciplina</strong> ocorreu a supervisão. Se um professor supervisiona o mesmo aluno em duas disciplinas diferentes, não haveria como distinguir as duas supervisões. É necessário um relacionamento ternário professor–aluno–disciplina, ou uma modelagem com agregação.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1370,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/02-entidades.html" class="pagination-link" aria-label="Conjuntos de Entidades">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/04-atributos.html" class="pagination-link" aria-label="Tipos de Atributos">
+        <span class="nav-page-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Tipos de Atributos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

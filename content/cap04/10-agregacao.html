@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>51&nbsp; Agregação – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/11-decisoes-projeto.html" rel="next">
+<link href="../../content/cap04/09-especializacao.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/10-agregacao.html"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -483,7 +463,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></span></a>
   </div>
 </li>
@@ -517,16 +497,22 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#o-problema" id="toc-o-problema" class="nav-link active" data-scroll-target="#o-problema"><span class="header-section-number">51.1</span> O Problema</a></li>
+  <li><a href="#solução-agregação" id="toc-solução-agregação" class="nav-link" data-scroll-target="#solução-agregação"><span class="header-section-number">51.2</span> Solução: Agregação</a></li>
+  <li><a href="#diagrama-er-com-agregação-undf" id="toc-diagrama-er-com-agregação-undf" class="nav-link" data-scroll-target="#diagrama-er-com-agregação-undf"><span class="header-section-number">51.3</span> Diagrama ER com Agregação: UnDF</a></li>
+  <li><a href="#quando-usar-agregação" id="toc-quando-usar-agregação" class="nav-link" data-scroll-target="#quando-usar-agregação"><span class="header-section-number">51.4</span> Quando Usar Agregação</a></li>
+  <li><a href="#conversão-para-esquema-relacional" id="toc-conversão-para-esquema-relacional" class="nav-link" data-scroll-target="#conversão-para-esquema-relacional"><span class="header-section-number">51.5</span> Conversão para Esquema Relacional</a></li>
+  <li><a href="#agregação-vs.-ternário" id="toc-agregação-vs.-ternário" class="nav-link" data-scroll-target="#agregação-vs.-ternário"><span class="header-section-number">51.6</span> Agregação vs.&nbsp;Ternário</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">51.7</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/10-agregacao.html"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></h1>
 </div>
 
 
@@ -549,6 +535,162 @@ div.csl-indent {
 </header>
 
 
+<section id="o-problema" class="level2" data-number="51.1">
+<h2 data-number="51.1" class="anchored" data-anchor-id="o-problema"><span class="header-section-number">51.1</span> O Problema</h2>
+<p>O modelo ER básico não permite que um relacionamento participe diretamente de outro relacionamento. Mas há situações em que precisamos exatamente disso.</p>
+<div class="exemplo">
+<p>No banco da UnDF, registramos que um aluno cursou uma turma de uma disciplina com uma nota. A “turma” não é simplesmente uma entidade — é descrita por um relacionamento (<code>ministra</code>) entre <code>professor</code> e <code>disciplina</code>, com atributos <code>ano</code>, <code>semestre</code> e <code>turma</code>.</p>
+<p>Queremos associar <code>aluno</code> a essa “turma” (e registrar <code>nota</code> e <code>aprovado</code>). Mas <code>aluno</code> seria associado ao <strong>relacionamento</strong> <code>ministra</code>, não a uma entidade.</p>
+</div>
+</section>
+<section id="solução-agregação" class="level2" data-number="51.2">
+<h2 data-number="51.2" class="anchored" data-anchor-id="solução-agregação"><span class="header-section-number">51.2</span> Solução: Agregação</h2>
+<div class="conceito">
+<p><strong>Agregação</strong> (<em>aggregation</em>) é uma abstração que trata um relacionamento como uma entidade de nível superior. O relacionamento (e os conjuntos de entidades que ele conecta) é “encaixotado” em uma nova entidade, que pode então participar de outros relacionamentos.</p>
+<p>A caixa de agregação é representada no diagrama ER por um retângulo tracejado ao redor do relacionamento e das entidades que ele conecta.</p>
+</div>
+</section>
+<section id="diagrama-er-com-agregação-undf" class="level2" data-number="51.3">
+<h2 data-number="51.3" class="anchored" data-anchor-id="diagrama-er-com-agregação-undf"><span class="header-section-number">51.3</span> Diagrama ER com Agregação: UnDF</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 605.70 378.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 374)">
+<title>er_agregacao</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-374 601.7,-374 601.7,4 -4,4"></polygon>
+<!-- professor -->
+<g id="node1" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="224.66,-275 170.66,-275 170.66,-239 224.66,-239 224.66,-275"></polygon>
+<text text-anchor="middle" x="197.66" y="-254" font-family="Times New Roman" font-size="10.00">professor</text>
+</g>
+<!-- ministra -->
+<g id="node4" class="node">
+<title>ministra</title>
+<polygon fill="#f9e79f" stroke="black" points="382.8,-241 341.34,-223 382.8,-205 424.25,-223 382.8,-241"></polygon>
+<text text-anchor="middle" x="382.8" y="-220" font-family="Times New Roman" font-size="10.00">ministra</text>
+</g>
+<!-- professor&#45;&gt;ministra -->
+<g id="edge1" class="edge">
+<title>professor-&gt;ministra</title>
+<path fill="none" stroke="black" d="M224.9,-252.13C258.92,-245.81 318.05,-234.83 353.19,-228.31"></path>
+<text text-anchor="middle" x="285.26" y="-245.2" font-family="Times,serif" font-size="14.00">N</text>
+</g>
+<!-- disciplina -->
+<g id="node2" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="594.43,-370 539.66,-370 539.66,-334 594.43,-334 594.43,-370"></polygon>
+<text text-anchor="middle" x="567.05" y="-349" font-family="Times New Roman" font-size="10.00">disciplina</text>
+</g>
+<!-- aluno -->
+<g id="node3" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="54,-122 0,-122 0,-86 54,-86 54,-122"></polygon>
+<text text-anchor="middle" x="27" y="-101" font-family="Times New Roman" font-size="10.00">aluno</text>
+</g>
+<!-- cursa -->
+<g id="node5" class="node">
+<title>cursa</title>
+<polygon fill="#f9e79f" stroke="black" points="197.66,-122 166.06,-104 197.66,-86 229.26,-104 197.66,-122"></polygon>
+<text text-anchor="middle" x="197.66" y="-101" font-family="Times New Roman" font-size="10.00">cursa</text>
+</g>
+<!-- aluno&#45;&gt;cursa -->
+<g id="edge6" class="edge">
+<title>aluno-&gt;cursa</title>
+<path fill="none" stroke="black" d="M54.35,-104C84.56,-104 133.99,-104 165.92,-104"></path>
+<text text-anchor="middle" x="110.06" y="-108.2" font-family="Times,serif" font-size="14.00">N</text>
+</g>
+<!-- ministra&#45;&gt;disciplina -->
+<g id="edge2" class="edge">
+<title>ministra-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M399.34,-234C430.75,-256.24 502.1,-306.74 540.48,-333.9"></path>
+<text text-anchor="middle" x="480.33" y="-295.2" font-family="Times,serif" font-size="14.00">N</text>
+</g>
+<!-- ano -->
+<g id="node8" class="node">
+<title>ano</title>
+<ellipse fill="none" stroke="black" cx="567.05" cy="-266" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567.05" y="-263" font-family="Times New Roman" font-size="10.00">ano</text>
+</g>
+<!-- ministra&#45;&gt;ano -->
+<g id="edge3" class="edge">
+<title>ministra-&gt;ano</title>
+<path fill="none" stroke="black" d="M410.3,-229.25C442.29,-236.8 496.16,-249.51 531.41,-257.83"></path>
+<polygon fill="black" stroke="black" points="530.73,-261.26 541.27,-260.15 532.34,-254.45 530.73,-261.26"></polygon>
+</g>
+<!-- semestre -->
+<g id="node9" class="node">
+<title>semestre</title>
+<ellipse fill="none" stroke="black" cx="567.05" cy="-180" rx="30.82" ry="18"></ellipse>
+<text text-anchor="middle" x="567.05" y="-177" font-family="Times New Roman" font-size="10.00">semestre</text>
+</g>
+<!-- ministra&#45;&gt;semestre -->
+<g id="edge4" class="edge">
+<title>ministra-&gt;semestre</title>
+<path fill="none" stroke="black" d="M410.3,-216.75C441.39,-209.41 493.15,-197.2 528.4,-188.88"></path>
+<polygon fill="black" stroke="black" points="529.39,-192.25 538.32,-186.54 527.78,-185.43 529.39,-192.25"></polygon>
+</g>
+<!-- turma_a -->
+<g id="node10" class="node">
+<title>turma_a</title>
+<ellipse fill="none" stroke="black" cx="567.05" cy="-94" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567.05" y="-91" font-family="Times New Roman" font-size="10.00">turma</text>
+</g>
+<!-- ministra&#45;&gt;turma_a -->
+<g id="edge5" class="edge">
+<title>ministra-&gt;turma_a</title>
+<path fill="none" stroke="black" d="M399.34,-212C430.55,-189.91 501.16,-139.93 539.71,-112.64"></path>
+<polygon fill="black" stroke="black" points="541.74,-115.49 547.88,-106.86 537.69,-109.78 541.74,-115.49"></polygon>
+</g>
+<!-- cursa&#45;&gt;ministra -->
+<g id="edge7" class="edge">
+<title>cursa-&gt;ministra</title>
+<path fill="none" stroke="black" d="M213.03,-113.34C246.59,-135.14 329.95,-189.31 365.41,-212.35"></path>
+<text text-anchor="middle" x="285.26" y="-168.2" font-family="Times,serif" font-size="14.00">N</text>
+</g>
+<!-- nota -->
+<g id="node6" class="node">
+<title>nota</title>
+<ellipse fill="none" stroke="black" cx="382.8" cy="-104" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="382.8" y="-101" font-family="Times New Roman" font-size="10.00">nota</text>
+</g>
+<!-- cursa&#45;&gt;nota -->
+<g id="edge8" class="edge">
+<title>cursa-&gt;nota</title>
+<path fill="none" stroke="black" d="M229.31,-104C261.29,-104 311.4,-104 345.37,-104"></path>
+<polygon fill="black" stroke="black" points="345.79,-107.5 355.79,-104 345.79,-100.5 345.79,-107.5"></polygon>
+</g>
+<!-- aprovado -->
+<g id="node7" class="node">
+<title>aprovado</title>
+<ellipse fill="none" stroke="black" cx="382.8" cy="-18" rx="31.99" ry="18"></ellipse>
+<text text-anchor="middle" x="382.8" y="-15" font-family="Times New Roman" font-size="10.00">aprovado</text>
+</g>
+<!-- cursa&#45;&gt;aprovado -->
+<g id="edge9" class="edge">
+<title>cursa-&gt;aprovado</title>
+<path fill="none" stroke="black" d="M215.56,-96.06C245.68,-81.92 309.16,-52.11 348.37,-33.7"></path>
+<polygon fill="black" stroke="black" points="350.22,-36.69 357.78,-29.28 347.25,-30.36 350.22,-36.69"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="quando-usar-agregação" class="level2" data-number="51.4">
+<h2 data-number="51.4" class="anchored" data-anchor-id="quando-usar-agregação"><span class="header-section-number">51.4</span> Quando Usar Agregação</h2>
+<p>Use agregação quando:</p>
+<ol type="1">
+<li>Um relacionamento precisa participar de outro relacionamento</li>
+<li>Há informação que descreve a participação de uma entidade em um relacionamento (e não em uma das entidades envolvidas)</li>
+<li>O relacionamento “base” deve existir independentemente da participação da entidade externa</li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -559,87 +701,138 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>No caso da UnDF: uma oferta de turma (<code>ministra</code>) pode existir mesmo sem nenhum aluno matriculado nela. Um aluno pode se matricular nessa oferta (cursa), mas a oferta preexiste. Isso justifica a separação: <code>ministra</code> é o relacionamento base; <code>cursa</code> é a agregação que conecta <code>aluno</code> a ele.</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+</section>
+<section id="conversão-para-esquema-relacional" class="level2" data-number="51.5">
+<h2 data-number="51.5" class="anchored" data-anchor-id="conversão-para-esquema-relacional"><span class="header-section-number">51.5</span> Conversão para Esquema Relacional</h2>
+<p>Para representar agregação em esquemas relacionais:</p>
+<div class="conceito">
+<p>Cria-se um schema para o relacionamento externo contendo: - A chave primária do <strong>relacionamento agregado</strong> (como FK) - A chave primária de cada <strong>entidade adicional</strong> participante (como FK) - Os atributos próprios do relacionamento externo</p>
+</div>
+<div class="exemplo">
+<p>O relacionamento <code>cursa</code> com a agregação <code>ministra</code> no banco da UnDF:</p>
+<pre><code>-- Schema do relacionamento agregado (já existente):
+ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
+  PK: (cod_disciplina, ano, semestre, turma)
+
+-- Schema da agregação (relacionamento externo):
+matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
+  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
+  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
+  FK: cod_matricula → aluno(matricula)</code></pre>
+<p>O schema <code>ministra</code> não é redundante — ele é necessário para registrar as ofertas de turmas independentemente das matrículas dos alunos.</p>
+</div>
+</section>
+<section id="agregação-vs.-ternário" class="level2" data-number="51.6">
+<h2 data-number="51.6" class="anchored" data-anchor-id="agregação-vs.-ternário"><span class="header-section-number">51.6</span> Agregação vs.&nbsp;Ternário</h2>
+<p>Uma alternativa à agregação seria um relacionamento <strong>ternário</strong> entre <code>professor</code>, <code>disciplina</code> e <code>aluno</code>. A diferença:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Abordagem</th>
+<th>Semântica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td><strong>Ternário</strong> (professor–disciplina–aluno)</td>
+<td>Cada tripla (professor, disciplina, aluno) é registrada em conjunto</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><strong>Agregação</strong> (ministra + aluno)</td>
+<td>A oferta <code>ministra</code> existe independentemente; <code>aluno</code> se associa a ela</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p>A agregação é mais rica: permite registrar que uma turma foi oferecida mas não teve matriculados, ou que uma nota foi registrada para uma oferta específica de um professor específico. O ternário puro não captura a existência da oferta sem aluno.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="51.7">
+<h2 data-number="51.7" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">51.7</span> Para Praticar</h2>
+<p><strong>1. Identificar necessidade de agregação.</strong> Para cada situação, determine se a agregação é necessária ou se um relacionamento binário/ternário simples é suficiente:</p>
+<ol type="a">
+<li>Registrar que um funcionário trabalha em um projeto durante um período (data início, data fim)</li>
+<li>Registrar que um médico avaliou o resultado de um exame feito por um paciente (onde o exame tem data, tipo e resultado)</li>
+<li>Registrar que um cliente comprou um produto com um desconto específico</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> Relacionamento binário simples <code>trabalha_em</code> entre <code>funcionario</code> e <code>projeto</code>, com atributos <code>data_inicio</code> e <code>data_fim</code>. Não precisa de agregação.</li>
+<li><strong>(b)</strong> Agregação necessária: <code>avalia</code> entre <code>médico</code> e o relacionamento <code>fez_exame</code> (entre <code>paciente</code> e <code>tipo_exame</code>). O exame existe independentemente da avaliação do médico.</li>
+<li><strong>(c)</strong> Relacionamento ternário ou binário <code>compra</code> entre <code>cliente</code>, <code>produto</code> e <code>pedido</code>, com atributo <code>desconto</code>. Pode-se resolver sem agregação dependendo do modelo.</li>
+</ul>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Conversão da agregação.</strong> Dado o cenário: alunos fazem projetos sob orientação de professores. Um projeto pode ter múltiplos alunos orientados pelo mesmo professor. Defina: (a) o relacionamento base <code>orienta</code> entre <code>professor</code> e <code>projeto</code>; (b) o relacionamento externo <code>participa</code> entre <code>aluno</code> e a agregação <code>orienta</code> (com atributo <code>papel</code>). Escreva os schemas relacionais.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>projeto(id_projeto, titulo, data_inicio, data_fim)
+  PK: id_projeto
+
+orienta(matricula_prof, id_projeto)
+  PK: (matricula_prof, id_projeto)
+  FK: matricula_prof → professor(matricula_prof)
+  FK: id_projeto → projeto(id_projeto)
+
+participa(matricula_prof, id_projeto, matricula_aluno, papel)
+  PK: (matricula_prof, id_projeto, matricula_aluno)
+  FK: (matricula_prof, id_projeto) → orienta(...)
+  FK: matricula_aluno → aluno(matricula)</code></pre>
+<p>O atributo <code>papel</code> descreve o papel do aluno naquela orientação específica (ex.: “bolsista”, “voluntário”).</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Armadilha: omitir a agregação.</strong> Se representarmos <code>cursa</code> como relacionamento ternário direto <code>(professor, disciplina, aluno)</code> em vez de usar agregação, que informação se perde?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Um relacionamento ternário <code>(professor, disciplina, aluno)</code> força que <strong>todo registro inclua um aluno</strong> — não é possível registrar que uma turma foi oferecida sem alunos matriculados.</p>
+<p>Com a agregação (<code>ministra</code> existe independentemente; <code>matricula_disciplina</code> referencia <code>ministra</code>), é possível: 1. Registrar uma oferta de turma sem nenhum aluno 2. Saber exatamente em qual oferta específica (professor+disciplina+ano+semestre+turma) o aluno se matriculou, mesmo se o professor mudar entre semestres</p>
+<p>O ternário puro perderia essas distinções.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1284,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/09-especializacao.html" class="pagination-link" aria-label="Especialização e Generalização">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/11-decisoes-projeto.html" class="pagination-link" aria-label="Decisões de Projeto">
+        <span class="nav-page-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

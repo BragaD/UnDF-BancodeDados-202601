@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>53&nbsp; Notações Alternativas – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/13-resumo.html" rel="next">
+<link href="../../content/cap04/11-decisoes-projeto.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/12-notacoes.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -495,7 +475,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></span></a>
   </div>
 </li>
@@ -517,16 +497,22 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#comparação-de-notações" id="toc-comparação-de-notações" class="nav-link active" data-scroll-target="#comparação-de-notações"><span class="header-section-number">53.1</span> Comparação de Notações</a></li>
+  <li><a href="#crows-foot-idef1x" id="toc-crows-foot-idef1x" class="nav-link" data-scroll-target="#crows-foot-idef1x"><span class="header-section-number">53.2</span> Crow’s Foot (IDEF1X)</a></li>
+  <li><a href="#equivalências-er-chen-crows-foot" id="toc-equivalências-er-chen-crows-foot" class="nav-link" data-scroll-target="#equivalências-er-chen-crows-foot"><span class="header-section-number">53.3</span> Equivalências: ER (Chen) × Crow’s Foot</a></li>
+  <li><a href="#uml-diagramas-de-classes" id="toc-uml-diagramas-de-classes" class="nav-link" data-scroll-target="#uml-diagramas-de-classes"><span class="header-section-number">53.4</span> UML — Diagramas de Classes</a></li>
+  <li><a href="#correspondências-er-uml" id="toc-correspondências-er-uml" class="nav-link" data-scroll-target="#correspondências-er-uml"><span class="header-section-number">53.5</span> Correspondências ER × UML</a></li>
+  <li><a href="#inversão-na-leitura-de-cardinalidade" id="toc-inversão-na-leitura-de-cardinalidade" class="nav-link" data-scroll-target="#inversão-na-leitura-de-cardinalidade"><span class="header-section-number">53.6</span> Inversão na Leitura de Cardinalidade</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">53.7</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/12-notacoes.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></h1>
 </div>
 
 
@@ -549,97 +535,264 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<p>O diagrama ER apresentado neste capítulo usa a <strong>notação de Chen</strong> (1976). Na prática, existem outras notações amplamente usadas em ferramentas de modelagem e em engenharia de software.</p>
+<section id="comparação-de-notações" class="level2" data-number="53.1">
+<h2 data-number="53.1" class="anchored" data-anchor-id="comparação-de-notações"><span class="header-section-number">53.1</span> Comparação de Notações</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notação</th>
+<th>Uso típico</th>
+<th>Caractísticas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Chen</strong></td>
+<td>Acadêmico, livros-texto</td>
+<td>Losangos para relacionamentos, elipses para atributos</td>
+</tr>
+<tr class="even">
+<td><strong>IDEF1X / Crow’s Foot</strong></td>
+<td>Ferramentas CASE, modelagem física</td>
+<td>Atributos dentro das caixas, pés de corvo para “muitos”</td>
+</tr>
+<tr class="odd">
+<td><strong>UML (Diagrama de Classes)</strong></td>
+<td>Engenharia de software</td>
+<td>Herança nativa, operações, multiplicidades</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="crows-foot-idef1x" class="level2" data-number="53.2">
+<h2 data-number="53.2" class="anchored" data-anchor-id="crows-foot-idef1x"><span class="header-section-number">53.2</span> Crow’s Foot (IDEF1X)</h2>
+<p>A notação <em>crow’s foot</em> (pé de corvo) é a mais usada em ferramentas de modelagem de dados como MySQL Workbench, dbdiagram.io e DBeaver.</p>
+<div class="conceito">
+<p>Na notação crow’s foot: - <strong>Retângulos</strong> representam entidades (com atributos listados internamente) - <strong>Linhas</strong> conectam entidades (sem losangos) - <strong>Símbolos nas extremidades</strong> indicam cardinalidade e participação: - <code>|</code> — exatamente um (participação total, lado “um”) - <code>O</code> — zero (participação parcial) - <code>&lt;</code> — muitos (pé de corvo)</p>
+<p>Os símbolos são combinados: - <code>|&lt;</code> — um ou mais (total, muitos) - <code>O&lt;</code> — zero ou mais (parcial, muitos) - <code>||</code> — exatamente um (total, um) - <code>O|</code> — zero ou um (parcial, um)</p>
+</div>
+</section>
+<section id="equivalências-er-chen-crows-foot" class="level2" data-number="53.3">
+<h2 data-number="53.3" class="anchored" data-anchor-id="equivalências-er-chen-crows-foot"><span class="header-section-number">53.3</span> Equivalências: ER (Chen) × Crow’s Foot</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Conceito ER (Chen)</th>
+<th>Crow’s Foot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1:N, participação parcial no N</td>
+<td><code>||</code> no lado 1, <code>O&lt;</code> no lado N</td>
+</tr>
+<tr class="even">
+<td>1:N, participação total no N</td>
+<td><code>||</code> no lado 1, <code>|&lt;</code> no lado N</td>
+</tr>
+<tr class="odd">
+<td>N:N</td>
+<td><code>O&lt;</code> nos dois lados</td>
+</tr>
+<tr class="even">
+<td>1:1</td>
+<td><code>||</code> nos dois lados (ou com O para parcial)</td>
+</tr>
+</tbody>
+</table>
+<div class="exemplo">
+<p>O relacionamento <code>professor</code> (N:1, parcial) com <code>escola</code> (1, parcial):</p>
+<p><strong>Chen</strong>: professor —— lotado_em —→ escola (linha simples dos dois lados, seta para escola)</p>
+<p><strong>Crow’s Foot</strong>:</p>
+<pre><code>professor |o---||  escola</code></pre>
+<ul>
+<li>Lado <code>professor</code>: <code>|o</code> — zero ou um (um professor pode existir sem estar lotado? Não neste caso; seria <code>|</code>|)</li>
+<li>Lado <code>escola</code>: <code>||</code> — exatamente uma escola por professor; <code>o&lt;</code> — uma escola pode ter zero ou mais professores</li>
+</ul>
+<p>Para o banco da UnDF (todo professor tem escola, uma escola pode ter 0 ou mais professores):</p>
+<pre><code>professor ||---o&lt;  escola</code></pre>
+</div>
+</section>
+<section id="uml-diagramas-de-classes" class="level2" data-number="53.4">
+<h2 data-number="53.4" class="anchored" data-anchor-id="uml-diagramas-de-classes"><span class="header-section-number">53.4</span> UML — Diagramas de Classes</h2>
+<p>O UML (<em>Unified Modeling Language</em>) usa <strong>diagramas de classes</strong> para modelagem conceitual. É a linguagem padrão em engenharia de software.</p>
+<div class="conceito">
+<p>Em diagramas de classes UML: - <strong>Retângulos com três compartimentos</strong>: nome da classe (topo), atributos (meio), operações (base) - <strong>Linhas de associação</strong>: sem losangos; o nome da associação aparece sobre a linha - <strong>Multiplicidade</strong>: expressa na forma <code>min..max</code> nas extremidades das linhas - <code>1</code> ou <code>1..1</code> — exatamente um - <code>0..1</code> — zero ou um - <code>*</code> ou <code>0..*</code> — zero ou mais - <code>1..*</code> — um ou mais - <strong>Generalização</strong>: seta com ponta aberta (triângulo) apontando para o nível superior</p>
+</div>
+</section>
+<section id="correspondências-er-uml" class="level2" data-number="53.5">
+<h2 data-number="53.5" class="anchored" data-anchor-id="correspondências-er-uml"><span class="header-section-number">53.5</span> Correspondências ER × UML</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elemento ER</th>
+<th>Equivalente UML</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conjunto de entidades</td>
+<td>Classe</td>
+</tr>
+<tr class="even">
+<td>Atributo</td>
+<td>Atributo da classe</td>
+</tr>
+<tr class="odd">
+<td>Relacionamento binário</td>
+<td>Associação com nome</td>
+</tr>
+<tr class="even">
+<td>Cardinalidade 1:N</td>
+<td>Multiplicidade <code>1</code> num lado, <code>*</code> no outro</td>
+</tr>
+<tr class="odd">
+<td>Participação total</td>
+<td>Multiplicidade mínima ≥ 1</td>
+</tr>
+<tr class="even">
+<td>Especialização/Generalização</td>
+<td>Herança (seta de generalização)</td>
+</tr>
+<tr class="odd">
+<td>Relacionamento com atributos</td>
+<td>Classe de associação (<em>association class</em>)</td>
+</tr>
+</tbody>
+</table>
+<div class="exemplo">
+<p>O relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code> com atributos:</p>
+<p><strong>ER (Chen)</strong>: <code>professor</code> —— ◇<code>ministra</code>(ano, semestre, turma, horario, sala) —— <code>disciplina</code></p>
+<p><strong>UML</strong>:</p>
+<pre><code>Professor           Disciplina
+───────────         ──────────
+matricula_prof      codigo
+nome           *─────────── ─────────────* nome_disciplina
+escola         ministra                    sigla_curso
+ch_semanal     ┄┄┄┄┄┄┄┄┄
+salario        ano
+               semestre
+               turma
+               horario
+               sala</code></pre>
+<p>Na UML, <code>ministra</code> seria uma <strong>classe de associação</strong> com os atributos do relacionamento.</p>
+</div>
+</section>
+<section id="inversão-na-leitura-de-cardinalidade" class="level2" data-number="53.6">
+<h2 data-number="53.6" class="anchored" data-anchor-id="inversão-na-leitura-de-cardinalidade"><span class="header-section-number">53.6</span> Inversão na Leitura de Cardinalidade</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+Aviso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
+<p><strong>Atenção à inversão de posição</strong>: na notação UML, a multiplicidade aparece do <strong>lado oposto</strong> ao da notação ER (Chen).</p>
 <ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+<li><strong>ER (Chen)</strong>: a cardinalidade é colocada <strong>próxima à entidade</strong> que ela restringe</li>
+<li><strong>UML</strong>: a multiplicidade é colocada <strong>próxima à entidade</strong> do lado contrário ao que ela descreve</li>
 </ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
-</tr>
-</tbody>
-</table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p>Exemplo: em ER, <code>1</code> próximo a <code>escola</code> significa “um professor está em uma escola”. Em UML, <code>1</code> no lado de <code>escola</code> significa “cada professor se associa a 1 escola” — o significado é o mesmo, mas a posição é diferente. Sempre leia as multiplicidades no contexto de ambas as extremidades.</p>
 </div>
 </div>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="53.7">
+<h2 data-number="53.7" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">53.7</span> Para Praticar</h2>
+<p><strong>1. Traduzir para crow’s foot.</strong> Traduza os seguintes relacionamentos da UnDF para notação crow’s foot (escreva as linhas com símbolos como <code>||</code>, <code>o&lt;</code>, <code>|&lt;</code>, <code>o|</code>):</p>
+<ol type="a">
+<li><code>aluno</code> matriculado_em <code>curso</code> (todo aluno está em exatamente um curso; um curso pode ter zero ou mais alunos)</li>
+<li><code>professor</code> ministra <code>disciplina</code> (um professor pode ministrar zero ou mais disciplinas; uma disciplina pode ser ministrada por zero ou mais professores)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> <code>aluno ||---o&lt; curso</code>
+<ul>
+<li>Lado <code>aluno</code>: <code>||</code> — exatamente um curso por aluno</li>
+<li>Lado <code>curso</code>: <code>o&lt;</code> — zero ou mais alunos por curso</li>
+</ul></li>
+<li><strong>(b)</strong> <code>professor o&lt;---o&lt; disciplina</code>
+<ul>
+<li>Lado <code>professor</code> (lido da perspectiva de <code>disciplina</code>): <code>o&lt;</code> — zero ou mais professores por disciplina</li>
+<li>Lado <code>disciplina</code> (lido da perspectiva de <code>professor</code>): <code>o&lt;</code> — zero ou mais disciplinas por professor</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Ler multiplicidade UML.</strong> Dado o seguinte trecho de um diagrama de classes UML:</p>
+<pre><code>Aluno 1..* ─── cursa ─── 0..* Disciplina</code></pre>
+<p>O que essa multiplicidade significa para <code>Aluno</code> e para <code>Disciplina</code>?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Do lado de <code>Disciplina</code></strong>: a multiplicidade <code>1..*</code> diz que, para cada <code>Disciplina</code>, há <strong>um ou mais</strong> <code>Aluno</code>s cursando — ou seja, uma disciplina só é registrada se tiver ao menos um aluno.</li>
+<li><strong>Do lado de <code>Aluno</code></strong>: a multiplicidade <code>0..*</code> diz que, para cada <code>Aluno</code>, pode haver <strong>zero ou mais</strong> <code>Disciplina</code>s cursadas — um aluno pode existir sem ter cursado nenhuma disciplina ainda.</li>
+</ul>
+<p>Na notação UML, a multiplicidade fica no lado <strong>oposto</strong> ao da entidade que ela descreve: <code>1..*</code> próximo a <code>Disciplina</code> descreve <strong>quantas disciplinas</strong> cada aluno pode cursar? Não — descreve quantos alunos cada disciplina tem. Esse é o ponto de confusão mais comum ao ler UML.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Classe de associação.</strong> Em UML, o relacionamento <code>ministra</code> com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code> deve ser representado como <strong>classe de associação</strong>. Por quê essa construção é necessária, e o que aconteceria se tentássemos colocar esses atributos diretamente em <code>Professor</code> ou em <code>Disciplina</code>?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Os atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code> descrevem <strong>a associação em si</strong> — não pertencem ao professor nem à disciplina individualmente:</p>
+<ul>
+<li>Um mesmo professor pode ministrar ENS-201 em 2024/1 (sala 201) e ENS-401 em 2024/2 (sala 301). Colocar <code>sala</code> em <code>Professor</code> permitiria apenas uma sala por professor.</li>
+<li>A mesma disciplina pode ser ministrada por professores diferentes com horários diferentes. Colocar <code>horario</code> em <code>Disciplina</code> impediria múltiplas ofertas.</li>
+</ul>
+<p>A <strong>classe de associação</strong> em UML existe exatamente para esse caso: atributos que descrevem uma associação N:N e não podem ser colocados em nenhuma das classes extremas. Ela gera, na conversão relacional, uma tabela de junção com os atributos — exatamente o que é <code>ministra</code> no banco da UnDF.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1244,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/11-decisoes-projeto.html" class="pagination-link" aria-label="Decisões de Projeto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/13-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
+        <span class="nav-page-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

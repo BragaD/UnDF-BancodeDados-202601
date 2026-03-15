@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>32&nbsp; Cláusula SELECT – Bases da Engenharia de Software 4</title>
+<title>33&nbsp; Cláusula SELECT – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -171,80 +171,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../content/cap01/00-exemplo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O Problema: Sistema Acadêmico da UnDF</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../content/cap01/01-o-que-e-bd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">O que é um Banco de Dados?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">O que é um Banco de Dados?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/02-aplicacoes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicações</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aplicações</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/03-sistemas-arquivos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Por que não usar Arquivos?</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/04-modelos-dados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modelos de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/05-tres-niveis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Visão em Três Níveis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/06-linguagens.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linguagens (DDL, DML, SQL)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/07-projeto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Projeto de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/08-motor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Motor de Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/09-arquiteturas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Arquiteturas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Arquiteturas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/10-usuarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Usuários e DBA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Usuários e DBA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/11-historia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">História</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">História</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/12-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap01/13-hands-on-postgresql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Hands-on: PostgreSQL</span></span></a>
   </div>
 </li>
       </ul>
@@ -261,79 +267,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/01-estrutura.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/02-schema.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Schema e Instância</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Schema e Instância</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/03-chaves.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Chaves</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Chaves</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/04-diagrama-schema.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Diagrama de Schema</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/05-linguagens-consulta.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Linguagens de Consulta Relacional</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Linguagens de Consulta Relacional</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/06-algebra-relacional.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Álgebra Relacional</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Álgebra Relacional</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/07-selecao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Operação de Seleção</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Operação de Seleção</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/08-projecao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Operação de Projeção</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Operação de Projeção</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/09-produto-juncao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Produto Cartesiano e Junção</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Produto Cartesiano e Junção</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/10-operacoes-conjunto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/11-operacoes-adicionais.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operações Adicionais</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Operações Adicionais</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap02/12-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
   </div>
 </li>
       </ul>
@@ -350,73 +356,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/01-historia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/02-ddl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Definição de Dados (DDL)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/03-select-from-where.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/05-clausula-where.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/06-operacoes-conjunto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Operações de Conjunto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/07-nulos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Valores Nulos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/08-agregacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Funções de Agregação</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/09-subconsultas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Subconsultas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Subconsultas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/10-modificacao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Modificação do Banco de Dados</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap03/11-resumo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Tipos de Atributos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Cardinalidade e Participação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Conversão ER → Relacional</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Decisões de Projeto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Notações Alternativas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span></a>
   </div>
 </li>
       </ul>
@@ -431,21 +532,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#distinct-eliminando-duplicatas" id="toc-distinct-eliminando-duplicatas" class="nav-link active" data-scroll-target="#distinct-eliminando-duplicatas"><span class="header-section-number">32.1</span> DISTINCT: Eliminando Duplicatas</a></li>
-  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">32.2</span> SELECT *</a></li>
-  <li><a href="#expressões-aritméticas" id="toc-expressões-aritméticas" class="nav-link" data-scroll-target="#expressões-aritméticas"><span class="header-section-number">32.3</span> Expressões Aritméticas</a></li>
-  <li><a href="#alias-com-as" id="toc-alias-com-as" class="nav-link" data-scroll-target="#alias-com-as"><span class="header-section-number">32.4</span> Alias com AS</a></li>
-  <li><a href="#literais-no-select" id="toc-literais-no-select" class="nav-link" data-scroll-target="#literais-no-select"><span class="header-section-number">32.5</span> Literais no SELECT</a></li>
-  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">32.6</span> Para Praticar</a></li>
+  <li><a href="#distinct-eliminando-duplicatas" id="toc-distinct-eliminando-duplicatas" class="nav-link active" data-scroll-target="#distinct-eliminando-duplicatas"><span class="header-section-number">33.1</span> DISTINCT: Eliminando Duplicatas</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">33.2</span> SELECT *</a></li>
+  <li><a href="#expressões-aritméticas" id="toc-expressões-aritméticas" class="nav-link" data-scroll-target="#expressões-aritméticas"><span class="header-section-number">33.3</span> Expressões Aritméticas</a></li>
+  <li><a href="#alias-com-as" id="toc-alias-com-as" class="nav-link" data-scroll-target="#alias-com-as"><span class="header-section-number">33.4</span> Alias com AS</a></li>
+  <li><a href="#literais-no-select" id="toc-literais-no-select" class="nav-link" data-scroll-target="#literais-no-select"><span class="header-section-number">33.5</span> Literais no SELECT</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">33.6</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></h1>
+<h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Cláusula SELECT</span></h1>
 </div>
 
 
@@ -469,8 +570,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>A cláusula <code>SELECT</code> determina <strong>quais colunas</strong> (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.</p>
-<section id="distinct-eliminando-duplicatas" class="level2" data-number="32.1">
-<h2 data-number="32.1" class="anchored" data-anchor-id="distinct-eliminando-duplicatas"><span class="header-section-number">32.1</span> DISTINCT: Eliminando Duplicatas</h2>
+<section id="distinct-eliminando-duplicatas" class="level2" data-number="33.1">
+<h2 data-number="33.1" class="anchored" data-anchor-id="distinct-eliminando-duplicatas"><span class="header-section-number">33.1</span> DISTINCT: Eliminando Duplicatas</h2>
 <p>Por padrão, o SQL <strong>não</strong> elimina linhas duplicadas no resultado — comportamento chamado de <code>ALL</code>. Para remover duplicatas, usa-se a palavra-chave <code>DISTINCT</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista a escola de cada professor (com repetição)</span></span>
@@ -538,8 +639,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Os 7 professores são distribuídos entre 3 escolas distintas. <code>DISTINCT</code> elimina as repetições.</p>
 </section>
-<section id="select" class="level2" data-number="32.2">
-<h2 data-number="32.2" class="anchored" data-anchor-id="select"><span class="header-section-number">32.2</span> SELECT *</h2>
+<section id="select" class="level2" data-number="33.2">
+<h2 data-number="33.2" class="anchored" data-anchor-id="select"><span class="header-section-number">33.2</span> SELECT *</h2>
 <p>O asterisco <code>*</code> seleciona <strong>todas as colunas</strong> da tabela:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Retorna todas as colunas de professor</span></span>
@@ -613,8 +714,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Embora prático para exploração, o uso de <code>SELECT *</code> em aplicações de produção é desaconselhado, pois o resultado depende da estrutura atual da tabela e pode mudar se colunas forem adicionadas ou reordenadas.</p>
 </section>
-<section id="expressões-aritméticas" class="level2" data-number="32.3">
-<h2 data-number="32.3" class="anchored" data-anchor-id="expressões-aritméticas"><span class="header-section-number">32.3</span> Expressões Aritméticas</h2>
+<section id="expressões-aritméticas" class="level2" data-number="33.3">
+<h2 data-number="33.3" class="anchored" data-anchor-id="expressões-aritméticas"><span class="header-section-number">33.3</span> Expressões Aritméticas</h2>
 <p>A cláusula <code>SELECT</code> pode conter expressões aritméticas com os operadores <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular um reajuste de 10% no salário dos professores sem alterar o banco</span></span>
@@ -693,8 +794,8 @@ Nota
 </div>
 </div>
 </section>
-<section id="alias-com-as" class="level2" data-number="32.4">
-<h2 data-number="32.4" class="anchored" data-anchor-id="alias-com-as"><span class="header-section-number">32.4</span> Alias com AS</h2>
+<section id="alias-com-as" class="level2" data-number="33.4">
+<h2 data-number="33.4" class="anchored" data-anchor-id="alias-com-as"><span class="header-section-number">33.4</span> Alias com AS</h2>
 <p>A palavra-chave <code>AS</code> permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de <strong>alias</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias em coluna: renomeia colunas no resultado</span></span>
@@ -757,8 +858,8 @@ Nota
 </div>
 </div>
 </section>
-<section id="literais-no-select" class="level2" data-number="32.5">
-<h2 data-number="32.5" class="anchored" data-anchor-id="literais-no-select"><span class="header-section-number">32.5</span> Literais no SELECT</h2>
+<section id="literais-no-select" class="level2" data-number="33.5">
+<h2 data-number="33.5" class="anchored" data-anchor-id="literais-no-select"><span class="header-section-number">33.5</span> Literais no SELECT</h2>
 <p>É possível incluir valores literais (constantes) na cláusula <code>SELECT</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adiciona uma coluna com o texto fixo 'UnDF'</span></span>
@@ -807,8 +908,8 @@ Nota
 </div>
 <hr>
 </section>
-<section id="para-praticar" class="level2" data-number="32.6">
-<h2 data-number="32.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">32.6</span> Para Praticar</h2>
+<section id="para-praticar" class="level2" data-number="33.6">
+<h2 data-number="33.6" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">33.6</span> Para Praticar</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- CASE no SELECT: categorizar professores por regime de trabalho</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, ch_semanal, salario,</span>
@@ -1455,12 +1556,12 @@ Nota
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../content/cap03/03-select-from-where.html" class="pagination-link" aria-label="SELECT-FROM-WHERE">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SELECT-FROM-WHERE</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../content/cap03/05-clausula-where.html" class="pagination-link" aria-label="WHERE e ORDER BY">
-        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">WHERE e ORDER BY</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

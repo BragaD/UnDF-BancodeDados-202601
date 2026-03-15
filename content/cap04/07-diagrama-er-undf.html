@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>48&nbsp; Diagrama ER da UnDF – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/08-conversao-relacional.html" rel="next">
+<link href="../../content/cap04/06-entidades-fracas.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/07-diagrama-er-undf.html"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -465,7 +445,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></span></a>
   </div>
 </li>
@@ -517,16 +497,23 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#visão-geral-do-domínio" id="toc-visão-geral-do-domínio" class="nav-link active" data-scroll-target="#visão-geral-do-domínio"><span class="header-section-number">48.1</span> Visão Geral do Domínio</a></li>
+  <li><a href="#diagrama-er-completo" id="toc-diagrama-er-completo" class="nav-link" data-scroll-target="#diagrama-er-completo"><span class="header-section-number">48.2</span> Diagrama ER Completo</a></li>
+  <li><a href="#legenda-e-observações" id="toc-legenda-e-observações" class="nav-link" data-scroll-target="#legenda-e-observações"><span class="header-section-number">48.3</span> Legenda e Observações</a>
+  <ul>
+  <li><a href="#notas-sobre-o-diagrama" id="toc-notas-sobre-o-diagrama" class="nav-link" data-scroll-target="#notas-sobre-o-diagrama"><span class="header-section-number">48.3.1</span> Notas sobre o diagrama</a></li>
+  </ul></li>
+  <li><a href="#verificação-do-diagrama" id="toc-verificação-do-diagrama" class="nav-link" data-scroll-target="#verificação-do-diagrama"><span class="header-section-number">48.4</span> Verificação do Diagrama</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">48.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/07-diagrama-er-undf.html"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Diagrama ER da UnDF</span></h1>
 </div>
 
 
@@ -549,97 +536,428 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
+<p>Aplicando os conceitos das seções anteriores, podemos construir o diagrama ER completo do banco de dados da UnDF. Este diagrama captura todos os conjuntos de entidades, relacionamentos, cardinalidades e participações do sistema.</p>
+<section id="visão-geral-do-domínio" class="level2" data-number="48.1">
+<h2 data-number="48.1" class="anchored" data-anchor-id="visão-geral-do-domínio"><span class="header-section-number">48.1</span> Visão Geral do Domínio</h2>
+<p>O banco da UnDF representa:</p>
 <ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+<li><strong>Centros</strong> acadêmicos, cada um com várias <strong>escolas</strong></li>
+<li><strong>Escolas</strong>, cada uma ofertando vários <strong>cursos</strong> e alocando vários <strong>professores</strong></li>
+<li><strong>Cursos</strong>, cada um composto por várias <strong>disciplinas</strong> e com vários <strong>alunos</strong> matriculados</li>
+<li><strong>Professores</strong> que ministram <strong>disciplinas</strong> em turmas específicas</li>
+<li><strong>Alunos</strong> que cursam essas turmas, obtendo notas</li>
+<li><strong>Pré-requisitos</strong> entre disciplinas do mesmo curso</li>
 </ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+</section>
+<section id="diagrama-er-completo" class="level2" data-number="48.2">
+<h2 data-number="48.2" class="anchored" data-anchor-id="diagrama-er-completo"><span class="header-section-number">48.2</span> Diagrama ER Completo</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 822.52 1131.60" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1127.6)">
+<title>er_undf</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-1127.6 818.52,-1127.6 818.52,4 -4,4"></polygon>
+<!-- centro -->
+<g id="node1" class="node">
+<title>centro</title>
+<polygon fill="#aed6f1" stroke="black" points="168.86,-36 114.86,-36 114.86,0 168.86,0 168.86,-36"></polygon>
+<text text-anchor="middle" x="141.86" y="-15" font-family="Times New Roman" font-size="10.00">centro</text>
+</g>
+<!-- escola -->
+<g id="node2" class="node">
+<title>escola</title>
+<polygon fill="#aed6f1" stroke="black" points="168.86,-301.6 114.86,-301.6 114.86,-265.6 168.86,-265.6 168.86,-301.6"></polygon>
+<text text-anchor="middle" x="141.86" y="-280.6" font-family="Times New Roman" font-size="10.00">escola</text>
+</g>
+<!-- pertence_a -->
+<g id="node7" class="node">
+<title>pertence_a</title>
+<polygon fill="#f9e79f" stroke="black" points="141.86,-168.8 91.5,-150.8 141.86,-132.8 192.22,-150.8 141.86,-168.8"></polygon>
+<text text-anchor="middle" x="141.86" y="-147.8" font-family="Times New Roman" font-size="10.00">pertence_a</text>
+</g>
+<!-- escola&#45;&gt;pertence_a -->
+<g id="edge1" class="edge">
+<title>escola-&gt;pertence_a</title>
+<path fill="none" stroke="black" d="M141.86,-265.41C141.86,-240.12 141.86,-194.59 141.86,-169.19"></path>
+<text text-anchor="middle" x="145.11" y="-214.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- curso -->
+<g id="node3" class="node">
+<title>curso</title>
+<polygon fill="#aed6f1" stroke="black" points="106.86,-567.2 52.86,-567.2 52.86,-531.2 106.86,-531.2 106.86,-567.2"></polygon>
+<text text-anchor="middle" x="79.86" y="-546.2" font-family="Times New Roman" font-size="10.00">curso</text>
+</g>
+<!-- ofertado_por -->
+<g id="node8" class="node">
+<title>ofertado_por</title>
+<polygon fill="#f9e79f" stroke="black" points="79.86,-434.4 22.31,-416.4 79.86,-398.4 137.42,-416.4 79.86,-434.4"></polygon>
+<text text-anchor="middle" x="79.86" y="-413.4" font-family="Times New Roman" font-size="10.00">ofertado_por</text>
+</g>
+<!-- curso&#45;&gt;ofertado_por -->
+<g id="edge3" class="edge">
+<title>curso-&gt;ofertado_por</title>
+<path fill="none" stroke="black" d="M79.86,-531.01C79.86,-505.72 79.86,-460.19 79.86,-434.79"></path>
+<text text-anchor="middle" x="83.11" y="-480.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- professor -->
+<g id="node4" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="354.86,-1123.6 300.86,-1123.6 300.86,-1087.6 354.86,-1087.6 354.86,-1123.6"></polygon>
+<text text-anchor="middle" x="327.86" y="-1102.6" font-family="Times New Roman" font-size="10.00">professor</text>
+</g>
+<!-- lotado_em -->
+<g id="node9" class="node">
+<title>lotado_em</title>
+<polygon fill="#f9e79f" stroke="black" points="210.86,-911.8 161.35,-893.8 210.86,-875.8 260.37,-893.8 210.86,-911.8"></polygon>
+<text text-anchor="middle" x="210.86" y="-890.8" font-family="Times New Roman" font-size="10.00">lotado_em</text>
+</g>
+<!-- professor&#45;&gt;lotado_em -->
+<g id="edge5" class="edge">
+<title>professor-&gt;lotado_em</title>
+<path fill="none" stroke="black" d="M307.86,-1087.47C307.86,-1036.06 307.86,-893 307.86,-893 307.86,-893 282.85,-893 258.23,-893"></path>
+<text text-anchor="middle" x="304.11" y="-1036.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- ministra -->
+<g id="node12" class="node">
+<title>ministra</title>
+<polygon fill="#f9e79f" stroke="black" points="488.86,-990.8 447.41,-972.8 488.86,-954.8 530.32,-972.8 488.86,-990.8"></polygon>
+<text text-anchor="middle" x="488.86" y="-969.8" font-family="Times New Roman" font-size="10.00">ministra</text>
+</g>
+<!-- professor&#45;&gt;ministra -->
+<g id="edge11" class="edge">
+<title>professor-&gt;ministra</title>
+<path fill="none" stroke="black" d="M346.6,-1087.59C346.6,-1052.42 346.6,-978 346.6,-978 346.6,-978 417.32,-978 459.04,-978"></path>
+<text text-anchor="middle" x="384.11" y="-1036.5" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- aluno -->
+<g id="node5" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="95.86,-832.8 41.86,-832.8 41.86,-796.8 95.86,-796.8 95.86,-832.8"></polygon>
+<text text-anchor="middle" x="68.86" y="-811.8" font-family="Times New Roman" font-size="10.00">aluno</text>
+</g>
+<!-- matriculado_em -->
+<g id="node10" class="node">
+<title>matriculado_em</title>
+<polygon fill="#f9e79f" stroke="black" points="68.86,-700 0.14,-682 68.86,-664 137.59,-682 68.86,-700"></polygon>
+<text text-anchor="middle" x="68.86" y="-679" font-family="Times New Roman" font-size="10.00">matriculado_em</text>
+</g>
+<!-- aluno&#45;&gt;matriculado_em -->
+<g id="edge7" class="edge">
+<title>aluno-&gt;matriculado_em</title>
+<path fill="none" stroke="black" stroke-width="2" d="M68.86,-796.61C68.86,-771.32 68.86,-725.79 68.86,-700.39"></path>
+<text text-anchor="middle" x="72.11" y="-745.7" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- disciplina -->
+<g id="node6" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="613.25,-832.8 558.48,-832.8 558.48,-796.8 613.25,-796.8 613.25,-832.8"></polygon>
+<text text-anchor="middle" x="585.86" y="-811.8" font-family="Times New Roman" font-size="10.00">disciplina</text>
+</g>
+<!-- compoe -->
+<g id="node11" class="node">
+<title>compoe</title>
+<polygon fill="#f9e79f" stroke="black" points="378.86,-700 338.31,-682 378.86,-664 419.42,-682 378.86,-700"></polygon>
+<text text-anchor="middle" x="378.86" y="-679" font-family="Times New Roman" font-size="10.00">compoe</text>
+</g>
+<!-- disciplina&#45;&gt;compoe -->
+<g id="edge9" class="edge">
+<title>disciplina-&gt;compoe</title>
+<path fill="none" stroke="black" d="M558.39,-808C548.83,-808 540.44,-808 540.44,-808 540.44,-808 540.44,-681 540.44,-681 540.44,-681 465.37,-681 417.56,-681"></path>
+<text text-anchor="middle" x="417.11" y="-745.7" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- prereq_r -->
+<g id="node13" class="node">
+<title>prereq_r</title>
+<polygon fill="#f9e79f" stroke="black" points="585.86,-700 550.71,-682 585.86,-664 621.01,-682 585.86,-700"></polygon>
+<text text-anchor="middle" x="585.86" y="-679" font-family="Times New Roman" font-size="10.00">prereq</text>
+</g>
+<!-- disciplina&#45;&gt;prereq_r -->
+<g id="edge18" class="edge">
+<title>disciplina-&gt;prereq_r</title>
+<path fill="none" stroke="black" d="M595.01,-796.61C595.01,-769.62 595.01,-719.56 595.01,-695.54"></path>
+<text text-anchor="middle" x="561.36" y="-745.7" font-family="Times,serif" font-size="9.00">disciplina</text>
+</g>
+<!-- pertence_a&#45;&gt;centro -->
+<g id="edge2" class="edge">
+<title>pertence_a-&gt;centro</title>
+<path fill="none" stroke="black" d="M141.86,-132.61C141.86,-132.61 141.86,-46.39 141.86,-46.39"></path>
+<polygon fill="black" stroke="black" points="145.36,-46.39 141.86,-36.39 138.36,-46.39 145.36,-46.39"></polygon>
+<text text-anchor="middle" x="144.11" y="-81.7" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- ofertado_por&#45;&gt;escola -->
+<g id="edge4" class="edge">
+<title>ofertado_por-&gt;escola</title>
+<path fill="none" stroke="black" d="M126.13,-412.85C126.13,-412.85 126.13,-311.82 126.13,-311.82"></path>
+<polygon fill="black" stroke="black" points="129.63,-311.82 126.13,-301.82 122.63,-311.82 129.63,-311.82"></polygon>
+<text text-anchor="middle" x="128.11" y="-347.3" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- lotado_em&#45;&gt;escola -->
+<g id="edge6" class="edge">
+<title>lotado_em-&gt;escola</title>
+<path fill="none" stroke="black" d="M165.11,-892.05C165.11,-892.05 165.11,-311.73 165.11,-311.73"></path>
+<polygon fill="black" stroke="black" points="168.61,-311.73 165.11,-301.73 161.61,-311.73 168.61,-311.73"></polygon>
+<text text-anchor="middle" x="205.11" y="-612.9" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- matriculado_em&#45;&gt;curso -->
+<g id="edge8" class="edge">
+<title>matriculado_em-&gt;curso</title>
+<path fill="none" stroke="black" d="M79.86,-666.77C79.86,-666.77 79.86,-577.21 79.86,-577.21"></path>
+<polygon fill="black" stroke="black" points="83.36,-577.21 79.86,-567.21 76.36,-577.21 83.36,-577.21"></polygon>
+<text text-anchor="middle" x="76.11" y="-612.9" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- compoe&#45;&gt;curso -->
+<g id="edge10" class="edge">
+<title>compoe-&gt;curso</title>
+<path fill="none" stroke="black" d="M378.86,-663.79C378.86,-627.36 378.86,-549 378.86,-549 378.86,-549 116.92,-549 116.92,-549"></path>
+<polygon fill="black" stroke="black" points="116.92,-545.5 106.92,-549 116.92,-552.5 116.92,-545.5"></polygon>
+<text text-anchor="middle" x="319.11" y="-612.9" font-family="Times,serif" font-size="9.00">1</text>
+</g>
+<!-- ministra&#45;&gt;disciplina -->
+<g id="edge12" class="edge">
+<title>ministra-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M523.1,-969.61C523.1,-947.67 523.1,-820 523.1,-820 523.1,-820 541.34,-820 558.15,-820"></path>
+<text text-anchor="middle" x="576.11" y="-891.1" font-family="Times,serif" font-size="9.00">N</text>
+</g>
+<!-- ano -->
+<g id="node14" class="node">
+<title>ano</title>
+<ellipse fill="none" stroke="black" cx="682.86" cy="-814.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="682.86" y="-811.8" font-family="Times New Roman" font-size="10.00">ano</text>
+</g>
+<!-- ministra&#45;&gt;ano -->
+<g id="edge13" class="edge">
+<title>ministra-&gt;ano</title>
+<path fill="none" stroke="black" d="M515.03,-966C567.98,-966 682.86,-966 682.86,-966 682.86,-966 682.86,-843.04 682.86,-843.04"></path>
+<polygon fill="black" stroke="black" points="686.36,-843.04 682.86,-833.04 679.36,-843.04 686.36,-843.04"></polygon>
+</g>
+<!-- semestre -->
+<g id="node15" class="node">
+<title>semestre</title>
+<ellipse fill="none" stroke="black" cx="783.86" cy="-814.8" rx="30.82" ry="18"></ellipse>
+<text text-anchor="middle" x="783.86" y="-811.8" font-family="Times New Roman" font-size="10.00">semestre</text>
+</g>
+<!-- ministra&#45;&gt;semestre -->
+<g id="edge14" class="edge">
+<title>ministra-&gt;semestre</title>
+<path fill="none" stroke="black" d="M518.5,-978C593.31,-978 783.86,-978 783.86,-978 783.86,-978 783.86,-842.89 783.86,-842.89"></path>
+<polygon fill="black" stroke="black" points="787.36,-842.89 783.86,-832.89 780.36,-842.89 787.36,-842.89"></polygon>
+</g>
+<!-- turma_a -->
+<g id="node16" class="node">
+<title>turma_a</title>
+<ellipse fill="none" stroke="black" cx="294.86" cy="-814.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="294.86" y="-811.8" font-family="Times New Roman" font-size="10.00">turma</text>
+</g>
+<!-- ministra&#45;&gt;turma_a -->
+<g id="edge15" class="edge">
+<title>ministra-&gt;turma_a</title>
+<path fill="none" stroke="black" d="M462.81,-966C414.27,-966 314.86,-966 314.86,-966 314.86,-966 314.86,-836.92 314.86,-836.92"></path>
+<polygon fill="black" stroke="black" points="318.36,-836.92 314.86,-826.92 311.36,-836.92 318.36,-836.92"></polygon>
+</g>
+<!-- horario -->
+<g id="node17" class="node">
+<title>horario</title>
+<ellipse fill="none" stroke="black" cx="391.86" cy="-814.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="391.86" y="-811.8" font-family="Times New Roman" font-size="10.00">horario</text>
+</g>
+<!-- ministra&#45;&gt;horario -->
+<g id="edge16" class="edge">
+<title>ministra-&gt;horario</title>
+<path fill="none" stroke="black" d="M454.62,-969.48C454.62,-946.68 454.62,-814 454.62,-814 454.62,-814 428.84,-814 428.84,-814"></path>
+<polygon fill="black" stroke="black" points="428.84,-810.5 418.84,-814 428.84,-817.5 428.84,-810.5"></polygon>
+</g>
+<!-- sala -->
+<g id="node18" class="node">
+<title>sala</title>
+<ellipse fill="none" stroke="black" cx="488.86" cy="-814.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="488.86" y="-811.8" font-family="Times New Roman" font-size="10.00">sala</text>
+</g>
+<!-- ministra&#45;&gt;sala -->
+<g id="edge17" class="edge">
+<title>ministra-&gt;sala</title>
+<path fill="none" stroke="black" d="M488.86,-954.68C488.86,-954.68 488.86,-843.2 488.86,-843.2"></path>
+<polygon fill="black" stroke="black" points="492.36,-843.2 488.86,-833.2 485.36,-843.2 492.36,-843.2"></polygon>
+</g>
+<!-- prereq_r&#45;&gt;disciplina -->
+<g id="edge19" class="edge">
+<title>prereq_r-&gt;disciplina</title>
+<path fill="none" stroke="black" d="M576.72,-695.71C576.72,-719.83 576.72,-769.85 576.72,-796.75"></path>
+<text text-anchor="middle" x="650.11" y="-745.7" font-family="Times,serif" font-size="9.00">pré-requisito</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="legenda-e-observações" class="level2" data-number="48.3">
+<h2 data-number="48.3" class="anchored" data-anchor-id="legenda-e-observações"><span class="header-section-number">48.3</span> Legenda e Observações</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Elemento</th>
+<th>Notação</th>
+<th>Exemplos no diagrama</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td>Entidade forte</td>
+<td>Retângulo azul</td>
+<td><code>centro</code>, <code>escola</code>, <code>professor</code></td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
+<td>Relacionamento</td>
+<td>Losango amarelo</td>
+<td><code>ministra</code>, <code>pertence_a</code></td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
+<td>Seta (→)</td>
+<td>Lado “um” da cardinalidade</td>
+<td><code>pertence_a</code> → <code>centro</code></td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
+<td>Linha (—)</td>
+<td>Lado “muitos”</td>
+<td><code>escola</code> — <code>pertence_a</code></td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
+<td>Linha dupla (bold)</td>
+<td>Participação total</td>
+<td><code>aluno</code> ==<code>matriculado_em</code></td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td>Elipse</td>
+<td>Atributo do relacionamento</td>
+<td><code>ano</code>, <code>semestre</code>, <code>sala</code></td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<section id="notas-sobre-o-diagrama" class="level3" data-number="48.3.1">
+<h3 data-number="48.3.1" class="anchored" data-anchor-id="notas-sobre-o-diagrama"><span class="header-section-number">48.3.1</span> Notas sobre o diagrama</h3>
+<p><strong>Cardinalidades:</strong></p>
+<ul>
+<li><code>pertence_a</code>, <code>ofertado_por</code>, <code>lotado_em</code>, <code>compoe</code>: todos N:1 — muitos do lado esquerdo para um do lado direito</li>
+<li><code>matriculado_em</code>: N:1, com participação <strong>total</strong> em <code>aluno</code> (todo aluno deve estar matriculado em um curso)</li>
+<li><code>ministra</code>: N:N — um professor ministra várias disciplinas; uma disciplina pode ser ministrada por vários professores</li>
+<li><code>prereq</code>: N:N autorreferencial — uma disciplina pode ter múltiplos pré-requisitos e ser pré-requisito de múltiplas outras</li>
+</ul>
+<p><strong>Agregação (não mostrada no diagrama simplificado):</strong></p>
+<p>O relacionamento <code>cursa</code> entre <code>aluno</code> e o relacionamento <code>ministra</code> (com atributos <code>nota</code> e <code>aprovado</code>) é uma instância de <strong>agregação</strong> — veremos na seção 4.10 como representar isso formalmente.</p>
+</section>
+</section>
+<section id="verificação-do-diagrama" class="level2" data-number="48.4">
+<h2 data-number="48.4" class="anchored" data-anchor-id="verificação-do-diagrama"><span class="header-section-number">48.4</span> Verificação do Diagrama</h2>
+<p>Uma maneira de verificar a correção do diagrama ER é confrontar cada relacionamento com os dados reais:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relacionamento</th>
+<th>Instâncias no banco</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pertence_a</code></td>
+<td>ESETI→COETI, EEMA→COEMAG, ESG→COCHCMA (3 pares)</td>
+</tr>
+<tr class="even">
+<td><code>lotado_em</code></td>
+<td>7 professores distribuídos por 3 escolas</td>
+</tr>
+<tr class="odd">
+<td><code>ministra</code></td>
+<td>36 tuplas em <code>ministra</code> (7 professores × disciplinas ao longo de semestres)</td>
+</tr>
+<tr class="even">
+<td><code>prereq</code></td>
+<td>16 pares de pré-requisito entre 24 disciplinas</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="48.5">
+<h2 data-number="48.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">48.5</span> Para Praticar</h2>
+<p><strong>1. Leitura do diagrama.</strong> Com base no diagrama ER da UnDF, responda:</p>
+<ol type="a">
+<li>Um professor pode ser lotado em mais de uma escola?</li>
+<li>Uma disciplina pode pertencer a mais de um curso?</li>
+<li>Um aluno pode estar matriculado em zero cursos?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> Não. A cardinalidade N:1 em <code>lotado_em</code> indica que cada professor está lotado em exatamente uma escola.</li>
+<li><strong>(b)</strong> Não. A cardinalidade N:1 em <code>compoe</code> indica que cada disciplina pertence a exatamente um curso. (Disciplinas de mesmo nome em cursos diferentes teriam códigos distintos.)</li>
+<li><strong>(c)</strong> Não. A linha dupla (bold) em <code>aluno</code> → <code>matriculado_em</code> indica participação total: todo aluno deve estar matriculado em ao menos um curso.</li>
+</ul>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Adicionar ao diagrama.</strong> O sistema da UnDF precisa registrar os <strong>monitores</strong> de cada disciplina: um monitor é um aluno que auxilia o professor em uma turma específica. Como você adicionaria essa informação ao diagrama ER? Qual a cardinalidade?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Adicionar um relacionamento <code>monitora</code> entre <code>aluno</code> e o relacionamento <code>ministra</code> (ou entre <code>aluno</code>, <code>professor</code> e <code>disciplina</code> se for ternário). A cardinalidade mais realista:</p>
+<ul>
+<li>Um aluno pode monitorar múltiplas turmas: N no lado <code>aluno</code></li>
+<li>Uma turma pode ter múltiplos monitores: N no lado <code>ministra</code></li>
+</ul>
+<p>Isso caracteriza N:N, possivelmente com atributo <code>periodo</code> (início e fim da monitoria). A implementação seria uma tabela <code>monitora(matricula, cod_disciplina, ano, semestre, turma, data_inicio, data_fim)</code> com FKs para <code>aluno</code> e <code>ministra</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Diagrama alternativo.</strong> Outro projetista propõe eliminar a entidade <code>centro</code> e adicionar <code>nome_centro</code> como atributo de <code>escola</code>. Quais seriam as consequências dessa decisão?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Consequências:</strong> - <strong>Redundância</strong>: o nome do centro (ex.: “COETI”) seria armazenado uma vez para cada escola que pertence a ele. Se houvesse múltiplas escolas no mesmo centro, o nome repetiria. - <strong>Anomalia de atualização</strong>: mudar o nome de um centro exigiria atualizar múltiplas linhas de escola. - <strong>Perda de informação</strong>: dados próprios do centro (ex.: diretor, endereço, orçamento) não teriam onde ser armazenados.</p>
+<p>Manter <code>centro</code> como entidade separada evita esses problemas e permite registrar informações adicionais sobre os centros no futuro.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1409,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/06-entidades-fracas.html" class="pagination-link" aria-label="Entidades Fracas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Entidades Fracas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/08-conversao-relacional.html" class="pagination-link" aria-label="Conversão ER → Relacional">
+        <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Conversão ER → Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

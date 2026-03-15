@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>43&nbsp; Conjuntos de Entidades – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +31,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/03-relacionamentos.html" rel="next">
+<link href="../../content/cap04/01-fases-projeto.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-entidades.html"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +320,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -435,7 +415,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></span></a>
   </div>
 </li>
@@ -517,16 +497,20 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#entidade-e-conjunto-de-entidades" id="toc-entidade-e-conjunto-de-entidades" class="nav-link active" data-scroll-target="#entidade-e-conjunto-de-entidades"><span class="header-section-number">43.1</span> Entidade e Conjunto de Entidades</a></li>
+  <li><a href="#chave-primária-do-conjunto-de-entidades" id="toc-chave-primária-do-conjunto-de-entidades" class="nav-link" data-scroll-target="#chave-primária-do-conjunto-de-entidades"><span class="header-section-number">43.2</span> Chave Primária do Conjunto de Entidades</a></li>
+  <li><a href="#representação-em-diagrama-er" id="toc-representação-em-diagrama-er" class="nav-link" data-scroll-target="#representação-em-diagrama-er"><span class="header-section-number">43.3</span> Representação em Diagrama ER</a></li>
+  <li><a href="#instância-vs.-conjunto" id="toc-instância-vs.-conjunto" class="nav-link" data-scroll-target="#instância-vs.-conjunto"><span class="header-section-number">43.4</span> Instância vs.&nbsp;Conjunto</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">43.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-entidades.html"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Conjuntos de Entidades</span></h1>
 </div>
 
 
@@ -549,6 +533,154 @@ div.csl-indent {
 </header>
 
 
+<section id="entidade-e-conjunto-de-entidades" class="level2" data-number="43.1">
+<h2 data-number="43.1" class="anchored" data-anchor-id="entidade-e-conjunto-de-entidades"><span class="header-section-number">43.1</span> Entidade e Conjunto de Entidades</h2>
+<div class="conceito">
+<p>Uma <strong>entidade</strong> é um objeto do mundo real distinguível de outros objetos. Pode ser concreta (uma pessoa, um prédio) ou abstrata (um curso, uma matrícula).</p>
+<p>Um <strong>conjunto de entidades</strong> (<em>entity set</em>) é a coleção de todas as entidades do mesmo tipo que compartilham as mesmas propriedades.</p>
+</div>
+<p>Cada entidade é descrita por um conjunto de <strong>atributos</strong> — propriedades descritivas pertencentes a todos os membros do conjunto.</p>
+<div class="exemplo">
+<p>No banco da UnDF, temos os seguintes conjuntos de entidades:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Conjunto de Entidades</th>
+<th>Atributos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>professor</code></td>
+<td>matricula_prof, nome, escola, ch_semanal, salario</td>
+</tr>
+<tr class="even">
+<td><code>aluno</code></td>
+<td>matricula, nome, sigla_curso, ano_ingresso</td>
+</tr>
+<tr class="odd">
+<td><code>disciplina</code></td>
+<td>codigo, nome_disciplina, sigla_curso, semestre, carga_horaria</td>
+</tr>
+<tr class="even">
+<td><code>curso</code></td>
+<td>sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso</td>
+</tr>
+<tr class="odd">
+<td><code>escola</code></td>
+<td>escola, nome_escola, centro</td>
+</tr>
+<tr class="even">
+<td><code>centro</code></td>
+<td>centro, nome_centro</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="chave-primária-do-conjunto-de-entidades" class="level2" data-number="43.2">
+<h2 data-number="43.2" class="anchored" data-anchor-id="chave-primária-do-conjunto-de-entidades"><span class="header-section-number">43.2</span> Chave Primária do Conjunto de Entidades</h2>
+<p>Um subconjunto dos atributos cujos valores identificam unicamente cada entidade forma a <strong>chave primária</strong> do conjunto de entidades. Nos diagramas ER, os atributos da chave primária são sublinhados.</p>
+<div class="exemplo">
+<ul>
+<li><code>professor</code>: chave primária = <code>matricula_prof</code> (ex.: PROF20230031)</li>
+<li><code>aluno</code>: chave primária = <code>matricula</code> (ex.: ENS-2023-001)</li>
+<li><code>disciplina</code>: chave primária = <code>codigo</code> (ex.: ENS-201)</li>
+<li><code>curso</code>: chave primária = <code>sigla_curso</code> (ex.: ENS)</li>
+</ul>
+</div>
+</section>
+<section id="representação-em-diagrama-er" class="level2" data-number="43.3">
+<h2 data-number="43.3" class="anchored" data-anchor-id="representação-em-diagrama-er"><span class="header-section-number">43.3</span> Representação em Diagrama ER</h2>
+<p>Na notação ER tradicional:</p>
+<div class="conceito">
+<ul>
+<li><strong>Retângulo</strong>: representa um conjunto de entidades</li>
+<li><strong>Elipses</strong>: representam atributos, conectadas ao retângulo por linhas</li>
+<li><strong>Atributo sublinhado</strong>: indica que é parte da chave primária</li>
+</ul>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 530.41 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>er_entidade</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 526.41,-112 526.41,4 -4,4"></polygon>
+<!-- professor -->
+<g id="node1" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="347.81,-108 290.94,-108 290.94,-72 347.81,-72 347.81,-108"></polygon>
+<text text-anchor="middle" x="319.37" y="-86.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- matricula_prof -->
+<g id="node2" class="node">
+<title>matricula_prof</title>
+<ellipse fill="none" stroke="black" cx="101.37" cy="-18" rx="101.24" ry="18"></ellipse>
+<text text-anchor="start" x="27.44" y="-14.7" font-family="Times New Roman" font-size="11.00">̲m̲a̲t̲r̲i̲c̲u̲l̲a̲_̲p̲r̲o̲f̲</text>
+</g>
+<!-- professor&#45;&#45;matricula_prof -->
+<g id="edge1" class="edge">
+<title>professor--matricula_prof</title>
+<path fill="none" stroke="black" d="M290.87,-79.85C254.63,-68.21 191.57,-47.96 148.21,-34.04"></path>
+</g>
+<!-- nome -->
+<g id="node3" class="node">
+<title>nome</title>
+<ellipse fill="none" stroke="black" cx="247.37" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="247.37" y="-14.7" font-family="Times New Roman" font-size="11.00">nome</text>
+</g>
+<!-- professor&#45;&#45;nome -->
+<g id="edge2" class="edge">
+<title>professor--nome</title>
+<path fill="none" stroke="black" d="M301.57,-71.7C289.41,-59.87 273.49,-44.4 262.06,-33.28"></path>
+</g>
+<!-- escola -->
+<g id="node4" class="node">
+<title>escola</title>
+<ellipse fill="none" stroke="black" cx="319.37" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="319.37" y="-14.7" font-family="Times New Roman" font-size="11.00">escola</text>
+</g>
+<!-- professor&#45;&#45;escola -->
+<g id="edge3" class="edge">
+<title>professor--escola</title>
+<path fill="none" stroke="black" d="M319.37,-71.7C319.37,-60.85 319.37,-46.92 319.37,-36.1"></path>
+</g>
+<!-- ch -->
+<g id="node5" class="node">
+<title>ch</title>
+<ellipse fill="none" stroke="black" cx="406.37" cy="-18" rx="42.04" ry="18"></ellipse>
+<text text-anchor="middle" x="406.37" y="-14.7" font-family="Times New Roman" font-size="11.00">ch_semanal</text>
+</g>
+<!-- professor&#45;&#45;ch -->
+<g id="edge4" class="edge">
+<title>professor--ch</title>
+<path fill="none" stroke="black" d="M340.88,-71.7C355.17,-60.2 373.76,-45.24 387.48,-34.2"></path>
+</g>
+<!-- salario -->
+<g id="node6" class="node">
+<title>salario</title>
+<ellipse fill="none" stroke="black" cx="494.37" cy="-18" rx="28.08" ry="18"></ellipse>
+<text text-anchor="middle" x="494.37" y="-14.7" font-family="Times New Roman" font-size="11.00">salario</text>
+</g>
+<!-- professor&#45;&#45;salario -->
+<g id="edge5" class="edge">
+<title>professor--salario</title>
+<path fill="none" stroke="black" d="M347.88,-77.6C382.26,-63.84 439.39,-40.99 471.19,-28.27"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -559,87 +691,124 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>A elipse com atributo sublinhado representa a chave primária. Como o Graphviz não suporta sublinhado nativo em labels de elipse de forma simples, nos diagramas completos do capítulo usa-se a convenção de indicar a PK em negrito ou com asterisco quando necessário.</p>
 </div>
 </div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
-</ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
+</section>
+<section id="instância-vs.-conjunto" class="level2" data-number="43.4">
+<h2 data-number="43.4" class="anchored" data-anchor-id="instância-vs.-conjunto"><span class="header-section-number">43.4</span> Instância vs.&nbsp;Conjunto</h2>
+<p>É importante distinguir o <strong>conjunto de entidades</strong> (o tipo, definido no schema) da <strong>instância</strong> (os dados reais armazenados):</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Conceito</th>
+<th>Exemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
+<td>Conjunto de entidades <code>professor</code></td>
+<td>Todos os professores da UnDF</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td>Entidade individual</td>
+<td>Gustavo Costa (PROF20230031, ESETI, 40h, R$ 3.300)</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+<p>O conjunto de entidades corresponde ao schema da tabela; cada entidade corresponde a uma linha (tupla) da tabela.</p>
+<hr>
+</section>
+<section id="para-praticar" class="level2" data-number="43.5">
+<h2 data-number="43.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">43.5</span> Para Praticar</h2>
+<p><strong>1. Identificar conjuntos de entidades.</strong> Um sistema de biblioteca universitária precisa registrar: livros (ISBN, título, ano), exemplares físicos (número de tombamento, localização na estante), autores (nome, nacionalidade) e empréstimos (data de retirada, data de devolução, usuário). Quais são os conjuntos de entidades? Quais são os atributos de cada um?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>livro</strong>: ISBN (PK), título, ano</li>
+<li><strong>exemplar</strong>: numero_tombamento (PK), localizacao</li>
+<li><strong>autor</strong>: id_autor (PK), nome, nacionalidade</li>
+<li><strong>usuario</strong>: id_usuario (PK), nome</li>
+</ul>
+<p><code>emprestimo</code> é melhor modelado como um <strong>relacionamento</strong> entre exemplar e usuário, com atributos data_retirada e data_devolucao — não como uma entidade separada (embora ambas as abordagens sejam válidas, discutiremos isso na seção 4.11).</p>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Chave primária composta.</strong> Por que o atributo <code>nome</code> não é adequado como chave primária do conjunto de entidades <code>professor</code>? Que problema surge se dois professores tiverem o mesmo nome?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O nome não é garantidamente único — dois professores diferentes podem ter o mesmo nome (ex.: dois “Carlos Silva” na mesma instituição). Se <code>nome</code> fosse a PK, seria impossível distingui-los no banco de dados. Por isso usa-se <code>matricula_prof</code>, que é atribuída pela instituição e garantidamente única.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Entidade ou atributo?</strong> Um projetista quer registrar os telefones de contato de cada professor. Ele propõe adicionar uma coluna <code>telefone VARCHAR(20)</code> à tabela <code>professor</code>. Qual o problema dessa abordagem quando um professor tem mais de um telefone?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Uma coluna simples suporta apenas um valor — é um <strong>atributo monovalorado</strong>. Para múltiplos telefones, as alternativas são:</p>
+<ol type="1">
+<li>Criar um conjunto de entidades separado <code>telefone_professor(matricula_prof, telefone)</code> com uma linha por número — <strong>atributo multivalorado representado como entidade</strong>.</li>
+<li>Modelar <code>telefone</code> como um <strong>atributo multivalorado</strong> no ER (elipse com borda dupla), que depois vira uma tabela separada na conversão relacional.</li>
+</ol>
+<p>Empurrar múltiplos valores em uma única coluna (ex.: “11-9999-0001, 11-9888-0002”) viola a primeira forma normal e dificulta buscas e atualizações.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>4. Limites de um conjunto de entidades.</strong> Considere <code>ministra</code> no banco da UnDF: um professor ministra uma disciplina em um determinado ano, semestre e turma. <code>ministra</code> deve ser modelado como conjunto de entidades ou como relacionamento?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>ministra</code> é melhor modelado como um <strong>relacionamento</strong> entre <code>professor</code> e <code>disciplina</code>, com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code>. Relacionamentos descrevem associações entre entidades; aqui, a associação “um professor ministra uma disciplina em dado contexto” é exatamente isso. Veremos essa modelagem na seção 4.3.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1260,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/01-fases-projeto.html" class="pagination-link" aria-label="Fases do Projeto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Fases do Projeto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/03-relacionamentos.html" class="pagination-link" aria-label="Conjuntos de Relacionamentos">
+        <span class="nav-page-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Conjuntos de Relacionamentos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

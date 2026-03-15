@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>29&nbsp; Visão Geral – Bases da Engenharia de Software 4</title>
+<title>50&nbsp; Especialização e Generalização – Bases da Engenharia de Software 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +66,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/01-historia.html" rel="next">
-<link href="../../content/cap02/12-resumo.html" rel="prev">
+<link href="../../content/cap04/10-agregacao.html" rel="next">
+<link href="../../content/cap04/08-conversao-relacional.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -105,7 +120,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/09-especializacao.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -340,7 +355,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../content/cap03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></span></a>
   </div>
 </li>
@@ -477,7 +492,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></span></a>
   </div>
 </li>
@@ -517,16 +532,28 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções"><span class="header-section-number">29.1</span> Seções</a></li>
+  <li><a href="#especialização" id="toc-especialização" class="nav-link active" data-scroll-target="#especialização"><span class="header-section-number">50.1</span> Especialização</a></li>
+  <li><a href="#generalização" id="toc-generalização" class="nav-link" data-scroll-target="#generalização"><span class="header-section-number">50.2</span> Generalização</a></li>
+  <li><a href="#restrições-de-especialização" id="toc-restrições-de-especialização" class="nav-link" data-scroll-target="#restrições-de-especialização"><span class="header-section-number">50.3</span> Restrições de Especialização</a>
+  <ul>
+  <li><a href="#disjunção" id="toc-disjunção" class="nav-link" data-scroll-target="#disjunção"><span class="header-section-number">50.3.1</span> Disjunção</a></li>
+  <li><a href="#completude" id="toc-completude" class="nav-link" data-scroll-target="#completude"><span class="header-section-number">50.3.2</span> Completude</a></li>
+  </ul></li>
+  <li><a href="#representação-em-esquemas-relacionais" id="toc-representação-em-esquemas-relacionais" class="nav-link" data-scroll-target="#representação-em-esquemas-relacionais"><span class="header-section-number">50.4</span> Representação em Esquemas Relacionais</a>
+  <ul>
+  <li><a href="#método-1-schema-para-cada-nível" id="toc-método-1-schema-para-cada-nível" class="nav-link" data-scroll-target="#método-1-schema-para-cada-nível"><span class="header-section-number">50.4.1</span> Método 1: Schema para cada nível</a></li>
+  <li><a href="#método-2-schema-completo-para-cada-subconjunto" id="toc-método-2-schema-completo-para-cada-subconjunto" class="nav-link" data-scroll-target="#método-2-schema-completo-para-cada-subconjunto"><span class="header-section-number">50.4.2</span> Método 2: Schema completo para cada subconjunto</a></li>
+  </ul></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar"><span class="header-section-number">50.5</span> Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/09-especializacao.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Especialização e Generalização</span></h1>
 </div>
 
 
@@ -549,97 +576,225 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<section id="especialização" class="level2" data-number="50.1">
+<h2 data-number="50.1" class="anchored" data-anchor-id="especialização"><span class="header-section-number">50.1</span> Especialização</h2>
+<p>Em alguns domínios, um conjunto de entidades contém subgrupos com características distintas — atributos adicionais ou participação em relacionamentos específicos que não se aplicam a todas as entidades do conjunto.</p>
+<div class="conceito">
+<p><strong>Especialização</strong> é um processo <em>top-down</em>: a partir de um conjunto de entidades de nível superior, definimos <strong>subconjuntos de entidades</strong> de nível inferior que possuem atributos ou relacionamentos exclusivos.</p>
+<p>A relação entre nível superior e inferior é representada pelo triângulo <strong>ISA</strong> (“is a” — “é um”) no diagrama ER.</p>
+<p><strong>Herança de atributos</strong>: entidades de nível inferior herdam todos os atributos e relacionamentos do nível superior, e acrescentam os seus próprios.</p>
+</div>
+<div class="exemplo">
+<p>No contexto da UnDF, poderíamos especializar <code>aluno</code> em:</p>
+<ul>
+<li><code>aluno_graduacao</code>: atributos adicionais <code>semestre_atual</code>, <code>coeficiente_rendimento</code></li>
+<li><code>aluno_pos_graduacao</code>: atributos adicionais <code>orientador</code>, <code>nivel</code> (mestrado/doutorado)</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 269.52 266.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 262.4)">
+<title>er_especializacao</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-262.4 265.52,-262.4 265.52,4 -4,4"></polygon>
+<!-- aluno -->
+<g id="node1" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="152.57,-258.4 98.57,-258.4 98.57,-222.4 152.57,-222.4 152.57,-258.4"></polygon>
+<text text-anchor="middle" x="125.57" y="-237.1" font-family="Times New Roman" font-size="11.00">aluno</text>
+</g>
+<!-- isa -->
+<g id="node2" class="node">
+<title>isa</title>
+<polygon fill="#fad7a0" stroke="black" points="125.57,-150.6 83.61,-118.5 167.52,-118.5 125.57,-150.6"></polygon>
+<text text-anchor="middle" x="125.57" y="-125.9" font-family="Times New Roman" font-size="11.00">ISA</text>
+</g>
+<!-- aluno&#45;&gt;isa -->
+<g id="edge1" class="edge">
+<title>aluno-&gt;isa</title>
+<path fill="none" stroke="black" d="M125.57,-222.34C125.57,-202.9 125.57,-171.17 125.57,-150.48"></path>
+</g>
+<!-- grad -->
+<g id="node3" class="node">
+<title>grad</title>
+<polygon fill="#d5e8d4" stroke="black" points="91.2,-36 -0.07,-36 -0.07,0 91.2,0 91.2,-36"></polygon>
+<text text-anchor="middle" x="45.57" y="-14.7" font-family="Times New Roman" font-size="11.00">aluno_graduacao</text>
+</g>
+<!-- isa&#45;&gt;grad -->
+<g id="edge2" class="edge">
+<title>isa-&gt;grad</title>
+<path fill="none" stroke="black" d="M118.18,-118.12C105.99,-101.48 81.28,-67.74 64.09,-44.28"></path>
+<polygon fill="black" stroke="black" points="66.86,-42.15 58.13,-36.15 61.22,-46.29 66.86,-42.15"></polygon>
+</g>
+<!-- pos -->
+<g id="node4" class="node">
+<title>pos</title>
+<polygon fill="#d5e8d4" stroke="black" points="261.48,-36 149.65,-36 149.65,0 261.48,0 261.48,-36"></polygon>
+<text text-anchor="middle" x="205.57" y="-14.7" font-family="Times New Roman" font-size="11.00">aluno_pos_graduacao</text>
+</g>
+<!-- isa&#45;&gt;pos -->
+<g id="edge3" class="edge">
+<title>isa-&gt;pos</title>
+<path fill="none" stroke="black" d="M132.95,-118.12C145.14,-101.48 169.86,-67.74 187.04,-44.28"></path>
+<polygon fill="black" stroke="black" points="189.91,-46.29 193,-36.15 184.27,-42.15 189.91,-46.29"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><code>aluno_graduacao</code> herda <code>matricula</code>, <code>nome</code>, <code>sigla_curso</code> e <code>ano_ingresso</code> de <code>aluno</code>, além de ter <code>semestre_atual</code> e <code>coeficiente_rendimento</code>.</p>
+</div>
+</section>
+<section id="generalização" class="level2" data-number="50.2">
+<h2 data-number="50.2" class="anchored" data-anchor-id="generalização"><span class="header-section-number">50.2</span> Generalização</h2>
+<div class="conceito">
+<p><strong>Generalização</strong> é o processo inverso — <em>bottom-up</em>: identificar atributos comuns entre múltiplos conjuntos de entidades e agrupá-los em um conjunto de entidades de nível superior.</p>
+<p>Especialização e generalização são inversões uma da outra e representadas da mesma forma no diagrama ER.</p>
+</div>
+<div class="exemplo">
+<p>Se o sistema tivesse conjuntos <code>professor_horista</code> e <code>professor_efetivo</code> com atributos comuns (<code>nome</code>, <code>escola</code>), poderíamos generalizá-los em <code>professor</code>, mantendo os atributos específicos nos subconjuntos:</p>
+<ul>
+<li><code>professor_horista</code>: <code>valor_hora</code>, <code>horas_contratadas</code></li>
+<li><code>professor_efetivo</code>: <code>data_posse</code>, <code>cargo</code></li>
+</ul>
+</div>
+</section>
+<section id="restrições-de-especialização" class="level2" data-number="50.3">
+<h2 data-number="50.3" class="anchored" data-anchor-id="restrições-de-especialização"><span class="header-section-number">50.3</span> Restrições de Especialização</h2>
+<section id="disjunção" class="level3" data-number="50.3.1">
+<h3 data-number="50.3.1" class="anchored" data-anchor-id="disjunção"><span class="header-section-number">50.3.1</span> Disjunção</h3>
+<div class="conceito">
+<ul>
+<li><strong>Disjunta</strong> (<em>disjoint</em>): uma entidade do nível superior pode pertencer a <strong>no máximo um</strong> subconjunto. Indicada pela palavra “disjoint” no diagrama.</li>
+<li><strong>Sobreposta</strong> (<em>overlapping</em>): uma entidade pode pertencer a <strong>múltiplos</strong> subconjuntos simultaneamente.</li>
+</ul>
+</div>
+<div class="exemplo">
+<ul>
+<li><code>aluno_graduacao</code> e <code>aluno_pos_graduacao</code> são <strong>disjuntos</strong>: um aluno é de graduação ou de pós, não ambos simultaneamente (na maioria das instituições).</li>
+<li>Em um sistema de funcionários, <code>funcionario_de_campo</code> e <code>funcionario_com_acesso_sistema</code> seriam <strong>sobrepostos</strong>: um funcionário pode ser de campo e ter acesso ao sistema ao mesmo tempo.</li>
+</ul>
+</div>
+</section>
+<section id="completude" class="level3" data-number="50.3.2">
+<h3 data-number="50.3.2" class="anchored" data-anchor-id="completude"><span class="header-section-number">50.3.2</span> Completude</h3>
+<div class="conceito">
+<ul>
+<li><strong>Total</strong>: toda entidade do nível superior deve pertencer a pelo menos um subconjunto. Indicada por linha dupla entre o conjunto superior e o triângulo ISA.</li>
+<li><strong>Parcial</strong> (default): algumas entidades do nível superior podem não pertencer a nenhum subconjunto.</li>
+</ul>
+</div>
+<div class="exemplo">
+<p>No banco da UnDF: - Se todo aluno for necessariamente de graduação ou de pós-graduação, a especialização é <strong>total</strong>. - Se houver alunos que não se enquadram em nenhuma categoria (ex.: alunos especiais), a especialização é <strong>parcial</strong>.</p>
+</div>
+</section>
+</section>
+<section id="representação-em-esquemas-relacionais" class="level2" data-number="50.4">
+<h2 data-number="50.4" class="anchored" data-anchor-id="representação-em-esquemas-relacionais"><span class="header-section-number">50.4</span> Representação em Esquemas Relacionais</h2>
+<p>Há dois métodos para converter especialização em tabelas:</p>
+<section id="método-1-schema-para-cada-nível" class="level3" data-number="50.4.1">
+<h3 data-number="50.4.1" class="anchored" data-anchor-id="método-1-schema-para-cada-nível"><span class="header-section-number">50.4.1</span> Método 1: Schema para cada nível</h3>
+<pre><code>-- Nível superior
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+
+-- Nível inferior (apenas atributos locais + PK herdada)
+aluno_graduacao(matricula, semestre_atual, coeficiente_rendimento)
+  FK: matricula → aluno(matricula)
+
+aluno_pos_graduacao(matricula, orientador, nivel)
+  FK: matricula → aluno(matricula)</code></pre>
+<p><strong>Vantagem</strong>: sem redundância — atributos comuns em um único lugar. <strong>Desvantagem</strong>: consultar todos os dados de um aluno requer JOIN entre as tabelas.</p>
+</section>
+<section id="método-2-schema-completo-para-cada-subconjunto" class="level3" data-number="50.4.2">
+<h3 data-number="50.4.2" class="anchored" data-anchor-id="método-2-schema-completo-para-cada-subconjunto"><span class="header-section-number">50.4.2</span> Método 2: Schema completo para cada subconjunto</h3>
+<pre><code>aluno_graduacao(matricula, nome, sigla_curso, ano_ingresso,
+                semestre_atual, coeficiente_rendimento)
+
+aluno_pos_graduacao(matricula, nome, sigla_curso, ano_ingresso,
+                    orientador, nivel)</code></pre>
+<p><strong>Vantagem</strong>: todas as informações em uma única tabela — sem JOIN para acessar dados completos. <strong>Desvantagem</strong>: atributos comuns (<code>nome</code>, <code>sigla_curso</code>) armazenados repetidamente se uma entidade pertence a ambos os subconjuntos (no caso de especialização sobreposta).</p>
+<hr>
+</section>
+</section>
+<section id="para-praticar" class="level2" data-number="50.5">
+<h2 data-number="50.5" class="anchored" data-anchor-id="para-praticar"><span class="header-section-number">50.5</span> Para Praticar</h2>
+<p><strong>1. Identificar tipo de especialização.</strong> Para cada par abaixo, determine se a especialização é total/parcial e disjunta/sobreposta:</p>
+<ol type="a">
+<li><code>veiculo</code> → <code>carro</code>, <code>moto</code>, <code>caminhão</code> (no contexto de uma frota, todo veículo é de um tipo)</li>
+<li><code>funcionario</code> → <code>gerente</code>, <code>analista</code> (um funcionário pode ser gerente de um departamento e analista de outro)</li>
+<li><code>produto</code> → <code>produto_perecivel</code>, <code>produto_duravel</code> (todo produto é um ou outro, nunca ambos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+<span class="screen-reader-only">Dica</span>Resposta
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 3 de <span class="citation" data-cites="silberschatz2019">Silberschatz, Korth, e Sudarshan (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta a linguagem SQL — a linguagem padrão para interação com bancos de dados relacionais. Ao longo das seções, você aprenderá a criar tabelas, consultar dados e modificar o conteúdo de um banco de dados relacional utilizando SQL.</p>
-<p>Todos os exemplos usam o banco de dados da UnDF, já apresentado no Capítulo 1. As quatro tabelas que compõem esse banco — <code>centro</code>, <code>professor</code>, <code>disciplina</code> e <code>aluno</code> — serão criadas formalmente neste capítulo por meio de comandos DDL e, em seguida, consultadas e manipuladas com DML.</p>
-<p>Ao final deste capítulo, você será capaz de:</p>
 <ul>
-<li>Descrever a história e as partes da linguagem SQL</li>
-<li>Criar tabelas com tipos de dados e restrições de integridade usando DDL</li>
-<li>Escrever consultas com <code>SELECT</code>, <code>FROM</code> e <code>WHERE</code></li>
-<li>Usar <code>DISTINCT</code>, <code>ORDER BY</code>, expressões aritméticas e aliases</li>
-<li>Combinar condições com <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>BETWEEN</code> e <code>LIKE</code></li>
-<li>Aplicar operações de conjunto (<code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>)</li>
-<li>Compreender o tratamento de valores nulos em SQL</li>
-<li>Usar funções de agregação e cláusulas <code>GROUP BY</code> e <code>HAVING</code></li>
-<li>Escrever subconsultas com <code>IN</code>, <code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>WITH</code></li>
-<li>Inserir, atualizar e excluir dados com <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+<li><strong>(a)</strong> Total e disjunta: todo veículo é de exatamente um tipo.</li>
+<li><strong>(b)</strong> Parcial e sobreposta: nem todo funcionário é gerente ou analista; e pode ser ambos.</li>
+<li><strong>(c)</strong> Total e disjunta: todo produto é perecível ou durável, nunca ambos.</li>
 </ul>
-<section id="seções" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="seções"><span class="header-section-number">29.1</span> Seções</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../content/cap03/01-historia.html">3.1</a></td>
-<td>História e Partes do SQL</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/02-ddl.html">3.2</a></td>
-<td>Definição de Dados (DDL)</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/03-select-from-where.html">3.3</a></td>
-<td>Estrutura Básica: SELECT-FROM-WHERE</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/04-clausula-select.html">3.4</a></td>
-<td>Cláusula SELECT</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/05-clausula-where.html">3.5</a></td>
-<td>Cláusulas WHERE e ORDER BY</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/06-operacoes-conjunto.html">3.6</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/07-nulos.html">3.7</a></td>
-<td>Valores Nulos</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/08-agregacao.html">3.8</a></td>
-<td>Funções de Agregação</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/09-subconsultas.html">3.9</a></td>
-<td>Subconsultas</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap03/10-modificacao.html">3.10</a></td>
-<td>Modificação do Banco de Dados</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap03/11-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
-</tr>
-</tbody>
-</table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
 </div>
 </div>
+</div>
+<hr>
+<p><strong>2. Escolha do método de conversão.</strong> Para a especialização total e disjunta de <code>veiculo</code> em <code>carro</code> e <code>moto</code>, qual método de conversão você escolheria e por quê?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>O <strong>Método 2</strong> (schema completo por subconjunto) é adequado quando a especialização é <strong>total e disjunta</strong>:</p>
+<pre><code>carro(placa, marca, modelo, numero_portas, tipo_combustivel)
+moto(placa, marca, modelo, cilindrada, tem_sidecar)</code></pre>
+<p>Como todo veículo é necessariamente carro ou moto (total) e nunca ambos (disjunto), não há risco de redundância entre subconjuntos. A ausência de uma tabela <code>veiculo</code> genérica simplifica as consultas, pois os dados completos de qualquer veículo estão em uma única tabela.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Herança e JOIN.</strong> Com o Método 1 (schema por nível), escreva uma consulta SQL que retorna o nome e o semestre atual de todos os alunos de graduação do curso ENS.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.nome, g.semestre_atual</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   aluno_graduacao g <span class="kw">ON</span> a.matricula <span class="op">=</span> g.matricula</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  a.sigla_curso <span class="op">=</span> <span class="st">'ENS'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O JOIN é necessário porque <code>nome</code> e <code>sigla_curso</code> estão em <code>aluno</code> (nível superior), enquanto <code>semestre_atual</code> está em <code>aluno_graduacao</code> (nível inferior). Esse é o custo do Método 1.</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1091,13 +1246,13 @@ Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap02/12-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Resumo e Exercícios</span></span>
+      <a href="../../content/cap04/08-conversao-relacional.html" class="pagination-link" aria-label="Conversão ER → Relacional">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Conversão ER → Relacional</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/01-historia.html" class="pagination-link" aria-label="História e Partes do SQL">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">História e Partes do SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/10-agregacao.html" class="pagination-link" aria-label="Agregação">
+        <span class="nav-page-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Agregação</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
