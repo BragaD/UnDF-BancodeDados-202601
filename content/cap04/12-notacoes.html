@@ -911,6 +911,54 @@ Aviso
 </section>
 
 </main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.spoiler').forEach(function (spoiler) {
+    const hash    = spoiler.dataset.passwordHash || '';
+    const hint    = spoiler.dataset.hint || 'Conteúdo protegido por senha';
+    const content = spoiler.innerHTML;
+
+    spoiler.innerHTML = `
+      <div class="spoiler-lock">
+        <span class="spoiler-icon">&#128274;</span>
+        <p class="spoiler-hint">${hint}</p>
+        <div class="spoiler-input-group">
+          <input type="password" class="spoiler-input" placeholder="Digite a senha…" autocomplete="off">
+          <button class="spoiler-btn">Acessar</button>
+        </div>
+        <p class="spoiler-error">Senha incorreta.</p>
+      </div>
+      <div class="spoiler-content">${content}</div>
+    `;
+
+    const lockDiv    = spoiler.querySelector('.spoiler-lock');
+    const contentDiv = spoiler.querySelector('.spoiler-content');
+    const input      = spoiler.querySelector('.spoiler-input');
+    const btn        = spoiler.querySelector('.spoiler-btn');
+    const errorMsg   = spoiler.querySelector('.spoiler-error');
+
+    async function tryUnlock() {
+      const val    = input.value;
+      const buf    = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+      const hex    = Array.from(new Uint8Array(buf))
+                         .map(b => b.toString(16).padStart(2, '0')).join('');
+
+      if (hex === hash) {
+        lockDiv.style.display    = 'none';
+        contentDiv.style.display = 'block';
+      } else {
+        errorMsg.style.display = 'block';
+        input.value = '';
+        input.focus();
+        setTimeout(() => { errorMsg.style.display = 'none'; }, 2500);
+      }
+    }
+
+    btn.addEventListener('click', tryUnlock);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
