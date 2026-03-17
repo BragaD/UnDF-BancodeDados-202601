@@ -676,60 +676,60 @@ ul.task-list li input[type="checkbox"] {
 <caption>Tabela <code>professor</code></caption>
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th style="text-align: right;">id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td style="text-align: right;">21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td style="text-align: right;">21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td style="text-align: right;">31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td style="text-align: right;">31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td style="text-align: right;">31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td style="text-align: right;">11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td style="text-align: right;">11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6600</td>
 </tr>
@@ -746,20 +746,24 @@ ul.task-list li input[type="checkbox"] {
 <table class="table-striped caption-top table">
 <thead>
 <tr class="header">
-<th>centro</th>
+<th style="text-align: right;">id_centro</th>
+<th>sigla</th>
 <th>nome_centro</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: right;">1</td>
 <td>COCHCMA</td>
 <td>Ciências Humanas, Cidadania e Meio Ambiente</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">2</td>
 <td>COEMAG</td>
 <td>Centro de Educação, Magistério e Artes</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">3</td>
 <td>COETI</td>
 <td>Centro de Engenharias, Tecnologia e Inovação</td>
 </tr>
@@ -768,50 +772,57 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Tabela <code>escola</code></strong></p>
 <table class="table-striped caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 26%">
+<col style="width: 16%">
+<col style="width: 30%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
+<th>sigla</th>
 <th>nome_escola</th>
-<th>centro</th>
+<th style="text-align: right;">id_centro</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: right;">11</td>
 <td>ESG</td>
 <td>Escola Superior de Gestão</td>
-<td>COCHCMA</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">21</td>
 <td>EEMA</td>
 <td>Escola de Educação, Magistério e Arte</td>
-<td>COEMAG</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">31</td>
 <td>ESETI</td>
 <td>Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td>COETI</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Tabela <code>curso</code></strong></p>
 <table class="table-striped caption-top table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 15%">
+<col style="width: 17%">
+<col style="width: 22%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 5%">
 </colgroup>
 <thead>
 <tr class="header">
+<th style="text-align: right;">id_curso</th>
 <th>sigla_curso</th>
 <th>nome_curso</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">n_semestres</th>
 <th style="text-align: right;">carga_horaria</th>
 <th>tipo_curso</th>
@@ -819,25 +830,28 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: right;">111</td>
 <td>ECO</td>
 <td>Ciências Econômicas</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">3000</td>
 <td>bacharelado</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">311</td>
 <td>ENS</td>
 <td>Engenharia de Software</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">3200</td>
 <td>bacharelado</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">211</td>
 <td>PED</td>
 <td>Pedagogia</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">3410</td>
 <td>licenciatura</td>
@@ -848,82 +862,89 @@ ul.task-list li input[type="checkbox"] {
 <table class="table-striped caption-top table">
 <thead>
 <tr class="header">
-<th>matricula</th>
+<th style="text-align: right;">id_aluno</th>
 <th>nome</th>
-<th>sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">ano_ingresso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2023002001</td>
+<td style="text-align: right;">2023311001</td>
 <td>Matheus Silva</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td>2023002002</td>
+<td style="text-align: right;">2023311002</td>
 <td>Larissa Araújo</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="odd">
-<td>2024002001</td>
+<td style="text-align: right;">2024311001</td>
 <td>Pedro Carvalho</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2024</td>
 </tr>
 <tr class="even">
-<td>2023007001</td>
+<td style="text-align: right;">2023111001</td>
 <td>Beatriz Carvalho</td>
-<td>ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="odd">
-<td>2023009001</td>
+<td style="text-align: right;">2023211001</td>
 <td>Amanda Moreira</td>
-<td>PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">2023</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Tabela <code>disciplina</code></strong> (amostra)</p>
 <table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 33%">
+<col style="width: 21%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th>nome_disciplina</th>
-<th>sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">semestre</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ENS-201</td>
-<td>Bases da Engenharia de Software 2</td>
-<td>ENS</td>
+<td style="text-align: right;">3110201</td>
+<td>Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td>ENS-202</td>
-<td>Projeto Aplicado 2 (site WEB)</td>
-<td>ENS</td>
+<td style="text-align: right;">3110202</td>
+<td>Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>ECO-201</td>
+<td style="text-align: right;">1110201</td>
 <td>História Econômica Geral</td>
-<td>ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>PED-203</td>
+<td style="text-align: right;">2110201</td>
 <td>Desenvolvimento Humano</td>
-<td>PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">60</td>
 </tr>

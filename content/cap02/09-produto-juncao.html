@@ -694,7 +694,7 @@ window.Quarto = {
 </div>
 <section id="qualificação-de-atributos" class="level3">
 <h3 class="anchored" data-anchor-id="qualificação-de-atributos">Qualificação de Atributos</h3>
-<p>Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular <span class="math inline">\(professor \times ministra\)</span>, o atributo <code>escola</code> aparece em <code>professor</code> e o atributo <code>matricula_prof</code> aparece em ambas; a junção os conectará pelo predicado <code>professor.matricula_prof = ministra.matricula_prof</code>.</p>
+<p>Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular <span class="math inline">\(professor \times ministra\)</span>, o atributo <code>id_prof</code> aparece em ambas; a junção os conectará pelo predicado <code>professor.id_prof = ministra.id_prof</code>.</p>
 </section>
 <section id="tabelas-utilizadas-nos-exemplos" class="level3">
 <h3 class="anchored" data-anchor-id="tabelas-utilizadas-nos-exemplos">Tabelas utilizadas nos exemplos</h3>
@@ -702,61 +702,61 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="odd">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 </tr>
 </tbody>
 </table>
-<p>Tabela <code>ministra</code> (3 tuplas — 2023, semestre 2, turma A):</p>
+<p>Tabela <code>ministra</code> (3 tuplas — 2023, semestre 2, turma 1):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>cod_disciplina</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: right;">ano</th>
 <th style="text-align: right;">semestre</th>
-<th>turma</th>
-<th>matricula_prof</th>
+<th style="text-align: right;">turma</th>
+<th>id_prof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ENS-201</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">2023</td>
 <td style="text-align: right;">2</td>
-<td>A</td>
-<td>PROF20230031</td>
+<td style="text-align: right;">1</td>
+<td>31200001</td>
 </tr>
 <tr class="even">
-<td>PED-203</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">2023</td>
 <td style="text-align: right;">2</td>
-<td>A</td>
-<td>PROF20230005</td>
+<td style="text-align: right;">1</td>
+<td>21200001</td>
 </tr>
 <tr class="odd">
-<td>ECO-201</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">2023</td>
 <td style="text-align: right;">2</td>
-<td>A</td>
-<td>PROF20230042</td>
+<td style="text-align: right;">1</td>
+<td>11400001</td>
 </tr>
 </tbody>
 </table>
@@ -767,100 +767,100 @@ window.Quarto = {
 <p>O produto cartesiano gera <span class="math inline">\(3 \times 3 = 9\)</span> tuplas — todas as combinações possíveis entre as 3 tuplas de <code>professor</code> e as 3 de <code>ministra</code>, independentemente de qualquer correspondência semântica:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 21%">
-<col style="width: 15%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>professor.matricula_prof</th>
+<th>professor.id_prof</th>
 <th>professor.nome</th>
-<th>professor.escola</th>
-<th>ministra.cod_disciplina</th>
+<th style="text-align: right;">professor.id_escola</th>
+<th style="text-align: right;">ministra.id_disciplina</th>
 <th style="text-align: right;">ministra.ano</th>
-<th>ministra.matricula_prof</th>
+<th>ministra.id_prof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td>ENS-201</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230031</td>
+<td>31200001</td>
 </tr>
 <tr class="even">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td>PED-203</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230005</td>
+<td>21200001</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td>ECO-201</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230042</td>
+<td>11400001</td>
 </tr>
 <tr class="even">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td>ENS-201</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230031</td>
+<td>31200001</td>
 </tr>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td>PED-203</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230005</td>
+<td>21200001</td>
 </tr>
 <tr class="even">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td>ECO-201</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230042</td>
+<td>11400001</td>
 </tr>
 <tr class="odd">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
-<td>ENS-201</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230031</td>
+<td>31200001</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
-<td>PED-203</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230005</td>
+<td>21200001</td>
 </tr>
 <tr class="odd">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
-<td>ECO-201</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">2023</td>
-<td>PROF20230042</td>
+<td>11400001</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que <code>professor.matricula_prof = ministra.matricula_prof</code>). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.</p>
+<p>Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que <code>professor.id_prof = ministra.id_prof</code>). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.</p>
 </div>
 </section>
 </section>
@@ -874,102 +874,102 @@ window.Quarto = {
 <section id="exemplo-professores-com-suas-disciplinas" class="level3">
 <h3 class="anchored" data-anchor-id="exemplo-professores-com-suas-disciplinas">Exemplo: Professores com Suas Disciplinas</h3>
 <p>Para associar cada professor às disciplinas que ministra em 2023:</p>
-<p><span class="math display">\[professor \bowtie_{professor.matricula\_prof\ =\ ministra.matricula\_prof} ministra\]</span></p>
+<p><span class="math display">\[professor \bowtie_{professor.id\_prof\ =\ ministra.id\_prof} ministra\]</span></p>
 <p>Esta expressão é equivalente a:</p>
-<p><span class="math display">\[\sigma_{professor.matricula\_prof\ =\ ministra.matricula\_prof}(professor \times ministra)\]</span></p>
+<p><span class="math display">\[\sigma_{professor.id\_prof\ =\ ministra.id\_prof}(professor \times ministra)\]</span></p>
 <p>Resultado (apenas as 3 tuplas válidas do produto cartesiano de 9):</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 25%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>professor.matricula_prof</th>
+<th>professor.id_prof</th>
 <th>professor.nome</th>
-<th>professor.escola</th>
-<th>ministra.cod_disciplina</th>
+<th style="text-align: right;">professor.id_escola</th>
+<th style="text-align: right;">ministra.id_disciplina</th>
 <th style="text-align: right;">ministra.ano</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td>ENS-201</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td>PED-203</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="odd">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
-<td>ECO-201</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">2023</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo <code>ministra.matricula_prof</code> é redundante no resultado e pode ser eliminado com uma projeção.</p>
+<p>A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo <code>ministra.id_prof</code> é redundante no resultado e pode ser eliminado com uma projeção.</p>
 </div>
 </section>
 <section id="junção-com-autorreferência-pré-requisitos" class="level3">
 <h3 class="anchored" data-anchor-id="junção-com-autorreferência-pré-requisitos">Junção com Autorreferência: Pré-requisitos</h3>
-<p>A relação <code>prereq</code> conecta disciplinas entre si: cada tupla indica que <code>codigo</code> exige <code>prereq_codigo</code> como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação <code>disciplina</code> — trata-se de uma <strong>autorreferência</strong>.</p>
+<p>A relação <code>prereq</code> conecta disciplinas entre si: cada tupla indica que <code>id_disciplina</code> exige <code>id_prereq</code> como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação <code>disciplina</code> — trata-se de uma <strong>autorreferência</strong>.</p>
 <p>Para obter os <strong>nomes</strong> da disciplina e do seu pré-requisito é necessário juntar <code>prereq</code> com <code>disciplina</code> <strong>duas vezes</strong>, usando renomeação para distinguir as duas instâncias:</p>
-<p><span class="math display">\[D \leftarrow \rho_d(disciplina)\]</span> <span class="math display">\[P \leftarrow \rho_p(disciplina)\]</span> <span class="math display">\[\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.codigo = d.codigo\ \wedge\ prereq.prereq\_codigo = p.codigo}(prereq \times D \times P)\right)\]</span></p>
+<p><span class="math display">\[D \leftarrow \rho_d(disciplina)\]</span> <span class="math display">\[P \leftarrow \rho_p(disciplina)\]</span> <span class="math display">\[\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.id\_disciplina = d.id\_disciplina\ \wedge\ prereq.id\_prereq = p.id\_disciplina}(prereq \times D \times P)\right)\]</span></p>
 <p>Versão compacta com junções encadeadas:</p>
-<p><span class="math display">\[prereq \bowtie_{prereq.codigo = d.codigo} \rho_d(disciplina) \bowtie_{prereq.prereq\_codigo = p.codigo} \rho_p(disciplina)\]</span></p>
+<p><span class="math display">\[prereq \bowtie_{prereq.id\_disciplina = d.id\_disciplina} \rho_d(disciplina) \bowtie_{prereq.id\_prereq = p.id\_disciplina} \rho_p(disciplina)\]</span></p>
 <p>Tabela <code>prereq</code> (amostra — ENS):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>codigo</th>
-<th>prereq_codigo</th>
+<th style="text-align: right;">id_disciplina</th>
+<th style="text-align: right;">id_prereq</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ENS-401</td>
-<td>ENS-201</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: right;">3110201</td>
 </tr>
 <tr class="even">
-<td>ENS-402</td>
-<td>ENS-202</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: right;">3110202</td>
 </tr>
 <tr class="odd">
-<td>ENS-601</td>
-<td>ENS-401</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: right;">3110401</td>
 </tr>
 <tr class="even">
-<td>ENS-601</td>
-<td>ENS-402</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: right;">3110402</td>
 </tr>
 <tr class="odd">
-<td>ENS-602</td>
-<td>ENS-402</td>
+<td style="text-align: right;">3110602</td>
+<td style="text-align: right;">3110402</td>
 </tr>
 <tr class="even">
-<td>ENS-801</td>
-<td>ENS-601</td>
+<td style="text-align: right;">3110801</td>
+<td style="text-align: right;">3110601</td>
 </tr>
 <tr class="odd">
-<td>ENS-802</td>
-<td>ENS-601</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: right;">3110601</td>
 </tr>
 <tr class="even">
-<td>ENS-802</td>
-<td>ENS-602</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: right;">3110602</td>
 </tr>
 </tbody>
 </table>
@@ -987,41 +987,41 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Bases da Engenharia de Software 4</td>
-<td>Bases da Engenharia de Software 2</td>
+<td>Bases da Eng. de Software 4</td>
+<td>Bases da Eng. de Software 2</td>
 </tr>
 <tr class="even">
-<td>Projeto Aplicado 4 (blockchain)</td>
-<td>Projeto Aplicado 2 (site WEB)</td>
+<td>Projeto Aplicado 4 - blockchain</td>
+<td>Projeto Aplicado 2 - site WEB</td>
 </tr>
 <tr class="odd">
-<td>Bases da Engenharia de Software 6</td>
-<td>Bases da Engenharia de Software 4</td>
+<td>Bases da Eng. de Software 6</td>
+<td>Bases da Eng. de Software 4</td>
 </tr>
 <tr class="even">
-<td>Bases da Engenharia de Software 6</td>
-<td>Projeto Aplicado 4 (blockchain)</td>
+<td>Bases da Eng. de Software 6</td>
+<td>Projeto Aplicado 4 - blockchain</td>
 </tr>
 <tr class="odd">
-<td>Projeto Aplicado 6 (Machine Learning)</td>
-<td>Projeto Aplicado 4 (blockchain)</td>
+<td>Projeto Aplicado 6 - Machine Learning</td>
+<td>Projeto Aplicado 4 - blockchain</td>
 </tr>
 <tr class="even">
-<td>Bases da Engenharia de Software 8</td>
-<td>Bases da Engenharia de Software 6</td>
+<td>Bases da Eng. de Software 8</td>
+<td>Bases da Eng. de Software 6</td>
 </tr>
 <tr class="odd">
-<td>Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td>Bases da Engenharia de Software 6</td>
+<td>Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td>Bases da Eng. de Software 6</td>
 </tr>
 <tr class="even">
-<td>Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td>Projeto Aplicado 6 (Machine Learning)</td>
+<td>Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td>Projeto Aplicado 6 - Machine Learning</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p><code>ENS-601</code> (Bases 6) tem <strong>dois</strong> pré-requisitos (ENS-401 e ENS-402), o que gera duas tuplas no resultado com o mesmo valor em <code>d.nome_disciplina</code>. Isso é esperado — a relação registra pares, não listas.</p>
+<p>A disciplina 3110601 (Bases 6) tem <strong>dois</strong> pré-requisitos (3110401 e 3110402), o que gera duas tuplas no resultado com o mesmo valor em <code>d.nome_disciplina</code>. Isso é esperado — a relação registra pares, não listas.</p>
 </div>
 </section>
 <section id="vantagem-da-junção" class="level3">
@@ -1072,12 +1072,12 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>O resultado é uma <strong>relação vazia</strong> com o schema combinado das duas relações. Exemplo: se tentarmos <span class="math inline">\(professor \bowtie_{professor.escola = \text{"XPTO"}} escola\)</span>, nenhum professor pertence à escola “XPTO”, portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.</p>
+<p>O resultado é uma <strong>relação vazia</strong> com o schema combinado das duas relações. Exemplo: se tentarmos <span class="math inline">\(professor \bowtie_{professor.id\_escola = 99} escola\)</span>, nenhum professor pertence à escola com id 99, portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>3. Junção transitiva de pré-requisitos.</strong> Escreva uma expressão de álgebra relacional para encontrar os <strong>pré-requisitos de pré-requisitos</strong> de ENS-801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de ENS-801.</p>
+<p><strong>3. Junção transitiva de pré-requisitos.</strong> Escreva uma expressão de álgebra relacional para encontrar os <strong>pré-requisitos de pré-requisitos</strong> de 3110801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de 3110801.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1090,9 +1090,9 @@ window.Quarto = {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Primeiro, encontramos os pré-requisitos diretos de ENS-801: <span class="math display">\[P1 \leftarrow \sigma_{codigo = \text{"ENS-801"}}(prereq)\]</span></p>
-<p>Depois, para cada prereq_codigo de P1, buscamos seus próprios pré-requisitos: <span class="math display">\[\Pi_{prereq.prereq\_codigo}\!\left(\sigma_{P1.prereq\_codigo = prereq.codigo}(P1 \times prereq)\right)\]</span></p>
-<p>ENS-801 → {ENS-601, ENS-602}. ENS-601 → {ENS-401, ENS-402}; ENS-602 → {ENS-402}. Resultado: <strong>{ENS-401, ENS-402}</strong>.</p>
+<p>Primeiro, encontramos os pré-requisitos diretos de 3110801: <span class="math display">\[P1 \leftarrow \sigma_{id\_disciplina = 3110801}(prereq)\]</span></p>
+<p>Depois, para cada id_prereq de P1, buscamos seus próprios pré-requisitos: <span class="math display">\[\Pi_{prereq.id\_prereq}\!\left(\sigma_{P1.id\_prereq = prereq.id\_disciplina}(P1 \times prereq)\right)\]</span></p>
+<p>3110801 → {3110601}. 3110601 → {3110401, 3110402}. Resultado: <strong>{3110401, 3110402}</strong>.</p>
 </div>
 </div>
 </div>

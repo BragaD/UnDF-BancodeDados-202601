@@ -693,7 +693,7 @@ window.Quarto = {
 <ul>
 <li><strong>Operadores de comparação</strong>: <span class="math inline">\(=\)</span>, <span class="math inline">\(\neq\)</span>, <span class="math inline">\(&gt;\)</span>, <span class="math inline">\(\geq\)</span>, <span class="math inline">\(&lt;\)</span>, <span class="math inline">\(\leq\)</span></li>
 <li><strong>Conectivos lógicos</strong>: <span class="math inline">\(\wedge\)</span> (e), <span class="math inline">\(\vee\)</span> (ou), <span class="math inline">\(\neg\)</span> (não)</li>
-<li><strong>Comparação entre atributos</strong>: <span class="math inline">\(\sigma_{escola = nome\_escola}(escola)\)</span></li>
+<li><strong>Comparação entre atributos</strong>: <span class="math inline">\(\sigma_{id\_escola = id\_centro}(escola)\)</span></li>
 </ul>
 </section>
 <section id="exemplo-1-professores-da-eseti" class="level2">
@@ -702,141 +702,141 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 </tr>
 </tbody>
 </table>
-<p>A expressão <span class="math inline">\(\sigma_{escola = \text{"ESETI"}}(professor)\)</span> retorna:</p>
+<p>A expressão <span class="math inline">\(\sigma_{id\_escola = 31}(professor)\)</span> retorna:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Apenas as tuplas onde <code>escola = "ESETI"</code> foram mantidas. O schema do resultado é idêntico ao schema de <code>professor</code>.</p>
+<p>Apenas as tuplas onde <code>id_escola = 31</code> foram mantidas. O schema do resultado é idêntico ao schema de <code>professor</code>.</p>
 </div>
 </section>
 <section id="exemplo-2-predicado-composto" class="level2">
 <h2 class="anchored" data-anchor-id="exemplo-2-predicado-composto">Exemplo 2: Predicado Composto</h2>
 <p>Para selecionar alunos do curso de Engenharia de Software <strong>e</strong> com ingresso em 2024, usa-se o conectivo <span class="math inline">\(\wedge\)</span>:</p>
-<p><span class="math display">\[\sigma_{sigla\_curso = \text{"ENS"} \,\wedge\, ano\_ingresso = 2024}(aluno)\]</span></p>
+<p><span class="math display">\[\sigma_{id\_curso = 311 \,\wedge\, ano\_ingresso = 2024}(aluno)\]</span></p>
 <p>Relação <code>aluno</code> (amostra):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula</th>
+<th>id_aluno</th>
 <th>nome</th>
-<th>sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">ano_ingresso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2023002001</td>
-<td>Matheus Silva</td>
-<td>ENS</td>
+<td>2023311001</td>
+<td>Matheus Lima</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td>2023002002</td>
+<td>2023311002</td>
 <td>Larissa Araújo</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="odd">
-<td>2024002001</td>
+<td>2024311001</td>
 <td>Pedro Carvalho</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2024</td>
 </tr>
 <tr class="even">
-<td>2024002002</td>
+<td>2024311002</td>
 <td>Isabela Freitas</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2024</td>
 </tr>
 <tr class="odd">
-<td>2023007001</td>
-<td>Beatriz Carvalho</td>
-<td>ECO</td>
+<td>2023111001</td>
+<td>Beatriz Mendes</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td>2023009001</td>
+<td>2023211001</td>
 <td>Amanda Moreira</td>
-<td>PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">2023</td>
 </tr>
 </tbody>
@@ -845,23 +845,23 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula</th>
+<th>id_aluno</th>
 <th>nome</th>
-<th>sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">ano_ingresso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2024002001</td>
+<td>2024311001</td>
 <td>Pedro Carvalho</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2024</td>
 </tr>
 <tr class="even">
-<td>2024002002</td>
+<td>2024311002</td>
 <td>Isabela Freitas</td>
-<td>ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">2024</td>
 </tr>
 </tbody>
@@ -889,8 +889,8 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\sigma_{escola = \text{"EEMA"}\ \vee\ salario &gt; 6000}(professor)\]</span></p>
-<p>Resultado (7 professores verificados): - EEMA: Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios) - ESETI: Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério) - ESG: Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário</p>
+<p><span class="math display">\[\sigma_{id\_escola = 21\ \vee\ salario &gt; 6000}(professor)\]</span></p>
+<p>Resultado (7 professores verificados): - EEMA (id_escola=21): Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios) - ESETI (id_escola=31): Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério) - ESG (id_escola=11): Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário</p>
 <p>Total: <strong>5 tuplas</strong> (Eduarda, Felipe, Helena, Bruno, Carla).</p>
 </div>
 </div>
@@ -909,14 +909,13 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\sigma_{sigla\_curso = \text{"ENS"}\ \wedge\ carga\_horaria \geq 120\ \wedge\ carga\_horaria \leq 160}(disciplina)\]</span></p>
-<p>Resultado: ENS-202 (120h), ENS-402 (120h), ENS-601 (150h), ENS-602 (120h), ENS-801 (100h? não — 100 &lt; 120), ENS-802 (160h).</p>
-<p>Disciplinas resultantes: ENS-202, ENS-401 (180h? não — 180 &gt; 160), ENS-402, ENS-601, ENS-602, ENS-802 = <strong>5 tuplas</strong>.</p>
+<p><span class="math display">\[\sigma_{id\_curso = 311\ \wedge\ carga\_horaria \geq 120\ \wedge\ carga\_horaria \leq 160}(disciplina)\]</span></p>
+<p>Resultado: 3110202 (120h), 3110402 (120h), 3110601 (150h), 3110602 (120h), 3110802 (160h) = <strong>5 tuplas</strong>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>3. Seleção sobre resultado de outra operação.</strong> É válido aplicar <span class="math inline">\(\sigma\)</span> sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde <code>professor.escola = escola.escola</code> e <code>escola.centro = 'COETI'</code>.</p>
+<p><strong>3. Seleção sobre resultado de outra operação.</strong> É válido aplicar <span class="math inline">\(\sigma\)</span> sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde <code>professor.id_escola = escola.id_escola</code> e <code>escola.id_centro = 3</code>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -929,8 +928,8 @@ window.Quarto = {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\sigma_{professor.escola = escola.escola\ \wedge\ escola.centro = \text{"COETI"}}(professor \times escola)\]</span></p>
-<p>Isso é exatamente uma <strong>junção com filtro adicional</strong> — equivale a <span class="math inline">\(professor \bowtie_{professor.escola = escola.escola} \sigma_{centro = \text{"COETI"}}(escola)\)</span>, que retorna apenas os professores da ESETI (vinculada ao COETI).</p>
+<p><span class="math display">\[\sigma_{professor.id\_escola = escola.id\_escola\ \wedge\ escola.id\_centro = 3}(professor \times escola)\]</span></p>
+<p>Isso é exatamente uma <strong>junção com filtro adicional</strong> — equivale a <span class="math inline">\(professor \bowtie_{professor.id\_escola = escola.id\_escola} \sigma_{id\_centro = 3}(escola)\)</span>, que retorna apenas os professores da ESETI (vinculada ao centro COETI, id_centro=3).</p>
 </div>
 </div>
 </div>

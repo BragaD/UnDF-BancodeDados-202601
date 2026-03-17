@@ -663,60 +663,60 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6600</td>
 </tr>
@@ -740,16 +740,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>matricula_prof</code></td>
-<td>sequência de caracteres alfanuméricos</td>
+<td><code>id_prof</code></td>
+<td>números inteiros positivos</td>
 </tr>
 <tr class="even">
 <td><code>nome</code></td>
 <td>cadeias de texto</td>
 </tr>
 <tr class="odd">
-<td><code>escola</code></td>
-<td><code>{EEMA, ESETI, ESG}</code></td>
+<td><code>id_escola</code></td>
+<td><code>{11, 21, 31}</code></td>
 </tr>
 <tr class="even">
 <td><code>ch_semanal</code></td>
@@ -774,7 +774,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="tuplas-não-ordenadas">Tuplas Não Ordenadas</h2>
 <p>Uma propriedade fundamental do modelo relacional é que <strong>a ordem das tuplas é irrelevante</strong>. Uma relação é formalmente um <em>conjunto</em> de tuplas, e conjuntos não têm ordem definida.</p>
 <div class="exemplo">
-<p>A tabela <code>professor</code> apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por <code>nome</code>, por <code>escola</code> ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.</p>
+<p>A tabela <code>professor</code> apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por <code>nome</code>, por <code>id_escola</code> ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.</p>
 </div>
 <p>Da mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenção sempre usemos uma ordem consistente.</p>
 <hr>
@@ -792,9 +792,9 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>2023002001</td>
+<td>2023311001</td>
 <td>Matheus Silva</td>
-<td>ENS-201, ENS-202</td>
+<td>3110201, 3110202</td>
 </tr>
 </tbody>
 </table>
@@ -821,21 +821,21 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th>id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td>31</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td>11</td>
 </tr>
 </tbody>
 </table>
@@ -843,21 +843,21 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>escola</th>
+<th>id_escola</th>
 <th>nome</th>
-<th>matricula_prof</th>
+<th>id_prof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ESG</td>
+<td>11</td>
 <td>Bruno Teixeira</td>
-<td>PROF20230042</td>
+<td>11400001</td>
 </tr>
 <tr class="even">
-<td>ESETI</td>
+<td>31</td>
 <td>Gustavo Costa</td>
-<td>PROF20230031</td>
+<td>31200001</td>
 </tr>
 </tbody>
 </table>
@@ -933,7 +933,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>centro</code></td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="even">

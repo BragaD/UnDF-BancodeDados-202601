@@ -695,137 +695,137 @@ window.Quarto = {
 <section id="conjuntos-utilizados-nos-exemplos" class="level3">
 <h3 class="anchored" data-anchor-id="conjuntos-utilizados-nos-exemplos">Conjuntos utilizados nos exemplos</h3>
 <p>Definimos duas relações auxiliares a partir da tabela <code>disciplina</code>:</p>
-<p><span class="math display">\[A \leftarrow \Pi_{codigo}(\sigma_{sigla\_curso = \text{"PED"}}(disciplina))\]</span></p>
-<p><span class="math display">\[B \leftarrow \Pi_{codigo}(\sigma_{carga\_horaria \geq 60}(disciplina))\]</span></p>
+<p><span class="math display">\[A \leftarrow \Pi_{id\_disciplina}(\sigma_{id\_curso = 211}(disciplina))\]</span></p>
+<p><span class="math display">\[B \leftarrow \Pi_{id\_disciplina}(\sigma_{carga\_horaria \geq 60}(disciplina))\]</span></p>
 <p>Relação <span class="math inline">\(A\)</span> — disciplinas de Pedagogia (8 disciplinas):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PED-203</td>
+<td style="text-align: right;">2110201</td>
 </tr>
 <tr class="even">
-<td>PED-204</td>
+<td style="text-align: right;">2110202</td>
 </tr>
 <tr class="odd">
-<td>PED-403</td>
+<td style="text-align: right;">2110401</td>
 </tr>
 <tr class="even">
-<td>PED-404</td>
+<td style="text-align: right;">2110402</td>
 </tr>
 <tr class="odd">
-<td>PED-603</td>
+<td style="text-align: right;">2110601</td>
 </tr>
 <tr class="even">
-<td>PED-604</td>
+<td style="text-align: right;">2110602</td>
 </tr>
 <tr class="odd">
-<td>PED-803</td>
+<td style="text-align: right;">2110801</td>
 </tr>
 <tr class="even">
-<td>PED-804</td>
+<td style="text-align: right;">2110802</td>
 </tr>
 </tbody>
 </table>
-<p>Relação <span class="math inline">\(B\)</span> — disciplinas com carga horária <span class="math inline">\(\geq 60\)</span> h (22 disciplinas — todas exceto PED-604 = 40 h e PED-804 = 50 h):</p>
+<p>Relação <span class="math inline">\(B\)</span> — disciplinas com carga horária <span class="math inline">\(\geq 60\)</span> h (22 disciplinas — todas exceto 2110602 = 40 h e 2110802 = 50 h):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: right;">(carga_horaria)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ECO-201</td>
+<td style="text-align: right;">1110201</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>ECO-202</td>
+<td style="text-align: right;">1110202</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td>ECO-401</td>
+<td style="text-align: right;">1110401</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>ECO-402</td>
+<td style="text-align: right;">1110402</td>
 <td style="text-align: right;">95</td>
 </tr>
 <tr class="odd">
-<td>ECO-601</td>
+<td style="text-align: right;">1110601</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td>ECO-602</td>
+<td style="text-align: right;">1110602</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td>ECO-801</td>
+<td style="text-align: right;">1110801</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td>ECO-802</td>
+<td style="text-align: right;">1110802</td>
 <td style="text-align: right;">90</td>
 </tr>
 <tr class="odd">
-<td>ENS-201</td>
+<td style="text-align: right;">3110201</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td>ENS-202</td>
+<td style="text-align: right;">3110202</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>ENS-401</td>
+<td style="text-align: right;">3110401</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td>ENS-402</td>
+<td style="text-align: right;">3110402</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>ENS-601</td>
+<td style="text-align: right;">3110601</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td>ENS-602</td>
+<td style="text-align: right;">3110602</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td>ENS-801</td>
+<td style="text-align: right;">3110801</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td>ENS-802</td>
+<td style="text-align: right;">3110802</td>
 <td style="text-align: right;">160</td>
 </tr>
 <tr class="odd">
-<td>PED-203</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="even">
-<td>PED-204</td>
+<td style="text-align: right;">2110202</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td>PED-403</td>
+<td style="text-align: right;">2110401</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
-<td>PED-404</td>
+<td style="text-align: right;">2110402</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr class="odd">
-<td>PED-603</td>
+<td style="text-align: right;">2110601</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
-<td>PED-803</td>
+<td style="text-align: right;">2110801</td>
 <td style="text-align: right;">60</td>
 </tr>
 </tbody>
@@ -840,7 +840,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>PED-604 (40 h) e PED-804 (50 h) <strong>não</strong> aparecem em <span class="math inline">\(B\)</span>, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em <strong>ambas</strong> as relações.</p>
+<p>2110602 (40 h) e 2110802 (50 h) <strong>não</strong> aparecem em <span class="math inline">\(B\)</span>, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em <strong>ambas</strong> as relações.</p>
 </div>
 </div>
 </section>
@@ -854,7 +854,7 @@ Nota
 <p><span class="math display">\[A \cup B\]</span></p>
 <p>Resultado — disciplinas de Pedagogia <strong>ou</strong> com carga horária <span class="math inline">\(\geq 60\)</span> h (24 disciplinas — o conjunto completo da amostra):</p>
 <div class="exemplo">
-<p>PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem às duas relações, mas aparecem apenas <strong>uma vez</strong> no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via <span class="math inline">\(A\)</span>.</p>
+<p>2110201, 2110202, 2110401, 2110402, 2110601 e 2110801 pertencem às duas relações, mas aparecem apenas <strong>uma vez</strong> no resultado — a união elimina duplicatas automaticamente. 2110602 e 2110802 são adicionadas via <span class="math inline">\(A\)</span>.</p>
 </div>
 </section>
 <section id="interseção-cap" class="level2">
@@ -868,32 +868,32 @@ Nota
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PED-203</td>
+<td style="text-align: right;">2110201</td>
 </tr>
 <tr class="even">
-<td>PED-204</td>
+<td style="text-align: right;">2110202</td>
 </tr>
 <tr class="odd">
-<td>PED-403</td>
+<td style="text-align: right;">2110401</td>
 </tr>
 <tr class="even">
-<td>PED-404</td>
+<td style="text-align: right;">2110402</td>
 </tr>
 <tr class="odd">
-<td>PED-603</td>
+<td style="text-align: right;">2110601</td>
 </tr>
 <tr class="even">
-<td>PED-803</td>
+<td style="text-align: right;">2110801</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>PED-604 (40 h) e PED-804 (50 h) estão em <span class="math inline">\(A\)</span> mas não em <span class="math inline">\(B\)</span>, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.</p>
+<p>2110602 (40 h) e 2110802 (50 h) estão em <span class="math inline">\(A\)</span> mas não em <span class="math inline">\(B\)</span>, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -920,20 +920,20 @@ Nota
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PED-604</td>
+<td style="text-align: right;">2110602</td>
 </tr>
 <tr class="even">
-<td>PED-804</td>
+<td style="text-align: right;">2110802</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem <span class="math inline">\(carga\_horaria \geq 60\)</span> h e portanto não estão em <span class="math inline">\(B\)</span>. São as únicas que permanecem após a diferença.</p>
+<p>Das 8 disciplinas de PED, apenas 2110602 (40 h) e 2110802 (50 h) não satisfazem <span class="math inline">\(carga\_horaria \geq 60\)</span> h e portanto não estão em <span class="math inline">\(B\)</span>. São as únicas que permanecem após a diferença.</p>
 </div>
 </section>
 <section id="resumo-comparativo" class="level2">
@@ -982,7 +982,7 @@ Nota
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(\cup\)</span> e <span class="math inline">\(\cap\)</span> são <strong>comutativas</strong> (<span class="math inline">\(A \cup B = B \cup A\)</span> e <span class="math inline">\(A \cap B = B \cap A\)</span>). A diferença <span class="math inline">\(-\)</span> <strong>não</strong> é comutativa.</p>
-<p>Exemplo: seja <span class="math inline">\(A\)</span> = disciplinas de PED (8 tuplas) e <span class="math inline">\(B\)</span> = disciplinas com carga ≥ 60 h (22 tuplas). - <span class="math inline">\(A - B\)</span> = disciplinas de PED com carga &lt; 60 h = {PED-604, PED-804} → <strong>2 tuplas</strong> - <span class="math inline">\(B - A\)</span> = disciplinas com carga ≥ 60 h que <strong>não</strong> são de PED = 22 − 6 = <strong>16 tuplas</strong></p>
+<p>Exemplo: seja <span class="math inline">\(A\)</span> = disciplinas de PED (8 tuplas) e <span class="math inline">\(B\)</span> = disciplinas com carga ≥ 60 h (22 tuplas). - <span class="math inline">\(A - B\)</span> = disciplinas de PED com carga &lt; 60 h = {2110602, 2110802} → <strong>2 tuplas</strong> - <span class="math inline">\(B - A\)</span> = disciplinas com carga ≥ 60 h que <strong>não</strong> são de PED = 22 − 6 = <strong>16 tuplas</strong></p>
 </div>
 </div>
 </div>

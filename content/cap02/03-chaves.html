@@ -703,63 +703,63 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><span class="math inline">\(\{matricula\_prof\}\)</span> é <strong>superclave</strong>: cada professor tem uma matrícula única.</li>
-<li><span class="math inline">\(\{matricula\_prof, nome\}\)</span> é <strong>superclave</strong>: a combinação também identifica unicamente, mas é redundante.</li>
+<li><span class="math inline">\(\{id\_prof\}\)</span> é <strong>superclave</strong>: cada professor tem um identificador único.</li>
+<li><span class="math inline">\(\{id\_prof, nome\}\)</span> é <strong>superclave</strong>: a combinação também identifica unicamente, mas é redundante.</li>
 <li><span class="math inline">\(\{nome\}\)</span> <strong>não é superclave</strong>: poderiam existir dois professores com o mesmo nome.</li>
-<li><span class="math inline">\(\{matricula\_prof\}\)</span> é <strong>chave candidata</strong>: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).</li>
-<li><span class="math inline">\(\{matricula\_prof\}\)</span> é escolhida como <strong>chave primária</strong>.</li>
+<li><span class="math inline">\(\{id\_prof\}\)</span> é <strong>chave candidata</strong>: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).</li>
+<li><span class="math inline">\(\{id\_prof\}\)</span> é escolhida como <strong>chave primária</strong>.</li>
 </ul>
 </section>
 <section id="relação-centro" class="level3">
 <h3 class="anchored" data-anchor-id="relação-centro">Relação <code>centro</code></h3>
 <ul>
-<li><span class="math inline">\(\{centro\}\)</span> é chave candidata e chave primária — cada centro tem um código único.</li>
+<li><span class="math inline">\(\{id\_centro\}\)</span> é chave candidata e chave primária — cada centro tem um identificador único.</li>
 </ul>
 </section>
 <section id="relação-disciplina" class="level3">
 <h3 class="anchored" data-anchor-id="relação-disciplina">Relação <code>disciplina</code></h3>
 <ul>
-<li><span class="math inline">\(\{codigo\}\)</span> é chave candidata e chave primária.</li>
+<li><span class="math inline">\(\{id\_disciplina\}\)</span> é chave candidata e chave primária.</li>
 </ul>
 </section>
 <section id="relação-ministra" class="level3">
 <h3 class="anchored" data-anchor-id="relação-ministra">Relação <code>ministra</code></h3>
 <p>A relação <code>ministra</code> registra que um professor ministra uma disciplina em um determinado ano, semestre e turma. Não existe uma coluna única que identifique cada tupla — a chave primária é <strong>composta</strong>:</p>
-<p><span class="math display">\[ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)\]</span></p>
+<p><span class="math display">\[ministra(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ id\_prof,\ horario,\ sala)\]</span></p>
 <ul>
-<li><span class="math inline">\(\{cod\_disciplina, ano, semestre, turma\}\)</span> é a chave primária composta.</li>
+<li><span class="math inline">\(\{id\_disciplina, ano, semestre, turma\}\)</span> é a chave primária composta.</li>
 </ul>
 </section>
 </section>
@@ -769,13 +769,13 @@ window.Quarto = {
 <p>Uma <strong>chave estrangeira</strong> (<em>foreign key</em>) é um conjunto de atributos em uma relação cujos valores devem corresponder a valores da chave primária de outra relação. A relação que contém a chave estrangeira é chamada de <strong>relação referenciante</strong>; a relação que contém a chave primária correspondente é chamada de <strong>relação referenciada</strong>.</p>
 </div>
 <div class="exemplo">
-<p>O atributo <code>escola</code> em <code>professor</code> é uma chave estrangeira que referencia <code>escola</code> em <code>escola</code>:</p>
+<p>O atributo <code>id_escola</code> em <code>professor</code> é uma chave estrangeira que referencia <code>id_escola</code> em <code>escola</code>:</p>
 <ul>
 <li><strong>Relação referenciante</strong>: <code>professor</code></li>
 <li><strong>Relação referenciada</strong>: <code>escola</code></li>
-<li><strong>Restrição</strong>: todo valor de <code>professor.escola</code> deve existir em <code>escola.escola</code></li>
+<li><strong>Restrição</strong>: todo valor de <code>professor.id_escola</code> deve existir em <code>escola.id_escola</code></li>
 </ul>
-<p>Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, <code>curso.escola</code> e <code>aluno.sigla_curso</code> são chaves estrangeiras que referenciam suas respectivas tabelas.</p>
+<p>Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, <code>curso.id_escola</code> e <code>aluno.id_curso</code> são chaves estrangeiras que referenciam suas respectivas tabelas.</p>
 </div>
 <p>A restrição imposta por uma chave estrangeira é chamada de <strong>restrição de integridade referencial</strong> (<em>referential integrity constraint</em>) e é uma das formas como o SGBD preserva a consistência dos dados.</p>
 <hr>
@@ -783,13 +783,13 @@ window.Quarto = {
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
 <p><strong>1. Superchaves de <code>disciplina</code>.</strong> O schema da relação <code>disciplina</code> é:</p>
-<p><span class="math display">\[disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)\]</span></p>
+<p><span class="math display">\[disciplina(\underline{id\_disciplina},\ nome\_disciplina,\ id\_curso,\ semestre,\ carga\_horaria)\]</span></p>
 <p>Das combinações abaixo, quais são superchaves? Quais são chaves candidatas?</p>
 <ol type="a">
-<li><span class="math inline">\(\{codigo\}\)</span></li>
+<li><span class="math inline">\(\{id\_disciplina\}\)</span></li>
 <li><span class="math inline">\(\{nome\_disciplina\}\)</span></li>
-<li><span class="math inline">\(\{codigo,\ semestre\}\)</span></li>
-<li><span class="math inline">\(\{sigla\_curso,\ semestre,\ nome\_disciplina\}\)</span></li>
+<li><span class="math inline">\(\{id\_disciplina,\ semestre\}\)</span></li>
+<li><span class="math inline">\(\{id\_curso,\ semestre,\ nome\_disciplina\}\)</span></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -804,10 +804,10 @@ window.Quarto = {
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>(a)</strong> <span class="math inline">\(\{codigo\}\)</span> — <strong>superclave e chave candidata</strong>: identifica unicamente cada disciplina e é minimal.</li>
-<li><strong>(b)</strong> <span class="math inline">\(\{nome\_disciplina\}\)</span> — <strong>não é superclave</strong>: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: “Eletiva I” em PED-403 e uma hipotética em outro curso).</li>
-<li><strong>(c)</strong> <span class="math inline">\(\{codigo,\ semestre\}\)</span> — <strong>superclave mas não candidata</strong>: redundante, pois <code>codigo</code> já identifica unicamente.</li>
-<li><strong>(d)</strong> <span class="math inline">\(\{sigla\_curso,\ semestre,\ nome\_disciplina\}\)</span> — <strong>pode ser superclave</strong> se nomes forem únicos por curso/semestre, mas não é minimal.</li>
+<li><strong>(a)</strong> <span class="math inline">\(\{id\_disciplina\}\)</span> — <strong>superclave e chave candidata</strong>: identifica unicamente cada disciplina e é minimal.</li>
+<li><strong>(b)</strong> <span class="math inline">\(\{nome\_disciplina\}\)</span> — <strong>não é superclave</strong>: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: “Eletiva I” em PED e uma hipotética em outro curso).</li>
+<li><strong>(c)</strong> <span class="math inline">\(\{id\_disciplina,\ semestre\}\)</span> — <strong>superclave mas não candidata</strong>: redundante, pois <code>id_disciplina</code> já identifica unicamente.</li>
+<li><strong>(d)</strong> <span class="math inline">\(\{id\_curso,\ semestre,\ nome\_disciplina\}\)</span> — <strong>pode ser superclave</strong> se nomes forem únicos por curso/semestre, mas não é minimal.</li>
 </ul>
 </div>
 </div>
@@ -833,10 +833,10 @@ window.Quarto = {
 <hr>
 <p><strong>3. Chave estrangeira autorreferencial.</strong> A tabela <code>prereq</code> tem duas FKs que apontam para a mesma tabela <code>disciplina</code>:</p>
 <ul>
-<li><code>prereq.codigo</code> → <code>disciplina.codigo</code></li>
-<li><code>prereq.prereq_codigo</code> → <code>disciplina.codigo</code></li>
+<li><code>prereq.id_disciplina</code> → <code>disciplina.id_disciplina</code></li>
+<li><code>prereq.id_prereq</code> → <code>disciplina.id_disciplina</code></li>
 </ul>
-<p>O que aconteceria se tentássemos inserir a tupla <code>('ENS-201', 'ENS-201')</code> em <code>prereq</code>? Essa inserção violaria alguma restrição?</p>
+<p>O que aconteceria se tentássemos inserir a tupla <code>(3110201, 3110201)</code> em <code>prereq</code>? Essa inserção violaria alguma restrição?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -849,7 +849,7 @@ window.Quarto = {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A tupla <code>('ENS-201', 'ENS-201')</code> <strong>não viola</strong> nenhuma restrição de FK (ENS-201 existe em <code>disciplina</code>) nem de PK (é uma combinação única). No entanto, ela criaria um <strong>ciclo de pré-requisito</strong>: ENS-201 seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição <code>CHECK (codigo &lt;&gt; prereq_codigo)</code>.</p>
+<p>A tupla <code>(3110201, 3110201)</code> <strong>não viola</strong> nenhuma restrição de FK (3110201 existe em <code>disciplina</code>) nem de PK (é uma combinação única). No entanto, ela criaria um <strong>ciclo de pré-requisito</strong>: a disciplina seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição <code>CHECK (id_disciplina &lt;&gt; id_prereq)</code>.</p>
 </div>
 </div>
 </div>

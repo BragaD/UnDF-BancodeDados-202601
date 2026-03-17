@@ -690,8 +690,8 @@ window.Quarto = {
 </div>
 <div class="exemplo">
 <p>Para encontrar os professores que são da ESETI <strong>ou</strong> da ESG, em vez de escrever tudo em uma linha:</p>
-<p><span class="math display">\[ESETI \leftarrow \sigma_{escola = \text{"ESETI"}}(professor)\]</span> <span class="math display">\[ESG \leftarrow \sigma_{escola = \text{"ESG"}}(professor)\]</span> <span class="math display">\[ESETI \cup ESG\]</span></p>
-<p>Isso é equivalente a: <span class="math display">\[\sigma_{escola = \text{"ESETI"}}(professor)\ \cup\ \sigma_{escola = \text{"ESG"}}(professor)\]</span></p>
+<p><span class="math display">\[ESETI \leftarrow \sigma_{id\_escola = 31}(professor)\]</span> <span class="math display">\[ESG \leftarrow \sigma_{id\_escola = 11}(professor)\]</span> <span class="math display">\[ESETI \cup ESG\]</span></p>
+<p>Isso é equivalente a: <span class="math display">\[\sigma_{id\_escola = 31}(professor)\ \cup\ \sigma_{id\_escola = 11}(professor)\]</span></p>
 <p>mas muito mais legível.</p>
 </div>
 </section>
@@ -706,66 +706,66 @@ window.Quarto = {
 <p>Retorna o resultado de <span class="math inline">\(E\)</span> com o nome <span class="math inline">\(x\)</span> e com os atributos renomeados para <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span>.</p>
 </div>
 <div class="exemplo">
-<p>Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois “aliases” para <code>professor</code>. Usamos <span class="math inline">\(p1.matricula\_prof &lt; p2.matricula\_prof\)</span> para evitar pares duplicados e auto-pares:</p>
-<p><span class="math display">\[P1 \leftarrow \rho_{p1}(professor)\]</span> <span class="math display">\[P2 \leftarrow \rho_{p2}(professor)\]</span> <span class="math display">\[\Pi_{p1.nome,\ p2.nome,\ p1.escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof &lt; p2.matricula\_prof}(P1 \times P2))\]</span></p>
+<p>Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois “aliases” para <code>professor</code>. Usamos <span class="math inline">\(p1.id\_prof &lt; p2.id\_prof\)</span> para evitar pares duplicados e auto-pares:</p>
+<p><span class="math display">\[P1 \leftarrow \rho_{p1}(professor)\]</span> <span class="math display">\[P2 \leftarrow \rho_{p2}(professor)\]</span> <span class="math display">\[\Pi_{p1.nome,\ p2.nome,\ p1.id\_escola}(\sigma_{p1.id\_escola = p2.id\_escola\ \wedge\ p1.id\_prof &lt; p2.id\_prof}(P1 \times P2))\]</span></p>
 <p>Usando a tabela <code>professor</code> com 7 tuplas:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6600</td>
 </tr>
@@ -777,38 +777,38 @@ window.Quarto = {
 <tr class="header">
 <th>p1.nome</th>
 <th>p2.nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Eduarda Souza</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="even">
 <td>Gustavo Costa</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
 <td>Gustavo Costa</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
 <td>Helena Carvalho</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
 <td>Bruno Teixeira</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 </tr>
 </tbody>
 </table>
-<p>Os pares são únicos e não contêm auto-pares graças à condição <span class="math inline">\(p1.matricula\_prof &lt; p2.matricula\_prof\)</span>. A ESETI contribui com 3 pares (3 professores, <span class="math inline">\(\binom{3}{2} = 3\)</span>), enquanto EEMA e ESG contribuem com 1 par cada.</p>
+<p>Os pares são únicos e não contêm auto-pares graças à condição <span class="math inline">\(p1.id\_prof &lt; p2.id\_prof\)</span>. A ESETI contribui com 3 pares (3 professores, <span class="math inline">\(\binom{3}{2} = 3\)</span>), enquanto EEMA e ESG contribuem com 1 par cada.</p>
 </div>
 </section>
 <section id="funções-de-agregação-gamma" class="level2">
@@ -870,40 +870,40 @@ window.Quarto = {
 </section>
 <section id="exemplo-2-com-agrupamento" class="level3">
 <h3 class="anchored" data-anchor-id="exemplo-2-com-agrupamento">Exemplo 2: Com Agrupamento</h3>
-<p>Salário médio por escola (equivalente a <code>GROUP BY escola</code>):</p>
-<p><span class="math display">\[{}_{escola}\ \gamma_{\text{avg}(salario)}(professor)\]</span></p>
+<p>Salário médio por escola (equivalente a <code>GROUP BY id_escola</code>):</p>
+<p><span class="math display">\[{}_{id\_escola}\ \gamma_{\text{avg}(salario)}(professor)\]</span></p>
 <p>Resultado:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">avg(salario)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">4800.00</td>
 </tr>
 <tr class="even">
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">4366.67</td>
 </tr>
 <tr class="odd">
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">6550.00</td>
 </tr>
 </tbody>
 </table>
 <div class="exemplo">
-<p>O agrupamento por <code>escola</code> faz com que a função <code>avg</code> seja calculada <strong>separadamente</strong> para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.</p>
+<p>O agrupamento por <code>id_escola</code> faz com que a função <code>avg</code> seja calculada <strong>separadamente</strong> para cada escola. A ESG (id_escola=11) tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI (id_escola=31) possui três professores — dois de 20h e um de 40h.</p>
 </div>
 <hr>
 </section>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Agregação sem grupo.</strong> Calcule o valor de <span class="math inline">\(\gamma_{\text{count}(*)}(prereq)\)</span> e <span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))\)</span>. O que cada resultado representa?</p>
+<p><strong>1. Agregação sem grupo.</strong> Calcule o valor de <span class="math inline">\(\gamma_{\text{count}(*)}(prereq)\)</span> e <span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{id\_curso = 311}(disciplina))\)</span>. O que cada resultado representa?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -918,14 +918,14 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <ul>
 <li><span class="math inline">\(\gamma_{\text{count}(*)}(prereq)\)</span> = <strong>16</strong> — total de pares de pré-requisito no banco.</li>
-<li><span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))\)</span> = <strong>8</strong> — número de disciplinas do curso ENS.</li>
+<li><span class="math inline">\(\gamma_{\text{count}(*)}(\sigma_{id\_curso = 311}(disciplina))\)</span> = <strong>8</strong> — número de disciplinas do curso ENS.</li>
 </ul>
 </div>
 </div>
 </div>
 <hr>
 <p><strong>2. Renomeação necessária.</strong> Por que a expressão abaixo é ambígua sem renomeação?</p>
-<p><span class="math display">\[\Pi_{nome\_1,\ nome\_2,\ escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof &lt; p2.matricula\_prof}(professor \times professor))\]</span></p>
+<p><span class="math display">\[\Pi_{nome\_1,\ nome\_2,\ id\_escola}(\sigma_{p1.id\_escola = p2.id\_escola\ \wedge\ p1.id\_prof &lt; p2.id\_prof}(professor \times professor))\]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -938,7 +938,7 @@ window.Quarto = {
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Quando multiplicamos <code>professor</code> por si mesmo sem renomear, o resultado tem dois atributos chamados <code>nome</code>, dois chamados <code>escola</code>, dois chamados <code>matricula_prof</code> etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: <span class="math inline">\(\rho_{p1}(professor)\)</span> e <span class="math inline">\(\rho_{p2}(professor)\)</span>, criando atributos qualificados como <span class="math inline">\(p1.nome\)</span> e <span class="math inline">\(p2.nome\)</span>.</p>
+<p>Quando multiplicamos <code>professor</code> por si mesmo sem renomear, o resultado tem dois atributos chamados <code>nome</code>, dois chamados <code>id_escola</code>, dois chamados <code>id_prof</code> etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: <span class="math inline">\(\rho_{p1}(professor)\)</span> e <span class="math inline">\(\rho_{p2}(professor)\)</span>, criando atributos qualificados como <span class="math inline">\(p1.nome\)</span> e <span class="math inline">\(p2.nome\)</span>.</p>
 </div>
 </div>
 </div>
@@ -956,8 +956,8 @@ window.Quarto = {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\sigma_{\text{avg\_sal} &gt; 5000}\!\left({}_{escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)\]</span></p>
-<p>O <span class="math inline">\(\sigma\)</span> externo filtra os grupos produzidos pelo <span class="math inline">\(\gamma\)</span> — é exatamente o que o SQL faz com <code>HAVING</code>. Apenas ESG (média = 6.550) satisfaz a condição.</p>
+<p><span class="math display">\[\sigma_{\text{avg\_sal} &gt; 5000}\!\left({}_{id\_escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)\]</span></p>
+<p>O <span class="math inline">\(\sigma\)</span> externo filtra os grupos produzidos pelo <span class="math inline">\(\gamma\)</span> — é exatamente o que o SQL faz com <code>HAVING</code>. Apenas ESG (id_escola = 11, média = 6.550) satisfaz a condição.</p>
 </div>
 </div>
 </div>

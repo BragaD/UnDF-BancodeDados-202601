@@ -780,7 +780,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantas escolas distintas têm professores?</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> escola) <span class="kw">AS</span> escolas_com_professor</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> id_escola) <span class="kw">AS</span> escolas_com_professor</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -827,19 +827,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A cláusula <code>GROUP BY</code> divide as linhas em grupos e aplica a função de agregação a cada grupo separadamente.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário médio, total e número de professores por escola</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(salario)           <span class="kw">AS</span> total_salarios,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)               <span class="kw">AS</span> n_professores</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">media_salario</th>
 <th style="text-align: right;">total_salarios</th>
 <th style="text-align: right;">n_professores</th>
@@ -847,19 +847,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">6550.00</td>
 <td style="text-align: right;">13100</td>
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">4800.00</td>
 <td style="text-align: right;">9600</td>
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">4366.67</td>
 <td style="text-align: right;">13100</td>
 <td style="text-align: right;">3</td>
@@ -870,30 +870,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Número de disciplinas por curso</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_disciplinas</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_disciplinas</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_curso</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n_disciplinas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">n_disciplinas</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">8</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">8</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">8</td>
 </tr>
 </tbody>
@@ -914,12 +914,12 @@ Aviso
 <div class="callout-body-container callout-body">
 <p>Todo atributo listado no <code>SELECT</code> que <strong>não</strong> é uma função de agregação <strong>deve</strong> aparecer no <code>GROUP BY</code>. O exemplo abaixo causaria erro:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- INCORRETO: 'nome' não está no GROUP BY</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, nome, <span class="fu">AVG</span>(salario)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, nome, <span class="fu">AVG</span>(salario)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola;</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: column "professor.nome" must appear in the GROUP BY clause</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">--        or be used in an aggregate function</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A razão: para cada grupo (uma escola), há vários nomes de professores. O banco não sabe qual nome retornar.</p>
+<p>A razão: para cada grupo (um id_escola), há vários nomes de professores. O banco não sabe qual nome retornar.</p>
 </div>
 </div>
 </section>
@@ -941,9 +941,9 @@ Aviso
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Escolas com salário médio acima de 4000</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">4000</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -951,34 +951,34 @@ Aviso
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">media_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">6550.00</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">4800.00</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">4366.67</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>ESETI tem média de R$ 4.366,67 e é excluída pelo <code>HAVING</code>.</p>
+<p>Todas as três escolas satisfazem <code>HAVING AVG(salario) &gt; 4000</code>: id_escola 11 (6.550), 21 (4.800) e 31 (4.367).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Cursos com pelo menos 2 disciplinas de semestre 4 ou mais avançado</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> disciplinas_avancadas</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> disciplinas_avancadas</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  semestre <span class="op">&gt;=</span> <span class="dv">4</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_curso</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> <span class="dv">2</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> disciplinas_avancadas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -986,21 +986,21 @@ Aviso
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">disciplinas_avancadas</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">6</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">6</td>
 </tr>
 </tbody>
@@ -1039,32 +1039,32 @@ Aviso
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- WHERE filtra antes: considera apenas professores de 40h,</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- depois agrupa por escola e filtra com média &gt; 6000</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  ch_semanal <span class="op">=</span> <span class="dv">40</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(salario) <span class="op">&gt;</span> <span class="dv">6000</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">media_salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EEMA</td>
-<td style="text-align: right;">6400</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">6550</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: right;">6700</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
-<td style="text-align: right;">6550</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">6700</td>
 </tr>
 </tbody>
 </table>
@@ -1076,19 +1076,19 @@ Aviso
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- GROUP BY com múltiplas colunas: distribuição por escola e regime</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, ch_semanal,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, ch_semanal,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)            <span class="kw">AS</span> n_professores,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(salario)        <span class="kw">AS</span> total_salarios,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(salario), <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola, ch_semanal</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola, ch_semanal</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>5 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">n_professores</th>
 <th style="text-align: right;">total_salarios</th>
@@ -1097,39 +1097,39 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EEMA</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3200</td>
-<td style="text-align: right;">3200</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">EEMA</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">6400</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">3200</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">6700</td>
-<td style="text-align: right;">6700</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">13100</td>
 <td style="text-align: right;">6550</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3200</td>
+<td style="text-align: right;">3200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6400</td>
+<td style="text-align: right;">6400</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6400</td>
+<td style="text-align: right;">3200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6700</td>
+<td style="text-align: right;">6700</td>
 </tr>
 </tbody>
 </table>
@@ -1137,11 +1137,11 @@ Aviso
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- HAVING com COUNT: cursos com mais de 6 disciplinas cadastradas</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_disciplinas,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_curso, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_disciplinas,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MIN</span>(carga_horaria) <span class="kw">AS</span> menor_carga,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(carga_horaria) <span class="kw">AS</span> maior_carga</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sigla_curso</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_curso</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">6</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n_disciplinas <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -1149,7 +1149,7 @@ Aviso
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">n_disciplinas</th>
 <th style="text-align: right;">menor_carga</th>
 <th style="text-align: right;">maior_carga</th>
@@ -1157,19 +1157,19 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">100</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">60</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">80</td>
@@ -1181,28 +1181,21 @@ Aviso
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos com pelo menos uma reprovação: comparar COUNT(*) com COUNT(aprovado=0)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usando filtro dentro do COUNT com FILTER (SQL padrão)</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_matricula,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_aluno,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)                                    <span class="kw">AS</span> total_disciplinas,</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> aprovado <span class="op">=</span> <span class="dv">0</span>)        <span class="kw">AS</span> reprovacoes,</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> aprovado <span class="op">=</span> <span class="dv">1</span>)        <span class="kw">AS</span> aprovacoes,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(nota), <span class="dv">2</span>)                         <span class="kw">AS</span> media_geral</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> cod_matricula</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_aluno</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> aprovado <span class="op">=</span> <span class="dv">0</span>) <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> reprovacoes <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>6 records</caption>
-<colgroup>
-<col style="width: 20%">
-<col style="width: 26%">
-<col style="width: 17%">
-<col style="width: 16%">
-<col style="width: 17%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">cod_matricula</th>
+<th style="text-align: right;">id_aluno</th>
 <th style="text-align: right;">total_disciplinas</th>
 <th style="text-align: right;">reprovacoes</th>
 <th style="text-align: right;">aprovacoes</th>
@@ -1211,46 +1204,46 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2024002002</td>
+<td style="text-align: right;">2024311002</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4.90</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2024007002</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">2023311001</td>
+<td style="text-align: right;">6</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">5.90</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7.22</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2023002002</td>
+<td style="text-align: right;">2023211002</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2025311002</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2023311002</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">6.33</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2023009002</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">2024111002</td>
+<td style="text-align: right;">4</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">6.10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2025002002</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4.00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2023002001</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">7.22</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5.90</td>
 </tr>
 </tbody>
 </table>

@@ -656,8 +656,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tabela-professor" id="toc-tabela-professor" class="nav-link" data-scroll-target="#tabela-professor">Tabela <code>professor</code></a></li>
   <li><a href="#tabela-aluno" id="toc-tabela-aluno" class="nav-link" data-scroll-target="#tabela-aluno">Tabela <code>aluno</code></a></li>
   <li><a href="#tabela-disciplina" id="toc-tabela-disciplina" class="nav-link" data-scroll-target="#tabela-disciplina">Tabela <code>disciplina</code></a></li>
-  <li><a href="#tabela-ministra" id="toc-tabela-ministra" class="nav-link" data-scroll-target="#tabela-ministra">Tabela <code>ministra</code></a></li>
   <li><a href="#tabela-prereq" id="toc-tabela-prereq" class="nav-link" data-scroll-target="#tabela-prereq">Tabela <code>prereq</code></a></li>
+  <li><a href="#tabela-ministra" id="toc-tabela-ministra" class="nav-link" data-scroll-target="#tabela-ministra">Tabela <code>ministra</code></a></li>
   <li><a href="#tabela-matricula_disciplina" id="toc-tabela-matricula_disciplina" class="nav-link" data-scroll-target="#tabela-matricula_disciplina">Tabela <code>matricula_disciplina</code></a></li>
   </ul></li>
   <li><a href="#carregando-os-dados" id="toc-carregando-os-dados" class="nav-link" data-scroll-target="#carregando-os-dados">Carregando os Dados</a>
@@ -788,43 +788,46 @@ Nota
 <h3 class="anchored" data-anchor-id="tabela-centro">Tabela <code>centro</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> centro (</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    centro     <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    id_centro   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    sigla       <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">UNIQUE</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tabela-escola" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-escola">Tabela <code>escola</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> escola (</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    escola      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    nome_escola <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    centro      <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> centro(centro)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    id_escola   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    sigla       <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">UNIQUE</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    nome_escola <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    id_centro   <span class="dt">INTEGER</span>      <span class="kw">REFERENCES</span> centro(id_centro)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tabela-curso" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-curso">Tabela <code>curso</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> curso (</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sigla_curso   <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    nome_curso    <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    escola        <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> escola(escola),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    n_semestres   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    tipo_curso    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    id_curso      <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    sigla_curso   <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">UNIQUE</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    nome_curso    <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    id_escola     <span class="dt">INTEGER</span>      <span class="kw">REFERENCES</span> escola(id_escola),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    n_semestres   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    carga_horaria <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    tipo_curso    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tabela-professor" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-professor">Tabela <code>professor</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> professor (</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    matricula_prof <span class="dt">VARCHAR</span>(<span class="dv">15</span>)    <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    nome           <span class="dt">VARCHAR</span>(<span class="dv">50</span>)    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    escola         <span class="dt">VARCHAR</span>(<span class="dv">10</span>)    <span class="kw">REFERENCES</span> escola(escola),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ch_semanal     <span class="dt">INTEGER</span>        <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    salario        <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    id_prof    <span class="dt">INTEGER</span>       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    nome       <span class="dt">VARCHAR</span>(<span class="dv">50</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    id_escola  <span class="dt">INTEGER</span>       <span class="kw">REFERENCES</span> escola(id_escola),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ch_semanal <span class="dt">INTEGER</span>       <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    salario    <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -832,10 +835,10 @@ Nota
 <h3 class="anchored" data-anchor-id="tabela-aluno">Tabela <code>aluno</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> aluno (</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    matricula    <span class="dt">VARCHAR</span>(<span class="dv">15</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    nome         <span class="dt">VARCHAR</span>(<span class="dv">50</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    sigla_curso  <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">REFERENCES</span> curso(sigla_curso),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    ano_ingresso <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    id_aluno     <span class="dt">INTEGER</span>     <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    nome         <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    id_curso     <span class="dt">INTEGER</span>     <span class="kw">REFERENCES</span> curso(id_curso),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    ano_ingresso <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -843,53 +846,53 @@ Nota
 <h3 class="anchored" data-anchor-id="tabela-disciplina">Tabela <code>disciplina</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> disciplina (</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    codigo         <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    nome_disciplina <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    sigla_curso    <span class="dt">VARCHAR</span>(<span class="dv">5</span>)   <span class="kw">REFERENCES</span> curso(sigla_curso),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria  <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    id_curso        <span class="dt">INTEGER</span>      <span class="kw">REFERENCES</span> curso(id_curso),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    semestre        <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (carga_horaria <span class="op">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="tabela-ministra" class="level3">
-<h3 class="anchored" data-anchor-id="tabela-ministra">Tabela <code>ministra</code></h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> ministra (</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina  <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">REFERENCES</span> disciplina(codigo),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    ano             <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    semestre        <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    turma           <span class="dt">CHAR</span>(<span class="dv">1</span>)      <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    matricula_prof  <span class="dt">VARCHAR</span>(<span class="dv">15</span>)  <span class="kw">REFERENCES</span> professor(matricula_prof),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    horario         <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    sala            <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tabela-prereq" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-prereq">Tabela <code>prereq</code></h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> prereq (</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    codigo        <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    prereq_codigo <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">REFERENCES</span> disciplina(codigo),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (codigo, prereq_codigo)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> prereq (</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> disciplina(id_disciplina),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    id_prereq     <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> disciplina(id_disciplina),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_disciplina, id_prereq)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tabela-ministra" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-ministra">Tabela <code>ministra</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> ministra (</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> disciplina(id_disciplina),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    ano           <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    semestre      <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    turma         <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    id_prof       <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> professor(id_prof),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    horario       <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    sala          <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_disciplina, ano, semestre, turma)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tabela-matricula_disciplina" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-matricula_disciplina">Tabela <code>matricula_disciplina</code></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> matricula_disciplina (</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    cod_disciplina <span class="dt">VARCHAR</span>(<span class="dv">10</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    ano            <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    semestre       <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    turma          <span class="dt">CHAR</span>(<span class="dv">1</span>)     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    cod_matricula  <span class="dt">VARCHAR</span>(<span class="dv">15</span>) <span class="kw">REFERENCES</span> aluno(matricula),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    nota           <span class="dt">NUMERIC</span>(<span class="dv">4</span>,<span class="dv">1</span>),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    aprovado       <span class="dt">SMALLINT</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma, cod_matricula),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (cod_disciplina, ano, semestre, turma)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ministra(cod_disciplina, ano, semestre, turma)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    ano           <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    semestre      <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    turma         <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    id_aluno      <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> aluno(id_aluno),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    nota          <span class="dt">NUMERIC</span>(<span class="dv">4</span>,<span class="dv">1</span>),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    aprovado      <span class="dt">SMALLINT</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_disciplina, ano, semestre, turma, id_aluno),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_disciplina, ano, semestre, turma)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ministra(id_disciplina, ano, semestre, turma)</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -904,227 +907,227 @@ Nota
 <section id="centros" class="level3">
 <h3 class="anchored" data-anchor-id="centros">Centros</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (centro, nome_centro) <span class="kw">VALUES</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'COCHCMA'</span>, <span class="st">'CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE'</span>),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'COEMAG'</span>,  <span class="st">'CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES'</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'COETI'</span>,   <span class="st">'CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (id_centro, sigla, nome_centro) <span class="kw">VALUES</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'COCHCMA'</span>, <span class="st">'Ciências Humanas, Cidadania e Meio Ambiente'</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'COEMAG'</span>,  <span class="st">'Centro de Educação, Magistério e Artes'</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'COETI'</span>,   <span class="st">'Centro de Engenharias, Tecnologia e Inovação'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="escolas" class="level3">
 <h3 class="anchored" data-anchor-id="escolas">Escolas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> escola (escola, nome_escola, centro) <span class="kw">VALUES</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ESG'</span>,   <span class="st">'Escola Superior de Gestão'</span>,                               <span class="st">'COCHCMA'</span>),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'EEMA'</span>,  <span class="st">'Escola de Educação, Magistério e Arte'</span>,                   <span class="st">'COEMAG'</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ESETI'</span>, <span class="st">'Escola Superior de Engenharias, Tecnologia e Inovação'</span>,   <span class="st">'COETI'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> escola (id_escola, sigla, nome_escola, id_centro) <span class="kw">VALUES</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">'ESG'</span>,   <span class="st">'Escola Superior de Gestão'</span>,                             <span class="dv">1</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">'EEMA'</span>,  <span class="st">'Escola de Educação, Magistério e Arte'</span>,                 <span class="dv">2</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">'ESETI'</span>, <span class="st">'Escola Superior de Engenharias, Tecnologia e Inovação'</span>, <span class="dv">3</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="cursos" class="level3">
 <h3 class="anchored" data-anchor-id="cursos">Cursos</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso) <span class="kw">VALUES</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS'</span>, <span class="st">'Engenharia de Software'</span>, <span class="st">'ESETI'</span>, <span class="dv">8</span>, <span class="dv">3200</span>, <span class="st">'bacharelado'</span>),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO'</span>, <span class="st">'Ciências Econômicas'</span>,    <span class="st">'ESG'</span>,   <span class="dv">8</span>, <span class="dv">3000</span>, <span class="st">'bacharelado'</span>),</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED'</span>, <span class="st">'Pedagogia'</span>,              <span class="st">'EEMA'</span>,  <span class="dv">8</span>, <span class="dv">3410</span>, <span class="st">'licenciatura'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso) <span class="kw">VALUES</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">311</span>, <span class="st">'ENS'</span>, <span class="st">'Engenharia de Software'</span>, <span class="dv">31</span>, <span class="dv">8</span>, <span class="dv">3200</span>, <span class="st">'bacharelado'</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">111</span>, <span class="st">'ECO'</span>, <span class="st">'Ciências Econômicas'</span>,    <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">3000</span>, <span class="st">'bacharelado'</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">211</span>, <span class="st">'PED'</span>, <span class="st">'Pedagogia'</span>,              <span class="dv">21</span>, <span class="dv">8</span>, <span class="dv">3410</span>, <span class="st">'licenciatura'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="professores" class="level3">
 <h3 class="anchored" data-anchor-id="professores">Professores</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (matricula_prof, nome, escola, ch_semanal, salario) <span class="kw">VALUES</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230005'</span>, <span class="st">'Eduarda Souza'</span>,   <span class="st">'EEMA'</span>,  <span class="dv">20</span>, <span class="dv">3200</span>),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230006'</span>, <span class="st">'Felipe Araujo'</span>,   <span class="st">'EEMA'</span>,  <span class="dv">40</span>, <span class="dv">6400</span>),</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230031'</span>, <span class="st">'Gustavo Costa'</span>,   <span class="st">'ESETI'</span>, <span class="dv">20</span>, <span class="dv">3300</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230032'</span>, <span class="st">'Helena Carvalho'</span>, <span class="st">'ESETI'</span>, <span class="dv">40</span>, <span class="dv">6700</span>),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230033'</span>, <span class="st">'Igor Melo'</span>,       <span class="st">'ESETI'</span>, <span class="dv">20</span>, <span class="dv">3100</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230042'</span>, <span class="st">'Bruno Teixeira'</span>,  <span class="st">'ESG'</span>,   <span class="dv">40</span>, <span class="dv">6500</span>),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PROF20230043'</span>, <span class="st">'Carla Pinto'</span>,     <span class="st">'ESG'</span>,   <span class="dv">40</span>, <span class="dv">6600</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (id_prof, nome, id_escola, ch_semanal, salario) <span class="kw">VALUES</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21200001</span>, <span class="st">'Eduarda Souza'</span>,   <span class="dv">21</span>, <span class="dv">20</span>, <span class="dv">3200</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21400002</span>, <span class="st">'Felipe Araujo'</span>,   <span class="dv">21</span>, <span class="dv">40</span>, <span class="dv">6400</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200001</span>, <span class="st">'Gustavo Costa'</span>,   <span class="dv">31</span>, <span class="dv">20</span>, <span class="dv">3300</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31400002</span>, <span class="st">'Helena Carvalho'</span>, <span class="dv">31</span>, <span class="dv">40</span>, <span class="dv">6700</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200003</span>, <span class="st">'Igor Melo'</span>,       <span class="dv">31</span>, <span class="dv">20</span>, <span class="dv">3100</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11400001</span>, <span class="st">'Bruno Teixeira'</span>,  <span class="dv">11</span>, <span class="dv">40</span>, <span class="dv">6500</span>),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11400002</span>, <span class="st">'Carla Pinto'</span>,     <span class="dv">11</span>, <span class="dv">40</span>, <span class="dv">6600</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="alunos" class="level3">
 <h3 class="anchored" data-anchor-id="alunos">Alunos</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (matricula, nome, sigla_curso, ano_ingresso) <span class="kw">VALUES</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023007001'</span>, <span class="st">'Beatriz Carvalho'</span>, <span class="st">'ECO'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023007002'</span>, <span class="st">'Lucas Santos'</span>,     <span class="st">'ECO'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024007001'</span>, <span class="st">'Gabriel Ribeiro'</span>,  <span class="st">'ECO'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024007002'</span>, <span class="st">'Fernanda Martins'</span>, <span class="st">'ECO'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025007001'</span>, <span class="st">'Rodrigo Lima'</span>,     <span class="st">'ECO'</span>, <span class="dv">2025</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025007002'</span>, <span class="st">'Camila Teixeira'</span>,  <span class="st">'ECO'</span>, <span class="dv">2025</span>),</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023002001'</span>, <span class="st">'Matheus Silva'</span>,    <span class="st">'ENS'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023002002'</span>, <span class="st">'Larissa Araújo'</span>,   <span class="st">'ENS'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024002001'</span>, <span class="st">'Pedro Carvalho'</span>,   <span class="st">'ENS'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024002002'</span>, <span class="st">'Isabela Freitas'</span>,  <span class="st">'ENS'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025002001'</span>, <span class="st">'Diego Correia'</span>,    <span class="st">'ENS'</span>, <span class="dv">2025</span>),</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025002002'</span>, <span class="st">'Juliana Nunes'</span>,    <span class="st">'ENS'</span>, <span class="dv">2025</span>),</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023009001'</span>, <span class="st">'Amanda Moreira'</span>,   <span class="st">'PED'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2023009002'</span>, <span class="st">'Thiago Gomes'</span>,     <span class="st">'PED'</span>, <span class="dv">2023</span>),</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024009001'</span>, <span class="st">'Carolina Lima'</span>,    <span class="st">'PED'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2024009002'</span>, <span class="st">'Rafael Costa'</span>,     <span class="st">'PED'</span>, <span class="dv">2024</span>),</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025009001'</span>, <span class="st">'Vinícius Pereira'</span>, <span class="st">'PED'</span>, <span class="dv">2025</span>),</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'2025009002'</span>, <span class="st">'Letícia Souza'</span>,    <span class="st">'PED'</span>, <span class="dv">2025</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (id_aluno, nome, id_curso, ano_ingresso) <span class="kw">VALUES</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023111001</span>, <span class="st">'Beatriz Carvalho'</span>, <span class="dv">111</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023111002</span>, <span class="st">'Lucas Santos'</span>,     <span class="dv">111</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024111001</span>, <span class="st">'Gabriel Ribeiro'</span>,  <span class="dv">111</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024111002</span>, <span class="st">'Fernanda Martins'</span>, <span class="dv">111</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025111001</span>, <span class="st">'Rodrigo Lima'</span>,     <span class="dv">111</span>, <span class="dv">2025</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025111002</span>, <span class="st">'Camila Teixeira'</span>,  <span class="dv">111</span>, <span class="dv">2025</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023211001</span>, <span class="st">'Amanda Moreira'</span>,   <span class="dv">211</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023211002</span>, <span class="st">'Thiago Gomes'</span>,     <span class="dv">211</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024211001</span>, <span class="st">'Carolina Lima'</span>,    <span class="dv">211</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024211002</span>, <span class="st">'Rafael Costa'</span>,     <span class="dv">211</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025211001</span>, <span class="st">'Vinícius Pereira'</span>, <span class="dv">211</span>, <span class="dv">2025</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025211002</span>, <span class="st">'Letícia Souza'</span>,    <span class="dv">211</span>, <span class="dv">2025</span>),</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023311001</span>, <span class="st">'Matheus Silva'</span>,    <span class="dv">311</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023311002</span>, <span class="st">'Larissa Araújo'</span>,   <span class="dv">311</span>, <span class="dv">2023</span>),</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024311001</span>, <span class="st">'Pedro Carvalho'</span>,   <span class="dv">311</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2024311002</span>, <span class="st">'Isabela Freitas'</span>,  <span class="dv">311</span>, <span class="dv">2024</span>),</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025311001</span>, <span class="st">'Diego Correia'</span>,    <span class="dv">311</span>, <span class="dv">2025</span>),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025311002</span>, <span class="st">'Juliana Nunes'</span>,    <span class="dv">311</span>, <span class="dv">2025</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="disciplinas" class="level3">
 <h3 class="anchored" data-anchor-id="disciplinas">Disciplinas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> disciplina (codigo, nome_disciplina, sigla_curso, semestre, carga_horaria) <span class="kw">VALUES</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="st">'História Econômica Geral'</span>,            <span class="st">'ECO'</span>, <span class="dv">2</span>,  <span class="dv">75</span>),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="st">'Culturas Digitais'</span>,                   <span class="st">'ECO'</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="st">'Microeconomia 2'</span>,                     <span class="st">'ECO'</span>, <span class="dv">4</span>,  <span class="dv">75</span>),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-402'</span>, <span class="st">'Macroeconomia 2'</span>,                     <span class="st">'ECO'</span>, <span class="dv">4</span>,  <span class="dv">95</span>),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-601'</span>, <span class="st">'Economia Brasileira'</span>,                 <span class="st">'ECO'</span>, <span class="dv">6</span>,  <span class="dv">75</span>),</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-602'</span>, <span class="st">'Orçamento e Finanças Públicas'</span>,       <span class="st">'ECO'</span>, <span class="dv">6</span>,  <span class="dv">75</span>),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-801'</span>, <span class="st">'Monografia'</span>,                          <span class="st">'ECO'</span>, <span class="dv">8</span>, <span class="dv">100</span>),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-802'</span>, <span class="st">'Desenvolvimento Econômico'</span>,           <span class="st">'ECO'</span>, <span class="dv">8</span>,  <span class="dv">90</span>),</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="st">'Bases da Engenharia de Software 2'</span>,                   <span class="st">'ENS'</span>, <span class="dv">2</span>, <span class="dv">150</span>),</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="st">'Projeto Aplicado 2 (site WEB)'</span>,                       <span class="st">'ENS'</span>, <span class="dv">2</span>, <span class="dv">120</span>),</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="st">'Bases da Engenharia de Software 4'</span>,                   <span class="st">'ENS'</span>, <span class="dv">4</span>, <span class="dv">180</span>),</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="st">'Projeto Aplicado 4 (blockchain)'</span>,                     <span class="st">'ENS'</span>, <span class="dv">4</span>, <span class="dv">120</span>),</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="st">'Bases da Engenharia de Software 6'</span>,                   <span class="st">'ENS'</span>, <span class="dv">6</span>, <span class="dv">150</span>),</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-602'</span>, <span class="st">'Projeto Aplicado 6 (Machine Learning)'</span>,               <span class="st">'ENS'</span>, <span class="dv">6</span>, <span class="dv">120</span>),</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-801'</span>, <span class="st">'Bases da Engenharia de Software 8'</span>,                   <span class="st">'ENS'</span>, <span class="dv">8</span>, <span class="dv">100</span>),</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-802'</span>, <span class="st">'Projeto Aplicado 8 (Sistema em Tempo Real)'</span>,          <span class="st">'ENS'</span>, <span class="dv">8</span>, <span class="dv">160</span>),</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="st">'Desenvolvimento Humano'</span>,              <span class="st">'PED'</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="st">'Didática Geral'</span>,                      <span class="st">'PED'</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="st">'Eletiva I'</span>,                           <span class="st">'PED'</span>, <span class="dv">4</span>,  <span class="dv">80</span>),</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="st">'Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC'</span>, <span class="st">'PED'</span>, <span class="dv">4</span>, <span class="dv">80</span>),</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-603'</span>, <span class="st">'Eletiva II'</span>,                          <span class="st">'PED'</span>, <span class="dv">6</span>,  <span class="dv">80</span>),</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-604'</span>, <span class="st">'Educação do Campo, Indígena e Quilombola'</span>, <span class="st">'PED'</span>, <span class="dv">6</span>, <span class="dv">40</span>),</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-803'</span>, <span class="st">'Tecnologia Educacional - Design'</span>,     <span class="st">'PED'</span>, <span class="dv">8</span>,  <span class="dv">60</span>),</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-804'</span>, <span class="st">'Estatística Aplicada'</span>,                <span class="st">'PED'</span>, <span class="dv">8</span>,  <span class="dv">50</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> disciplina (id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria) <span class="kw">VALUES</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="st">'História Econômica Geral'</span>,                                    <span class="dv">111</span>, <span class="dv">2</span>,  <span class="dv">75</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="st">'Culturas Digitais'</span>,                                           <span class="dv">111</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="st">'Microeconomia 2'</span>,                                             <span class="dv">111</span>, <span class="dv">4</span>,  <span class="dv">75</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110402</span>, <span class="st">'Macroeconomia 2'</span>,                                             <span class="dv">111</span>, <span class="dv">4</span>,  <span class="dv">95</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110601</span>, <span class="st">'Economia Brasileira'</span>,                                         <span class="dv">111</span>, <span class="dv">6</span>,  <span class="dv">75</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110602</span>, <span class="st">'Orçamento e Finanças Públicas'</span>,                               <span class="dv">111</span>, <span class="dv">6</span>,  <span class="dv">75</span>),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110801</span>, <span class="st">'Monografia'</span>,                                                  <span class="dv">111</span>, <span class="dv">8</span>, <span class="dv">100</span>),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110802</span>, <span class="st">'Desenvolvimento Econômico'</span>,                                   <span class="dv">111</span>, <span class="dv">8</span>,  <span class="dv">90</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="st">'Desenvolvimento Humano'</span>,                                      <span class="dv">211</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="st">'Didática Geral'</span>,                                              <span class="dv">211</span>, <span class="dv">2</span>,  <span class="dv">60</span>),</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="st">'Eletiva I'</span>,                                                   <span class="dv">211</span>, <span class="dv">4</span>,  <span class="dv">80</span>),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="st">'Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC'</span>, <span class="dv">211</span>, <span class="dv">4</span>, <span class="dv">80</span>),</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="st">'Eletiva II'</span>,                                                  <span class="dv">211</span>, <span class="dv">6</span>,  <span class="dv">80</span>),</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110602</span>, <span class="st">'Educação do Campo, Indígena e Quilombola'</span>,                    <span class="dv">211</span>, <span class="dv">6</span>,  <span class="dv">40</span>),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110801</span>, <span class="st">'Tecnologia Educacional - Design'</span>,                             <span class="dv">211</span>, <span class="dv">8</span>,  <span class="dv">60</span>),</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110802</span>, <span class="st">'Estatística Aplicada'</span>,                                        <span class="dv">211</span>, <span class="dv">8</span>,  <span class="dv">50</span>),</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="st">'Bases da Eng. de Software 2'</span>,                                 <span class="dv">311</span>, <span class="dv">2</span>, <span class="dv">150</span>),</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="st">'Projeto Aplicado 2 - site WEB'</span>,                               <span class="dv">311</span>, <span class="dv">2</span>, <span class="dv">120</span>),</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="st">'Bases da Eng. de Software 4'</span>,                                 <span class="dv">311</span>, <span class="dv">4</span>, <span class="dv">180</span>),</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="st">'Projeto Aplicado 4 - blockchain'</span>,                             <span class="dv">311</span>, <span class="dv">4</span>, <span class="dv">120</span>),</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="st">'Bases da Eng. de Software 6'</span>,                                 <span class="dv">311</span>, <span class="dv">6</span>, <span class="dv">150</span>),</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110602</span>, <span class="st">'Projeto Aplicado 6 - Machine Learning'</span>,                       <span class="dv">311</span>, <span class="dv">6</span>, <span class="dv">120</span>),</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110801</span>, <span class="st">'Bases da Eng. de Software 8'</span>,                                 <span class="dv">311</span>, <span class="dv">8</span>, <span class="dv">100</span>),</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110802</span>, <span class="st">'Projeto Aplicado 8 - Sistema em Tempo Real'</span>,                  <span class="dv">311</span>, <span class="dv">8</span>, <span class="dv">160</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="pré-requisitos" class="level3">
 <h3 class="anchored" data-anchor-id="pré-requisitos">Pré-requisitos</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> prereq (codigo, prereq_codigo) <span class="kw">VALUES</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="st">'ENS-201'</span>),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="st">'ENS-202'</span>),</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="st">'ENS-401'</span>),</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="st">'ENS-402'</span>),</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-602'</span>, <span class="st">'ENS-402'</span>),</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-801'</span>, <span class="st">'ENS-601'</span>),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-802'</span>, <span class="st">'ENS-601'</span>),</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-802'</span>, <span class="st">'ENS-602'</span>),</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="st">'ECO-201'</span>),</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-601'</span>, <span class="st">'ECO-401'</span>),</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-602'</span>, <span class="st">'ECO-402'</span>),</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-801'</span>, <span class="st">'ECO-601'</span>),</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-801'</span>, <span class="st">'ECO-602'</span>),</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="st">'PED-203'</span>),</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-603'</span>, <span class="st">'PED-403'</span>),</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-803'</span>, <span class="st">'PED-603'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> prereq (id_disciplina, id_prereq) <span class="kw">VALUES</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">3110201</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">3110202</span>),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="dv">3110401</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="dv">3110402</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110602</span>, <span class="dv">3110402</span>),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110801</span>, <span class="dv">3110601</span>),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110802</span>, <span class="dv">3110601</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110802</span>, <span class="dv">3110602</span>),</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="dv">1110201</span>),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110601</span>, <span class="dv">1110401</span>),</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110602</span>, <span class="dv">1110402</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110801</span>, <span class="dv">1110601</span>),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110801</span>, <span class="dv">1110602</span>),</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2110201</span>),</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="dv">2110401</span>),</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110801</span>, <span class="dv">2110601</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="turmas-ministradas" class="level3">
 <h3 class="anchored" data-anchor-id="turmas-ministradas">Turmas ministradas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ministra (cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala) <span class="kw">VALUES</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-002'</span>),</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230006'</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-002'</span>),</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-603'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-604'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230005'</span>, <span class="st">'2f-19:00-20:40'</span>,               <span class="st">'EEMA-SALA-046'</span>),</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230032'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-006'</span>),</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-17:30/4f-13:45-17:30'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230032'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-005'</span>),</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-005'</span>),</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230032'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-010'</span>),</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230031'</span>, <span class="st">'2f-13:45-17:30/4f-13:45-17:30'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230033'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-008'</span>),</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230032'</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-602'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230033'</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-007'</span>),</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-005'</span>),</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:00'</span>,                <span class="st">'ESG-SALA-012'</span>),</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-013'</span>),</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'3f-10:00-12:30'</span>,               <span class="st">'ESG-SALA-001'</span>),</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-009'</span>),</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-402'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-11:30'</span>,                <span class="st">'ESG-SALA-001'</span>),</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-025'</span>),</span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230043'</span>, <span class="st">'3f-10:00-12:30'</span>,               <span class="st">'ESG-SALA-007'</span>),</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-021'</span>),</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-402'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-11:30'</span>,                <span class="st">'ESG-SALA-005'</span>),</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-601'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230042'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-015'</span>),</span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-602'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'PROF20230043'</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-016'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ministra (id_disciplina, ano, semestre, turma, id_prof, horario, sala) <span class="kw">VALUES</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-002'</span>),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21400002</span>, <span class="st">'3f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-002'</span>),</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-004'</span>),</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-22:20'</span>,               <span class="st">'EEMA-SALA-001'</span>),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-20:40'</span>,               <span class="st">'EEMA-SALA-046'</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31400002</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-006'</span>),</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-17:30/4f-13:45-17:30'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31400002</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-005'</span>),</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-005'</span>),</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31400002</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-010'</span>),</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2f-13:45-17:30/4f-13:45-17:30'</span>, <span class="st">'ESETI-SALA-001'</span>),</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200003</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-008'</span>),</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31400002</span>, <span class="st">'2f-13:45-16:55/4f-13:45-16:50'</span>, <span class="st">'ESETI-SALA-003'</span>),</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">31200003</span>, <span class="st">'2f-13:45-16:15/4f-13:45-16:15'</span>, <span class="st">'ESETI-SALA-007'</span>),</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-005'</span>),</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:00'</span>,                <span class="st">'ESG-SALA-012'</span>),</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-013'</span>),</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'3f-10:00-12:30'</span>,               <span class="st">'ESG-SALA-001'</span>),</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-009'</span>),</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-11:30'</span>,                <span class="st">'ESG-SALA-001'</span>),</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-025'</span>),</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400002</span>, <span class="st">'3f-10:00-12:30'</span>,               <span class="st">'ESG-SALA-007'</span>),</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-021'</span>),</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-11:30'</span>,                <span class="st">'ESG-SALA-005'</span>),</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-015'</span>),</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400002</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-016'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="matrículas-em-disciplinas" class="level3">
 <h3 class="anchored" data-anchor-id="matrículas-em-disciplinas">Matrículas em disciplinas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado) <span class="kw">VALUES</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">7.4</span>, <span class="dv">1</span>),</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">7.5</span>, <span class="dv">1</span>),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">6.6</span>, <span class="dv">1</span>),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">4.1</span>, <span class="dv">0</span>),</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-602'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002001'</span>, <span class="fl">8.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">6.3</span>, <span class="dv">1</span>),</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">8.6</span>, <span class="dv">1</span>),</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-601'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">0.3</span>, <span class="dv">0</span>),</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-602'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023002002'</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024002002'</span>, <span class="fl">4.3</span>, <span class="dv">0</span>),</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024002002'</span>, <span class="fl">7.2</span>, <span class="dv">1</span>),</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-401'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024002002'</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-402'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024002002'</span>, <span class="fl">0.4</span>, <span class="dv">0</span>),</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025002001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025002001'</span>, <span class="fl">6.8</span>, <span class="dv">1</span>),</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025002002'</span>, <span class="fl">1.9</span>, <span class="dv">0</span>),</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ENS-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025002002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023007001'</span>, <span class="fl">9.8</span>, <span class="dv">1</span>),</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023007001'</span>, <span class="fl">8.8</span>, <span class="dv">1</span>),</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007001'</span>, <span class="fl">7.9</span>, <span class="dv">1</span>),</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007001'</span>, <span class="fl">8.5</span>, <span class="dv">1</span>),</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-402'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007001'</span>, <span class="fl">6.5</span>, <span class="dv">1</span>),</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007002'</span>, <span class="fl">3.4</span>, <span class="dv">0</span>),</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007002'</span>, <span class="fl">6.4</span>, <span class="dv">1</span>),</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-401'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-402'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024007002'</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025007001'</span>, <span class="fl">7.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025007001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-201'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025007002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ECO-202'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025007002'</span>, <span class="fl">9.9</span>, <span class="dv">1</span>),</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">8.2</span>, <span class="dv">1</span>),</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">8.5</span>, <span class="dv">1</span>),</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">8.8</span>, <span class="dv">1</span>),</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-603'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-604'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009001'</span>, <span class="fl">6.2</span>, <span class="dv">1</span>),</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>, <span class="fl">6.3</span>, <span class="dv">1</span>),</span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>, <span class="fl">6.8</span>, <span class="dv">1</span>),</span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>,<span class="fl">10.0</span>, <span class="dv">1</span>),</span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-603'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>, <span class="fl">1.3</span>, <span class="dv">0</span>),</span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-604'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2023009002'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009001'</span>, <span class="fl">7.0</span>, <span class="dv">1</span>),</span>
-<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009001'</span>, <span class="fl">9.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009001'</span>, <span class="fl">9.2</span>, <span class="dv">1</span>),</span>
-<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009002'</span>, <span class="fl">7.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009002'</span>, <span class="fl">8.7</span>, <span class="dv">1</span>),</span>
-<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-403'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009002'</span>, <span class="fl">7.6</span>, <span class="dv">1</span>),</span>
-<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-404'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2024009002'</span>, <span class="fl">7.6</span>, <span class="dv">1</span>),</span>
-<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009001'</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
-<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009001'</span>, <span class="fl">7.0</span>, <span class="dv">1</span>),</span>
-<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-203'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009002'</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
-<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'PED-204'</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="st">'A'</span>, <span class="st">'2025009002'</span>, <span class="fl">7.4</span>, <span class="dv">1</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado) <span class="kw">VALUES</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">7.4</span>, <span class="dv">1</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">7.5</span>, <span class="dv">1</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">6.6</span>, <span class="dv">1</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">4.1</span>, <span class="dv">0</span>),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">8.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">6.3</span>, <span class="dv">1</span>),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">8.6</span>, <span class="dv">1</span>),</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">0.3</span>, <span class="dv">0</span>),</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311002</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024311002</span>, <span class="fl">4.3</span>, <span class="dv">0</span>),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024311002</span>, <span class="fl">7.2</span>, <span class="dv">1</span>),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024311002</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024311002</span>, <span class="fl">0.4</span>, <span class="dv">0</span>),</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025311001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025311001</span>, <span class="fl">6.8</span>, <span class="dv">1</span>),</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025311002</span>, <span class="fl">1.9</span>, <span class="dv">0</span>),</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025311002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023111001</span>, <span class="fl">9.8</span>, <span class="dv">1</span>),</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023111001</span>, <span class="fl">8.8</span>, <span class="dv">1</span>),</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111001</span>, <span class="fl">7.9</span>, <span class="dv">1</span>),</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111001</span>, <span class="fl">8.5</span>, <span class="dv">1</span>),</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111001</span>, <span class="fl">6.5</span>, <span class="dv">1</span>),</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111002</span>, <span class="fl">3.4</span>, <span class="dv">0</span>),</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111002</span>, <span class="fl">6.4</span>, <span class="dv">1</span>),</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024111002</span>, <span class="fl">7.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025111001</span>, <span class="fl">7.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025111001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025111002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025111002</span>, <span class="fl">9.9</span>, <span class="dv">1</span>),</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">8.2</span>, <span class="dv">1</span>),</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">8.5</span>, <span class="dv">1</span>),</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">8.8</span>, <span class="dv">1</span>),</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211001</span>, <span class="fl">6.2</span>, <span class="dv">1</span>),</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>, <span class="fl">6.3</span>, <span class="dv">1</span>),</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>, <span class="fl">6.8</span>, <span class="dv">1</span>),</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>,<span class="fl">10.0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>, <span class="fl">1.3</span>, <span class="dv">0</span>),</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023211002</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211001</span>, <span class="fl">7.0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211001</span>, <span class="fl">9.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211001</span>, <span class="fl">9.2</span>, <span class="dv">1</span>),</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211002</span>, <span class="fl">7.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2024</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211002</span>, <span class="fl">8.7</span>, <span class="dv">1</span>),</span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110401</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211002</span>, <span class="fl">7.6</span>, <span class="dv">1</span>),</span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110402</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2024211002</span>, <span class="fl">7.6</span>, <span class="dv">1</span>),</span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211001</span>, <span class="fl">6.1</span>, <span class="dv">1</span>),</span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211001</span>, <span class="fl">7.0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211002</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211002</span>, <span class="fl">7.4</span>, <span class="dv">1</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/caminho/para/matricula_disciplina.csv'</span> DELIMITER <span class="st">';'</span> CSV <span class="kw">HEADER</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -1134,38 +1137,49 @@ Nota
 <section id="todos-os-cursos" class="level3">
 <h3 class="anchored" data-anchor-id="todos-os-cursos">Todos os cursos</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, escola, tipo_curso</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_curso, sigla_curso, nome_curso, id_escola, tipo_curso</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> curso</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 34%">
+<col style="width: 14%">
+<col style="width: 19%">
+</colgroup>
 <thead>
 <tr class="header">
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: left;">sigla_curso</th>
 <th style="text-align: left;">nome_curso</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: left;">tipo_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: right;">111</td>
 <td style="text-align: left;">ECO</td>
 <td style="text-align: left;">Ciências Econômicas</td>
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: left;">bacharelado</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Engenharia de Software</td>
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: left;">bacharelado</td>
-</tr>
-<tr class="odd">
+<td style="text-align: right;">211</td>
 <td style="text-align: left;">PED</td>
 <td style="text-align: left;">Pedagogia</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: left;">licenciatura</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">311</td>
+<td style="text-align: left;">ENS</td>
+<td style="text-align: left;">Engenharia de Software</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: left;">bacharelado</td>
 </tr>
 </tbody>
 </table>
@@ -1175,31 +1189,31 @@ Nota
 <section id="professores-por-escola" class="level3">
 <h3 class="anchored" data-anchor-id="professores-por-escola">Professores por escola</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_professores</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_professores</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> professor</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> escola</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">n_professores</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
@@ -1209,7 +1223,7 @@ Nota
 <section id="disciplinas-com-carga-horária-acima-de-100-h" class="level3">
 <h3 class="anchored" data-anchor-id="disciplinas-com-carga-horária-acima-de-100-h">Disciplinas com carga horária acima de 100 h</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> disciplina</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> carga_horaria <span class="op">&gt;</span> <span class="dv">100</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1217,60 +1231,60 @@ Nota
 <table class="caption-top table table-sm table-striped small">
 <caption>7 records</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 55%">
-<col style="width: 15%">
-<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 53%">
+<col style="width: 11%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">160</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110602</td>
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 </tbody>
@@ -1281,27 +1295,27 @@ Nota
 <section id="alunos-de-engenharia-de-software-ingressantes-em-2023" class="level3">
 <h3 class="anchored" data-anchor-id="alunos-de-engenharia-de-software-ingressantes-em-2023">Alunos de Engenharia de Software ingressantes em 2023</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> matricula, nome, ano_ingresso</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_aluno, nome, ano_ingresso</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> aluno</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> sigla_curso <span class="op">=</span> <span class="st">'ENS'</span> <span class="kw">AND</span> ano_ingresso <span class="op">=</span> <span class="dv">2023</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> id_curso <span class="op">=</span> <span class="dv">311</span> <span class="kw">AND</span> ano_ingresso <span class="op">=</span> <span class="dv">2023</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">matricula</th>
+<th style="text-align: left;">id_aluno</th>
 <th style="text-align: left;">nome</th>
 <th style="text-align: right;">ano_ingresso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2023002001</td>
+<td style="text-align: left;">2023311001</td>
 <td style="text-align: left;">Matheus Silva</td>
 <td style="text-align: right;">2023</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2023002002</td>
+<td style="text-align: left;">2023311002</td>
 <td style="text-align: left;">Larissa Araújo</td>
 <td style="text-align: right;">2023</td>
 </tr>
@@ -1320,7 +1334,7 @@ Nota
 </div>
 <div class="callout-body-container callout-body">
 <p>Para remover todas as tabelas e recriar do zero:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> matricula_disciplina, ministra,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> matricula_disciplina, ministra, prereq,</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                     disciplina, aluno, professor,</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                     curso, escola, centro <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>

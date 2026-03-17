@@ -724,14 +724,14 @@ window.Quarto = {
 </div>
 <div class="exemplo">
 <p>As entidades fortes da UnDF geram diretamente suas relações:</p>
-<pre><code>centro(centro, nome_centro)
-  PK: centro
+<pre><code>centro(id_centro, sigla, nome_centro)
+  PK: id_centro
 
-escola(escola, nome_escola, centro)
-  PK: escola
+escola(id_escola, sigla, nome_escola, id_centro)
+  PK: id_escola
 
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  PK: matricula_prof</code></pre>
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  PK: id_prof</code></pre>
 </div>
 </section>
 <section id="regra-2-entidade-fraca" class="level2">
@@ -742,9 +742,9 @@ professor(matricula_prof, nome, escola, ch_semanal, salario)
 </div>
 <div class="exemplo">
 <p>Se <code>turma</code> fosse modelada como entidade fraca de <code>disciplina</code> com discriminador <code>(ano, semestre, id_turma)</code>:</p>
-<pre><code>turma(cod_disciplina, ano, semestre, id_turma, horario, sala)
-  PK: (cod_disciplina, ano, semestre, id_turma)
-  FK: cod_disciplina → disciplina(codigo)</code></pre>
+<pre><code>turma(id_disciplina, ano, semestre, id_turma, horario, sala)
+  PK: (id_disciplina, ano, semestre, id_turma)
+  FK: id_disciplina → disciplina(id_disciplina)</code></pre>
 </div>
 </section>
 <section id="regra-3-atributo-composto" class="level2">
@@ -769,9 +769,9 @@ sobrenome     VARCHAR(50)  NOT NULL</code></pre>
 </div>
 <div class="exemplo">
 <p>Se <code>professor</code> tiver atributo multivalorado <code>telefone</code>:</p>
-<pre><code>telefone_professor(matricula_prof, telefone)
-  PK: (matricula_prof, telefone)
-  FK: matricula_prof → professor(matricula_prof)</code></pre>
+<pre><code>telefone_professor(id_prof, telefone)
+  PK: (id_prof, telefone)
+  FK: id_prof → professor(id_prof)</code></pre>
 <p>Cada número de telefone vira uma tupla separada.</p>
 </div>
 </section>
@@ -783,10 +783,10 @@ sobrenome     VARCHAR(50)  NOT NULL</code></pre>
 </div>
 <div class="exemplo">
 <p>O relacionamento <code>ministra</code> (N:N entre <code>professor</code> e <code>disciplina</code>):</p>
-<pre><code>ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-  PK: (cod_disciplina, ano, semestre, turma)
-  FK: cod_disciplina → disciplina(codigo)
-  FK: matricula_prof → professor(matricula_prof)</code></pre>
+<pre><code>ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+  PK: (id_disciplina, ano, semestre, turma)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prof → professor(id_prof)</code></pre>
 <p>Nota: como <code>ministra</code> tem atributos <code>ano</code>, <code>semestre</code> e <code>turma</code>, a PK inclui esses atributos para distinguir ofertas da mesma disciplina em semestres diferentes.</p>
 </div>
 </section>
@@ -799,11 +799,11 @@ sobrenome     VARCHAR(50)  NOT NULL</code></pre>
 <div class="exemplo">
 <p>O relacionamento <code>lotado_em</code> (professor N:1 escola) não precisa de tabela própria:</p>
 <pre><code>-- Sem otimização (schema separado):
-lotado_em(matricula_prof, escola)
+lotado_em(id_prof, id_escola)
 
 -- Com otimização (FK embutida em professor):
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  FK: escola → escola(escola)</code></pre>
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  FK: id_escola → escola(id_escola)</code></pre>
 <p>O mesmo se aplica a <code>pertence_a</code>, <code>ofertado_por</code>, <code>compoe</code> e <code>matriculado_em</code>.</p>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -827,37 +827,37 @@ Aviso
 <section id="esquema-completo-da-undf" class="level2">
 <h2 class="anchored" data-anchor-id="esquema-completo-da-undf">Esquema Completo da UnDF</h2>
 <p>Aplicando todas as regras ao diagrama ER da UnDF:</p>
-<pre><code>centro(centro, nome_centro)
+<pre><code>centro(id_centro, sigla, nome_centro)
 
-escola(escola, nome_escola, centro)
-  FK: centro → centro(centro)
+escola(id_escola, sigla, nome_escola, id_centro)
+  FK: id_centro → centro(id_centro)
 
-curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
-  FK: escola → escola(escola)
+curso(id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso)
+  FK: id_escola → escola(id_escola)
 
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  FK: escola → escola(escola)
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  FK: id_escola → escola(id_escola)
 
-aluno(matricula, nome, sigla_curso, ano_ingresso)
-  FK: sigla_curso → curso(sigla_curso)
+aluno(id_aluno, nome, id_curso, ano_ingresso)
+  FK: id_curso → curso(id_curso)
 
-disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
-  FK: sigla_curso → curso(sigla_curso)
+disciplina(id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria)
+  FK: id_curso → curso(id_curso)
 
-ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-  PK: (cod_disciplina, ano, semestre, turma)
-  FK: cod_disciplina → disciplina(codigo)
-  FK: matricula_prof → professor(matricula_prof)
+ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+  PK: (id_disciplina, ano, semestre, turma)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prof → professor(id_prof)
 
-prereq(codigo, prereq_codigo)
-  PK: (codigo, prereq_codigo)
-  FK: codigo → disciplina(codigo)
-  FK: prereq_codigo → disciplina(codigo)
+prereq(id_disciplina, id_prereq)
+  PK: (id_disciplina, id_prereq)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prereq → disciplina(id_disciplina)
 
-matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
-  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
-  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
-  FK: cod_matricula → aluno(matricula)</code></pre>
+matricula_disciplina(id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+  PK: (id_disciplina, ano, semestre, turma, id_aluno)
+  FK: (id_disciplina, ano, semestre, turma) → ministra(...)
+  FK: id_aluno → aluno(id_aluno)</code></pre>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
@@ -909,7 +909,7 @@ escreve(id_autor, ISBN, ordem)
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>O relacionamento <code>pertence_a</code> (N:1) foi absorvido pelo schema de <code>escola</code> pela Regra 6: adicionou-se a FK <code>centro</code> diretamente em <code>escola</code>. Um schema separado <code>pertence_a(escola, centro)</code> conteria exatamente a mesma informação já presente na tabela <code>escola</code> — seria uma duplicação. Por isso, o schema de <code>pertence_a</code> é redundante e deve ser descartado.</p>
+<p>O relacionamento <code>pertence_a</code> (N:1) foi absorvido pelo schema de <code>escola</code> pela Regra 6: adicionou-se a FK <code>id_centro</code> diretamente em <code>escola</code>. Um schema separado <code>pertence_a(id_escola, id_centro)</code> conteria exatamente a mesma informação já presente na tabela <code>escola</code> — seria uma duplicação. Por isso, o schema de <code>pertence_a</code> é redundante e deve ser descartado.</p>
 </div>
 </div>
 </div>

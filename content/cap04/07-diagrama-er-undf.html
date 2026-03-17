@@ -983,7 +983,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>pertence_a</code></td>
-<td>ESETI→COETI, EEMA→COEMAG, ESG→COCHCMA (3 pares)</td>
+<td>31→3, 21→2, 11→1 (id_escola→id_centro, 3 pares)</td>
 </tr>
 <tr class="even">
 <td><code>lotado_em</code></td>
@@ -1048,7 +1048,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Um aluno pode monitorar múltiplas turmas: N no lado <code>aluno</code></li>
 <li>Uma turma pode ter múltiplos monitores: N no lado <code>ministra</code></li>
 </ul>
-<p>Isso caracteriza N:N, possivelmente com atributo <code>periodo</code> (início e fim da monitoria). A implementação seria uma tabela <code>monitora(matricula, cod_disciplina, ano, semestre, turma, data_inicio, data_fim)</code> com FKs para <code>aluno</code> e <code>ministra</code>.</p>
+<p>Isso caracteriza N:N, possivelmente com atributo <code>periodo</code> (início e fim da monitoria). A implementação seria uma tabela <code>monitora(id_aluno, id_disciplina, ano, semestre, turma, data_inicio, data_fim)</code> com FKs para <code>aluno</code> e <code>ministra</code>.</p>
 </div>
 </div>
 </div>

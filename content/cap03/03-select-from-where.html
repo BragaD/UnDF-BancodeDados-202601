@@ -678,7 +678,7 @@ window.Quarto = {
   <li><a href="#forma-geral" id="toc-forma-geral" class="nav-link active" data-scroll-target="#forma-geral">Forma Geral</a></li>
   <li><a href="#correspondência-com-a-álgebra-relacional" id="toc-correspondência-com-a-álgebra-relacional" class="nav-link" data-scroll-target="#correspondência-com-a-álgebra-relacional">Correspondência com a Álgebra Relacional</a></li>
   <li><a href="#exemplo-1-nomes-dos-professores-da-eseti" id="toc-exemplo-1-nomes-dos-professores-da-eseti" class="nav-link" data-scroll-target="#exemplo-1-nomes-dos-professores-da-eseti">Exemplo 1: Nomes dos Professores da ESETI</a></li>
-  <li><a href="#exemplo-2-nomes-e-escolas-dos-professores-da-eema" id="toc-exemplo-2-nomes-e-escolas-dos-professores-da-eema" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-escolas-dos-professores-da-eema">Exemplo 2: Nomes e Escolas dos Professores da EEMA</a></li>
+  <li><a href="#exemplo-2-nomes-e-escola-dos-professores-da-eema" id="toc-exemplo-2-nomes-e-escola-dos-professores-da-eema" class="nav-link" data-scroll-target="#exemplo-2-nomes-e-escola-dos-professores-da-eema">Exemplo 2: Nomes e Escola dos Professores da EEMA</a></li>
   <li><a href="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas" id="toc-exemplo-3-produto-cartesiano-com-múltiplas-tabelas" class="nav-link" data-scroll-target="#exemplo-3-produto-cartesiano-com-múltiplas-tabelas">Exemplo 3: Produto Cartesiano com Múltiplas Tabelas</a></li>
   <li><a href="#exemplo-4-junção-com-autorreferência-pré-requisitos" id="toc-exemplo-4-junção-com-autorreferência-pré-requisitos" class="nav-link" data-scroll-target="#exemplo-4-junção-com-autorreferência-pré-requisitos">Exemplo 4: Junção com Autorreferência (Pré-requisitos)</a></li>
   <li><a href="#notação-com-qualificador-de-tabela" id="toc-notação-com-qualificador-de-tabela" class="nav-link" data-scroll-target="#notação-com-qualificador-de-tabela">Notação com Qualificador de Tabela</a></li>
@@ -766,7 +766,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores estão lotados na Escola Superior de Engenharias, Tecnologia e Inovação?</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
@@ -790,30 +790,30 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="exemplo-2-nomes-e-escolas-dos-professores-da-eema" class="level2">
-<h2 class="anchored" data-anchor-id="exemplo-2-nomes-e-escolas-dos-professores-da-eema">Exemplo 2: Nomes e Escolas dos Professores da EEMA</h2>
+<section id="exemplo-2-nomes-e-escola-dos-professores-da-eema" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-2-nomes-e-escola-dos-professores-da-eema">Exemplo 2: Nomes e Escola dos Professores da EEMA</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quais professores pertencem à Escola de Educação, Magistério e Arte?</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, id_escola</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'EEMA'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">21</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">nome</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 </tbody>
 </table>
@@ -825,59 +825,59 @@ window.Quarto = {
 <p>Quando duas ou mais tabelas são listadas na cláusula <code>FROM</code>, o SQL produz o <strong>produto cartesiano</strong> entre elas — cada linha da primeira tabela é combinada com cada linha da segunda. O resultado deve ser filtrado com <code>WHERE</code> para ser significativo.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nomes dos professores com os dados da escola e do centro ao qual pertencem</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola, e.centro</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola, e.id_centro</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor p, escola e</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola <span class="op">=</span> e.escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.id_escola <span class="op">=</span> e.id_escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>7 records</caption>
 <colgroup>
 <col style="width: 20%">
-<col style="width: 69%">
-<col style="width: 10%">
+<col style="width: 67%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">nome</th>
 <th style="text-align: left;">nome_escola</th>
-<th style="text-align: left;">centro</th>
+<th style="text-align: right;">id_centro</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Eduarda Souza</td>
 <td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
-<td style="text-align: left;">COEMAG</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Felipe Araujo</td>
 <td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
-<td style="text-align: left;">COEMAG</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Gustavo Costa</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">COETI</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Helena Carvalho</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">COETI</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Igor Melo</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">COETI</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Bruno Teixeira</td>
 <td style="text-align: left;">Escola Superior de Gestão</td>
-<td style="text-align: left;">COCHCMA</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Carla Pinto</td>
 <td style="text-align: left;">Escola Superior de Gestão</td>
-<td style="text-align: left;">COCHCMA</td>
+<td style="text-align: right;">1</td>
 </tr>
 </tbody>
 </table>
@@ -893,7 +893,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A condição <code>p.escola = e.escola</code> na cláusula <code>WHERE</code> funciona como uma <strong>junção</strong> entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.</p>
+<p>A condição <code>p.id_escola = e.id_escola</code> na cláusula <code>WHERE</code> funciona como uma <strong>junção</strong> entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.</p>
 <p>A sintaxe com <code>JOIN</code> explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.</p>
 </div>
 </div>
@@ -906,16 +906,12 @@ Nota
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.nome_disciplina <span class="kw">AS</span> disciplina,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       p.nome_disciplina <span class="kw">AS</span> prereq</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereq pr, disciplina d, disciplina p</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  pr.codigo        <span class="op">=</span> d.codigo</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  pr.prereq_codigo <span class="op">=</span> p.codigo</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.sigla_curso, d.codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  pr.id_disciplina <span class="op">=</span> d.id_disciplina</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  pr.id_prereq     <span class="op">=</span> p.id_disciplina</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.id_curso, d.id_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
-<colgroup>
-<col style="width: 52%">
-<col style="width: 47%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">disciplina</th>
@@ -944,24 +940,24 @@ Nota
 <td style="text-align: left;">Economia Brasileira</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
+<td style="text-align: left;">Eletiva I</td>
+<td style="text-align: left;">Desenvolvimento Humano</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
+<td style="text-align: left;">Eletiva II</td>
+<td style="text-align: left;">Eletiva I</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: left;">Eletiva II</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
 </tr>
 </tbody>
 </table>
@@ -970,11 +966,11 @@ Nota
 </section>
 <section id="notação-com-qualificador-de-tabela" class="level2">
 <h2 class="anchored" data-anchor-id="notação-com-qualificador-de-tabela">Notação com Qualificador de Tabela</h2>
-<p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>escola</code> em <code>professor</code> e em <code>escola</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela ou alias:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p.escola   <span class="co">-- coluna escola da tabela professor (alias p)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>e.escola   <span class="co">-- coluna escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quando o mesmo nome de coluna aparece em mais de uma tabela (como <code>id_escola</code> em <code>professor</code> e em <code>escola</code>), é necessário <strong>qualificar</strong> o nome da coluna com o nome da tabela ou alias:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p.id_escola   <span class="co">-- coluna id_escola da tabela professor (alias p)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>e.id_escola   <span class="co">-- coluna id_escola da tabela escola (alias e)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sem o qualificador, o SQL lançará um erro de ambiguidade:</p>
-<pre><code>ERROR: column reference "escola" is ambiguous</code></pre>
+<pre><code>ERROR: column reference "id_escola" is ambiguous</code></pre>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
@@ -983,9 +979,9 @@ Nota
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Três tabelas em cadeia: nome do professor, escola e centro</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola, c.nome_centro</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor p, escola e, centro c</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola  <span class="op">=</span> e.escola</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  e.centro  <span class="op">=</span> c.centro</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> c.centro, p.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.id_escola <span class="op">=</span> e.id_escola</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  e.id_centro <span class="op">=</span> c.id_centro</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> c.id_centro, p.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>7 records</caption>
@@ -1005,37 +1001,37 @@ Nota
 <tr class="odd">
 <td style="text-align: left;">Bruno Teixeira</td>
 <td style="text-align: left;">Escola Superior de Gestão</td>
-<td style="text-align: left;">CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE</td>
+<td style="text-align: left;">Ciências Humanas, Cidadania e Meio Ambiente</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Carla Pinto</td>
 <td style="text-align: left;">Escola Superior de Gestão</td>
-<td style="text-align: left;">CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE</td>
+<td style="text-align: left;">Ciências Humanas, Cidadania e Meio Ambiente</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Eduarda Souza</td>
 <td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
-<td style="text-align: left;">CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES</td>
+<td style="text-align: left;">Centro de Educação, Magistério e Artes</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Felipe Araujo</td>
 <td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
-<td style="text-align: left;">CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES</td>
+<td style="text-align: left;">Centro de Educação, Magistério e Artes</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Gustavo Costa</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+<td style="text-align: left;">Centro de Engenharias, Tecnologia e Inovação</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Helena Carvalho</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+<td style="text-align: left;">Centro de Engenharias, Tecnologia e Inovação</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Igor Melo</td>
 <td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: left;">CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO</td>
+<td style="text-align: left;">Centro de Engenharias, Tecnologia e Inovação</td>
 </tr>
 </tbody>
 </table>
@@ -1063,12 +1059,12 @@ Nota
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos cujo ano de ingresso coincide com o semestre da disciplina que cursaram</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos cujo ano de ingresso coincide com o ano da disciplina que cursaram</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (caso limite: comparação entre atributos de tabelas diferentes)</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.nome, a.ano_ingresso, md.cod_disciplina</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.nome, a.ano_ingresso, md.id_disciplina</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a, matricula_disciplina md</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  a.matricula      <span class="op">=</span> md.cod_matricula</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  a.ano_ingresso   <span class="op">=</span> md.ano</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  a.id_aluno     <span class="op">=</span> md.id_aluno</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  a.ano_ingresso <span class="op">=</span> md.ano</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1077,59 +1073,59 @@ Nota
 <tr class="header">
 <th style="text-align: left;">nome</th>
 <th style="text-align: right;">ano_ingresso</th>
-<th style="text-align: left;">cod_disciplina</th>
+<th style="text-align: right;">id_disciplina</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Amanda Moreira</td>
 <td style="text-align: right;">2023</td>
-<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2110201</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Amanda Moreira</td>
 <td style="text-align: right;">2023</td>
-<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2110202</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Beatriz Carvalho</td>
 <td style="text-align: right;">2023</td>
-<td style="text-align: left;">ECO-201</td>
+<td style="text-align: right;">1110201</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Beatriz Carvalho</td>
 <td style="text-align: right;">2023</td>
-<td style="text-align: left;">ECO-202</td>
+<td style="text-align: right;">1110202</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Camila Teixeira</td>
 <td style="text-align: right;">2025</td>
-<td style="text-align: left;">ECO-201</td>
+<td style="text-align: right;">1110201</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Camila Teixeira</td>
 <td style="text-align: right;">2025</td>
-<td style="text-align: left;">ECO-202</td>
+<td style="text-align: right;">1110202</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Carolina Lima</td>
 <td style="text-align: right;">2024</td>
-<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2110201</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Carolina Lima</td>
 <td style="text-align: right;">2024</td>
-<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2110202</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Diego Correia</td>
 <td style="text-align: right;">2025</td>
-<td style="text-align: left;">ENS-201</td>
+<td style="text-align: right;">3110201</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Diego Correia</td>
 <td style="text-align: right;">2025</td>
-<td style="text-align: left;">ENS-202</td>
+<td style="text-align: right;">3110202</td>
 </tr>
 </tbody>
 </table>

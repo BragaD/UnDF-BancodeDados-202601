@@ -704,7 +704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>=</code></td>
 <td>igual</td>
-<td><code>escola = 'ESETI'</code></td>
+<td><code>id_escola = 31</code></td>
 </tr>
 <tr class="even">
 <td><code>&lt;&gt;</code> ou <code>!=</code></td>
@@ -738,29 +738,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="conectivos-lógicos-and-or-not">Conectivos Lógicos: AND, OR, NOT</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas de ENS com carga horária acima de 150 horas</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, carga_horaria</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, carga_horaria</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  sigla_curso <span class="op">=</span> <span class="st">'ENS'</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">311</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  carga_horaria <span class="op">&gt;</span> <span class="dv">150</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 60%">
+<col style="width: 19%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
 <td style="text-align: right;">160</td>
 </tr>
 </tbody>
@@ -769,87 +774,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas de PED ou com carga horária acima de 150 horas</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  sigla_curso <span class="op">=</span> <span class="st">'PED'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">211</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">OR</span>  carga_horaria <span class="op">&gt;</span> <span class="dv">150</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <colgroup>
-<col style="width: 8%">
-<col style="width: 64%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 62%">
+<col style="width: 9%">
 <col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">160</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED-404</td>
-<td style="text-align: left;">Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC</td>
-<td style="text-align: left;">PED</td>
-<td style="text-align: right;">80</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PED-403</td>
+<td style="text-align: right;">2110401</td>
 <td style="text-align: left;">Eletiva I</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110402</td>
+<td style="text-align: left;">Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED-603</td>
+<td style="text-align: right;">2110601</td>
 <td style="text-align: left;">Eletiva II</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: left;">Desenvolvimento Humano</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2110202</td>
 <td style="text-align: left;">Didática Geral</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PED-803</td>
+<td style="text-align: right;">2110801</td>
 <td style="text-align: left;">Tecnologia Educacional - Design</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PED-804</td>
+<td style="text-align: right;">2110802</td>
 <td style="text-align: left;">Estatística Aplicada</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">50</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PED-604</td>
+<td style="text-align: right;">2110602</td>
 <td style="text-align: left;">Educação do Campo, Indígena e Quilombola</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">40</td>
 </tr>
 </tbody>
@@ -858,70 +863,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas que NÃO são de ECO</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> sigla_curso <span class="op">=</span> <span class="st">'ECO'</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso, codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  <span class="kw">NOT</span> id_curso <span class="op">=</span> <span class="dv">111</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_curso, id_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 72%">
+<col style="width: 10%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-801</td>
-<td style="text-align: left;">Bases da Engenharia de Software 8</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PED-203</td>
+<td style="text-align: right;">2110201</td>
 <td style="text-align: left;">Desenvolvimento Humano</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PED-204</td>
+<td style="text-align: right;">2110202</td>
 <td style="text-align: left;">Didática Geral</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2110401</td>
+<td style="text-align: left;">Eletiva I</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110402</td>
+<td style="text-align: left;">Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2110601</td>
+<td style="text-align: left;">Eletiva II</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110602</td>
+<td style="text-align: left;">Educação do Campo, Indígena e Quilombola</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2110801</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110802</td>
+<td style="text-align: left;">Estatística Aplicada</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 </tr>
 </tbody>
 </table>
@@ -934,7 +944,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>O predicado <code>BETWEEN</code> verifica se um valor está dentro de um intervalo fechado (inclusive os extremos):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas com carga horária entre 100 e 160 horas (inclusive)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="kw">BETWEEN</span> <span class="dv">100</span> <span class="kw">AND</span> <span class="dv">160</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -942,66 +952,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <table class="caption-top table table-sm table-striped small">
 <caption>8 records</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 55%">
-<col style="width: 15%">
-<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 53%">
+<col style="width: 11%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-801</td>
-<td style="text-align: left;">Bases da Engenharia de Software 8</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-801</td>
+<td style="text-align: right;">1110801</td>
 <td style="text-align: left;">Monografia</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110602</td>
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">160</td>
 </tr>
 </tbody>
@@ -1036,38 +1046,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo nome começa com "Bases"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, carga_horaria</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_disciplina <span class="kw">LIKE</span> <span class="st">'Bases%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- (corresponde às disciplinas de Bases da Eng. de Software dos semestres 2, 4, 6 e 8 de ENS)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, carga_horaria</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_disciplina <span class="kw">LIKE</span> <span class="st">'Bases%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>4 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-801</td>
-<td style="text-align: left;">Bases da Engenharia de Software 8</td>
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
 <td style="text-align: right;">100</td>
 </tr>
 </tbody>
@@ -1076,7 +1087,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo nome contém a palavra "Projeto"</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_disciplina <span class="kw">LIKE</span> <span class="st">'%Projeto%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -1084,107 +1095,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <caption>4 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">311</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110602</td>
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">311</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas cujo código começa com "ENS"</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, semestre, carga_horaria</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  codigo <span class="kw">LIKE</span> <span class="st">'ENS%'</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>8 records</caption>
-<colgroup>
-<col style="width: 10%">
-<col style="width: 58%">
-<col style="width: 12%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">codigo</th>
-<th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: right;">semestre</th>
-<th style="text-align: right;">carga_horaria</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">150</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">120</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">180</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">120</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">150</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">120</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-801</td>
-<td style="text-align: left;">Bases da Engenharia de Software 8</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">100</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 </tr>
 </tbody>
 </table>
@@ -1200,6 +1135,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><code>LIKE</code> aplica-se a colunas do tipo texto (<code>VARCHAR</code>, <code>CHAR</code>, <code>TEXT</code>). Como <code>id_disciplina</code> é agora um <code>INTEGER</code>, padrões de código de disciplina devem ser expressos via atributos textuais, como <code>nome_disciplina</code>, ou filtrando pela coluna <code>id_curso</code>.</p>
 <p>Por padrão, <code>LIKE</code> é <strong>sensível a maiúsculas e minúsculas</strong> na maioria dos SGBDs. Para buscas sem distinção de caixa, use <code>ILIKE</code> (PostgreSQL) ou a função <code>LOWER()</code>.</p>
 </div>
 </div>
@@ -1208,86 +1144,86 @@ Nota
 <h2 class="anchored" data-anchor-id="order-by-ordenando-o-resultado">ORDER BY: Ordenando o Resultado</h2>
 <p>A cláusula <code>ORDER BY</code> especifica a ordem em que as linhas são retornadas. Por padrão, a ordem é crescente (<code>ASC</code>); para ordem decrescente, usa-se <code>DESC</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas ordenadas por carga horária, da maior para a menor</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas ordenadas por carga horária, da maior para a menor</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 55%">
-<col style="width: 15%">
-<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 53%">
+<col style="width: 11%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">180</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">160</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-402</td>
-<td style="text-align: left;">Projeto Aplicado 4 (blockchain)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110602</td>
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-602</td>
-<td style="text-align: left;">Projeto Aplicado 6 (Machine Learning)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">120</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-801</td>
-<td style="text-align: left;">Bases da Engenharia de Software 8</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-801</td>
+<td style="text-align: right;">1110801</td>
 <td style="text-align: left;">Monografia</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-402</td>
+<td style="text-align: right;">1110402</td>
 <td style="text-align: left;">Macroeconomia 2</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">95</td>
 </tr>
 </tbody>
@@ -1296,87 +1232,81 @@ Nota
 </div>
 <p>É possível ordenar por múltiplas colunas. O critério secundário é aplicado quando há empate no critério primário:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas ordenadas por curso (alfabético) e, dentro do mesmo curso, por carga horária decrescente</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso <span class="kw">ASC</span>, carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas ordenadas por curso e, dentro do mesmo curso, por carga horária decrescente</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_curso <span class="kw">ASC</span>, carga_horaria <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
-<colgroup>
-<col style="width: 10%">
-<col style="width: 55%">
-<col style="width: 15%">
-<col style="width: 18%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ECO-801</td>
+<td style="text-align: right;">1110801</td>
 <td style="text-align: left;">Monografia</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-402</td>
+<td style="text-align: right;">1110402</td>
 <td style="text-align: left;">Macroeconomia 2</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">95</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-802</td>
+<td style="text-align: right;">1110802</td>
 <td style="text-align: left;">Desenvolvimento Econômico</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">90</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-602</td>
+<td style="text-align: right;">1110602</td>
 <td style="text-align: left;">Orçamento e Finanças Públicas</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-601</td>
+<td style="text-align: right;">1110601</td>
 <td style="text-align: left;">Economia Brasileira</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-201</td>
-<td style="text-align: left;">História Econômica Geral</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">1110401</td>
+<td style="text-align: left;">Microeconomia 2</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-401</td>
-<td style="text-align: left;">Microeconomia 2</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">1110201</td>
+<td style="text-align: left;">História Econômica Geral</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">75</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-202</td>
+<td style="text-align: right;">1110202</td>
 <td style="text-align: left;">Culturas Digitais</td>
-<td style="text-align: left;">ECO</td>
+<td style="text-align: right;">111</td>
 <td style="text-align: right;">60</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: right;">180</td>
+<td style="text-align: right;">2110601</td>
+<td style="text-align: left;">Eletiva II</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">2110401</td>
+<td style="text-align: left;">Eletiva I</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">80</td>
 </tr>
 </tbody>
 </table>
@@ -1387,63 +1317,63 @@ Nota
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- NOT BETWEEN: disciplinas fora do intervalo central de carga horária</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, sigla_curso, carga_horaria</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="kw">NOT</span> <span class="kw">BETWEEN</span> <span class="dv">60</span> <span class="kw">AND</span> <span class="dv">120</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- NOT BETWEEN: disciplinas fora do intervalo central de carga horária</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, id_curso, carga_horaria</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  carga_horaria <span class="kw">NOT</span> <span class="kw">BETWEEN</span> <span class="dv">60</span> <span class="kw">AND</span> <span class="dv">120</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> carga_horaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>6 records</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 55%">
-<col style="width: 15%">
-<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 53%">
+<col style="width: 11%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: left;">sigla_curso</th>
+<th style="text-align: right;">id_curso</th>
 <th style="text-align: right;">carga_horaria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">PED-604</td>
+<td style="text-align: right;">2110602</td>
 <td style="text-align: left;">Educação do Campo, Indígena e Quilombola</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PED-804</td>
+<td style="text-align: right;">2110802</td>
 <td style="text-align: left;">Estatística Aplicada</td>
-<td style="text-align: left;">PED</td>
+<td style="text-align: right;">211</td>
 <td style="text-align: right;">50</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-601</td>
-<td style="text-align: left;">Bases da Engenharia de Software 6</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENS-802</td>
-<td style="text-align: left;">Projeto Aplicado 8 (Sistema em Tempo Real)</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">160</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENS-401</td>
-<td style="text-align: left;">Bases da Engenharia de Software 4</td>
-<td style="text-align: left;">ENS</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">311</td>
 <td style="text-align: right;">180</td>
 </tr>
 </tbody>
@@ -1451,63 +1381,33 @@ Nota
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- LIKE com sublinhado: códigos onde o 5º caractere é exatamente '2'</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ex.: ENS-201, ECO-201, PED-203 — o padrão 'xxx-2__' captura sem 10 (ENS-201 = E,N,S,-,2,0,1)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> codigo, nome_disciplina, semestre</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  codigo <span class="kw">LIKE</span> <span class="st">'___-2%'</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> codigo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- LIKE com sublinhado: nomes com exatamente uma letra após "Bases d"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Demonstra o uso do caractere curinga _ (um único caractere qualquer)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome_disciplina, semestre</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  nome_disciplina <span class="kw">LIKE</span> <span class="st">'Bases d_'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>6 records</caption>
+<table class="caption-top">
+<caption>0 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">id_disciplina</th>
 <th style="text-align: left;">nome_disciplina</th>
 <th style="text-align: right;">semestre</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">ECO-201</td>
-<td style="text-align: left;">História Econômica Geral</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ECO-202</td>
-<td style="text-align: left;">Culturas Digitais</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENS-201</td>
-<td style="text-align: left;">Bases da Engenharia de Software 2</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENS-202</td>
-<td style="text-align: left;">Projeto Aplicado 2 (site WEB)</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PED-203</td>
-<td style="text-align: left;">Desenvolvimento Humano</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PED-204</td>
-<td style="text-align: left;">Didática Geral</td>
-<td style="text-align: right;">2</td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- IN com lista literal: cursos específicos sem usar LIKE</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, tipo_curso</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   curso</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  tipo_curso <span class="kw">IN</span> (<span class="st">'bacharelado'</span>, <span class="st">'licenciatura'</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tipo_curso, sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- IN com lista literal: cursos específicos sem usar LIKE</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sigla_curso, nome_curso, tipo_curso</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   curso</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  tipo_curso <span class="kw">IN</span> (<span class="st">'bacharelado'</span>, <span class="st">'licenciatura'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tipo_curso, sigla_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
@@ -1539,32 +1439,32 @@ Nota
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Combinação de AND/OR com parênteses: a precedência importa!</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem parênteses, AND tem precedência sobre OR</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola, salario</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  (escola <span class="op">=</span> <span class="st">'ESETI'</span> <span class="kw">OR</span> escola <span class="op">=</span> <span class="st">'EEMA'</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  salario <span class="op">&gt;</span> <span class="dv">5000</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola, salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Combinação de AND/OR com parênteses: a precedência importa!</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem parênteses, AND tem precedência sobre OR</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, id_escola, salario</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  (id_escola <span class="op">=</span> <span class="dv">31</span> <span class="kw">OR</span> id_escola <span class="op">=</span> <span class="dv">21</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  salario <span class="op">&gt;</span> <span class="dv">5000</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola, salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">nome</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">6700</td>
 </tr>
 </tbody>

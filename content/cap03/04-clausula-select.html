@@ -689,70 +689,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="distinct-eliminando-duplicatas">DISTINCT: Eliminando Duplicatas</h2>
 <p>Por padrão, o SQL <strong>não</strong> elimina linhas duplicadas no resultado — comportamento chamado de <code>ALL</code>. Para remover duplicatas, usa-se a palavra-chave <code>DISTINCT</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista a escola de cada professor (com repetição)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> escola</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista o id_escola de cada professor (com repetição)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>7 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com DISTINCT: cada escola aparece apenas uma vez</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> escola</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com DISTINCT: cada id_escola aparece apenas uma vez</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">31</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Os 7 professores são distribuídos entre 3 escolas distintas. <code>DISTINCT</code> elimina as repetições.</p>
+<p>Os 7 professores são distribuídos entre 3 escolas distintas (ids: 11, 21, 31). <code>DISTINCT</code> elimina as repetições.</p>
 </section>
 <section id="select" class="level2">
 <h2 class="anchored" data-anchor-id="select">SELECT *</h2>
@@ -766,60 +766,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <caption>7 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">matricula_prof</th>
+<th style="text-align: right;">id_prof</th>
 <th style="text-align: left;">nome</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">PROF20230005</td>
+<td style="text-align: right;">21200001</td>
 <td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PROF20230006</td>
+<td style="text-align: right;">21400002</td>
 <td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PROF20230031</td>
+<td style="text-align: right;">31200001</td>
 <td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PROF20230032</td>
+<td style="text-align: right;">31400002</td>
 <td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PROF20230033</td>
+<td style="text-align: right;">31200003</td>
 <td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PROF20230043</td>
+<td style="text-align: right;">11400002</td>
 <td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6600</td>
 </tr>
@@ -834,7 +834,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A cláusula <code>SELECT</code> pode conter expressões aritméticas com os operadores <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular um reajuste de 10% no salário dos professores sem alterar o banco</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, escola, salario,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, id_escola, salario,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(salario <span class="op">*</span> <span class="fl">1.10</span>, <span class="dv">2</span>) <span class="kw">AS</span> salario_reajustado</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -843,7 +843,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th style="text-align: left;">nome</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">salario</th>
 <th style="text-align: right;">salario_reajustado</th>
 </tr>
@@ -851,43 +851,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">3200</td>
 <td style="text-align: right;">3520</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">6400</td>
 <td style="text-align: right;">7040</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">3300</td>
 <td style="text-align: right;">3630</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">6700</td>
 <td style="text-align: right;">7370</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">3100</td>
 <td style="text-align: right;">3410</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">6500</td>
 <td style="text-align: right;">7150</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">6600</td>
 <td style="text-align: right;">7260</td>
 </tr>
@@ -914,30 +914,30 @@ Nota
 <p>A palavra-chave <code>AS</code> permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de <strong>alias</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias em coluna: renomeia colunas no resultado</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">AS</span> professor, escola <span class="kw">AS</span> lotacao</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">AS</span> professor, id_escola <span class="kw">AS</span> escola_id</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">professor</th>
-<th style="text-align: left;">lotacao</th>
+<th style="text-align: right;">escola_id</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 </tbody>
 </table>
@@ -948,8 +948,8 @@ Nota
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias de tabela: p para professor, e para escola</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor <span class="kw">AS</span> p, escola <span class="kw">AS</span> e</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola <span class="op">=</span> e.escola</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  p.escola <span class="op">=</span> <span class="st">'ESG'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.id_escola <span class="op">=</span> e.id_escola</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  p.id_escola <span class="op">=</span> <span class="dv">11</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>2 records</caption>
@@ -978,9 +978,9 @@ Nota
 <p>É possível incluir valores literais (constantes) na cláusula <code>SELECT</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adiciona uma coluna com o texto fixo 'UnDF'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UnDF'</span> <span class="kw">AS</span> instituicao, nome, escola</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UnDF'</span> <span class="kw">AS</span> instituicao, nome, id_escola</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  escola <span class="op">=</span> <span class="st">'ESETI'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>3 records</caption>
@@ -988,24 +988,24 @@ Nota
 <tr class="header">
 <th style="text-align: left;">instituicao</th>
 <th style="text-align: left;">nome</th>
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">UnDF</td>
 <td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">UnDF</td>
 <td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">UnDF</td>
 <td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 </tbody>
 </table>
@@ -1095,8 +1095,8 @@ Nota
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Concatenação de strings: montar identificação completa da turma</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> cod_disciplina <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(ano <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'-'</span> <span class="op">||</span> <span class="fu">CAST</span>(semestre <span class="kw">AS</span> TEXT) <span class="op">||</span> turma <span class="kw">AS</span> id_turma,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       matricula_prof,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(id_disciplina <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(ano <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'-'</span> <span class="op">||</span> <span class="fu">CAST</span>(semestre <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(turma <span class="kw">AS</span> TEXT) <span class="kw">AS</span> id_turma,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       id_prof,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       sala</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_turma;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1106,59 +1106,59 @@ Nota
 <thead>
 <tr class="header">
 <th style="text-align: left;">id_turma</th>
-<th style="text-align: left;">matricula_prof</th>
+<th style="text-align: right;">id_prof</th>
 <th style="text-align: left;">sala</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">ECO-201/2023-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110201/2023-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-005</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-201/2024-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110201/2024-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-013</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-201/2025-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110201/2025-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-025</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-202/2023-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110202/2023-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-012</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-202/2024-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110202/2024-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-001</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-202/2025-2A</td>
-<td style="text-align: left;">PROF20230043</td>
+<td style="text-align: left;">1110202/2025-2/1</td>
+<td style="text-align: right;">11400002</td>
 <td style="text-align: left;">ESG-SALA-007</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-401/2024-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110401/2024-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-009</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-401/2025-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110401/2025-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-021</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ECO-402/2024-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110402/2024-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-001</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ECO-402/2025-2A</td>
-<td style="text-align: left;">PROF20230042</td>
+<td style="text-align: left;">1110402/2025-2/1</td>
+<td style="text-align: right;">11400001</td>
 <td style="text-align: left;">ESG-SALA-005</td>
 </tr>
 </tbody>
@@ -1166,38 +1166,38 @@ Nota
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- DISTINCT com múltiplas colunas: combinações únicas de escola e ch_semanal</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> escola, ch_semanal</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- DISTINCT com múltiplas colunas: combinações únicas de id_escola e ch_semanal</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola, ch_semanal</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>5 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">EEMA</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">ESETI</td>
+<tr class="even">
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">ESETI</td>
+<tr class="odd">
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 </tr>
+<tr class="even">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
+</tr>
 <tr class="odd">
-<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 </tr>
 </tbody>
@@ -1214,7 +1214,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>DISTINCT</code> com múltiplas colunas elimina duplicatas de <strong>combinações</strong> — não de cada coluna individualmente. A consulta acima retorna cada par (escola, ch_semanal) único.</p>
+<p><code>DISTINCT</code> com múltiplas colunas elimina duplicatas de <strong>combinações</strong> — não de cada coluna individualmente. A consulta acima retorna cada par (id_escola, ch_semanal) único.</p>
 </div>
 </div>
 

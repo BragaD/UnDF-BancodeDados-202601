@@ -683,18 +683,18 @@ window.Quarto = {
 <p>O <strong>schema</strong> de um banco de dados é a sua estrutura lógica — a descrição das relações, seus atributos e os tipos de dados de cada atributo. O schema muda raramente e é definido durante o projeto do banco de dados.</p>
 </div>
 <p>Representa-se o schema de uma relação pelo nome da relação seguido dos seus atributos entre parênteses:</p>
-<p><span class="math display">\[professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)\]</span></p>
+<p><span class="math display">\[professor(\underline{id\_prof},\ nome,\ id\_escola,\ ch\_semanal,\ salario)\]</span></p>
 <p>O atributo sublinhado indica a chave primária (conceito detalhado na próxima seção).</p>
 <p>O banco de dados da UnDF possui oito relações com os seguintes schemas:</p>
 <ul>
-<li><span class="math inline">\(centro(\underline{centro},\ nome\_centro)\)</span></li>
-<li><span class="math inline">\(escola(\underline{escola},\ nome\_escola,\ centro)\)</span></li>
-<li><span class="math inline">\(curso(\underline{sigla\_curso},\ nome\_curso,\ escola,\ n\_semestres,\ carga\_horaria,\ tipo\_curso)\)</span></li>
-<li><span class="math inline">\(professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)\)</span></li>
-<li><span class="math inline">\(aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)\)</span></li>
-<li><span class="math inline">\(disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)\)</span></li>
-<li><span class="math inline">\(ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)\)</span></li>
-<li><span class="math inline">\(matricula\_disciplina(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ \underline{cod\_matricula},\ nota,\ aprovado)\)</span></li>
+<li><span class="math inline">\(centro(\underline{id\_centro},\ sigla,\ nome\_centro)\)</span></li>
+<li><span class="math inline">\(escola(\underline{id\_escola},\ sigla,\ nome\_escola,\ id\_centro)\)</span></li>
+<li><span class="math inline">\(curso(\underline{id\_curso},\ sigla\_curso,\ nome\_curso,\ id\_escola,\ n\_semestres,\ carga\_horaria,\ tipo\_curso)\)</span></li>
+<li><span class="math inline">\(professor(\underline{id\_prof},\ nome,\ id\_escola,\ ch\_semanal,\ salario)\)</span></li>
+<li><span class="math inline">\(aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso)\)</span></li>
+<li><span class="math inline">\(disciplina(\underline{id\_disciplina},\ nome\_disciplina,\ id\_curso,\ semestre,\ carga\_horaria)\)</span></li>
+<li><span class="math inline">\(ministra(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ id\_prof,\ horario,\ sala)\)</span></li>
+<li><span class="math inline">\(matricula\_disciplina(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ \underline{id\_aluno},\ nota,\ aprovado)\)</span></li>
 </ul>
 </section>
 <section id="instância-do-banco-de-dados" class="level2">
@@ -708,60 +708,60 @@ window.Quarto = {
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 <th style="text-align: right;">salario</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3200</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6400</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3300</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6700</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">3100</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6500</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">6600</td>
 </tr>
@@ -905,7 +905,7 @@ window.Quarto = {
 </div>
 <hr>
 <p><strong>3. Novo atributo, schema ou instância?</strong> O schema de <code>aluno</code> é:</p>
-<p><span class="math display">\[aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)\]</span></p>
+<p><span class="math display">\[aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso)\]</span></p>
 <p>Se a UnDF decidir registrar também o <strong>e-mail institucional</strong> de cada aluno, o que muda — schema ou instância? Escreva o novo schema.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -920,7 +920,7 @@ window.Quarto = {
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Muda o <strong>schema</strong> — é preciso adicionar um atributo. O novo schema seria:</p>
-<p><span class="math display">\[aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso,\ email)\]</span></p>
+<p><span class="math display">\[aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso,\ email)\]</span></p>
 <p>Após essa mudança de schema, a instância precisaria ser atualizada (via <code>UPDATE</code>) para popular o novo campo — caso contrário, os valores ficariam <code>null</code>.</p>
 </div>
 </div>

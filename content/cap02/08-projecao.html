@@ -688,98 +688,98 @@ window.Quarto = {
 </section>
 <section id="exemplo-1-projeção-simples" class="level2">
 <h2 class="anchored" data-anchor-id="exemplo-1-projeção-simples">Exemplo 1: Projeção Simples</h2>
-<p>Para obter apenas <code>matricula_prof</code> e <code>nome</code> de todos os professores — omitindo <code>escola</code> e <code>ch_semanal</code>:</p>
-<p><span class="math display">\[\Pi_{matricula\_prof,\ nome}(professor)\]</span></p>
+<p>Para obter apenas <code>id_prof</code> e <code>nome</code> de todos os professores — omitindo <code>id_escola</code> e <code>ch_semanal</code>:</p>
+<p><span class="math display">\[\Pi_{id\_prof,\ nome}(professor)\]</span></p>
 <p>Relação original <code>professor</code>:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
-<td>EEMA</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 <td style="text-align: right;">40</td>
 </tr>
 </tbody>
 </table>
-<p>Resultado de <span class="math inline">\(\Pi_{matricula\_prof,\ nome}(professor)\)</span>:</p>
+<p>Resultado de <span class="math inline">\(\Pi_{id\_prof,\ nome}(professor)\)</span>:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230005</td>
+<td>21200001</td>
 <td>Eduarda Souza</td>
 </tr>
 <tr class="even">
-<td>PROF20230006</td>
+<td>21400002</td>
 <td>Felipe Araujo</td>
 </tr>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
 </tr>
 <tr class="even">
-<td>PROF20230042</td>
+<td>11400001</td>
 <td>Bruno Teixeira</td>
 </tr>
 <tr class="odd">
-<td>PROF20230043</td>
+<td>11400002</td>
 <td>Carla Pinto</td>
 </tr>
 </tbody>
@@ -787,27 +787,27 @@ window.Quarto = {
 </section>
 <section id="eliminação-de-duplicatas" class="level2">
 <h2 class="anchored" data-anchor-id="eliminação-de-duplicatas">Eliminação de Duplicatas</h2>
-<p>Se projetarmos apenas <code>escola</code> de <code>professor</code>, o resultado terá somente os valores distintos:</p>
-<p><span class="math display">\[\Pi_{escola}(professor)\]</span></p>
+<p>Se projetarmos apenas <code>id_escola</code> de <code>professor</code>, o resultado terá somente os valores distintos:</p>
+<p><span class="math display">\[\Pi_{id\_escola}(professor)\]</span></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>EEMA</td>
+<td style="text-align: right;">21</td>
 </tr>
 <tr class="even">
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 </tr>
 <tr class="odd">
-<td>ESG</td>
+<td style="text-align: right;">11</td>
 </tr>
 </tbody>
 </table>
-<p>Mesmo que <code>ESETI</code> apareça em três tuplas (Gustavo, Helena e Igor), o resultado contém cada valor apenas uma vez.</p>
+<p>Mesmo que <code>31</code> apareça em três tuplas (Gustavo, Helena e Igor), o resultado contém cada valor apenas uma vez.</p>
 </section>
 <section id="composição-de-operações" class="level2">
 <h2 class="anchored" data-anchor-id="composição-de-operações">Composição de Operações</h2>
@@ -817,35 +817,35 @@ window.Quarto = {
 </div>
 <div class="exemplo">
 <p>Para obter os nomes de todos os professores da ESETI, combina-se seleção e projeção:</p>
-<p><span class="math display">\[\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)\]</span></p>
-<p><strong>Passo 1</strong> — Seleção <span class="math inline">\(\sigma_{escola = \text{"ESETI"}}(professor)\)</span>:</p>
+<p><span class="math display">\[\Pi_{nome}\!\left(\sigma_{id\_escola = 31}(professor)\right)\]</span></p>
+<p><strong>Passo 1</strong> — Seleção <span class="math inline">\(\sigma_{id\_escola = 31}(professor)\)</span>:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>matricula_prof</th>
+<th>id_prof</th>
 <th>nome</th>
-<th>escola</th>
+<th style="text-align: right;">id_escola</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>PROF20230031</td>
+<td>31200001</td>
 <td>Gustavo Costa</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 <tr class="even">
-<td>PROF20230032</td>
+<td>31400002</td>
 <td>Helena Carvalho</td>
-<td>ESETI</td>
+<td style="text-align: right;">31</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td>PROF20230033</td>
+<td>31200003</td>
 <td>Igor Melo</td>
-<td>ESETI</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">20</td>
 </tr>
 </tbody>
 </table>
@@ -895,9 +895,9 @@ window.Quarto = {
 <hr>
 <p><strong>2. Quantas tuplas?</strong> Calcule o número de tuplas esperado em cada resultado:</p>
 <ol type="a">
-<li><span class="math inline">\(\Pi_{escola}(professor)\)</span> — a tabela <code>professor</code> tem 7 tuplas distribuídas em 3 escolas</li>
-<li><span class="math inline">\(\Pi_{sigla\_curso}(disciplina)\)</span> — 24 disciplinas distribuídas em 3 cursos</li>
-<li><span class="math inline">\(\Pi_{matricula\_prof, escola}(professor)\)</span> — 7 tuplas, combinação de atributos</li>
+<li><span class="math inline">\(\Pi_{id\_escola}(professor)\)</span> — a tabela <code>professor</code> tem 7 tuplas distribuídas em 3 escolas</li>
+<li><span class="math inline">\(\Pi_{id\_curso}(disciplina)\)</span> — 24 disciplinas distribuídas em 3 cursos</li>
+<li><span class="math inline">\(\Pi_{id\_prof, id\_escola}(professor)\)</span> — 7 tuplas, combinação de atributos</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -912,16 +912,16 @@ window.Quarto = {
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><strong>3 tuplas</strong> — a projeção elimina duplicatas; há exatamente 3 valores distintos de <code>escola</code>.</li>
+<li><strong>3 tuplas</strong> — a projeção elimina duplicatas; há exatamente 3 valores distintos de <code>id_escola</code>.</li>
 <li><strong>3 tuplas</strong> — idem; 3 cursos distintos.</li>
-<li><strong>7 tuplas</strong> — como <code>matricula_prof</code> é a chave primária, cada combinação (matricula_prof, escola) já é única. A projeção não elimina nenhuma tupla.</li>
+<li><strong>7 tuplas</strong> — como <code>id_prof</code> é a chave primária, cada combinação (id_prof, id_escola) já é única. A projeção não elimina nenhuma tupla.</li>
 </ol>
 <p><em>Observação:</em> a projeção sobre a chave primária nunca elimina tuplas — o número é preservado.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>3. Projeção e junção.</strong> Após fazer a junção <span class="math inline">\(professor \bowtie_{professor.escola = escola.escola} escola\)</span>, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.</p>
+<p><strong>3. Projeção e junção.</strong> Após fazer a junção <span class="math inline">\(professor \bowtie_{professor.id\_escola = escola.id\_escola} escola\)</span>, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -934,7 +934,7 @@ window.Quarto = {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.escola = escola.escola} escola\right)\]</span></p>
+<p><span class="math display">\[\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.id\_escola = escola.id\_escola} escola\right)\]</span></p>
 <p>O resultado tem 7 tuplas (uma por professor), com os atributos <code>nome</code> e <code>nome_escola</code>.</p>
 </div>
 </div>
