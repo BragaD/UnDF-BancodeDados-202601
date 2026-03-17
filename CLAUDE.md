@@ -90,51 +90,75 @@ The `docs/` directory and `_freeze/` are gitignored locally — the CI handles a
 
 Os exemplos dos capítulos 1, 2 e 3 usam dados reais carregados de CSVs em `dados/amostra/` para um banco PostgreSQL chamado **`curso`**.
 
+### Padrão de chaves primárias (hierárquico)
+
+Todas as PKs são inteiros. Chaves de entidades filhas **herdam o prefixo** da entidade pai:
+
+| Tabela | Padrão da PK | Exemplo |
+|---|---|---|
+| `centro` | sequencial simples (1 dígito) | `1` = COCHCMA |
+| `escola` | `id_centro(1d)` + seq(1d) | `11` = ESG (centro 1, seq 1) |
+| `curso` | `id_escola(2d)` + seq(1d) | `111` = ECO (escola 11, seq 1) |
+| `professor` | `id_escola(2d)` + `ch_semanal(2d)` + seq(4d) | `21200001` = Eduarda (EEMA, 20h, seq 1) |
+| `aluno` | `ano(4d)` + `id_curso(3d)` + seq(3d) | `2024311001` = Pedro (ENS/311, 2024, seq 1) |
+| `disciplina` | `id_curso(3d)` + `semestre(2d)` + seq(2d) | `3110401` = BES4 (ENS/311, sem 4, seq 1) |
+| `ministra` | PK composta: `id_disciplina`, `ano`, `semestre`, `turma` (int) | turma `'A'` → `1` |
+| `prereq` | PK composta: `id_disciplina`, `id_prereq` | — |
+| `matricula_disciplina` | PK composta: `id_disciplina`, `ano`, `semestre`, `turma`, `id_aluno` | — |
+
+**Regra do professor:** o seq é global por escola (independente de ch_semanal). Exemplo: Bruno(40h) é o 1º da escola 11 → `11400001`; Carla(40h) é a 2ª → `11400002`.
+
 ### Tabelas e schema
 
 | Tabela | Colunas principais |
 |---|---|
-| `centro` | `centro` (PK), `nome_centro` |
-| `escola` | `escola` (PK), `nome_escola`, `centro` (FK→centro) |
-| `curso` | `sigla_curso` (PK), `nome_curso`, `escola` (FK→escola), `n_semestres`, `carga_horaria`, `tipo_curso` |
-| `professor` | `matricula_prof` (PK), `nome`, `escola` (FK→escola), `ch_semanal`, `salario` |
-| `aluno` | `matricula` (PK), `nome`, `sigla_curso` (FK→curso), `ano_ingresso` |
-| `disciplina` | `codigo` (PK), `nome_disciplina`, `sigla_curso` (FK→curso), `semestre`, `carga_horaria` |
-| `ministra` | `cod_disciplina`, `ano`, `semestre`, `turma` (PK composta), `matricula_prof` (FK→professor) |
-| `prereq` | `codigo` (PK+FK→disciplina), `prereq_codigo` (PK+FK→disciplina) |
-| `matricula_disciplina` | `cod_disciplina`, `ano`, `semestre`, `turma`, `cod_matricula` (PK composta), `nota`, `aprovado` |
+| `centro` | `id_centro` INT (PK), `sigla`, `nome_centro` |
+| `escola` | `id_escola` INT (PK), `sigla`, `nome_escola`, `id_centro` (FK→centro) |
+| `curso` | `id_curso` INT (PK), `sigla_curso`, `nome_curso`, `id_escola` (FK→escola), `n_semestres`, `carga_horaria`, `tipo_curso` |
+| `professor` | `id_prof` INT (PK), `nome`, `id_escola` (FK→escola), `ch_semanal`, `salario` |
+| `aluno` | `id_aluno` INT (PK), `nome`, `id_curso` (FK→curso), `ano_ingresso` |
+| `disciplina` | `id_disciplina` INT (PK), `nome_disciplina`, `id_curso` (FK→curso), `semestre`, `carga_horaria` |
+| `ministra` | `id_disciplina`, `ano`, `semestre`, `turma` (PK composta), `id_prof` (FK→professor), `horario`, `sala` |
+| `prereq` | `id_disciplina` (PK+FK→disciplina), `id_prereq` (PK+FK→disciplina) |
+| `matricula_disciplina` | `id_disciplina`, `ano`, `semestre`, `turma`, `id_aluno` (PK composta), `nota`, `aprovado` |
 
 ### Dados de referência
 
 **centro** (3 linhas):
 
-| centro | nome_centro |
-|---|---|
-| COCHCMA | Ciências Humanas, Cidadania e Meio Ambiente |
-| COEMAG  | Centro de Educação, Magistério e Artes |
-| COETI   | Centro de Engenharias, Tecnologia e Inovação |
+| id_centro | sigla | nome_centro |
+|---|---|---|
+| 1 | COCHCMA | Ciências Humanas, Cidadania e Meio Ambiente |
+| 2 | COEMAG  | Centro de Educação, Magistério e Artes |
+| 3 | COETI   | Centro de Engenharias, Tecnologia e Inovação |
 
 **escola** (3 linhas):
 
-| escola | nome_escola | centro |
-|---|---|---|
-| ESG   | Escola Superior de Gestão | COCHCMA |
-| EEMA  | Escola de Educação, Magistério e Arte | COEMAG |
-| ESETI | Escola Superior de Engenharias, Tecnologia e Inovação | COETI |
+| id_escola | sigla | nome_escola | id_centro |
+|---|---|---|---|
+| 11 | ESG   | Escola Superior de Gestão | 1 |
+| 21 | EEMA  | Escola de Educação, Magistério e Arte | 2 |
+| 31 | ESETI | Escola Superior de Engenharias, Tecnologia e Inovação | 3 |
 
-**curso** (3 linhas): `ENS` (Engenharia de Software, ESETI), `ECO` (Ciências Econômicas, ESG), `PED` (Pedagogia, EEMA)
+**curso** (3 linhas):
 
-**professor** (7 linhas): EEMA → Eduarda Souza (20h, R$3.200), Felipe Araujo (40h, R$6.400); ESETI → Gustavo Costa (20h, R$3.300), Helena Carvalho (40h, R$6.700), Igor Melo (20h, R$3.100); ESG → Bruno Teixeira (40h, R$6.500), Carla Pinto (40h, R$6.600)
+| id_curso | sigla_curso | nome_curso | id_escola |
+|---|---|---|---|
+| 111 | ECO | Ciências Econômicas | 11 |
+| 211 | PED | Pedagogia | 21 |
+| 311 | ENS | Engenharia de Software | 31 |
 
-**aluno** (18 linhas): 6 por curso (ENS/ECO/PED), ingressantes 2023–2025
+**professor** (7 linhas): ESG(11) → Bruno Teixeira `11400001` (40h, R$6.500), Carla Pinto `11400002` (40h, R$6.600); EEMA(21) → Eduarda Souza `21200001` (20h, R$3.200), Felipe Araujo `21400002` (40h, R$6.400); ESETI(31) → Gustavo Costa `31200001` (20h, R$3.300), Helena Carvalho `31400002` (40h, R$6.700), Igor Melo `31200003` (20h, R$3.100)
 
-**disciplina** (24 linhas): 8 por curso (semestres 2,4,6,8); `carga_horaria` varia de 40 a 180h
+**aluno** (18 linhas): 6 por curso (ECO/111, PED/211, ENS/311), ingressantes 2023–2025; id_aluno = `ano × 10^7 + id_curso × 10^3 + seq`
+
+**disciplina** (24 linhas): 8 por curso (semestres 2,4,6,8); `carga_horaria` varia de 40 a 180h; id_disciplina = `id_curso × 10^4 + semestre × 10^2 + seq`
 
 ### Nomes das pessoas
 Usar **nome e sobrenome**, tipicamente brasileiros.
 
-### Códigos de disciplina
-Padrão `SIGLA-SSS` (sigla do curso + semestre + sequencial): ex. `ENS-201`, `ECO-401`, `PED-801`.
+### Códigos de disciplina (legível)
+Os ids são numéricos. Para exibição textual em material didático, usar `SIGLA-SSNN`: ex. `ENS-0401` (id 3110401), `ECO-0201` (id 1110201). Nos CSVs usar apenas o `id_disciplina` inteiro.
 
 ### Conexão R nos arquivos .qmd
 

@@ -17,52 +17,52 @@ Em outras palavras, as relações devem "ter a mesma forma" para que faz sentido
 
 Definimos duas relações auxiliares a partir da tabela `disciplina`:
 
-$$A \leftarrow \Pi_{codigo}(\sigma_{sigla\_curso = \text{"PED"}}(disciplina))$$
+$$A \leftarrow \Pi_{id\_disciplina}(\sigma_{id\_curso = 211}(disciplina))$$
 
-$$B \leftarrow \Pi_{codigo}(\sigma_{carga\_horaria \geq 60}(disciplina))$$
+$$B \leftarrow \Pi_{id\_disciplina}(\sigma_{carga\_horaria \geq 60}(disciplina))$$
 
 Relação $A$ — disciplinas de Pedagogia (8 disciplinas):
 
-| codigo  |
-|---|
-| PED-203 |
-| PED-204 |
-| PED-403 |
-| PED-404 |
-| PED-603 |
-| PED-604 |
-| PED-803 |
-| PED-804 |
+| id_disciplina |
+|---:|
+| 2110201 |
+| 2110202 |
+| 2110401 |
+| 2110402 |
+| 2110601 |
+| 2110602 |
+| 2110801 |
+| 2110802 |
 
-Relação $B$ — disciplinas com carga horária $\geq 60$ h (22 disciplinas — todas exceto PED-604 = 40 h e PED-804 = 50 h):
+Relação $B$ — disciplinas com carga horária $\geq 60$ h (22 disciplinas — todas exceto 2110602 = 40 h e 2110802 = 50 h):
 
-| codigo  | (carga_horaria) |
-|---|---:|
-| ECO-201 | 75 |
-| ECO-202 | 60 |
-| ECO-401 | 75 |
-| ECO-402 | 95 |
-| ECO-601 | 75 |
-| ECO-602 | 75 |
-| ECO-801 | 100 |
-| ECO-802 | 90 |
-| ENS-201 | 150 |
-| ENS-202 | 120 |
-| ENS-401 | 180 |
-| ENS-402 | 120 |
-| ENS-601 | 150 |
-| ENS-602 | 120 |
-| ENS-801 | 100 |
-| ENS-802 | 160 |
-| PED-203 | 60 |
-| PED-204 | 60 |
-| PED-403 | 80 |
-| PED-404 | 80 |
-| PED-603 | 80 |
-| PED-803 | 60 |
+| id_disciplina | (carga_horaria) |
+|---:|---:|
+| 1110201 | 75 |
+| 1110202 | 60 |
+| 1110401 | 75 |
+| 1110402 | 95 |
+| 1110601 | 75 |
+| 1110602 | 75 |
+| 1110801 | 100 |
+| 1110802 | 90 |
+| 3110201 | 150 |
+| 3110202 | 120 |
+| 3110401 | 180 |
+| 3110402 | 120 |
+| 3110601 | 150 |
+| 3110602 | 120 |
+| 3110801 | 100 |
+| 3110802 | 160 |
+| 2110201 | 60 |
+| 2110202 | 60 |
+| 2110401 | 80 |
+| 2110402 | 80 |
+| 2110601 | 80 |
+| 2110801 | 60 |
 
 ::: {.callout-note}
-PED-604 (40 h) e PED-804 (50 h) **não** aparecem em $B$, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em **ambas** as relações.
+2110602 (40 h) e 2110802 (50 h) **não** aparecem em $B$, pois têm carga horária inferior a 60 h. As demais 6 disciplinas de PED aparecem em **ambas** as relações.
 :::
 
 ## União ($\cup$)
@@ -78,7 +78,7 @@ $$A \cup B$$
 Resultado — disciplinas de Pedagogia **ou** com carga horária $\geq 60$ h (24 disciplinas — o conjunto completo da amostra):
 
 ::: {.exemplo}
-PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem às duas relações, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via $A$.
+2110201, 2110202, 2110401, 2110402, 2110601 e 2110801 pertencem às duas relações, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. 2110602 e 2110802 são adicionadas via $A$.
 :::
 
 ## Interseção ($\cap$)
@@ -93,17 +93,17 @@ $$A \cap B$$
 
 Resultado — disciplinas de Pedagogia **que também** têm carga horária $\geq 60$ h:
 
-| codigo  |
-|---|
-| PED-203 |
-| PED-204 |
-| PED-403 |
-| PED-404 |
-| PED-603 |
-| PED-803 |
+| id_disciplina |
+|---:|
+| 2110201 |
+| 2110202 |
+| 2110401 |
+| 2110402 |
+| 2110601 |
+| 2110801 |
 
 ::: {.exemplo}
-PED-604 (40 h) e PED-804 (50 h) estão em $A$ mas não em $B$, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.
+2110602 (40 h) e 2110802 (50 h) estão em $A$ mas não em $B$, por isso são excluídas. As demais 6 disciplinas de PED satisfazem ambas as condições.
 :::
 
 ::: {.callout-note}
@@ -122,13 +122,13 @@ $$A - B$$
 
 Resultado — disciplinas de Pedagogia com carga horária $< 60$ h:
 
-| codigo  |
-|---|
-| PED-604 |
-| PED-804 |
+| id_disciplina |
+|---:|
+| 2110602 |
+| 2110802 |
 
 ::: {.exemplo}
-Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem $carga\_horaria \geq 60$ h e portanto não estão em $B$. São as únicas que permanecem após a diferença.
+Das 8 disciplinas de PED, apenas 2110602 (40 h) e 2110802 (50 h) não satisfazem $carga\_horaria \geq 60$ h e portanto não estão em $B$. São as únicas que permanecem após a diferença.
 :::
 
 ## Resumo Comparativo
@@ -150,7 +150,7 @@ Das 8 disciplinas de PED, apenas PED-604 (40 h) e PED-804 (50 h) não satisfazem
 $\cup$ e $\cap$ são **comutativas** ($A \cup B = B \cup A$ e $A \cap B = B \cap A$). A diferença $-$ **não** é comutativa.
 
 Exemplo: seja $A$ = disciplinas de PED (8 tuplas) e $B$ = disciplinas com carga ≥ 60 h (22 tuplas).
-- $A - B$ = disciplinas de PED com carga < 60 h = {PED-604, PED-804} → **2 tuplas**
+- $A - B$ = disciplinas de PED com carga < 60 h = {2110602, 2110802} → **2 tuplas**
 - $B - A$ = disciplinas com carga ≥ 60 h que **não** são de PED = 22 − 6 = **16 tuplas**
 :::
 

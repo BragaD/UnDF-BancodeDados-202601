@@ -27,14 +27,15 @@ O predicado `IN` verifica se um valor pertence ao conjunto retornado por uma sub
 ```{sql}
 --| connection: con
 --| eval: true
--- Passo 1 (subconsulta): códigos das disciplinas de ENS
+-- Passo 1 (subconsulta): ids das disciplinas de ENS (id_curso = 311)
 -- Passo 2 (consulta principal): alunos que cursaram essas disciplinas
-SELECT DISTINCT a.nome, a.sigla_curso
+SELECT DISTINCT a.nome, a.id_curso
 FROM   aluno a
-WHERE  a.matricula IN (
-    SELECT md.cod_matricula
+WHERE  a.id_aluno IN (
+    SELECT md.id_aluno
     FROM   matricula_disciplina md
-    WHERE  md.cod_disciplina LIKE 'ENS%'
+    JOIN   disciplina d ON d.id_disciplina = md.id_disciplina
+    WHERE  d.id_curso = 311
 )
 ORDER BY a.nome;
 ```
@@ -46,13 +47,13 @@ ORDER BY a.nome;
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT codigo, nome_disciplina
+SELECT id_disciplina, nome_disciplina
 FROM   disciplina
-WHERE  codigo NOT IN (
-    SELECT DISTINCT cod_disciplina
+WHERE  id_disciplina NOT IN (
+    SELECT DISTINCT id_disciplina
     FROM   matricula_disciplina
 )
-ORDER BY codigo;
+ORDER BY id_disciplina;
 ```
 :::
 
@@ -62,13 +63,13 @@ ORDER BY codigo;
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT codigo, nome_disciplina, sigla_curso, semestre
+SELECT id_disciplina, nome_disciplina, id_curso, semestre
 FROM   disciplina
-WHERE  codigo NOT IN (
-    SELECT codigo
+WHERE  id_disciplina NOT IN (
+    SELECT id_disciplina
     FROM   prereq
 )
-ORDER BY sigla_curso, semestre;
+ORDER BY id_curso, semestre;
 ```
 :::
 
@@ -89,14 +90,14 @@ O predicado `= SOME` é equivalente a `IN`.
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria > SOME (
     SELECT carga_horaria
     FROM   disciplina
-    WHERE  sigla_curso = 'PED'
+    WHERE  id_curso = 211
 )
-  AND sigla_curso <> 'PED'
+  AND id_curso <> 211
 ORDER BY carga_horaria;
 ```
 :::
@@ -107,12 +108,12 @@ ORDER BY carga_horaria;
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria > ALL (
     SELECT carga_horaria
     FROM   disciplina
-    WHERE  sigla_curso = 'ECO'
+    WHERE  id_curso = 111
 )
 ORDER BY carga_horaria;
 ```
@@ -128,14 +129,14 @@ ORDER BY carga_horaria;
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT d.codigo, d.nome_disciplina, d.sigla_curso
+SELECT d.id_disciplina, d.nome_disciplina, d.id_curso
 FROM   disciplina d
 WHERE  EXISTS (
     SELECT 1
     FROM   prereq p
-    WHERE  p.codigo = d.codigo
+    WHERE  p.id_disciplina = d.id_disciplina
 )
-ORDER BY d.sigla_curso, d.codigo;
+ORDER BY d.id_curso, d.id_disciplina;
 ```
 :::
 
@@ -145,12 +146,12 @@ ORDER BY d.sigla_curso, d.codigo;
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT c.sigla_curso, c.nome_curso
+SELECT c.id_curso, c.nome_curso
 FROM   curso c
 WHERE  EXISTS (
     SELECT 1
     FROM   disciplina d
-    WHERE  d.sigla_curso = c.sigla_curso   -- correlação com a consulta externa
+    WHERE  d.id_curso = c.id_curso   -- correlação com a consulta externa
       AND  d.carga_horaria > 150
 );
 ```
@@ -162,15 +163,15 @@ WHERE  EXISTS (
 ```{sql}
 --| connection: con
 --| eval: true
-SELECT a.nome, a.sigla_curso
+SELECT a.nome, a.id_curso
 FROM   aluno a
 WHERE  NOT EXISTS (
     SELECT 1
     FROM   matricula_disciplina md
-    WHERE  md.cod_matricula = a.matricula
+    WHERE  md.id_aluno = a.id_aluno
       AND  md.aprovado = 0
 )
-ORDER BY a.sigla_curso, a.nome;
+ORDER BY a.id_curso, a.nome;
 ```
 :::
 
@@ -185,12 +186,12 @@ Uma subconsulta pode ser usada como se fosse uma tabela na cláusula `FROM`. Ela
 --| connection: con
 --| eval: true
 -- A subconsulta calcula a média por curso; a consulta externa filtra
-SELECT media_por_curso.sigla_curso,
+SELECT media_por_curso.id_curso,
        ROUND(media_por_curso.media, 2) AS media_carga
 FROM (
-    SELECT sigla_curso, AVG(carga_horaria) AS media
+    SELECT id_curso, AVG(carga_horaria) AS media
     FROM   disciplina
-    GROUP BY sigla_curso
+    GROUP BY id_curso
 ) AS media_por_curso
 WHERE  media_por_curso.media > 70
 ORDER BY media_por_curso.media DESC;
@@ -209,18 +210,18 @@ A cláusula `WITH` define uma **CTE** (*Common Table Expression*), que é uma su
 --| eval: true
 -- Define a CTE com estatísticas por curso
 WITH stats_curso AS (
-    SELECT sigla_curso,
+    SELECT id_curso,
            COUNT(*)         AS n_disciplinas,
            SUM(carga_horaria)  AS carga_total,
            AVG(carga_horaria)  AS carga_media
     FROM   disciplina
-    GROUP BY sigla_curso
+    GROUP BY id_curso
 )
 -- Usa a CTE junto com a tabela curso para obter o nome completo
 SELECT c.nome_curso, s.n_disciplinas, s.carga_total,
        ROUND(s.carga_media, 1) AS carga_media
 FROM   stats_curso s
-JOIN   curso c USING (sigla_curso)
+JOIN   curso c USING (id_curso)
 ORDER BY s.carga_total DESC;
 ```
 :::
@@ -241,7 +242,7 @@ ORDER BY s.carga_total DESC;
 --| connection: con
 --| eval: true
 -- Subconsulta escalar no SELECT: mostrar a diferença do salário em relação à média
-SELECT nome, escola, salario,
+SELECT nome, id_escola, salario,
        ROUND(salario - (SELECT AVG(salario) FROM professor), 2) AS dif_media
 FROM   professor
 ORDER BY dif_media DESC;
@@ -251,7 +252,7 @@ ORDER BY dif_media DESC;
 --| connection: con
 --| eval: true
 -- ALL: professores com salário maior que TODOS os professores de 20h
-SELECT nome, escola, salario
+SELECT nome, id_escola, salario
 FROM   professor
 WHERE  salario > ALL (
     SELECT salario
@@ -264,25 +265,25 @@ ORDER BY salario DESC;
 ```{sql}
 --| connection: con
 --| eval: true
--- WITH RECURSIVE: encontrar todos os pré-requisitos transitivos de ENS-801
+-- WITH RECURSIVE: encontrar todos os pré-requisitos transitivos de 3110801
 -- (pré-requisitos diretos e indiretos — cadeia completa)
 WITH RECURSIVE cadeia AS (
-    -- Caso base: pré-requisitos diretos de ENS-801
-    SELECT prereq_codigo AS disciplina, 1 AS nivel
+    -- Caso base: pré-requisitos diretos de 3110801
+    SELECT id_prereq AS disciplina, 1 AS nivel
     FROM   prereq
-    WHERE  codigo = 'ENS-801'
+    WHERE  id_disciplina = 3110801
     UNION
     -- Caso recursivo: pré-requisitos dos pré-requisitos
-    SELECT p.prereq_codigo, c.nivel + 1
+    SELECT p.id_prereq, c.nivel + 1
     FROM   prereq p
-    JOIN   cadeia c ON p.codigo = c.disciplina
+    JOIN   cadeia c ON p.id_disciplina = c.disciplina
 )
 SELECT c.disciplina AS prereq_transitivo, c.nivel, d.nome_disciplina
 FROM   cadeia c
-JOIN   disciplina d ON d.codigo = c.disciplina
+JOIN   disciplina d ON d.id_disciplina = c.disciplina
 ORDER BY c.nivel, c.disciplina;
 ```
 
 ::: {.conceito}
-`WITH RECURSIVE` permite escrever consultas que percorrem estruturas hierárquicas ou grafos — como a cadeia de pré-requisitos. O PostgreSQL suporta esse recurso; outros SGBDs podem ter sintaxe ligeiramente diferente. O resultado mostra todos os pré-requisitos (diretos e indiretos) de ENS-801 com o nível de profundidade na cadeia.
+`WITH RECURSIVE` permite escrever consultas que percorrem estruturas hierárquicas ou grafos — como a cadeia de pré-requisitos. O PostgreSQL suporta esse recurso; outros SGBDs podem ter sintaxe ligeiramente diferente. O resultado mostra todos os pré-requisitos (diretos e indiretos) de 3110801 com o nível de profundidade na cadeia.
 :::

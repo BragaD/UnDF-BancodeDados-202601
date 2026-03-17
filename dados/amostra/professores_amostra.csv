@@ -1,8 +1,8 @@
-matricula_prof;nome;escola;ch_semanal;salario
-PROF20230005;Eduarda Souza;EEMA;20;3200
-PROF20230006;Felipe Araujo;EEMA;40;6400
-PROF20230031;Gustavo Costa;ESETI;20;3300
-PROF20230032;Helena Carvalho;ESETI;40;6700
-PROF20230033;Igor Melo;ESETI;20;3100
-PROF20230042;Bruno Teixeira;ESG;40;6500
-PROF20230043;Carla Pinto;ESG;40;6600
+id_prof;nome;id_escola;ch_semanal;salario
+11400001;Bruno Teixeira;11;40;6500
+11400002;Carla Pinto;11;40;6600
+21200001;Eduarda Souza;21;20;3200
+21400002;Felipe Araujo;21;40;6400
+31200001;Gustavo Costa;31;20;3300
+31400002;Helena Carvalho;31;40;6700
+31200003;Igor Melo;31;20;3100

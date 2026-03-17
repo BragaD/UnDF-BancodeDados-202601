@@ -23,7 +23,7 @@ Cada coluna de uma tabela deve ter um **tipo de dado** que determina quais valor
 
 | Tipo | Descrição | Exemplo |
 |---|---|---|
-| `CHAR(n)` | String de comprimento fixo com exatamente *n* caracteres | `CHAR(1)` para turma `'A'` |
+| `CHAR(n)` | String de comprimento fixo com exatamente *n* caracteres | `CHAR(5)` para sigla `'ESETI'` |
 | `VARCHAR(n)` | String de comprimento variável com até *n* caracteres | `VARCHAR(50)` para nomes |
 | `INT` ou `INTEGER` | Número inteiro (tipicamente 4 bytes) | `42`, `-7` |
 | `SMALLINT` | Número inteiro menor (tipicamente 2 bytes) | `32767` |
@@ -72,7 +72,8 @@ As tabelas devem ser criadas na ordem correta: primeiro as que não têm depend�
 
 ```sql
 CREATE TABLE centro (
-    centro      VARCHAR(10)  PRIMARY KEY,
+    id_centro   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
     nome_centro VARCHAR(100) NOT NULL
 );
 ```
@@ -81,9 +82,10 @@ CREATE TABLE centro (
 
 ```sql
 CREATE TABLE escola (
-    escola      VARCHAR(10)  PRIMARY KEY,
+    id_escola   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
     nome_escola VARCHAR(100) NOT NULL,
-    centro      VARCHAR(10)  REFERENCES centro(centro)
+    id_centro   INTEGER      REFERENCES centro(id_centro)
 );
 ```
 
@@ -91,9 +93,10 @@ CREATE TABLE escola (
 
 ```sql
 CREATE TABLE curso (
-    sigla_curso   VARCHAR(5)   PRIMARY KEY,
+    id_curso      INTEGER      PRIMARY KEY,
+    sigla_curso   VARCHAR(5)   NOT NULL UNIQUE,
     nome_curso    VARCHAR(100) NOT NULL,
-    escola        VARCHAR(10)  REFERENCES escola(escola),
+    id_escola     INTEGER      REFERENCES escola(id_escola),
     n_semestres   INTEGER      NOT NULL,
     carga_horaria INTEGER      NOT NULL,
     tipo_curso    VARCHAR(20)  NOT NULL
@@ -104,11 +107,22 @@ CREATE TABLE curso (
 
 ```sql
 CREATE TABLE professor (
-    matricula_prof VARCHAR(15)    PRIMARY KEY,
-    nome           VARCHAR(50)    NOT NULL,
-    escola         VARCHAR(10)    REFERENCES escola(escola),
-    ch_semanal     INTEGER        NOT NULL,
-    salario        NUMERIC(10,2)  NOT NULL
+    id_prof    INTEGER       PRIMARY KEY,
+    nome       VARCHAR(50)   NOT NULL,
+    id_escola  INTEGER       REFERENCES escola(id_escola),
+    ch_semanal INTEGER       NOT NULL,
+    salario    NUMERIC(10,2) NOT NULL
+);
+```
+
+**Tabela `aluno`** — referencia `curso`:
+
+```sql
+CREATE TABLE aluno (
+    id_aluno     INTEGER     PRIMARY KEY,
+    nome         VARCHAR(50) NOT NULL,
+    id_curso     INTEGER     REFERENCES curso(id_curso),
+    ano_ingresso INTEGER     NOT NULL
 );
 ```
 
@@ -116,9 +130,9 @@ CREATE TABLE professor (
 
 ```sql
 CREATE TABLE disciplina (
-    codigo          VARCHAR(10)  PRIMARY KEY,
+    id_disciplina   INTEGER      PRIMARY KEY,
     nome_disciplina VARCHAR(100) NOT NULL,
-    sigla_curso     VARCHAR(5)   REFERENCES curso(sigla_curso),
+    id_curso        INTEGER      REFERENCES curso(id_curso),
     semestre        INTEGER      NOT NULL,
     carga_horaria   INTEGER      NOT NULL CHECK (carga_horaria > 0)
 );
@@ -128,9 +142,9 @@ CREATE TABLE disciplina (
 
 ```sql
 CREATE TABLE prereq (
-    codigo        VARCHAR(10) REFERENCES disciplina(codigo),
-    prereq_codigo VARCHAR(10) REFERENCES disciplina(codigo),
-    PRIMARY KEY (codigo, prereq_codigo)
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    id_prereq     INTEGER REFERENCES disciplina(id_disciplina),
+    PRIMARY KEY (id_disciplina, id_prereq)
 );
 ```
 
@@ -138,14 +152,14 @@ CREATE TABLE prereq (
 
 ```sql
 CREATE TABLE ministra (
-    cod_disciplina VARCHAR(10) REFERENCES disciplina(codigo),
-    ano            INTEGER     NOT NULL,
-    semestre       INTEGER     NOT NULL,
-    turma          CHAR(1)     NOT NULL,
-    matricula_prof VARCHAR(15) REFERENCES professor(matricula_prof),
-    horario        VARCHAR(20),
-    sala           VARCHAR(20),
-    PRIMARY KEY (cod_disciplina, ano, semestre, turma)
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_prof       INTEGER REFERENCES professor(id_prof),
+    horario       VARCHAR(50),
+    sala          VARCHAR(20),
+    PRIMARY KEY (id_disciplina, ano, semestre, turma)
 );
 ```
 
@@ -153,16 +167,16 @@ CREATE TABLE ministra (
 
 ```sql
 CREATE TABLE matricula_disciplina (
-    cod_disciplina VARCHAR(10) NOT NULL,
-    ano            INTEGER     NOT NULL,
-    semestre       INTEGER     NOT NULL,
-    turma          CHAR(1)     NOT NULL,
-    cod_matricula  VARCHAR(15) REFERENCES aluno(matricula),
-    nota           NUMERIC(4,1),
-    aprovado       SMALLINT,
-    PRIMARY KEY (cod_disciplina, ano, semestre, turma, cod_matricula),
-    FOREIGN KEY (cod_disciplina, ano, semestre, turma)
-        REFERENCES ministra(cod_disciplina, ano, semestre, turma)
+    id_disciplina INTEGER NOT NULL,
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_aluno      INTEGER REFERENCES aluno(id_aluno),
+    nota          NUMERIC(4,1),
+    aprovado      SMALLINT,
+    PRIMARY KEY (id_disciplina, ano, semestre, turma, id_aluno),
+    FOREIGN KEY (id_disciplina, ano, semestre, turma)
+        REFERENCES ministra(id_disciplina, ano, semestre, turma)
 );
 ```
 :::
@@ -186,7 +200,7 @@ Se tentarmos criar `escola` antes de `centro`, o banco de dados retornará um er
 ERROR: relation "centro" does not exist
 ```
 
-Isso ocorre porque `REFERENCES centro(centro)` exige que `centro` já exista.
+Isso ocorre porque `REFERENCES centro(id_centro)` exige que `centro` já exista.
 
 ## ALTER TABLE
 

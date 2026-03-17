@@ -47,18 +47,18 @@ A consulta `SELECT A FROM r WHERE condição` equivale a: $\Pi_A(\sigma_{cond}(r
 -- Quais professores estão lotados na Escola Superior de Engenharias, Tecnologia e Inovação?
 SELECT nome
 FROM   professor
-WHERE  escola = 'ESETI';
+WHERE  id_escola = 31;
 ```
 
-## Exemplo 2: Nomes e Escolas dos Professores da EEMA
+## Exemplo 2: Nomes e Escola dos Professores da EEMA
 
 ```{sql}
 --| connection: con
 --| eval: true
 -- Quais professores pertencem à Escola de Educação, Magistério e Arte?
-SELECT nome, escola
+SELECT nome, id_escola
 FROM   professor
-WHERE  escola = 'EEMA';
+WHERE  id_escola = 21;
 ```
 
 ## Exemplo 3: Produto Cartesiano com Múltiplas Tabelas
@@ -69,13 +69,13 @@ Quando duas ou mais tabelas são listadas na cláusula `FROM`, o SQL produz o **
 --| connection: con
 --| eval: true
 -- Nomes dos professores com os dados da escola e do centro ao qual pertencem
-SELECT p.nome, e.nome_escola, e.centro
+SELECT p.nome, e.nome_escola, e.id_centro
 FROM   professor p, escola e
-WHERE  p.escola = e.escola;
+WHERE  p.id_escola = e.id_escola;
 ```
 
 ::: {.callout-note}
-A condição `p.escola = e.escola` na cláusula `WHERE` funciona como uma **junção** entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.
+A condição `p.id_escola = e.id_escola` na cláusula `WHERE` funciona como uma **junção** entre as tabelas. Sem essa condição, o resultado seria o produto cartesiano completo: 7 professores × 3 escolas = 21 linhas, a maioria sem sentido.
 
 A sintaxe com `JOIN` explícito — abordada em capítulos posteriores — é a forma preferida para expressar junções com clareza.
 :::
@@ -91,24 +91,24 @@ Quando uma tabela referencia a si mesma, precisamos incluí-la **duas vezes** na
 SELECT d.nome_disciplina AS disciplina,
        p.nome_disciplina AS prereq
 FROM   prereq pr, disciplina d, disciplina p
-WHERE  pr.codigo        = d.codigo
-  AND  pr.prereq_codigo = p.codigo
-ORDER BY d.sigla_curso, d.codigo;
+WHERE  pr.id_disciplina = d.id_disciplina
+  AND  pr.id_prereq     = p.id_disciplina
+ORDER BY d.id_curso, d.id_disciplina;
 ```
 
 ## Notação com Qualificador de Tabela
 
-Quando o mesmo nome de coluna aparece em mais de uma tabela (como `escola` em `professor` e em `escola`), é necessário **qualificar** o nome da coluna com o nome da tabela ou alias:
+Quando o mesmo nome de coluna aparece em mais de uma tabela (como `id_escola` em `professor` e em `escola`), é necessário **qualificar** o nome da coluna com o nome da tabela ou alias:
 
 ```sql
-p.escola   -- coluna escola da tabela professor (alias p)
-e.escola   -- coluna escola da tabela escola (alias e)
+p.id_escola   -- coluna id_escola da tabela professor (alias p)
+e.id_escola   -- coluna id_escola da tabela escola (alias e)
 ```
 
 Sem o qualificador, o SQL lançará um erro de ambiguidade:
 
 ```
-ERROR: column reference "escola" is ambiguous
+ERROR: column reference "id_escola" is ambiguous
 ```
 
 ---
@@ -121,9 +121,9 @@ ERROR: column reference "escola" is ambiguous
 -- Três tabelas em cadeia: nome do professor, escola e centro
 SELECT p.nome, e.nome_escola, c.nome_centro
 FROM   professor p, escola e, centro c
-WHERE  p.escola  = e.escola
-  AND  e.centro  = c.centro
-ORDER BY c.centro, p.nome;
+WHERE  p.id_escola = e.id_escola
+  AND  e.id_centro = c.id_centro
+ORDER BY c.id_centro, p.nome;
 ```
 
 ```{sql}
@@ -138,12 +138,12 @@ FROM   professor, escola;
 ```{sql}
 --| connection: con
 --| eval: true
--- Alunos cujo ano de ingresso coincide com o semestre da disciplina que cursaram
+-- Alunos cujo ano de ingresso coincide com o ano da disciplina que cursaram
 -- (caso limite: comparação entre atributos de tabelas diferentes)
-SELECT DISTINCT a.nome, a.ano_ingresso, md.cod_disciplina
+SELECT DISTINCT a.nome, a.ano_ingresso, md.id_disciplina
 FROM   aluno a, matricula_disciplina md
-WHERE  a.matricula      = md.cod_matricula
-  AND  a.ano_ingresso   = md.ano
+WHERE  a.id_aluno     = md.id_aluno
+  AND  a.ano_ingresso = md.ano
 ORDER BY a.nome;
 ```
 

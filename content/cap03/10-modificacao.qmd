@@ -25,15 +25,15 @@ A forma mais simples insere uma linha com valores explícitos:
 
 ```sql
 -- Inserir um novo centro na UnDF
-INSERT INTO centro (centro, nome_centro)
-VALUES ('COLAB', 'Centro de Laboratórios Avançados');
+INSERT INTO centro (id_centro, sigla, nome_centro)
+VALUES (4, 'COLAB', 'Centro de Laboratórios Avançados');
 ```
 
 Ao inserir uma escola vinculada ao novo centro:
 
 ```sql
-INSERT INTO escola (escola, nome_escola, centro)
-VALUES ('ELAB', 'Escola de Laboratórios', 'COLAB');
+INSERT INTO escola (id_escola, sigla, nome_escola, id_centro)
+VALUES (41, 'ELAB', 'Escola de Laboratórios', 4);
 ```
 
 ### INSERT com SELECT
@@ -43,9 +43,9 @@ VALUES ('ELAB', 'Escola de Laboratórios', 'COLAB');
 ```sql
 -- Criar tabela histórica (estrutura idêntica a disciplina)
 CREATE TABLE disciplina_historico (
-    codigo          VARCHAR(10) PRIMARY KEY,
+    id_disciplina   INTEGER      PRIMARY KEY,
     nome_disciplina VARCHAR(100) NOT NULL,
-    sigla_curso     VARCHAR(5),
+    id_curso        INTEGER,
     semestre        INTEGER,
     carga_horaria   INTEGER
 );
@@ -63,7 +63,7 @@ Verificando o que seria inserido:
 --| connection: con
 --| eval: true
 -- Disciplinas que seriam copiadas para o histórico (carga > 150 h)
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria > 150
 ORDER BY carga_horaria DESC;
@@ -86,10 +86,10 @@ Para condições mais complexas, o `WHERE` pode conter subconsultas:
 ```sql
 -- Remover matrículas de alunos com nota abaixo de 5.0 em todas as disciplinas
 DELETE FROM matricula_disciplina
-WHERE  cod_matricula IN (
-    SELECT cod_matricula
+WHERE  id_aluno IN (
+    SELECT id_aluno
     FROM   matricula_disciplina
-    GROUP BY cod_matricula
+    GROUP BY id_aluno
     HAVING AVG(nota) < 5.0
 );
 ```
@@ -100,9 +100,9 @@ Verificando quais alunos seriam afetados:
 --| connection: con
 --| eval: true
 -- Alunos com média abaixo de 5.0
-SELECT cod_matricula, ROUND(AVG(nota), 2) AS media
+SELECT id_aluno, ROUND(AVG(nota), 2) AS media
 FROM   matricula_disciplina
-GROUP BY cod_matricula
+GROUP BY id_aluno
 HAVING AVG(nota) < 5.0;
 ```
 
@@ -118,7 +118,7 @@ HAVING AVG(nota) < 5.0;
 -- Renomear um curso (corrigir nome)
 UPDATE curso
 SET    nome_curso = 'Engenharia de Software (Bacharelado)'
-WHERE  sigla_curso = 'ENS';
+WHERE  id_curso = 311;
 ```
 
 ### UPDATE condicional
@@ -136,12 +136,12 @@ Verificando o que seria alterado:
 --| connection: con
 --| eval: true
 -- Disciplinas de semestre 8 e como ficariam com +10% de carga horária
-SELECT codigo, nome_disciplina,
+SELECT id_disciplina, nome_disciplina,
        carga_horaria                          AS carga_atual,
        ROUND(carga_horaria * 1.10)            AS carga_nova
 FROM   disciplina
 WHERE  semestre = 8
-ORDER BY sigla_curso;
+ORDER BY id_curso;
 ```
 
 ### UPDATE com CASE: reajuste diferenciado
@@ -165,13 +165,13 @@ Verificando o efeito por faixa:
 --| connection: con
 --| eval: true
 -- Simular o ajuste sem alterar o banco
-SELECT codigo, sigla_curso, carga_horaria AS atual,
+SELECT id_disciplina, id_curso, carga_horaria AS atual,
        CASE
            WHEN carga_horaria <= 60 THEN ROUND(carga_horaria * 1.20)
            ELSE                          ROUND(carga_horaria * 1.10)
        END AS proposto
 FROM   disciplina
-ORDER BY sigla_curso, semestre;
+ORDER BY id_curso, semestre;
 ```
 
 ::: {.conceito}
@@ -222,7 +222,7 @@ ORDER BY aprovado;
 --| eval: true
 -- Simular: quais professores seriam afetados por um reajuste de 15%
 -- para quem tem salário abaixo da média?
-SELECT nome, escola, salario AS atual,
+SELECT nome, id_escola, salario AS atual,
        ROUND(salario * 1.15, 2) AS apos_reajuste
 FROM   professor
 WHERE  salario < (SELECT AVG(salario) FROM professor)
@@ -234,25 +234,25 @@ ORDER BY salario;
 --| eval: true
 -- Simular: disciplinas que seriam removidas se excluíssemos as sem pré-requisitos
 -- e sem matrícula (seguras para remover)
-SELECT d.codigo, d.nome_disciplina, d.sigla_curso
+SELECT d.id_disciplina, d.nome_disciplina, d.id_curso
 FROM   disciplina d
-WHERE  d.codigo NOT IN (SELECT codigo        FROM prereq)
-  AND  d.codigo NOT IN (SELECT prereq_codigo FROM prereq)
-  AND  d.codigo NOT IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)
-ORDER BY d.sigla_curso, d.codigo;
+WHERE  d.id_disciplina NOT IN (SELECT id_disciplina FROM prereq)
+  AND  d.id_disciplina NOT IN (SELECT id_prereq     FROM prereq)
+  AND  d.id_disciplina NOT IN (SELECT DISTINCT id_disciplina FROM matricula_disciplina)
+ORDER BY d.id_curso, d.id_disciplina;
 ```
 
 ```sql
 -- Violação de FK: tentar deletar uma disciplina que tem pré-requisitos
 -- Isso geraria erro:
-DELETE FROM disciplina WHERE codigo = 'ENS-201';
+DELETE FROM disciplina WHERE id_disciplina = 3110201;
 -- ERROR: update or delete on table "disciplina" violates foreign key constraint
--- "prereq_prereq_codigo_fkey" on table "prereq"
--- DETAIL: Key (codigo)=(ENS-201) is still referenced from table "prereq".
+-- "prereq_id_prereq_fkey" on table "prereq"
+-- DETAIL: Key (id_disciplina)=(3110201) is still referenced from table "prereq".
 
 -- Solução: deletar os pré-requisitos primeiro, ou usar CASCADE
-DELETE FROM prereq       WHERE codigo = 'ENS-201' OR prereq_codigo = 'ENS-201';
-DELETE FROM disciplina   WHERE codigo = 'ENS-201';
+DELETE FROM prereq     WHERE id_disciplina = 3110201 OR id_prereq = 3110201;
+DELETE FROM disciplina WHERE id_disciplina = 3110201;
 -- (não executar — apenas ilustrativo)
 ```
 

@@ -41,9 +41,9 @@ Qualquer operação aritmética envolvendo NULL retorna NULL:
 Se a nota de um aluno em uma disciplina fosse `NULL` (ainda não lançada), a média calculada com essa nota também seria `NULL`:
 
 ```sql
-SELECT cod_matricula, AVG(nota) AS media
+SELECT id_aluno, AVG(nota) AS media
 FROM   matricula_disciplina
-GROUP BY cod_matricula;
+GROUP BY id_aluno;
 -- Alunos com alguma nota NULL teriam resultado influenciado (NULL ignorado na média)
 ```
 
@@ -120,7 +120,7 @@ Para verificar a presença ou ausência de valores nulos, SQL oferece predicados
 --| connection: con
 --| eval: true
 -- Registros de ministra com horário informado
-SELECT cod_disciplina, ano, semestre, turma, horario
+SELECT id_disciplina, ano, semestre, turma, horario
 FROM   ministra
 WHERE  horario IS NOT NULL
 LIMIT 5;
@@ -130,7 +130,7 @@ LIMIT 5;
 --| connection: con
 --| eval: true
 -- Registros de ministra sem horário
-SELECT cod_disciplina, ano, semestre, turma
+SELECT id_disciplina, ano, semestre, turma
 FROM   ministra
 WHERE  horario IS NULL
 LIMIT 5;
@@ -144,7 +144,7 @@ As funções de agregação (`AVG`, `SUM`, `COUNT`, `MIN`, `MAX`) **ignoram** va
 Suponha que a tabela `matricula_disciplina` tivesse 3 notas: `9.0`, `NULL` e `7.4`:
 
 ```sql
-SELECT AVG(nota) FROM matricula_disciplina WHERE cod_matricula = '2023002001';
+SELECT AVG(nota) FROM matricula_disciplina WHERE id_aluno = 2023311001;
 -- Resultado: (9.0 + 7.4) / 2 = 8.2
 -- O NULL é ignorado; o denominador é 2, não 3
 ```
@@ -175,7 +175,7 @@ FROM   matricula_disciplina;
 --| connection: con
 --| eval: true
 -- NULL em aritmética: qualquer operação com NULL resulta em NULL
-SELECT cod_matricula,
+SELECT id_aluno,
        nota,
        nota + 1     AS nota_mais_1,
        nota * 2     AS nota_dobro
@@ -188,7 +188,7 @@ LIMIT 5;
 --| connection: con
 --| eval: true
 -- COALESCE: substituir NULL por um valor padrão
-SELECT cod_disciplina, ano, semestre, turma,
+SELECT id_disciplina, ano, semestre, turma,
        COALESCE(horario, 'Horário não definido') AS horario_exibido,
        COALESCE(sala,    'Sala não definida')    AS sala_exibida
 FROM   ministra

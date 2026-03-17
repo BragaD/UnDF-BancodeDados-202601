@@ -12,11 +12,11 @@ Um banco de dados oferece três níveis de abstração:
 
 ```
 type professor = record
-    matricula_prof : string;
-    nome           : string;
-    escola         : string;
-    ch_semanal     : integer;
-    salario        : real;
+    id_prof    : integer;
+    nome       : string;
+    id_escola  : integer;
+    ch_semanal : integer;
+    salario    : real;
 end;
 ```
 

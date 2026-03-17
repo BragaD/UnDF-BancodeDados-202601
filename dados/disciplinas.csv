@@ -1,730 +1,730 @@
-codigo; nome_disciplina; sigla_curso; semestre; carga_horaria
-CC-101; Bases de Ciência da Computação 1; CC; 1; 160
-CC-102; Projeto Aplicado 1; CC; 1; 120
-CC-103; RHS: Metodologias Problematizadoras 1; CC; 1; 20
-CC-104; RHS:Culturas Digitais; CC; 1; 60
-CC-105; RHS:Cultura e Sociedade do Planalto Central; CC; 1; 40
-CC-201; Bases de Ciência da Computação 2; CC; 2; 200
-CC-202; Projeto Aplicado 2; CC; 2; 140
-CC-203; Desenvolvimento Humano; CC; 2; 60
-CC-301; Bases de Ciência da Computação 3; CC; 3; 160
-CC-302; Projeto Aplicado 3; CC; 3; 120
-CC-303; Metodologias Problematizadoras 2; CC; 3; 40
-CC-304; Estágio Acadêmico 1; CC; 3; 80
-CC-401; Bases de Ciência da Computação 4; CC; 4; 120
-CC-402; Projeto Aplicado 4; CC; 4; 120
-CC-403; Eletiva NU 1; CC; 4; 80
-CC-404; Estágio Acadêmico 2; CC; 4; 80
-CC-501; Bases de Ciência da Computação 5; CC; 5; 160
-CC-502; Projeto Aplicado 5; CC; 5; 140
-CC-503; Estágio Empresarial 1; CC; 5; 80
-CC-601; Bases de Ciência da Computação 6; CC; 6; 140
-CC-602; Projeto Aplicado 6; CC; 6; 120
-CC-603; Estágio Empresarial 2; CC; 6; 80
-CC-604; Eletiva NU 2; CC; 6; 80
-CC-701; Bases de Ciência da Computação 7; CC; 7; 120
-CC-702; Projeto Aplicado 7; CC; 7; 140
-CC-703; Estágio Empresarial 3; CC; 7; 80
-CC-704; Trabalho de Conclusão de Curso 1; CC; 7; 60
-CC-801; Bases de Ciência da Computação 8; CC; 8; 100
-CC-802; Projeto Aplicado 8; CC; 8; 140
-CC-803; Estágio Empresarial 4; CC; 8; 80
-CC-804; Trabalho de Conclusão de Curso 2; CC; 8; 80
-ENS-101; Introdução à Engenharia de Software; ENS; 1; 20
-ENS-102; Bases da Engenharia de Software 1; ENS; 1; 180
-ENS-103; Projeto Aplicado 0 (Instrumentação); ENS; 1; 20
-ENS-104; Projeto Aplicado 1 (Servomecanismos); ENS; 1; 100
-ENS-105; Núcleo universal/Relações Humanas e Sociais; ENS; 1; 120
-ENS-201; Bases da Engenharia de Software 2; ENS; 2; 150
-ENS-202; Projeto Aplicado 2 (site WEB); ENS; 2; 120
-ENS-203; Núcleo Universal/ Obrigatória; ENS; 2; 60
-ENS-204; Optativa 1; ENS; 2; 60
-ENS-301; Bases da Engenharia de Software 3; ENS; 3; 120
-ENS-302; Projeto Aplicado 3 (app para smartphone); ENS; 3; 120
-ENS-303; Estágio Acadêmico 1; ENS; 3; 60
-ENS-304; Optativa 2; ENS; 3; 80
-ENS-401; Bases da Engenharia de Software 4; ENS; 4; 180
-ENS-402; Projeto Aplicado 4 (blockchain); ENS; 4; 120
-ENS-403; Estágio Acadêmico 2; ENS; 4; 60
-ENS-404; Núcleo universal/ obrigatória; ENS; 4; 60
-ENS-501; Bases da Engenharia de Software 5; ENS; 5; 180
-ENS-502; Projeto Aplicado 5 (Realidade Aumentada & Virtual); ENS; 5; 120
-ENS-503; Estágio Empresarial 1; ENS; 5; 60
-ENS-601; Bases da Engenharia de Software 6; ENS; 6; 150
-ENS-602; Projeto Aplicado 6 (Machine Learning); ENS; 6; 120
-ENS-603; Estágio Empresarial 2; ENS; 6; 60
-ENS-604; Trabalho de Conclusão de Curso 1; ENS; 6; 20
-ENS-701; Bases da Engenharia de Software 7; ENS; 7; 120
-ENS-702; Projeto Aplicado 7 (Jogos digitais); ENS; 7; 160
-ENS-703; Estágio Empresarial 3; ENS; 7; 80
-ENS-704; Trabalho de Conclusão de Curso 2; ENS; 7; 20
-ENS-801; Bases da Engenharia de Software 8; ENS; 8; 100
-ENS-802; Projeto Aplicado 8 (Sistema em Tempo Real); ENS; 8; 160
-ENS-803; Estágio Empresarial 4; ENS; 8; 80
-ENS-804; Trabalho de Conclusão de Curso 3; ENS; 8; 20
-SI-101; Bases de Sistema de Informação 1; SI; 1; 200
-SI-102; Projeto Aplicado 1; SI; 1; 120
-SI-103; NU - Metodologias Problematizadoras 1; SI; 1; 20
-SI-104; NU - Culturas Digitais; SI; 1; 60
-SI-201; Bases de Sistema de Informação 2; SI; 2; 160
-SI-202; Projeto Aplicado 2; SI; 2; 120
-SI-203; NU - Cultura e Sociedade; SI; 2; 40
-SI-301; Bases de Sistema de Informação 3; SI; 3; 120
-SI-302; Projeto Aplicado 3; SI; 3; 120
-SI-303; Estágio Acadêmico 1; SI; 3; 60
-SI-304; Optativa 1-NU; SI; 3; 80
-SI-401; Bases de Sistema de Informação 4; SI; 4; 160
-SI-402; Projeto Aplicado 4; SI; 4; 100
-SI-403; Estágio Acadêmico 2; SI; 4; 60
-SI-404; NU - Metodologias Problematizadoras 2; SI; 4; 40
-SI-501; Bases de Sistema de Informação 5; SI; 5; 120
-SI-502; Projeto Aplicado 5; SI; 5; 120
-SI-503; Optativa 2; SI; 5; 60
-SI-504; Estágio Empresarial 1; SI; 5; 60
-SI-601; Bases de Sistema de Informação 6; SI; 6; 120
-SI-602; Projeto Aplicado 6; SI; 6; 100
-SI-603; Estágio Empresarial 2; SI; 6; 60
-SI-604; Trabalho de Conclusão de Curso 1; SI; 6; 20
-SI-701; Bases de Sistema de Informação 7; SI; 7; 100
-SI-702; Projeto Aplicado 7; SI; 7; 120
-SI-703; Estágio Empresarial 3; SI; 7; 60
-SI-704; Trabalho de Conclusão de Curso 2; SI; 7; 20
-SI-801; Bases de Sistema de Informação 8; SI; 8; 100
-SI-802; Projeto Aplicado 8; SI; 8; 120
-SI-803; Estágio Empresarial 4; SI; 8; 60
-SI-804; Trabalho de Conclusão de Curso 3; SI; 8; 20
-SS-101; Metodologias Problematizadoras I; SS; 1; 20
-SS-102; Introdução ao Serviço Social; SS; 1; 60
-SS-103; Teoria Social e Política; SS; 1; 80
-SS-104; Antropologia e Serviço Social; SS; 1; 60
-SS-105; Atividades Complementares; SS; 1; 120
-SS-106; HPSS 01 - Habilidades Profissionais em Serviço Social; SS; 1; 60
-SS-201; Infância, Adolescência e Direitos Sociais; SS; 2; 60
-SS-202; Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social I; SS; 2; 60
-SS-203; Atividades Complementares; SS; 2; 20
-SS-204; Economia Política e Serviço Social; SS; 2; 80
-SS-205; Desenvolvimento Humano; SS; 2; 60
-SS-206; HPSS 02 - Habilidades Profissionais em Serviço Social; SS; 2; 60
-SS-301; Cultura e Sociedade no Planalto Central; SS; 3; 40
-SS-302; Trabalho e Questão Social no Brasil; SS; 3; 60
-SS-303; Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social II; SS; 3; 50
-SS-304; Tópicos Especiais em Serviço Social I (Política de Assitência Social); SS; 3; 60
-SS-305; HPSS 03 - Habilidades Profissionais em Serviço Social; SS; 3; 60
-SS-401; Relações Sociais, Família e Serviço Social; SS; 4; 60
-SS-402; Metodologias Problematizadoras II; SS; 4; 40
-SS-403; Pesquisa Social; SS; 4; 60
-SS-404; Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social III; SS; 4; 60
-SS-405; Tópicos Especiais em Serviço Social II (Saúde Pública); SS; 4; 60
-SS-406; Atividades Complementares; SS; 4; 50
-SS-407; HPSS 04 - Habilidades Profissionais em Serviço Social; SS; 4; 60
-SS-501; Formação sócio-histórica do Brasil; SS; 5; 60
-SS-502; Ética e Serviço Social; SS; 5; 60
-SS-503; Política Social II; SS; 5; 60
-SS-504; Tópicos Especiais em Serviço Social III (Educação e Previdência Social); SS; 5; 60
-SS-505; Envelhecimento e Políticas Sociais; SS; 5; 40
-SS-506; HPSS 05 - Habilidades Profissionais em Serviço Social; SS; 5; 60
-SS-601; + Espaços sócio-ocupacionais e Processo de Trabalho em Serviço Social; SS; 6; 60
-SS-602; Eletiva I; SS; 6; 80
-SS-603; Culturas Digitais; SS; 6; 60
-SS-604; Classes, Organizações e Movimentos Sociais; SS; 6; 60
-SS-605; Saúde Mental e Serviço Social; SS; 6; 60
-SS-606; Estágio Supervisionado I; SS; 6; 155
-SS-701; Raça, Etnia e Serviço Social; SS; 7; 50
-SS-702; Planejamento e Gestão em Serviço Social; SS; 7; 60
-SS-703; Seminário e orientação de TCC I; SS; 7; 30
-SS-704; Estado, Direitos Humanos e Sociais; SS; 7; 60
-SS-705; Trabalho e Sociabilidade; SS; 7; 60
-SS-706; Atividades Complementares; SS; 7; 60
-SS-707; Estágio Supervisionado II; SS; 7; 155
-SS-801; Eletiva II; SS; 8; 80
-SS-802; Gênero e Serviço Social; SS; 8; 60
-SS-803; Orçamento e fundo público no Brasil; SS; 8; 60
-SS-804; Estágio Supervisionado III; SS; 8; 155
-SS-805; Seminário e orientação de TCC II; SS; 8; 30
-NUT-101; Bioquímica e biofísica; NUT; 1; 105
-NUT-102; Anatomia humana; NUT; 1; 70
-NUT-103; Citologia, histologia e embriologia; NUT; 1; 70
-NUT-104; Fundamentos da Alimentação e Nutrição; NUT; 1; 70
-NUT-105; Atividades Complementares; NUT; 1; 20
-NUT-106; Metodologias Problematizadoras I (20h); NUT; 1; 20
-NUT-201; Fisiologia Humana 1; NUT; 2; 35
-NUT-202; Microbiologia básica; NUT; 2; 70
-NUT-203; Imunologia; NUT; 2; 70
-NUT-204; Introdução à Antropologia; NUT; 2; 35
-NUT-205; Atividades complementares; NUT; 2; 20
-NUT-206; Culturas Digitais (60h); NUT; 2; 60
-NUT-207; Desenvolvimento Humano (60h); NUT; 2; 60
-NUT-301; Microbiologia e higiene dos Alimentos; NUT; 3; 70
-NUT-302; Avaliação Nutricional; NUT; 3; 70
-NUT-303; Fisiologia Humana 2; NUT; 3; 70
-NUT-304; Nutrição Humana 1; NUT; 3; 35
-NUT-305; Fundamentos da Ciência dos Alimentos 1; NUT; 3; 35
-NUT-306; Introdução à Sociologia; NUT; 3; 35
-NUT-307; Cultura e Sociedade no Planalto Central (40h); NUT; 3; 40
-NUT-308; Atividades complementares; NUT; 3; 20
-NUT-401; Técnica dietética 1; NUT; 4; 70
-NUT-402; Fundamentos da Ciência dos Alimentos 2; NUT; 4; 70
-NUT-403; Nutrição e Dietética 1; NUT; 4; 35
-NUT-404; Epidemiologia Geral; NUT; 4; 70
-NUT-405; Optativa; NUT; 4; 35
-NUT-406; Metodologias Problematizadoras II (40h); NUT; 4; 40
-NUT-407; Atividades complementares; NUT; 4; 20
-NUT-501; Gestão em Produção de Refeições 1; NUT; 5; 70
-NUT-502; Patologia; NUT; 5; 70
-NUT-503; Nutrição Humana 2; NUT; 5; 70
-NUT-504; Introdução à filosofia; NUT; 5; 35
-NUT-505; Eletiva do NU I (80h); NUT; 5; 80
-NUT-506; Atividades complementares; NUT; 5; 20
-NUT-601; Técnica Dietética 2; NUT; 6; 35
-NUT-602; Gestão em Produção de Refeições 2; NUT; 6; 35
-NUT-603; Nutrição e Dietética 2; NUT; 6; 70
-NUT-604; Bioestatística; NUT; 6; 70
-NUT-605; Educação Alimentar e Nutricional; NUT; 6; 70
-NUT-606; Atividades complementares; NUT; 6; 20
-NUT-607; Eletiva do NU II (80h); NUT; 6; 80
-NUT-701; Tecnologia dos Produtos Agropecuários; NUT; 7; 70
-NUT-702; Dietoterapia 1; NUT; 7; 35
-NUT-703; Nutrição em Saúde Coletiva; NUT; 7; 70
-NUT-704; Nutrição e Fases da Vida 1; NUT; 7; 35
-NUT-705; Metodologia Científica; NUT; 7; 70
-NUT-706; Optativa; NUT; 7; 35
-NUT-707; Atividades complementares; NUT; 7; 20
-NUT-801; Farmacologia Aplicada à Nutrição; NUT; 8; 70
-NUT-802; Nutrição e Fases da Vida 2; NUT; 8; 70
-NUT-803; Dietoterapia 2; NUT; 8; 70
-NUT-804; Marcadores do Estado Nutricional; NUT; 8; 70
-NUT-805; Optativa; NUT; 8; 35
-NUT-806; Optativa; NUT; 8; 35
-NUT-901; Estágio Supervisionado em Gestão de Produção de Refeições; NUT; 9; 270
-NUT-902; Nutrição Clínica em Pediatria; NUT; 9; 70
-NUT-903; Ética na Formação Profissional; NUT; 9; 35
-NUT-904; Atividades complementares; NUT; 9; 20
-NUT-1001; Estágio Supervisionado em Nutrição em Saúde Coletiva; NUT; 10; 270
-NUT-1002; TCC 1; NUT; 10; 35
-NUT-1003; Optativa; NUT; 10; 35
-NUT-1004; Optativa; NUT; 10; 35
-NUT-1005; Atividades complementares; NUT; 10; 20
-NUT-1101; Estágio Supervisionado em Nutrição Clínica; NUT; 11; 270
-NUT-1102; TCC 2; NUT; 11; 35
-NUT-1103; Comunicação, marketing e economia; NUT; 11; 35
-NUT-1104; Optativa; NUT; 11; 35
-NUT-1105; Optativa; NUT; 11; 35
-PSI-101; NU: Metodologias Problematizadoras I; PSI; 1; 20
-PSI-102; Psicologia do Desenvolvimento Humano: infância e adolescência; PSI; 1; 60
-PSI-103; Fundamentos Epistemológicos da Psicologia; PSI; 1; 60
-PSI-104; Habilidades Profissionais em Psicologia I - HPP (Saúde e Saúde Mental); PSI; 1; 40
-PSI-105; Psicologia: Ciência e Profissão; PSI; 1; 60
-PSI-106; Introdução às Ciências Sociais; PSI; 1; 60
-PSI-107; Extensionalização do Currículo: Associada ao HPP; PSI; 1; 100
-PSI-201; NU: Pensamento Filosófico na construção do conhecimento; PSI; 2; 80
-PSI-202; Ética Profissional; PSI; 2; 60
-PSI-203; NU: Culturas Digitais; PSI; 2; 60
-PSI-204; Habilidades Profissionais em Psicologia II - HPP (SUAS e Justiça); PSI; 2; 40
-PSI-205; Processos Psicológicos Básicos; PSI; 2; 80
-PSI-206; Psicologia do Desenvolvimento Humano – Idade adulta e envelhecimento; PSI; 2; 60
-PSI-207; Extensionalização do Currículo: Associada ao HPP; PSI; 2; 40
-PSI-301; NU: Cultura e Sociedade no Planalto Central; PSI; 3; 40
-PSI-302; Fundamentos, Métodos e Técnicas de Investigação Científica em Psicologia; PSI; 3; 40
-PSI-303; Psicologia da Personalidade; PSI; 3; 60
-PSI-304; Teorias e Técnicas Psicoterápicas I; PSI; 3; 60
-PSI-305; Estágio Básico I (em investigação científica); PSI; 3; 50
-PSI-306; Estatística Aplicada à Psicologia; PSI; 3; 40
-PSI-307; Teorias e Práticas de Processos Grupais; PSI; 3; 60
-PSI-308; Extensionalização do Currículo: Associada às UCs do semestre; PSI; 3; 50
-PSI-401; NU: Metodologias Problematizadoras II; PSI; 4; 40
-PSI-402; Psicopatologia I; PSI; 4; 60
-PSI-403; Psicologia Comportamental I; PSI; 4; 60
-PSI-404; Psicanálise; PSI; 4; 60
-PSI-405; Estágio Básico II; PSI; 4; 70
-PSI-406; Neuroanatomia aplicada à Psicologia; PSI; 4; 60
-PSI-407; Extensionalização do Currículo: Associada às UCs do semestre; PSI; 4; 50
-PSI-501; Teorias e Técnicas Psicoterápicas II; PSI; 5; 60
-PSI-502; Psicologia Social I; PSI; 5; 60
-PSI-503; Estágio Básico III (entrevista); PSI; 5; 80
-PSI-504; Psicologia da Saúde; PSI; 5; 60
-PSI-505; Psicopatologia II; PSI; 5; 60
-PSI-506; Psicologia Comportamental II; PSI; 5; 60
-PSI-507; Extensionalização do Currículo: Associada às UCs do semestre; PSI; 5; 40
-PSI-601; Avaliação em Psicologia I; PSI; 6; 60
-PSI-602; Psicologia Escolar e da Educação; PSI; 6; 60
-PSI-603; Psicologia Social II; PSI; 6; 60
-PSI-604; Psicologia organizacional; PSI; 6; 60
-PSI-605; Tópicos Especiais em Psicologia Clínica; PSI; 6; 60
-PSI-606; Estágio Específico Supervisionado I (núcleo comum); PSI; 6; 100
-PSI-701; Psicofarmacologia; PSI; 7; 60
-PSI-702; Psicologia Comunitária; PSI; 7; 60
-PSI-703; Psicologia do Trabalho; PSI; 7; 60
-PSI-704; Avaliação em Psicologia II; PSI; 7; 60
-PSI-705; Estágio Específico Supervisionado II (núcleo comum); PSI; 7; 100
-PSI-706; Extensionalização do Currículo: Associada às UCs do semestre; PSI; 7; 60
-PSI-801; Psicologia e direitos humanos: gênero, sexualidade e relações raciais; PSI; 8; 60
-PSI-802; Neuropsicologia; PSI; 8; 60
-PSI-803; Eletiva Ênfase; PSI; 8; 60
-PSI-804; Estágio Específico Supervisionado III (ênfase); PSI; 8; 140
-PSI-805; Extensionalização do Currículo: Associada às UCs do semestre; PSI; 8; 60
-PSI-901; Psicologia, diversidade e inclusão; PSI; 9; 60
-PSI-902; Trabalho de Conclusão de Curso - TCC I; PSI; 9; 60
-PSI-903; Eletiva Ênfase; PSI; 9; 60
-PSI-904; NU: Eletiva; PSI; 9; 60
-PSI-905; Estágio Específico Supervisionado IV (ênfase); PSI; 9; 140
-PSI-1001; Eletiva Ênfase; PSI; 10; 60
-PSI-1002; NU: Eletiva; PSI; 10; 80
-PSI-1003; Trabalho de Conclusão de Curso II; PSI; 10; 40
-PSI-1004; Estágio Específico Supervisionado V (ênfase); PSI; 10; 120
-PSI-1005; A FAZER DURANTE TODO O CURSO Atividades complementares; PSI; 10; 120
-ECO-101; Fundamentos de Contabilidade; ECO; 1; 75
-ECO-102; Introdução à Economia; ECO; 1; 100
-ECO-103; Matemática 1; ECO; 1; 75
-ECO-104; Introdução à Programação; ECO; 1; 105
-ECO-105; Metodologias Problematizadoras I; ECO; 1; 20
-ECO-201; História Econômica Geral; ECO; 2; 75
-ECO-202; Culturas Digitais; ECO; 2; 60
-ECO-203; Matemática 2; ECO; 2; 75
-ECO-204; Estatística 1; ECO; 2; 95
-ECO-205; Desenvolvimento Humano; ECO; 2; 60
-ECO-301; Microeconomia 1; ECO; 3; 75
-ECO-302; Macroeconomia 1; ECO; 3; 95
-ECO-303; Matemática 3; ECO; 3; 75
-ECO-304; Estatística 2; ECO; 3; 95
-ECO-305; Cultura e Sociedade no Planalto Central; ECO; 3; 40
-ECO-401; Microeconomia 2; ECO; 4; 75
-ECO-402; Macroeconomia 2; ECO; 4; 95
-ECO-403; História do Pensamento Econômico; ECO; 4; 75
-ECO-404; Econometria 1; ECO; 4; 95
-ECO-405; Metodologias Problematizadoras II; ECO; 4; 40
-ECO-501; Ciência de Dados 1; ECO; 5; 60
-ECO-502; Economia Internacional; ECO; 5; 75
-ECO-503; Economia do Setor Público; ECO; 5; 95
-ECO-504; Econometria 2; ECO; 5; 75
-ECO-505; Formação Econômica e Social do Brasil; ECO; 5; 75
-ECO-601; Economia Brasileira; ECO; 6; 75
-ECO-602; Orçamento e Finanças Públicas; ECO; 6; 75
-ECO-603; Economia Política; ECO; 6; 75
-ECO-604; Avaliação de Políticas Públicas; ECO; 6; 95
-ECO-605; Ciência de Dados 2; ECO; 6; 60
-ECO-701; Técnicas de Pesquisa em Economia; ECO; 7; 75
-ECO-702; Economia Regional e Urbana; ECO; 7; 75
-ECO-703; Economia Monetária; ECO; 7; 75
-ECO-704; Economia da RIDE/DF; ECO; 7; 75
-ECO-705; Eletiva 1 - Núcleo Universal; ECO; 7; 80
-ECO-801; Monografia; ECO; 8; 100
-ECO-802; Desenvolvimento Econômico; ECO; 8; 90
-ECO-803; Análise da Conjuntura Econômica; ECO; 8; 90
-ECO-804; Eletiva 2 - Núcleo Universal; ECO; 8; 80
-MAT-101; Cult e Soc. No Planalto Central; MAT; 1; 40
-MAT-102; Metodologias problematizadoras 1; MAT; 1; 20
-MAT-103; Culturas Digitais; MAT; 1; 60
-MAT-104; Números e Operações 1; MAT; 1; 60
-MAT-105; Geometria 1; MAT; 1; 60
-MAT-106; Álgebra 1; MAT; 1; 60
-MAT-107; HPP 1: Espaços Formativos; MAT; 1; 60
-MAT-108; Orientação Acadêmica; MAT; 1; 10
-MAT-201; Modelagem Matemática 1; MAT; 2; 40
-MAT-202; Desenvolvimento Humano; MAT; 2; 60
-MAT-203; História da Educação Matemática; MAT; 2; 60
-MAT-204; Números e Operações 2; MAT; 2; 60
-MAT-205; Geometria 2; MAT; 2; 60
-MAT-206; Álgebra 2; MAT; 2; 60
-MAT-207; HPP 2: Espaços Formativos; MAT; 2; 60
-MAT-208; Orientação Acadêmica; MAT; 2; 10
-MAT-301; Metodologias problematizadoras 2; MAT; 3; 40
-MAT-302; Álgebra 3; MAT; 3; 60
-MAT-303; Números e Operações 3; MAT; 3; 60
-MAT-304; Geometria 3; MAT; 3; 60
-MAT-305; Grandezas e Medidas 1; MAT; 3; 60
-MAT-306; Combinatória; MAT; 3; 60
-MAT-307; HPP 3: Espaços Formativos; MAT; 3; 100
-MAT-308; Orientação Acadêmica; MAT; 3; 10
-MAT-401; Eletiva 1 do NU; MAT; 4; 80
-MAT-402; Álgebra 4; MAT; 4; 60
-MAT-403; Números e Operações 4; MAT; 4; 60
-MAT-404; Grandezas e Medidas 2; MAT; 4; 60
-MAT-405; Estágio 1 - Ensino Fundamental; MAT; 4; 80
-MAT-406; Modelagem Matemática 2; MAT; 4; 40
-MAT-407; HPP 4: Espaços Formativos; MAT; 4; 60
-MAT-408; Orientação Acadêmica; MAT; 4; 10
-MAT-501; LIBRAS; MAT; 5; 80
-MAT-502; Números e Operações 5; MAT; 5; 60
-MAT-503; Geometria 4; MAT; 5; 60
-MAT-504; Álgebra 5; MAT; 5; 60
-MAT-505; Estágio 2 - Ensino Fundamental; MAT; 5; 80
-MAT-506; HPP 5: Espaços Formativos; MAT; 5; 60
-MAT-507; Orientação Acadêmica; MAT; 5; 10
-MAT-601; Eletiva de Educação Matemática 1; MAT; 6; 60
-MAT-602; Educação Estatística e Probabilística 1; MAT; 6; 60
-MAT-603; Modelagem Matemática 3; MAT; 6; 40
-MAT-604; Pesquisa em Educação Matemática; MAT; 6; 80
-MAT-605; Estágio 3 - Ensino Médio; MAT; 6; 80
-MAT-606; HPP 6: Espaços Formativos; MAT; 6; 40
-MAT-607; Orientação Acadêmica; MAT; 6; 10
-MAT-701; Pensamento Computacional; MAT; 7; 80
-MAT-702; Currículo e Avaliação; MAT; 7; 60
-MAT-703; Tecnologias em Educação Matemática; MAT; 7; 60
-MAT-704; TCC 1; MAT; 7; 40
-MAT-705; Estágio 4 - Ensino Médio; MAT; 7; 80
-MAT-801; Eletiva 2 de Educação Matemática; MAT; 8; 60
-MAT-802; Educação Estatística e Probabilística 2; MAT; 8; 60
-MAT-803; Experiências em Educação Matemática Inclusiva; MAT; 8; 40
-MAT-804; TCC 2; MAT; 8; 40
-MAT-805; Estágio 5 - Outros contextos; MAT; 8; 80
-MAT-806; HPP 7: Espaços Formativos; MAT; 8; 40
-PED-101; Extensão*; PED; 1; 30
-PED-102; Atividades Complementares; PED; 1; 40
-PED-103; Culturas Digitais; PED; 1; 60
-PED-104; Metodologias Problematizadoras I; PED; 1; 20
-PED-105; Cultura e Sociedade no Planalto Central; PED; 1; 40
-PED-106; História da Educação; PED; 1; 60
-PED-107; Políticas Públicas em Educação – Educação Brasileira; PED; 1; 60
-PED-108; Práticas de Leitura e Escrita I; PED; 1; 60
-PED-109; Gestão nos Espaços Formativos; PED; 1; 80
-PED-110; HPP* 01: Espaços Formativos; PED; 1; 50
-PED-201; Extensão; PED; 2; 30
-PED-202; Atividades Complementares; PED; 2; 40
-PED-203; Desenvolvimento Humano; PED; 2; 60
-PED-204; Didática Geral; PED; 2; 60
-PED-205; Conhecimentos Básicos para Uso das TICs; PED; 2; 60
-PED-206; Libras; PED; 2; 60
-PED-207; Currículo, Planejamento e Avaliação; PED; 2; 60
-PED-208; Educação Comparada; PED; 2; 60
-PED-209; HPP* 02: Espaços Formativos; PED; 2; 50
-PED-301; Extensão; PED; 3; 50
-PED-302; Atividades Complementares; PED; 3; 40
-PED-303; Metodologias Problematizadoras II; PED; 3; 40
-PED-304; História da Matemática; PED; 3; 60
-PED-305; Fundamentos e orientações Metodológicas – EJA; PED; 3; 60
-PED-306; Teorias e Práticas de Educação Matemática I - BNCC; PED; 3; 60
-PED-307; Linguagem e Criança - BNCC; PED; 3; 50
-PED-308; Jogos e Brincadeiras na Infância - BNCC; PED; 3; 60
-PED-309; HPP* 03: EJA; PED; 3; 50
-PED-401; Extensão; PED; 4; 60
-PED-402; Atividades Complementares; PED; 4; 10
-PED-403; Eletiva I; PED; 4; 80
-PED-404; Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC; PED; 4; 80
-PED-405; Ciências Naturais - BNCC; PED; 4; 80
-PED-406; Práticas de Leitura e escrita II; PED; 4; 60
-PED-407; Educação, Arte e Movimento - Ed. Infantil e Anos Iniciais - BNCC; PED; 4; 60
-PED-408; HPP* 04: Educação Infantil e Creche; PED; 4; 50
-PED-501; Extensão; PED; 5; 70
-PED-502; Atividades Complementares; PED; 5; 0
-PED-503; Profissão Docente; PED; 5; 60
-PED-504; Fundamentos e Orientações Metodológicas – Anos Iniciais - BNCC; PED; 5; 80
-PED-505; Elaboração de Projetos Interventivos/Didáticos - BNCC; PED; 5; 60
-PED-506; Ciências Humanas – BNCC; PED; 5; 80
-PED-507; Proficiência em Língua Portuguesa e Literatura - BNCC; PED; 5; 60
-PED-508; Teorias e Práticas em Educação Matemática II - BNCC; PED; 5; 60
-PED-509; HPP 05: Anos Iniciais; PED; 5; 50
-PED-601; Extensão; PED; 6; 50
-PED-602; Atividades Complementares; PED; 6; 0
-PED-603; Eletiva II; PED; 6; 80
-PED-604; Educação do Campo, Indígena e Quilombola; PED; 6; 40
-PED-605; História, Cultura Afrobrasileira e Africanas - BNCC; PED; 6; 50
-PED-606; Alfabetização e Práticas de Letramento – BNCC; PED; 6; 60
-PED-607; Proficiência em Língua Portuguesa - Produção Acadêmica I; PED; 6; 60
-PED-608; Elaboração de Materiais Didáticos - BNCC; PED; 6; 60
-PED-609; HPP 06: Anos Iniciais; PED; 6; 50
-PED-701; Extensão; PED; 7; 30
-PED-702; Atividades Complementares; PED; 7; 30
-PED-703; Práticas e instrumentos de Inclusão; PED; 7; 60
-PED-704; Proficiência em Língua Portuguesa – Produção Acadêmica II; PED; 7; 60
-PED-705; HPP* 07: Escolha do Estudante - Atuação; PED; 7; 50
-PED-706; Estágio I - Educação Infantil; PED; 7; 200
-PED-801; Extensão; PED; 8; 10
-PED-802; Atividades Complementares; PED; 8; 40
-PED-803; Tecnologia Educacional - Design; PED; 8; 60
-PED-804; Estatística Aplicada; PED; 8; 50
-PED-805; HPP 08: Escolha do Estudante – Atuação; PED; 8; 50
-PED-806; Estágio II - Anos Iniciais; PED; 8; 200
-LPOR-101; Introdução aos Estudos da Linguagem; LPOR; 1; 60
-LPOR-102; Introdução aos Estudos Literários; LPOR; 1; 60
-LPOR-103; Literatura Contemporânea; LPOR; 1; 60
-LPOR-104; Metodologias Problematizadoras I; LPOR; 1; 20
-LPOR-105; Cultura e Sociedade no Planalto Central; LPOR; 1; 40
-LPOR-106; Culturas Digitais; LPOR; 1; 60
-LPOR-107; Práticas de Leitura e Escrita I - Gêneros Discursivo-Textuais; LPOR; 1; 60
-LPOR-108; HPL 1: Multiletramentos; LPOR; 1; 50
-LPOR-201; Literatura Medieval e Renascentista: Trovadorismo, Humanismo e Classicismo; LPOR; 2; 60
-LPOR-202; Literatura do Distrito Federal; LPOR; 2; 60
-LPOR-203; Formação do Português Contemporâneo; LPOR; 2; 60
-LPOR-204; Historiografia Linguística; LPOR; 2; 60
-LPOR-205; Desenvolvimento Humano; LPOR; 2; 60
-LPOR-206; Práticas de Leitura e Escrita II - Gêneros Acadêmicos; LPOR; 2; 60
-LPOR-207; HPL 2: Ensino de Gramática; LPOR; 2; 50
-LPOR-301; Literatura Colonial: Quinhentismo, Barroco e Arcadismo; LPOR; 3; 60
-LPOR-302; Literaturas Africanas de Língua Portuguesa; LPOR; 3; 60
-LPOR-303; Morfologia e Lexicologia da Língua Portuguesa; LPOR; 3; 60
-LPOR-304; Sociolinguística e Políticas Linguísticas; LPOR; 3; 60
-LPOR-305; Metodologias Problematizadoras II; LPOR; 3; 40
-LPOR-306; Práticas de Leitura e Escrita III - Textos e Tecnologias; LPOR; 3; 60
-LPOR-307; HPL 3: TDICs no Ensino de Língua Portuguesa 5; LPOR; 3; 50
-LPOR-401; Romantismo; LPOR; 4; 60
-LPOR-402; Sintaxe da Língua Portuguesa; LPOR; 4; 60
-LPOR-403; Psicolinguística; LPOR; 4; 60
-LPOR-404; Psicologia da Educação; LPOR; 4; 40
-LPOR-405; Libras (nível básico); LPOR; 4; 80
-LPOR-406; Eletiva do Núcleo Universal; LPOR; 4; 80
-LPOR-407; HPL 4: Educação Inclusiva; LPOR; 4; 50
-LPOR-501; Escolas Realista; LPOR; 5; 60
-LPOR-502; Literaturas Afro-brasileiras e Indígenas; LPOR; 5; 60
-LPOR-503; Semântica e Pragmática; LPOR; 5; 60
-LPOR-504; Fonética e Fonologia da Língua Portuguesa; LPOR; 5; 60
-LPOR-505; Oralidade e Escrita; LPOR; 5; 60
-LPOR-506; Didática; LPOR; 5; 40
-LPOR-507; HPL 5: Oralidade e Ensino; LPOR; 5; 50
-LPOR-601; Simbolismo e Modernismo; LPOR; 6; 60
-LPOR-602; Crítica Literária; LPOR; 6; 60
-LPOR-603; Análise de Discurso e Semiótica; LPOR; 6; 60
-LPOR-604; Linguística Textual; LPOR; 6; 60
-LPOR-605; Práticas de Leitura e Escrita IV - Experimentação em Escrita; LPOR; 6; 60
-LPOR-606; Política e Legislação Educacional Brasileira; LPOR; 6; 40
-LPOR-607; HPL 6: Formação de Leitores; LPOR; 6; 50
-LPOR-701; Eletiva de Linguística; LPOR; 7; 60
-LPOR-702; Educação, Linguagem e Sociedade; LPOR; 7; 40
-LPOR-703; Trabalho de Conclusão do Curso de Letras I; LPOR; 7; 80
-LPOR-704; Estágio Supervisionado de Ensino I; LPOR; 7; 200
-LPOR-705; HPL 7: Ensino Fundamental e EJA; LPOR; 7; 50
-LPOR-801; Eletiva de Literatura; LPOR; 8; 60
-LPOR-802; História da Educação e do Ensino de Língua Portuguesa; LPOR; 8; 40
-LPOR-803; Trabalho de Conclusão do Curso de Letras II; LPOR; 8; 80
-LPOR-804; Estágio Supervisionado de Ensino II; LPOR; 8; 200
-LPOR-805; HPL 08: Ensino Médio e EJA; LPOR; 8; 50
-LING-101; Compreensão Oral e Escrita em Língua Inglesa; LING; 1; 60
-LING-102; Introdução aos Estudos da Linguagem; LING; 1; 60
-LING-103; Introdução aos Estudos Literários; LING; 1; 60
-LING-104; Metodologias Problematizadoras I; LING; 1; 20
-LING-105; Culturas Digitais; LING; 1; 60
-LING-106; Cultura e Sociedade no Planalto Central; LING; 1; 40
-LING-107; Práticas de Leitura e Escrita I - Gêneros Discursivo-Textuais; LING; 1; 60
-LING-108; HPL 1: Multiletramentos; LING; 1; 50
-LING-201; Expressão Escrita em Língua Inglesa I; LING; 2; 60
-LING-202; Expressão Oral em Língua Inglesa I; LING; 2; 60
-LING-203; Historiografia Linguística; LING; 2; 60
-LING-204; Panorama da Literatura em Língua Inglesa; LING; 2; 60
-LING-205; Desenvolvimento Humano; LING; 2; 60
-LING-206; Práticas de Leitura e Escrita II - Gêneros Acadêmicos 6; LING; 2; 60
-LING-207; HPL 2: Espaços de Atuação em Língua Inglesa; LING; 2; 50
-LING-301; Expressão Escrita em Língua Inglesa II; LING; 3; 60
-LING-302; Expressão Oral em Língua Inglesa II; LING; 3; 60
-LING-303; Morfossintaxe da Língua Inglesa I; LING; 3; 60
-LING-304; Literaturas em Língua Inglesa - Narrativas Curtas; LING; 3; 60
-LING-305; Metodologias Problematizadoras II; LING; 3; 40
-LING-306; Práticas de Leitura e Escrita III - Textos e Tecnologias; LING; 3; 60
-LING-307; HPL 3: TDICs no Ensino de Língua Estrangeira; LING; 3; 50
-LING-401; Morfossintaxe da Língua Inglesa II; LING; 4; 60
-LING-402; Aprendizagem e Aquisição de Segunda Língua e Língua Estrangeira; LING; 4; 60
-LING-403; Literaturas em Língua Inglesa - Lírica; LING; 4; 60
-LING-404; Libras (nível básico); LING; 4; 80
-LING-405; Psicologia da Educação; LING; 4; 40
-LING-406; HPL 4: Educação Inclusiva; LING; 4; 50
-LING-501; Fonética e Fonologia da Língua Inglesa; LING; 5; 60
-LING-502; História da Língua Inglesa; LING; 5; 60
-LING-503; Literaturas em Língua Inglesa - Drama; LING; 5; 60
-LING-504; Eletiva do Núcleo Universal; LING; 5; 80
-LING-505; Metodologia do Ensino da Língua Inglesa I; LING; 5; 40
-LING-506; Didática; LING; 5; 40
-LING-507; HPL 5: Oralidade e Ensino; LING; 5; 50
-LING-601; Linguística Textual; LING; 6; 60
-LING-602; Literaturas em Língua Inglesa - Romance; LING; 6; 60
-LING-603; Crítica Literária; LING; 6; 60
-LING-604; Educação, Linguagem e Sociedade; LING; 6; 40
-LING-605; Metodologia do Ensino da Língua Inglesa II; LING; 6; 40
-LING-606; Política e Legislação Educacional Brasileira; LING; 6; 40
-LING-607; HPL 6: Formação de Leitores; LING; 6; 50
-LING-701; Introdução aos Estudos da Tradução; LING; 7; 60
-LING-702; Sociolinguística e Políticas Linguísticas; LING; 7; 60
-LING-703; Trabalho de Conclusão do Curso de Letras I - Língua Inglesa; LING; 7; 80
-LING-704; Estágio Supervisionado de Ensino I - Língua Inglesa; LING; 7; 200
-LING-705; HPL 7: Tradução; LING; 7; 50
-LING-801; Análise de Discurso e Semiótica; LING; 8; 60
-LING-802; Eletiva de Literatura e Estudos Culturais; LING; 8; 60
-LING-803; Trabalho de Conclusão do Curso de Letras II - Língua Inglesa; LING; 8; 80
-LING-804; Estágio Supervisionado de Ensino II - Língua Inglesa; LING; 8; 200
-LING-805; HPL 8: Laboratório de Gramática em Língua Inglesa; LING; 8; 50
-GTI-101; MTI 100 – Introdução às Metodologias Ativas; GTI; 1; 40
-GTI-102; MTI 101 - Fundamentos de Tecnologia da Informação; GTI; 1; 60
-GTI-103; MTI 102 – Gestão Estratégica de Negócios; GTI; 1; 60
-GTI-104; MTI 103 – Ciclo de Vida de Software I; GTI; 1; 60
-GTI-105; MTI 104 – Rede de Computadores I; GTI; 1; 60
-GTI-106; HPGTI I – Habilidades Profissionais em Gestão da Tecnologia da Informação I: Tecnologia da Informação (fundamentos); GTI; 1; 60
-GTI-107; PI I - Projeto Integrador I; GTI; 1; 60
-GTI-201; MTI 201 – Rede de Computadores II; GTI; 2; 60
-GTI-202; MTI 202 – Estatística: Matemática Computacional; GTI; 2; 40
-GTI-203; MTI 203 – Ciclo de Vida de Software II; GTI; 2; 60
-GTI-204; MTI 204 – Governança dos Serviços de TI; GTI; 2; 60
-GTI-205; HPGTI II – Habilidades Profissionais em Gestão da Tecnologia da Informação II : Ciclo de Vida do Software; GTI; 2; 80
-GTI-206; APE I – Atividade de Pesquisa e Extensão I; GTI; 2; 50
-GTI-207; PI II - Projeto Integrador II; GTI; 2; 50
-GTI-301; MTI 301 - Banco de Dados I; GTI; 3; 60
-GTI-302; MTI 302 - Informação, Ética e Sociedade; GTI; 3; 40
-GTI-303; MTI 303 – Ciclo de Vida de Software III; GTI; 3; 80
-GTI-304; MTI 304 – Gestão de Rede de Computadores (SO, Redes, BD); GTI; 3; 40
-GTI-305; HPGTI III – Habilidades Profissionais em Gestão da Tecnologia da Informação III : Redes de Computadores; GTI; 3; 80
-GTI-306; APE II – Atividade de Pesquisa e Extensão II; GTI; 3; 50
-GTI-307; PI III - Projeto Integrador III; GTI; 3; 50
-GTI-401; MTI 401 – Ciclo de Vida de Software IV; GTI; 4; 60
-GTI-402; MTI 402 – Banco de Dados II; GTI; 4; 40
-GTI-403; MTI 403 – Legislação Aplicada à Tecnologia da Informação; GTI; 4; 60
-GTI-404; MTI 404 – Gestão de Projetos; GTI; 4; 60
-GTI-405; HPGTI IV – Habilidades Profissionais em Gestão da Tecnologia da Informação IV: Banco de Dados e Ciclo de Vida do Software; GTI; 4; 80
-GTI-406; APE III – Atividade de Pesquisa e Extensão III; GTI; 4; 50
-GTI-407; PI IV - Projeto Integrador IV; GTI; 4; 50
-GTI-501; MTI 501 - Governança de Serviços da TI II; GTI; 5; 60
-GTI-502; MTI 502 – Engenharia de Usabilidade; GTI; 5; 60
-GTI-503; MTI 503 - Concepção de Engenharia de Teste de Software; GTI; 5; 60
-GTI-504; MTI 504 – Segurança e Auditoria de Sistemas; GTI; 5; 60
-GTI-505; HPGTI IV – Habilidades Profissionais em Gestão da Tecnologia da Informação IV : Governança e Gestão; GTI; 5; 60
-GTI-506; APE IV – Atividade de Pesquisa e Extensão IV; GTI; 5; 50
-GTI-507; PI V - Projeto Integrador IV; GTI; 5; 50
-GPUB-101; MTI 100 - Introdução ao Ensino das Metodologias Ativas na Gestão Pública; GPUB; 1; 40
-GPUB-102; MTI 101 - Introdução à Pesquisa Científica; GPUB; 1; 60
-GPUB-103; MTI 102 - Fundamentos Normativos da Política e da Gestão Pública; GPUB; 1; 60
-GPUB-104; MTI 103 - Estudos Comparativos: Gestão e Orçamento Público; GPUB; 1; 60
-GPUB-105; MTI 104 - Sustentabilidade Social e Ética no Serviço Público; GPUB; 1; 60
-GPUB-106; HPGeP - Habilidades Profissionais em Gestão Pública I; GPUB; 1; 60
-GPUB-107; Projeto Integrador - PI I; GPUB; 1; 60
-GPUB-201; MTI 201 - Administração Voltada à Gestão Pública; GPUB; 2; 60
-GPUB-202; MTI 202 - Gestão de Pessoas na Administração Pública; GPUB; 2; 60
-GPUB-203; MTI 203 - Contratações Públicas; GPUB; 2; 60
-GPUB-204; MTI 204 - Contabilidade e Economia no Setor Público; GPUB; 2; 60
-GPUB-205; HPGeP - Habilidades Profissionais em Gestão Pública II; GPUB; 2; 60
-GPUB-206; APE - Atividades de Pesquisa e Extensão I; GPUB; 2; 50
-GPUB-207; Projeto Integrador - PI II; GPUB; 2; 50
-GPUB-301; MTI 301 - Gestão de Contratos e Controle na Administração Pública; GPUB; 3; 60
-GPUB-302; MTI 302 – Gestão de Processos: Sistemas, Processos e Gestão de Conflitos; GPUB; 3; 60
-GPUB-303; MTI 303 - Administração de Material e Patrimônio; GPUB; 3; 60
-GPUB-304; MTI 304 – Sistemas de Informação no Setor Público; GPUB; 3; 60
-GPUB-305; HPGeP - Habilidades Profissionais em Gestão Pública III; GPUB; 3; 60
-GPUB-306; APE - Atividades de Pesquisa e Extensão II; GPUB; 3; 50
-GPUB-307; Projeto Integrador - PI III; GPUB; 3; 50
-GPUB-401; MTI 401 - Comunicação Institucional e Negociação; GPUB; 4; 60
-GPUB-402; MTI 402 - Políticas Públicas e Sociais; GPUB; 4; 60
-GPUB-403; MTI 403 - Planejamento Estratégico na Administração Pública; GPUB; 4; 60
-GPUB-404; MTI 404 - Gestão de Projetos voltados ao Setor Público; GPUB; 4; 60
-GPUB-405; HPGeP - Habilidades Profissionais em Gestão Pública IV; GPUB; 4; 50
-GPUB-406; APE - Atividades de Pesquisa e Extensão III; GPUB; 4; 68
-GPUB-407; Projeto Integrador - PI IV; GPUB; 4; 50
-GPUB-408; UNIDADE EDUCACIONAL TRANSVERSAL - obrigatórias Ética, Cultura e Diversidade I; GPUB; 4; 36
-GPUB-409; Ética, Cultura e Diversidade II; GPUB; 4; 36
-GPUB-410; UNIDADES EDUCACIONAIS OPTATIVAS Libras; GPUB; 4; 60
-GPUB-411; Inglês Técnico; GPUB; 4; 40
-PCUL-101; Metodologias Problematizadoras I; PCUL; 1; 20
-PCUL-102; Prática de Leitura e escrita; PCUL; 1; 60
-PCUL-103; Fundamentos da produção cultural; PCUL; 1; 60
-PCUL-104; Estética e a história da arte; PCUL; 1; 60
-PCUL-105; Identidade, Memória e Patrimônio Cultural; PCUL; 1; 60
-PCUL-106; HPPC I – Habilidades Profissionais em Produção Cultural I e Atividades de Extensão; PCUL; 1; 80
-PCUL-107; PI I - Projeto Integrador I; PCUL; 1; 40
-PCUL-201; Culturas Digitais; PCUL; 2; 60
-PCUL-202; Fundamentos - Artes Visuais; PCUL; 2; 40
-PCUL-203; Fundamentos - Música; PCUL; 2; 40
-PCUL-204; Fundamentos - Literatura; PCUL; 2; 40
-PCUL-205; Fundamentos - Artes cênicas e dança; PCUL; 2; 40
-PCUL-206; Fundamentos - Audiovisual; PCUL; 2; 40
-PCUL-207; HPPPC II – Habilidades Profissionais em Produção Cultural II e Atividades de Extensão; PCUL; 2; 80
-PCUL-208; PI II - Projeto Integrador II; PCUL; 2; 40
-PCUL-301; Cultura e Sociedade no Planalto Central; PCUL; 3; 40
-PCUL-302; Diversidade, cultura e relações étnico-raciais; PCUL; 3; 60
-PCUL-303; Arte brasileira e cultura contemporânea; PCUL; 3; 60
-PCUL-304; Diversidade e cultura na RIDE - DF; PCUL; 3; 60
-PCUL-305; HPPC III – Habilidades Profissionais em Produção Cultural III e Atividades de Extensão; PCUL; 3; 80
-PCUL-306; PI III - Projeto Integrador III; PCUL; 3; 40
-PCUL-307; ELETIVA NÚCLEO UNIVERSAL; PCUL; 3; 60
-PCUL-401; Metodologias Problematizadoras II ***; PCUL; 4; 40
-PCUL-402; Marketing, captação de recursos e empreendedorismo; PCUL; 4; 40
-PCUL-403; Legislações da cultura e direitos autorais; PCUL; 4; 60
-PCUL-404; Elaboração de projetos culturais; PCUL; 4; 60
-PCUL-405; Marketing, mídia e Produção Cultural; PCUL; 4; 40
-PCUL-406; HPPC IV – Habilidades Profissionais em Produção Cultural IV e Atividades de Extensão; PCUL; 4; 80
-PCUL-407; PI IV - Projeto Integrador IV; PCUL; 4; 60
-PCUL-501; Produção cultural - Artes Visuais; PCUL; 5; 60
-PCUL-502; Produção cultural - Literatura; PCUL; 5; 60
-PCUL-503; Produção cultural - Música; PCUL; 5; 60
-PCUL-504; Tópicos especiais em Produção Cultural; PCUL; 5; 60
-PCUL-505; HPPC V – Habilidades Profissionais em Produção Cultural V e Atividades de Extensão; PCUL; 5; 80
-PCUL-506; PI V - Projeto Integrador V; PCUL; 5; 60
-PCUL-601; Produção cultural - Audiovisual; PCUL; 6; 60
-PCUL-602; Produção cultural - Artes Cênicas e Dança; PCUL; 6; 60
-PCUL-603; Gestão de Instituições e Espaços Culturais; PCUL; 6; 60
-PCUL-604; Gestão de projetos culturais; PCUL; 6; 60
-PCUL-605; HPPC VI – Habilidades Profissionais em Produção Cultural VI e Atividade de Extensão; PCUL; 6; 80
-PCUL-606; PI VI - Projeto Integrador VI; PCUL; 6; 60
-ACEN-101; Metodologias Problematizadoras I; ACEN; 1; 20
-ACEN-102; Culturas Digitais; ACEN; 1; 60
-ACEN-103; Atuação Cênica I: Fundamentos; ACEN; 1; 60
-ACEN-104; Corpo, Movimento e Percepção; ACEN; 1; 60
-ACEN-105; Voz e Canto em Performance; ACEN; 1; 60
-ACEN-106; Poéticas Teatrais; ACEN; 1; 40
-ACEN-107; Habilidades Profissionais em Atuação Cênica I: Espectação + Atividades de Extensão; ACEN; 1; 50
-ACEN-108; Projeto Integrador em Atuação Cênica I + Atividades de Extensão; ACEN; 1; 60
-ACEN-201; Metodologias Problematizadoras II; ACEN; 2; 40
-ACEN-202; Atuação Cênica II: Ação, Interpretação e Representação; ACEN; 2; 80
-ACEN-203; Corpo, Movimento e suas Tecnologias; ACEN; 2; 60
-ACEN-204; Palavra em Performance; ACEN; 2; 60
-ACEN-205; História do Ator; ACEN; 2; 40
-ACEN-206; Habilidades Profissionais em Atuação Cênica II: Diálogos com Trajetórias Artísticas + Atividades de Extensão; ACEN; 2; 50
-ACEN-207; Projeto Integrador em Atuação Cênica II + Atividades de Extensão; ACEN; 2; 60
-ACEN-301; Cultura e Sociedade no Planalto Central; ACEN; 3; 40
-ACEN-302; Atuação Cênica III: Performance e Cidadania; ACEN; 3; 80
-ACEN-303; Corporeidades Brasileiras; ACEN; 3; 60
-ACEN-304; Música, Vocalidade e Sonoridades em Performance; ACEN; 3; 60
-ACEN-305; Diversidades e Relações Étnico-Raciais em Cena; ACEN; 3; 60
-ACEN-306; Habilidades Profissionais em Atuação Cênica III: Teatralidades do DF e RIDE e Políticas Públicas para a Cena + Atividades de Extensão; ACEN; 3; 50
-ACEN-307; Projeto Integrador em Atuação Cênica III + Atividades de Extensão; ACEN; 3; 60
-ACEN-401; Eletiva do Núcleo Universal; ACEN; 4; 80
-ACEN-402; Atuação Cênica IV: Câmera e Audiovisual; ACEN; 4; 80
-ACEN-403; Dublagem; ACEN; 4; 40
-ACEN-404; Dramaturgias Cênicas; ACEN; 4; 60
-ACEN-405; Habilidades Profissionais em Atuação Cênica IV: Produção Audiovisual Brasileira e do DF + Atividades de Extensão; ACEN; 4; 50
-ACEN-406; Projeto Integrador em Atuação Cênica IV + Atividades de Extensão; ACEN; 4; 60
-ACEN-501; Atuação Cênica V: Criação e Composição; ACEN; 5; 80
-ACEN-502; Metodologias de Pesquisa em Atuação Cênica; ACEN; 5; 40
-ACEN-503; Eletiva 1 do Núcleo Artes e Cultura; ACEN; 5; 60
-ACEN-504; Eletiva 2 do Núcleo Artes e Cultura; ACEN; 5; 60
-ACEN-505; Habilidades Profissionais em Atuação Cênica V: Profissionalização e Campos de Atuação + Atividades de Extensão; ACEN; 5; 50
-ACEN-506; Projeto Integrador em Atuação Cênica V + Atividades de Extensão; ACEN; 5; 90
-ACEN-601; Atuação Cênica VI: Liminaridades e Tecnologias; ACEN; 6; 80
-ACEN-602; Trabalho de Conclusão de Curso em Atuação Cênica; ACEN; 6; 40
-ACEN-603; Eletiva 3 do Núcleo Artes e Cultura; ACEN; 6; 60
-ACEN-604; Habilidades Profissionais em Atuação Cênica VI: Pesquisa em Atuação Cênica + Atividades de Extensão; ACEN; 6; 50
-ACEN-605; Projeto Integrador em Atuação Cênica VI + Atividades de Extensão; ACEN; 6; 120
-DAN-101; HP Dança I -Habilidades Profissionais em Dança I - Produção Cultural Espetáculos em salas de Teatros (40h)/Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 1; 80
-DAN-102; Análise de configurações coreográficas I; DAN; 1; 40
-DAN-103; Estudos Práticos da Percepção do corpo I; DAN; 1; 80
-DAN-104; Cinesiologia aplicada à Dança I; DAN; 1; 40
-DAN-105; Metodologia de Pesquisa em Dança I; DAN; 1; 40
-DAN-106; Danças e territorialidades I: corpo e culturas afro-diaspóricas; DAN; 1; 40
-DAN-107; História, Análise e crítica de Dança I; DAN; 1; 40
-DAN-108; Metodologias Problematizadoras I (N. U. Obrigatória); DAN; 1; 20
-DAN-201; HP Dança II - Habilidades Profissionais em Dança II - Produção Cultural Espetáculos em Espaços Externos 40h /Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 2; 80
-DAN-202; Análise de configurações coreográficas II; DAN; 2; 40
-DAN-203; Metodologia Prática de Dança I; DAN; 2; 80
-DAN-204; Cinesiologia aplicada à Dança II; DAN; 2; 40
-DAN-205; Danças e territorialidades II: corpo e culturas indígenas; DAN; 2; 40
-DAN-206; História, Análise e crítica de Dança II; DAN; 2; 40
-DAN-207; Culturas Digitais (N.U. Obrigatória); DAN; 2; 60
-DAN-301; HPDança III - Habilidades Profissionais em Dança III - Artes visuais (luz, figurino, cenografia) 40h) / e interfaces com a performance art / Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 3; 80
-DAN-302; Estudos para a criação I; DAN; 3; 80
-DAN-303; Metodologia Prática de Dança II; DAN; 3; 80
-DAN-304; Pedagogias da Dança I; DAN; 3; 40
-DAN-305; Metodologia de Pesquisa em Dança II; DAN; 3; 40
-DAN-306; Danças e territorialidades III: corpo e culturas de rua no DF; DAN; 3; 40
-DAN-307; Cultura e Sociedade no Planalto Central (N. U. Obrigatória); DAN; 3; 40
-DAN-401; HP Dança IV – Habilidades Profissionais em Dança IV Sonoridades e Música para as cenas de Dança / Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 4; 80
-DAN-402; Estudos para a criação II; DAN; 4; 80
-DAN-403; Metodologia Prática de Dança III; DAN; 4; 80
-DAN-404; Pedagogias da Dança II; DAN; 4; 40
-DAN-405; Danças e territorialidades IV: corpo e culturas de rua no Brasil; DAN; 4; 40
-DAN-406; Eletiva I do Núcleo Artes e Cultura; DAN; 4; 60
-DAN-407; Metodologias Problematizadoras II (N. U. Obrigatória); DAN; 4; 40
-DAN-501; HPDança V -Habilidades Profissionais em Dança V - Interfaces com o cinema-audiovisual (40h) / Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 5; 80
-DAN-502; Montagem Orientada (TCC) I; DAN; 5; 40
-DAN-503; Elaboração de projetos culturais para a Dança; DAN; 5; 40
-DAN-504; Metodologia Prática de Dança IV; DAN; 5; 80
-DAN-505; Pesquisa orientada: elaboração do TCC I; DAN; 5; 40
-DAN-506; Dramaturgias de criação na Dança I; DAN; 5; 40
-DAN-507; (N. U. Eletiva); DAN; 5; 60
-DAN-601; HPDança VI Habilidades Profissionais em Dança VI - Atelier de criação com Mostra de Processos de Criação (F.I.A.); DAN; 6; 80
-DAN-602; Montagem Orientada (TCC) II; DAN; 6; 40
-DAN-603; Atelier de criação - Projeto Final; DAN; 6; 80
-DAN-604; Pesquisa Orientada: elaboração do TCC II; DAN; 6; 40
-DAN-605; Dramaturgias de criação na Dança II; DAN; 6; 40
-DAN-606; Eletiva II do Núcleo Artes e Cultura; DAN; 6; 60
+id_disciplina;nome_disciplina;id_curso;semestre;carga_horaria
+1110101;Fundamentos de Contabilidade;111;1;75
+1110102;Introdução à Economia;111;1;100
+1110103;Matemática 1;111;1;75
+1110104;Introdução à Programação;111;1;105
+1110105;Metodologias Problematizadoras I;111;1;20
+1110201;História Econômica Geral;111;2;75
+1110202;Culturas Digitais;111;2;60
+1110203;Matemática 2;111;2;75
+1110204;Estatística 1;111;2;95
+1110205;Desenvolvimento Humano;111;2;60
+1110301;Microeconomia 1;111;3;75
+1110302;Macroeconomia 1;111;3;95
+1110303;Matemática 3;111;3;75
+1110304;Estatística 2;111;3;95
+1110305;Cultura e Sociedade no Planalto Central;111;3;40
+1110401;Microeconomia 2;111;4;75
+1110402;Macroeconomia 2;111;4;95
+1110403;História do Pensamento Econômico;111;4;75
+1110404;Econometria 1;111;4;95
+1110405;Metodologias Problematizadoras II;111;4;40
+1110501;Ciência de Dados 1;111;5;60
+1110502;Economia Internacional;111;5;75
+1110503;Economia do Setor Público;111;5;95
+1110504;Econometria 2;111;5;75
+1110505;Formação Econômica e Social do Brasil;111;5;75
+1110601;Economia Brasileira;111;6;75
+1110602;Orçamento e Finanças Públicas;111;6;75
+1110603;Economia Política;111;6;75
+1110604;Avaliação de Políticas Públicas;111;6;95
+1110605;Ciência de Dados 2;111;6;60
+1110701;Técnicas de Pesquisa em Economia;111;7;75
+1110702;Economia Regional e Urbana;111;7;75
+1110703;Economia Monetária;111;7;75
+1110704;Economia da RIDE/DF;111;7;75
+1110705;Eletiva 1 - Núcleo Universal;111;7;80
+1110801;Monografia;111;8;100
+1110802;Desenvolvimento Econômico;111;8;90
+1110803;Análise da Conjuntura Econômica;111;8;90
+1110804;Eletiva 2 - Núcleo Universal;111;8;80
+1120101;MTI 100 – Introdução às Metodologias Ativas;112;1;40
+1120102;MTI 101 - Fundamentos de Tecnologia da Informação;112;1;60
+1120103;MTI 102 – Gestão Estratégica de Negócios;112;1;60
+1120104;MTI 103 – Ciclo de Vida de Software I;112;1;60
+1120105;MTI 104 – Rede de Computadores I;112;1;60
+1120106;HPGTI I – Habilidades Profissionais em Gestão da Tecnologia da Informação I: Tecnologia da Informação (fundamentos);112;1;60
+1120107;PI I - Projeto Integrador I;112;1;60
+1120201;MTI 201 – Rede de Computadores II;112;2;60
+1120202;MTI 202 – Estatística: Matemática Computacional;112;2;40
+1120203;MTI 203 – Ciclo de Vida de Software II;112;2;60
+1120204;MTI 204 – Governança dos Serviços de TI;112;2;60
+1120205;HPGTI II – Habilidades Profissionais em Gestão da Tecnologia da Informação II : Ciclo de Vida do Software;112;2;80
+1120206;APE I – Atividade de Pesquisa e Extensão I;112;2;50
+1120207;PI II - Projeto Integrador II;112;2;50
+1120301;MTI 301 - Banco de Dados I;112;3;60
+1120302;MTI 302 - Informação, Ética e Sociedade;112;3;40
+1120303;MTI 303 – Ciclo de Vida de Software III;112;3;80
+1120304;MTI 304 – Gestão de Rede de Computadores (SO, Redes, BD);112;3;40
+1120305;HPGTI III – Habilidades Profissionais em Gestão da Tecnologia da Informação III : Redes de Computadores;112;3;80
+1120306;APE II – Atividade de Pesquisa e Extensão II;112;3;50
+1120307;PI III - Projeto Integrador III;112;3;50
+1120401;MTI 401 – Ciclo de Vida de Software IV;112;4;60
+1120402;MTI 402 – Banco de Dados II;112;4;40
+1120403;MTI 403 – Legislação Aplicada à Tecnologia da Informação;112;4;60
+1120404;MTI 404 – Gestão de Projetos;112;4;60
+1120405;HPGTI IV – Habilidades Profissionais em Gestão da Tecnologia da Informação IV: Banco de Dados e Ciclo de Vida do Software;112;4;80
+1120406;APE III – Atividade de Pesquisa e Extensão III;112;4;50
+1120407;PI IV - Projeto Integrador IV;112;4;50
+1120501;MTI 501 - Governança de Serviços da TI II;112;5;60
+1120502;MTI 502 – Engenharia de Usabilidade;112;5;60
+1120503;MTI 503 - Concepção de Engenharia de Teste de Software;112;5;60
+1120504;MTI 504 – Segurança e Auditoria de Sistemas;112;5;60
+1120505;HPGTI IV – Habilidades Profissionais em Gestão da Tecnologia da Informação IV : Governança e Gestão;112;5;60
+1120506;APE IV – Atividade de Pesquisa e Extensão IV;112;5;50
+1120507;PI V - Projeto Integrador IV;112;5;50
+1130101;MTI 100 - Introdução ao Ensino das Metodologias Ativas na Gestão Pública;113;1;40
+1130102;MTI 101 - Introdução à Pesquisa Científica;113;1;60
+1130103;MTI 102 - Fundamentos Normativos da Política e da Gestão Pública;113;1;60
+1130104;MTI 103 - Estudos Comparativos: Gestão e Orçamento Público;113;1;60
+1130105;MTI 104 - Sustentabilidade Social e Ética no Serviço Público;113;1;60
+1130106;HPGeP - Habilidades Profissionais em Gestão Pública I;113;1;60
+1130107;Projeto Integrador - PI I;113;1;60
+1130201;MTI 201 - Administração Voltada à Gestão Pública;113;2;60
+1130202;MTI 202 - Gestão de Pessoas na Administração Pública;113;2;60
+1130203;MTI 203 - Contratações Públicas;113;2;60
+1130204;MTI 204 - Contabilidade e Economia no Setor Público;113;2;60
+1130205;HPGeP - Habilidades Profissionais em Gestão Pública II;113;2;60
+1130206;APE - Atividades de Pesquisa e Extensão I;113;2;50
+1130207;Projeto Integrador - PI II;113;2;50
+1130301;MTI 301 - Gestão de Contratos e Controle na Administração Pública;113;3;60
+1130302;MTI 302 – Gestão de Processos: Sistemas, Processos e Gestão de Conflitos;113;3;60
+1130303;MTI 303 - Administração de Material e Patrimônio;113;3;60
+1130304;MTI 304 – Sistemas de Informação no Setor Público;113;3;60
+1130305;HPGeP - Habilidades Profissionais em Gestão Pública III;113;3;60
+1130306;APE - Atividades de Pesquisa e Extensão II;113;3;50
+1130307;Projeto Integrador - PI III;113;3;50
+1130401;MTI 401 - Comunicação Institucional e Negociação;113;4;60
+1130402;MTI 402 - Políticas Públicas e Sociais;113;4;60
+1130403;MTI 403 - Planejamento Estratégico na Administração Pública;113;4;60
+1130404;MTI 404 - Gestão de Projetos voltados ao Setor Público;113;4;60
+1130405;HPGeP - Habilidades Profissionais em Gestão Pública IV;113;4;50
+1130406;APE - Atividades de Pesquisa e Extensão III;113;4;68
+1130407;Projeto Integrador - PI IV;113;4;50
+1130408;UNIDADE EDUCACIONAL TRANSVERSAL - obrigatórias Ética, Cultura e Diversidade I;113;4;36
+1130409;Ética, Cultura e Diversidade II;113;4;36
+1130410;UNIDADES EDUCACIONAIS OPTATIVAS Libras;113;4;60
+1130411;Inglês Técnico;113;4;40
+1310101;Metodologias Problematizadoras I;131;1;20
+1310102;Introdução ao Serviço Social;131;1;60
+1310103;Teoria Social e Política;131;1;80
+1310104;Antropologia e Serviço Social;131;1;60
+1310105;Atividades Complementares;131;1;120
+1310106;HPSS 01 - Habilidades Profissionais em Serviço Social;131;1;60
+1310201;Infância, Adolescência e Direitos Sociais;131;2;60
+1310202;Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social I;131;2;60
+1310203;Atividades Complementares;131;2;20
+1310204;Economia Política e Serviço Social;131;2;80
+1310205;Desenvolvimento Humano;131;2;60
+1310206;HPSS 02 - Habilidades Profissionais em Serviço Social;131;2;60
+1310301;Cultura e Sociedade no Planalto Central;131;3;40
+1310302;Trabalho e Questão Social no Brasil;131;3;60
+1310303;Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social II;131;3;50
+1310304;Tópicos Especiais em Serviço Social I (Política de Assitência Social);131;3;60
+1310305;HPSS 03 - Habilidades Profissionais em Serviço Social;131;3;60
+1310401;Relações Sociais, Família e Serviço Social;131;4;60
+1310402;Metodologias Problematizadoras II;131;4;40
+1310403;Pesquisa Social;131;4;60
+1310404;Fundamentos Históricos, Teóricos e Metodológicos do Serviço Social III;131;4;60
+1310405;Tópicos Especiais em Serviço Social II (Saúde Pública);131;4;60
+1310406;Atividades Complementares;131;4;50
+1310407;HPSS 04 - Habilidades Profissionais em Serviço Social;131;4;60
+1310501;Formação sócio-histórica do Brasil;131;5;60
+1310502;Ética e Serviço Social;131;5;60
+1310503;Política Social II;131;5;60
+1310504;Tópicos Especiais em Serviço Social III (Educação e Previdência Social);131;5;60
+1310505;Envelhecimento e Políticas Sociais;131;5;40
+1310506;HPSS 05 - Habilidades Profissionais em Serviço Social;131;5;60
+1310601;+ Espaços sócio-ocupacionais e Processo de Trabalho em Serviço Social;131;6;60
+1310602;Eletiva I;131;6;80
+1310603;Culturas Digitais;131;6;60
+1310604;Classes, Organizações e Movimentos Sociais;131;6;60
+1310605;Saúde Mental e Serviço Social;131;6;60
+1310606;Estágio Supervisionado I;131;6;155
+1310701;Raça, Etnia e Serviço Social;131;7;50
+1310702;Planejamento e Gestão em Serviço Social;131;7;60
+1310703;Seminário e orientação de TCC I;131;7;30
+1310704;Estado, Direitos Humanos e Sociais;131;7;60
+1310705;Trabalho e Sociabilidade;131;7;60
+1310706;Atividades Complementares;131;7;60
+1310707;Estágio Supervisionado II;131;7;155
+1310801;Eletiva II;131;8;80
+1310802;Gênero e Serviço Social;131;8;60
+1310803;Orçamento e fundo público no Brasil;131;8;60
+1310804;Estágio Supervisionado III;131;8;155
+1310805;Seminário e orientação de TCC II;131;8;30
+1320101;NU: Metodologias Problematizadoras I;132;1;20
+1320102;Psicologia do Desenvolvimento Humano: infância e adolescência;132;1;60
+1320103;Fundamentos Epistemológicos da Psicologia;132;1;60
+1320104;Habilidades Profissionais em Psicologia I - HPP (Saúde e Saúde Mental);132;1;40
+1320105;Psicologia: Ciência e Profissão;132;1;60
+1320106;Introdução às Ciências Sociais;132;1;60
+1320107;Extensionalização do Currículo: Associada ao HPP;132;1;100
+1320201;NU: Pensamento Filosófico na construção do conhecimento;132;2;80
+1320202;Ética Profissional;132;2;60
+1320203;NU: Culturas Digitais;132;2;60
+1320204;Habilidades Profissionais em Psicologia II - HPP (SUAS e Justiça);132;2;40
+1320205;Processos Psicológicos Básicos;132;2;80
+1320206;Psicologia do Desenvolvimento Humano – Idade adulta e envelhecimento;132;2;60
+1320207;Extensionalização do Currículo: Associada ao HPP;132;2;40
+1320301;NU: Cultura e Sociedade no Planalto Central;132;3;40
+1320302;Fundamentos, Métodos e Técnicas de Investigação Científica em Psicologia;132;3;40
+1320303;Psicologia da Personalidade;132;3;60
+1320304;Teorias e Técnicas Psicoterápicas I;132;3;60
+1320305;Estágio Básico I (em investigação científica);132;3;50
+1320306;Estatística Aplicada à Psicologia;132;3;40
+1320307;Teorias e Práticas de Processos Grupais;132;3;60
+1320308;Extensionalização do Currículo: Associada às UCs do semestre;132;3;50
+1320401;NU: Metodologias Problematizadoras II;132;4;40
+1320402;Psicopatologia I;132;4;60
+1320403;Psicologia Comportamental I;132;4;60
+1320404;Psicanálise;132;4;60
+1320405;Estágio Básico II;132;4;70
+1320406;Neuroanatomia aplicada à Psicologia;132;4;60
+1320407;Extensionalização do Currículo: Associada às UCs do semestre;132;4;50
+1320501;Teorias e Técnicas Psicoterápicas II;132;5;60
+1320502;Psicologia Social I;132;5;60
+1320503;Estágio Básico III (entrevista);132;5;80
+1320504;Psicologia da Saúde;132;5;60
+1320505;Psicopatologia II;132;5;60
+1320506;Psicologia Comportamental II;132;5;60
+1320507;Extensionalização do Currículo: Associada às UCs do semestre;132;5;40
+1320601;Avaliação em Psicologia I;132;6;60
+1320602;Psicologia Escolar e da Educação;132;6;60
+1320603;Psicologia Social II;132;6;60
+1320604;Psicologia organizacional;132;6;60
+1320605;Tópicos Especiais em Psicologia Clínica;132;6;60
+1320606;Estágio Específico Supervisionado I (núcleo comum);132;6;100
+1320701;Psicofarmacologia;132;7;60
+1320702;Psicologia Comunitária;132;7;60
+1320703;Psicologia do Trabalho;132;7;60
+1320704;Avaliação em Psicologia II;132;7;60
+1320705;Estágio Específico Supervisionado II (núcleo comum);132;7;100
+1320706;Extensionalização do Currículo: Associada às UCs do semestre;132;7;60
+1320801;Psicologia e direitos humanos: gênero, sexualidade e relações raciais;132;8;60
+1320802;Neuropsicologia;132;8;60
+1320803;Eletiva Ênfase;132;8;60
+1320804;Estágio Específico Supervisionado III (ênfase);132;8;140
+1320805;Extensionalização do Currículo: Associada às UCs do semestre;132;8;60
+1320901;Psicologia, diversidade e inclusão;132;9;60
+1320902;Trabalho de Conclusão de Curso - TCC I;132;9;60
+1320903;Eletiva Ênfase;132;9;60
+1320904;NU: Eletiva;132;9;60
+1320905;Estágio Específico Supervisionado IV (ênfase);132;9;140
+1321001;Eletiva Ênfase;132;10;60
+1321002;NU: Eletiva;132;10;80
+1321003;Trabalho de Conclusão de Curso II;132;10;40
+1321004;Estágio Específico Supervisionado V (ênfase);132;10;120
+1321005;A FAZER DURANTE TODO O CURSO Atividades complementares;132;10;120
+2110101;Extensão*;211;1;30
+2110102;Atividades Complementares;211;1;40
+2110103;Culturas Digitais;211;1;60
+2110104;Metodologias Problematizadoras I;211;1;20
+2110105;Cultura e Sociedade no Planalto Central;211;1;40
+2110106;História da Educação;211;1;60
+2110107;Políticas Públicas em Educação – Educação Brasileira;211;1;60
+2110108;Práticas de Leitura e Escrita I;211;1;60
+2110109;Gestão nos Espaços Formativos;211;1;80
+2110110;HPP* 01: Espaços Formativos;211;1;50
+2110201;Extensão;211;2;30
+2110202;Atividades Complementares;211;2;40
+2110203;Desenvolvimento Humano;211;2;60
+2110204;Didática Geral;211;2;60
+2110205;Conhecimentos Básicos para Uso das TICs;211;2;60
+2110206;Libras;211;2;60
+2110207;Currículo, Planejamento e Avaliação;211;2;60
+2110208;Educação Comparada;211;2;60
+2110209;HPP* 02: Espaços Formativos;211;2;50
+2110301;Extensão;211;3;50
+2110302;Atividades Complementares;211;3;40
+2110303;Metodologias Problematizadoras II;211;3;40
+2110304;História da Matemática;211;3;60
+2110305;Fundamentos e orientações Metodológicas – EJA;211;3;60
+2110306;Teorias e Práticas de Educação Matemática I - BNCC;211;3;60
+2110307;Linguagem e Criança - BNCC;211;3;50
+2110308;Jogos e Brincadeiras na Infância - BNCC;211;3;60
+2110309;HPP* 03: EJA;211;3;50
+2110401;Extensão;211;4;60
+2110402;Atividades Complementares;211;4;10
+2110403;Eletiva I;211;4;80
+2110404;Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC;211;4;80
+2110405;Ciências Naturais - BNCC;211;4;80
+2110406;Práticas de Leitura e escrita II;211;4;60
+2110407;Educação, Arte e Movimento - Ed. Infantil e Anos Iniciais - BNCC;211;4;60
+2110408;HPP* 04: Educação Infantil e Creche;211;4;50
+2110501;Extensão;211;5;70
+2110502;Atividades Complementares;211;5;0
+2110503;Profissão Docente;211;5;60
+2110504;Fundamentos e Orientações Metodológicas – Anos Iniciais - BNCC;211;5;80
+2110505;Elaboração de Projetos Interventivos/Didáticos - BNCC;211;5;60
+2110506;Ciências Humanas – BNCC;211;5;80
+2110507;Proficiência em Língua Portuguesa e Literatura - BNCC;211;5;60
+2110508;Teorias e Práticas em Educação Matemática II - BNCC;211;5;60
+2110509;HPP 05: Anos Iniciais;211;5;50
+2110601;Extensão;211;6;50
+2110602;Atividades Complementares;211;6;0
+2110603;Eletiva II;211;6;80
+2110604;Educação do Campo, Indígena e Quilombola;211;6;40
+2110605;História, Cultura Afrobrasileira e Africanas - BNCC;211;6;50
+2110606;Alfabetização e Práticas de Letramento – BNCC;211;6;60
+2110607;Proficiência em Língua Portuguesa - Produção Acadêmica I;211;6;60
+2110608;Elaboração de Materiais Didáticos - BNCC;211;6;60
+2110609;HPP 06: Anos Iniciais;211;6;50
+2110701;Extensão;211;7;30
+2110702;Atividades Complementares;211;7;30
+2110703;Práticas e instrumentos de Inclusão;211;7;60
+2110704;Proficiência em Língua Portuguesa – Produção Acadêmica II;211;7;60
+2110705;HPP* 07: Escolha do Estudante - Atuação;211;7;50
+2110706;Estágio I - Educação Infantil;211;7;200
+2110801;Extensão;211;8;10
+2110802;Atividades Complementares;211;8;40
+2110803;Tecnologia Educacional - Design;211;8;60
+2110804;Estatística Aplicada;211;8;50
+2110805;HPP 08: Escolha do Estudante – Atuação;211;8;50
+2110806;Estágio II - Anos Iniciais;211;8;200
+2120101;Cult e Soc. No Planalto Central;212;1;40
+2120102;Metodologias problematizadoras 1;212;1;20
+2120103;Culturas Digitais;212;1;60
+2120104;Números e Operações 1;212;1;60
+2120105;Geometria 1;212;1;60
+2120106;Álgebra 1;212;1;60
+2120107;HPP 1: Espaços Formativos;212;1;60
+2120108;Orientação Acadêmica;212;1;10
+2120201;Modelagem Matemática 1;212;2;40
+2120202;Desenvolvimento Humano;212;2;60
+2120203;História da Educação Matemática;212;2;60
+2120204;Números e Operações 2;212;2;60
+2120205;Geometria 2;212;2;60
+2120206;Álgebra 2;212;2;60
+2120207;HPP 2: Espaços Formativos;212;2;60
+2120208;Orientação Acadêmica;212;2;10
+2120301;Metodologias problematizadoras 2;212;3;40
+2120302;Álgebra 3;212;3;60
+2120303;Números e Operações 3;212;3;60
+2120304;Geometria 3;212;3;60
+2120305;Grandezas e Medidas 1;212;3;60
+2120306;Combinatória;212;3;60
+2120307;HPP 3: Espaços Formativos;212;3;100
+2120308;Orientação Acadêmica;212;3;10
+2120401;Eletiva 1 do NU;212;4;80
+2120402;Álgebra 4;212;4;60
+2120403;Números e Operações 4;212;4;60
+2120404;Grandezas e Medidas 2;212;4;60
+2120405;Estágio 1 - Ensino Fundamental;212;4;80
+2120406;Modelagem Matemática 2;212;4;40
+2120407;HPP 4: Espaços Formativos;212;4;60
+2120408;Orientação Acadêmica;212;4;10
+2120501;LIBRAS;212;5;80
+2120502;Números e Operações 5;212;5;60
+2120503;Geometria 4;212;5;60
+2120504;Álgebra 5;212;5;60
+2120505;Estágio 2 - Ensino Fundamental;212;5;80
+2120506;HPP 5: Espaços Formativos;212;5;60
+2120507;Orientação Acadêmica;212;5;10
+2120601;Eletiva de Educação Matemática 1;212;6;60
+2120602;Educação Estatística e Probabilística 1;212;6;60
+2120603;Modelagem Matemática 3;212;6;40
+2120604;Pesquisa em Educação Matemática;212;6;80
+2120605;Estágio 3 - Ensino Médio;212;6;80
+2120606;HPP 6: Espaços Formativos;212;6;40
+2120607;Orientação Acadêmica;212;6;10
+2120701;Pensamento Computacional;212;7;80
+2120702;Currículo e Avaliação;212;7;60
+2120703;Tecnologias em Educação Matemática;212;7;60
+2120704;TCC 1;212;7;40
+2120705;Estágio 4 - Ensino Médio;212;7;80
+2120801;Eletiva 2 de Educação Matemática;212;8;60
+2120802;Educação Estatística e Probabilística 2;212;8;60
+2120803;Experiências em Educação Matemática Inclusiva;212;8;40
+2120804;TCC 2;212;8;40
+2120805;Estágio 5 - Outros contextos;212;8;80
+2120806;HPP 7: Espaços Formativos;212;8;40
+2130101;Introdução aos Estudos da Linguagem;213;1;60
+2130102;Introdução aos Estudos Literários;213;1;60
+2130103;Literatura Contemporânea;213;1;60
+2130104;Metodologias Problematizadoras I;213;1;20
+2130105;Cultura e Sociedade no Planalto Central;213;1;40
+2130106;Culturas Digitais;213;1;60
+2130107;Práticas de Leitura e Escrita I - Gêneros Discursivo-Textuais;213;1;60
+2130108;HPL 1: Multiletramentos;213;1;50
+2130201;Literatura Medieval e Renascentista: Trovadorismo, Humanismo e Classicismo;213;2;60
+2130202;Literatura do Distrito Federal;213;2;60
+2130203;Formação do Português Contemporâneo;213;2;60
+2130204;Historiografia Linguística;213;2;60
+2130205;Desenvolvimento Humano;213;2;60
+2130206;Práticas de Leitura e Escrita II - Gêneros Acadêmicos;213;2;60
+2130207;HPL 2: Ensino de Gramática;213;2;50
+2130301;Literatura Colonial: Quinhentismo, Barroco e Arcadismo;213;3;60
+2130302;Literaturas Africanas de Língua Portuguesa;213;3;60
+2130303;Morfologia e Lexicologia da Língua Portuguesa;213;3;60
+2130304;Sociolinguística e Políticas Linguísticas;213;3;60
+2130305;Metodologias Problematizadoras II;213;3;40
+2130306;Práticas de Leitura e Escrita III - Textos e Tecnologias;213;3;60
+2130307;HPL 3: TDICs no Ensino de Língua Portuguesa 5;213;3;50
+2130401;Romantismo;213;4;60
+2130402;Sintaxe da Língua Portuguesa;213;4;60
+2130403;Psicolinguística;213;4;60
+2130404;Psicologia da Educação;213;4;40
+2130405;Libras (nível básico);213;4;80
+2130406;Eletiva do Núcleo Universal;213;4;80
+2130407;HPL 4: Educação Inclusiva;213;4;50
+2130501;Escolas Realista;213;5;60
+2130502;Literaturas Afro-brasileiras e Indígenas;213;5;60
+2130503;Semântica e Pragmática;213;5;60
+2130504;Fonética e Fonologia da Língua Portuguesa;213;5;60
+2130505;Oralidade e Escrita;213;5;60
+2130506;Didática;213;5;40
+2130507;HPL 5: Oralidade e Ensino;213;5;50
+2130601;Simbolismo e Modernismo;213;6;60
+2130602;Crítica Literária;213;6;60
+2130603;Análise de Discurso e Semiótica;213;6;60
+2130604;Linguística Textual;213;6;60
+2130605;Práticas de Leitura e Escrita IV - Experimentação em Escrita;213;6;60
+2130606;Política e Legislação Educacional Brasileira;213;6;40
+2130607;HPL 6: Formação de Leitores;213;6;50
+2130701;Eletiva de Linguística;213;7;60
+2130702;Educação, Linguagem e Sociedade;213;7;40
+2130703;Trabalho de Conclusão do Curso de Letras I;213;7;80
+2130704;Estágio Supervisionado de Ensino I;213;7;200
+2130705;HPL 7: Ensino Fundamental e EJA;213;7;50
+2130801;Eletiva de Literatura;213;8;60
+2130802;História da Educação e do Ensino de Língua Portuguesa;213;8;40
+2130803;Trabalho de Conclusão do Curso de Letras II;213;8;80
+2130804;Estágio Supervisionado de Ensino II;213;8;200
+2130805;HPL 08: Ensino Médio e EJA;213;8;50
+2140101;Compreensão Oral e Escrita em Língua Inglesa;214;1;60
+2140102;Introdução aos Estudos da Linguagem;214;1;60
+2140103;Introdução aos Estudos Literários;214;1;60
+2140104;Metodologias Problematizadoras I;214;1;20
+2140105;Culturas Digitais;214;1;60
+2140106;Cultura e Sociedade no Planalto Central;214;1;40
+2140107;Práticas de Leitura e Escrita I - Gêneros Discursivo-Textuais;214;1;60
+2140108;HPL 1: Multiletramentos;214;1;50
+2140201;Expressão Escrita em Língua Inglesa I;214;2;60
+2140202;Expressão Oral em Língua Inglesa I;214;2;60
+2140203;Historiografia Linguística;214;2;60
+2140204;Panorama da Literatura em Língua Inglesa;214;2;60
+2140205;Desenvolvimento Humano;214;2;60
+2140206;Práticas de Leitura e Escrita II - Gêneros Acadêmicos 6;214;2;60
+2140207;HPL 2: Espaços de Atuação em Língua Inglesa;214;2;50
+2140301;Expressão Escrita em Língua Inglesa II;214;3;60
+2140302;Expressão Oral em Língua Inglesa II;214;3;60
+2140303;Morfossintaxe da Língua Inglesa I;214;3;60
+2140304;Literaturas em Língua Inglesa - Narrativas Curtas;214;3;60
+2140305;Metodologias Problematizadoras II;214;3;40
+2140306;Práticas de Leitura e Escrita III - Textos e Tecnologias;214;3;60
+2140307;HPL 3: TDICs no Ensino de Língua Estrangeira;214;3;50
+2140401;Morfossintaxe da Língua Inglesa II;214;4;60
+2140402;Aprendizagem e Aquisição de Segunda Língua e Língua Estrangeira;214;4;60
+2140403;Literaturas em Língua Inglesa - Lírica;214;4;60
+2140404;Libras (nível básico);214;4;80
+2140405;Psicologia da Educação;214;4;40
+2140406;HPL 4: Educação Inclusiva;214;4;50
+2140501;Fonética e Fonologia da Língua Inglesa;214;5;60
+2140502;História da Língua Inglesa;214;5;60
+2140503;Literaturas em Língua Inglesa - Drama;214;5;60
+2140504;Eletiva do Núcleo Universal;214;5;80
+2140505;Metodologia do Ensino da Língua Inglesa I;214;5;40
+2140506;Didática;214;5;40
+2140507;HPL 5: Oralidade e Ensino;214;5;50
+2140601;Linguística Textual;214;6;60
+2140602;Literaturas em Língua Inglesa - Romance;214;6;60
+2140603;Crítica Literária;214;6;60
+2140604;Educação, Linguagem e Sociedade;214;6;40
+2140605;Metodologia do Ensino da Língua Inglesa II;214;6;40
+2140606;Política e Legislação Educacional Brasileira;214;6;40
+2140607;HPL 6: Formação de Leitores;214;6;50
+2140701;Introdução aos Estudos da Tradução;214;7;60
+2140702;Sociolinguística e Políticas Linguísticas;214;7;60
+2140703;Trabalho de Conclusão do Curso de Letras I - Língua Inglesa;214;7;80
+2140704;Estágio Supervisionado de Ensino I - Língua Inglesa;214;7;200
+2140705;HPL 7: Tradução;214;7;50
+2140801;Análise de Discurso e Semiótica;214;8;60
+2140802;Eletiva de Literatura e Estudos Culturais;214;8;60
+2140803;Trabalho de Conclusão do Curso de Letras II - Língua Inglesa;214;8;80
+2140804;Estágio Supervisionado de Ensino II - Língua Inglesa;214;8;200
+2140805;HPL 8: Laboratório de Gramática em Língua Inglesa;214;8;50
+2150101;Metodologias Problematizadoras I;215;1;20
+2150102;Prática de Leitura e escrita;215;1;60
+2150103;Fundamentos da produção cultural;215;1;60
+2150104;Estética e a história da arte;215;1;60
+2150105;Identidade, Memória e Patrimônio Cultural;215;1;60
+2150106;HPPC I – Habilidades Profissionais em Produção Cultural I e Atividades de Extensão;215;1;80
+2150107;PI I - Projeto Integrador I;215;1;40
+2150201;Culturas Digitais;215;2;60
+2150202;Fundamentos - Artes Visuais;215;2;40
+2150203;Fundamentos - Música;215;2;40
+2150204;Fundamentos - Literatura;215;2;40
+2150205;Fundamentos - Artes cênicas e dança;215;2;40
+2150206;Fundamentos - Audiovisual;215;2;40
+2150207;HPPPC II – Habilidades Profissionais em Produção Cultural II e Atividades de Extensão;215;2;80
+2150208;PI II - Projeto Integrador II;215;2;40
+2150301;Cultura e Sociedade no Planalto Central;215;3;40
+2150302;Diversidade, cultura e relações étnico-raciais;215;3;60
+2150303;Arte brasileira e cultura contemporânea;215;3;60
+2150304;Diversidade e cultura na RIDE - DF;215;3;60
+2150305;HPPC III – Habilidades Profissionais em Produção Cultural III e Atividades de Extensão;215;3;80
+2150306;PI III - Projeto Integrador III;215;3;40
+2150307;ELETIVA NÚCLEO UNIVERSAL;215;3;60
+2150401;Metodologias Problematizadoras II ***;215;4;40
+2150402;Marketing, captação de recursos e empreendedorismo;215;4;40
+2150403;Legislações da cultura e direitos autorais;215;4;60
+2150404;Elaboração de projetos culturais;215;4;60
+2150405;Marketing, mídia e Produção Cultural;215;4;40
+2150406;HPPC IV – Habilidades Profissionais em Produção Cultural IV e Atividades de Extensão;215;4;80
+2150407;PI IV - Projeto Integrador IV;215;4;60
+2150501;Produção cultural - Artes Visuais;215;5;60
+2150502;Produção cultural - Literatura;215;5;60
+2150503;Produção cultural - Música;215;5;60
+2150504;Tópicos especiais em Produção Cultural;215;5;60
+2150505;HPPC V – Habilidades Profissionais em Produção Cultural V e Atividades de Extensão;215;5;80
+2150506;PI V - Projeto Integrador V;215;5;60
+2150601;Produção cultural - Audiovisual;215;6;60
+2150602;Produção cultural - Artes Cênicas e Dança;215;6;60
+2150603;Gestão de Instituições e Espaços Culturais;215;6;60
+2150604;Gestão de projetos culturais;215;6;60
+2150605;HPPC VI – Habilidades Profissionais em Produção Cultural VI e Atividade de Extensão;215;6;80
+2150606;PI VI - Projeto Integrador VI;215;6;60
+2160101;Metodologias Problematizadoras I;216;1;20
+2160102;Culturas Digitais;216;1;60
+2160103;Atuação Cênica I: Fundamentos;216;1;60
+2160104;Corpo, Movimento e Percepção;216;1;60
+2160105;Voz e Canto em Performance;216;1;60
+2160106;Poéticas Teatrais;216;1;40
+2160107;Habilidades Profissionais em Atuação Cênica I: Espectação + Atividades de Extensão;216;1;50
+2160108;Projeto Integrador em Atuação Cênica I + Atividades de Extensão;216;1;60
+2160201;Metodologias Problematizadoras II;216;2;40
+2160202;Atuação Cênica II: Ação, Interpretação e Representação;216;2;80
+2160203;Corpo, Movimento e suas Tecnologias;216;2;60
+2160204;Palavra em Performance;216;2;60
+2160205;História do Ator;216;2;40
+2160206;Habilidades Profissionais em Atuação Cênica II: Diálogos com Trajetórias Artísticas + Atividades de Extensão;216;2;50
+2160207;Projeto Integrador em Atuação Cênica II + Atividades de Extensão;216;2;60
+2160301;Cultura e Sociedade no Planalto Central;216;3;40
+2160302;Atuação Cênica III: Performance e Cidadania;216;3;80
+2160303;Corporeidades Brasileiras;216;3;60
+2160304;Música, Vocalidade e Sonoridades em Performance;216;3;60
+2160305;Diversidades e Relações Étnico-Raciais em Cena;216;3;60
+2160306;Habilidades Profissionais em Atuação Cênica III: Teatralidades do DF e RIDE e Políticas Públicas para a Cena + Atividades de Extensão;216;3;50
+2160307;Projeto Integrador em Atuação Cênica III + Atividades de Extensão;216;3;60
+2160401;Eletiva do Núcleo Universal;216;4;80
+2160402;Atuação Cênica IV: Câmera e Audiovisual;216;4;80
+2160403;Dublagem;216;4;40
+2160404;Dramaturgias Cênicas;216;4;60
+2160405;Habilidades Profissionais em Atuação Cênica IV: Produção Audiovisual Brasileira e do DF + Atividades de Extensão;216;4;50
+2160406;Projeto Integrador em Atuação Cênica IV + Atividades de Extensão;216;4;60
+2160501;Atuação Cênica V: Criação e Composição;216;5;80
+2160502;Metodologias de Pesquisa em Atuação Cênica;216;5;40
+2160503;Eletiva 1 do Núcleo Artes e Cultura;216;5;60
+2160504;Eletiva 2 do Núcleo Artes e Cultura;216;5;60
+2160505;Habilidades Profissionais em Atuação Cênica V: Profissionalização e Campos de Atuação + Atividades de Extensão;216;5;50
+2160506;Projeto Integrador em Atuação Cênica V + Atividades de Extensão;216;5;90
+2160601;Atuação Cênica VI: Liminaridades e Tecnologias;216;6;80
+2160602;Trabalho de Conclusão de Curso em Atuação Cênica;216;6;40
+2160603;Eletiva 3 do Núcleo Artes e Cultura;216;6;60
+2160604;Habilidades Profissionais em Atuação Cênica VI: Pesquisa em Atuação Cênica + Atividades de Extensão;216;6;50
+2160605;Projeto Integrador em Atuação Cênica VI + Atividades de Extensão;216;6;120
+2170101;HP Dança I -Habilidades Profissionais em Dança I - Produção Cultural Espetáculos em salas de Teatros (40h)/Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;1;80
+2170102;Análise de configurações coreográficas I;217;1;40
+2170103;Estudos Práticos da Percepção do corpo I;217;1;80
+2170104;Cinesiologia aplicada à Dança I;217;1;40
+2170105;Metodologia de Pesquisa em Dança I;217;1;40
+2170106;Danças e territorialidades I: corpo e culturas afro-diaspóricas;217;1;40
+2170107;História, Análise e crítica de Dança I;217;1;40
+2170108;Metodologias Problematizadoras I (N. U. Obrigatória);217;1;20
+2170201;HP Dança II - Habilidades Profissionais em Dança II - Produção Cultural Espetáculos em Espaços Externos 40h /Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;2;80
+2170202;Análise de configurações coreográficas II;217;2;40
+2170203;Metodologia Prática de Dança I;217;2;80
+2170204;Cinesiologia aplicada à Dança II;217;2;40
+2170205;Danças e territorialidades II: corpo e culturas indígenas;217;2;40
+2170206;História, Análise e crítica de Dança II;217;2;40
+2170207;Culturas Digitais (N.U. Obrigatória);217;2;60
+2170301;HPDança III - Habilidades Profissionais em Dança III - Artes visuais (luz, figurino, cenografia) 40h) / e interfaces com a performance art / Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;3;80
+2170302;Estudos para a criação I;217;3;80
+2170303;Metodologia Prática de Dança II;217;3;80
+2170304;Pedagogias da Dança I;217;3;40
+2170305;Metodologia de Pesquisa em Dança II;217;3;40
+2170306;Danças e territorialidades III: corpo e culturas de rua no DF;217;3;40
+2170307;Cultura e Sociedade no Planalto Central (N. U. Obrigatória);217;3;40
+2170401;HP Dança IV – Habilidades Profissionais em Dança IV Sonoridades e Música para as cenas de Dança / Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;4;80
+2170402;Estudos para a criação II;217;4;80
+2170403;Metodologia Prática de Dança III;217;4;80
+2170404;Pedagogias da Dança II;217;4;40
+2170405;Danças e territorialidades IV: corpo e culturas de rua no Brasil;217;4;40
+2170406;Eletiva I do Núcleo Artes e Cultura;217;4;60
+2170407;Metodologias Problematizadoras II (N. U. Obrigatória);217;4;40
+2170501;HPDança V -Habilidades Profissionais em Dança V - Interfaces com o cinema-audiovisual (40h) / Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;5;80
+2170502;Montagem Orientada (TCC) I;217;5;40
+2170503;Elaboração de projetos culturais para a Dança;217;5;40
+2170504;Metodologia Prática de Dança IV;217;5;80
+2170505;Pesquisa orientada: elaboração do TCC I;217;5;40
+2170506;Dramaturgias de criação na Dança I;217;5;40
+2170507;(N. U. Eletiva);217;5;60
+2170601;HPDança VI Habilidades Profissionais em Dança VI - Atelier de criação com Mostra de Processos de Criação (F.I.A.);217;6;80
+2170602;Montagem Orientada (TCC) II;217;6;40
+2170603;Atelier de criação - Projeto Final;217;6;80
+2170604;Pesquisa Orientada: elaboração do TCC II;217;6;40
+2170605;Dramaturgias de criação na Dança II;217;6;40
+2170606;Eletiva II do Núcleo Artes e Cultura;217;6;60
+3110101;Introdução à Engenharia de Software;311;1;20
+3110102;Bases da Engenharia de Software 1;311;1;180
+3110103;Projeto Aplicado 0 (Instrumentação);311;1;20
+3110104;Projeto Aplicado 1 (Servomecanismos);311;1;100
+3110105;Núcleo universal/Relações Humanas e Sociais;311;1;120
+3110201;Bases da Engenharia de Software 2;311;2;150
+3110202;Projeto Aplicado 2 (site WEB);311;2;120
+3110203;Núcleo Universal/ Obrigatória;311;2;60
+3110204;Optativa 1;311;2;60
+3110301;Bases da Engenharia de Software 3;311;3;120
+3110302;Projeto Aplicado 3 (app para smartphone);311;3;120
+3110303;Estágio Acadêmico 1;311;3;60
+3110304;Optativa 2;311;3;80
+3110401;Bases da Engenharia de Software 4;311;4;180
+3110402;Projeto Aplicado 4 (blockchain);311;4;120
+3110403;Estágio Acadêmico 2;311;4;60
+3110404;Núcleo universal/ obrigatória;311;4;60
+3110501;Bases da Engenharia de Software 5;311;5;180
+3110502;Projeto Aplicado 5 (Realidade Aumentada & Virtual);311;5;120
+3110503;Estágio Empresarial 1;311;5;60
+3110601;Bases da Engenharia de Software 6;311;6;150
+3110602;Projeto Aplicado 6 (Machine Learning);311;6;120
+3110603;Estágio Empresarial 2;311;6;60
+3110604;Trabalho de Conclusão de Curso 1;311;6;20
+3110701;Bases da Engenharia de Software 7;311;7;120
+3110702;Projeto Aplicado 7 (Jogos digitais);311;7;160
+3110703;Estágio Empresarial 3;311;7;80
+3110704;Trabalho de Conclusão de Curso 2;311;7;20
+3110801;Bases da Engenharia de Software 8;311;8;100
+3110802;Projeto Aplicado 8 (Sistema em Tempo Real);311;8;160
+3110803;Estágio Empresarial 4;311;8;80
+3110804;Trabalho de Conclusão de Curso 3;311;8;20
+3120101;Bases de Ciência da Computação 1;312;1;160
+3120102;Projeto Aplicado 1;312;1;120
+3120103;RHS: Metodologias Problematizadoras 1;312;1;20
+3120104;RHS:Culturas Digitais;312;1;60
+3120105;RHS:Cultura e Sociedade do Planalto Central;312;1;40
+3120201;Bases de Ciência da Computação 2;312;2;200
+3120202;Projeto Aplicado 2;312;2;140
+3120203;Desenvolvimento Humano;312;2;60
+3120301;Bases de Ciência da Computação 3;312;3;160
+3120302;Projeto Aplicado 3;312;3;120
+3120303;Metodologias Problematizadoras 2;312;3;40
+3120304;Estágio Acadêmico 1;312;3;80
+3120401;Bases de Ciência da Computação 4;312;4;120
+3120402;Projeto Aplicado 4;312;4;120
+3120403;Eletiva NU 1;312;4;80
+3120404;Estágio Acadêmico 2;312;4;80
+3120501;Bases de Ciência da Computação 5;312;5;160
+3120502;Projeto Aplicado 5;312;5;140
+3120503;Estágio Empresarial 1;312;5;80
+3120601;Bases de Ciência da Computação 6;312;6;140
+3120602;Projeto Aplicado 6;312;6;120
+3120603;Estágio Empresarial 2;312;6;80
+3120604;Eletiva NU 2;312;6;80
+3120701;Bases de Ciência da Computação 7;312;7;120
+3120702;Projeto Aplicado 7;312;7;140
+3120703;Estágio Empresarial 3;312;7;80
+3120704;Trabalho de Conclusão de Curso 1;312;7;60
+3120801;Bases de Ciência da Computação 8;312;8;100
+3120802;Projeto Aplicado 8;312;8;140
+3120803;Estágio Empresarial 4;312;8;80
+3120804;Trabalho de Conclusão de Curso 2;312;8;80
+3130101;Bases de Sistema de Informação 1;313;1;200
+3130102;Projeto Aplicado 1;313;1;120
+3130103;NU - Metodologias Problematizadoras 1;313;1;20
+3130104;NU - Culturas Digitais;313;1;60
+3130201;Bases de Sistema de Informação 2;313;2;160
+3130202;Projeto Aplicado 2;313;2;120
+3130203;NU - Cultura e Sociedade;313;2;40
+3130301;Bases de Sistema de Informação 3;313;3;120
+3130302;Projeto Aplicado 3;313;3;120
+3130303;Estágio Acadêmico 1;313;3;60
+3130304;Optativa 1-NU;313;3;80
+3130401;Bases de Sistema de Informação 4;313;4;160
+3130402;Projeto Aplicado 4;313;4;100
+3130403;Estágio Acadêmico 2;313;4;60
+3130404;NU - Metodologias Problematizadoras 2;313;4;40
+3130501;Bases de Sistema de Informação 5;313;5;120
+3130502;Projeto Aplicado 5;313;5;120
+3130503;Optativa 2;313;5;60
+3130504;Estágio Empresarial 1;313;5;60
+3130601;Bases de Sistema de Informação 6;313;6;120
+3130602;Projeto Aplicado 6;313;6;100
+3130603;Estágio Empresarial 2;313;6;60
+3130604;Trabalho de Conclusão de Curso 1;313;6;20
+3130701;Bases de Sistema de Informação 7;313;7;100
+3130702;Projeto Aplicado 7;313;7;120
+3130703;Estágio Empresarial 3;313;7;60
+3130704;Trabalho de Conclusão de Curso 2;313;7;20
+3130801;Bases de Sistema de Informação 8;313;8;100
+3130802;Projeto Aplicado 8;313;8;120
+3130803;Estágio Empresarial 4;313;8;60
+3130804;Trabalho de Conclusão de Curso 3;313;8;20
+4110101;Bioquímica e biofísica;411;1;105
+4110102;Anatomia humana;411;1;70
+4110103;Citologia, histologia e embriologia;411;1;70
+4110104;Fundamentos da Alimentação e Nutrição;411;1;70
+4110105;Atividades Complementares;411;1;20
+4110106;Metodologias Problematizadoras I (20h);411;1;20
+4110201;Fisiologia Humana 1;411;2;35
+4110202;Microbiologia básica;411;2;70
+4110203;Imunologia;411;2;70
+4110204;Introdução à Antropologia;411;2;35
+4110205;Atividades complementares;411;2;20
+4110206;Culturas Digitais (60h);411;2;60
+4110207;Desenvolvimento Humano (60h);411;2;60
+4110301;Microbiologia e higiene dos Alimentos;411;3;70
+4110302;Avaliação Nutricional;411;3;70
+4110303;Fisiologia Humana 2;411;3;70
+4110304;Nutrição Humana 1;411;3;35
+4110305;Fundamentos da Ciência dos Alimentos 1;411;3;35
+4110306;Introdução à Sociologia;411;3;35
+4110307;Cultura e Sociedade no Planalto Central (40h);411;3;40
+4110308;Atividades complementares;411;3;20
+4110401;Técnica dietética 1;411;4;70
+4110402;Fundamentos da Ciência dos Alimentos 2;411;4;70
+4110403;Nutrição e Dietética 1;411;4;35
+4110404;Epidemiologia Geral;411;4;70
+4110405;Optativa;411;4;35
+4110406;Metodologias Problematizadoras II (40h);411;4;40
+4110407;Atividades complementares;411;4;20
+4110501;Gestão em Produção de Refeições 1;411;5;70
+4110502;Patologia;411;5;70
+4110503;Nutrição Humana 2;411;5;70
+4110504;Introdução à filosofia;411;5;35
+4110505;Eletiva do NU I (80h);411;5;80
+4110506;Atividades complementares;411;5;20
+4110601;Técnica Dietética 2;411;6;35
+4110602;Gestão em Produção de Refeições 2;411;6;35
+4110603;Nutrição e Dietética 2;411;6;70
+4110604;Bioestatística;411;6;70
+4110605;Educação Alimentar e Nutricional;411;6;70
+4110606;Atividades complementares;411;6;20
+4110607;Eletiva do NU II (80h);411;6;80
+4110701;Tecnologia dos Produtos Agropecuários;411;7;70
+4110702;Dietoterapia 1;411;7;35
+4110703;Nutrição em Saúde Coletiva;411;7;70
+4110704;Nutrição e Fases da Vida 1;411;7;35
+4110705;Metodologia Científica;411;7;70
+4110706;Optativa;411;7;35
+4110707;Atividades complementares;411;7;20
+4110801;Farmacologia Aplicada à Nutrição;411;8;70
+4110802;Nutrição e Fases da Vida 2;411;8;70
+4110803;Dietoterapia 2;411;8;70
+4110804;Marcadores do Estado Nutricional;411;8;70
+4110805;Optativa;411;8;35
+4110806;Optativa;411;8;35
+4110901;Estágio Supervisionado em Gestão de Produção de Refeições;411;9;270
+4110902;Nutrição Clínica em Pediatria;411;9;70
+4110903;Ética na Formação Profissional;411;9;35
+4110904;Atividades complementares;411;9;20
+4111001;Estágio Supervisionado em Nutrição em Saúde Coletiva;411;10;270
+4111002;TCC 1;411;10;35
+4111003;Optativa;411;10;35
+4111004;Optativa;411;10;35
+4111005;Atividades complementares;411;10;20
+4111101;Estágio Supervisionado em Nutrição Clínica;411;11;270
+4111102;TCC 2;411;11;35
+4111103;Comunicação, marketing e economia;411;11;35
+4111104;Optativa;411;11;35
+4111105;Optativa;411;11;35

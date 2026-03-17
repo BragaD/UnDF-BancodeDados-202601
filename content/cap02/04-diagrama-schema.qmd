@@ -24,7 +24,8 @@ digraph schema {
   centro [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>centro</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
     </TABLE>
   >];
@@ -32,18 +33,20 @@ digraph schema {
   escola [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>escola</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_escola</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>centro</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_centro</I></TD></TR>
     </TABLE>
   >];
 
   curso [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>curso</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>sigla_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_curso</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_escola</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>n_semestres</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>tipo_curso</I></TD></TR>
@@ -53,9 +56,9 @@ digraph schema {
   professor [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>professor</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>matricula_prof</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_prof</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_escola</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>ch_semanal</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>salario</I></TD></TR>
     </TABLE>
@@ -64,9 +67,9 @@ digraph schema {
   aluno [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>aluno</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
     </TABLE>
   >];
@@ -74,9 +77,9 @@ digraph schema {
   disciplina [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>disciplina</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_disciplina</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>semestre</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
     </TABLE>
@@ -85,11 +88,11 @@ digraph schema {
   ministra [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>ministra</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>matricula_prof</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_prof</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>horario</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>sala</I></TD></TR>
     </TABLE>
@@ -98,11 +101,11 @@ digraph schema {
   matricula_disciplina [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>matricula_disciplina</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nota</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>aprovado</I></TD></TR>
     </TABLE>
@@ -111,8 +114,8 @@ digraph schema {
   prereq [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>prereq</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>prereq_codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_prereq</I></U></TD></TR>
     </TABLE>
   >];
 
@@ -132,8 +135,8 @@ digraph schema {
   ministra             -> professor
   matricula_disciplina -> ministra
   matricula_disciplina -> aluno
-  prereq               -> disciplina [label="codigo"]
-  prereq               -> disciplina [label="prereq_codigo"]
+  prereq               -> disciplina [label="id_disciplina"]
+  prereq               -> disciplina [label="id_prereq"]
 }
 ```
 
@@ -145,7 +148,7 @@ digraph schema {
 - `curso` e `professor` referenciam `escola`; `aluno` e `disciplina` referenciam `curso`
 - `ministra` é a relação de associação entre `professor` e `disciplina` (com chave composta de 4 atributos)
 - `matricula_disciplina` registra as matrículas de alunos em turmas específicas e referencia tanto `ministra` quanto `aluno`
-- `prereq` é uma relação de **autorreferência** sobre `disciplina`: ambos os atributos da chave composta (`codigo` e `prereq_codigo`) são chaves estrangeiras que apontam para a mesma tabela `disciplina`
+- `prereq` é uma relação de **autorreferência** sobre `disciplina`: ambos os atributos da chave composta (`id_disciplina` e `id_prereq`) são chaves estrangeiras que apontam para a mesma tabela `disciplina`
 
 ---
 
@@ -159,9 +162,9 @@ c. Qual é o "caminho" de chaves estrangeiras de `matricula_disciplina` até `ce
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-a. `ministra` (4 atributos: cod_disciplina, ano, semestre, turma), `matricula_disciplina` (5 atributos) e `prereq` (2 atributos).
+a. `ministra` (4 atributos: id_disciplina, ano, semestre, turma), `matricula_disciplina` (5 atributos) e `prereq` (2 atributos).
 
-b. Três: `ministra` (via cod_disciplina), `prereq` (via codigo) e `prereq` (via prereq_codigo) — ou seja, `ministra` e `prereq` referenciam `disciplina`.
+b. Três: `ministra` (via id_disciplina), `prereq` (via id_disciplina) e `prereq` (via id_prereq) — ou seja, `ministra` e `prereq` referenciam `disciplina`.
 
 c. `matricula_disciplina` → `ministra` → `disciplina` → `curso` → `escola` → `centro`. São 5 saltos.
 :::
@@ -172,7 +175,7 @@ c. `matricula_disciplina` → `ministra` → `disciplina` → `curso` → `escol
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$sala(\underline{id\_sala},\ numero,\ capacidade,\ tipo,\ escola)$$
+$$sala(\underline{id\_sala},\ numero,\ capacidade,\ tipo,\ id\_escola)$$
 
-A chave estrangeira seria `escola → escola.escola`. A tabela `ministra` poderia então referenciar `sala.id_sala` em vez de armazenar o nome da sala como VARCHAR.
+A chave estrangeira seria `id_escola → escola.id_escola`. A tabela `ministra` poderia então referenciar `sala.id_sala` em vez de armazenar o nome da sala como VARCHAR.
 :::

@@ -10,20 +10,20 @@ O **schema** de um banco de dados é a sua estrutura lógica — a descrição d
 
 Representa-se o schema de uma relação pelo nome da relação seguido dos seus atributos entre parênteses:
 
-$$professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)$$
+$$professor(\underline{id\_prof},\ nome,\ id\_escola,\ ch\_semanal,\ salario)$$
 
 O atributo sublinhado indica a chave primária (conceito detalhado na próxima seção).
 
 O banco de dados da UnDF possui oito relações com os seguintes schemas:
 
-- $centro(\underline{centro},\ nome\_centro)$
-- $escola(\underline{escola},\ nome\_escola,\ centro)$
-- $curso(\underline{sigla\_curso},\ nome\_curso,\ escola,\ n\_semestres,\ carga\_horaria,\ tipo\_curso)$
-- $professor(\underline{matricula\_prof},\ nome,\ escola,\ ch\_semanal,\ salario)$
-- $aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)$
-- $disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)$
-- $ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)$
-- $matricula\_disciplina(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ \underline{cod\_matricula},\ nota,\ aprovado)$
+- $centro(\underline{id\_centro},\ sigla,\ nome\_centro)$
+- $escola(\underline{id\_escola},\ sigla,\ nome\_escola,\ id\_centro)$
+- $curso(\underline{id\_curso},\ sigla\_curso,\ nome\_curso,\ id\_escola,\ n\_semestres,\ carga\_horaria,\ tipo\_curso)$
+- $professor(\underline{id\_prof},\ nome,\ id\_escola,\ ch\_semanal,\ salario)$
+- $aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso)$
+- $disciplina(\underline{id\_disciplina},\ nome\_disciplina,\ id\_curso,\ semestre,\ carga\_horaria)$
+- $ministra(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ id\_prof,\ horario,\ sala)$
+- $matricula\_disciplina(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ \underline{id\_aluno},\ nota,\ aprovado)$
 
 ## Instância do Banco de Dados
 
@@ -36,15 +36,15 @@ A instância muda continuamente à medida que dados são inseridos, alterados ou
 ::: {.exemplo}
 A tabela a seguir é uma instância do schema `professor`:
 
-| matricula_prof | nome | escola | ch_semanal | salario |
-|---|---|---|---:|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
-| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
-| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
+| id_prof | nome | id_escola | ch_semanal | salario |
+|---|---|---:|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 | 3200 |
+| 21400002 | Felipe Araujo   | 21 | 40 | 6400 |
+| 31200001 | Gustavo Costa   | 31 | 20 | 3300 |
+| 31400002 | Helena Carvalho | 31 | 40 | 6700 |
+| 31200003 | Igor Melo       | 31 | 20 | 3100 |
+| 11400001 | Bruno Teixeira  | 11 | 40 | 6500 |
+| 11400002 | Carla Pinto     | 11 | 40 | 6600 |
 
 Amanhã, após a contratação de um novo professor, essa instância terá oito tuplas — mas o schema continuará sendo exatamente o mesmo.
 :::
@@ -103,7 +103,7 @@ Schema muda com DDL (`CREATE`, `ALTER`, `DROP`); instância muda com DML (`INSER
 
 **3. Novo atributo, schema ou instância?** O schema de `aluno` é:
 
-$$aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso)$$
+$$aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso)$$
 
 Se a UnDF decidir registrar também o **e-mail institucional** de cada aluno, o que muda — schema ou instância? Escreva o novo schema.
 
@@ -111,7 +111,7 @@ Se a UnDF decidir registrar também o **e-mail institucional** de cada aluno, o 
 ## Resposta
 Muda o **schema** — é preciso adicionar um atributo. O novo schema seria:
 
-$$aluno(\underline{matricula},\ nome,\ sigla\_curso,\ ano\_ingresso,\ email)$$
+$$aluno(\underline{id\_aluno},\ nome,\ id\_curso,\ ano\_ingresso,\ email)$$
 
 Após essa mudança de schema, a instância precisaria ser atualizada (via `UPDATE`) para popular o novo campo — caso contrário, os valores ficariam `null`.
 :::

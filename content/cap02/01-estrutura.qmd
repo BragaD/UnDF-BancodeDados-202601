@@ -14,15 +14,15 @@ Uma **relação** é uma tabela composta por linhas e colunas. Cada linha é cha
 
 A tabela `professor` da UnDF é um exemplo de relação:
 
-| matricula_prof | nome | escola | ch_semanal | salario |
-|---|---|---|---:|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
-| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
-| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
+| id_prof | nome | id_escola | ch_semanal | salario |
+|---|---|---:|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 | 3200 |
+| 21400002 | Felipe Araujo   | 21 | 40 | 6400 |
+| 31200001 | Gustavo Costa   | 31 | 20 | 3300 |
+| 31400002 | Helena Carvalho | 31 | 40 | 6700 |
+| 31200003 | Igor Melo       | 31 | 20 | 3100 |
+| 11400001 | Bruno Teixeira  | 11 | 40 | 6500 |
+| 11400002 | Carla Pinto     | 11 | 40 | 6600 |
 
 Aqui a relação `professor` tem aridade 5 (cinco atributos) e sete tuplas.
 
@@ -38,9 +38,9 @@ Exemplos de domínios nos dados da UnDF:
 
 | Atributo | Domínio |
 |---|---|
-| `matricula_prof` | sequência de caracteres alfanuméricos |
+| `id_prof` | números inteiros positivos |
 | `nome` | cadeias de texto |
-| `escola` | `{EEMA, ESETI, ESG}` |
+| `id_escola` | `{11, 21, 31}` |
 | `ch_semanal` | números inteiros positivos |
 | `salario` | números decimais positivos |
 
@@ -59,7 +59,7 @@ Por exemplo, se o salário de um professor ainda não foi definido, o atributo `
 Uma propriedade fundamental do modelo relacional é que **a ordem das tuplas é irrelevante**. Uma relação é formalmente um *conjunto* de tuplas, e conjuntos não têm ordem definida.
 
 ::: {.exemplo}
-A tabela `professor` apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por `nome`, por `escola` ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.
+A tabela `professor` apresentada acima poderia igualmente ser exibida com as tuplas em qualquer outra ordem — por `nome`, por `id_escola` ou em qualquer sequência aleatória — sem que o conteúdo da relação fosse alterado. Duas apresentações que diferem apenas na ordem das linhas representam a mesma relação.
 :::
 
 Da mesma forma, a ordem dos atributos (colunas) também não tem significado formal, embora por convenção sempre usemos uma ordem consistente.
@@ -72,7 +72,7 @@ Da mesma forma, a ordem dos atributos (colunas) também não tem significado for
 
 | matricula | nome | disciplinas_cursadas |
 |---|---|---|
-| 2023002001 | Matheus Silva | ENS-201, ENS-202 |
+| 2023311001 | Matheus Silva | 3110201, 3110202 |
 
 Por que esse design viola o modelo relacional? Como corrigi-lo?
 
@@ -87,17 +87,17 @@ O atributo `disciplinas_cursadas` armazena uma **lista** de valores — não é 
 
 **Tabela A:**
 
-| matricula_prof | nome | escola |
+| id_prof | nome | id_escola |
 |---|---|---|
-| PROF20230031 | Gustavo Costa | ESETI |
-| PROF20230042 | Bruno Teixeira | ESG |
+| 31200001 | Gustavo Costa | 31 |
+| 11400001 | Bruno Teixeira | 11 |
 
 **Tabela B:**
 
-| escola | nome | matricula_prof |
+| id_escola | nome | id_prof |
 |---|---|---|
-| ESG | Bruno Teixeira | PROF20230042 |
-| ESETI | Gustavo Costa | PROF20230031 |
+| 11 | Bruno Teixeira | 11400001 |
+| 31 | Gustavo Costa | 31200001 |
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
@@ -120,7 +120,7 @@ O atributo `disciplinas_cursadas` armazena uma **lista** de valores — não é 
 
 | Tabela | Aridade | Nº de tuplas |
 |---|---:|---:|
-| `centro` | 2 | 3 |
+| `centro` | 3 | 3 |
 | `professor` | 5 | 7 |
 | `prereq` | 2 | 16 |
 | `ministra` | 7 | 36 |

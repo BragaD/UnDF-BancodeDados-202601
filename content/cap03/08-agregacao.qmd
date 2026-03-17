@@ -56,7 +56,7 @@ FROM   professor;
 --| connection: con
 --| eval: true
 -- Quantas escolas distintas têm professores?
-SELECT COUNT(DISTINCT escola) AS escolas_com_professor
+SELECT COUNT(DISTINCT id_escola) AS escolas_com_professor
 FROM   professor;
 ```
 
@@ -77,12 +77,12 @@ A cláusula `GROUP BY` divide as linhas em grupos e aplica a função de agrega�
 --| connection: con
 --| eval: true
 -- Salário médio, total e número de professores por escola
-SELECT escola,
+SELECT id_escola,
        ROUND(AVG(salario), 2) AS media_salario,
        SUM(salario)           AS total_salarios,
        COUNT(*)               AS n_professores
 FROM   professor
-GROUP BY escola
+GROUP BY id_escola
 ORDER BY media_salario DESC;
 ```
 
@@ -90,9 +90,9 @@ ORDER BY media_salario DESC;
 --| connection: con
 --| eval: true
 -- Número de disciplinas por curso
-SELECT sigla_curso, COUNT(*) AS n_disciplinas
+SELECT id_curso, COUNT(*) AS n_disciplinas
 FROM   disciplina
-GROUP BY sigla_curso
+GROUP BY id_curso
 ORDER BY n_disciplinas DESC;
 ```
 
@@ -103,14 +103,14 @@ Todo atributo listado no `SELECT` que **não** é uma função de agregação **
 
 ```sql
 -- INCORRETO: 'nome' não está no GROUP BY
-SELECT escola, nome, AVG(salario)
+SELECT id_escola, nome, AVG(salario)
 FROM   professor
-GROUP BY escola;
+GROUP BY id_escola;
 -- ERROR: column "professor.nome" must appear in the GROUP BY clause
 --        or be used in an aggregate function
 ```
 
-A razão: para cada grupo (uma escola), há vários nomes de professores. O banco não sabe qual nome retornar.
+A razão: para cada grupo (um id_escola), há vários nomes de professores. O banco não sabe qual nome retornar.
 :::
 
 ## HAVING: Filtrando Grupos
@@ -133,23 +133,23 @@ A cláusula `HAVING` filtra os **grupos** resultantes do `GROUP BY`, da mesma fo
 --| connection: con
 --| eval: true
 -- Escolas com salário médio acima de 4000
-SELECT escola, ROUND(AVG(salario), 2) AS media_salario
+SELECT id_escola, ROUND(AVG(salario), 2) AS media_salario
 FROM   professor
-GROUP BY escola
+GROUP BY id_escola
 HAVING AVG(salario) > 4000
 ORDER BY media_salario DESC;
 ```
 
-ESETI tem média de R$ 4.366,67 e é excluída pelo `HAVING`.
+Todas as três escolas satisfazem `HAVING AVG(salario) > 4000`: id_escola 11 (6.550), 21 (4.800) e 31 (4.367).
 
 ```{sql}
 --| connection: con
 --| eval: true
 -- Cursos com pelo menos 2 disciplinas de semestre 4 ou mais avançado
-SELECT sigla_curso, COUNT(*) AS disciplinas_avancadas
+SELECT id_curso, COUNT(*) AS disciplinas_avancadas
 FROM   disciplina
 WHERE  semestre >= 4
-GROUP BY sigla_curso
+GROUP BY id_curso
 HAVING COUNT(*) >= 2
 ORDER BY disciplinas_avancadas DESC;
 ```
@@ -167,10 +167,10 @@ ORDER BY disciplinas_avancadas DESC;
 --| eval: true
 -- WHERE filtra antes: considera apenas professores de 40h,
 -- depois agrupa por escola e filtra com média > 6000
-SELECT escola, ROUND(AVG(salario), 2) AS media_salario
+SELECT id_escola, ROUND(AVG(salario), 2) AS media_salario
 FROM   professor
 WHERE  ch_semanal = 40
-GROUP BY escola
+GROUP BY id_escola
 HAVING AVG(salario) > 6000;
 ```
 
@@ -182,24 +182,24 @@ HAVING AVG(salario) > 6000;
 --| connection: con
 --| eval: true
 -- GROUP BY com múltiplas colunas: distribuição por escola e regime
-SELECT escola, ch_semanal,
+SELECT id_escola, ch_semanal,
        COUNT(*)            AS n_professores,
        SUM(salario)        AS total_salarios,
        ROUND(AVG(salario), 2) AS media_salario
 FROM   professor
-GROUP BY escola, ch_semanal
-ORDER BY escola, ch_semanal;
+GROUP BY id_escola, ch_semanal
+ORDER BY id_escola, ch_semanal;
 ```
 
 ```{sql}
 --| connection: con
 --| eval: true
 -- HAVING com COUNT: cursos com mais de 6 disciplinas cadastradas
-SELECT sigla_curso, COUNT(*) AS n_disciplinas,
+SELECT id_curso, COUNT(*) AS n_disciplinas,
        MIN(carga_horaria) AS menor_carga,
        MAX(carga_horaria) AS maior_carga
 FROM   disciplina
-GROUP BY sigla_curso
+GROUP BY id_curso
 HAVING COUNT(*) > 6
 ORDER BY n_disciplinas DESC;
 ```
@@ -209,13 +209,13 @@ ORDER BY n_disciplinas DESC;
 --| eval: true
 -- Alunos com pelo menos uma reprovação: comparar COUNT(*) com COUNT(aprovado=0)
 -- Usando filtro dentro do COUNT com FILTER (SQL padrão)
-SELECT cod_matricula,
+SELECT id_aluno,
        COUNT(*)                                    AS total_disciplinas,
        COUNT(*) FILTER (WHERE aprovado = 0)        AS reprovacoes,
        COUNT(*) FILTER (WHERE aprovado = 1)        AS aprovacoes,
        ROUND(AVG(nota), 2)                         AS media_geral
 FROM   matricula_disciplina
-GROUP BY cod_matricula
+GROUP BY id_aluno
 HAVING COUNT(*) FILTER (WHERE aprovado = 0) > 0
 ORDER BY reprovacoes DESC;
 ```

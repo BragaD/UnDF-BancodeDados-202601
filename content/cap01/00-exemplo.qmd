@@ -28,7 +28,7 @@ Cada escola é responsável por oferecer um ou mais **cursos de graduação**. T
 
 ### Corpo Docente
 
-Os **professores** da UnDF são identificados por uma matrícula institucional (no formato "PROFaaaannnn"). Além da matrícula, o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal em horas (tipicamente 20 ou 40 horas semanais) e o salário bruto mensal.
+Os **professores** da UnDF são identificados por um número inteiro de matrícula institucional. Além da matrícula, o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal em horas (tipicamente 20 ou 40 horas semanais) e o salário bruto mensal.
 
 Um professor é lotado em exatamente uma escola — independentemente de quais disciplinas ele ministra. Professores de escolas diferentes podem, em princípio, ministrar disciplinas de qualquer curso, embora na prática isso raramente ocorra.
 
@@ -42,9 +42,9 @@ Os **alunos** são identificados por uma matrícula própria. O sistema deve gua
 
 ### Grade Curricular
 
-A grade curricular de cada curso é composta por **disciplinas**. Cada disciplina tem um código único na universidade (formado pela sigla do curso e um número, como "ENS-201"), um nome, o semestre recomendado de oferta dentro do curso (1º, 2º, 4º semestre etc.) e uma carga horária em horas.
+A grade curricular de cada curso é composta por **disciplinas**. Cada disciplina tem um identificador inteiro único, um nome, o semestre recomendado de oferta dentro do curso (1º, 2º, 4º semestre etc.) e uma carga horária em horas.
 
-Uma disciplina pertence a exatamente um curso; um curso é composto por diversas disciplinas. Não existem disciplinas compartilhadas entre cursos: se dois cursos abordam o mesmo conteúdo, cada um tem sua própria disciplina com código distinto.
+Uma disciplina pertence a exatamente um curso; um curso é composto por diversas disciplinas. Não existem disciplinas compartilhadas entre cursos: se dois cursos abordam o mesmo conteúdo, cada um tem sua própria disciplina com identificador distinto.
 
 Algumas disciplinas têm **pré-requisitos**: para se matricular em determinada disciplina, o aluno precisa ter cursado e sido aprovado em uma ou mais disciplinas anteriores do mesmo curso. Uma disciplina pode ter zero, um ou vários pré-requisitos. Da mesma forma, uma disciplina pode ser pré-requisito de zero, uma ou várias outras disciplinas do curso. Pré-requisitos são sempre disciplinas do mesmo curso e de semestres anteriores ao da disciplina que os exige.
 
@@ -52,7 +52,7 @@ Algumas disciplinas têm **pré-requisitos**: para se matricular em determinada 
 
 ### Oferta de Turmas
 
-A cada semestre letivo, cada escola define quais disciplinas serão ofertadas e quem as ministrará. Uma **turma** é identificada pela combinação de disciplina, ano letivo, semestre (1 ou 2) e um identificador de turma (como "A" ou "B", para quando há mais de uma turma da mesma disciplina no mesmo semestre). Uma turma tem um horário semanal (ex.: "SEG/QUA 08:00-10:00") e uma sala.
+A cada semestre letivo, cada escola define quais disciplinas serão ofertadas e quem as ministrará. Uma **turma** é identificada pela combinação de disciplina, ano letivo, semestre (1 ou 2) e um número de turma (como 1 ou 2, para quando há mais de uma turma da mesma disciplina no mesmo semestre). Uma turma tem um horário semanal (ex.: "SEG/QUA 08:00-10:00") e uma sala.
 
 Cada turma é ministrada por exatamente um professor. Um professor pode ministrar múltiplas turmas ao longo do semestre — de disciplinas iguais ou diferentes. Uma disciplina pode ter turmas ministradas por professores diferentes em semestres diferentes (e até turmas simultâneas com professores distintos no mesmo semestre, quando há mais de uma turma).
 
@@ -91,7 +91,7 @@ Com base nessa descrição, você será capaz de desenvolver, ao longo deste cur
 
 Releia o texto acima sublinhando os **substantivos** — eles geralmente revelam os conjuntos de entidades. Em seguida, identifique os **verbos** que conectam esses substantivos — eles revelam os relacionamentos. Por fim, procure os **adjetivos e complementos** associados a cada substantivo — eles revelam os atributos.
 
-Exemplo da primeira frase relevante: *"os professores da UnDF são identificados por uma matrícula institucional... o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário"* → entidade `professor` com atributos matrícula (PK), nome, escola (FK), ch_semanal, salário.
+Exemplo da primeira frase relevante: *"os professores da UnDF são identificados por um número inteiro de matrícula institucional... o sistema precisa armazenar o nome completo, a qual escola o professor está vinculado, o regime de trabalho semanal e o salário"* → entidade `professor` com atributos id_prof (PK), nome, id_escola (FK), ch_semanal, salário.
 :::
 
 ---
@@ -110,12 +110,12 @@ Tente desenvolver os modelos de forma independente antes de consultar as respost
 
 | Entidade | Atributos | Chave Primária |
 |---|---|---|
-| `centro` | codigo, nome_centro | codigo |
-| `escola` | codigo, nome_escola, **centro** (FK) | codigo |
-| `curso` | sigla, nome_curso, **escola** (FK), n_semestres, carga_horaria_total, modalidade | sigla |
-| `professor` | matricula_prof, nome, **escola** (FK), ch_semanal, salario | matricula_prof |
-| `aluno` | matricula, nome, ano_ingresso, **sigla_curso** (FK) | matricula |
-| `disciplina` | codigo, nome, **sigla_curso** (FK), semestre_recomendado, carga_horaria | codigo |
+| `centro` | id_centro, sigla, nome_centro | id_centro |
+| `escola` | id_escola, sigla, nome_escola, **id_centro** (FK) | id_escola |
+| `curso` | id_curso, sigla_curso, nome_curso, **id_escola** (FK), n_semestres, carga_horaria, tipo_curso | id_curso |
+| `professor` | id_prof, nome, **id_escola** (FK), ch_semanal, salario | id_prof |
+| `aluno` | id_aluno, nome, ano_ingresso, **id_curso** (FK) | id_aluno |
+| `disciplina` | id_disciplina, nome_disciplina, **id_curso** (FK), semestre, carga_horaria | id_disciplina |
 
 :::
 
@@ -225,43 +225,43 @@ digraph er_undf_gabarito {
 ::: {.spoiler data-password-hash="46f77bab34fd3e4e980e66f1e40ff961146ff8330fd162b23236c8affb21e298" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 
 ```
-centro(centro, nome_centro)
-  PK: centro
+centro(id_centro, sigla, nome_centro)
+  PK: id_centro
 
-escola(escola, nome_escola, centro)
-  PK: escola
-  FK: centro → centro(centro)
+escola(id_escola, sigla, nome_escola, id_centro)
+  PK: id_escola
+  FK: id_centro → centro(id_centro)
 
-curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
-  PK: sigla_curso
-  FK: escola → escola(escola)
+curso(id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso)
+  PK: id_curso
+  FK: id_escola → escola(id_escola)
 
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  PK: matricula_prof
-  FK: escola → escola(escola)
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  PK: id_prof
+  FK: id_escola → escola(id_escola)
 
-aluno(matricula, nome, sigla_curso, ano_ingresso)
-  PK: matricula
-  FK: sigla_curso → curso(sigla_curso)
+aluno(id_aluno, nome, id_curso, ano_ingresso)
+  PK: id_aluno
+  FK: id_curso → curso(id_curso)
 
-disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
-  PK: codigo
-  FK: sigla_curso → curso(sigla_curso)
+disciplina(id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria)
+  PK: id_disciplina
+  FK: id_curso → curso(id_curso)
 
-prereq(codigo, prereq_codigo)
-  PK: (codigo, prereq_codigo)
-  FK: codigo → disciplina(codigo)
-  FK: prereq_codigo → disciplina(codigo)
+prereq(id_disciplina, id_prereq)
+  PK: (id_disciplina, id_prereq)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prereq → disciplina(id_disciplina)
 
-ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-  PK: (cod_disciplina, ano, semestre, turma)
-  FK: cod_disciplina → disciplina(codigo)
-  FK: matricula_prof → professor(matricula_prof)
+ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+  PK: (id_disciplina, ano, semestre, turma)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prof → professor(id_prof)
 
-matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
-  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
-  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
-  FK: cod_matricula → aluno(matricula)
+matricula_disciplina(id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+  PK: (id_disciplina, ano, semestre, turma, id_aluno)
+  FK: (id_disciplina, ano, semestre, turma) → ministra(...)
+  FK: id_aluno → aluno(id_aluno)
 ```
 
 **Decisões de projeto:**
@@ -286,7 +286,8 @@ digraph schema_undf_gabarito {
   centro [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>centro</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_centro</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_centro</I></TD></TR>
     </TABLE>
   >];
@@ -294,18 +295,20 @@ digraph schema_undf_gabarito {
   escola [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>escola</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_escola</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_escola</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>centro</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_centro</I></TD></TR>
     </TABLE>
   >];
 
   curso [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>curso</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>sigla_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_curso</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_curso</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_escola</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>n_semestres</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>tipo_curso</I></TD></TR>
@@ -315,9 +318,9 @@ digraph schema_undf_gabarito {
   professor [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>professor</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>matricula_prof</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_prof</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>escola</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_escola</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>ch_semanal</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>salario</I></TD></TR>
     </TABLE>
@@ -326,9 +329,9 @@ digraph schema_undf_gabarito {
   aluno [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>aluno</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>ano_ingresso</I></TD></TR>
     </TABLE>
   >];
@@ -336,9 +339,9 @@ digraph schema_undf_gabarito {
   disciplina [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>disciplina</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nome_disciplina</I></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>sigla_curso</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_curso</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>semestre</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>carga_horaria</I></TD></TR>
     </TABLE>
@@ -347,19 +350,19 @@ digraph schema_undf_gabarito {
   prereq [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>prereq</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>codigo</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>prereq_codigo</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_prereq</I></U></TD></TR>
     </TABLE>
   >];
 
   ministra [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>ministra</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><I>matricula_prof</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>id_prof</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>horario</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>sala</I></TD></TR>
     </TABLE>
@@ -368,28 +371,28 @@ digraph schema_undf_gabarito {
   mat_disc [label=<
     <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="white">
       <TR><TD BGCOLOR="#AED6F1" ALIGN="CENTER"><I><B>matricula_disciplina</B></I></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_disciplina</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_disciplina</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>ano</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>semestre</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><U><I>turma</I></U></TD></TR>
-      <TR><TD ALIGN="LEFT"><U><I>cod_matricula</I></U></TD></TR>
+      <TR><TD ALIGN="LEFT"><U><I>id_aluno</I></U></TD></TR>
       <TR><TD ALIGN="LEFT"><I>nota</I></TD></TR>
       <TR><TD ALIGN="LEFT"><I>aprovado</I></TD></TR>
     </TABLE>
   >];
 
   /* FKs */
-  escola    -> centro     [label="centro"];
-  curso     -> escola     [label="escola"];
-  professor -> escola     [label="escola"];
-  aluno     -> curso      [label="sigla_curso"];
-  disciplina -> curso     [label="sigla_curso"];
-  prereq    -> disciplina [label="codigo"];
-  prereq    -> disciplina [label="prereq_codigo"];
-  ministra  -> disciplina [label="cod_disciplina"];
-  ministra  -> professor  [label="matricula_prof"];
-  mat_disc  -> ministra   [label="(cod_disc,ano,sem,turma)"];
-  mat_disc  -> aluno      [label="cod_matricula"];
+  escola    -> centro     [label="id_centro"];
+  curso     -> escola     [label="id_escola"];
+  professor -> escola     [label="id_escola"];
+  aluno     -> curso      [label="id_curso"];
+  disciplina -> curso     [label="id_curso"];
+  prereq    -> disciplina [label="id_disciplina"];
+  prereq    -> disciplina [label="id_prereq"];
+  ministra  -> disciplina [label="id_disciplina"];
+  ministra  -> professor  [label="id_prof"];
+  mat_disc  -> ministra   [label="(id_disc,ano,sem,turma)"];
+  mat_disc  -> aluno      [label="id_aluno"];
 }
 ```
 
@@ -402,78 +405,80 @@ digraph schema_undf_gabarito {
 
 ```sql
 CREATE TABLE centro (
-    centro      VARCHAR(10)  PRIMARY KEY,
+    id_centro   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
     nome_centro VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE escola (
-    escola      VARCHAR(10)  PRIMARY KEY,
+    id_escola   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
     nome_escola VARCHAR(100) NOT NULL,
-    centro      VARCHAR(10)  NOT NULL REFERENCES centro(centro)
+    id_centro   INTEGER      REFERENCES centro(id_centro)
 );
 
 CREATE TABLE curso (
-    sigla_curso   VARCHAR(10)  PRIMARY KEY,
+    id_curso      INTEGER      PRIMARY KEY,
+    sigla_curso   VARCHAR(5)   NOT NULL UNIQUE,
     nome_curso    VARCHAR(100) NOT NULL,
-    escola        VARCHAR(10)  NOT NULL REFERENCES escola(escola),
+    id_escola     INTEGER      REFERENCES escola(id_escola),
     n_semestres   INTEGER      NOT NULL,
     carga_horaria INTEGER      NOT NULL,
     tipo_curso    VARCHAR(20)  NOT NULL
 );
 
 CREATE TABLE professor (
-    matricula_prof VARCHAR(15)   PRIMARY KEY,
-    nome           VARCHAR(100)  NOT NULL,
-    escola         VARCHAR(10)   NOT NULL REFERENCES escola(escola),
-    ch_semanal     INTEGER       NOT NULL,
-    salario        NUMERIC(10,2) NOT NULL
+    id_prof    INTEGER       PRIMARY KEY,
+    nome       VARCHAR(50)   NOT NULL,
+    id_escola  INTEGER       REFERENCES escola(id_escola),
+    ch_semanal INTEGER       NOT NULL,
+    salario    NUMERIC(10,2) NOT NULL
 );
 
 CREATE TABLE aluno (
-    matricula    VARCHAR(20)  PRIMARY KEY,
-    nome         VARCHAR(100) NOT NULL,
-    sigla_curso  VARCHAR(10)  NOT NULL REFERENCES curso(sigla_curso),
-    ano_ingresso INTEGER      NOT NULL
+    id_aluno     INTEGER     PRIMARY KEY,
+    nome         VARCHAR(50) NOT NULL,
+    id_curso     INTEGER     REFERENCES curso(id_curso),
+    ano_ingresso INTEGER     NOT NULL
 );
 
 CREATE TABLE disciplina (
-    codigo          VARCHAR(10)  PRIMARY KEY,
+    id_disciplina   INTEGER      PRIMARY KEY,
     nome_disciplina VARCHAR(100) NOT NULL,
-    sigla_curso     VARCHAR(10)  NOT NULL REFERENCES curso(sigla_curso),
+    id_curso        INTEGER      REFERENCES curso(id_curso),
     semestre        INTEGER      NOT NULL,
-    carga_horaria   INTEGER      NOT NULL
+    carga_horaria   INTEGER      NOT NULL CHECK (carga_horaria > 0)
 );
 
 CREATE TABLE prereq (
-    codigo        VARCHAR(10) REFERENCES disciplina(codigo),
-    prereq_codigo VARCHAR(10) REFERENCES disciplina(codigo),
-    PRIMARY KEY (codigo, prereq_codigo)
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    id_prereq     INTEGER REFERENCES disciplina(id_disciplina),
+    PRIMARY KEY (id_disciplina, id_prereq)
 );
 
 CREATE TABLE ministra (
-    cod_disciplina VARCHAR(10) NOT NULL REFERENCES disciplina(codigo),
-    ano            INTEGER     NOT NULL,
-    semestre       INTEGER     NOT NULL,
-    turma          VARCHAR(5)  NOT NULL,
-    matricula_prof VARCHAR(15) NOT NULL REFERENCES professor(matricula_prof),
-    horario        VARCHAR(50),
-    sala           VARCHAR(20),
-    PRIMARY KEY (cod_disciplina, ano, semestre, turma)
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_prof       INTEGER REFERENCES professor(id_prof),
+    horario       VARCHAR(50),
+    sala          VARCHAR(20),
+    PRIMARY KEY (id_disciplina, ano, semestre, turma)
 );
 
 CREATE TABLE matricula_disciplina (
-    cod_disciplina VARCHAR(10) NOT NULL,
-    ano            INTEGER     NOT NULL,
-    semestre       INTEGER     NOT NULL,
-    turma          VARCHAR(5)  NOT NULL,
-    cod_matricula  VARCHAR(20) NOT NULL REFERENCES aluno(matricula),
-    nota           NUMERIC(4,1),
-    aprovado       SMALLINT,
-    PRIMARY KEY (cod_disciplina, ano, semestre, turma, cod_matricula),
-    FOREIGN KEY (cod_disciplina, ano, semestre, turma)
-        REFERENCES ministra(cod_disciplina, ano, semestre, turma)
+    id_disciplina INTEGER NOT NULL,
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_aluno      INTEGER REFERENCES aluno(id_aluno),
+    nota          NUMERIC(4,1),
+    aprovado      SMALLINT,
+    PRIMARY KEY (id_disciplina, ano, semestre, turma, id_aluno),
+    FOREIGN KEY (id_disciplina, ano, semestre, turma)
+        REFERENCES ministra(id_disciplina, ano, semestre, turma)
 );
 ```
 
 :::
-

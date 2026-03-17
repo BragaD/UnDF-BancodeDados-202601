@@ -32,9 +32,9 @@ Neste capítulo vimos:
 6. Considere a seguinte consulta SQL:
 
    ```sql
-   SELECT nome, escola
+   SELECT nome, id_escola
    FROM professor
-   WHERE escola = 'ESETI';
+   WHERE id_escola = 31;
    ```
 
    Quais etapas o processador de consultas executa para responder essa consulta?

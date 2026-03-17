@@ -18,57 +18,57 @@ Os predicados podem usar:
 
 - **Operadores de comparação**: $=$, $\neq$, $>$, $\geq$, $<$, $\leq$
 - **Conectivos lógicos**: $\wedge$ (e), $\vee$ (ou), $\neg$ (não)
-- **Comparação entre atributos**: $\sigma_{escola = nome\_escola}(escola)$
+- **Comparação entre atributos**: $\sigma_{id\_escola = id\_centro}(escola)$
 
 ## Exemplo 1: Professores da ESETI
 
 Considere a relação `professor`:
 
-| matricula_prof | nome | escola | ch_semanal |
-|---|---|---|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 40 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 |
-| PROF20230031 | Gustavo Costa   | ESETI | 40 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 |
-| PROF20230033 | Igor Melo       | ESETI | 40 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 |
+| id_prof | nome | id_escola | ch_semanal |
+|---|---|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 |
+| 21400002 | Felipe Araujo   | 21 | 40 |
+| 31200001 | Gustavo Costa   | 31 | 20 |
+| 31400002 | Helena Carvalho | 31 | 40 |
+| 31200003 | Igor Melo       | 31 | 20 |
+| 11400001 | Bruno Teixeira  | 11 | 40 |
+| 11400002 | Carla Pinto     | 11 | 40 |
 
-A expressão $\sigma_{escola = \text{"ESETI"}}(professor)$ retorna:
+A expressão $\sigma_{id\_escola = 31}(professor)$ retorna:
 
-| matricula_prof | nome | escola | ch_semanal |
-|---|---|---|---:|
-| PROF20230031 | Gustavo Costa   | ESETI | 40 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 |
-| PROF20230033 | Igor Melo       | ESETI | 40 |
+| id_prof | nome | id_escola | ch_semanal |
+|---|---|---:|---:|
+| 31200001 | Gustavo Costa   | 31 | 20 |
+| 31400002 | Helena Carvalho | 31 | 40 |
+| 31200003 | Igor Melo       | 31 | 20 |
 
 ::: {.exemplo}
-Apenas as tuplas onde `escola = "ESETI"` foram mantidas. O schema do resultado é idêntico ao schema de `professor`.
+Apenas as tuplas onde `id_escola = 31` foram mantidas. O schema do resultado é idêntico ao schema de `professor`.
 :::
 
 ## Exemplo 2: Predicado Composto
 
 Para selecionar alunos do curso de Engenharia de Software **e** com ingresso em 2024, usa-se o conectivo $\wedge$:
 
-$$\sigma_{sigla\_curso = \text{"ENS"} \,\wedge\, ano\_ingresso = 2024}(aluno)$$
+$$\sigma_{id\_curso = 311 \,\wedge\, ano\_ingresso = 2024}(aluno)$$
 
 Relação `aluno` (amostra):
 
-| matricula  | nome | sigla_curso | ano_ingresso |
-|---|---|---|---:|
-| 2023002001 | Matheus Silva   | ENS | 2023 |
-| 2023002002 | Larissa Araújo  | ENS | 2023 |
-| 2024002001 | Pedro Carvalho  | ENS | 2024 |
-| 2024002002 | Isabela Freitas | ENS | 2024 |
-| 2023007001 | Beatriz Carvalho | ECO | 2023 |
-| 2023009001 | Amanda Moreira  | PED | 2023 |
+| id_aluno   | nome | id_curso | ano_ingresso |
+|---|---|---:|---:|
+| 2023311001 | Matheus Lima    | 311 | 2023 |
+| 2023311002 | Larissa Araújo  | 311 | 2023 |
+| 2024311001 | Pedro Carvalho  | 311 | 2024 |
+| 2024311002 | Isabela Freitas | 311 | 2024 |
+| 2023111001 | Beatriz Mendes  | 111 | 2023 |
+| 2023211001 | Amanda Moreira  | 211 | 2023 |
 
 Resultado:
 
-| matricula  | nome | sigla_curso | ano_ingresso |
-|---|---|---|---:|
-| 2024002001 | Pedro Carvalho  | ENS | 2024 |
-| 2024002002 | Isabela Freitas | ENS | 2024 |
+| id_aluno   | nome | id_curso | ano_ingresso |
+|---|---|---:|---:|
+| 2024311001 | Pedro Carvalho  | 311 | 2024 |
+| 2024311002 | Isabela Freitas | 311 | 2024 |
 
 ## Exemplo 3: Comparação Entre Atributos
 
@@ -86,12 +86,12 @@ Neste caso, o predicado $semestre > 6$ filtra as disciplinas das fases finais do
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$\sigma_{escola = \text{"EEMA"}\ \vee\ salario > 6000}(professor)$$
+$$\sigma_{id\_escola = 21\ \vee\ salario > 6000}(professor)$$
 
 Resultado (7 professores verificados):
-- EEMA: Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios)
-- ESETI: Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério)
-- ESG: Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário
+- EEMA (id_escola=21): Eduarda Souza (3.200 — pelo critério de escola), Felipe Araujo (6.400 — ambos os critérios)
+- ESETI (id_escola=31): Helena Carvalho (6.700 — pelo salário), Gustavo Costa e Igor Melo (não satisfazem nenhum critério)
+- ESG (id_escola=11): Bruno Teixeira (6.500) e Carla Pinto (6.600) — pelo salário
 
 Total: **5 tuplas** (Eduarda, Felipe, Helena, Bruno, Carla).
 :::
@@ -102,20 +102,18 @@ Total: **5 tuplas** (Eduarda, Felipe, Helena, Bruno, Carla).
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$\sigma_{sigla\_curso = \text{"ENS"}\ \wedge\ carga\_horaria \geq 120\ \wedge\ carga\_horaria \leq 160}(disciplina)$$
+$$\sigma_{id\_curso = 311\ \wedge\ carga\_horaria \geq 120\ \wedge\ carga\_horaria \leq 160}(disciplina)$$
 
-Resultado: ENS-202 (120h), ENS-402 (120h), ENS-601 (150h), ENS-602 (120h), ENS-801 (100h? não — 100 < 120), ENS-802 (160h).
-
-Disciplinas resultantes: ENS-202, ENS-401 (180h? não — 180 > 160), ENS-402, ENS-601, ENS-602, ENS-802 = **5 tuplas**.
+Resultado: 3110202 (120h), 3110402 (120h), 3110601 (150h), 3110602 (120h), 3110802 (160h) = **5 tuplas**.
 :::
 
 ---
 
-**3. Seleção sobre resultado de outra operação.** É válido aplicar $\sigma$ sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde `professor.escola = escola.escola` e `escola.centro = 'COETI'`.
+**3. Seleção sobre resultado de outra operação.** É válido aplicar $\sigma$ sobre o resultado de um produto cartesiano? Escreva a expressão para encontrar todos os pares (professor, escola) onde `professor.id_escola = escola.id_escola` e `escola.id_centro = 3`.
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$\sigma_{professor.escola = escola.escola\ \wedge\ escola.centro = \text{"COETI"}}(professor \times escola)$$
+$$\sigma_{professor.id\_escola = escola.id\_escola\ \wedge\ escola.id\_centro = 3}(professor \times escola)$$
 
-Isso é exatamente uma **junção com filtro adicional** — equivale a $professor \bowtie_{professor.escola = escola.escola} \sigma_{centro = \text{"COETI"}}(escola)$, que retorna apenas os professores da ESETI (vinculada ao COETI).
+Isso é exatamente uma **junção com filtro adicional** — equivale a $professor \bowtie_{professor.id\_escola = escola.id\_escola} \sigma_{id\_centro = 3}(escola)$, que retorna apenas os professores da ESETI (vinculada ao centro COETI, id_centro=3).
 :::

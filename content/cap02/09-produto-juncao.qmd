@@ -12,25 +12,25 @@ O resultado contém todas as tuplas $(t_r, t_s)$ onde $t_r$ é uma tupla de $r$ 
 
 ### Qualificação de Atributos
 
-Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular $professor \times ministra$, o atributo `escola` aparece em `professor` e o atributo `matricula_prof` aparece em ambas; a junção os conectará pelo predicado `professor.matricula_prof = ministra.matricula_prof`.
+Quando as duas relações possuem atributos com o mesmo nome, o atributo é qualificado com o nome da relação para evitar ambiguidade. Por exemplo, ao calcular $professor \times ministra$, o atributo `id_prof` aparece em ambas; a junção os conectará pelo predicado `professor.id_prof = ministra.id_prof`.
 
 ### Tabelas utilizadas nos exemplos
 
 Versão reduzida de `professor` (3 tuplas):
 
-| matricula_prof | nome | escola |
-|---|---|---|
-| PROF20230031 | Gustavo Costa  | ESETI |
-| PROF20230005 | Eduarda Souza  | EEMA  |
-| PROF20230042 | Bruno Teixeira | ESG   |
+| id_prof | nome | id_escola |
+|---|---|---:|
+| 31200001 | Gustavo Costa  | 31 |
+| 21200001 | Eduarda Souza  | 21 |
+| 11400001 | Bruno Teixeira | 11 |
 
-Tabela `ministra` (3 tuplas — 2023, semestre 2, turma A):
+Tabela `ministra` (3 tuplas — 2023, semestre 2, turma 1):
 
-| cod_disciplina | ano | semestre | turma | matricula_prof |
-|---|---:|---:|---|---|
-| ENS-201 | 2023 | 2 | A | PROF20230031 |
-| PED-203 | 2023 | 2 | A | PROF20230005 |
-| ECO-201 | 2023 | 2 | A | PROF20230042 |
+| id_disciplina | ano | semestre | turma | id_prof |
+|---:|---:|---:|---:|---|
+| 3110201 | 2023 | 2 | 1 | 31200001 |
+| 2110201 | 2023 | 2 | 1 | 21200001 |
+| 1110201 | 2023 | 2 | 1 | 11400001 |
 
 ### Exemplo: $professor \times ministra$
 
@@ -38,20 +38,20 @@ $$professor \times ministra$$
 
 O produto cartesiano gera $3 \times 3 = 9$ tuplas — todas as combinações possíveis entre as 3 tuplas de `professor` e as 3 de `ministra`, independentemente de qualquer correspondência semântica:
 
-| professor.matricula_prof | professor.nome | professor.escola | ministra.cod_disciplina | ministra.ano | ministra.matricula_prof |
-|---|---|---|---|---:|---|
-| PROF20230031 | Gustavo Costa  | ESETI | ENS-201 | 2023 | PROF20230031 |
-| PROF20230031 | Gustavo Costa  | ESETI | PED-203 | 2023 | PROF20230005 |
-| PROF20230031 | Gustavo Costa  | ESETI | ECO-201 | 2023 | PROF20230042 |
-| PROF20230005 | Eduarda Souza  | EEMA  | ENS-201 | 2023 | PROF20230031 |
-| PROF20230005 | Eduarda Souza  | EEMA  | PED-203 | 2023 | PROF20230005 |
-| PROF20230005 | Eduarda Souza  | EEMA  | ECO-201 | 2023 | PROF20230042 |
-| PROF20230042 | Bruno Teixeira | ESG   | ENS-201 | 2023 | PROF20230031 |
-| PROF20230042 | Bruno Teixeira | ESG   | PED-203 | 2023 | PROF20230005 |
-| PROF20230042 | Bruno Teixeira | ESG   | ECO-201 | 2023 | PROF20230042 |
+| professor.id_prof | professor.nome | professor.id_escola | ministra.id_disciplina | ministra.ano | ministra.id_prof |
+|---|---|---:|---:|---:|---|
+| 31200001 | Gustavo Costa  | 31 | 3110201 | 2023 | 31200001 |
+| 31200001 | Gustavo Costa  | 31 | 2110201 | 2023 | 21200001 |
+| 31200001 | Gustavo Costa  | 31 | 1110201 | 2023 | 11400001 |
+| 21200001 | Eduarda Souza  | 21 | 3110201 | 2023 | 31200001 |
+| 21200001 | Eduarda Souza  | 21 | 2110201 | 2023 | 21200001 |
+| 21200001 | Eduarda Souza  | 21 | 1110201 | 2023 | 11400001 |
+| 11400001 | Bruno Teixeira | 11 | 3110201 | 2023 | 31200001 |
+| 11400001 | Bruno Teixeira | 11 | 2110201 | 2023 | 21200001 |
+| 11400001 | Bruno Teixeira | 11 | 1110201 | 2023 | 11400001 |
 
 ::: {.exemplo}
-Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que `professor.matricula_prof = ministra.matricula_prof`). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.
+Das 9 tuplas, apenas 3 são semanticamente válidas (aquelas em que `professor.id_prof = ministra.id_prof`). As demais 6 combinam um professor com registros de ministração que pertencem a outro professor — informação sem sentido. Por isso, o produto cartesiano sozinho raramente é útil; é quase sempre combinado com uma seleção.
 :::
 
 ## Junção ($\bowtie$)
@@ -68,66 +68,66 @@ onde $\theta$ é o **predicado de junção**. A junção é equivalente a fazer 
 
 Para associar cada professor às disciplinas que ministra em 2023:
 
-$$professor \bowtie_{professor.matricula\_prof\ =\ ministra.matricula\_prof} ministra$$
+$$professor \bowtie_{professor.id\_prof\ =\ ministra.id\_prof} ministra$$
 
 Esta expressão é equivalente a:
 
-$$\sigma_{professor.matricula\_prof\ =\ ministra.matricula\_prof}(professor \times ministra)$$
+$$\sigma_{professor.id\_prof\ =\ ministra.id\_prof}(professor \times ministra)$$
 
 Resultado (apenas as 3 tuplas válidas do produto cartesiano de 9):
 
-| professor.matricula_prof | professor.nome | professor.escola | ministra.cod_disciplina | ministra.ano |
-|---|---|---|---|---:|
-| PROF20230031 | Gustavo Costa  | ESETI | ENS-201 | 2023 |
-| PROF20230005 | Eduarda Souza  | EEMA  | PED-203 | 2023 |
-| PROF20230042 | Bruno Teixeira | ESG   | ECO-201 | 2023 |
+| professor.id_prof | professor.nome | professor.id_escola | ministra.id_disciplina | ministra.ano |
+|---|---|---:|---:|---:|
+| 31200001 | Gustavo Costa  | 31 | 3110201 | 2023 |
+| 21200001 | Eduarda Souza  | 21 | 2110201 | 2023 |
+| 11400001 | Bruno Teixeira | 11 | 1110201 | 2023 |
 
 ::: {.exemplo}
-A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.matricula_prof` é redundante no resultado e pode ser eliminado com uma projeção.
+A junção filtrou as 6 combinações sem sentido e manteve exatamente as 3 tuplas onde o professor corresponde ao registro de ministração. O atributo `ministra.id_prof` é redundante no resultado e pode ser eliminado com uma projeção.
 :::
 
 ### Junção com Autorreferência: Pré-requisitos
 
-A relação `prereq` conecta disciplinas entre si: cada tupla indica que `codigo` exige `prereq_codigo` como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação `disciplina` — trata-se de uma **autorreferência**.
+A relação `prereq` conecta disciplinas entre si: cada tupla indica que `id_disciplina` exige `id_prereq` como pré-requisito. Ambos os atributos são chaves estrangeiras para a mesma relação `disciplina` — trata-se de uma **autorreferência**.
 
 Para obter os **nomes** da disciplina e do seu pré-requisito é necessário juntar `prereq` com `disciplina` **duas vezes**, usando renomeação para distinguir as duas instâncias:
 
 $$D \leftarrow \rho_d(disciplina)$$
 $$P \leftarrow \rho_p(disciplina)$$
-$$\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.codigo = d.codigo\ \wedge\ prereq.prereq\_codigo = p.codigo}(prereq \times D \times P)\right)$$
+$$\Pi_{d.nome\_disciplina,\ p.nome\_disciplina}\!\left(\sigma_{prereq.id\_disciplina = d.id\_disciplina\ \wedge\ prereq.id\_prereq = p.id\_disciplina}(prereq \times D \times P)\right)$$
 
 Versão compacta com junções encadeadas:
 
-$$prereq \bowtie_{prereq.codigo = d.codigo} \rho_d(disciplina) \bowtie_{prereq.prereq\_codigo = p.codigo} \rho_p(disciplina)$$
+$$prereq \bowtie_{prereq.id\_disciplina = d.id\_disciplina} \rho_d(disciplina) \bowtie_{prereq.id\_prereq = p.id\_disciplina} \rho_p(disciplina)$$
 
 Tabela `prereq` (amostra — ENS):
 
-| codigo  | prereq_codigo |
-|---------|---------------|
-| ENS-401 | ENS-201 |
-| ENS-402 | ENS-202 |
-| ENS-601 | ENS-401 |
-| ENS-601 | ENS-402 |
-| ENS-602 | ENS-402 |
-| ENS-801 | ENS-601 |
-| ENS-802 | ENS-601 |
-| ENS-802 | ENS-602 |
+| id_disciplina | id_prereq |
+|---:|---:|
+| 3110401 | 3110201 |
+| 3110402 | 3110202 |
+| 3110601 | 3110401 |
+| 3110601 | 3110402 |
+| 3110602 | 3110402 |
+| 3110801 | 3110601 |
+| 3110802 | 3110601 |
+| 3110802 | 3110602 |
 
 Resultado após a junção (ENS — nomes completos):
 
 | d.nome_disciplina | p.nome_disciplina |
 |---|---|
-| Bases da Engenharia de Software 4 | Bases da Engenharia de Software 2 |
-| Projeto Aplicado 4 (blockchain) | Projeto Aplicado 2 (site WEB) |
-| Bases da Engenharia de Software 6 | Bases da Engenharia de Software 4 |
-| Bases da Engenharia de Software 6 | Projeto Aplicado 4 (blockchain) |
-| Projeto Aplicado 6 (Machine Learning) | Projeto Aplicado 4 (blockchain) |
-| Bases da Engenharia de Software 8 | Bases da Engenharia de Software 6 |
-| Projeto Aplicado 8 (Sistema em Tempo Real) | Bases da Engenharia de Software 6 |
-| Projeto Aplicado 8 (Sistema em Tempo Real) | Projeto Aplicado 6 (Machine Learning) |
+| Bases da Eng. de Software 4 | Bases da Eng. de Software 2 |
+| Projeto Aplicado 4 - blockchain | Projeto Aplicado 2 - site WEB |
+| Bases da Eng. de Software 6 | Bases da Eng. de Software 4 |
+| Bases da Eng. de Software 6 | Projeto Aplicado 4 - blockchain |
+| Projeto Aplicado 6 - Machine Learning | Projeto Aplicado 4 - blockchain |
+| Bases da Eng. de Software 8 | Bases da Eng. de Software 6 |
+| Projeto Aplicado 8 - Sistema em Tempo Real | Bases da Eng. de Software 6 |
+| Projeto Aplicado 8 - Sistema em Tempo Real | Projeto Aplicado 6 - Machine Learning |
 
 ::: {.exemplo}
-`ENS-601` (Bases 6) tem **dois** pré-requisitos (ENS-401 e ENS-402), o que gera duas tuplas no resultado com o mesmo valor em `d.nome_disciplina`. Isso é esperado — a relação registra pares, não listas.
+A disciplina 3110601 (Bases 6) tem **dois** pré-requisitos (3110401 e 3110402), o que gera duas tuplas no resultado com o mesmo valor em `d.nome_disciplina`. Isso é esperado — a relação registra pares, não listas.
 :::
 
 ### Vantagem da Junção
@@ -157,20 +157,20 @@ c. $7 \times 7 = 49$ tuplas (autojunção — inclui o par de cada professor con
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-O resultado é uma **relação vazia** com o schema combinado das duas relações. Exemplo: se tentarmos $professor \bowtie_{professor.escola = \text{"XPTO"}} escola$, nenhum professor pertence à escola "XPTO", portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.
+O resultado é uma **relação vazia** com o schema combinado das duas relações. Exemplo: se tentarmos $professor \bowtie_{professor.id\_escola = 99} escola$, nenhum professor pertence à escola com id 99, portanto o resultado tem zero tuplas. Isso é válido — junções com resultado vazio são comuns em prática quando os dados não coincidem.
 :::
 
 ---
 
-**3. Junção transitiva de pré-requisitos.** Escreva uma expressão de álgebra relacional para encontrar os **pré-requisitos de pré-requisitos** de ENS-801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de ENS-801.
+**3. Junção transitiva de pré-requisitos.** Escreva uma expressão de álgebra relacional para encontrar os **pré-requisitos de pré-requisitos** de 3110801 — ou seja, as disciplinas que são pré-requisito de algo que é pré-requisito de 3110801.
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-Primeiro, encontramos os pré-requisitos diretos de ENS-801:
-$$P1 \leftarrow \sigma_{codigo = \text{"ENS-801"}}(prereq)$$
+Primeiro, encontramos os pré-requisitos diretos de 3110801:
+$$P1 \leftarrow \sigma_{id\_disciplina = 3110801}(prereq)$$
 
-Depois, para cada prereq_codigo de P1, buscamos seus próprios pré-requisitos:
-$$\Pi_{prereq.prereq\_codigo}\!\left(\sigma_{P1.prereq\_codigo = prereq.codigo}(P1 \times prereq)\right)$$
+Depois, para cada id_prereq de P1, buscamos seus próprios pré-requisitos:
+$$\Pi_{prereq.id\_prereq}\!\left(\sigma_{P1.id\_prereq = prereq.id\_disciplina}(P1 \times prereq)\right)$$
 
-ENS-801 → {ENS-601, ENS-602}. ENS-601 → {ENS-401, ENS-402}; ENS-602 → {ENS-402}. Resultado: **{ENS-401, ENS-402}**.
+3110801 → {3110601}. 3110601 → {3110401, 3110402}. Resultado: **{3110401, 3110402}**.
 :::

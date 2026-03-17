@@ -12,14 +12,14 @@ Cada **conjunto de entidades forte** gera um schema com os mesmos atributos. A c
 As entidades fortes da UnDF geram diretamente suas relações:
 
 ```
-centro(centro, nome_centro)
-  PK: centro
+centro(id_centro, sigla, nome_centro)
+  PK: id_centro
 
-escola(escola, nome_escola, centro)
-  PK: escola
+escola(id_escola, sigla, nome_escola, id_centro)
+  PK: id_escola
 
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  PK: matricula_prof
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  PK: id_prof
 ```
 :::
 
@@ -37,9 +37,9 @@ A chave primária da relação é a união da PK da entidade identificadora com 
 Se `turma` fosse modelada como entidade fraca de `disciplina` com discriminador `(ano, semestre, id_turma)`:
 
 ```
-turma(cod_disciplina, ano, semestre, id_turma, horario, sala)
-  PK: (cod_disciplina, ano, semestre, id_turma)
-  FK: cod_disciplina → disciplina(codigo)
+turma(id_disciplina, ano, semestre, id_turma, horario, sala)
+  PK: (id_disciplina, ano, semestre, id_turma)
+  FK: id_disciplina → disciplina(id_disciplina)
 ```
 :::
 
@@ -76,9 +76,9 @@ A chave primária de $EM$ é a combinação da PK de $E$ com $M$.
 Se `professor` tiver atributo multivalorado `telefone`:
 
 ```
-telefone_professor(matricula_prof, telefone)
-  PK: (matricula_prof, telefone)
-  FK: matricula_prof → professor(matricula_prof)
+telefone_professor(id_prof, telefone)
+  PK: (id_prof, telefone)
+  FK: id_prof → professor(id_prof)
 ```
 
 Cada número de telefone vira uma tupla separada.
@@ -98,10 +98,10 @@ A chave primária é a união das PKs das entidades participantes.
 O relacionamento `ministra` (N:N entre `professor` e `disciplina`):
 
 ```
-ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-  PK: (cod_disciplina, ano, semestre, turma)
-  FK: cod_disciplina → disciplina(codigo)
-  FK: matricula_prof → professor(matricula_prof)
+ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+  PK: (id_disciplina, ano, semestre, turma)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prof → professor(id_prof)
 ```
 
 Nota: como `ministra` tem atributos `ano`, `semestre` e `turma`, a PK inclui esses atributos para distinguir ofertas da mesma disciplina em semestres diferentes.
@@ -120,11 +120,11 @@ O relacionamento `lotado_em` (professor N:1 escola) não precisa de tabela próp
 
 ```
 -- Sem otimização (schema separado):
-lotado_em(matricula_prof, escola)
+lotado_em(id_prof, id_escola)
 
 -- Com otimização (FK embutida em professor):
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  FK: escola → escola(escola)
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  FK: id_escola → escola(id_escola)
 ```
 
 O mesmo se aplica a `pertence_a`, `ofertado_por`, `compoe` e `matriculado_em`.
@@ -143,37 +143,37 @@ Para relacionamentos **1:1**, a chave primária de qualquer um dos dois lados po
 Aplicando todas as regras ao diagrama ER da UnDF:
 
 ```
-centro(centro, nome_centro)
+centro(id_centro, sigla, nome_centro)
 
-escola(escola, nome_escola, centro)
-  FK: centro → centro(centro)
+escola(id_escola, sigla, nome_escola, id_centro)
+  FK: id_centro → centro(id_centro)
 
-curso(sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso)
-  FK: escola → escola(escola)
+curso(id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso)
+  FK: id_escola → escola(id_escola)
 
-professor(matricula_prof, nome, escola, ch_semanal, salario)
-  FK: escola → escola(escola)
+professor(id_prof, nome, id_escola, ch_semanal, salario)
+  FK: id_escola → escola(id_escola)
 
-aluno(matricula, nome, sigla_curso, ano_ingresso)
-  FK: sigla_curso → curso(sigla_curso)
+aluno(id_aluno, nome, id_curso, ano_ingresso)
+  FK: id_curso → curso(id_curso)
 
-disciplina(codigo, nome_disciplina, sigla_curso, semestre, carga_horaria)
-  FK: sigla_curso → curso(sigla_curso)
+disciplina(id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria)
+  FK: id_curso → curso(id_curso)
 
-ministra(cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-  PK: (cod_disciplina, ano, semestre, turma)
-  FK: cod_disciplina → disciplina(codigo)
-  FK: matricula_prof → professor(matricula_prof)
+ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+  PK: (id_disciplina, ano, semestre, turma)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prof → professor(id_prof)
 
-prereq(codigo, prereq_codigo)
-  PK: (codigo, prereq_codigo)
-  FK: codigo → disciplina(codigo)
-  FK: prereq_codigo → disciplina(codigo)
+prereq(id_disciplina, id_prereq)
+  PK: (id_disciplina, id_prereq)
+  FK: id_disciplina → disciplina(id_disciplina)
+  FK: id_prereq → disciplina(id_disciplina)
 
-matricula_disciplina(cod_disciplina, ano, semestre, turma, cod_matricula, nota, aprovado)
-  PK: (cod_disciplina, ano, semestre, turma, cod_matricula)
-  FK: (cod_disciplina, ano, semestre, turma) → ministra(...)
-  FK: cod_matricula → aluno(matricula)
+matricula_disciplina(id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+  PK: (id_disciplina, ano, semestre, turma, id_aluno)
+  FK: (id_disciplina, ano, semestre, turma) → ministra(...)
+  FK: id_aluno → aluno(id_aluno)
 ```
 
 ---
@@ -212,7 +212,7 @@ O atributo `ordem` fica no schema de `escreve`, pois descreve a posição do aut
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-O relacionamento `pertence_a` (N:1) foi absorvido pelo schema de `escola` pela Regra 6: adicionou-se a FK `centro` diretamente em `escola`. Um schema separado `pertence_a(escola, centro)` conteria exatamente a mesma informação já presente na tabela `escola` — seria uma duplicação. Por isso, o schema de `pertence_a` é redundante e deve ser descartado.
+O relacionamento `pertence_a` (N:1) foi absorvido pelo schema de `escola` pela Regra 6: adicionou-se a FK `id_centro` diretamente em `escola`. Um schema separado `pertence_a(id_escola, id_centro)` conteria exatamente a mesma informação já presente na tabela `escola` — seria uma duplicação. Por isso, o schema de `pertence_a` é redundante e deve ser descartado.
 :::
 
 ---

@@ -33,8 +33,8 @@ Por padrão, todas as três operações **eliminam duplicatas** do resultado. Pa
 
 Para demonstrar as operações, usamos dois conjuntos:
 
-- **Conjunto A**: disciplinas de Pedagogia (PED) — 8 disciplinas
-- **Conjunto B**: disciplinas com carga horária ≥ 60 horas — 22 disciplinas (todas exceto PED-604 = 40 h e PED-804 = 50 h)
+- **Conjunto A**: disciplinas de Pedagogia (id_curso = 211) — 8 disciplinas
+- **Conjunto B**: disciplinas com carga horária ≥ 60 horas — 22 disciplinas (todas exceto as duas de PED com 40 h e 50 h)
 
 ### UNION: Disciplinas de PED ou com carga horária ≥ 60 h
 
@@ -42,22 +42,22 @@ Para demonstrar as operações, usamos dois conjuntos:
 --| connection: con
 --| eval: true
 -- Conjunto A: disciplinas de Pedagogia
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  sigla_curso = 'PED'
+WHERE  id_curso = 211
 
 UNION
 
 -- Conjunto B: disciplinas com carga horária >= 60 horas
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria >= 60
 
-ORDER BY codigo;
+ORDER BY id_disciplina;
 ```
 
 ::: {.callout-note}
-PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem aos dois conjuntos, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. PED-604 e PED-804 são adicionadas via conjunto A.
+Várias disciplinas de PED pertencem aos dois conjuntos, mas aparecem apenas **uma vez** no resultado — a união elimina duplicatas automaticamente. As disciplinas de PED com menos de 60 h são adicionadas via conjunto A.
 :::
 
 ### INTERSECT: Disciplinas de PED E com carga horária ≥ 60 h
@@ -66,20 +66,20 @@ PED-203, PED-204, PED-403, PED-404, PED-603 e PED-803 pertencem aos dois conjunt
 --| connection: con
 --| eval: true
 -- Disciplinas de PED que também têm carga horária >= 60 horas
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  sigla_curso = 'PED'
+WHERE  id_curso = 211
 
 INTERSECT
 
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria >= 60
 
-ORDER BY codigo;
+ORDER BY id_disciplina;
 ```
 
-PED-604 (40 h) e PED-804 (50 h) satisfazem apenas o primeiro lado — são excluídas do resultado.
+As disciplinas de PED com 40 h e 50 h satisfazem apenas o primeiro lado — são excluídas do resultado.
 
 ### EXCEPT: Disciplinas de PED que NÃO têm carga horária ≥ 60 h
 
@@ -87,29 +87,29 @@ PED-604 (40 h) e PED-804 (50 h) satisfazem apenas o primeiro lado — são exclu
 --| connection: con
 --| eval: true
 -- Disciplinas de PED com carga horária inferior a 60 horas
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  sigla_curso = 'PED'
+WHERE  id_curso = 211
 
 EXCEPT
 
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria >= 60;
 ```
 
-Apenas PED-604 (40 h) e PED-804 (50 h) pertencem ao conjunto A mas não ao conjunto B.
+Apenas as disciplinas de PED com 40 h e 50 h pertencem ao conjunto A mas não ao conjunto B.
 
 ## UNION ALL: Mantendo Duplicatas
 
 ```{sql}
 --| connection: con
 --| eval: true
--- Todos os sigla_curso de disciplinas e alunos (com repetição)
-SELECT sigla_curso FROM disciplina
+-- Todos os id_curso de disciplinas e alunos (com repetição)
+SELECT id_curso FROM disciplina
 UNION ALL
-SELECT sigla_curso FROM aluno
-ORDER BY sigla_curso;
+SELECT id_curso FROM aluno
+ORDER BY id_curso;
 ```
 
 O resultado tem 24 + 18 = 42 linhas, com muitas repetições. Use `UNION ALL` quando a presença de duplicatas é intencional (por exemplo, ao contar ocorrências totais).
@@ -131,25 +131,25 @@ Os nomes das colunas no resultado final são determinados pela **primeira** cons
 --| connection: con
 --| eval: true
 -- EXCEPT: disciplinas que possuem pré-requisito mas nenhum aluno cursou
--- (aparece em prereq, mas não em matricula_disciplina como prereq_codigo cursado)
-SELECT d.codigo, d.nome_disciplina
+-- (aparece em prereq, mas não em matricula_disciplina)
+SELECT d.id_disciplina, d.nome_disciplina
 FROM   disciplina d
-WHERE  d.codigo IN (SELECT codigo FROM prereq)
+WHERE  d.id_disciplina IN (SELECT id_disciplina FROM prereq)
 EXCEPT
-SELECT d.codigo, d.nome_disciplina
+SELECT d.id_disciplina, d.nome_disciplina
 FROM   disciplina d
-WHERE  d.codigo IN (SELECT DISTINCT cod_disciplina FROM matricula_disciplina)
-ORDER BY codigo;
+WHERE  d.id_disciplina IN (SELECT DISTINCT id_disciplina FROM matricula_disciplina)
+ORDER BY id_disciplina;
 ```
 
 ```{sql}
 --| connection: con
 --| eval: true
 -- INTERSECT: disciplinas que têm pré-requisito E foram cursadas por algum aluno
-SELECT codigo FROM prereq
+SELECT id_disciplina FROM prereq
 INTERSECT
-SELECT DISTINCT cod_disciplina FROM matricula_disciplina
-ORDER BY codigo;
+SELECT DISTINCT id_disciplina FROM matricula_disciplina
+ORDER BY id_disciplina;
 ```
 
 ```{sql}
@@ -159,15 +159,15 @@ ORDER BY codigo;
 -- UNION ALL conta todas as ocorrências; UNION apenas valores distintos
 SELECT 'UNION (sem dup.)' AS operacao, COUNT(*) AS n_linhas
 FROM (
-    SELECT sigla_curso FROM curso
+    SELECT id_curso FROM curso
     UNION
-    SELECT sigla_curso FROM disciplina
+    SELECT id_curso FROM disciplina
 ) t
 UNION ALL
 SELECT 'UNION ALL (com dup.)', COUNT(*)
 FROM (
-    SELECT sigla_curso FROM curso
+    SELECT id_curso FROM curso
     UNION ALL
-    SELECT sigla_curso FROM disciplina
+    SELECT id_curso FROM disciplina
 ) t;
 ```

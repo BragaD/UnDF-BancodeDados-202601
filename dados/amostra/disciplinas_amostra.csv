@@ -1,25 +1,25 @@
-codigo;nome_disciplina;sigla_curso;semestre;carga_horaria
-ECO-201;História Econômica Geral;ECO;2;75
-ECO-202;Culturas Digitais;ECO;2;60
-ECO-401;Microeconomia 2;ECO;4;75
-ECO-402;Macroeconomia 2;ECO;4;95
-ECO-601;Economia Brasileira;ECO;6;75
-ECO-602;Orçamento e Finanças Públicas;ECO;6;75
-ECO-801;Monografia;ECO;8;100
-ECO-802;Desenvolvimento Econômico;ECO;8;90
-ENS-201;Bases da Engenharia de Software 2;ENS;2;150
-ENS-202;Projeto Aplicado 2 (site WEB);ENS;2;120
-ENS-401;Bases da Engenharia de Software 4;ENS;4;180
-ENS-402;Projeto Aplicado 4 (blockchain);ENS;4;120
-ENS-601;Bases da Engenharia de Software 6;ENS;6;150
-ENS-602;Projeto Aplicado 6 (Machine Learning);ENS;6;120
-ENS-801;Bases da Engenharia de Software 8;ENS;8;100
-ENS-802;Projeto Aplicado 8 (Sistema em Tempo Real);ENS;8;160
-PED-203;Desenvolvimento Humano;PED;2;60
-PED-204;Didática Geral;PED;2;60
-PED-403;Eletiva I;PED;4;80
-PED-404;Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC;PED;4;80
-PED-603;Eletiva II;PED;6;80
-PED-604;Educação do Campo, Indígena e Quilombola;PED;6;40
-PED-803;Tecnologia Educacional - Design;PED;8;60
-PED-804;Estatística Aplicada;PED;8;50
+id_disciplina;nome_disciplina;id_curso;semestre;carga_horaria
+1110201;História Econômica Geral;111;2;75
+1110202;Culturas Digitais;111;2;60
+1110401;Microeconomia 2;111;4;75
+1110402;Macroeconomia 2;111;4;95
+1110601;Economia Brasileira;111;6;75
+1110602;Orçamento e Finanças Públicas;111;6;75
+1110801;Monografia;111;8;100
+1110802;Desenvolvimento Econômico;111;8;90
+2110201;Desenvolvimento Humano;211;2;60
+2110202;Didática Geral;211;2;60
+2110401;Eletiva I;211;4;80
+2110402;Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC;211;4;80
+2110601;Eletiva II;211;6;80
+2110602;Educação do Campo, Indígena e Quilombola;211;6;40
+2110801;Tecnologia Educacional - Design;211;8;60
+2110802;Estatística Aplicada;211;8;50
+3110201;Bases da Engenharia de Software 2;311;2;150
+3110202;Projeto Aplicado 2 (site WEB);311;2;120
+3110401;Bases da Engenharia de Software 4;311;4;180
+3110402;Projeto Aplicado 4 (blockchain);311;4;120
+3110601;Bases da Engenharia de Software 6;311;6;150
+3110602;Projeto Aplicado 6 (Machine Learning);311;6;120
+3110801;Bases da Engenharia de Software 8;311;8;100
+3110802;Projeto Aplicado 8 (Sistema em Tempo Real);311;8;160

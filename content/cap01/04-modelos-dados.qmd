@@ -25,15 +25,15 @@ Um sistema de banco de dados é uma coleção de dados inter-relacionados e um c
 
 Todos os dados são armazenados em diversas tabelas. Abaixo, um exemplo de dados tabulares no modelo relacional:
 
-| matricula_prof | nome | escola | ch_semanal | salario |
-|---|---|---|---:|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
-| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
-| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
+| id_prof | nome | id_escola | ch_semanal | salario |
+|---:|---|---:|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 | 3200 |
+| 21400002 | Felipe Araujo   | 21 | 40 | 6400 |
+| 31200001 | Gustavo Costa   | 31 | 20 | 3300 |
+| 31400002 | Helena Carvalho | 31 | 40 | 6700 |
+| 31200003 | Igor Melo       | 31 | 20 | 3100 |
+| 11400001 | Bruno Teixeira  | 11 | 40 | 6500 |
+| 11400002 | Carla Pinto     | 11 | 40 | 6600 |
 
 : Tabela `professor` {.striped}
 
@@ -45,53 +45,53 @@ O banco de dados universitário utilizado ao longo deste material é composto pe
 
 **Tabela `centro`**
 
-| centro  | nome_centro |
-|---------|-------------|
-| COCHCMA | Ciências Humanas, Cidadania e Meio Ambiente |
-| COEMAG  | Centro de Educação, Magistério e Artes |
-| COETI   | Centro de Engenharias, Tecnologia e Inovação |
+| id_centro | sigla   | nome_centro |
+|----------:|---------|-------------|
+| 1 | COCHCMA | Ciências Humanas, Cidadania e Meio Ambiente |
+| 2 | COEMAG  | Centro de Educação, Magistério e Artes |
+| 3 | COETI   | Centro de Engenharias, Tecnologia e Inovação |
 
 : {.striped}
 
 **Tabela `escola`**
 
-| escola | nome_escola | centro |
-|---|---|---|
-| ESG   | Escola Superior de Gestão | COCHCMA |
-| EEMA  | Escola de Educação, Magistério e Arte | COEMAG |
-| ESETI | Escola Superior de Engenharias, Tecnologia e Inovação | COETI |
+| id_escola | sigla | nome_escola | id_centro |
+|----------:|-------|-------------|----------:|
+| 11 | ESG   | Escola Superior de Gestão | 1 |
+| 21 | EEMA  | Escola de Educação, Magistério e Arte | 2 |
+| 31 | ESETI | Escola Superior de Engenharias, Tecnologia e Inovação | 3 |
 
 : {.striped}
 
 **Tabela `curso`**
 
-| sigla_curso | nome_curso | escola | n_semestres | carga_horaria | tipo_curso |
-|---|---|---|---:|---:|---|
-| ECO | Ciências Econômicas    | ESG   | 8 | 3000 | bacharelado |
-| ENS | Engenharia de Software | ESETI | 8 | 3200 | bacharelado |
-| PED | Pedagogia              | EEMA  | 8 | 3410 | licenciatura |
+| id_curso | sigla_curso | nome_curso | id_escola | n_semestres | carga_horaria | tipo_curso |
+|---------:|-------------|------------|----------:|---:|---:|---|
+| 111 | ECO | Ciências Econômicas    | 11 | 8 | 3000 | bacharelado |
+| 311 | ENS | Engenharia de Software | 31 | 8 | 3200 | bacharelado |
+| 211 | PED | Pedagogia              | 21 | 8 | 3410 | licenciatura |
 
 : {.striped}
 
 **Tabela `aluno`** (amostra)
 
-| matricula  | nome | sigla_curso | ano_ingresso |
-|---|---|---|---:|
-| 2023002001 | Matheus Silva   | ENS | 2023 |
-| 2023002002 | Larissa Araújo  | ENS | 2023 |
-| 2024002001 | Pedro Carvalho  | ENS | 2024 |
-| 2023007001 | Beatriz Carvalho | ECO | 2023 |
-| 2023009001 | Amanda Moreira  | PED | 2023 |
+| id_aluno    | nome | id_curso | ano_ingresso |
+|------------:|------|----------:|---:|
+| 2023311001 | Matheus Silva    | 311 | 2023 |
+| 2023311002 | Larissa Araújo   | 311 | 2023 |
+| 2024311001 | Pedro Carvalho   | 311 | 2024 |
+| 2023111001 | Beatriz Carvalho | 111 | 2023 |
+| 2023211001 | Amanda Moreira   | 211 | 2023 |
 
 : {.striped}
 
 **Tabela `disciplina`** (amostra)
 
-| codigo  | nome_disciplina | sigla_curso | semestre | carga_horaria |
-|---|---|---|---:|---:|
-| ENS-201 | Bases da Engenharia de Software 2 | ENS | 2 | 150 |
-| ENS-202 | Projeto Aplicado 2 (site WEB)     | ENS | 2 | 120 |
-| ECO-201 | História Econômica Geral          | ECO | 2 |  75 |
-| PED-203 | Desenvolvimento Humano            | PED | 2 |  60 |
+| id_disciplina | nome_disciplina | id_curso | semestre | carga_horaria |
+|--------------:|-----------------|----------:|---:|---:|
+| 3110201 | Bases da Eng. de Software 2      | 311 | 2 | 150 |
+| 3110202 | Projeto Aplicado 2 - site WEB    | 311 | 2 | 120 |
+| 1110201 | História Econômica Geral         | 111 | 2 |  75 |
+| 2110201 | Desenvolvimento Humano           | 211 | 2 |  60 |
 
 : {.striped}

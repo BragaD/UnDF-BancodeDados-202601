@@ -1,166 +1,166 @@
-matricula_prof; nome; escola; ch_semanal; ano_ingresso
-PROF20230001; Ana Silva Costa; EEMA; 40; 2023
-PROF20230002; Bruno Souza Carvalho; EEMA; 40; 2023
-PROF20230003; Carla Rodrigues Melo; EEMA; 40; 2023
-PROF20230004; Daniel Lima Batista; EEMA; 40; 2023
-PROF20230005; Eduarda Carvalho Souza; EEMA; 40; 2023
-PROF20230006; Felipe Rocha Araujo; EEMA; 40; 2023
-PROF20230007; Gabriela Barbosa Alves; EEMA; 40; 2023
-PROF20230008; Henrique Moura Monteiro; EEMA; 40; 2023
-PROF20230009; Isabela Monteiro Santos; EEMA; 40; 2023
-PROF20230010; Joao Campos Nascimento; EEMA; 40; 2023
-PROF20230011; Kamila Silva Rocha; EEMA; 40; 2023
-PROF20230012; Lucas Souza Teixeira; EEMA; 40; 2023
-PROF20230013; Mariana Rodrigues Pinto; EEMA; 40; 2023
-PROF20230014; Nicolas Lima Rodrigues; EEMA; 40; 2023
-PROF20230015; Olivia Carvalho Gomes; EEMA; 40; 2023
-PROF20230016; Paulo Rocha Freitas; EEMA; 40; 2023
-PROF20230017; Quezia Barbosa Campos; EEMA; 40; 2023
-PROF20230018; Rafael Moura Pereira; EEMA; 40; 2023
-PROF20230019; Sabrina Monteiro Fernandes; EEMA; 40; 2023
-PROF20230020; Tiago Campos Barbosa; EEMA; 40; 2023
-PROF20230021; Ursula Silva Cardoso; EEMA; 40; 2023
-PROF20230022; Vitor Souza Oliveira; EEMA; 40; 2023
-PROF20230023; Wesley Rodrigues Lima; EEMA; 40; 2023
-PROF20230024; Yasmin Lima Ribeiro; EEMA; 40; 2023
-PROF20230025; Amanda Carvalho Correia; EEMA; 20; 2023
-PROF20230026; Beatriz Rocha Silva; EEMA; 20; 2023
-PROF20230027; Caio Barbosa Almeida; ESCS; 40; 2023
-PROF20230028; Diego Moura Martins; ESCS; 40; 2023
-PROF20230029; Elisa Monteiro Moura; ESCS; 40; 2023
-PROF20230030; Fernanda Campos Mendes; ESCS; 20; 2023
-PROF20230031; Gustavo Silva Costa; ESETI; 40; 2023
-PROF20230032; Helena Souza Carvalho; ESETI; 40; 2023
-PROF20230033; Igor Rodrigues Melo; ESETI; 40; 2023
-PROF20230034; Juliana Lima Batista; ESETI; 40; 2023
-PROF20230035; Leandro Carvalho Souza; ESETI; 40; 2023
-PROF20230036; Milena Rocha Araujo; ESETI; 40; 2023
-PROF20230037; Natanael Barbosa Alves; ESETI; 40; 2023
-PROF20230038; Priscila Moura Monteiro; ESETI; 40; 2023
-PROF20230039; Renato Monteiro Santos; ESETI; 40; 2023
-PROF20230040; Tatiane Campos Nascimento; ESETI; 40; 2023
-PROF20230041; Ana Silva Rocha; ESETI; 40; 2023
-PROF20230042; Bruno Souza Teixeira; ESG; 40; 2023
-PROF20230043; Carla Rodrigues Pinto; ESG; 40; 2023
-PROF20230044; Daniel Lima Rodrigues; ESG; 40; 2023
-PROF20230045; Eduarda Carvalho Gomes; ESG; 40; 2023
-PROF20230046; Felipe Rocha Freitas; ESG; 40; 2023
-PROF20230047; Gabriela Barbosa Campos; ESG; 40; 2023
-PROF20230048; Henrique Moura Pereira; ESG; 40; 2023
-PROF20230049; Isabela Monteiro Fernandes; ESG; 40; 2023
-PROF20230050; Joao Campos Barbosa; ESG; 40; 2023
-PROF20230051; Kamila Silva Cardoso; ESG; 40; 2023
-PROF20230052; Lucas Souza Oliveira; ESG; 40; 2023
-PROF20230053; Mariana Rodrigues Lima; ESG; 40; 2023
-PROF20230054; Nicolas Lima Ribeiro; ESG; 40; 2023
-PROF20230055; Olivia Carvalho Correia; ESG; 40; 2023
-PROF20230056; Paulo Rocha Silva; ESG; 40; 2023
-PROF20230057; Quezia Barbosa Almeida; ESG; 40; 2023
-PROF20230058; Rafael Moura Martins; ESG; 40; 2023
-PROF20230157; Henrique Fernandes Santos; ESG; 20; 2023
-PROF20240059; Sabrina Monteiro Moura; EEMA; 40; 2024
-PROF20240060; Tiago Campos Mendes; EEMA; 40; 2024
-PROF20240061; Ursula Silva Costa; EEMA; 40; 2024
-PROF20240062; Vitor Souza Carvalho; EEMA; 40; 2024
-PROF20240063; Wesley Rodrigues Melo; EEMA; 40; 2024
-PROF20240064; Yasmin Lima Batista; EEMA; 40; 2024
-PROF20240065; Amanda Carvalho Souza; EEMA; 40; 2024
-PROF20240066; Beatriz Rocha Araujo; EEMA; 40; 2024
-PROF20240067; Caio Barbosa Alves; EEMA; 40; 2024
-PROF20240068; Diego Moura Monteiro; EEMA; 40; 2024
-PROF20240069; Elisa Monteiro Santos; EEMA; 40; 2024
-PROF20240070; Fernanda Campos Nascimento; EEMA; 40; 2024
-PROF20240071; Gustavo Silva Rocha; EEMA; 40; 2024
-PROF20240072; Helena Souza Teixeira; EEMA; 40; 2024
-PROF20240073; Igor Rodrigues Pinto; EEMA; 40; 2024
-PROF20240074; Juliana Lima Rodrigues; EEMA; 40; 2024
-PROF20240075; Leandro Carvalho Gomes; EEMA; 20; 2024
-PROF20240076; Milena Rocha Freitas; ESCS; 40; 2024
-PROF20240077; Natanael Barbosa Campos; ESCS; 40; 2024
-PROF20240078; Priscila Moura Pereira; ESETI; 40; 2024
-PROF20240079; Renato Monteiro Fernandes; ESETI; 40; 2024
-PROF20240080; Tatiane Campos Barbosa; ESETI; 40; 2024
-PROF20240081; Ana Silva Cardoso; ESETI; 40; 2024
-PROF20240082; Bruno Souza Oliveira; ESETI; 40; 2024
-PROF20240083; Carla Rodrigues Lima; ESETI; 40; 2024
-PROF20240084; Daniel Lima Ribeiro; ESETI; 20; 2024
-PROF20240085; Eduarda Carvalho Correia; ESG; 40; 2024
-PROF20240086; Felipe Rocha Silva; ESG; 40; 2024
-PROF20240087; Gabriela Barbosa Almeida; ESG; 40; 2024
-PROF20240088; Henrique Moura Martins; ESG; 40; 2024
-PROF20240089; Isabela Monteiro Moura; ESG; 40; 2024
-PROF20240090; Joao Campos Mendes; ESG; 40; 2024
-PROF20240091; Kamila Silva Costa; ESG; 40; 2024
-PROF20240092; Lucas Souza Carvalho; ESG; 40; 2024
-PROF20240093; Mariana Rodrigues Melo; ESG; 40; 2024
-PROF20240094; Nicolas Lima Batista; ESG; 40; 2024
-PROF20240095; Olivia Carvalho Souza; ESG; 20; 2024
-PROF20240096; Paulo Rocha Araujo; ESG; 20; 2024
-PROF20240158; Isabela Martins Nascimento; EEMA; 20; 2024
-PROF20240159; Joao Alves Rocha; ESETI; 20; 2024
-PROF20240160; Kamila Silva Oliveira; ESG; 20; 2024
-PROF20250097; Quezia Barbosa Alves; EEMA; 40; 2025
-PROF20250098; Rafael Moura Monteiro; EEMA; 40; 2025
-PROF20250099; Sabrina Monteiro Santos; EEMA; 40; 2025
-PROF20250100; Tiago Campos Nascimento; EEMA; 40; 2025
-PROF20250101; Ursula Silva Rocha; EEMA; 40; 2025
-PROF20250102; Vitor Souza Teixeira; EEMA; 40; 2025
-PROF20250103; Wesley Rodrigues Pinto; EEMA; 40; 2025
-PROF20250104; Yasmin Lima Rodrigues; EEMA; 40; 2025
-PROF20250105; Amanda Carvalho Gomes; EEMA; 40; 2025
-PROF20250106; Beatriz Rocha Freitas; EEMA; 40; 2025
-PROF20250107; Caio Barbosa Campos; EEMA; 40; 2025
-PROF20250108; Diego Moura Pereira; EEMA; 40; 2025
-PROF20250109; Elisa Monteiro Fernandes; EEMA; 40; 2025
-PROF20250110; Fernanda Campos Barbosa; EEMA; 40; 2025
-PROF20250111; Gustavo Silva Cardoso; EEMA; 40; 2025
-PROF20250112; Helena Souza Oliveira; EEMA; 40; 2025
-PROF20250113; Igor Rodrigues Lima; ESCS; 40; 2025
-PROF20250114; Juliana Lima Ribeiro; ESCS; 40; 2025
-PROF20250115; Leandro Carvalho Correia; ESETI; 40; 2025
-PROF20250116; Milena Rocha Silva; ESETI; 40; 2025
-PROF20250117; Natanael Barbosa Almeida; ESETI; 40; 2025
-PROF20250118; Priscila Moura Martins; ESETI; 40; 2025
-PROF20250119; Renato Monteiro Moura; ESETI; 40; 2025
-PROF20250120; Tatiane Campos Mendes; ESETI; 40; 2025
-PROF20250121; Ana Silva Costa; ESETI; 20; 2025
-PROF20250122; Bruno Souza Carvalho; ESG; 40; 2025
-PROF20250123; Carla Rodrigues Melo; ESG; 40; 2025
-PROF20250124; Daniel Lima Batista; ESG; 40; 2025
-PROF20250125; Eduarda Carvalho Souza; ESG; 40; 2025
-PROF20250126; Felipe Rocha Araujo; ESG; 40; 2025
-PROF20250127; Gabriela Barbosa Alves; ESG; 40; 2025
-PROF20250128; Henrique Moura Monteiro; ESG; 40; 2025
-PROF20250129; Isabela Monteiro Santos; ESG; 40; 2025
-PROF20250130; Joao Campos Nascimento; ESG; 20; 2025
-PROF20250161; Lucas Souza Lima; EEMA; 20; 2025
-PROF20250162; Mariana Rodrigues Ribeiro; ESG; 20; 2025
-PROF20250163; Nicolas Lima Souza; ESG; 20; 2025
-PROF20260131; Kamila Silva Rocha; EEMA; 40; 2026
-PROF20260132; Lucas Souza Teixeira; EEMA; 40; 2026
-PROF20260133; Mariana Rodrigues Pinto; EEMA; 40; 2026
-PROF20260134; Nicolas Lima Rodrigues; EEMA; 40; 2026
-PROF20260135; Olivia Carvalho Gomes; EEMA; 40; 2026
-PROF20260136; Paulo Rocha Freitas; EEMA; 40; 2026
-PROF20260137; Quezia Barbosa Campos; EEMA; 40; 2026
-PROF20260138; Rafael Moura Pereira; EEMA; 20; 2026
-PROF20260139; Sabrina Monteiro Fernandes; ESCS; 40; 2026
-PROF20260140; Tiago Campos Barbosa; ESCS; 20; 2026
-PROF20260141; Ursula Silva Cardoso; ESCS; 20; 2026
-PROF20260142; Vitor Souza Oliveira; ESETI; 40; 2026
-PROF20260143; Wesley Rodrigues Lima; ESETI; 40; 2026
-PROF20260144; Yasmin Lima Ribeiro; ESETI; 40; 2026
-PROF20260145; Amanda Carvalho Correia; ESETI; 40; 2026
-PROF20260146; Beatriz Rocha Silva; ESETI; 40; 2026
-PROF20260147; Caio Barbosa Almeida; ESETI; 20; 2026
-PROF20260148; Diego Moura Martins; ESETI; 20; 2026
-PROF20260149; Elisa Monteiro Moura; ESG; 40; 2026
-PROF20260150; Fernanda Campos Mendes; ESG; 40; 2026
-PROF20260151; Gustavo Silva Costa; ESG; 40; 2026
-PROF20260152; Helena Souza Carvalho; ESG; 40; 2026
-PROF20260153; Igor Rodrigues Melo; ESG; 40; 2026
-PROF20260154; Juliana Lima Batista; ESG; 40; 2026
-PROF20260155; Leandro Carvalho Souza; ESG; 40; 2026
-PROF20260156; Milena Rocha Araujo; ESG; 20; 2026
-PROF20260164; Olivia Carvalho Araujo; ESETI; 20; 2026
-PROF20260165; Paulo Rocha Alves; ESG; 20; 2026
+id_prof;nome;id_escola;ch_semanal;salario
+11200001;Henrique Fernandes Santos;11;20;2800
+11200002;Olivia Carvalho Souza;11;20;2900
+11200003;Paulo Rocha Araujo;11;20;3000
+11200004;Kamila Silva Oliveira;11;20;3100
+11200005;Joao Campos Nascimento;11;20;3200
+11200006;Mariana Rodrigues Ribeiro;11;20;3300
+11200007;Nicolas Lima Souza;11;20;3400
+11200008;Milena Rocha Araujo;11;20;3500
+11200009;Paulo Rocha Alves;11;20;3600
+11400001;Bruno Souza Teixeira;11;40;5800
+11400002;Carla Rodrigues Pinto;11;40;5850
+11400003;Daniel Lima Rodrigues;11;40;5900
+11400004;Eduarda Carvalho Gomes;11;40;5950
+11400005;Felipe Rocha Freitas;11;40;6000
+11400006;Gabriela Barbosa Campos;11;40;6050
+11400007;Henrique Moura Pereira;11;40;6100
+11400008;Isabela Monteiro Fernandes;11;40;6150
+11400009;Joao Campos Barbosa;11;40;6200
+11400010;Kamila Silva Cardoso;11;40;6250
+11400011;Lucas Souza Oliveira;11;40;6300
+11400012;Mariana Rodrigues Lima;11;40;6350
+11400013;Nicolas Lima Ribeiro;11;40;6400
+11400014;Olivia Carvalho Correia;11;40;6450
+11400015;Paulo Rocha Silva;11;40;6500
+11400016;Quezia Barbosa Almeida;11;40;6550
+11400017;Rafael Moura Martins;11;40;6600
+11400018;Eduarda Carvalho Correia;11;40;6650
+11400019;Felipe Rocha Silva;11;40;6700
+11400020;Gabriela Barbosa Almeida;11;40;6750
+11400021;Henrique Moura Martins;11;40;6800
+11400022;Isabela Monteiro Moura;11;40;6850
+11400023;Joao Campos Mendes;11;40;6900
+11400024;Kamila Silva Costa;11;40;6950
+11400025;Lucas Souza Carvalho;11;40;7000
+11400026;Mariana Rodrigues Melo;11;40;7050
+11400027;Nicolas Lima Batista;11;40;7100
+11400028;Bruno Souza Carvalho;11;40;7150
+11400029;Carla Rodrigues Melo;11;40;7200
+11400030;Daniel Lima Batista;11;40;7250
+11400031;Eduarda Carvalho Souza;11;40;7300
+11400032;Felipe Rocha Araujo;11;40;7350
+11400033;Gabriela Barbosa Alves;11;40;7400
+11400034;Henrique Moura Monteiro;11;40;7450
+11400035;Isabela Monteiro Santos;11;40;7500
+11400036;Elisa Monteiro Moura;11;40;7550
+11400037;Fernanda Campos Mendes;11;40;7600
+11400038;Gustavo Silva Costa;11;40;7650
+11400039;Helena Souza Carvalho;11;40;7700
+11400040;Igor Rodrigues Melo;11;40;7750
+11400041;Juliana Lima Batista;11;40;7800
+11400042;Leandro Carvalho Souza;11;40;7850
+21200001;Amanda Carvalho Correia;21;20;2800
+21200002;Beatriz Rocha Silva;21;20;2900
+21200003;Leandro Carvalho Gomes;21;20;3000
+21200004;Isabela Martins Nascimento;21;20;3100
+21200005;Lucas Souza Lima;21;20;3200
+21200006;Rafael Moura Pereira;21;20;3300
+21400001;Ana Silva Costa;21;40;5800
+21400002;Bruno Souza Carvalho;21;40;5850
+21400003;Carla Rodrigues Melo;21;40;5900
+21400004;Daniel Lima Batista;21;40;5950
+21400005;Eduarda Carvalho Souza;21;40;6000
+21400006;Felipe Rocha Araujo;21;40;6050
+21400007;Gabriela Barbosa Alves;21;40;6100
+21400008;Henrique Moura Monteiro;21;40;6150
+21400009;Isabela Monteiro Santos;21;40;6200
+21400010;Joao Campos Nascimento;21;40;6250
+21400011;Kamila Silva Rocha;21;40;6300
+21400012;Lucas Souza Teixeira;21;40;6350
+21400013;Mariana Rodrigues Pinto;21;40;6400
+21400014;Nicolas Lima Rodrigues;21;40;6450
+21400015;Olivia Carvalho Gomes;21;40;6500
+21400016;Paulo Rocha Freitas;21;40;6550
+21400017;Quezia Barbosa Campos;21;40;6600
+21400018;Rafael Moura Pereira;21;40;6650
+21400019;Sabrina Monteiro Fernandes;21;40;6700
+21400020;Tiago Campos Barbosa;21;40;6750
+21400021;Ursula Silva Cardoso;21;40;6800
+21400022;Vitor Souza Oliveira;21;40;6850
+21400023;Wesley Rodrigues Lima;21;40;6900
+21400024;Yasmin Lima Ribeiro;21;40;6950
+21400025;Sabrina Monteiro Moura;21;40;7000
+21400026;Tiago Campos Mendes;21;40;7050
+21400027;Ursula Silva Costa;21;40;7100
+21400028;Vitor Souza Carvalho;21;40;7150
+21400029;Wesley Rodrigues Melo;21;40;7200
+21400030;Yasmin Lima Batista;21;40;7250
+21400031;Amanda Carvalho Souza;21;40;7300
+21400032;Beatriz Rocha Araujo;21;40;7350
+21400033;Caio Barbosa Alves;21;40;7400
+21400034;Diego Moura Monteiro;21;40;7450
+21400035;Elisa Monteiro Santos;21;40;7500
+21400036;Fernanda Campos Nascimento;21;40;7550
+21400037;Gustavo Silva Rocha;21;40;7600
+21400038;Helena Souza Teixeira;21;40;7650
+21400039;Igor Rodrigues Pinto;21;40;7700
+21400040;Juliana Lima Rodrigues;21;40;7750
+21400041;Quezia Barbosa Alves;21;40;7800
+21400042;Rafael Moura Monteiro;21;40;7850
+21400043;Sabrina Monteiro Santos;21;40;7900
+21400044;Tiago Campos Nascimento;21;40;7950
+21400045;Ursula Silva Rocha;21;40;8000
+21400046;Vitor Souza Teixeira;21;40;8050
+21400047;Wesley Rodrigues Pinto;21;40;8100
+21400048;Yasmin Lima Rodrigues;21;40;8150
+21400049;Amanda Carvalho Gomes;21;40;8200
+21400050;Beatriz Rocha Freitas;21;40;8250
+21400051;Caio Barbosa Campos;21;40;8300
+21400052;Diego Moura Pereira;21;40;8350
+21400053;Elisa Monteiro Fernandes;21;40;8400
+21400054;Fernanda Campos Barbosa;21;40;8450
+21400055;Gustavo Silva Cardoso;21;40;8500
+21400056;Helena Souza Oliveira;21;40;8550
+21400057;Kamila Silva Rocha;21;40;8600
+21400058;Lucas Souza Teixeira;21;40;8650
+21400059;Mariana Rodrigues Pinto;21;40;8700
+21400060;Nicolas Lima Rodrigues;21;40;8750
+21400061;Olivia Carvalho Gomes;21;40;8800
+21400062;Paulo Rocha Freitas;21;40;8850
+21400063;Quezia Barbosa Campos;21;40;8900
+31200001;Daniel Lima Ribeiro;31;20;2800
+31200002;Joao Alves Rocha;31;20;2900
+31200003;Ana Silva Costa;31;20;3000
+31200004;Caio Barbosa Almeida;31;20;3100
+31200005;Diego Moura Martins;31;20;3200
+31200006;Olivia Carvalho Araujo;31;20;3300
+31400001;Gustavo Silva Costa;31;40;5800
+31400002;Helena Souza Carvalho;31;40;5850
+31400003;Igor Rodrigues Melo;31;40;5900
+31400004;Juliana Lima Batista;31;40;5950
+31400005;Leandro Carvalho Souza;31;40;6000
+31400006;Milena Rocha Araujo;31;40;6050
+31400007;Natanael Barbosa Alves;31;40;6100
+31400008;Priscila Moura Monteiro;31;40;6150
+31400009;Renato Monteiro Santos;31;40;6200
+31400010;Tatiane Campos Nascimento;31;40;6250
+31400011;Ana Silva Rocha;31;40;6300
+31400012;Priscila Moura Pereira;31;40;6350
+31400013;Renato Monteiro Fernandes;31;40;6400
+31400014;Tatiane Campos Barbosa;31;40;6450
+31400015;Ana Silva Cardoso;31;40;6500
+31400016;Bruno Souza Oliveira;31;40;6550
+31400017;Carla Rodrigues Lima;31;40;6600
+31400018;Leandro Carvalho Correia;31;40;6650
+31400019;Milena Rocha Silva;31;40;6700
+31400020;Natanael Barbosa Almeida;31;40;6750
+31400021;Priscila Moura Martins;31;40;6800
+31400022;Renato Monteiro Moura;31;40;6850
+31400023;Tatiane Campos Mendes;31;40;6900
+31400024;Vitor Souza Oliveira;31;40;6950
+31400025;Wesley Rodrigues Lima;31;40;7000
+31400026;Yasmin Lima Ribeiro;31;40;7050
+31400027;Amanda Carvalho Correia;31;40;7100
+31400028;Beatriz Rocha Silva;31;40;7150
+41200001;Fernanda Campos Mendes;41;20;2800
+41200002;Tiago Campos Barbosa;41;20;2900
+41200003;Ursula Silva Cardoso;41;20;3000
+41400001;Caio Barbosa Almeida;41;40;5800
+41400002;Diego Moura Martins;41;40;5850
+41400003;Elisa Monteiro Moura;41;40;5900
+41400004;Milena Rocha Freitas;41;40;5950
+41400005;Natanael Barbosa Campos;41;40;6000
+41400006;Igor Rodrigues Lima;41;40;6050
+41400007;Juliana Lima Ribeiro;41;40;6100
+41400008;Sabrina Monteiro Fernandes;41;40;6150

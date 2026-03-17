@@ -23,7 +23,7 @@ A cláusula `WHERE` especifica quais linhas devem aparecer no resultado. Ela ace
 
 | Operador | Significado | Exemplo |
 |---|---|---|
-| `=` | igual | `escola = 'ESETI'` |
+| `=` | igual | `id_escola = 31` |
 | `<>` ou `!=` | diferente | `semestre <> 2` |
 | `<` | menor que | `carga_horaria < 60` |
 | `>` | maior que | `carga_horaria > 100` |
@@ -36,9 +36,9 @@ A cláusula `WHERE` especifica quais linhas devem aparecer no resultado. Ela ace
 --| connection: con
 --| eval: true
 -- Disciplinas de ENS com carga horária acima de 150 horas
-SELECT codigo, nome_disciplina, carga_horaria
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
-WHERE  sigla_curso = 'ENS'
+WHERE  id_curso = 311
   AND  carga_horaria > 150;
 ```
 
@@ -46,9 +46,9 @@ WHERE  sigla_curso = 'ENS'
 --| connection: con
 --| eval: true
 -- Disciplinas de PED ou com carga horária acima de 150 horas
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
-WHERE  sigla_curso = 'PED'
+WHERE  id_curso = 211
    OR  carga_horaria > 150
 ORDER BY carga_horaria DESC;
 ```
@@ -57,10 +57,10 @@ ORDER BY carga_horaria DESC;
 --| connection: con
 --| eval: true
 -- Disciplinas que NÃO são de ECO
-SELECT codigo, nome_disciplina, sigla_curso
+SELECT id_disciplina, nome_disciplina, id_curso
 FROM   disciplina
-WHERE  NOT sigla_curso = 'ECO'
-ORDER BY sigla_curso, codigo;
+WHERE  NOT id_curso = 111
+ORDER BY id_curso, id_disciplina;
 ```
 
 ## BETWEEN
@@ -71,7 +71,7 @@ O predicado `BETWEEN` verifica se um valor está dentro de um intervalo fechado 
 --| connection: con
 --| eval: true
 -- Disciplinas com carga horária entre 100 e 160 horas (inclusive)
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria BETWEEN 100 AND 160
 ORDER BY carga_horaria;
@@ -96,7 +96,8 @@ O predicado `LIKE` permite filtrar strings usando **padrões**. Dois caracteres 
 --| connection: con
 --| eval: true
 -- Disciplinas cujo nome começa com "Bases"
-SELECT codigo, nome_disciplina, carga_horaria
+-- (corresponde às disciplinas de Bases da Eng. de Software dos semestres 2, 4, 6 e 8 de ENS)
+SELECT id_disciplina, nome_disciplina, carga_horaria
 FROM   disciplina
 WHERE  nome_disciplina LIKE 'Bases%';
 ```
@@ -105,22 +106,14 @@ WHERE  nome_disciplina LIKE 'Bases%';
 --| connection: con
 --| eval: true
 -- Disciplinas cujo nome contém a palavra "Projeto"
-SELECT codigo, nome_disciplina, sigla_curso
+SELECT id_disciplina, nome_disciplina, id_curso
 FROM   disciplina
 WHERE  nome_disciplina LIKE '%Projeto%';
 ```
 
-```{sql}
---| connection: con
---| eval: true
--- Disciplinas cujo código começa com "ENS"
-SELECT codigo, nome_disciplina, semestre, carga_horaria
-FROM   disciplina
-WHERE  codigo LIKE 'ENS%'
-ORDER BY semestre;
-```
-
 ::: {.callout-note}
+`LIKE` aplica-se a colunas do tipo texto (`VARCHAR`, `CHAR`, `TEXT`). Como `id_disciplina` é agora um `INTEGER`, padrões de código de disciplina devem ser expressos via atributos textuais, como `nome_disciplina`, ou filtrando pela coluna `id_curso`.
+
 Por padrão, `LIKE` é **sensível a maiúsculas e minúsculas** na maioria dos SGBDs. Para buscas sem distinção de caixa, use `ILIKE` (PostgreSQL) ou a função `LOWER()`.
 :::
 
@@ -132,7 +125,7 @@ A cláusula `ORDER BY` especifica a ordem em que as linhas são retornadas. Por 
 --| connection: con
 --| eval: true
 -- Disciplinas ordenadas por carga horária, da maior para a menor
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 ORDER BY carga_horaria DESC;
 ```
@@ -142,10 +135,10 @@ ORDER BY carga_horaria DESC;
 ```{sql}
 --| connection: con
 --| eval: true
--- Disciplinas ordenadas por curso (alfabético) e, dentro do mesmo curso, por carga horária decrescente
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+-- Disciplinas ordenadas por curso e, dentro do mesmo curso, por carga horária decrescente
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
-ORDER BY sigla_curso ASC, carga_horaria DESC;
+ORDER BY id_curso ASC, carga_horaria DESC;
 ```
 
 ---
@@ -156,7 +149,7 @@ ORDER BY sigla_curso ASC, carga_horaria DESC;
 --| connection: con
 --| eval: true
 -- NOT BETWEEN: disciplinas fora do intervalo central de carga horária
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM   disciplina
 WHERE  carga_horaria NOT BETWEEN 60 AND 120
 ORDER BY carga_horaria;
@@ -165,12 +158,12 @@ ORDER BY carga_horaria;
 ```{sql}
 --| connection: con
 --| eval: true
--- LIKE com sublinhado: códigos onde o 5º caractere é exatamente '2'
--- Ex.: ENS-201, ECO-201, PED-203 — o padrão 'xxx-2__' captura sem 10 (ENS-201 = E,N,S,-,2,0,1)
-SELECT codigo, nome_disciplina, semestre
+-- LIKE com sublinhado: nomes com exatamente uma letra após "Bases d"
+-- Demonstra o uso do caractere curinga _ (um único caractere qualquer)
+SELECT id_disciplina, nome_disciplina, semestre
 FROM   disciplina
-WHERE  codigo LIKE '___-2%'
-ORDER BY codigo;
+WHERE  nome_disciplina LIKE 'Bases d_'
+ORDER BY id_disciplina;
 ```
 
 ```{sql}
@@ -188,11 +181,11 @@ ORDER BY tipo_curso, sigla_curso;
 --| eval: true
 -- Combinação de AND/OR com parênteses: a precedência importa!
 -- Sem parênteses, AND tem precedência sobre OR
-SELECT nome, escola, salario
+SELECT nome, id_escola, salario
 FROM   professor
-WHERE  (escola = 'ESETI' OR escola = 'EEMA')
+WHERE  (id_escola = 31 OR id_escola = 21)
   AND  salario > 5000
-ORDER BY escola, salario DESC;
+ORDER BY id_escola, salario DESC;
 ```
 
 ::: {.callout-warning}

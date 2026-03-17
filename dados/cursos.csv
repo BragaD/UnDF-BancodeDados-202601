@@ -1,18 +1,18 @@
-sigla_curso; nome_curso; escola; n_semestres; carga_horaria; tipo_curso
-CC; Ciência da Computação; ESETI; 8; 3400; bacharelado
-ENS; Engenharia de Software; ESETI; 8; 3200; bacharelado
-SI; Sistemas de Informação; ESETI; 8; 3000; bacharelado
-SS; Serviço Social; ESCHCMA; 8; 3075; bacharelado
-NUT; Nutrição; ESCS; 11; 4050; bacharelado
-PSI; Psicologia; ESCHCMA; 10; 4040; bacharelado
-ECO; Ciências Econômicas; ESG; 8; 3000; bacharelado
-MAT; Matemática; EEMA; 8; 3280; licenciatura
-PED; Pedagogia; EEMA; 8; 3410; licenciatura
-LPOR; Letras Português; EEMA; 8; 3645; licenciatura
-LING; Letras Inglês; EEMA; 8; 3555; licenciatura
-GTI; Gestão da Tecnologia da Informação; ESG; 5; 2000; tecnológico
-GPUB; Gestão Pública; ESG; 4; 1680; tecnológico
-GAM; Gestão Ambiental; ESG; 4; 1620; tecnológico
-PCUL; Produção Cultural; EEMA; 6; 2420; tecnológico
-ACEN; Atuação Cênica; EEMA; 6; 2430; tecnológico
-DAN; Dança; EEMA; 6; 2400; tecnológico
+id_curso;sigla_curso;nome_curso;id_escola;n_semestres;carga_horaria;tipo_curso
+111;ECO;Ciências Econômicas;11;8;3000;bacharelado
+112;GTI;Gestão da Tecnologia da Informação;11;5;2000;tecnológico
+113;GPUB;Gestão Pública;11;4;1680;tecnológico
+114;GAM;Gestão Ambiental;11;4;1620;tecnológico
+131;SS;Serviço Social;13;8;3075;bacharelado
+132;PSI;Psicologia;13;10;4040;bacharelado
+211;PED;Pedagogia;21;8;3410;licenciatura
+212;MAT;Matemática;21;8;3280;licenciatura
+213;LPOR;Letras Português;21;8;3645;licenciatura
+214;LING;Letras Inglês;21;8;3555;licenciatura
+215;PCUL;Produção Cultural;21;6;2420;tecnológico
+216;ACEN;Atuação Cênica;21;6;2430;tecnológico
+217;DAN;Dança;21;6;2400;tecnológico
+311;ENS;Engenharia de Software;31;8;3200;bacharelado
+312;CC;Ciência da Computação;31;8;3400;bacharelado
+313;SI;Sistemas de Informação;31;8;3000;bacharelado
+411;NUT;Nutrição;41;11;4050;bacharelado

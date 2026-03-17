@@ -22,33 +22,33 @@ Seja $R$ o schema de uma relação e $K \subseteq R$ um subconjunto de seus atri
 
 ### Relação `professor`
 
-| matricula_prof | nome | escola | ch_semanal | salario |
-|---|---|---|---:|---:|
-| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
+| id_prof | nome | id_escola | ch_semanal | salario |
+|---|---|---:|---:|---:|
+| 31200001 | Gustavo Costa   | 31 | 20 | 3300 |
+| 31400002 | Helena Carvalho | 31 | 40 | 6700 |
+| 11400001 | Bruno Teixeira  | 11 | 40 | 6500 |
 
-- $\{matricula\_prof\}$ é **superclave**: cada professor tem uma matrícula única.
-- $\{matricula\_prof, nome\}$ é **superclave**: a combinação também identifica unicamente, mas é redundante.
+- $\{id\_prof\}$ é **superclave**: cada professor tem um identificador único.
+- $\{id\_prof, nome\}$ é **superclave**: a combinação também identifica unicamente, mas é redundante.
 - $\{nome\}$ **não é superclave**: poderiam existir dois professores com o mesmo nome.
-- $\{matricula\_prof\}$ é **chave candidata**: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).
-- $\{matricula\_prof\}$ é escolhida como **chave primária**.
+- $\{id\_prof\}$ é **chave candidata**: é a menor superclave (não há subconjunto próprio não vazio que seja superclave).
+- $\{id\_prof\}$ é escolhida como **chave primária**.
 
 ### Relação `centro`
 
-- $\{centro\}$ é chave candidata e chave primária — cada centro tem um código único.
+- $\{id\_centro\}$ é chave candidata e chave primária — cada centro tem um identificador único.
 
 ### Relação `disciplina`
 
-- $\{codigo\}$ é chave candidata e chave primária.
+- $\{id\_disciplina\}$ é chave candidata e chave primária.
 
 ### Relação `ministra`
 
 A relação `ministra` registra que um professor ministra uma disciplina em um determinado ano, semestre e turma. Não existe uma coluna única que identifique cada tupla — a chave primária é **composta**:
 
-$$ministra(\underline{cod\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ matricula\_prof,\ horario,\ sala)$$
+$$ministra(\underline{id\_disciplina},\ \underline{ano},\ \underline{semestre},\ \underline{turma},\ id\_prof,\ horario,\ sala)$$
 
-- $\{cod\_disciplina, ano, semestre, turma\}$ é a chave primária composta.
+- $\{id\_disciplina, ano, semestre, turma\}$ é a chave primária composta.
 
 ## Chave Estrangeira
 
@@ -57,13 +57,13 @@ Uma **chave estrangeira** (*foreign key*) é um conjunto de atributos em uma rel
 :::
 
 ::: {.exemplo}
-O atributo `escola` em `professor` é uma chave estrangeira que referencia `escola` em `escola`:
+O atributo `id_escola` em `professor` é uma chave estrangeira que referencia `id_escola` em `escola`:
 
 - **Relação referenciante**: `professor`
 - **Relação referenciada**: `escola`
-- **Restrição**: todo valor de `professor.escola` deve existir em `escola.escola`
+- **Restrição**: todo valor de `professor.id_escola` deve existir em `escola.id_escola`
 
-Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, `curso.escola` e `aluno.sigla_curso` são chaves estrangeiras que referenciam suas respectivas tabelas.
+Isso garante que não seja possível cadastrar um professor em uma escola inexistente. Da mesma forma, `curso.id_escola` e `aluno.id_curso` são chaves estrangeiras que referenciam suas respectivas tabelas.
 :::
 
 A restrição imposta por uma chave estrangeira é chamada de **restrição de integridade referencial** (*referential integrity constraint*) e é uma das formas como o SGBD preserva a consistência dos dados.
@@ -74,21 +74,21 @@ A restrição imposta por uma chave estrangeira é chamada de **restrição de i
 
 **1. Superchaves de `disciplina`.** O schema da relação `disciplina` é:
 
-$$disciplina(\underline{codigo},\ nome\_disciplina,\ sigla\_curso,\ semestre,\ carga\_horaria)$$
+$$disciplina(\underline{id\_disciplina},\ nome\_disciplina,\ id\_curso,\ semestre,\ carga\_horaria)$$
 
 Das combinações abaixo, quais são superchaves? Quais são chaves candidatas?
 
-a. $\{codigo\}$
+a. $\{id\_disciplina\}$
 b. $\{nome\_disciplina\}$
-c. $\{codigo,\ semestre\}$
-d. $\{sigla\_curso,\ semestre,\ nome\_disciplina\}$
+c. $\{id\_disciplina,\ semestre\}$
+d. $\{id\_curso,\ semestre,\ nome\_disciplina\}$
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-- **(a)** $\{codigo\}$ — **superclave e chave candidata**: identifica unicamente cada disciplina e é minimal.
-- **(b)** $\{nome\_disciplina\}$ — **não é superclave**: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: "Eletiva I" em PED-403 e uma hipotética em outro curso).
-- **(c)** $\{codigo,\ semestre\}$ — **superclave mas não candidata**: redundante, pois `codigo` já identifica unicamente.
-- **(d)** $\{sigla\_curso,\ semestre,\ nome\_disciplina\}$ — **pode ser superclave** se nomes forem únicos por curso/semestre, mas não é minimal.
+- **(a)** $\{id\_disciplina\}$ — **superclave e chave candidata**: identifica unicamente cada disciplina e é minimal.
+- **(b)** $\{nome\_disciplina\}$ — **não é superclave**: dois cursos diferentes podem ter disciplinas com nomes iguais (ex.: "Eletiva I" em PED e uma hipotética em outro curso).
+- **(c)** $\{id\_disciplina,\ semestre\}$ — **superclave mas não candidata**: redundante, pois `id_disciplina` já identifica unicamente.
+- **(d)** $\{id\_curso,\ semestre,\ nome\_disciplina\}$ — **pode ser superclave** se nomes forem únicos por curso/semestre, mas não é minimal.
 :::
 
 ---
@@ -104,12 +104,12 @@ A chave primária deve identificar **unicamente** cada tupla. Se um atributo de 
 
 **3. Chave estrangeira autorreferencial.** A tabela `prereq` tem duas FKs que apontam para a mesma tabela `disciplina`:
 
-- `prereq.codigo` → `disciplina.codigo`
-- `prereq.prereq_codigo` → `disciplina.codigo`
+- `prereq.id_disciplina` → `disciplina.id_disciplina`
+- `prereq.id_prereq` → `disciplina.id_disciplina`
 
-O que aconteceria se tentássemos inserir a tupla `('ENS-201', 'ENS-201')` em `prereq`? Essa inserção violaria alguma restrição?
+O que aconteceria se tentássemos inserir a tupla `(3110201, 3110201)` em `prereq`? Essa inserção violaria alguma restrição?
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-A tupla `('ENS-201', 'ENS-201')` **não viola** nenhuma restrição de FK (ENS-201 existe em `disciplina`) nem de PK (é uma combinação única). No entanto, ela criaria um **ciclo de pré-requisito**: ENS-201 seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição `CHECK (codigo <> prereq_codigo)`.
+A tupla `(3110201, 3110201)` **não viola** nenhuma restrição de FK (3110201 existe em `disciplina`) nem de PK (é uma combinação única). No entanto, ela criaria um **ciclo de pré-requisito**: a disciplina seria pré-requisito de si mesma, o que é semanticamente absurdo. Para evitar isso, seria necessário adicionar uma restrição `CHECK (id_disciplina <> id_prereq)`.
 :::

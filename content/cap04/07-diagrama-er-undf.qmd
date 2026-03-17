@@ -115,7 +115,7 @@ Uma maneira de verificar a correção do diagrama ER é confrontar cada relacion
 
 | Relacionamento | Instâncias no banco |
 |---|---|
-| `pertence_a` | ESETI→COETI, EEMA→COEMAG, ESG→COCHCMA (3 pares) |
+| `pertence_a` | 31→3, 21→2, 11→1 (id_escola→id_centro, 3 pares) |
 | `lotado_em` | 7 professores distribuídos por 3 escolas |
 | `ministra` | 36 tuplas em `ministra` (7 professores × disciplinas ao longo de semestres) |
 | `prereq` | 16 pares de pré-requisito entre 24 disciplinas |
@@ -148,7 +148,7 @@ Adicionar um relacionamento `monitora` entre `aluno` e o relacionamento `ministr
 - Um aluno pode monitorar múltiplas turmas: N no lado `aluno`
 - Uma turma pode ter múltiplos monitores: N no lado `ministra`
 
-Isso caracteriza N:N, possivelmente com atributo `periodo` (início e fim da monitoria). A implementação seria uma tabela `monitora(matricula, cod_disciplina, ano, semestre, turma, data_inicio, data_fim)` com FKs para `aluno` e `ministra`.
+Isso caracteriza N:N, possivelmente com atributo `periodo` (início e fim da monitoria). A implementação seria uma tabela `monitora(id_aluno, id_disciplina, ano, semestre, turma, data_inicio, data_fim)` com FKs para `aluno` e `ministra`.
 :::
 
 ---

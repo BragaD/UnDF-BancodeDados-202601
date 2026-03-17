@@ -15,12 +15,12 @@ Atribui à variável temporária $x$ o resultado da expressão $E$. A variável 
 ::: {.exemplo}
 Para encontrar os professores que são da ESETI **ou** da ESG, em vez de escrever tudo em uma linha:
 
-$$ESETI \leftarrow \sigma_{escola = \text{"ESETI"}}(professor)$$
-$$ESG \leftarrow \sigma_{escola = \text{"ESG"}}(professor)$$
+$$ESETI \leftarrow \sigma_{id\_escola = 31}(professor)$$
+$$ESG \leftarrow \sigma_{id\_escola = 11}(professor)$$
 $$ESETI \cup ESG$$
 
 Isso é equivalente a:
-$$\sigma_{escola = \text{"ESETI"}}(professor)\ \cup\ \sigma_{escola = \text{"ESG"}}(professor)$$
+$$\sigma_{id\_escola = 31}(professor)\ \cup\ \sigma_{id\_escola = 11}(professor)$$
 
 mas muito mais legível.
 :::
@@ -42,35 +42,35 @@ Retorna o resultado de $E$ com o nome $x$ e com os atributos renomeados para $A_
 :::
 
 ::: {.exemplo}
-Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois "aliases" para `professor`. Usamos $p1.matricula\_prof < p2.matricula\_prof$ para evitar pares duplicados e auto-pares:
+Para encontrar pares de professores da mesma escola (autojunção), precisamos de dois "aliases" para `professor`. Usamos $p1.id\_prof < p2.id\_prof$ para evitar pares duplicados e auto-pares:
 
 $$P1 \leftarrow \rho_{p1}(professor)$$
 $$P2 \leftarrow \rho_{p2}(professor)$$
-$$\Pi_{p1.nome,\ p2.nome,\ p1.escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof < p2.matricula\_prof}(P1 \times P2))$$
+$$\Pi_{p1.nome,\ p2.nome,\ p1.id\_escola}(\sigma_{p1.id\_escola = p2.id\_escola\ \wedge\ p1.id\_prof < p2.id\_prof}(P1 \times P2))$$
 
 Usando a tabela `professor` com 7 tuplas:
 
-| matricula_prof | nome | escola | ch_semanal | salario |
-|---|---|---|---:|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 20 | 3200 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 | 6400 |
-| PROF20230031 | Gustavo Costa   | ESETI | 20 | 3300 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 | 6700 |
-| PROF20230033 | Igor Melo       | ESETI | 20 | 3100 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 | 6500 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 | 6600 |
+| id_prof | nome | id_escola | ch_semanal | salario |
+|---|---|---:|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 | 3200 |
+| 21400002 | Felipe Araujo   | 21 | 40 | 6400 |
+| 31200001 | Gustavo Costa   | 31 | 20 | 3300 |
+| 31400002 | Helena Carvalho | 31 | 40 | 6700 |
+| 31200003 | Igor Melo       | 31 | 20 | 3100 |
+| 11400001 | Bruno Teixeira  | 11 | 40 | 6500 |
+| 11400002 | Carla Pinto     | 11 | 40 | 6600 |
 
 Resultado:
 
-| p1.nome | p2.nome | escola |
-|---|---|---|
-| Eduarda Souza   | Felipe Araujo   | EEMA  |
-| Gustavo Costa   | Helena Carvalho | ESETI |
-| Gustavo Costa   | Igor Melo       | ESETI |
-| Helena Carvalho | Igor Melo       | ESETI |
-| Bruno Teixeira  | Carla Pinto     | ESG   |
+| p1.nome | p2.nome | id_escola |
+|---|---|---:|
+| Eduarda Souza   | Felipe Araujo   | 21 |
+| Gustavo Costa   | Helena Carvalho | 31 |
+| Gustavo Costa   | Igor Melo       | 31 |
+| Helena Carvalho | Igor Melo       | 31 |
+| Bruno Teixeira  | Carla Pinto     | 11 |
 
-Os pares são únicos e não contêm auto-pares graças à condição $p1.matricula\_prof < p2.matricula\_prof$. A ESETI contribui com 3 pares (3 professores, $\binom{3}{2} = 3$), enquanto EEMA e ESG contribuem com 1 par cada.
+Os pares são únicos e não contêm auto-pares graças à condição $p1.id\_prof < p2.id\_prof$. A ESETI contribui com 3 pares (3 professores, $\binom{3}{2} = 3$), enquanto EEMA e ESG contribuem com 1 par cada.
 :::
 
 ## Funções de Agregação ($\gamma$)
@@ -109,43 +109,43 @@ Resultado:
 
 ### Exemplo 2: Com Agrupamento
 
-Salário médio por escola (equivalente a `GROUP BY escola`):
+Salário médio por escola (equivalente a `GROUP BY id_escola`):
 
-$${}_{escola}\ \gamma_{\text{avg}(salario)}(professor)$$
+$${}_{id\_escola}\ \gamma_{\text{avg}(salario)}(professor)$$
 
 Resultado:
 
-| escola | avg(salario) |
-|---|---:|
-| EEMA  | 4800.00 |
-| ESETI | 4366.67 |
-| ESG   | 6550.00 |
+| id_escola | avg(salario) |
+|---:|---:|
+| 21 | 4800.00 |
+| 31 | 4366.67 |
+| 11 | 6550.00 |
 
 ::: {.exemplo}
-O agrupamento por `escola` faz com que a função `avg` seja calculada **separadamente** para cada escola. A ESG tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI possui três professores — dois de 20h e um de 40h.
+O agrupamento por `id_escola` faz com que a função `avg` seja calculada **separadamente** para cada escola. A ESG (id_escola=11) tem média mais alta pois seus dois professores são de regime de 40h, enquanto a ESETI (id_escola=31) possui três professores — dois de 20h e um de 40h.
 :::
 
 ---
 
 ## Para Praticar
 
-**1. Agregação sem grupo.** Calcule o valor de $\gamma_{\text{count}(*)}(prereq)$ e $\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))$. O que cada resultado representa?
+**1. Agregação sem grupo.** Calcule o valor de $\gamma_{\text{count}(*)}(prereq)$ e $\gamma_{\text{count}(*)}(\sigma_{id\_curso = 311}(disciplina))$. O que cada resultado representa?
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
 - $\gamma_{\text{count}(*)}(prereq)$ = **16** — total de pares de pré-requisito no banco.
-- $\gamma_{\text{count}(*)}(\sigma_{sigla\_curso = \text{"ENS"}}(disciplina))$ = **8** — número de disciplinas do curso ENS.
+- $\gamma_{\text{count}(*)}(\sigma_{id\_curso = 311}(disciplina))$ = **8** — número de disciplinas do curso ENS.
 :::
 
 ---
 
 **2. Renomeação necessária.** Por que a expressão abaixo é ambígua sem renomeação?
 
-$$\Pi_{nome\_1,\ nome\_2,\ escola}(\sigma_{p1.escola = p2.escola\ \wedge\ p1.matricula\_prof < p2.matricula\_prof}(professor \times professor))$$
+$$\Pi_{nome\_1,\ nome\_2,\ id\_escola}(\sigma_{p1.id\_escola = p2.id\_escola\ \wedge\ p1.id\_prof < p2.id\_prof}(professor \times professor))$$
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-Quando multiplicamos `professor` por si mesmo sem renomear, o resultado tem dois atributos chamados `nome`, dois chamados `escola`, dois chamados `matricula_prof` etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: $\rho_{p1}(professor)$ e $\rho_{p2}(professor)$, criando atributos qualificados como $p1.nome$ e $p2.nome$.
+Quando multiplicamos `professor` por si mesmo sem renomear, o resultado tem dois atributos chamados `nome`, dois chamados `id_escola`, dois chamados `id_prof` etc. — os nomes ficam ambíguos. A solução é usar renomeação antes: $\rho_{p1}(professor)$ e $\rho_{p2}(professor)$, criando atributos qualificados como $p1.nome$ e $p2.nome$.
 :::
 
 ---
@@ -154,7 +154,7 @@ Quando multiplicamos `professor` por si mesmo sem renomear, o resultado tem dois
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$\sigma_{\text{avg\_sal} > 5000}\!\left({}_{escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)$$
+$$\sigma_{\text{avg\_sal} > 5000}\!\left({}_{id\_escola}\ \gamma_{\text{avg}(salario)\ \text{as}\ \text{avg\_sal}}(professor)\right)$$
 
-O $\sigma$ externo filtra os grupos produzidos pelo $\gamma$ — é exatamente o que o SQL faz com `HAVING`. Apenas ESG (média = 6.550) satisfaz a condição.
+O $\sigma$ externo filtra os grupos produzidos pelo $\gamma$ — é exatamente o que o SQL faz com `HAVING`. Apenas ESG (id_escola = 11, média = 6.550) satisfaz a condição.
 :::

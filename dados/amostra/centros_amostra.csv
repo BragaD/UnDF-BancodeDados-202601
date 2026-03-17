@@ -1,4 +1,4 @@
-centro;nome_centro
-COCHCMA;CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE
-COEMAG;CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES
-COETI;CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO
+id_centro;sigla;nome_centro
+1;COCHCMA;Ciências Humanas, Cidadania e Meio Ambiente
+2;COEMAG;Centro de Educação, Magistério e Artes
+3;COETI;Centro de Engenharias, Tecnologia e Inovação

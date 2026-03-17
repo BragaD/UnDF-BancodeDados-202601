@@ -24,20 +24,20 @@ Por padrão, o SQL **não** elimina linhas duplicadas no resultado — comportam
 ```{sql}
 --| connection: con
 --| eval: true
--- Sem DISTINCT: lista a escola de cada professor (com repetição)
-SELECT escola
+-- Sem DISTINCT: lista o id_escola de cada professor (com repetição)
+SELECT id_escola
 FROM   professor;
 ```
 
 ```{sql}
 --| connection: con
 --| eval: true
--- Com DISTINCT: cada escola aparece apenas uma vez
-SELECT DISTINCT escola
+-- Com DISTINCT: cada id_escola aparece apenas uma vez
+SELECT DISTINCT id_escola
 FROM   professor;
 ```
 
-Os 7 professores são distribuídos entre 3 escolas distintas. `DISTINCT` elimina as repetições.
+Os 7 professores são distribuídos entre 3 escolas distintas (ids: 11, 21, 31). `DISTINCT` elimina as repetições.
 
 ## SELECT *
 
@@ -61,7 +61,7 @@ A cláusula `SELECT` pode conter expressões aritméticas com os operadores `+`,
 --| connection: con
 --| eval: true
 -- Simular um reajuste de 10% no salário dos professores sem alterar o banco
-SELECT nome, escola, salario,
+SELECT nome, id_escola, salario,
        ROUND(salario * 1.10, 2) AS salario_reajustado
 FROM   professor;
 ```
@@ -78,9 +78,9 @@ A palavra-chave `AS` permite renomear colunas e tabelas no resultado — o nome 
 --| connection: con
 --| eval: true
 -- Alias em coluna: renomeia colunas no resultado
-SELECT nome AS professor, escola AS lotacao
+SELECT nome AS professor, id_escola AS escola_id
 FROM   professor
-WHERE  escola = 'ESETI';
+WHERE  id_escola = 31;
 ```
 
 Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas:
@@ -91,8 +91,8 @@ Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas:
 -- Alias de tabela: p para professor, e para escola
 SELECT p.nome, e.nome_escola
 FROM   professor AS p, escola AS e
-WHERE  p.escola = e.escola
-  AND  p.escola = 'ESG';
+WHERE  p.id_escola = e.id_escola
+  AND  p.id_escola = 11;
 ```
 
 ## Literais no SELECT
@@ -103,9 +103,9 @@ WHERE  p.escola = e.escola
 --| connection: con
 --| eval: true
 -- Adiciona uma coluna com o texto fixo 'UnDF'
-SELECT 'UnDF' AS instituicao, nome, escola
+SELECT 'UnDF' AS instituicao, nome, id_escola
 FROM   professor
-WHERE  escola = 'ESETI';
+WHERE  id_escola = 31;
 ```
 
 ::: {.conceito}
@@ -140,8 +140,8 @@ ORDER BY ch_semanal DESC, nome;
 --| connection: con
 --| eval: true
 -- Concatenação de strings: montar identificação completa da turma
-SELECT cod_disciplina || '/' || CAST(ano AS TEXT) || '-' || CAST(semestre AS TEXT) || turma AS id_turma,
-       matricula_prof,
+SELECT CAST(id_disciplina AS TEXT) || '/' || CAST(ano AS TEXT) || '-' || CAST(semestre AS TEXT) || '/' || CAST(turma AS TEXT) AS id_turma,
+       id_prof,
        sala
 FROM   ministra
 ORDER BY id_turma;
@@ -150,12 +150,12 @@ ORDER BY id_turma;
 ```{sql}
 --| connection: con
 --| eval: true
--- DISTINCT com múltiplas colunas: combinações únicas de escola e ch_semanal
-SELECT DISTINCT escola, ch_semanal
+-- DISTINCT com múltiplas colunas: combinações únicas de id_escola e ch_semanal
+SELECT DISTINCT id_escola, ch_semanal
 FROM   professor
-ORDER BY escola, ch_semanal;
+ORDER BY id_escola, ch_semanal;
 ```
 
 ::: {.callout-note}
-`DISTINCT` com múltiplas colunas elimina duplicatas de **combinações** — não de cada coluna individualmente. A consulta acima retorna cada par (escola, ch_semanal) único.
+`DISTINCT` com múltiplas colunas elimina duplicatas de **combinações** — não de cada coluna individualmente. A consulta acima retorna cada par (id_escola, ch_semanal) único.
 :::

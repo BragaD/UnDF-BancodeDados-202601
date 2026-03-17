@@ -1,7 +1,7 @@
-escola; nome_escola; centro
-ESCS; Escola Superior de Ciências da Saúde; COCBS
-ESG; Escola Superior de Gestão; COCHCMA
-ESPC; Escola Superior da Polícia Civil; COCHCMA
-ESCHCMA; Escola Superior de Ciências Humanas, Cidadania e Meio Ambiente; COCHCMA
-EEMA; Escola de Educação, Magistério e Arte; COEMAG
-ESETI; Escola Superior de Engenharias, Tecnologia e Inovação; COETI
+id_escola;sigla;nome_escola;id_centro
+11;ESG;Escola Superior de Gestão;1
+12;ESPC;Escola Superior da Polícia Civil;1
+13;ESCHCMA;Escola Superior de Ciências Humanas, Cidadania e Meio Ambiente;1
+21;EEMA;Escola de Educação, Magistério e Arte;2
+31;ESETI;Escola Superior de Engenharias, Tecnologia e Inovação;3
+41;ESCS;Escola Superior de Ciências da Saúde;4

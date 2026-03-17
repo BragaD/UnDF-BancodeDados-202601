@@ -14,47 +14,47 @@ Como o resultado é uma **relação** (um conjunto), linhas duplicadas são auto
 
 ## Exemplo 1: Projeção Simples
 
-Para obter apenas `matricula_prof` e `nome` de todos os professores — omitindo `escola` e `ch_semanal`:
+Para obter apenas `id_prof` e `nome` de todos os professores — omitindo `id_escola` e `ch_semanal`:
 
-$$\Pi_{matricula\_prof,\ nome}(professor)$$
+$$\Pi_{id\_prof,\ nome}(professor)$$
 
 Relação original `professor`:
 
-| matricula_prof | nome | escola | ch_semanal |
-|---|---|---|---:|
-| PROF20230005 | Eduarda Souza   | EEMA  | 40 |
-| PROF20230006 | Felipe Araujo   | EEMA  | 40 |
-| PROF20230031 | Gustavo Costa   | ESETI | 40 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 |
-| PROF20230033 | Igor Melo       | ESETI | 40 |
-| PROF20230042 | Bruno Teixeira  | ESG   | 40 |
-| PROF20230043 | Carla Pinto     | ESG   | 40 |
+| id_prof | nome | id_escola | ch_semanal |
+|---|---|---:|---:|
+| 21200001 | Eduarda Souza   | 21 | 20 |
+| 21400002 | Felipe Araujo   | 21 | 40 |
+| 31200001 | Gustavo Costa   | 31 | 20 |
+| 31400002 | Helena Carvalho | 31 | 40 |
+| 31200003 | Igor Melo       | 31 | 20 |
+| 11400001 | Bruno Teixeira  | 11 | 40 |
+| 11400002 | Carla Pinto     | 11 | 40 |
 
-Resultado de $\Pi_{matricula\_prof,\ nome}(professor)$:
+Resultado de $\Pi_{id\_prof,\ nome}(professor)$:
 
-| matricula_prof | nome |
+| id_prof | nome |
 |---|---|
-| PROF20230005 | Eduarda Souza   |
-| PROF20230006 | Felipe Araujo   |
-| PROF20230031 | Gustavo Costa   |
-| PROF20230032 | Helena Carvalho |
-| PROF20230033 | Igor Melo       |
-| PROF20230042 | Bruno Teixeira  |
-| PROF20230043 | Carla Pinto     |
+| 21200001 | Eduarda Souza   |
+| 21400002 | Felipe Araujo   |
+| 31200001 | Gustavo Costa   |
+| 31400002 | Helena Carvalho |
+| 31200003 | Igor Melo       |
+| 11400001 | Bruno Teixeira  |
+| 11400002 | Carla Pinto     |
 
 ## Eliminação de Duplicatas
 
-Se projetarmos apenas `escola` de `professor`, o resultado terá somente os valores distintos:
+Se projetarmos apenas `id_escola` de `professor`, o resultado terá somente os valores distintos:
 
-$$\Pi_{escola}(professor)$$
+$$\Pi_{id\_escola}(professor)$$
 
-| escola |
-|---|
-| EEMA  |
-| ESETI |
-| ESG   |
+| id_escola |
+|---:|
+| 21 |
+| 31 |
+| 11 |
 
-Mesmo que `ESETI` apareça em três tuplas (Gustavo, Helena e Igor), o resultado contém cada valor apenas uma vez.
+Mesmo que `31` apareça em três tuplas (Gustavo, Helena e Igor), o resultado contém cada valor apenas uma vez.
 
 ## Composição de Operações
 
@@ -67,15 +67,15 @@ Como o resultado de qualquer operação é uma relação, operações podem ser 
 ::: {.exemplo}
 Para obter os nomes de todos os professores da ESETI, combina-se seleção e projeção:
 
-$$\Pi_{nome}\!\left(\sigma_{escola = \text{"ESETI"}}(professor)\right)$$
+$$\Pi_{nome}\!\left(\sigma_{id\_escola = 31}(professor)\right)$$
 
-**Passo 1** — Seleção $\sigma_{escola = \text{"ESETI"}}(professor)$:
+**Passo 1** — Seleção $\sigma_{id\_escola = 31}(professor)$:
 
-| matricula_prof | nome | escola | ch_semanal |
-|---|---|---|---:|
-| PROF20230031 | Gustavo Costa   | ESETI | 40 |
-| PROF20230032 | Helena Carvalho | ESETI | 40 |
-| PROF20230033 | Igor Melo       | ESETI | 40 |
+| id_prof | nome | id_escola | ch_semanal |
+|---|---|---:|---:|
+| 31200001 | Gustavo Costa   | 31 | 20 |
+| 31400002 | Helena Carvalho | 31 | 40 |
+| 31200003 | Igor Melo       | 31 | 20 |
 
 **Passo 2** — Projeção $\Pi_{nome}(\cdot)$:
 
@@ -105,26 +105,26 @@ A expressão é **inválida**: $\Pi_A(r)$ elimina o atributo $B$, que passa a n�
 
 **2. Quantas tuplas?** Calcule o número de tuplas esperado em cada resultado:
 
-a. $\Pi_{escola}(professor)$ — a tabela `professor` tem 7 tuplas distribuídas em 3 escolas
-b. $\Pi_{sigla\_curso}(disciplina)$ — 24 disciplinas distribuídas em 3 cursos
-c. $\Pi_{matricula\_prof, escola}(professor)$ — 7 tuplas, combinação de atributos
+a. $\Pi_{id\_escola}(professor)$ — a tabela `professor` tem 7 tuplas distribuídas em 3 escolas
+b. $\Pi_{id\_curso}(disciplina)$ — 24 disciplinas distribuídas em 3 cursos
+c. $\Pi_{id\_prof, id\_escola}(professor)$ — 7 tuplas, combinação de atributos
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-a. **3 tuplas** — a projeção elimina duplicatas; há exatamente 3 valores distintos de `escola`.
+a. **3 tuplas** — a projeção elimina duplicatas; há exatamente 3 valores distintos de `id_escola`.
 b. **3 tuplas** — idem; 3 cursos distintos.
-c. **7 tuplas** — como `matricula_prof` é a chave primária, cada combinação (matricula_prof, escola) já é única. A projeção não elimina nenhuma tupla.
+c. **7 tuplas** — como `id_prof` é a chave primária, cada combinação (id_prof, id_escola) já é única. A projeção não elimina nenhuma tupla.
 
 *Observação:* a projeção sobre a chave primária nunca elimina tuplas — o número é preservado.
 :::
 
 ---
 
-**3. Projeção e junção.** Após fazer a junção $professor \bowtie_{professor.escola = escola.escola} escola$, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.
+**3. Projeção e junção.** Após fazer a junção $professor \bowtie_{professor.id\_escola = escola.id\_escola} escola$, queremos apenas os nomes dos professores e o nome completo da escola. Escreva a expressão completa.
 
 ::: {.callout-tip collapse="true"}
 ## Resposta
-$$\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.escola = escola.escola} escola\right)$$
+$$\Pi_{professor.nome,\ escola.nome\_escola}\!\left(professor \bowtie_{professor.id\_escola = escola.id\_escola} escola\right)$$
 
 O resultado tem 7 tuplas (uma por professor), com os atributos `nome` e `nome_escola`.
 :::

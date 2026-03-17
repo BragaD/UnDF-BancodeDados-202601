@@ -42,7 +42,7 @@ Os exercícios abaixo usam as tabelas `escola`, `curso`, `professor`, `disciplin
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `WHERE sigla_curso = 'PED'` e `ORDER BY nome ASC`.
+Use `WHERE id_curso = 211` e `ORDER BY nome ASC`.
 :::
 
 ---
@@ -51,7 +51,7 @@ Use `WHERE sigla_curso = 'PED'` e `ORDER BY nome ASC`.
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `SUM(carga_horaria)` e `AVG(carga_horaria)` com `WHERE sigla_curso = 'ENS'`.
+Use `SUM(carga_horaria)` e `AVG(carga_horaria)` com `WHERE id_curso = 311`.
 :::
 
 ---
@@ -69,7 +69,7 @@ A média geral pode ser calculada com uma subconsulta: `HAVING AVG(carga_horaria
 
 ::: {.callout-tip collapse="true"}
 ## Dica
-Use `IN` com uma subconsulta que seleciona `escola` das disciplinas via a relação `curso` para encontrar as escolas relevantes. Ou junte `professor` com `curso` e `disciplina` usando `JOIN`.
+Use `IN` com uma subconsulta que seleciona `id_escola` das disciplinas via a relação `curso` para encontrar as escolas relevantes. Ou junte `professor` com `curso` e `disciplina` usando `JOIN`.
 :::
 
 ---
