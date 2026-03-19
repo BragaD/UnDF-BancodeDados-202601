@@ -36,3 +36,6 @@ dados/*.py
 .vscode/
 
 **/*.quarto_ipynb
+
+# Gabaritos
+atividades/gabarito*
