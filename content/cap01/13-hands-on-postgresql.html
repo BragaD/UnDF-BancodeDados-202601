@@ -671,9 +671,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos">Pré-requisitos</a></li>
   <li><a href="#turmas-ministradas" id="toc-turmas-ministradas" class="nav-link" data-scroll-target="#turmas-ministradas">Turmas ministradas</a></li>
   <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas">Matrículas em disciplinas</a></li>
-  </ul></li>
-  <li><a href="#verificando-os-dados" id="toc-verificando-os-dados" class="nav-link" data-scroll-target="#verificando-os-dados">Verificando os Dados</a>
-  <ul>
   <li><a href="#todos-os-cursos" id="toc-todos-os-cursos" class="nav-link" data-scroll-target="#todos-os-cursos">Todos os cursos</a></li>
   <li><a href="#professores-por-escola" id="toc-professores-por-escola" class="nav-link" data-scroll-target="#professores-por-escola">Professores por escola</a></li>
   <li><a href="#disciplinas-com-carga-horária-acima-de-100-h" id="toc-disciplinas-com-carga-horária-acima-de-100-h" class="nav-link" data-scroll-target="#disciplinas-com-carga-horária-acima-de-100-h">Disciplinas com carga horária acima de 100 h</a></li>
@@ -786,6 +783,7 @@ Nota
 <p>As tabelas devem ser criadas na ordem correta: primeiro as referenciadas (sem dependências), depois as que referenciam outras.</p>
 <section id="tabela-centro" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-centro">Tabela <code>centro</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> centro (</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    id_centro   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -793,9 +791,11 @@ Nota
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    nome_centro <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-escola" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-escola">Tabela <code>escola</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> escola (</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    id_escola   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -804,9 +804,11 @@ Nota
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    id_centro   <span class="dt">INTEGER</span>      <span class="kw">REFERENCES</span> centro(id_centro)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-curso" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-curso">Tabela <code>curso</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> curso (</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    id_curso      <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -818,9 +820,11 @@ Nota
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    tipo_curso    <span class="dt">VARCHAR</span>(<span class="dv">20</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-professor" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-professor">Tabela <code>professor</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> professor (</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    id_prof    <span class="dt">INTEGER</span>       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -830,9 +834,11 @@ Nota
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    salario    <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-aluno" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-aluno">Tabela <code>aluno</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> aluno (</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    id_aluno     <span class="dt">INTEGER</span>     <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -841,9 +847,11 @@ Nota
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    ano_ingresso <span class="dt">INTEGER</span>     <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-disciplina" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-disciplina">Tabela <code>disciplina</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> disciplina (</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina   <span class="dt">INTEGER</span>      <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
@@ -853,9 +861,11 @@ Nota
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    carga_horaria   <span class="dt">INTEGER</span>      <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (carga_horaria <span class="op">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-prereq" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-prereq">Tabela <code>prereq</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> prereq (</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> disciplina(id_disciplina),</span>
@@ -863,9 +873,11 @@ Nota
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_disciplina, id_prereq)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-ministra" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-ministra">Tabela <code>ministra</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> ministra (</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> disciplina(id_disciplina),</span>
@@ -878,9 +890,11 @@ Nota
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_disciplina, ano, semestre, turma)</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="tabela-matricula_disciplina" class="level3">
 <h3 class="anchored" data-anchor-id="tabela-matricula_disciplina">Tabela <code>matricula_disciplina</code></h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> matricula_disciplina (</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    id_disciplina <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
@@ -895,44 +909,54 @@ Nota
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">REFERENCES</span> ministra(id_disciplina, ano, semestre, turma)</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 </section>
 <section id="carregando-os-dados" class="level2">
 <h2 class="anchored" data-anchor-id="carregando-os-dados">Carregando os Dados</h2>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <p>Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves estrangeiras):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">TRUNCATE</span> matricula_disciplina, ministra, prereq, disciplina,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         aluno, professor, curso, escola, centro <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 <section id="centros" class="level3">
 <h3 class="anchored" data-anchor-id="centros">Centros</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> centro (id_centro, sigla, nome_centro) <span class="kw">VALUES</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'COCHCMA'</span>, <span class="st">'Ciências Humanas, Cidadania e Meio Ambiente'</span>),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'COEMAG'</span>,  <span class="st">'Centro de Educação, Magistério e Artes'</span>),</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'COETI'</span>,   <span class="st">'Centro de Engenharias, Tecnologia e Inovação'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="escolas" class="level3">
 <h3 class="anchored" data-anchor-id="escolas">Escolas</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> escola (id_escola, sigla, nome_escola, id_centro) <span class="kw">VALUES</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">'ESG'</span>,   <span class="st">'Escola Superior de Gestão'</span>,                             <span class="dv">1</span>),</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">'EEMA'</span>,  <span class="st">'Escola de Educação, Magistério e Arte'</span>,                 <span class="dv">2</span>),</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">'ESETI'</span>, <span class="st">'Escola Superior de Engenharias, Tecnologia e Inovação'</span>, <span class="dv">3</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="cursos" class="level3">
 <h3 class="anchored" data-anchor-id="cursos">Cursos</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> curso (id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso) <span class="kw">VALUES</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">311</span>, <span class="st">'ENS'</span>, <span class="st">'Engenharia de Software'</span>, <span class="dv">31</span>, <span class="dv">8</span>, <span class="dv">3200</span>, <span class="st">'bacharelado'</span>),</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">111</span>, <span class="st">'ECO'</span>, <span class="st">'Ciências Econômicas'</span>,    <span class="dv">11</span>, <span class="dv">8</span>, <span class="dv">3000</span>, <span class="st">'bacharelado'</span>),</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">211</span>, <span class="st">'PED'</span>, <span class="st">'Pedagogia'</span>,              <span class="dv">21</span>, <span class="dv">8</span>, <span class="dv">3410</span>, <span class="st">'licenciatura'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="professores" class="level3">
 <h3 class="anchored" data-anchor-id="professores">Professores</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professor (id_prof, nome, id_escola, ch_semanal, salario) <span class="kw">VALUES</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21200001</span>, <span class="st">'Eduarda Souza'</span>,   <span class="dv">21</span>, <span class="dv">20</span>, <span class="dv">3200</span>),</span>
@@ -943,9 +967,11 @@ Nota
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11400001</span>, <span class="st">'Bruno Teixeira'</span>,  <span class="dv">11</span>, <span class="dv">40</span>, <span class="dv">6500</span>),</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11400002</span>, <span class="st">'Carla Pinto'</span>,     <span class="dv">11</span>, <span class="dv">40</span>, <span class="dv">6600</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="alunos" class="level3">
 <h3 class="anchored" data-anchor-id="alunos">Alunos</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (id_aluno, nome, id_curso, ano_ingresso) <span class="kw">VALUES</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2023111001</span>, <span class="st">'Beatriz Carvalho'</span>, <span class="dv">111</span>, <span class="dv">2023</span>),</span>
@@ -967,9 +993,11 @@ Nota
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025311001</span>, <span class="st">'Diego Correia'</span>,    <span class="dv">311</span>, <span class="dv">2025</span>),</span>
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2025311002</span>, <span class="st">'Juliana Nunes'</span>,    <span class="dv">311</span>, <span class="dv">2025</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="disciplinas" class="level3">
 <h3 class="anchored" data-anchor-id="disciplinas">Disciplinas</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> disciplina (id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria) <span class="kw">VALUES</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110201</span>, <span class="st">'História Econômica Geral'</span>,                                    <span class="dv">111</span>, <span class="dv">2</span>,  <span class="dv">75</span>),</span>
@@ -997,9 +1025,11 @@ Nota
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110801</span>, <span class="st">'Bases da Eng. de Software 8'</span>,                                 <span class="dv">311</span>, <span class="dv">8</span>, <span class="dv">100</span>),</span>
 <span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110802</span>, <span class="st">'Projeto Aplicado 8 - Sistema em Tempo Real'</span>,                  <span class="dv">311</span>, <span class="dv">8</span>, <span class="dv">160</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="pré-requisitos" class="level3">
 <h3 class="anchored" data-anchor-id="pré-requisitos">Pré-requisitos</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> prereq (id_disciplina, id_prereq) <span class="kw">VALUES</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">3110201</span>),</span>
@@ -1019,9 +1049,11 @@ Nota
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110601</span>, <span class="dv">2110401</span>),</span>
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110801</span>, <span class="dv">2110601</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="turmas-ministradas" class="level3">
 <h3 class="anchored" data-anchor-id="turmas-ministradas">Turmas ministradas</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> ministra (id_disciplina, ano, semestre, turma, id_prof, horario, sala) <span class="kw">VALUES</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">21200001</span>, <span class="st">'2f-19:00-21:30'</span>,               <span class="st">'EEMA-SALA-003'</span>),</span>
@@ -1061,9 +1093,11 @@ Nota
 <span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110601</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400001</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-015'</span>),</span>
 <span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1110602</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">11400002</span>, <span class="st">'2f-7:30-10:40'</span>,                <span class="st">'ESG-SALA-016'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
 </section>
 <section id="matrículas-em-disciplinas" class="level3">
 <h3 class="anchored" data-anchor-id="matrículas-em-disciplinas">Matrículas em disciplinas</h3>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado) <span class="kw">VALUES</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110201</span>, <span class="dv">2023</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2023311001</span>, <span class="fl">9.0</span>, <span class="dv">1</span>),</span>
@@ -1125,15 +1159,14 @@ Nota
 <span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110201</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211002</span>, <span class="fl">8.4</span>, <span class="dv">1</span>),</span>
 <span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211002</span>, <span class="fl">7.4</span>, <span class="dv">1</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo:</p>
+</div>
+<p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo: ::: {.spoiler data-password-hash=“9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899” data-hint=“Gabarito protegido — desbloqueie para ver a resposta”}</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/caminho/para/matricula_disciplina.csv'</span> DELIMITER <span class="st">';'</span> CSV <span class="kw">HEADER</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>::: ## Verificando os Dados</p>
 </section>
-</section>
-<section id="verificando-os-dados" class="level2">
-<h2 class="anchored" data-anchor-id="verificando-os-dados">Verificando os Dados</h2>
 <section id="todos-os-cursos" class="level3">
 <h3 class="anchored" data-anchor-id="todos-os-cursos">Todos os cursos</h3>
 <div class="cell">
