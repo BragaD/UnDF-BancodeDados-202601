@@ -671,6 +671,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos">Pré-requisitos</a></li>
   <li><a href="#turmas-ministradas" id="toc-turmas-ministradas" class="nav-link" data-scroll-target="#turmas-ministradas">Turmas ministradas</a></li>
   <li><a href="#matrículas-em-disciplinas" id="toc-matrículas-em-disciplinas" class="nav-link" data-scroll-target="#matrículas-em-disciplinas">Matrículas em disciplinas</a></li>
+  </ul></li>
+  <li><a href="#verificando-os-dados" id="toc-verificando-os-dados" class="nav-link" data-scroll-target="#verificando-os-dados">Verificando os Dados</a>
+  <ul>
   <li><a href="#todos-os-cursos" id="toc-todos-os-cursos" class="nav-link" data-scroll-target="#todos-os-cursos">Todos os cursos</a></li>
   <li><a href="#professores-por-escola" id="toc-professores-por-escola" class="nav-link" data-scroll-target="#professores-por-escola">Professores por escola</a></li>
   <li><a href="#disciplinas-com-carga-horária-acima-de-100-h" id="toc-disciplinas-com-carga-horária-acima-de-100-h" class="nav-link" data-scroll-target="#disciplinas-com-carga-horária-acima-de-100-h">Disciplinas com carga horária acima de 100 h</a></li>
@@ -1160,13 +1163,17 @@ Nota
 <span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2110202</span>, <span class="dv">2025</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025211002</span>, <span class="fl">7.4</span>, <span class="dv">1</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo: ::: {.spoiler data-password-hash=“9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899” data-hint=“Gabarito protegido — desbloqueie para ver a resposta”}</p>
+<p>Outra opção, no PostgreSQL, é utilizar o comando <code>COPY</code> para importar os dados diretamente de arquivos CSV. Por exemplo:</p>
+<div class="spoiler" data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/caminho/para/matricula_disciplina.csv'</span> DELIMITER <span class="st">';'</span> CSV <span class="kw">HEADER</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>::: ## Verificando os Dados</p>
+</div>
 </section>
+</section>
+<section id="verificando-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="verificando-os-dados">Verificando os Dados</h2>
 <section id="todos-os-cursos" class="level3">
 <h3 class="anchored" data-anchor-id="todos-os-cursos">Todos os cursos</h3>
 <div class="cell">
