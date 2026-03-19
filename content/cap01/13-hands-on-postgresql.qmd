@@ -526,6 +526,7 @@ INSERT INTO matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno,
 :::
 
 Outra opção, no PostgreSQL, é utilizar o comando `COPY` para importar os dados diretamente de arquivos CSV. Por exemplo:
+
 ::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
@@ -534,6 +535,7 @@ COPY matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, 
 FROM '/caminho/para/matricula_disciplina.csv' DELIMITER ';' CSV HEADER;
 ```
 :::
+
 ## Verificando os Dados
 
 ### Todos os cursos

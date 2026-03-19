@@ -116,7 +116,9 @@ Fique atento à ordem de criação das tabelas, para evitar erros de referência
 
 # Parte 3 — Carga de Dados
 
-Após criar todas as tabelas, insira os dados disponíveis nos arquivos CSV em `dados/amostra/`, respeitando a mesma ordem de criação das tabelas. Você pode usar comandos `INSERT INTO` escritos manualmente ou o comando `COPY` para importar os CSVs diretamente (PostgreSQL local).
+Após criar todas as tabelas, insira os [dados disponíveis nos arquivos CSV no Google Drive](https://drive.google.com/drive/folders/1Bs1zys2e_W7jlvUSj3PBlztnm6TUQA7Y?usp=drive_link). Você pode usar comandos `INSERT INTO` escritos manualmente ou o comando `COPY` para importar os CSVs diretamente (PostgreSQL local).
+
+A ordem de inserção dos dados nas tabelas é importante? Por quê? Qual a ordem correta?
 
 ---
 
@@ -124,9 +126,9 @@ Após criar todas as tabelas, insira os dados disponíveis nos arquivos CSV em `
 
 Execute as consultas de verificação disponíveis na seção **Verificando os Dados** do material online:
 
-<https://bragad.github.io/UnDF-BancodeDados-202601/content/cap01/13-hands-on-postgresql.html>
+<https://bragad.github.io/UnDF-BancodeDados-202601/content/cap01/13-hands-on-postgresql.html#verificando-os-dados>
 
-Essa verificação é útil para confirmar que os dados carregados correspondem ao esperado - Não é necessário apresentar os códigos e resultados dessas consultas no relatório, mas é recomendado que você as execute para garantir a integridade dos dados antes de prosseguir para os exercícios.
+Essa verificação é útil para confirmar que os dados carregados correspondem ao esperado - Não é necessário apresentar os códigos e resultados dessas consultas no relatório, mas é recomendado que você as execute para garantir a corretude da importação dos dados antes de prosseguir para os exercícios.
 
 ---
 
