@@ -112,7 +112,7 @@ con <- tryCatch(
 As tabelas devem ser criadas na ordem correta: primeiro as referenciadas (sem dependências), depois as que referenciam outras.
 
 ### Tabela `centro`
-
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -122,9 +122,10 @@ CREATE TABLE IF NOT EXISTS centro (
     nome_centro VARCHAR(100) NOT NULL
 );
 ```
-
+:::
 ### Tabela `escola`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -135,9 +136,11 @@ CREATE TABLE IF NOT EXISTS escola (
     id_centro   INTEGER      REFERENCES centro(id_centro)
 );
 ```
+:::
 
 ### Tabela `curso`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -151,9 +154,11 @@ CREATE TABLE IF NOT EXISTS curso (
     tipo_curso    VARCHAR(20)  NOT NULL
 );
 ```
+:::
 
 ### Tabela `professor`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -165,9 +170,11 @@ CREATE TABLE IF NOT EXISTS professor (
     salario    NUMERIC(10,2) NOT NULL
 );
 ```
+:::
 
 ### Tabela `aluno`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -178,9 +185,11 @@ CREATE TABLE IF NOT EXISTS aluno (
     ano_ingresso INTEGER     NOT NULL
 );
 ```
+:::
 
 ### Tabela `disciplina`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -192,9 +201,11 @@ CREATE TABLE IF NOT EXISTS disciplina (
     carga_horaria   INTEGER      NOT NULL CHECK (carga_horaria > 0)
 );
 ```
+:::
 
 ### Tabela `prereq`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -204,9 +215,11 @@ CREATE TABLE IF NOT EXISTS prereq (
     PRIMARY KEY (id_disciplina, id_prereq)
 );
 ```
+:::
 
 ### Tabela `ministra`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -221,9 +234,11 @@ CREATE TABLE IF NOT EXISTS ministra (
     PRIMARY KEY (id_disciplina, ano, semestre, turma)
 );
 ```
+:::
 
 ### Tabela `matricula_disciplina`
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -240,9 +255,9 @@ CREATE TABLE IF NOT EXISTS matricula_disciplina (
         REFERENCES ministra(id_disciplina, ano, semestre, turma)
 );
 ```
-
+:::
 ## Carregando os Dados
-
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves estrangeiras):
 
 ```{sql}
@@ -251,9 +266,10 @@ Antes de inserir, limpamos os dados anteriores (respeitando a ordem das chaves e
 TRUNCATE matricula_disciplina, ministra, prereq, disciplina,
          aluno, professor, curso, escola, centro CASCADE;
 ```
-
+:::
 ### Centros
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -262,9 +278,11 @@ INSERT INTO centro (id_centro, sigla, nome_centro) VALUES
     (2, 'COEMAG',  'Centro de Educação, Magistério e Artes'),
     (3, 'COETI',   'Centro de Engenharias, Tecnologia e Inovação');
 ```
+:::
 
 ### Escolas
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -273,9 +291,11 @@ INSERT INTO escola (id_escola, sigla, nome_escola, id_centro) VALUES
     (21, 'EEMA',  'Escola de Educação, Magistério e Arte',                 2),
     (31, 'ESETI', 'Escola Superior de Engenharias, Tecnologia e Inovação', 3);
 ```
+:::
 
 ### Cursos
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -284,9 +304,11 @@ INSERT INTO curso (id_curso, sigla_curso, nome_curso, id_escola, n_semestres, ca
     (111, 'ECO', 'Ciências Econômicas',    11, 8, 3000, 'bacharelado'),
     (211, 'PED', 'Pedagogia',              21, 8, 3410, 'licenciatura');
 ```
+:::
 
 ### Professores
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -299,9 +321,11 @@ INSERT INTO professor (id_prof, nome, id_escola, ch_semanal, salario) VALUES
     (11400001, 'Bruno Teixeira',  11, 40, 6500),
     (11400002, 'Carla Pinto',     11, 40, 6600);
 ```
+:::
 
 ### Alunos
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -325,9 +349,11 @@ INSERT INTO aluno (id_aluno, nome, id_curso, ano_ingresso) VALUES
     (2025311001, 'Diego Correia',    311, 2025),
     (2025311002, 'Juliana Nunes',    311, 2025);
 ```
+:::
 
 ### Disciplinas
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -357,9 +383,11 @@ INSERT INTO disciplina (id_disciplina, nome_disciplina, id_curso, semestre, carg
     (3110801, 'Bases da Eng. de Software 8',                                 311, 8, 100),
     (3110802, 'Projeto Aplicado 8 - Sistema em Tempo Real',                  311, 8, 160);
 ```
+:::
 
 ### Pré-requisitos
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -381,9 +409,11 @@ INSERT INTO prereq (id_disciplina, id_prereq) VALUES
     (2110601, 2110401),
     (2110801, 2110601);
 ```
+:::
 
 ### Turmas ministradas
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -425,9 +455,11 @@ INSERT INTO ministra (id_disciplina, ano, semestre, turma, id_prof, horario, sal
     (1110601, 2025, 2, 1, 11400001, '2f-7:30-10:40',                'ESG-SALA-015'),
     (1110602, 2025, 2, 1, 11400002, '2f-7:30-10:40',                'ESG-SALA-016');
 ```
+:::
 
 ### Matrículas em disciplinas
 
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: true
@@ -491,15 +523,17 @@ INSERT INTO matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno,
     (2110201, 2025, 2, 1, 2025211002, 8.4, 1),
     (2110202, 2025, 2, 1, 2025211002, 7.4, 1);
 ```
+:::
 
 Outra opção, no PostgreSQL, é utilizar o comando `COPY` para importar os dados diretamente de arquivos CSV. Por exemplo:
+::: {.spoiler data-password-hash="9193ab44aa4f3c88be24d332997989f160384747f834ee6bca1ee27760cb0899" data-hint="Gabarito protegido — desbloqueie para ver a resposta"}
 ```{sql}
 --| connection: con
 --| eval: false
 COPY matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
 FROM '/caminho/para/matricula_disciplina.csv' DELIMITER ';' CSV HEADER;
 ```
-
+:::
 ## Verificando os Dados
 
 ### Todos os cursos
