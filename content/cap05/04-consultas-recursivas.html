@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Consultas Recursivas – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/05-agregacao-avancada.html" rel="next">
+<link href="../../content/cap05/03-triggers.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +306,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/04-consultas-recursivas.html"><span class="chapter-title">Consultas Recursivas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +421,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -628,7 +644,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,7 +745,13 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#common-table-expressions-with" id="toc-common-table-expressions-with" class="nav-link active" data-scroll-target="#common-table-expressions-with">Common Table Expressions (WITH)</a></li>
+  <li><a href="#with-recursive" id="toc-with-recursive" class="nav-link" data-scroll-target="#with-recursive">WITH RECURSIVE</a></li>
+  <li><a href="#exemplo-1-pré-requisitos-transitivos" id="toc-exemplo-1-pré-requisitos-transitivos" class="nav-link" data-scroll-target="#exemplo-1-pré-requisitos-transitivos">Exemplo 1 — Pré-requisitos Transitivos</a></li>
+  <li><a href="#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência" id="toc-exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência" class="nav-link" data-scroll-target="#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência">Exemplo 2 — Caminho Mínimo: Quantos Semestres de Antecedência?</a></li>
+  <li><a href="#exemplo-3-hierarquia-de-estrutura-acadêmica" id="toc-exemplo-3-hierarquia-de-estrutura-acadêmica" class="nav-link" data-scroll-target="#exemplo-3-hierarquia-de-estrutura-acadêmica">Exemplo 3 — Hierarquia de Estrutura Acadêmica</a></li>
+  <li><a href="#guardas-contra-recursão-infinita" id="toc-guardas-contra-recursão-infinita" class="nav-link" data-scroll-target="#guardas-contra-recursão-infinita">Guardas Contra Recursão Infinita</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +759,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/04-consultas-recursivas.html"><span class="chapter-title">Consultas Recursivas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Consultas Recursivas</span></h1>
 </div>
 
 
@@ -762,96 +784,662 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<p>Algumas consultas são naturalmente recursivas: encontrar todos os pré-requisitos de uma disciplina (incluindo pré-requisitos de pré-requisitos), percorrer uma hierarquia de cargos, ou descobrir todos os nós alcançáveis em um grafo. O SQL padrão suporta isso com <strong>CTEs recursivas</strong>.</p>
+<section id="common-table-expressions-with" class="level2">
+<h2 class="anchored" data-anchor-id="common-table-expressions-with">Common Table Expressions (WITH)</h2>
+<p>Antes de introduzir a recursão, revisamos as CTEs — expressões de tabela nomeadas que tornam consultas complexas mais legíveis:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- CTE simples: disciplinas de semestre par de ENS</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> disciplinas_par <span class="kw">AS</span> (</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> id_disciplina, nome_disciplina, semestre</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   disciplina</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">AND</span>  semestre % <span class="dv">2</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> dp.nome_disciplina, dp.semestre,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(pr.id_prereq) <span class="kw">AS</span> num_prereqs</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplinas_par dp</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> prereq pr <span class="kw">ON</span> pr.id_disciplina <span class="op">=</span> dp.id_disciplina</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> dp.id_disciplina, dp.nome_disciplina, dp.semestre</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> dp.semestre, dp.nome_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>8 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">semestre</th>
+<th style="text-align: right;">num_prereqs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="with-recursive" class="level2">
+<h2 class="anchored" data-anchor-id="with-recursive">WITH RECURSIVE</h2>
+<div class="conceito">
+<p>Uma CTE recursiva define uma relação em termos de si mesma. A estrutura é sempre:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE nome_cte(colunas) <span class="kw">AS</span> (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso base: consulta inicial (não recursiva)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> [<span class="kw">ALL</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso recursivo: referencia nome_cte</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="op">..</span>. <span class="kw">FROM</span> <span class="op">..</span>. <span class="kw">JOIN</span> nome_cte <span class="kw">ON</span> <span class="op">..</span>.</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>. <span class="kw">FROM</span> nome_cte;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O SGBD executa a CTE iterativamente: 1. Avalia o caso base → resultado inicial <code>R₀</code> 2. Avalia o caso recursivo usando <code>R₀</code> → produz <code>R₁</code> 3. Avalia usando <code>R₁</code> → produz <code>R₂</code> 4. Continua até que o caso recursivo produza um conjunto vazio 5. O resultado final é a união de todos os <code>Rᵢ</code></p>
+</div>
+<p><code>UNION</code> elimina duplicatas entre iterações (importante quando o grafo pode ter caminhos múltiplos para o mesmo nó). <code>UNION ALL</code> mantém todas as ocorrências.</p>
+</section>
+<section id="exemplo-1-pré-requisitos-transitivos" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-1-pré-requisitos-transitivos">Exemplo 1 — Pré-requisitos Transitivos</h2>
+<p>A tabela <code>prereq</code> registra relações diretas: “a disciplina X requer Y”. Para encontrar <strong>todos</strong> os pré-requisitos de uma disciplina (incluindo os transitivos), precisamos de recursão.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Estrutura de pré-requisitos diretos no banco</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> pr.id_disciplina,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       d1.nome_disciplina <span class="kw">AS</span> disciplina,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       pr.id_prereq,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       d2.nome_disciplina <span class="kw">AS</span> prerequisito</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereq pr</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d1 <span class="kw">ON</span> d1.id_disciplina <span class="op">=</span> pr.id_disciplina</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d2 <span class="kw">ON</span> d2.id_disciplina <span class="op">=</span> pr.id_prereq</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> pr.id_disciplina, pr.id_prereq;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 37%">
+<col style="width: 11%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_disciplina</th>
+<th style="text-align: left;">disciplina</th>
+<th style="text-align: right;">id_prereq</th>
+<th style="text-align: left;">prerequisito</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1110401</td>
+<td style="text-align: left;">Microeconomia 2</td>
+<td style="text-align: right;">1110201</td>
+<td style="text-align: left;">História Econômica Geral</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1110601</td>
+<td style="text-align: left;">Economia Brasileira</td>
+<td style="text-align: right;">1110401</td>
+<td style="text-align: left;">Microeconomia 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1110602</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+<td style="text-align: right;">1110402</td>
+<td style="text-align: left;">Macroeconomia 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1110801</td>
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: right;">1110601</td>
+<td style="text-align: left;">Economia Brasileira</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1110801</td>
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: right;">1110602</td>
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110401</td>
+<td style="text-align: left;">Eletiva I</td>
+<td style="text-align: right;">2110201</td>
+<td style="text-align: left;">Desenvolvimento Humano</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2110601</td>
+<td style="text-align: left;">Eletiva II</td>
+<td style="text-align: right;">2110401</td>
+<td style="text-align: left;">Eletiva I</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110801</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: right;">2110601</td>
+<td style="text-align: left;">Eletiva II</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Todos os pré-requisitos transitivos de cada disciplina</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) <span class="kw">AS</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso base: pré-requisitos diretos</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> id_disciplina, id_prereq, <span class="dv">1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereq</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Caso recursivo: pré-requisitos dos pré-requisitos</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> pt.id_disciplina_raiz, p.id_prereq, pt.profundidade <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereqs_transitivos pt</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   prereq p <span class="kw">ON</span> p.id_disciplina <span class="op">=</span> pt.id_prereq</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> pt.id_disciplina_raiz                 <span class="kw">AS</span> disciplina_id,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       d_raiz.nome_disciplina                <span class="kw">AS</span> disciplina,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>       pt.id_prereq                          <span class="kw">AS</span> prereq_id,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>       d_prereq.nome_disciplina              <span class="kw">AS</span> prerequisito,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>       pt.profundidade                       <span class="kw">AS</span> nivel</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereqs_transitivos pt</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d_raiz   <span class="kw">ON</span> d_raiz.id_disciplina   <span class="op">=</span> pt.id_disciplina_raiz</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d_prereq <span class="kw">ON</span> d_prereq.id_disciplina <span class="op">=</span> pt.id_prereq</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> disciplina, nivel, prereq_id;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 31%">
+<col style="width: 11%">
+<col style="width: 35%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">disciplina_id</th>
+<th style="text-align: left;">disciplina</th>
+<th style="text-align: right;">prereq_id</th>
+<th style="text-align: left;">prerequisito</th>
+<th style="text-align: right;">nivel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">3110601</td>
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">3110401</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">3110402</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A coluna <code>nivel</code> indica a distância: <code>1</code> = pré-requisito direto; <code>2</code> = pré-requisito do pré-requisito; e assim por diante.</p>
+</section>
+<section id="exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência">Exemplo 2 — Caminho Mínimo: Quantos Semestres de Antecedência?</h2>
+<p>Combinando a recursão com <code>MIN</code>, podemos responder: “qual a distância máxima na cadeia de pré-requisitos de cada disciplina?”</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) <span class="kw">AS</span> (</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> id_disciplina, id_prereq, <span class="dv">1</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereq</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> pt.id_disciplina_raiz, p.id_prereq, pt.profundidade <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereqs_transitivos pt</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   prereq p <span class="kw">ON</span> p.id_disciplina <span class="op">=</span> pt.id_prereq</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.nome_disciplina            <span class="kw">AS</span> disciplina,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>       d.semestre                   <span class="kw">AS</span> semestre_curriculo,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> pt.id_prereq) <span class="kw">AS</span> total_prereqs_transitivos,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(pt.profundidade)         <span class="kw">AS</span> profundidade_maxima</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   prereqs_transitivos pt <span class="kw">ON</span> pt.id_disciplina_raiz <span class="op">=</span> d.id_disciplina</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> d.id_disciplina, d.nome_disciplina, d.semestre</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> profundidade_maxima <span class="kw">DESC</span>, total_prereqs_transitivos <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 39%">
+<col style="width: 17%">
+<col style="width: 24%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">disciplina</th>
+<th style="text-align: right;">semestre_curriculo</th>
+<th style="text-align: right;">total_prereqs_transitivos</th>
+<th style="text-align: right;">profundidade_maxima</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eletiva II</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Economia Brasileira</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Orçamento e Finanças Públicas</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="exemplo-3-hierarquia-de-estrutura-acadêmica" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-3-hierarquia-de-estrutura-acadêmica">Exemplo 3 — Hierarquia de Estrutura Acadêmica</h2>
+<p>A estrutura Centro → Escola → Curso → Disciplina é uma hierarquia. Embora tenhamos JOINs diretos para ela, o padrão WITH RECURSIVE funciona igualmente para qualquer árvore onde a relação pai–filho é armazenada em tabela:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Hierarquia completa: centro → escola → curso (sem recursão, mas ilustra o padrão)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> estrutura <span class="kw">AS</span> (</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> ce.nome_centro  <span class="kw">AS</span> nivel1,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           es.nome_escola  <span class="kw">AS</span> nivel2,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           cu.nome_curso   <span class="kw">AS</span> nivel3,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>           cu.id_curso</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   centro  ce</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   escola  es <span class="kw">ON</span> es.id_centro <span class="op">=</span> ce.id_centro</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   curso   cu <span class="kw">ON</span> cu.id_escola <span class="op">=</span> es.id_escola</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.nivel1, e.nivel2, e.nivel3,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(a.id_aluno) <span class="kw">AS</span> alunos</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   estrutura e</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> aluno a <span class="kw">ON</span> a.id_curso <span class="op">=</span> e.id_curso</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> e.nivel1, e.nivel2, e.nivel3</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> e.nivel1, e.nivel2, e.nivel3;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<colgroup>
+<col style="width: 34%">
+<col style="width: 41%">
+<col style="width: 17%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nivel1</th>
+<th style="text-align: left;">nivel2</th>
+<th style="text-align: left;">nivel3</th>
+<th style="text-align: right;">alunos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Centro de Educação, Magistério e Artes</td>
+<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
+<td style="text-align: left;">Pedagogia</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Centro de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
+<td style="text-align: left;">Engenharia de Software</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ciências Humanas, Cidadania e Meio Ambiente</td>
+<td style="text-align: left;">Escola Superior de Gestão</td>
+<td style="text-align: left;">Ciências Econômicas</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="guardas-contra-recursão-infinita" class="level2">
+<h2 class="anchored" data-anchor-id="guardas-contra-recursão-infinita">Guardas Contra Recursão Infinita</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+Aviso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Se o grafo contiver <strong>ciclos</strong> (A → B → A), a CTE recursiva pode não terminar. Estratégias de proteção:</p>
+<ol type="1">
+<li><strong><code>UNION</code> em vez de <code>UNION ALL</code></strong>: elimina duplicatas entre iterações — se um nó já foi visitado, não é reinserido na próxima iteração.</li>
+<li><strong>Contador de profundidade com <code>WHERE profundidade &lt; N</code></strong>: limita o número de iterações.</li>
+<li><strong>Array de caminho</strong>: acumula os nós visitados e verifica se o próximo já está no array (PostgreSQL específico).</li>
+</ol>
+<p>No banco da UnDF, <code>prereq</code> não deveria ter ciclos (uma disciplina não pode ser pré-requisito de si mesma transitivamente), mas em dados reais essa verificação é importante.</p>
 </div>
 </div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
-<table class="caption-top table">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exemplo de guarda com profundidade máxima</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE prereqs_limitados(id_raiz, id_prereq, profundidade) <span class="kw">AS</span> (</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> id_disciplina, id_prereq, <span class="dv">1</span> <span class="kw">FROM</span> prereq</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> pt.id_raiz, p.id_prereq, pt.profundidade <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereqs_limitados pt</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   prereq p <span class="kw">ON</span> p.id_disciplina <span class="op">=</span> pt.id_prereq</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  pt.profundidade <span class="op">&lt;</span> <span class="dv">10</span>   <span class="co">-- guarda: no máximo 10 níveis</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="para-praticar" class="level2">
+<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas sem nenhum pré-requisito (pontos de entrada do grafo)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.id_disciplina, d.nome_disciplina, d.semestre</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.id_disciplina <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> id_disciplina <span class="kw">FROM</span> prereq)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  d.id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th style="text-align: left;">id_disciplina</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">semestre</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td style="text-align: left;">3110201</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td style="text-align: left;">3110202</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">2</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas "folha": possuem pré-requisitos mas não são pré-requisito de ninguém</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.id_disciplina, d.nome_disciplina, d.semestre</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.id_disciplina <span class="kw">IN</span>  (<span class="kw">SELECT</span> id_disciplina <span class="kw">FROM</span> prereq)   <span class="co">-- tem prereq</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  d.id_disciplina <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> id_prereq   <span class="kw">FROM</span> prereq)   <span class="co">-- não é prereq de ninguém</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> d.semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>4 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_disciplina</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">semestre</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1110801</td>
+<td style="text-align: left;">Monografia</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2110801</td>
+<td style="text-align: left;">Tecnologia Educacional - Design</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3110801</td>
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3110802</td>
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quantos pré-requisitos transitivos tem cada disciplina de ENS?</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq) <span class="kw">AS</span> (</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> id_disciplina, id_prereq <span class="kw">FROM</span> prereq</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> pt.id_disciplina_raiz, p.id_prereq</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   prereqs_transitivos pt</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span>   prereq p <span class="kw">ON</span> p.id_disciplina <span class="op">=</span> pt.id_prereq</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.nome_disciplina,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       d.semestre,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COALESCE</span>(<span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> pt.id_prereq), <span class="dv">0</span>) <span class="kw">AS</span> total_prereqs_transitivos</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> prereqs_transitivos pt <span class="kw">ON</span> pt.id_disciplina_raiz <span class="op">=</span> d.id_disciplina</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> d.id_disciplina, d.nome_disciplina, d.semestre</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_prereqs_transitivos <span class="kw">DESC</span>, d.semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>8 records</caption>
+<colgroup>
+<col style="width: 55%">
+<col style="width: 11%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">semestre</th>
+<th style="text-align: right;">total_prereqs_transitivos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bases da Eng. de Software 8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1952,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap05/03-triggers.html" class="pagination-link" aria-label="Triggers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Triggers</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/05-agregacao-avancada.html" class="pagination-link" aria-label="Agregação Avançada">
+        <span class="nav-page-text"><span class="chapter-title">Agregação Avançada</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

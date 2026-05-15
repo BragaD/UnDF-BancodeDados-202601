@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>SQL Avançado – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +34,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/01-acesso-python.html" rel="next">
+<link href="../../content/cap04/08-resumo.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +271,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +386,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -608,7 +589,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,7 +710,8 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#tópicos" id="toc-tópicos" class="nav-link active" data-scroll-target="#tópicos">Tópicos</a></li>
+  <li><a href="#por-que-sql-precisa-de-extensões" id="toc-por-que-sql-precisa-de-extensões" class="nav-link" data-scroll-target="#por-que-sql-precisa-de-extensões">Por Que SQL Precisa de Extensões?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +719,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">SQL Avançado</span></h1>
 </div>
 
 
@@ -762,96 +744,56 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
+<p>O SQL padrão vai muito além das consultas básicas. Este capítulo cobre as extensões que tornam o SQL uma linguagem completa para engenharia de sistemas — desde integrar o banco a programas Python até automatizar regras de negócio com triggers.</p>
+<section id="tópicos" class="level2">
+<h2 class="anchored" data-anchor-id="tópicos">Tópicos</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Seção</th>
-<th>Tópico</th>
+<th>O que você vai aprender</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td><strong>Acesso via Python</strong></td>
+<td>Conectar um programa Python ao PostgreSQL, executar consultas com segurança e controlar transações</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
+<td><strong>Funções e Procedimentos</strong></td>
+<td>Armazenar lógica de negócio no próprio banco usando PL/pgSQL</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
+<td><strong>Triggers</strong></td>
+<td>Executar ações automaticamente em resposta a <code>INSERT</code>, <code>UPDATE</code> ou <code>DELETE</code></td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
+<td><strong>Consultas Recursivas</strong></td>
+<td>Percorrer hierarquias e calcular fechamentos transitivos com <code>WITH RECURSIVE</code></td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><strong>Agregação Avançada</strong></td>
+<td>Funções de janela (<code>RANK</code>, <code>DENSE_RANK</code>, <code>ROW_NUMBER</code>), <code>ROLLUP</code> e <code>CUBE</code> para análise multidimensional</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="por-que-sql-precisa-de-extensões" class="level2">
+<h2 class="anchored" data-anchor-id="por-que-sql-precisa-de-extensões">Por Que SQL Precisa de Extensões?</h2>
+<p>O SQL puro é expressivo para consultas declarativas, mas tem limitações naturais:</p>
+<ul>
+<li><strong>Não suporta iteração arbitrária</strong> — loops e lógica condicional exigem PL/pgSQL ou outra linguagem hospedeira.</li>
+<li><strong>Não interage com o usuário</strong> — formulários, relatórios e interfaces precisam de uma aplicação.</li>
+<li><strong>Não executa efeitos colaterais automaticamente</strong> — registrar auditoria, enviar e-mails ou manter totais derivados requer triggers ou lógica na aplicação.</li>
+</ul>
+<p>A solução padrão é <strong>combinar SQL com uma linguagem de programação</strong>: o SQL cuida dos dados; a linguagem cuida da lógica de apresentação e controle de fluxo. O banco, por sua vez, pode encapsular regras complexas em funções e triggers — próximas aos dados e independentes de qualquer linguagem cliente.</p>
+<p>Os exemplos deste capítulo continuam usando o banco da UnDF. Novos objetos criados ao longo do capítulo (tabelas de log, funções, triggers) usam nomes prefixados com <code>fn_</code>, <code>trg_</code> ou <code>log_</code> para fácil identificação.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1306,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap04/08-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Resumo e Exercícios</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/01-acesso-python.html" class="pagination-link" aria-label="Acesso ao Banco via Python">
+        <span class="nav-page-text"><span class="chapter-title">Acesso ao Banco via Python</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

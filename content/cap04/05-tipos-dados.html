@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Cláusula SELECT – Bases da Engenharia de Software 4</title>
+<title>Tipos de Dados SQL – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,8 +69,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/05-clausula-where.html" rel="next">
-<link href="../../content/cap03/03-select-from-where.html" rel="prev">
+<link href="../../content/cap04/06-indices.html" rel="next">
+<link href="../../content/cap04/04-integridade.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/05-tipos-dados.html"><span class="chapter-title">Tipos de Dados SQL</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -517,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Cláusula SELECT</span></a>
+  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cláusula SELECT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -593,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -745,11 +745,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#distinct-eliminando-duplicatas" id="toc-distinct-eliminando-duplicatas" class="nav-link active" data-scroll-target="#distinct-eliminando-duplicatas">DISTINCT: Eliminando Duplicatas</a></li>
-  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select">SELECT *</a></li>
-  <li><a href="#expressões-aritméticas" id="toc-expressões-aritméticas" class="nav-link" data-scroll-target="#expressões-aritméticas">Expressões Aritméticas</a></li>
-  <li><a href="#alias-com-as" id="toc-alias-com-as" class="nav-link" data-scroll-target="#alias-com-as">Alias com AS</a></li>
-  <li><a href="#literais-no-select" id="toc-literais-no-select" class="nav-link" data-scroll-target="#literais-no-select">Literais no SELECT</a></li>
+  <li><a href="#tipos-temporais" id="toc-tipos-temporais" class="nav-link active" data-scroll-target="#tipos-temporais">Tipos Temporais</a>
+  <ul>
+  <li><a href="#date" id="toc-date" class="nav-link" data-scroll-target="#date">DATE</a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time">TIME</a></li>
+  <li><a href="#timestamp" id="toc-timestamp" class="nav-link" data-scroll-target="#timestamp">TIMESTAMP</a></li>
+  <li><a href="#interval-e-aritmética-de-datas" id="toc-interval-e-aritmética-de-datas" class="nav-link" data-scroll-target="#interval-e-aritmética-de-datas">INTERVAL e aritmética de datas</a></li>
+  </ul></li>
+  <li><a href="#tipos-de-texto" id="toc-tipos-de-texto" class="nav-link" data-scroll-target="#tipos-de-texto">Tipos de Texto</a></li>
+  <li><a href="#tipos-numéricos" id="toc-tipos-numéricos" class="nav-link" data-scroll-target="#tipos-numéricos">Tipos Numéricos</a></li>
+  <li><a href="#tipos-de-objetos-grandes-lob" id="toc-tipos-de-objetos-grandes-lob" class="nav-link" data-scroll-target="#tipos-de-objetos-grandes-lob">Tipos de Objetos Grandes (LOB)</a></li>
+  <li><a href="#tipos-definidos-pelo-usuário" id="toc-tipos-definidos-pelo-usuário" class="nav-link" data-scroll-target="#tipos-definidos-pelo-usuário">Tipos Definidos pelo Usuário</a>
+  <ul>
+  <li><a href="#create-type" id="toc-create-type" class="nav-link" data-scroll-target="#create-type">CREATE TYPE</a></li>
+  <li><a href="#create-domain" id="toc-create-domain" class="nav-link" data-scroll-target="#create-domain">CREATE DOMAIN</a></li>
+  </ul></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -758,9 +768,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/05-tipos-dados.html"><span class="chapter-title">Tipos de Dados SQL</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Cláusula SELECT</span></h1>
+<h1 class="title"><span class="chapter-title">Tipos de Dados SQL</span></h1>
 </div>
 
 
@@ -783,217 +793,567 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>A cláusula <code>SELECT</code> determina <strong>quais colunas</strong> (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.</p>
-<section id="distinct-eliminando-duplicatas" class="level2">
-<h2 class="anchored" data-anchor-id="distinct-eliminando-duplicatas">DISTINCT: Eliminando Duplicatas</h2>
-<p>Por padrão, o SQL <strong>não</strong> elimina linhas duplicadas no resultado — comportamento chamado de <code>ALL</code>. Para remover duplicatas, usa-se a palavra-chave <code>DISTINCT</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista o id_escola de cada professor (com repetição)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
+<p>O SQL define um conjunto de tipos de dados embutidos e mecanismos para criar tipos definidos pelo usuário. Conhecer os tipos disponíveis é essencial para modelar o banco de dados com precisão e eficiência.</p>
+<section id="tipos-temporais" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-temporais">Tipos Temporais</h2>
+<div class="conceito">
+<table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: right;">id_escola</th>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Exemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">21</td>
+<td><code>DATE</code></td>
+<td>Data (ano, mês, dia)</td>
+<td><code>'2025-03-15'</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">21</td>
+<td><code>TIME</code></td>
+<td>Hora do dia (horas, minutos, segundos)</td>
+<td><code>'14:30:00'</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">31</td>
+<td><code>TIMESTAMP</code></td>
+<td>Data + hora</td>
+<td><code>'2025-03-15 14:30:00'</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
+<td><code>INTERVAL</code></td>
+<td>Período de tempo</td>
+<td><code>INTERVAL '30 days'</code></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>A subtração entre dois <code>DATE</code> produz um inteiro (número de dias); a subtração entre dois <code>TIME</code> produz um <code>INTERVAL</code>; somar um <code>INTERVAL</code> a uma data produz outra data.</p>
+<p>Para demonstrar cada tipo com saída concreta, criamos a tabela <code>evento_academico</code> — eventos institucionais da UnDF com data de início e fim, horário, e registro de criação com timestamp.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> evento_academico (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    id_evento   SERIAL        <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    nome        <span class="dt">VARCHAR</span>(<span class="dv">100</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    tipo        <span class="dt">VARCHAR</span>(<span class="dv">30</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    id_escola   <span class="dt">INT</span>           <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">REFERENCES</span> escola (id_escola),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    data_inicio <span class="dt">DATE</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    data_fim    <span class="dt">DATE</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    hora_inicio <span class="dt">TIME</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    hora_fim    <span class="dt">TIME</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    criado_em   <span class="dt">TIMESTAMP</span>     <span class="kw">DEFAULT</span> <span class="fu">CURRENT_TIMESTAMP</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> (nome, data_inicio)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com DISTINCT: cada id_escola aparece apenas uma vez</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> evento_academico</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (nome, tipo, id_escola, data_inicio, data_fim, hora_inicio, hora_fim)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Semana Acadêmica de Engenharia de Software'</span>, <span class="st">'Semana Acadêmica'</span>, <span class="dv">31</span>, <span class="st">'2025-10-06'</span>, <span class="st">'2025-10-10'</span>, <span class="st">'08:00'</span>, <span class="st">'18:00'</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Workshop de Banco de Dados'</span>,                 <span class="st">'Workshop'</span>,         <span class="dv">31</span>, <span class="st">'2026-03-20'</span>, <span class="st">'2026-03-20'</span>, <span class="st">'09:00'</span>, <span class="st">'17:00'</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Palestra sobre Inteligência Artificial'</span>,     <span class="st">'Palestra'</span>,         <span class="dv">21</span>, <span class="st">'2026-06-10'</span>, <span class="st">'2026-06-10'</span>, <span class="st">'19:00'</span>, <span class="st">'21:00'</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Jornada Pedagógica'</span>,                         <span class="st">'Semana Acadêmica'</span>, <span class="dv">21</span>, <span class="st">'2025-07-28'</span>, <span class="st">'2025-08-01'</span>, <span class="st">'08:00'</span>, <span class="st">'17:00'</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Defesa de TCC — Pedro Alves'</span>,                <span class="st">'Defesa'</span>,           <span class="dv">31</span>, <span class="st">'2026-05-15'</span>, <span class="st">'2026-05-15'</span>, <span class="st">'14:00'</span>, <span class="st">'16:00'</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Defesa de TCC — Camila Rocha'</span>,               <span class="st">'Defesa'</span>,           <span class="dv">31</span>, <span class="st">'2026-07-20'</span>, <span class="st">'2026-07-20'</span>, <span class="st">'10:00'</span>, <span class="st">'12:00'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT (nome, data_inicio) DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Os 7 professores são distribuídos entre 3 escolas distintas (ids: 11, 21, 31). <code>DISTINCT</code> elimina as repetições.</p>
-</section>
-<section id="select" class="level2">
-<h2 class="anchored" data-anchor-id="select">SELECT *</h2>
-<p>O asterisco <code>*</code> seleciona <strong>todas as colunas</strong> da tabela:</p>
+<section id="date" class="level3">
+<h3 class="anchored" data-anchor-id="date">DATE</h3>
+<p>Colunas <code>DATE</code> armazenam apenas a data (sem hora). A subtração entre dois <code>DATE</code> retorna o número de dias entre elas.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Retorna todas as colunas de professor</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Datas de início e fim de cada evento; duração em dias</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, tipo,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       data_inicio,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       data_fim,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       (data_fim <span class="op">-</span> data_inicio <span class="op">+</span> <span class="dv">1</span>) <span class="kw">AS</span> duracao_dias</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   evento_academico</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> data_inicio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: right;">ch_semanal</th>
-<th style="text-align: right;">salario</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">21200001</td>
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3200</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">21400002</td>
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6400</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31200001</td>
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3300</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">31400002</td>
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6700</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3100</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6500</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6600</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Embora prático para exploração, o uso de <code>SELECT *</code> em aplicações de produção é desaconselhado, pois o resultado depende da estrutura atual da tabela e pode mudar se colunas forem adicionadas ou reordenadas.</p>
-</section>
-<section id="expressões-aritméticas" class="level2">
-<h2 class="anchored" data-anchor-id="expressões-aritméticas">Expressões Aritméticas</h2>
-<p>A cláusula <code>SELECT</code> pode conter expressões aritméticas com os operadores <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular um reajuste de 10% no salário dos professores sem alterar o banco</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, id_escola, salario,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(salario <span class="op">*</span> <span class="fl">1.10</span>, <span class="dv">2</span>) <span class="kw">AS</span> salario_reajustado</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 44%">
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 13%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: right;">salario</th>
-<th style="text-align: right;">salario_reajustado</th>
+<th style="text-align: left;">tipo</th>
+<th style="text-align: left;">data_inicio</th>
+<th style="text-align: left;">data_fim</th>
+<th style="text-align: right;">duracao_dias</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">3200</td>
-<td style="text-align: right;">3520</td>
+<td style="text-align: left;">Jornada Pedagógica</td>
+<td style="text-align: left;">Semana Acadêmica</td>
+<td style="text-align: left;">2025-07-28</td>
+<td style="text-align: left;">2025-08-01</td>
+<td style="text-align: right;">5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">7040</td>
+<td style="text-align: left;">Semana Acadêmica de Engenharia de Software</td>
+<td style="text-align: left;">Semana Acadêmica</td>
+<td style="text-align: left;">2025-10-06</td>
+<td style="text-align: left;">2025-10-10</td>
+<td style="text-align: right;">5</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">3300</td>
-<td style="text-align: right;">3630</td>
+<td style="text-align: left;">Workshop de Banco de Dados</td>
+<td style="text-align: left;">Workshop</td>
+<td style="text-align: left;">2026-03-20</td>
+<td style="text-align: left;">2026-03-20</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">6700</td>
-<td style="text-align: right;">7370</td>
+<td style="text-align: left;">Defesa de TCC — Pedro Alves</td>
+<td style="text-align: left;">Defesa</td>
+<td style="text-align: left;">2026-05-15</td>
+<td style="text-align: left;">2026-05-15</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">3100</td>
-<td style="text-align: right;">3410</td>
+<td style="text-align: left;">Palestra sobre Inteligência Artificial</td>
+<td style="text-align: left;">Palestra</td>
+<td style="text-align: left;">2026-06-10</td>
+<td style="text-align: left;">2026-06-10</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">6500</td>
-<td style="text-align: right;">7150</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">6600</td>
-<td style="text-align: right;">7260</td>
+<td style="text-align: left;">Defesa de TCC — Camila Rocha</td>
+<td style="text-align: left;">Defesa</td>
+<td style="text-align: left;">2026-07-20</td>
+<td style="text-align: left;">2026-07-20</td>
+<td style="text-align: right;">1</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</section>
+<section id="time" class="level3">
+<h3 class="anchored" data-anchor-id="time">TIME</h3>
+<p>Colunas <code>TIME</code> armazenam apenas o horário. A subtração entre dois <code>TIME</code> retorna um <code>INTERVAL</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Horário de início e fim de cada evento; carga horária diária</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       hora_inicio,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       hora_fim,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       hora_fim <span class="op">-</span> hora_inicio <span class="kw">AS</span> carga_horaria_diaria</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   evento_academico</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> hora_inicio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">hora_inicio</th>
+<th style="text-align: left;">hora_fim</th>
+<th style="text-align: left;">carga_horaria_diaria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Semana Acadêmica de Engenharia de Software</td>
+<td style="text-align: left;">08:00:00</td>
+<td style="text-align: left;">18:00:00</td>
+<td style="text-align: left;">10:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jornada Pedagógica</td>
+<td style="text-align: left;">08:00:00</td>
+<td style="text-align: left;">17:00:00</td>
+<td style="text-align: left;">09:00:00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Workshop de Banco de Dados</td>
+<td style="text-align: left;">09:00:00</td>
+<td style="text-align: left;">17:00:00</td>
+<td style="text-align: left;">08:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Camila Rocha</td>
+<td style="text-align: left;">10:00:00</td>
+<td style="text-align: left;">12:00:00</td>
+<td style="text-align: left;">02:00:00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Defesa de TCC — Pedro Alves</td>
+<td style="text-align: left;">14:00:00</td>
+<td style="text-align: left;">16:00:00</td>
+<td style="text-align: left;">02:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Palestra sobre Inteligência Artificial</td>
+<td style="text-align: left;">19:00:00</td>
+<td style="text-align: left;">21:00:00</td>
+<td style="text-align: left;">02:00:00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="timestamp" class="level3">
+<h3 class="anchored" data-anchor-id="timestamp">TIMESTAMP</h3>
+<p><code>TIMESTAMP</code> armazena data e hora juntas. A coluna <code>criado_em</code> é preenchida automaticamente com <code>CURRENT_TIMESTAMP</code> na inserção.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Timestamp de criação de cada registro e diferença em relação à hora atual</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       criado_em,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">CURRENT_TIMESTAMP</span>                    <span class="kw">AS</span> agora,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       AGE(<span class="fu">CURRENT_TIMESTAMP</span>, criado_em)   <span class="kw">AS</span> tempo_desde_insercao</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   evento_academico</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> criado_em;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 41%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">criado_em</th>
+<th style="text-align: left;">agora</th>
+<th style="text-align: left;">tempo_desde_insercao</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Semana Acadêmica de Engenharia de Software</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Workshop de Banco de Dados</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Palestra sobre Inteligência Artificial</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jornada Pedagógica</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Defesa de TCC — Pedro Alves</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Camila Rocha</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">2026-05-15 18:18:57</td>
+<td style="text-align: left;">00:00:00.025583</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interval-e-aritmética-de-datas" class="level3">
+<h3 class="anchored" data-anchor-id="interval-e-aritmética-de-datas">INTERVAL e aritmética de datas</h3>
+<p><code>INTERVAL</code> representa uma duração. O PostgreSQL infere <code>INTERVAL</code> de subtrações entre datas e horas e aceita literais como <code>INTERVAL '7 days'</code> ou <code>INTERVAL '2 hours 30 minutes'</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Dias até cada evento a partir de hoje; status (passado / futuro)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       data_inicio,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>       (data_inicio <span class="op">-</span> <span class="fu">CURRENT_DATE</span>)         <span class="kw">AS</span> dias_ate_evento,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>       <span class="cf">CASE</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> data_inicio <span class="op">&gt;</span> <span class="fu">CURRENT_DATE</span> <span class="cf">THEN</span> <span class="st">'futuro'</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> data_inicio <span class="op">=</span> <span class="fu">CURRENT_DATE</span> <span class="cf">THEN</span> <span class="st">'hoje'</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>           <span class="cf">ELSE</span> <span class="st">'passado'</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="cf">END</span>                                  <span class="kw">AS</span> status</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   evento_academico</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> data_inicio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 54%">
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">data_inicio</th>
+<th style="text-align: right;">dias_ate_evento</th>
+<th style="text-align: left;">status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Jornada Pedagógica</td>
+<td style="text-align: left;">2025-07-28</td>
+<td style="text-align: right;">-291</td>
+<td style="text-align: left;">passado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Semana Acadêmica de Engenharia de Software</td>
+<td style="text-align: left;">2025-10-06</td>
+<td style="text-align: right;">-221</td>
+<td style="text-align: left;">passado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Workshop de Banco de Dados</td>
+<td style="text-align: left;">2026-03-20</td>
+<td style="text-align: right;">-56</td>
+<td style="text-align: left;">passado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Pedro Alves</td>
+<td style="text-align: left;">2026-05-15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">hoje</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Palestra sobre Inteligência Artificial</td>
+<td style="text-align: left;">2026-06-10</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">futuro</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Camila Rocha</td>
+<td style="text-align: left;">2026-07-20</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: left;">futuro</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EXTRACT: componentes individuais de uma data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       data_inicio,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">EXTRACT</span>(<span class="dt">YEAR</span>  <span class="kw">FROM</span> data_inicio):<span class="ch">:INT</span> <span class="kw">AS</span> ano,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">EXTRACT</span>(<span class="dt">MONTH</span> <span class="kw">FROM</span> data_inicio):<span class="ch">:INT</span> <span class="kw">AS</span> mes,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">EXTRACT</span>(DOW   <span class="kw">FROM</span> data_inicio):<span class="ch">:INT</span> <span class="kw">AS</span> dia_semana,  <span class="co">-- 0=Dom … 6=Sáb</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">TO_CHAR</span>(data_inicio, <span class="st">'TMDay, DD "de" TMMonth "de" YYYY'</span>) <span class="kw">AS</span> data_extenso</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   evento_academico</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> data_inicio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 40%">
+<col style="width: 11%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 10%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">data_inicio</th>
+<th style="text-align: right;">ano</th>
+<th style="text-align: right;">mes</th>
+<th style="text-align: right;">dia_semana</th>
+<th style="text-align: left;">data_extenso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Jornada Pedagógica</td>
+<td style="text-align: left;">2025-07-28</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Monday, 28 de July de 2025</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Semana Acadêmica de Engenharia de Software</td>
+<td style="text-align: left;">2025-10-06</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Monday, 06 de October de 2025</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Workshop de Banco de Dados</td>
+<td style="text-align: left;">2026-03-20</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Friday, 20 de March de 2026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Pedro Alves</td>
+<td style="text-align: left;">2026-05-15</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Friday, 15 de May de 2026</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Palestra sobre Inteligência Artificial</td>
+<td style="text-align: left;">2026-06-10</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Wednesday, 10 de June de 2026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Defesa de TCC — Camila Rocha</td>
+<td style="text-align: left;">2026-07-20</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Monday, 20 de July de 2026</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="tipos-de-texto" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-texto">Tipos de Texto</h2>
+<p>O SQL padrão define:</p>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CHAR(n)</code></td>
+<td>String de tamanho fixo n (preenchida com espaços)</td>
+</tr>
+<tr class="even">
+<td><code>VARCHAR(n)</code></td>
+<td>String de tamanho variável, máximo n caracteres</td>
+</tr>
+<tr class="odd">
+<td><code>TEXT</code></td>
+<td>String de tamanho ilimitado (extensão do PostgreSQL, equivalente ao <code>CLOB</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>O PostgreSQL não distingue <code>CHAR</code> de <code>VARCHAR</code> em desempenho — ambos são armazenados de forma compacta. O tipo <code>TEXT</code> é preferido para textos sem limite predefinido.</p>
+</section>
+<section id="tipos-numéricos" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-numéricos">Tipos Numéricos</h2>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SMALLINT</code></td>
+<td>Inteiro de 2 bytes (-32.768 a 32.767)</td>
+</tr>
+<tr class="even">
+<td><code>INT</code> / <code>INTEGER</code></td>
+<td>Inteiro de 4 bytes</td>
+</tr>
+<tr class="odd">
+<td><code>BIGINT</code></td>
+<td>Inteiro de 8 bytes</td>
+</tr>
+<tr class="even">
+<td><code>NUMERIC(p, s)</code></td>
+<td>Decimal exato com p dígitos totais e s casas decimais</td>
+</tr>
+<tr class="odd">
+<td><code>REAL</code> / <code>FLOAT</code></td>
+<td>Ponto flutuante (precisão aproximada)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>No banco da UnDF, <code>salario</code> é <code>NUMERIC(10,2)</code> para garantir precisão exata em valores monetários — evitando erros de arredondamento que ocorreriam com <code>FLOAT</code>.</p>
+</section>
+<section id="tipos-de-objetos-grandes-lob" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-objetos-grandes-lob">Tipos de Objetos Grandes (LOB)</h2>
+<p>Para armazenar objetos grandes (fotos, vídeos, documentos):</p>
+<div class="conceito">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tipo padrão SQL</th>
+<th>Equivalente PostgreSQL</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>BLOB</code></td>
+<td><code>BYTEA</code></td>
+<td>Dados binários (fotos, PDFs, executáveis)</td>
+</tr>
+<tr class="even">
+<td><code>CLOB</code></td>
+<td><code>TEXT</code></td>
+<td>Texto de tamanho arbitrário</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Quando uma consulta retorna um objeto grande, o SGBD geralmente retorna um <strong>ponteiro</strong> para o objeto em vez dos dados completos — pois transferir gigabytes pela rede seria inviável.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exemplo: tabela com foto de perfil armazenada como binário</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> perfil_aluno (</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    id_aluno   <span class="dt">INT</span>     <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">REFERENCES</span> aluno (id_aluno),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    foto       BYTEA,          <span class="co">-- blob: foto em formato binário</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    curriculo  TEXT            <span class="co">-- clob: texto livre do currículo</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tipos-definidos-pelo-usuário" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-definidos-pelo-usuário">Tipos Definidos pelo Usuário</h2>
+<section id="create-type" class="level3">
+<h3 class="anchored" data-anchor-id="create-type">CREATE TYPE</h3>
+<p>O SQL:1999 introduziu <code>CREATE TYPE</code>, que permite definir novos tipos com base em tipos existentes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tipo Reais: valores monetários em reais</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TYPE</span> Reais <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">12</span>, <span class="dv">2</span>) FINAL;</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Uso em uma tabela</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> orcamento_escola (</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    id_escola  <span class="dt">INT</span>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">REFERENCES</span> escola (id_escola),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    valor      Reais</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1004,316 +1364,361 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A expressão <code>salario * 1.10</code> <strong>não altera</strong> o banco de dados. Ela cria uma coluna calculada apenas no resultado da consulta. Para alterar os dados de fato, seria necessário usar <code>UPDATE</code> (ver seção 3.10).</p>
+<p>No PostgreSQL, o <code>CREATE TYPE</code> tem uso mais amplo: cria tipos compostos, tipos enumerados (<code>ENUM</code>) e tipos de range. O <code>ENUM</code> é especialmente útil para representar conjuntos fixos de valores:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TYPE</span> tipo_curso_enum <span class="kw">AS</span> ENUM (<span class="st">'Bacharelado'</span>, <span class="st">'Licenciatura'</span>, <span class="st">'Tecnólogo'</span>);</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usando o tipo enum</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> curso <span class="kw">ALTER</span> <span class="kw">COLUMN</span> tipo_curso <span class="kw">TYPE</span> tipo_curso_enum</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">USING</span> tipo_curso:<span class="ch">:tipo_curso_enum</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
-<section id="alias-com-as" class="level2">
-<h2 class="anchored" data-anchor-id="alias-com-as">Alias com AS</h2>
-<p>A palavra-chave <code>AS</code> permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de <strong>alias</strong>:</p>
+<section id="create-domain" class="level3">
+<h3 class="anchored" data-anchor-id="create-domain">CREATE DOMAIN</h3>
+<p>Um <strong>domínio</strong> é semelhante a um tipo, mas pode incluir constraints. É uma camada de abstração que permite reutilizar validações em várias tabelas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Domínio para ch_semanal: apenas 20 ou 40 horas</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DOMAIN</span> ch_semanal_valida <span class="kw">AS</span> <span class="dt">INT</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (<span class="fu">VALUE</span> <span class="kw">IN</span> (<span class="dv">20</span>, <span class="dv">40</span>));</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Domínio para nota: entre 0.0 e 10.0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DOMAIN</span> nota_disciplina <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span> (<span class="fu">VALUE</span> <span class="kw">BETWEEN</span> <span class="fl">0.0</span> <span class="kw">AND</span> <span class="fl">10.0</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Diferença entre <code>TYPE</code> e <code>DOMAIN</code>: - <code>TYPE</code> define a estrutura dos dados. - <code>DOMAIN</code> é um tipo com constraints embutidas — reutilizável como uma regra de negócio.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias em coluna: renomeia colunas no resultado</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">AS</span> professor, id_escola <span class="kw">AS</span> escola_id</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">professor</th>
-<th style="text-align: right;">escola_id</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias de tabela: p para professor, e para escola</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor <span class="kw">AS</span> p, escola <span class="kw">AS</span> e</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.id_escola <span class="op">=</span> e.id_escola</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  p.id_escola <span class="op">=</span> <span class="dv">11</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>2 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: left;">nome_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: left;">Escola Superior de Gestão</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: left;">Escola Superior de Gestão</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="literais-no-select" class="level2">
-<h2 class="anchored" data-anchor-id="literais-no-select">Literais no SELECT</h2>
-<p>É possível incluir valores literais (constantes) na cláusula <code>SELECT</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adiciona uma coluna com o texto fixo 'UnDF'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UnDF'</span> <span class="kw">AS</span> instituicao, nome, id_escola</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">instituicao</th>
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="conceito">
-<p><strong>Resumo da cláusula SELECT:</strong></p>
-<ul>
-<li><code>SELECT coluna</code> — projeta uma coluna específica</li>
-<li><code>SELECT DISTINCT coluna</code> — elimina duplicatas</li>
-<li><code>SELECT *</code> — projeta todas as colunas</li>
-<li><code>SELECT expressão AS alias</code> — projeta uma expressão com nome alternativo</li>
-<li><code>SELECT 'literal' AS alias</code> — inclui uma constante no resultado</li>
-</ul>
-</div>
-<hr>
-</section>
-<section id="para-praticar" class="level2">
-<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- CASE no SELECT: categorizar professores por regime de trabalho</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, ch_semanal, salario,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="cf">CASE</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> ch_semanal <span class="op">=</span> <span class="dv">40</span> <span class="cf">THEN</span> <span class="st">'Regime integral'</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> ch_semanal <span class="op">=</span> <span class="dv">20</span> <span class="cf">THEN</span> <span class="st">'Regime parcial'</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>           <span class="cf">ELSE</span>                      <span class="st">'Outro'</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="cf">END</span> <span class="kw">AS</span> regime</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> ch_semanal <span class="kw">DESC</span>, nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">ch_semanal</th>
-<th style="text-align: right;">salario</th>
-<th style="text-align: left;">regime</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6500</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6600</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6700</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3200</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3300</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3100</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Concatenação de strings: montar identificação completa da turma</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(id_disciplina <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(ano <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'-'</span> <span class="op">||</span> <span class="fu">CAST</span>(semestre <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(turma <span class="kw">AS</span> TEXT) <span class="kw">AS</span> id_turma,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       id_prof,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       sala</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_turma;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tipos definidos no banco atual (domínios e tipos customizados)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> typname <span class="kw">AS</span> tipo, typtype <span class="kw">AS</span> categoria</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   pg_type</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  typnamespace <span class="op">=</span> (<span class="kw">SELECT</span> <span class="kw">oid</span> <span class="kw">FROM</span> pg_namespace <span class="kw">WHERE</span> nspname <span class="op">=</span> <span class="st">'public'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> typname;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">id_turma</th>
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">sala</th>
+<th style="text-align: left;">tipo</th>
+<th style="text-align: left;">categoria</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">1110201/2023-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-005</td>
+<td style="text-align: left;">_aluno</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110201/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-013</td>
+<td style="text-align: left;">_centro</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110201/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-025</td>
+<td style="text-align: left;">_curso</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110202/2023-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-012</td>
+<td style="text-align: left;">_disciplina</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110202/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-001</td>
+<td style="text-align: left;">_escola</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110202/2025-2/1</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">ESG-SALA-007</td>
+<td style="text-align: left;">_evento_academico</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110401/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-009</td>
+<td style="text-align: left;">_matricula_disciplina</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110401/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-021</td>
+<td style="text-align: left;">_ministra</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110402/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-001</td>
+<td style="text-align: left;">_mv_desempenho_aluno</td>
+<td style="text-align: left;">b</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110402/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-005</td>
+<td style="text-align: left;">_prereq</td>
+<td style="text-align: left;">b</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="para-praticar" class="level2">
+<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Funções de data: extraindo partes de uma data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       ano_ingresso,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">EXTRACT</span>(<span class="dt">YEAR</span>  <span class="kw">FROM</span> <span class="fu">CURRENT_DATE</span>)                <span class="kw">AS</span> ano_atual,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">EXTRACT</span>(<span class="dt">YEAR</span>  <span class="kw">FROM</span> <span class="fu">CURRENT_DATE</span>) <span class="op">-</span> ano_ingresso <span class="kw">AS</span> tempo_na_undf</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tempo_na_undf <span class="kw">DESC</span>, nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">ano_ingresso</th>
+<th style="text-align: right;">ano_atual</th>
+<th style="text-align: right;">tempo_na_undf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Amanda Moreira</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Larissa Araújo</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lucas Santos</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Matheus Silva</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thiago Gomes</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carolina Lima</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fernanda Martins</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gabriel Ribeiro</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2026</td>
+<td style="text-align: right;">2</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- DISTINCT com múltiplas colunas: combinações únicas de id_escola e ch_semanal</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola, ch_semanal</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Formatando valores numéricos: salário em formato brasileiro</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">TO_CHAR</span>(salario, <span class="st">'FM"R$" 999.990,00'</span>) <span class="kw">AS</span> salario_formatado,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       ch_semanal</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>5 records</caption>
+<caption>7 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: right;">id_escola</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">salario_formatado</th>
 <th style="text-align: right;">ch_semanal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">11</td>
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">R$ ###.###,##</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: left;">R$ ###.###,##</td>
+<td style="text-align: right;">40</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">21</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: left;">R$ ###.###,##</td>
 <td style="text-align: right;">40</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">31</td>
+<td style="text-align: left;">Felipe Araujo</td>
+<td style="text-align: left;">R$ ###.###,##</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">R$ ###.###,##</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eduarda Souza</td>
+<td style="text-align: left;">R$ ###.###,##</td>
 <td style="text-align: right;">20</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">R$ ###.###,##</td>
+<td style="text-align: right;">20</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- CAST entre tipos: convertendo id_aluno para texto e extraindo partes</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_aluno,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       nome,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">CAST</span>(id_aluno <span class="kw">AS</span> TEXT)                 <span class="kw">AS</span> id_texto,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       <span class="kw">LEFT</span>(<span class="fu">CAST</span>(id_aluno <span class="kw">AS</span> TEXT), <span class="dv">4</span>)        <span class="kw">AS</span> ano_ingresso_extraido,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       SUBSTRING(<span class="fu">CAST</span>(id_aluno <span class="kw">AS</span> TEXT), <span class="dv">5</span>, <span class="dv">3</span>) <span class="kw">AS</span> id_curso_extraido</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 13%">
+<col style="width: 27%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_aluno</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">id_texto</th>
+<th style="text-align: left;">ano_ingresso_extraido</th>
+<th style="text-align: left;">id_curso_extraido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2023111001</td>
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: left;">2023111001</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023111002</td>
+<td style="text-align: left;">Lucas Santos</td>
+<td style="text-align: left;">2023111002</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2024111001</td>
+<td style="text-align: left;">Gabriel Ribeiro</td>
+<td style="text-align: left;">2024111001</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2024111002</td>
+<td style="text-align: left;">Fernanda Martins</td>
+<td style="text-align: left;">2024111002</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2025111001</td>
+<td style="text-align: left;">Rodrigo Lima</td>
+<td style="text-align: left;">2025111001</td>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">111</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="callout-title-container flex-fill">
-Nota
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>DISTINCT</code> com múltiplas colunas elimina duplicatas de <strong>combinações</strong> — não de cada coluna individualmente. A consulta acima retorna cada par (id_escola, ch_semanal) único.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aritmética de datas com INTERVAL: quantos dias faltam para a conclusão estimada</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- de cada aluno de ENS (4 anos após ingresso, em 15/12)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>       ano_ingresso,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       make_date(ano_ingresso <span class="op">+</span> <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">15</span>)           <span class="kw">AS</span> conclusao_estimada,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       make_date(ano_ingresso <span class="op">+</span> <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">15</span>) <span class="op">-</span> <span class="fu">CURRENT_DATE</span> <span class="kw">AS</span> dias_restantes</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> conclusao_estimada;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>6 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">ano_ingresso</th>
+<th style="text-align: left;">conclusao_estimada</th>
+<th style="text-align: right;">dias_restantes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Matheus Silva</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">2027-12-15</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Larissa Araújo</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">2027-12-15</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pedro Carvalho</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: left;">2028-12-15</td>
+<td style="text-align: right;">945</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: left;">2028-12-15</td>
+<td style="text-align: right;">945</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">2029-12-15</td>
+<td style="text-align: right;">1310</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Juliana Nunes</td>
+<td style="text-align: right;">2025</td>
+<td style="text-align: left;">2029-12-15</td>
+<td style="text-align: right;">1310</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -1830,13 +2235,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap03/03-select-from-where.html" class="pagination-link" aria-label="SELECT-FROM-WHERE">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">SELECT-FROM-WHERE</span></span>
+      <a href="../../content/cap04/04-integridade.html" class="pagination-link" aria-label="Restrições de Integridade">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Restrições de Integridade</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/05-clausula-where.html" class="pagination-link" aria-label="WHERE e ORDER BY">
-        <span class="nav-page-text"><span class="chapter-title">WHERE e ORDER BY</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/06-indices.html" class="pagination-link" aria-label="Índices">
+        <span class="nav-page-text"><span class="chapter-title">Índices</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Resumo e Exercícios – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/index.html" rel="next">
+<link href="../../content/cap04/07-autorizacao.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +306,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/08-resumo.html"><span class="chapter-title">Resumo e Exercícios</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +421,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -592,7 +608,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -729,7 +745,8 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#resumo" id="toc-resumo" class="nav-link active" data-scroll-target="#resumo">Resumo</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +754,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/08-resumo.html"><span class="chapter-title">Resumo e Exercícios</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Resumo e Exercícios</span></h1>
 </div>
 
 
@@ -762,96 +779,250 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
+<section id="resumo" class="level2">
+<h2 class="anchored" data-anchor-id="resumo">Resumo</h2>
+<p>Neste capítulo, expandimos o repertório SQL para além das consultas básicas. Os principais recursos abordados foram:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Recurso</th>
+<th>Finalidade</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td><code>NATURAL JOIN</code></td>
+<td>Une relações pelos atributos de mesmo nome (risco de homônimos não relacionados)</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
+<td><code>INNER JOIN ON</code> / <code>JOIN USING</code></td>
+<td>Junção explícita e segura por predicado ou coluna nomeada</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
+<td><code>LEFT / RIGHT / FULL OUTER JOIN</code></td>
+<td>Preserva tuplas sem correspondência com <code>NULL</code> nos atributos ausentes</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
+<td><code>CREATE VIEW</code></td>
+<td>Define uma relação virtual a partir de uma expressão de consulta</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
+<td><code>CREATE MATERIALIZED VIEW</code></td>
+<td>Visão com resultado fisicamente armazenado; requer <code>REFRESH</code> manual</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
+<td><code>REFRESH MATERIALIZED VIEW</code></td>
+<td>Atualiza o conteúdo de uma visão materializada</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
+<td><code>BEGIN</code> / <code>COMMIT</code> / <code>ROLLBACK</code></td>
+<td>Delimita e controla transações (atomicidade)</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
+<td><code>SAVEPOINT</code></td>
+<td>Permite desfazer apenas parte de uma transação</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
+<td><code>NOT NULL</code></td>
+<td>Impede valores nulos em um atributo</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
+<td><code>UNIQUE</code></td>
+<td>Garante unicidade de valores (admite <code>NULL</code>)</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
+<td><code>CHECK (P)</code></td>
+<td>Valida que toda tupla satisfaz o predicado P</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td><code>FOREIGN KEY REFERENCES</code></td>
+<td>Garante integridade referencial entre tabelas</td>
+</tr>
+<tr class="odd">
+<td><code>ON DELETE CASCADE</code></td>
+<td>Propaga exclusão em cascata para as tabelas filhas</td>
+</tr>
+<tr class="even">
+<td><code>ON DELETE SET NULL</code></td>
+<td>Define como <code>NULL</code> as FKs dos registros filhos ao excluir o pai</td>
+</tr>
+<tr class="odd">
+<td><code>DATE</code>, <code>TIME</code>, <code>TIMESTAMP</code>, <code>INTERVAL</code></td>
+<td>Tipos temporais do SQL</td>
+</tr>
+<tr class="even">
+<td><code>BYTEA</code> / <code>TEXT</code></td>
+<td>Tipos de objetos grandes (binário e texto) no PostgreSQL</td>
+</tr>
+<tr class="odd">
+<td><code>CREATE TYPE</code></td>
+<td>Define um novo tipo de dado</td>
+</tr>
+<tr class="even">
+<td><code>CREATE DOMAIN</code></td>
+<td>Define um tipo com constraints embutidas (reutilizável)</td>
+</tr>
+<tr class="odd">
+<td><code>CREATE INDEX</code></td>
+<td>Cria estrutura de acesso rápido a valores de um atributo</td>
+</tr>
+<tr class="even">
+<td><code>GRANT</code></td>
+<td>Concede privilégios a usuários ou papéis</td>
+</tr>
+<tr class="odd">
+<td><code>REVOKE</code></td>
+<td>Revoga privilégios concedidos</td>
+</tr>
+<tr class="even">
+<td><code>CREATE ROLE</code></td>
+<td>Cria um papel (agrupamento de privilégios)</td>
+</tr>
+<tr class="odd">
+<td><code>WITH GRANT OPTION</code></td>
+<td>Permite que o destinatário repasse o privilégio a outros</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+</section>
+<section id="exercícios" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios">Exercícios</h2>
+<p>Os exercícios abaixo usam as tabelas do banco de dados da UnDF: <code>centro</code>, <code>escola</code>, <code>curso</code>, <code>professor</code>, <code>aluno</code>, <code>disciplina</code>, <code>ministra</code>, <code>prereq</code> e <code>matricula_disciplina</code>.</p>
+<hr>
+<p><strong>Exercício 1.</strong> Liste os nomes de todos os alunos junto com o nome de seu curso e da escola responsável, usando <code>JOIN</code> explícito (não use natural join). Ordene pelo nome da escola, depois pelo nome do curso.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Encadeie três <code>JOIN</code>: <code>aluno → curso → escola</code>. Use <code>USING (id_curso)</code> e <code>USING (id_escola)</code>.</p>
 </div>
 </div>
+</div>
+<hr>
+<p><strong>Exercício 2.</strong> Liste todos os professores e, para cada um, a quantidade de turmas que ministraram (zero se nunca ministraram). Ordene do mais ativo ao menos ativo.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <code>LEFT JOIN</code> entre <code>professor</code> e <code>ministra</code> e agrupe com <code>GROUP BY</code> e <code>COUNT(id_disciplina)</code> (que retorna 0 quando não há registros em <code>ministra</code>).</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Exercício 3.</strong> Crie uma visão chamada <code>v_turmas_completas</code> que mostre o nome da disciplina, o nome do professor, o ano, o semestre e a turma de cada oferta. Use essa visão para listar todas as turmas do ano 2025.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A visão une <code>ministra</code>, <code>disciplina</code> e <code>professor</code>. Depois consulte a visão com <code>WHERE ano = 2025</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Exercício 4.</strong> Explique por que o seguinte natural join pode produzir resultados inesperados, e reescreva a consulta de forma correta:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.nome_disciplina, m.ano, m.semestre</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   disciplina d</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">NATURAL</span> <span class="kw">JOIN</span> ministra m;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Identifique quais colunas <code>disciplina</code> e <code>ministra</code> têm em comum. Além de <code>id_disciplina</code>, ambas possuem <code>semestre</code> — mas com significados diferentes (semestre curricular vs.&nbsp;semestre de oferta). Use <code>JOIN ... USING (id_disciplina)</code> para corrigir.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Exercício 5.</strong> Escreva o comando DDL para adicionar uma restrição <code>CHECK</code> na tabela <code>aluno</code> garantindo que <code>ano_ingresso</code> seja maior ou igual a 2020. Escreva também o comando para remover essa restrição depois.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <code>ALTER TABLE aluno ADD CONSTRAINT chk_ano_ingresso CHECK (ano_ingresso &gt;= 2020)</code>. Para remover: <code>ALTER TABLE aluno DROP CONSTRAINT chk_ano_ingresso</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Exercício 6.</strong> Crie um papel (<code>ROLE</code>) chamado <code>monitor_disciplina</code> com permissão de leitura nas tabelas <code>disciplina</code>, <code>ministra</code>, <code>matricula_disciplina</code> e <code>prereq</code>, e permissão de atualização apenas na coluna <code>nota</code> de <code>matricula_disciplina</code>. Escreva os comandos SQL necessários.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use <code>CREATE ROLE monitor_disciplina</code>, depois <code>GRANT SELECT ON ... TO monitor_disciplina</code> e <code>GRANT UPDATE (nota) ON matricula_disciplina TO monitor_disciplina</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Exercício 7.</strong> Sem executar, explique o que acontece quando uma turma é excluída da tabela <code>ministra</code>, supondo que <code>matricula_disciplina</code> tenha <code>ON DELETE CASCADE</code> na foreign key que referencia <code>ministra</code>. Qual seria o comportamento se a ação fosse <code>ON DELETE SET NULL</code>?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Com <code>CASCADE</code>: todas as matrículas daquela turma são excluídas automaticamente. Com <code>SET NULL</code>: os campos da FK em <code>matricula_disciplina</code> receberiam <code>NULL</code> — mas isso exigiria que as colunas da FK admitissem <code>NULL</code>, o que conflita com a chave primária de <code>matricula_disciplina</code> (onde essas colunas fazem parte da PK e portanto são <code>NOT NULL</code>).</p>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1535,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap04/07-autorizacao.html" class="pagination-link" aria-label="Autorização">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Autorização</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/index.html" class="pagination-link" aria-label="Visão Geral">
+        <span class="nav-page-text"><span class="chapter-title">Visão Geral</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

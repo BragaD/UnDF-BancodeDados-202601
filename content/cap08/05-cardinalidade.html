@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
 
-<title>Decisões de Projeto – Bases da Engenharia de Software 4</title>
+<title>Cardinalidade e Participação – Bases da Engenharia de Software 4</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -31,23 +34,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/12-notacoes.html" rel="next">
-<link href="../../content/cap04/10-agregacao.html" rel="prev">
+<link href="../../content/cap08/06-entidades-fracas.html" rel="next">
+<link href="../../content/cap08/04-atributos.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-663e73f9dec64fbea7d0ce06426dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -77,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -298,7 +300,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/11-decisoes-projeto.html"><span class="chapter-title">Decisões de Projeto</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/05-cardinalidade.html"><span class="chapter-title">Cardinalidade e Participação</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -552,7 +554,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 4: SQL Intermediário</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -565,67 +567,164 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  <a href="../../content/cap04/01-joins.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Expressões de Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  <a href="../../content/cap04/03-transacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  <a href="../../content/cap04/06-indices.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Índices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  <a href="../../content/cap04/07-autorizacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Autorização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 5: SQL Avançado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Decisões de Projeto</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap05/05-agregacao-avancada.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação Avançada</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/05-cardinalidade.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -640,24 +739,11 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#entidade-vs.-atributo" id="toc-entidade-vs.-atributo" class="nav-link active" data-scroll-target="#entidade-vs.-atributo">Entidade vs.&nbsp;Atributo</a>
-  <ul>
-  <li><a href="#quando-usar-entidade" id="toc-quando-usar-entidade" class="nav-link" data-scroll-target="#quando-usar-entidade">Quando usar entidade</a></li>
-  <li><a href="#quando-usar-atributo" id="toc-quando-usar-atributo" class="nav-link" data-scroll-target="#quando-usar-atributo">Quando usar atributo</a></li>
-  </ul></li>
-  <li><a href="#entidade-vs.-relacionamento" id="toc-entidade-vs.-relacionamento" class="nav-link" data-scroll-target="#entidade-vs.-relacionamento">Entidade vs.&nbsp;Relacionamento</a></li>
-  <li><a href="#relacionamento-binário-vs.-n-ário" id="toc-relacionamento-binário-vs.-n-ário" class="nav-link" data-scroll-target="#relacionamento-binário-vs.-n-ário">Relacionamento Binário vs.&nbsp;N-ário</a>
-  <ul>
-  <li><a href="#quando-usar-n-ário" id="toc-quando-usar-n-ário" class="nav-link" data-scroll-target="#quando-usar-n-ário">Quando usar n-ário</a></li>
-  <li><a href="#convertendo-n-ário-para-binário" id="toc-convertendo-n-ário-para-binário" class="nav-link" data-scroll-target="#convertendo-n-ário-para-binário">Convertendo n-ário para binário</a></li>
-  </ul></li>
-  <li><a href="#erros-comuns-em-diagramas-er" id="toc-erros-comuns-em-diagramas-er" class="nav-link" data-scroll-target="#erros-comuns-em-diagramas-er">Erros Comuns em Diagramas ER</a>
-  <ul>
-  <li><a href="#erro-1-informação-duplicada" id="toc-erro-1-informação-duplicada" class="nav-link" data-scroll-target="#erro-1-informação-duplicada">Erro 1: Informação duplicada</a></li>
-  <li><a href="#erro-2-usar-relacionamento-quando-deveria-ser-atributo" id="toc-erro-2-usar-relacionamento-quando-deveria-ser-atributo" class="nav-link" data-scroll-target="#erro-2-usar-relacionamento-quando-deveria-ser-atributo">Erro 2: Usar relacionamento quando deveria ser atributo</a></li>
-  <li><a href="#erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" id="toc-erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" class="nav-link" data-scroll-target="#erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade">Erro 3: Perda de informação em relacionamentos de alta cardinalidade</a></li>
-  </ul></li>
-  <li><a href="#decisões-de-projeto-resumidas" id="toc-decisões-de-projeto-resumidas" class="nav-link" data-scroll-target="#decisões-de-projeto-resumidas">Decisões de Projeto Resumidas</a></li>
+  <li><a href="#restrições-de-cardinalidade" id="toc-restrições-de-cardinalidade" class="nav-link active" data-scroll-target="#restrições-de-cardinalidade">Restrições de Cardinalidade</a></li>
+  <li><a href="#notação-no-diagrama-er" id="toc-notação-no-diagrama-er" class="nav-link" data-scroll-target="#notação-no-diagrama-er">Notação no Diagrama ER</a></li>
+  <li><a href="#cardinalidades-no-banco-da-undf" id="toc-cardinalidades-no-banco-da-undf" class="nav-link" data-scroll-target="#cardinalidades-no-banco-da-undf">Cardinalidades no Banco da UnDF</a></li>
+  <li><a href="#participação-total-e-parcial" id="toc-participação-total-e-parcial" class="nav-link" data-scroll-target="#participação-total-e-parcial">Participação Total e Parcial</a></li>
+  <li><a href="#notação-l..h-mínimo-e-máximo" id="toc-notação-l..h-mínimo-e-máximo" class="nav-link" data-scroll-target="#notação-l..h-mínimo-e-máximo">Notação l..h (Mínimo e Máximo)</a></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -666,9 +752,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/11-decisoes-projeto.html"><span class="chapter-title">Decisões de Projeto</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/05-cardinalidade.html"><span class="chapter-title">Cardinalidade e Participação</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Decisões de Projeto</span></h1>
+<h1 class="title"><span class="chapter-title">Cardinalidade e Participação</span></h1>
 </div>
 
 
@@ -691,129 +777,10 @@ window.Quarto = {
 </header>
 
 
-<p>O modelo ER oferece flexibilidade — muitas situações do mundo real podem ser modeladas de formas diferentes, todas tecnicamente corretas. Esta seção apresenta as principais decisões de projeto e critérios para escolher entre alternativas.</p>
-<section id="entidade-vs.-atributo" class="level2">
-<h2 class="anchored" data-anchor-id="entidade-vs.-atributo">Entidade vs.&nbsp;Atributo</h2>
+<section id="restrições-de-cardinalidade" class="level2">
+<h2 class="anchored" data-anchor-id="restrições-de-cardinalidade">Restrições de Cardinalidade</h2>
 <div class="conceito">
-<p>A decisão de modelar algo como <strong>entidade</strong> ou como <strong>atributo</strong> depende de: - Quantas propriedades próprias o conceito tem? - Pode o mesmo valor ser associado a múltiplas entidades? - Há necessidade de múltiplos valores (multivalorado)?</p>
-</div>
-<section id="quando-usar-entidade" class="level3">
-<h3 class="anchored" data-anchor-id="quando-usar-entidade">Quando usar entidade</h3>
-<p>Use entidade quando o conceito: - Tem atributos próprios relevantes além do nome/valor - É referenciado por múltiplas outras entidades (seria duplicado como atributo) - Precisa participar de outros relacionamentos</p>
-<div class="exemplo">
-<p><strong><code>escola</code> como entidade vs.&nbsp;atributo de <code>professor</code></strong></p>
-<p>Se modelarmos a escola como atributo de <code>professor</code>, poderíamos ter:</p>
-<pre><code>professor(matricula_prof, nome, nome_escola, ...)</code></pre>
-<p>Mas isso perde: - Os atributos próprios da escola (<code>nome_escola</code>, <code>centro</code>) - A referência compartilhada (7 professores duplicariam o nome da escola) - A possibilidade de consultar escolas sem professores</p>
-<p>Como <code>escola</code> tem atributos próprios e é compartilhada por múltiplas entidades, deve ser uma <strong>entidade</strong>.</p>
-</div>
-</section>
-<section id="quando-usar-atributo" class="level3">
-<h3 class="anchored" data-anchor-id="quando-usar-atributo">Quando usar atributo</h3>
-<p>Use atributo quando o conceito: - É uma propriedade simples e específica da entidade (não compartilhada) - Não tem subpropriedades relevantes - Não precisa participar de outros relacionamentos</p>
-<div class="exemplo">
-<p>O <code>salario</code> de um professor é um atributo simples — não tem propriedades próprias, não é compartilhado entre professores, e não participa de relacionamentos. Manter como atributo de <code>professor</code> é a escolha certa.</p>
-</div>
-</section>
-</section>
-<section id="entidade-vs.-relacionamento" class="level2">
-<h2 class="anchored" data-anchor-id="entidade-vs.-relacionamento">Entidade vs.&nbsp;Relacionamento</h2>
-<div class="conceito">
-<p>Use <strong>relacionamento</strong> para descrever uma <strong>ação ou associação</strong> entre entidades. Use <strong>entidade</strong> quando o conceito tem existência própria e atributos independentes.</p>
-</div>
-<div class="exemplo">
-<p><strong><code>ministra</code> como relacionamento vs.&nbsp;entidade</strong></p>
-<p><code>ministra</code> poderia ser modelado como entidade independente com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code>, <code>sala</code>. No banco da UnDF, essa é exatamente a abordagem escolhida para <code>ministra</code> na tabela homônima — principalmente porque <code>matricula_disciplina</code> precisa referenciar cada oferta individualmente.</p>
-<p>Como regra geral: se o conceito é uma <strong>ação</strong> entre entidades (ministrar, comprar, avaliar) e tem atributos descritivos, pode ser representado como relacionamento com atributos. Se precisar ser referenciado por outras entidades ou relacionamentos (como na agregação), é melhor tratá-lo como entidade.</p>
-</div>
-</section>
-<section id="relacionamento-binário-vs.-n-ário" class="level2">
-<h2 class="anchored" data-anchor-id="relacionamento-binário-vs.-n-ário">Relacionamento Binário vs.&nbsp;N-ário</h2>
-<section id="quando-usar-n-ário" class="level3">
-<h3 class="anchored" data-anchor-id="quando-usar-n-ário">Quando usar n-ário</h3>
-<p>Use relacionamento n-ário (n &gt; 2) quando a associação entre <span class="math inline">\(n\)</span> entidades é genuinamente simultânea — quando a remoção de qualquer participante muda o significado do relacionamento.</p>
-<div class="exemplo">
-<p><code>orienta(professor, aluno, projeto)</code> é ternário porque precisamos saber <strong>qual professor orienta qual aluno em qual projeto</strong>. Saber apenas que um professor orienta um aluno (sem o projeto) ou que um aluno participa de um projeto (sem o professor) não é suficiente.</p>
-</div>
-</section>
-<section id="convertendo-n-ário-para-binário" class="level3">
-<h3 class="anchored" data-anchor-id="convertendo-n-ário-para-binário">Convertendo n-ário para binário</h3>
-<p>Qualquer relacionamento n-ário pode ser convertido para um conjunto de relacionamentos binários através de uma <strong>entidade artificial</strong>:</p>
-<div class="conceito">
-<p>Para converter um relacionamento ternário <span class="math inline">\(R\)</span> entre entidades <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> e <span class="math inline">\(C\)</span>:</p>
-<ol type="1">
-<li>Criar uma entidade artificial <span class="math inline">\(E\)</span> com um atributo identificador gerado</li>
-<li>Criar três relacionamentos binários: <span class="math inline">\(R_A\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(A\)</span>), <span class="math inline">\(R_B\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(B\)</span>), <span class="math inline">\(R_C\)</span> (entre <span class="math inline">\(E\)</span> e <span class="math inline">\(C\)</span>)</li>
-<li>Mover os atributos de <span class="math inline">\(R\)</span> para <span class="math inline">\(E\)</span></li>
-</ol>
-</div>
-<div class="example">
-<p>Converter <code>orienta(professor, aluno, projeto)</code> em binários:</p>
-<pre><code>orientacao(id_orientacao, ...)   -- entidade artificial
-
-orienta_professor(id_orientacao, matricula_prof)
-orienta_aluno(id_orientacao, matricula_aluno)
-orienta_projeto(id_orientacao, id_projeto)</code></pre>
-<p><strong>Limitação</strong>: a conversão nem sempre preserva as restrições de integridade do relacionamento original. Por exemplo, se a restrição for “cada par (aluno, projeto) tem exatamente um professor orientador”, é difícil de expressar apenas com os três relacionamentos binários separados.</p>
-</div>
-</section>
-</section>
-<section id="erros-comuns-em-diagramas-er" class="level2">
-<h2 class="anchored" data-anchor-id="erros-comuns-em-diagramas-er">Erros Comuns em Diagramas ER</h2>
-<section id="erro-1-informação-duplicada" class="level3">
-<h3 class="anchored" data-anchor-id="erro-1-informação-duplicada">Erro 1: Informação duplicada</h3>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Aviso
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Incluir como atributo de uma entidade a mesma informação que já está capturada por um relacionamento.</p>
-<p><strong>Errado</strong>: <code>professor</code> com atributo <code>nome_escola</code> E relacionamento <code>lotado_em</code> com <code>escola</code> <strong>Correto</strong>: remover <code>nome_escola</code> de <code>professor</code> (o relacionamento já captura essa informação)</p>
-</div>
-</div>
-</section>
-<section id="erro-2-usar-relacionamento-quando-deveria-ser-atributo" class="level3">
-<h3 class="anchored" data-anchor-id="erro-2-usar-relacionamento-quando-deveria-ser-atributo">Erro 2: Usar relacionamento quando deveria ser atributo</h3>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Aviso
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Criar um conjunto de entidades para algo que é simplesmente um valor:</p>
-<p><strong>Errado</strong>: entidade <code>salario</code> com atributo <code>valor</code>, relacionamento <code>recebe</code> entre <code>professor</code> e <code>salario</code> <strong>Correto</strong>: <code>salario</code> como atributo numérico de <code>professor</code></p>
-</div>
-</div>
-</section>
-<section id="erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade" class="level3">
-<h3 class="anchored" data-anchor-id="erro-3-perda-de-informação-em-relacionamentos-de-alta-cardinalidade">Erro 3: Perda de informação em relacionamentos de alta cardinalidade</h3>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Aviso
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Usar um relacionamento 1:N quando o domínio exige N:N, o que impede registrar múltiplas associações:</p>
-<p><strong>Errado</strong>: relacionamento 1:N entre <code>professor</code> e <code>disciplina</code> (implica que cada disciplina tem um único professor permanente) <strong>Correto</strong>: N:N via <code>ministra</code>, permitindo múltiplas ofertas com professores diferentes</p>
-</div>
-</div>
-</section>
-</section>
-<section id="decisões-de-projeto-resumidas" class="level2">
-<h2 class="anchored" data-anchor-id="decisões-de-projeto-resumidas">Decisões de Projeto Resumidas</h2>
+<p><strong>Cardinalidade</strong> (<em>mapping cardinality</em>) expressa o número máximo de entidades a que outra entidade pode se associar por meio de um relacionamento. Para relacionamentos binários, os tipos possíveis são:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -821,42 +788,291 @@ Aviso
 </colgroup>
 <thead>
 <tr class="header">
-<th>Decisão</th>
-<th>Critério</th>
+<th>Cardinalidade</th>
+<th>Significado</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Entidade vs.&nbsp;Atributo</td>
-<td>Tem atributos próprios? É compartilhado? → Entidade</td>
+<td><strong>1:1</strong> (um para um)</td>
+<td>Cada entidade em A associa-se a no máximo uma em B, e vice-versa</td>
 </tr>
 <tr class="even">
-<td>Entidade vs.&nbsp;Relacionamento</td>
-<td>É uma ação entre entidades? → Relacionamento</td>
+<td><strong>1:N</strong> (um para muitos)</td>
+<td>Uma entidade em A associa-se a várias em B; cada entidade em B associa-se a no máximo uma em A</td>
 </tr>
 <tr class="odd">
-<td>Binário vs.&nbsp;N-ário</td>
-<td>Remoção de um participante muda o significado? → N-ário</td>
+<td><strong>N:1</strong> (muitos para um)</td>
+<td>Inverso do 1:N</td>
 </tr>
 <tr class="even">
-<td>Forte vs.&nbsp;Fraco</td>
-<td>Tem PK própria independente? → Forte</td>
-</tr>
-<tr class="odd">
-<td>Especialização</td>
-<td>Há subgrupos com atributos/relacionamentos exclusivos?</td>
-</tr>
-<tr class="even">
-<td>Agregação</td>
-<td>Um relacionamento precisa participar de outro relacionamento?</td>
+<td><strong>N:N</strong> (muitos para muitos)</td>
+<td>Entidades em A associam-se a várias em B, e vice-versa</td>
 </tr>
 </tbody>
 </table>
+</div>
+</section>
+<section id="notação-no-diagrama-er" class="level2">
+<h2 class="anchored" data-anchor-id="notação-no-diagrama-er">Notação no Diagrama ER</h2>
+<p>Na notação ER tradicional:</p>
+<ul>
+<li><strong>Seta</strong> (→): o lado “um” — a entidade participa no máximo uma vez</li>
+<li><strong>Linha</strong> (—): o lado “muitos” — a entidade pode participar múltiplas vezes</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 552.95 218.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 214)">
+<title>er_card</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-214 548.95,-214 548.95,4 -4,4"></polygon>
+<g id="clust1" class="cluster">
+<title>cluster_1n</title>
+<polygon fill="white" stroke="gray" stroke-dasharray="5,2" points="8,-8 8,-92 534.56,-92 534.56,-8 8,-8"></polygon>
+<text text-anchor="middle" x="100.7" y="-79" font-family="Times New Roman" font-size="10.00">1:N — um professor lotado em uma escola</text>
+<text text-anchor="middle" x="100.7" y="-67" font-family="Times New Roman" font-size="10.00">(vários professores por escola)</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_nn</title>
+<polygon fill="white" stroke="gray" stroke-dasharray="5,2" points="8,-130 8,-202 536.95,-202 536.95,-130 8,-130"></polygon>
+<text text-anchor="middle" x="87.79" y="-189" font-family="Times New Roman" font-size="10.00">N:N — professor ministra disciplina</text>
+</g>
+<!-- p1 -->
+<g id="node1" class="node">
+<title>p1</title>
+<polygon fill="#aed6f1" stroke="black" points="72.9,-52 16.03,-52 16.03,-16 72.9,-16 72.9,-52"></polygon>
+<text text-anchor="middle" x="44.47" y="-30.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- r1 -->
+<g id="node2" class="node">
+<title>r1</title>
+<polygon fill="#f9e79f" stroke="black" points="271.56,-52 216.81,-34 271.56,-16 326.3,-34 271.56,-52"></polygon>
+<text text-anchor="middle" x="271.56" y="-30.7" font-family="Times New Roman" font-size="11.00">lotado_em</text>
+</g>
+<!-- p1&#45;&gt;r1 -->
+<g id="edge1" class="edge">
+<title>p1-&gt;r1</title>
+<path fill="none" stroke="black" d="M73.07,-34C108.75,-34 171.69,-34 216.93,-34"></path>
+</g>
+<!-- e1 -->
+<g id="node3" class="node">
+<title>e1</title>
+<polygon fill="#aed6f1" stroke="black" points="526.56,-52 472.56,-52 472.56,-16 526.56,-16 526.56,-52"></polygon>
+<text text-anchor="middle" x="499.56" y="-30.7" font-family="Times New Roman" font-size="11.00">escola</text>
+</g>
+<!-- r1&#45;&gt;e1 -->
+<g id="edge2" class="edge">
+<title>r1-&gt;e1</title>
+<path fill="none" stroke="black" d="M326.4,-34C368.35,-34 425.45,-34 462.16,-34"></path>
+<polygon fill="black" stroke="black" points="462.4,-37.5 472.4,-34 462.4,-30.5 462.4,-37.5"></polygon>
+</g>
+<!-- p2 -->
+<g id="node4" class="node">
+<title>p2</title>
+<polygon fill="#aed6f1" stroke="black" points="72.9,-174 16.03,-174 16.03,-138 72.9,-138 72.9,-174"></polygon>
+<text text-anchor="middle" x="44.47" y="-152.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- r2 -->
+<g id="node5" class="node">
+<title>r2</title>
+<polygon fill="#f9e79f" stroke="black" points="271.56,-174 225.98,-156 271.56,-138 317.13,-156 271.56,-174"></polygon>
+<text text-anchor="middle" x="271.56" y="-152.7" font-family="Times New Roman" font-size="11.00">ministra</text>
+</g>
+<!-- p2&#45;&gt;r2 -->
+<g id="edge3" class="edge">
+<title>p2-&gt;r2</title>
+<path fill="none" stroke="black" d="M73.07,-156C111.1,-156 180.08,-156 225.61,-156"></path>
+</g>
+<!-- d2 -->
+<g id="node6" class="node">
+<title>d2</title>
+<polygon fill="#aed6f1" stroke="black" points="528.83,-174 470.29,-174 470.29,-138 528.83,-138 528.83,-174"></polygon>
+<text text-anchor="middle" x="499.56" y="-152.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- r2&#45;&gt;d2 -->
+<g id="edge4" class="edge">
+<title>r2-&gt;d2</title>
+<path fill="none" stroke="black" d="M317.21,-156C362.62,-156 431.62,-156 470.1,-156"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cardinalidades-no-banco-da-undf" class="level2">
+<h2 class="anchored" data-anchor-id="cardinalidades-no-banco-da-undf">Cardinalidades no Banco da UnDF</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relacionamento</th>
+<th>Cardinalidade</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>escola</code> — <code>pertence_a</code> — <code>centro</code></td>
+<td>N:1</td>
+<td>Uma escola pertence a um centro; um centro pode ter várias escolas</td>
+</tr>
+<tr class="even">
+<td><code>curso</code> — <code>ofertado_por</code> — <code>escola</code></td>
+<td>N:1</td>
+<td>Um curso é ofertado por uma escola; uma escola pode ter vários cursos</td>
+</tr>
+<tr class="odd">
+<td><code>professor</code> — <code>lotado_em</code> — <code>escola</code></td>
+<td>N:1</td>
+<td>Um professor é lotado em uma escola; uma escola pode ter vários professores</td>
+</tr>
+<tr class="even">
+<td><code>aluno</code> — <code>matriculado_em</code> — <code>curso</code></td>
+<td>N:1</td>
+<td>Um aluno está matriculado em um curso; um curso tem vários alunos</td>
+</tr>
+<tr class="odd">
+<td><code>disciplina</code> — <code>compoe</code> — <code>curso</code></td>
+<td>N:1</td>
+<td>Uma disciplina pertence a um curso; um curso tem várias disciplinas</td>
+</tr>
+<tr class="even">
+<td><code>professor</code> — <code>ministra</code> — <code>disciplina</code></td>
+<td>N:N</td>
+<td>Um professor ministra várias disciplinas; uma disciplina pode ser ministrada por vários professores</td>
+</tr>
+<tr class="odd">
+<td><code>disciplina</code> — <code>prereq</code> — <code>disciplina</code></td>
+<td>N:N</td>
+<td>Uma disciplina pode ter vários pré-requisitos; uma disciplina pode ser pré-requisito de várias outras</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="participação-total-e-parcial" class="level2">
+<h2 class="anchored" data-anchor-id="participação-total-e-parcial">Participação Total e Parcial</h2>
+<p>Além da cardinalidade máxima, é importante especificar se a participação é <strong>obrigatória</strong> ou <strong>opcional</strong>:</p>
+<div class="conceito">
+<ul>
+<li><strong>Participação total</strong> (linha dupla no diagrama): toda entidade do conjunto deve participar de ao menos um relacionamento. É uma restrição de existência.</li>
+<li><strong>Participação parcial</strong> (linha simples): algumas entidades podem não participar de nenhum relacionamento.</li>
+</ul>
+</div>
+<div class="exemplo">
+<p>No relacionamento <code>matriculado_em</code> entre <code>aluno</code> e <code>curso</code>:</p>
+<ul>
+<li><strong>Aluno</strong> tem participação <strong>total</strong>: todo aluno cadastrado deve estar matriculado em algum curso.</li>
+<li><strong>Curso</strong> tem participação <strong>parcial</strong> em relação a alunos: um curso pode existir sem ter alunos matriculados ainda (ex.: curso recém-criado).</li>
+</ul>
+<p>No relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>:</p>
+<ul>
+<li><strong>Professor</strong> tem participação <strong>parcial</strong>: pode existir um professor cadastrado que ainda não ministrou nenhuma disciplina.</li>
+<li><strong>Disciplina</strong> tem participação <strong>parcial</strong>: uma disciplina pode existir na grade curricular sem ter turma aberta naquele semestre.</li>
+</ul>
+</div>
+</section>
+<section id="notação-l..h-mínimo-e-máximo" class="level2">
+<h2 class="anchored" data-anchor-id="notação-l..h-mínimo-e-máximo">Notação l..h (Mínimo e Máximo)</h2>
+<p>Uma notação mais precisa especifica o mínimo <span class="math inline">\(l\)</span> e o máximo <span class="math inline">\(h\)</span> de participações de cada entidade:</p>
+<div class="conceito">
+<p>A restrição <span class="math inline">\(l..h\)</span> em uma aresta indica que cada entidade participa em no mínimo <span class="math inline">\(l\)</span> e no máximo <span class="math inline">\(h\)</span> relacionamentos:</p>
+<ul>
+<li><span class="math inline">\(l = 0\)</span>: participação parcial</li>
+<li><span class="math inline">\(l = 1\)</span>: participação total</li>
+<li><span class="math inline">\(h = 1\)</span>: cardinalidade “um”</li>
+<li><span class="math inline">\(h = *\)</span>: cardinalidade “muitos” (sem limite superior)</li>
+</ul>
+</div>
+<div class="exemplo">
+<p>Para o relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>:</p>
+<ul>
+<li><code>professor</code> com restrição <span class="math inline">\(0..*\)</span>: um professor pode não ministrar nenhuma disciplina (mínimo 0) e pode ministrar várias (máximo ilimitado)</li>
+<li><code>disciplina</code> com restrição <span class="math inline">\(0..*\)</span>: uma disciplina pode não ter turma aberta (mínimo 0) e pode ter múltiplas turmas/professores (máximo ilimitado)</li>
+</ul>
+<p>Para <code>aluno</code> no relacionamento <code>matriculado_em</code>:</p>
+<ul>
+<li><span class="math inline">\(1..1\)</span>: cada aluno está matriculado em exatamente um curso (mínimo e máximo 1)</li>
+</ul>
+</div>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Entidade ou atributo?</strong> Um sistema de e-commerce precisa registrar o endereço de entrega de cada pedido. O mesmo cliente pode ter diferentes endereços para pedidos diferentes. Deve-se modelar <code>endereco</code> como atributo de <code>pedido</code> ou como entidade separada?</p>
+<p><strong>1. Identificar cardinalidade.</strong> Para cada relacionamento abaixo, determine a cardinalidade (1:1, 1:N ou N:N) e justifique:</p>
+<ol type="a">
+<li>Entre <code>turma</code> e <code>sala</code> em um sistema acadêmico (uma turma é realizada em uma sala, uma sala pode abrigar várias turmas ao longo do dia)</li>
+<li>Entre <code>aluno</code> e <code>curso</code> no banco da UnDF (política: um aluno cursa exatamente um curso por vez)</li>
+<li>Entre <code>professor</code> e <code>disciplina</code> via <code>ministra</code> no banco da UnDF</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>(a)</strong> N:1: muitas turmas podem usar a mesma sala (em horários diferentes); cada turma ocorre em uma sala.</li>
+<li><strong>(b)</strong> N:1: muitos alunos estão em um curso; cada aluno está em exatamente um curso.</li>
+<li><strong>(c)</strong> N:N: um professor ministra várias disciplinas ao longo do tempo; uma disciplina pode ser ministrada por professores diferentes em semestres diferentes.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Participação total e integridade referencial.</strong> A participação total de <code>aluno</code> em <code>matriculado_em</code> (todo aluno deve estar matriculado em um curso) tem um equivalente direto em SQL. Qual é ele?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>É a restrição <code>NOT NULL</code> na coluna de chave estrangeira <code>sigla_curso</code> da tabela <code>aluno</code>. Se <code>sigla_curso NOT NULL</code>, então todo aluno obrigatoriamente referencia um curso — o que implementa a participação total. Já a participação parcial corresponde a uma coluna FK que aceita <code>NULL</code>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>3. Cardinalidade 1:1 na prática.</strong> Suponha que a UnDF implantasse a regra “cada escola tem exatamente um coordenador, que é um professor daquela escola, e cada professor pode coordenar no máximo uma escola”. Qual seria a cardinalidade do relacionamento <code>coordena</code> entre <code>professor</code> e <code>escola</code>? Como isso seria implementado no esquema relacional?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Cardinalidade 1:1</strong>: um professor coordena no máximo uma escola; uma escola é coordenada por no máximo um professor.</p>
+<p><strong>Implementação</strong>: adicionar uma coluna <code>matricula_coordenador VARCHAR(15) REFERENCES professor(matricula_prof) UNIQUE</code> na tabela <code>escola</code>. A constraint <code>UNIQUE</code> garante que o mesmo professor não coordene duas escolas. Alternativamente, adicionar <code>escola_coordenada VARCHAR(10) REFERENCES escola(escola) UNIQUE</code> em <code>professor</code>, deixando <code>NULL</code> para professores não coordenadores.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>4. Armadilha da cardinalidade N:N.</strong> Por que não é possível representar um relacionamento N:N entre <code>professor</code> e <code>disciplina</code> adicionando apenas uma coluna FK em um dos lados?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -869,54 +1085,7 @@ Aviso
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Depende dos requisitos:</p>
-<ul>
-<li><strong>Atributo</strong> (simples): se o endereço é específico de cada pedido e não precisa ser reutilizado. Colunas <code>rua</code>, <code>numero</code>, <code>cidade</code>, <code>cep</code> diretamente em <code>pedido</code>.</li>
-<li><strong>Entidade</strong> (com relacionamento): se o cliente tem uma <strong>lista de endereços cadastrados</strong> e seleciona um para cada pedido. Entidade <code>endereco(id_endereco, rua, numero, cidade, cep)</code> com relacionamento <code>tem_endereco</code> entre <code>cliente</code> e <code>endereco</code>, e FK <code>id_endereco</code> em <code>pedido</code> apontando para o endereço escolhido.</li>
-</ul>
-<p>A segunda opção permite que o cliente reutilize endereços e evita digitação repetida.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>2. Identificar o erro.</strong> Um projetista cria o seguinte ER: entidade <code>curso</code> com atributo <code>nome_escola</code>, E relacionamento <code>ofertado_por</code> entre <code>curso</code> e <code>escola</code>. Qual o erro e como corrigir?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>O atributo <code>nome_escola</code> em <code>curso</code> é <strong>redundante</strong> — o relacionamento <code>ofertado_por</code> já captura a associação entre <code>curso</code> e <code>escola</code>. Armazenar o nome da escola em <code>curso</code> duplica a informação e cria risco de inconsistência (se o nome da escola mudar, precisa ser atualizado em <code>escola</code> e em todos os <code>curso</code>).</p>
-<p><strong>Correção</strong>: remover o atributo <code>nome_escola</code> de <code>curso</code>. O relacionamento <code>ofertado_por</code> (N:1) é suficiente; na conversão relacional, vira a FK <code>escola</code> em <code>curso</code>.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>3. Binário vs.&nbsp;ternário.</strong> Um sistema de biblioteca registra que “um usuário pegou emprestado um exemplar de um livro”. Justifique se o relacionamento <code>emprestimo</code> deve ser binário (usuario–exemplar) ou ternário (usuario–exemplar–livro).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Binário</strong> (usuario–exemplar) é suficiente e preferível:</p>
-<ul>
-<li>Um exemplar <strong>é</strong> de um livro (via FK <code>exemplar.isbn → livro.isbn</code>). A informação de qual livro é emprestado já está implícita no exemplar.</li>
-<li>Adicionar <code>livro</code> no relacionamento seria redundante — seria possível derivar de <code>exemplar</code>.</li>
-</ul>
-<p>Usar ternário implicaria em redundância e risco de inconsistência: o livro indicado no relacionamento poderia não corresponder ao livro do exemplar. O relacionamento binário <code>emprestimo(id_usuario, numero_tombamento, data_retirada, data_devolucao)</code> é correto e suficiente.</p>
+<p>Se adicionarmos <code>matricula_prof FK</code> em <code>disciplina</code>, cada disciplina poderia referenciar apenas <strong>um</strong> professor — o que limita a cardinalidade para N:1 (muitas disciplinas para um professor). Para N:N, é necessário uma <strong>tabela de junção</strong> (<code>ministra</code>) com FK para ambos os lados, permitindo registrar múltiplas combinações professor–disciplina sem restrição de cardinalidade.</p>
 </div>
 </div>
 </div>
@@ -1434,13 +1603,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/10-agregacao.html" class="pagination-link" aria-label="Agregação">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Agregação</span></span>
+      <a href="../../content/cap08/04-atributos.html" class="pagination-link" aria-label="Tipos de Atributos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Tipos de Atributos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/12-notacoes.html" class="pagination-link" aria-label="Notações Alternativas">
-        <span class="nav-page-text"><span class="chapter-title">Notações Alternativas</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap08/06-entidades-fracas.html" class="pagination-link" aria-label="Entidades Fracas">
+        <span class="nav-page-text"><span class="chapter-title">Entidades Fracas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

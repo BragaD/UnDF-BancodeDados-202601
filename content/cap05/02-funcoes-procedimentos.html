@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Funções e Procedimentos – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/03-triggers.html" rel="next">
+<link href="../../content/cap05/01-acesso-python.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +306,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/02-funcoes-procedimentos.html"><span class="chapter-title">Funções e Procedimentos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +421,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -618,7 +634,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,7 +745,16 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#funções-sql-simples" id="toc-funções-sql-simples" class="nav-link active" data-scroll-target="#funções-sql-simples">Funções SQL Simples</a></li>
+  <li><a href="#funções-plpgsql" id="toc-funções-plpgsql" class="nav-link" data-scroll-target="#funções-plpgsql">Funções PL/pgSQL</a>
+  <ul>
+  <li><a href="#estruturas-de-controle" id="toc-estruturas-de-controle" class="nav-link" data-scroll-target="#estruturas-de-controle">Estruturas de Controle</a></li>
+  <li><a href="#exemplo-função-com-laço-for" id="toc-exemplo-função-com-laço-for" class="nav-link" data-scroll-target="#exemplo-função-com-laço-for">Exemplo: Função com Laço FOR</a></li>
+  </ul></li>
+  <li><a href="#funções-que-retornam-tabelas" id="toc-funções-que-retornam-tabelas" class="nav-link" data-scroll-target="#funções-que-retornam-tabelas">Funções que Retornam Tabelas</a></li>
+  <li><a href="#procedimentos-armazenados" id="toc-procedimentos-armazenados" class="nav-link" data-scroll-target="#procedimentos-armazenados">Procedimentos Armazenados</a></li>
+  <li><a href="#listando-funções-criadas" id="toc-listando-funções-criadas" class="nav-link" data-scroll-target="#listando-funções-criadas">Listando Funções Criadas</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +762,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/02-funcoes-procedimentos.html"><span class="chapter-title">Funções e Procedimentos</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Funções e Procedimentos</span></h1>
 </div>
 
 
@@ -762,96 +787,541 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
-</div>
-</div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
+<p><strong>Funções</strong> e <strong>procedimentos</strong> permitem armazenar lógica de negócio diretamente no banco de dados, onde ela pode ser invocada por qualquer aplicação conectada — independente de linguagem ou plataforma.</p>
+<div class="conceito">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th>Característica</th>
+<th>Função (<code>FUNCTION</code>)</th>
+<th>Procedimento (<code>PROCEDURE</code>)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td>Retorna valor</td>
+<td>Sim (escalar ou tabela)</td>
+<td>Não (ou via parâmetros <code>OUT</code>)</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
+<td>Pode ser usada em <code>SELECT</code></td>
+<td>Sim</td>
+<td>Não</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
+<td>Chamada com</td>
+<td>Expressão SQL</td>
+<td><code>CALL nome(...)</code></td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td>Controle de transação</td>
+<td>Não (herda da transação chamante)</td>
+<td>Sim (pode <code>COMMIT</code>/<code>ROLLBACK</code>)</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
+</div>
+<section id="funções-sql-simples" class="level2">
+<h2 class="anchored" data-anchor-id="funções-sql-simples">Funções SQL Simples</h2>
+<p>A forma mais direta: o corpo é uma única expressão SQL.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> total_alunos_curso(p_id_curso <span class="dt">INT</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>RETURNS BIGINT <span class="kw">AS</span> $$</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> aluno <span class="kw">WHERE</span> id_curso <span class="op">=</span> p_id_curso;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE sql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usando a função em uma consulta</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome_curso,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       total_alunos_curso(id_curso) <span class="kw">AS</span> total_alunos</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   curso</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_alunos <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome_curso</th>
+<th style="text-align: right;">total_alunos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Engenharia de Software</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ciências Econômicas</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pedagogia</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<p>Funções SQL são ideais quando o corpo cabe em uma única instrução. Para lógica mais complexa, usa-se PL/pgSQL.</p>
+</section>
+<section id="funções-plpgsql" class="level2">
+<h2 class="anchored" data-anchor-id="funções-plpgsql">Funções PL/pgSQL</h2>
+<p>PL/pgSQL é a linguagem procedural nativa do PostgreSQL. Suporta variáveis, condicionais, laços e tratamento de exceções.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> classificar_nota(p_nota <span class="dt">NUMERIC</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>RETURNS TEXT <span class="kw">AS</span> $$</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span>    p_nota <span class="kw">IS</span> <span class="kw">NULL</span>     <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="st">'Em curso'</span>;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSIF</span> p_nota <span class="op">&gt;=</span> <span class="fl">9.0</span>      <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="st">'SS — Superior'</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSIF</span> p_nota <span class="op">&gt;=</span> <span class="fl">7.0</span>      <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="st">'MS — Médio Superior'</span>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSIF</span> p_nota <span class="op">&gt;=</span> <span class="fl">6.0</span>      <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="st">'MM — Médio'</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSIF</span> p_nota <span class="op">&gt;=</span> <span class="fl">4.0</span>      <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="st">'MI — Médio Inferior'</span>;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span>                          <span class="kw">RETURN</span> <span class="st">'II — Inferior'</span>;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Classificar notas dos alunos de ENS</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.nome,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       d.nome_disciplina,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       md.nota,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       classificar_nota(md.nota) <span class="kw">AS</span> conceito</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina md</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   aluno      a <span class="kw">USING</span> (id_aluno)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d <span class="kw">USING</span> (id_disciplina)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  d.id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> a.nome, d.semestre;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 43%">
+<col style="width: 6%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">nome_disciplina</th>
+<th style="text-align: right;">nota</th>
+<th style="text-align: left;">conceito</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: left;">MM — Médio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diego Correia</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: left;">MM — Médio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: left;">MI — Médio Inferior</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: left;">MS — Médio Superior</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: left;">Bases da Eng. de Software 4</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: left;">MS — Médio Superior</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isabela Freitas</td>
+<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: left;">II — Inferior</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Juliana Nunes</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: left;">MM — Médio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Juliana Nunes</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: left;">II — Inferior</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Larissa Araújo</td>
+<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: left;">MM — Médio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Larissa Araújo</td>
+<td style="text-align: left;">Bases da Eng. de Software 2</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: left;">MM — Médio</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="estruturas-de-controle" class="level3">
+<h3 class="anchored" data-anchor-id="estruturas-de-controle">Estruturas de Controle</h3>
+<p>PL/pgSQL suporta as estruturas usuais de linguagens procedurais:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- IF / ELSIF / ELSE</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> condicao <span class="cf">THEN</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSIF</span> outra_condicao <span class="cf">THEN</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- WHILE</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">WHILE</span> condicao <span class="cf">LOOP</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">LOOP</span>;</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- FOR sobre resultado de consulta</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">FOR</span> registro <span class="kw">IN</span> <span class="kw">SELECT</span> <span class="op">..</span>. <span class="kw">FROM</span> <span class="op">..</span>. <span class="cf">LOOP</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- registro.coluna</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="cf">LOOP</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="exemplo-função-com-laço-for" class="level3">
+<h3 class="anchored" data-anchor-id="exemplo-função-com-laço-for">Exemplo: Função com Laço FOR</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> media_escola(p_id_escola <span class="dt">INT</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="dt">NUMERIC</span> <span class="kw">AS</span> $$</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">DECLARE</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    v_total   <span class="dt">NUMERIC</span> <span class="op">:=</span> <span class="dv">0</span>;</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    v_count   <span class="dt">INT</span>     <span class="op">:=</span> <span class="dv">0</span>;</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    v_salario <span class="dt">NUMERIC</span>;</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">FOR</span> v_salario <span class="kw">IN</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> p_id_escola</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">LOOP</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        v_total <span class="op">:=</span> v_total <span class="op">+</span> v_salario;</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        v_count <span class="op">:=</span> v_count <span class="op">+</span> <span class="dv">1</span>;</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">LOOP</span>;</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> v_count <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">RETURN</span> <span class="kw">NULL</span>; <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">RETURN</span> <span class="fu">ROUND</span>(v_total <span class="op">/</span> v_count, <span class="dv">2</span>);</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Média salarial calculada via função vs. AVG nativo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.sigla,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       media_escola(e.id_escola)          <span class="kw">AS</span> media_fn,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(p.salario), <span class="dv">2</span>)           <span class="kw">AS</span> media_avg</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   escola e</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_escola <span class="op">=</span> e.id_escola</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> e.id_escola, e.sigla</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> e.sigla;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sigla</th>
+<th style="text-align: right;">media_fn</th>
+<th style="text-align: right;">media_avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">4800.00</td>
+<td style="text-align: right;">4800.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">4366.67</td>
+<td style="text-align: right;">4366.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6550.00</td>
+<td style="text-align: right;">6550.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="funções-que-retornam-tabelas" class="level2">
+<h2 class="anchored" data-anchor-id="funções-que-retornam-tabelas">Funções que Retornam Tabelas</h2>
+<p>O padrão SQL (e o PostgreSQL) permite que funções retornem um conjunto de linhas — chamadas de <strong>table functions</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> professores_da_escola(p_id_escola <span class="dt">INT</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="kw">TABLE</span>(nome <span class="dt">VARCHAR</span>, ch_semanal <span class="dt">INT</span>, salario <span class="dt">NUMERIC</span>) <span class="kw">AS</span> $$</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> nome, ch_semanal, salario</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span>   professor</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  id_escola <span class="op">=</span> p_id_escola</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> salario <span class="kw">DESC</span>;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE sql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Professores da ESETI (escola 31) via table function</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> professores_da_escola(<span class="dv">31</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">ch_semanal</th>
+<th style="text-align: right;">salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3300</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A função pode ser usada diretamente na cláusula <code>FROM</code>, como uma tabela.</p>
+</section>
+<section id="procedimentos-armazenados" class="level2">
+<h2 class="anchored" data-anchor-id="procedimentos-armazenados">Procedimentos Armazenados</h2>
+<p><code>PROCEDURE</code> difere de <code>FUNCTION</code> por não retornar um valor e por poder controlar transações internamente.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">PROCEDURE</span> reajustar_salarios(p_id_escola <span class="dt">INT</span>, p_percentual <span class="dt">NUMERIC</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>LANGUAGE plpgsql <span class="kw">AS</span> $$</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UPDATE</span> professor</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SET</span>    salario <span class="op">=</span> <span class="fu">ROUND</span>(salario <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> p_percentual <span class="op">/</span> <span class="dv">100</span>), <span class="dv">2</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span>  id_escola <span class="op">=</span> p_id_escola;</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    RAISE NOTICE <span class="st">'Reajuste de % %% aplicado a % professor(es) da escola %'</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        p_percentual,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> p_id_escola),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        p_id_escola;</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salários antes do reajuste</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">11</span> <span class="kw">ORDER</span> <span class="kw">BY</span> nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">6500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">6600</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Chamar o procedimento (5% de reajuste para ESG)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> reajustar_salarios(<span class="dv">11</span>, <span class="dv">5</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salários após o reajuste</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">11</span> <span class="kw">ORDER</span> <span class="kw">BY</span> nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">6825</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">6930</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Desfazer o reajuste para não alterar os dados base do livro</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CALL</span> reajustar_salarios(<span class="dv">11</span>, <span class="op">-</span><span class="fl">100.0</span> <span class="op">*</span> <span class="dv">5</span> <span class="op">/</span> <span class="dv">105</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="listando-funções-criadas" class="level2">
+<h2 class="anchored" data-anchor-id="listando-funções-criadas">Listando Funções Criadas</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Funções e procedimentos definidos no schema public</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> routine_name        <span class="kw">AS</span> nome,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       routine_type        <span class="kw">AS</span> tipo,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       data_type           <span class="kw">AS</span> retorno</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.routines</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  routine_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> routine_type, routine_name;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: left;">tipo</th>
+<th style="text-align: left;">retorno</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">classificar_nota</td>
+<td style="text-align: left;">FUNCTION</td>
+<td style="text-align: left;">text</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">media_escola</td>
+<td style="text-align: left;">FUNCTION</td>
+<td style="text-align: left;">numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">professores_da_escola</td>
+<td style="text-align: left;">FUNCTION</td>
+<td style="text-align: left;">record</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">total_alunos_curso</td>
+<td style="text-align: left;">FUNCTION</td>
+<td style="text-align: left;">bigint</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reajustar_salarios</td>
+<td style="text-align: left;">PROCEDURE</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2">
+<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Chamar classificar_nota para ver a distribuição de conceitos em ENS</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> classificar_nota(nota)   <span class="kw">AS</span> conceito,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)                  <span class="kw">AS</span> quantidade</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina <span class="kw">USING</span> (id_disciplina)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">311</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  nota <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> conceito</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> quantidade <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">conceito</th>
+<th style="text-align: right;">quantidade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MS — Médio Superior</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MM — Médio</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">II — Inferior</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MI — Médio Inferior</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SS — Superior</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Total de alunos por escola usando a função + JOIN</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.sigla,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(total_alunos_curso(c.id_curso)) <span class="kw">AS</span> total_alunos</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   escola e</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   curso  c <span class="kw">ON</span> c.id_escola <span class="op">=</span> e.id_escola</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> e.id_escola, e.sigla</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_alunos <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sigla</th>
+<th style="text-align: right;">total_alunos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ESG</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EEMA</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ESETI</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1834,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap05/01-acesso-python.html" class="pagination-link" aria-label="Acesso ao Banco via Python">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Acesso ao Banco via Python</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/03-triggers.html" class="pagination-link" aria-label="Triggers">
+        <span class="nav-page-text"><span class="chapter-title">Triggers</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

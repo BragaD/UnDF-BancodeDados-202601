@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Cláusula SELECT – Bases da Engenharia de Software 4</title>
+<title>Restrições de Integridade – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,8 +69,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap03/05-clausula-where.html" rel="next">
-<link href="../../content/cap03/03-select-from-where.html" rel="prev">
+<link href="../../content/cap04/05-tipos-dados.html" rel="next">
+<link href="../../content/cap04/03-transacoes.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/04-integridade.html"><span class="chapter-title">Restrições de Integridade</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -517,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Cláusula SELECT</span></a>
+  <a href="../../content/cap03/04-clausula-select.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cláusula SELECT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -588,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -745,11 +745,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#distinct-eliminando-duplicatas" id="toc-distinct-eliminando-duplicatas" class="nav-link active" data-scroll-target="#distinct-eliminando-duplicatas">DISTINCT: Eliminando Duplicatas</a></li>
-  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select">SELECT *</a></li>
-  <li><a href="#expressões-aritméticas" id="toc-expressões-aritméticas" class="nav-link" data-scroll-target="#expressões-aritméticas">Expressões Aritméticas</a></li>
-  <li><a href="#alias-com-as" id="toc-alias-com-as" class="nav-link" data-scroll-target="#alias-com-as">Alias com AS</a></li>
-  <li><a href="#literais-no-select" id="toc-literais-no-select" class="nav-link" data-scroll-target="#literais-no-select">Literais no SELECT</a></li>
+  <li><a href="#restrições-sobre-uma-única-relação" id="toc-restrições-sobre-uma-única-relação" class="nav-link active" data-scroll-target="#restrições-sobre-uma-única-relação">Restrições sobre uma Única Relação</a>
+  <ul>
+  <li><a href="#not-null" id="toc-not-null" class="nav-link" data-scroll-target="#not-null">NOT NULL</a></li>
+  <li><a href="#unique" id="toc-unique" class="nav-link" data-scroll-target="#unique">UNIQUE</a></li>
+  <li><a href="#check" id="toc-check" class="nav-link" data-scroll-target="#check">CHECK</a></li>
+  </ul></li>
+  <li><a href="#integridade-referencial" id="toc-integridade-referencial" class="nav-link" data-scroll-target="#integridade-referencial">Integridade Referencial</a></li>
+  <li><a href="#ações-em-cascata" id="toc-ações-em-cascata" class="nav-link" data-scroll-target="#ações-em-cascata">Ações em Cascata</a></li>
+  <li><a href="#violação-durante-transações" id="toc-violação-durante-transações" class="nav-link" data-scroll-target="#violação-durante-transações">Violação Durante Transações</a></li>
+  <li><a href="#assertions" id="toc-assertions" class="nav-link" data-scroll-target="#assertions">Assertions</a></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -758,9 +763,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap03/index.html">Capítulo 3: Introdução ao SQL</a></li><li class="breadcrumb-item"><a href="../../content/cap03/04-clausula-select.html"><span class="chapter-title">Cláusula SELECT</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/04-integridade.html"><span class="chapter-title">Restrições de Integridade</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Cláusula SELECT</span></h1>
+<h1 class="title"><span class="chapter-title">Restrições de Integridade</span></h1>
 </div>
 
 
@@ -783,216 +788,534 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>A cláusula <code>SELECT</code> determina <strong>quais colunas</strong> (ou expressões) aparecem no resultado de uma consulta. Ela oferece recursos além de simplesmente listar nomes de colunas: eliminação de duplicatas, expressões aritméticas, aliases e literais.</p>
-<section id="distinct-eliminando-duplicatas" class="level2">
-<h2 class="anchored" data-anchor-id="distinct-eliminando-duplicatas">DISTINCT: Eliminando Duplicatas</h2>
-<p>Por padrão, o SQL <strong>não</strong> elimina linhas duplicadas no resultado — comportamento chamado de <code>ALL</code>. Para remover duplicatas, usa-se a palavra-chave <code>DISTINCT</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sem DISTINCT: lista o id_escola de cada professor (com repetição)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
+<p><strong>Restrições de integridade</strong> protegem o banco de dados contra alterações acidentais que comprometeriam a consistência dos dados. Elas garantem que mudanças autorizadas não resultem em perda de consistência.</p>
+<section id="restrições-sobre-uma-única-relação" class="level2">
+<h2 class="anchored" data-anchor-id="restrições-sobre-uma-única-relação">Restrições sobre uma Única Relação</h2>
+<p>As principais restrições que podem ser declaradas em uma tabela são:</p>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">id_escola</th>
+<th>Restrição</th>
+<th>Efeito</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">21</td>
+<td><code>NOT NULL</code></td>
+<td>O atributo não pode ter valor nulo</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">21</td>
+<td><code>PRIMARY KEY</code></td>
+<td>Identifica univocamente cada tupla; implica <code>NOT NULL</code> e <code>UNIQUE</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">31</td>
+<td><code>UNIQUE</code></td>
+<td>Não podem existir duas tuplas com o mesmo valor nesse atributo (admite <code>NULL</code>)</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">31</td>
+<td><code>CHECK (P)</code></td>
+<td>Toda tupla inserida ou atualizada deve satisfazer o predicado P</td>
 </tr>
+</tbody>
+</table>
+</div>
+<p>Para demonstrar cada restrição de forma executável, criaremos duas tabelas auxiliares no domínio da UnDF: <code>sala</code> (salas de aula disponíveis para reserva) e <code>reserva_sala</code> (reservas feitas por professores). Essas tabelas concentram todos os tipos de restrição estudados nesta seção.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> sala (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    id_sala    <span class="dt">INT</span>          <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    codigo     <span class="dt">VARCHAR</span>(<span class="dv">10</span>)  <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">UNIQUE</span>,                             <span class="co">-- NOT NULL + UNIQUE</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    capacidade <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">CHECK</span> (capacidade <span class="kw">BETWEEN</span> <span class="dv">10</span> <span class="kw">AND</span> <span class="dv">500</span>),  <span class="co">-- CHECK</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    bloco      <span class="dt">CHAR</span>(<span class="dv">1</span>)      <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> reserva_sala (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    id_reserva   SERIAL  <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    id_sala      <span class="dt">INT</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    id_prof      <span class="dt">INT</span>     <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    data_reserva <span class="dt">DATE</span>    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    hora_inicio  <span class="dt">TIME</span>    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    hora_fim     <span class="dt">TIME</span>    <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> (id_sala, id_prof, data_reserva),          <span class="co">-- sem reservas duplicadas</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">CHECK</span>  (hora_fim <span class="op">&gt;</span> hora_inicio),                  <span class="co">-- CHECK entre dois atributos</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_sala) <span class="kw">REFERENCES</span> sala (id_sala)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_prof) <span class="kw">REFERENCES</span> professor (id_prof)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sala (id_sala, codigo, capacidade, bloco) <span class="kw">VALUES</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'A101'</span>,    <span class="dv">40</span>, <span class="st">'A'</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'A102'</span>,    <span class="dv">40</span>, <span class="st">'A'</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'B201'</span>,    <span class="dv">80</span>, <span class="st">'B'</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'LAB-01'</span>,  <span class="dv">30</span>, <span class="st">'C'</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'AUDIT'</span>,  <span class="dv">200</span>, <span class="st">'D'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim) <span class="kw">VALUES</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2026-03-10'</span>, <span class="st">'08:00'</span>, <span class="st">'10:00'</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">31400002</span>, <span class="st">'2026-03-10'</span>, <span class="st">'10:00'</span>, <span class="st">'12:00'</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="dv">31200003</span>, <span class="st">'2026-03-11'</span>, <span class="st">'14:00'</span>, <span class="st">'16:00'</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="dv">31200001</span>, <span class="st">'2026-03-12'</span>, <span class="st">'08:00'</span>, <span class="st">'10:00'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salas cadastradas</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sala <span class="kw">ORDER</span> <span class="kw">BY</span> id_sala;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">id_sala</th>
+<th style="text-align: left;">codigo</th>
+<th style="text-align: right;">capacidade</th>
+<th style="text-align: left;">bloco</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td style="text-align: right;">31</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">A101</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">A</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">11</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">A102</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">A</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">11</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">B201</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: left;">B</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">LAB-01</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">C</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">AUDIT</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">D</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<section id="not-null" class="level3">
+<h3 class="anchored" data-anchor-id="not-null">NOT NULL</h3>
+<p><code>NOT NULL</code> impede que um atributo receba valor nulo. Em <code>sala</code>, os atributos <code>codigo</code>, <code>capacidade</code> e <code>bloco</code> são <code>NOT NULL</code>: nenhuma sala pode ser cadastrada sem essas informações.</p>
+<div class="exemplo">
+<p><strong>Tentativa de inserir uma sala sem código (<code>NOT NULL</code>):</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Com DISTINCT: cada id_escola aparece apenas uma vez</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> sala (id_sala, codigo, capacidade, bloco)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">99</span>, <span class="kw">NULL</span>, <span class="dv">30</span>, <span class="st">'Z'</span>);</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> not_null_violation <span class="cf">THEN</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: NOT NULL — o código da sala não pode ser nulo'</span>;</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>O SGBD rejeita a instrução com <code>not_null_violation</code>. A linha com <code>id_sala = 99</code> não é inserida e a tabela permanece inalterada.</p>
 </div>
-<p>Os 7 professores são distribuídos entre 3 escolas distintas (ids: 11, 21, 31). <code>DISTINCT</code> elimina as repetições.</p>
 </section>
-<section id="select" class="level2">
-<h2 class="anchored" data-anchor-id="select">SELECT *</h2>
-<p>O asterisco <code>*</code> seleciona <strong>todas as colunas</strong> da tabela:</p>
+<section id="unique" class="level3">
+<h3 class="anchored" data-anchor-id="unique">UNIQUE</h3>
+<p><code>UNIQUE</code> garante que nenhum valor se repita no atributo (ou combinação de atributos). Diferente de <code>PRIMARY KEY</code>, permite <code>NULL</code> — e múltiplos <code>NULL</code> são tratados como distintos entre si pelo SQL.</p>
+<p>Em <code>sala</code>, o atributo <code>codigo</code> é <code>UNIQUE</code>: duas salas não podem ter o mesmo código de identificação.</p>
+<div class="exemplo">
+<p><strong>Tentativa de inserir uma sala com código <code>'A101'</code> — que já existe:</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Retorna todas as colunas de professor</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: right;">ch_semanal</th>
-<th style="text-align: right;">salario</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">21200001</td>
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3200</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">21400002</td>
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6400</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31200001</td>
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3300</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">31400002</td>
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6700</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3100</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6500</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6600</td>
-</tr>
-</tbody>
-</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> sala (id_sala, codigo, capacidade, bloco)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">99</span>, <span class="st">'A101'</span>, <span class="dv">50</span>, <span class="st">'A'</span>);</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> unique_violation <span class="cf">THEN</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: UNIQUE — já existe uma sala com código A101'</span>;</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Embora prático para exploração, o uso de <code>SELECT *</code> em aplicações de produção é desaconselhado, pois o resultado depende da estrutura atual da tabela e pode mudar se colunas forem adicionadas ou reordenadas.</p>
 </section>
-<section id="expressões-aritméticas" class="level2">
-<h2 class="anchored" data-anchor-id="expressões-aritméticas">Expressões Aritméticas</h2>
-<p>A cláusula <code>SELECT</code> pode conter expressões aritméticas com os operadores <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>:</p>
+<section id="check" class="level3">
+<h3 class="anchored" data-anchor-id="check">CHECK</h3>
+<p><code>CHECK (P)</code> especifica um predicado P que toda tupla da relação deve satisfazer. O predicado pode referenciar uma única coluna ou múltiplas colunas da mesma tabela.</p>
+<div class="exemplo">
+<p><strong>Capacidade fora do intervalo permitido (<code>CHECK</code> em coluna única):</strong></p>
+<p>A restrição <code>CHECK (capacidade BETWEEN 10 AND 500)</code> impede salas com menos de 10 ou mais de 500 lugares.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Simular um reajuste de 10% no salário dos professores sem alterar o banco</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, id_escola, salario,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(salario <span class="op">*</span> <span class="fl">1.10</span>, <span class="dv">2</span>) <span class="kw">AS</span> salario_reajustado</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> sala (id_sala, codigo, capacidade, bloco)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">99</span>, <span class="st">'Z999'</span>, <span class="dv">5</span>, <span class="st">'Z'</span>);   <span class="co">-- 5 &lt; 10: viola o CHECK</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> check_violation <span class="cf">THEN</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: CHECK — capacidade deve estar entre 10 e 500'</span>;</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="exemplo">
+<p><strong>Horário de fim anterior ao de início (<code>CHECK</code> entre dois atributos):</strong></p>
+<p>A restrição <code>CHECK (hora_fim &gt; hora_inicio)</code> em <code>reserva_sala</code> envolve dois atributos da mesma tupla — o tipo de predicado mais comum na prática.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">1</span>, <span class="dv">31200001</span>, <span class="st">'2026-04-01'</span>, <span class="st">'14:00'</span>, <span class="st">'12:00'</span>);  <span class="co">-- 12:00 &lt; 14:00</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> check_violation <span class="cf">THEN</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: CHECK — hora_fim deve ser maior que hora_inicio'</span>;</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Verificando as restrições <code>CHECK</code> ativas no banco:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> tc.table_name, tc.constraint_name, cc.check_clause</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.table_constraints  tc</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   information_schema.check_constraints  cc</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="kw">USING</span> (constraint_catalog, constraint_schema, constraint_name)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  tc.table_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  tc.constraint_type <span class="op">=</span> <span class="st">'CHECK'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tc.table_name, tc.constraint_name;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
+<caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: right;">salario</th>
-<th style="text-align: right;">salario_reajustado</th>
+<th style="text-align: left;">table_name</th>
+<th style="text-align: left;">constraint_name</th>
+<th style="text-align: left;">check_clause</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">3200</td>
-<td style="text-align: right;">3520</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">2200_16430_1_not_null</td>
+<td style="text-align: left;">id_aluno IS NOT NULL</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">7040</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">2200_16430_2_not_null</td>
+<td style="text-align: left;">nome IS NOT NULL</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">3300</td>
-<td style="text-align: right;">3630</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">2200_16430_4_not_null</td>
+<td style="text-align: left;">ano_ingresso IS NOT NULL</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">6700</td>
-<td style="text-align: right;">7370</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">2200_16389_1_not_null</td>
+<td style="text-align: left;">id_centro IS NOT NULL</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">3100</td>
-<td style="text-align: right;">3410</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">2200_16389_2_not_null</td>
+<td style="text-align: left;">sigla IS NOT NULL</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">6500</td>
-<td style="text-align: right;">7150</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">2200_16389_3_not_null</td>
+<td style="text-align: left;">nome_centro IS NOT NULL</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">6600</td>
-<td style="text-align: right;">7260</td>
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">2200_16408_1_not_null</td>
+<td style="text-align: left;">id_curso IS NOT NULL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">2200_16408_2_not_null</td>
+<td style="text-align: left;">sigla_curso IS NOT NULL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">2200_16408_3_not_null</td>
+<td style="text-align: left;">nome_curso IS NOT NULL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">2200_16408_5_not_null</td>
+<td style="text-align: left;">n_semestres IS NOT NULL</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</section>
+</section>
+<section id="integridade-referencial" class="level2">
+<h2 class="anchored" data-anchor-id="integridade-referencial">Integridade Referencial</h2>
+<div class="conceito">
+<p>A <strong>integridade referencial</strong> garante que um valor que aparece em uma relação para um conjunto de atributos também apareça para um conjunto de atributos correspondente em outra relação.</p>
+<p>Se A é um conjunto de atributos da relação R e S é outra relação cujo atributo A é chave primária, então A é uma <strong>chave estrangeira</strong> (<em>foreign key</em>) de R se para todo valor de A em R esse valor também aparece em S.</p>
+</div>
+<p>Em <code>reserva_sala</code>:</p>
+<ul>
+<li><code>id_sala</code> referencia <code>sala (id_sala)</code> — não é possível reservar uma sala inexistente.</li>
+<li><code>id_prof</code> referencia <code>professor (id_prof)</code> — apenas professores cadastrados podem fazer reservas.</li>
+</ul>
+<div class="exemplo">
+<p><strong>Tentativa de reservar uma sala com <code>id_sala = 999</code> (não existe):</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">999</span>, <span class="dv">31200001</span>, <span class="st">'2026-05-01'</span>, <span class="st">'10:00'</span>, <span class="st">'12:00'</span>);</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> foreign_key_violation <span class="cf">THEN</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: FK — sala 999 não existe na tabela sala'</span>;</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Verificando todas as chaves estrangeiras definidas no banco:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> tc.table_name        <span class="kw">AS</span> tabela,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       kcu.column_name      <span class="kw">AS</span> coluna,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       ccu.table_name       <span class="kw">AS</span> referencia_tabela,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       ccu.column_name      <span class="kw">AS</span> referencia_coluna</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.table_constraints    tc</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   information_schema.key_column_usage     kcu</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="kw">ON</span> kcu.constraint_name <span class="op">=</span> tc.constraint_name</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="kw">AND</span> kcu.table_schema   <span class="op">=</span> tc.table_schema</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   information_schema.constraint_column_usage ccu</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>       <span class="kw">ON</span> ccu.constraint_name <span class="op">=</span> tc.constraint_name</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>       <span class="kw">AND</span> ccu.table_schema   <span class="op">=</span> tc.table_schema</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  tc.constraint_type <span class="op">=</span> <span class="st">'FOREIGN KEY'</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  tc.table_schema    <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tc.table_name, kcu.column_name;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 29%">
+<col style="width: 19%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">tabela</th>
+<th style="text-align: left;">coluna</th>
+<th style="text-align: left;">referencia_tabela</th>
+<th style="text-align: left;">referencia_coluna</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">id_curso</td>
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">id_curso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">id_escola</td>
+<td style="text-align: left;">escola</td>
+<td style="text-align: left;">id_escola</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">disciplina</td>
+<td style="text-align: left;">id_curso</td>
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">id_curso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">escola</td>
+<td style="text-align: left;">id_centro</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">id_centro</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">ano</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">id_disciplina</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">ano</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">ano</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">ano</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">semestre</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">ano</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">turma</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">id_aluno</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">id_aluno</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">id_disciplina</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">turma</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="ações-em-cascata" class="level2">
+<h2 class="anchored" data-anchor-id="ações-em-cascata">Ações em Cascata</h2>
+<p>Quando uma restrição referencial é violada por uma operação de exclusão ou atualização, o comportamento padrão é <strong>rejeitar</strong> a operação. Alternativas podem ser configuradas com <code>ON DELETE</code> e <code>ON UPDATE</code>:</p>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ação</th>
+<th>Efeito quando o registro pai é excluído/atualizado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>RESTRICT</code> (padrão)</td>
+<td>Rejeita a operação</td>
+</tr>
+<tr class="even">
+<td><code>CASCADE</code></td>
+<td>Propaga a exclusão/atualização para os registros filhos</td>
+</tr>
+<tr class="odd">
+<td><code>SET NULL</code></td>
+<td>Define as colunas da FK como <code>NULL</code> nos registros filhos</td>
+</tr>
+<tr class="even">
+<td><code>SET DEFAULT</code></td>
+<td>Define as colunas da FK com seu valor padrão</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A tabela <code>reserva_sala</code> foi criada com <code>ON DELETE CASCADE</code> na FK que referencia <code>sala</code>: excluir uma sala apaga automaticamente todas as suas reservas. Para observar o efeito, inserimos uma sala temporária <code>'DEMO'</code> com uma reserva associada:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sala (id_sala, codigo, capacidade, bloco)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">99</span>, <span class="st">'DEMO'</span>, <span class="dv">50</span>, <span class="st">'Z'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">99</span>, <span class="dv">31200001</span>, <span class="st">'2026-06-01'</span>, <span class="st">'10:00'</span>, <span class="st">'12:00'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Reserva vinculada à sala DEMO — deve aparecer 1 linha</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> r.id_reserva, s.codigo <span class="kw">AS</span> sala, p.nome <span class="kw">AS</span> professor, r.data_reserva</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   reserva_sala r</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   sala         s <span class="kw">ON</span> s.id_sala <span class="op">=</span> r.id_sala</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor    p <span class="kw">ON</span> p.id_prof <span class="op">=</span> r.id_prof</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  r.id_sala <span class="op">=</span> <span class="dv">99</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_reserva</th>
+<th style="text-align: left;">sala</th>
+<th style="text-align: left;">professor</th>
+<th style="text-align: left;">data_reserva</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">DEMO</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">2026-06-01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Excluir a sala DEMO — o CASCADE propaga a exclusão para reserva_sala</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> sala <span class="kw">WHERE</span> id_sala <span class="op">=</span> <span class="dv">99</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Reservas da sala 99 após a exclusão em cascata — deve retornar 0</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> reservas_restantes</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   reserva_sala</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_sala <span class="op">=</span> <span class="dv">99</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">reservas_restantes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O <code>CASCADE</code> é conveniente, mas deve ser usado com cuidado. Uma exclusão em cascata pode propagar-se por múltiplas tabelas e apagar dados que seriam difíceis de recuperar.</p>
+</div>
+</div>
+</section>
+<section id="violação-durante-transações" class="level2">
+<h2 class="anchored" data-anchor-id="violação-durante-transações">Violação Durante Transações</h2>
+<p>Algumas restrições são difíceis de satisfazer durante a inserção porque os dados dependem uns dos outros. Por exemplo, em uma tabela onde pai e mãe são chaves estrangeiras para a própria tabela <code>pessoa</code>, não é possível inserir uma pessoa antes de inserir seus pais — mas os pais também são pessoas.</p>
+<p>Soluções: 1. Inserir pai e mãe antes da própria pessoa. 2. Inserir a pessoa com <code>NULL</code> nos campos pai/mãe e atualizar depois (exige que <code>NOT NULL</code> não esteja definido). 3. Adiar a verificação da constraint para o momento do <code>COMMIT</code> com <code>DEFERRABLE INITIALLY DEFERRED</code> (suportado pelo PostgreSQL).</p>
+<div class="exemplo">
+<p><strong>Constraint deferível — verificação postergada até o COMMIT:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> prereq</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> prereq_existe</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (id_prereq) <span class="kw">REFERENCES</span> disciplina (id_disciplina)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">DEFERRABLE</span> <span class="kw">INITIALLY</span> <span class="kw">DEFERRED</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="assertions" class="level2">
+<h2 class="anchored" data-anchor-id="assertions">Assertions</h2>
+<div class="conceito">
+<p>Uma <strong>assertion</strong> é um predicado que o banco de dados deve satisfazer em todo momento. Diferente do <code>CHECK</code>, uma assertion pode envolver múltiplas tabelas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> <span class="op">&lt;</span>nome<span class="op">&gt;</span> <span class="kw">CHECK</span> (<span class="op">&lt;</span>predicado<span class="op">&gt;</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1004,316 +1327,178 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A expressão <code>salario * 1.10</code> <strong>não altera</strong> o banco de dados. Ela cria uma coluna calculada apenas no resultado da consulta. Para alterar os dados de fato, seria necessário usar <code>UPDATE</code> (ver seção 3.10).</p>
+<p>O padrão SQL define <code>CREATE ASSERTION</code>, mas a maioria dos SGBDs — incluindo o PostgreSQL — <strong>não implementa</strong> esse recurso diretamente. Em vez disso, usa-se <em>triggers</em> para obter efeito equivalente.</p>
+<p><strong>Exemplo conceitual</strong> (não executável no PostgreSQL):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Garante que nenhuma disciplina tenha carga horária maior que a do curso ao qual pertence</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> carga_disciplina_valida <span class="kw">CHECK</span> (</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">NOT</span> <span class="kw">EXISTS</span> (</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> <span class="dv">1</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">FROM</span>   disciplina d</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">JOIN</span>   curso c <span class="kw">ON</span> c.id_curso <span class="op">=</span> d.id_curso</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">WHERE</span>  d.carga_horaria <span class="op">&gt;</span> c.carga_horaria</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</section>
-<section id="alias-com-as" class="level2">
-<h2 class="anchored" data-anchor-id="alias-com-as">Alias com AS</h2>
-<p>A palavra-chave <code>AS</code> permite renomear colunas e tabelas no resultado — o nome alternativo é chamado de <strong>alias</strong>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias em coluna: renomeia colunas no resultado</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">AS</span> professor, id_escola <span class="kw">AS</span> escola_id</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">professor</th>
-<th style="text-align: right;">escola_id</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Aliases de tabela são especialmente úteis em consultas com múltiplas tabelas:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alias de tabela: p para professor, e para escola</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.nome_escola</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor <span class="kw">AS</span> p, escola <span class="kw">AS</span> e</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.id_escola <span class="op">=</span> e.id_escola</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  p.id_escola <span class="op">=</span> <span class="dv">11</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>2 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: left;">nome_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: left;">Escola Superior de Gestão</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: left;">Escola Superior de Gestão</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="literais-no-select" class="level2">
-<h2 class="anchored" data-anchor-id="literais-no-select">Literais no SELECT</h2>
-<p>É possível incluir valores literais (constantes) na cláusula <code>SELECT</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Adiciona uma coluna com o texto fixo 'UnDF'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'UnDF'</span> <span class="kw">AS</span> instituicao, nome, id_escola</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">instituicao</th>
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">id_escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">UnDF</td>
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">31</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="conceito">
-<p><strong>Resumo da cláusula SELECT:</strong></p>
-<ul>
-<li><code>SELECT coluna</code> — projeta uma coluna específica</li>
-<li><code>SELECT DISTINCT coluna</code> — elimina duplicatas</li>
-<li><code>SELECT *</code> — projeta todas as colunas</li>
-<li><code>SELECT expressão AS alias</code> — projeta uma expressão com nome alternativo</li>
-<li><code>SELECT 'literal' AS alias</code> — inclui uma constante no resultado</li>
-</ul>
 </div>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- CASE no SELECT: categorizar professores por regime de trabalho</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, ch_semanal, salario,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="cf">CASE</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> ch_semanal <span class="op">=</span> <span class="dv">40</span> <span class="cf">THEN</span> <span class="st">'Regime integral'</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           <span class="cf">WHEN</span> ch_semanal <span class="op">=</span> <span class="dv">20</span> <span class="cf">THEN</span> <span class="st">'Regime parcial'</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>           <span class="cf">ELSE</span>                      <span class="st">'Outro'</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="cf">END</span> <span class="kw">AS</span> regime</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> ch_semanal <span class="kw">DESC</span>, nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">ch_semanal</th>
-<th style="text-align: right;">salario</th>
-<th style="text-align: left;">regime</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6500</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6600</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Felipe Araujo</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6700</td>
-<td style="text-align: left;">Regime integral</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Eduarda Souza</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3200</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3300</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">3100</td>
-<td style="text-align: left;">Regime parcial</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Concatenação de strings: montar identificação completa da turma</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(id_disciplina <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(ano <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'-'</span> <span class="op">||</span> <span class="fu">CAST</span>(semestre <span class="kw">AS</span> TEXT) <span class="op">||</span> <span class="st">'/'</span> <span class="op">||</span> <span class="fu">CAST</span>(turma <span class="kw">AS</span> TEXT) <span class="kw">AS</span> id_turma,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       id_prof,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       sala</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   ministra</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_turma;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Chaves primárias de todas as tabelas do banco</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> tc.table_name,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       STRING_AGG(kcu.column_name, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> kcu.ordinal_position) <span class="kw">AS</span> colunas_pk</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.table_constraints   tc</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   information_schema.key_column_usage    kcu</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>       <span class="kw">ON</span> kcu.constraint_name <span class="op">=</span> tc.constraint_name</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  tc.table_schema    <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  tc.constraint_type <span class="op">=</span> <span class="st">'PRIMARY KEY'</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tc.table_name</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tc.table_name;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">id_turma</th>
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">sala</th>
+<th style="text-align: left;">table_name</th>
+<th style="text-align: left;">colunas_pk</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">1110201/2023-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-005</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">id_aluno</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110201/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-013</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">id_centro</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110201/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-025</td>
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">id_curso</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110202/2023-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-012</td>
+<td style="text-align: left;">disciplina</td>
+<td style="text-align: left;">id_disciplina</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110202/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-001</td>
+<td style="text-align: left;">escola</td>
+<td style="text-align: left;">id_escola</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110202/2025-2/1</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">ESG-SALA-007</td>
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">id_disciplina, ano, semestre, turma, id_aluno</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110401/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-009</td>
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">id_disciplina, ano, semestre, turma</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110401/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-021</td>
+<td style="text-align: left;">prereq</td>
+<td style="text-align: left;">id_disciplina, id_prereq</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1110402/2024-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-001</td>
+<td style="text-align: left;">professor</td>
+<td style="text-align: left;">id_prof</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1110402/2025-2/1</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">ESG-SALA-005</td>
+<td style="text-align: left;">reserva_sala</td>
+<td style="text-align: left;">id_reserva</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- DISTINCT com múltiplas colunas: combinações únicas de id_escola e ch_semanal</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_escola, ch_semanal</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_escola, ch_semanal;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Reservas agendadas: sala, professor, data e horário</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.codigo <span class="kw">AS</span> sala, s.bloco,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>       p.nome   <span class="kw">AS</span> professor,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>       r.data_reserva,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       r.hora_inicio, r.hora_fim</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   reserva_sala r</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   sala         s <span class="kw">ON</span> s.id_sala <span class="op">=</span> r.id_sala</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor    p <span class="kw">ON</span> p.id_prof <span class="op">=</span> r.id_prof</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> r.data_reserva, r.hora_inicio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>5 records</caption>
+<caption>4 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: right;">ch_semanal</th>
+<th style="text-align: left;">sala</th>
+<th style="text-align: left;">bloco</th>
+<th style="text-align: left;">professor</th>
+<th style="text-align: left;">data_reserva</th>
+<th style="text-align: left;">hora_inicio</th>
+<th style="text-align: left;">hora_fim</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: left;">A101</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">2026-03-10</td>
+<td style="text-align: left;">08:00:00</td>
+<td style="text-align: left;">10:00:00</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: left;">A102</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Helena Carvalho</td>
+<td style="text-align: left;">2026-03-10</td>
+<td style="text-align: left;">10:00:00</td>
+<td style="text-align: left;">12:00:00</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: left;">B201</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Igor Melo</td>
+<td style="text-align: left;">2026-03-11</td>
+<td style="text-align: left;">14:00:00</td>
+<td style="text-align: left;">16:00:00</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">40</td>
+<td style="text-align: left;">LAB-01</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: left;">2026-03-12</td>
+<td style="text-align: left;">08:00:00</td>
+<td style="text-align: left;">10:00:00</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tentativa de inserir um professor com escola inexistente (violação de FK)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>DO $$</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">INSERT</span> <span class="kw">INTO</span> professor (id_prof, nome, id_escola, ch_semanal, salario)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">VALUES</span> (<span class="dv">99999999</span>, <span class="st">'Teste Inválido'</span>, <span class="dv">99</span>, <span class="dv">40</span>, <span class="fl">5000.00</span>);</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">EXCEPTION</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> foreign_key_violation <span class="cf">THEN</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        RAISE NOTICE <span class="st">'Correto: FK violation — escola 99 não existe'</span>;</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>$$;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>DISTINCT</code> com múltiplas colunas elimina duplicatas de <strong>combinações</strong> — não de cada coluna individualmente. A consulta acima retorna cada par (id_escola, ch_semanal) único.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Disciplinas com pelo menos um pré-requisito</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> id_disciplina) <span class="kw">AS</span> disciplinas_com_prereq</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereq;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">disciplinas_com_prereq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -1830,13 +2015,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap03/03-select-from-where.html" class="pagination-link" aria-label="SELECT-FROM-WHERE">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">SELECT-FROM-WHERE</span></span>
+      <a href="../../content/cap04/03-transacoes.html" class="pagination-link" aria-label="Transações">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Transações</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap03/05-clausula-where.html" class="pagination-link" aria-label="WHERE e ORDER BY">
-        <span class="nav-page-text"><span class="chapter-title">WHERE e ORDER BY</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/05-tipos-dados.html" class="pagination-link" aria-label="Tipos de Dados SQL">
+        <span class="nav-page-text"><span class="chapter-title">Tipos de Dados SQL</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

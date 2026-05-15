@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Acesso ao Banco via Python – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/02-funcoes-procedimentos.html" rel="next">
+<link href="../../content/cap05/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +306,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/01-acesso-python.html"><span class="chapter-title">Acesso ao Banco via Python</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +421,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -613,7 +629,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,7 +745,18 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#instalação" id="toc-instalação" class="nav-link active" data-scroll-target="#instalação">Instalação</a></li>
+  <li><a href="#conectando-ao-postgresql" id="toc-conectando-ao-postgresql" class="nav-link" data-scroll-target="#conectando-ao-postgresql">Conectando ao PostgreSQL</a></li>
+  <li><a href="#executando-consultas-select" id="toc-executando-consultas-select" class="nav-link" data-scroll-target="#executando-consultas-select">Executando Consultas SELECT</a></li>
+  <li><a href="#sql-injection-o-perigo-das-strings-concatenadas" id="toc-sql-injection-o-perigo-das-strings-concatenadas" class="nav-link" data-scroll-target="#sql-injection-o-perigo-das-strings-concatenadas">SQL Injection — O Perigo das Strings Concatenadas</a>
+  <ul>
+  <li><a href="#exemplo-inseguro" id="toc-exemplo-inseguro" class="nav-link" data-scroll-target="#exemplo-inseguro">Exemplo inseguro</a></li>
+  <li><a href="#solução-consultas-parametrizadas" id="toc-solução-consultas-parametrizadas" class="nav-link" data-scroll-target="#solução-consultas-parametrizadas">Solução: Consultas Parametrizadas</a></li>
+  </ul></li>
+  <li><a href="#operações-dml-insert-update-delete" id="toc-operações-dml-insert-update-delete" class="nav-link" data-scroll-target="#operações-dml-insert-update-delete">Operações DML (INSERT, UPDATE, DELETE)</a></li>
+  <li><a href="#controle-de-transações" id="toc-controle-de-transações" class="nav-link" data-scroll-target="#controle-de-transações">Controle de Transações</a></li>
+  <li><a href="#padrão-completo-com-context-manager" id="toc-padrão-completo-com-context-manager" class="nav-link" data-scroll-target="#padrão-completo-com-context-manager">Padrão Completo com Context Manager</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +764,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/01-acesso-python.html"><span class="chapter-title">Acesso ao Banco via Python</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Acesso ao Banco via Python</span></h1>
 </div>
 
 
@@ -762,6 +789,288 @@ div.csl-indent {
 </header>
 
 
+<p>O SQL não é uma linguagem de programação completa: não suporta laços, entrada de usuário, chamadas de rede ou lógica de apresentação. Para construir uma aplicação real, é preciso combinar SQL com uma linguagem hospedeira — aqui, Python.</p>
+<div class="conceito">
+<p>A abordagem padrão é usar uma <strong>biblioteca de acesso a banco de dados</strong> (database API) que:</p>
+<ol type="1">
+<li>Abre uma <strong>conexão</strong> com o SGBD</li>
+<li>Envia <strong>instruções SQL</strong> pelo canal aberto</li>
+<li>Recebe os <strong>resultados</strong> (linhas, contagens, erros) de volta</li>
+<li>Confirma ou desfaz <strong>transações</strong></li>
+</ol>
+</div>
+<p>Em Python, a biblioteca padrão para PostgreSQL é o <strong>psycopg2</strong>, que implementa a especificação DB-API 2.0 (PEP 249) — a mesma interface usada por <code>sqlite3</code>, <code>pymysql</code> e outras.</p>
+<section id="instalação" class="level2">
+<h2 class="anchored" data-anchor-id="instalação">Instalação</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install psycopg2-binary</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="conectando-ao-postgresql" class="level2">
+<h2 class="anchored" data-anchor-id="conectando-ao-postgresql">Conectando ao PostgreSQL</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> psycopg2.<span class="ex">connect</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    dbname   <span class="op">=</span> <span class="st">"curso"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    host     <span class="op">=</span> <span class="st">"localhost"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    port     <span class="op">=</span> <span class="dv">5432</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    user     <span class="op">=</span> <span class="st">"postgres"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    password <span class="op">=</span> os.getenv(<span class="st">"POSTGRES_PASSWORD"</span>, <span class="st">"postgres"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="conceito">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objeto</th>
+<th>Papel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>conn</code></td>
+<td>Representa a sessão com o banco; mantém estado de transação</td>
+</tr>
+<tr class="even">
+<td><code>cur = conn.cursor()</code></td>
+<td>Canal pelo qual se enviam SQL e se recebem resultados</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="executando-consultas-select" class="level2">
+<h2 class="anchored" data-anchor-id="executando-consultas-select">Executando Consultas SELECT</h2>
+<div id="0eba2193" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cur.execute(<span class="st">"SELECT nome, salario FROM professor ORDER BY salario DESC"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nome, salario <span class="kw">in</span> cur.fetchall():</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>nome<span class="sc">}</span><span class="ss">: R$ </span><span class="sc">{</span>salario<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Helena Carvalho: R$ 6700.00
+Carla Pinto: R$ 6600.00
+Bruno Teixeira: R$ 6500.00
+Felipe Araujo: R$ 6400.00
+Gustavo Costa: R$ 3300.00
+Eduarda Souza: R$ 3200.00
+Igor Melo: R$ 3100.00</code></pre>
+</div>
+</div>
+<p>Alternativas de fetch:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Método</th>
+<th>Retorna</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fetchone()</code></td>
+<td>Próxima linha (ou <code>None</code>)</td>
+</tr>
+<tr class="even">
+<td><code>fetchmany(n)</code></td>
+<td>Até <em>n</em> linhas</td>
+</tr>
+<tr class="odd">
+<td><code>fetchall()</code></td>
+<td>Todas as linhas restantes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sql-injection-o-perigo-das-strings-concatenadas" class="level2">
+<h2 class="anchored" data-anchor-id="sql-injection-o-perigo-das-strings-concatenadas">SQL Injection — O Perigo das Strings Concatenadas</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>SQL Injection</strong> é uma das vulnerabilidades mais críticas (OWASP Top 10). Ocorre quando dados do usuário são inseridos diretamente em uma string SQL — permitindo que um atacante altere a estrutura da consulta.</p>
+</div>
+</div>
+<section id="exemplo-inseguro" class="level3">
+<h3 class="anchored" data-anchor-id="exemplo-inseguro">Exemplo inseguro</h3>
+<p>O código abaixo concatena o input do usuário diretamente na string SQL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VULNERÁVEL — nunca faça isso</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>escola_id <span class="op">=</span> <span class="bu">input</span>(<span class="st">"ID da escola: "</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> <span class="st">"SELECT nome FROM professor WHERE id_escola = "</span> <span class="op">+</span> escola_id</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>cur.execute(sql)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quando o usuário digita <code>31 OR 1=1 --</code>, a variável <code>sql</code> fica:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">31</span> <span class="kw">OR</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span> <span class="co">--</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O fragmento <code>OR 1=1</code> é sempre verdadeiro — o filtro é completamente ignorado. Executando exatamente essa query no banco:</p>
+<div id="64661679" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando o código vulnerável com input malicioso</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>escola_id_malicioso <span class="op">=</span> <span class="st">"31 OR 1=1 --"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sql_injetado <span class="op">=</span> <span class="st">"SELECT nome FROM professor WHERE id_escola = "</span> <span class="op">+</span> escola_id_malicioso</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>cur.execute(sql_injetado)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> cur.fetchall()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Professores retornados com input '</span><span class="sc">{</span>escola_id_malicioso<span class="sc">}</span><span class="ss">':"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  → </span><span class="sc">{</span><span class="bu">len</span>(rows)<span class="sc">}</span><span class="ss"> linha(s) — deveria retornar apenas os da escola 31</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (nome,) <span class="kw">in</span> rows:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>nome<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Professores retornados com input '31 OR 1=1 --':
+  → 7 linha(s) — deveria retornar apenas os da escola 31
+
+  Eduarda Souza
+  Felipe Araujo
+  Gustavo Costa
+  Helena Carvalho
+  Igor Melo
+  Bruno Teixeira
+  Carla Pinto</code></pre>
+</div>
+</div>
+<p><strong>Todos</strong> os professores foram retornados — independente da escola pedida. Além do <code>OR 1=1</code>, um atacante pode usar <code>UNION SELECT</code> para exfiltrar dados de outras tabelas ou <code>; DROP TABLE</code> para destruir dados.</p>
+</section>
+<section id="solução-consultas-parametrizadas" class="level3">
+<h3 class="anchored" data-anchor-id="solução-consultas-parametrizadas">Solução: Consultas Parametrizadas</h3>
+<p>Com consultas parametrizadas, o valor do usuário é enviado <strong>separado</strong> da query — nunca como parte do texto SQL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SEGURO — use sempre parâmetros</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>escola_id <span class="op">=</span> <span class="bu">input</span>(<span class="st">"ID da escola: "</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>cur.execute(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SELECT nome FROM professor WHERE id_escola = </span><span class="sc">%s</span><span class="st">"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    (escola_id,)   <span class="co"># psycopg2 envia como parâmetro $1, nunca concatena no SQL</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quando <code>escola_id = "31 OR 1=1 --"</code>, psycopg2 envia ao PostgreSQL:</p>
+<ul>
+<li><strong>Query template:</strong> <code>SELECT nome FROM professor WHERE id_escola = $1</code></li>
+<li><strong>Parâmetro $1:</strong> a string literal <code>31 OR 1=1 --</code></li>
+</ul>
+<p>O PostgreSQL recebe um texto e tenta compará-lo com a coluna <code>id_escola</code> (tipo <code>INTEGER</code>). Como <code>"31 OR 1=1 --"</code> não é um inteiro válido, o banco rejeita e lança um erro — que o Python captura normalmente:</p>
+<div id="d6e1b0bb" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2.errors</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>escola_id_malicioso <span class="op">=</span> <span class="st">"31 OR 1=1 --"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    cur.execute(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SELECT nome FROM professor WHERE id_escola = </span><span class="sc">%s</span><span class="st">"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        (escola_id_malicioso,)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> cur.fetchall()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(rows)<span class="sc">}</span><span class="ss"> linha(s) retornada(s)"</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> psycopg2.errors.InvalidTextRepresentation <span class="im">as</span> e:</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    conn.rollback()  <span class="co"># limpa o estado de erro da conexão</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"PostgreSQL bloqueou a operação:"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>e<span class="sc">.</span>diag<span class="sc">.</span>message_primary<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">  → O input foi tratado como DADO, não como SQL."</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  → A estrutura da query permanece intacta."</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PostgreSQL bloqueou a operação:
+  invalid input syntax for type integer: "31 OR 1=1 --"
+
+  → O input foi tratado como DADO, não como SQL.
+  → A estrutura da query permanece intacta.</code></pre>
+</div>
+</div>
+<p>Mesmo que o atacante forneça um input que <strong>seja</strong> um inteiro válido (como <code>"999"</code>), a query simplesmente retorna 0 linhas — nenhum SQL extra é executado:</p>
+<div id="3128bca0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>escola_id_invalido <span class="op">=</span> <span class="st">"999"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>cur.execute(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SELECT nome FROM professor WHERE id_escola = </span><span class="sc">%s</span><span class="st">"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    (<span class="bu">int</span>(escola_id_invalido),)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> cur.fetchall()</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Escola </span><span class="sc">{</span>escola_id_invalido<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span><span class="bu">len</span>(rows)<span class="sc">}</span><span class="ss"> professor(es) — escola inexistente, 0 linhas."</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Escola 999: 0 professor(es) — escola inexistente, 0 linhas.</code></pre>
+</div>
+</div>
+<div class="conceito">
+<p>Em psycopg2, o marcador de posição é <code>%s</code> para qualquer tipo. A biblioteca envia query e parâmetros separadamente ao servidor via protocolo wire — o SQL enviado nunca contém os dados do usuário concatenados como texto.</p>
+<p>Compare com JDBC (Java), onde o marcador é <code>?</code> em <code>PreparedStatement</code> — o mesmo princípio.</p>
+</div>
+</section>
+</section>
+<section id="operações-dml-insert-update-delete" class="level2">
+<h2 class="anchored" data-anchor-id="operações-dml-insert-update-delete">Operações DML (INSERT, UPDATE, DELETE)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># INSERT com parâmetros</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>cur.execute(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">    INSERT INTO evento_academico</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">        (nome, tipo, id_escola, data_inicio, data_fim, hora_inicio, hora_fim)</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">    VALUES (</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Hackathon UnDF"</span>, <span class="st">"Workshop"</span>, <span class="dv">31</span>, <span class="st">"2026-09-15"</span>, <span class="st">"2026-09-16"</span>, <span class="st">"08:00"</span>, <span class="st">"22:00"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># UPDATE</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>cur.execute(</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UPDATE professor SET salario = </span><span class="sc">%s</span><span class="st"> WHERE id_prof = </span><span class="sc">%s</span><span class="st">"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">6900.00</span>, <span class="dv">31400002</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Linhas afetadas: </span><span class="sc">{</span>cur<span class="sc">.</span>rowcount<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="controle-de-transações" class="level2">
+<h2 class="anchored" data-anchor-id="controle-de-transações">Controle de Transações</h2>
+<p>Por padrão, psycopg2 inicia uma transação implicitamente na primeira instrução. Para confirmar ou desfazer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># As duas instruções são atômicas: confirmam juntas ou nenhuma confirma</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    cur.execute(<span class="st">"UPDATE professor SET salario = salario * 1.10 WHERE id_escola = 31"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    cur.execute(<span class="st">"UPDATE professor SET salario = salario * 0.95 WHERE id_escola = 21"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    conn.commit()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Transação confirmada."</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    conn.rollback()</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Erro — rollback realizado: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Para operações de leitura simples onde transação explícita não é necessária:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>conn.autocommit <span class="op">=</span> <span class="va">True</span>   <span class="co"># cada instrução é confirmada imediatamente</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="padrão-completo-com-context-manager" class="level2">
+<h2 class="anchored" data-anchor-id="padrão-completo-com-context-manager">Padrão Completo com Context Manager</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2, os</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> contextlib <span class="im">import</span> closing</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>dsn <span class="op">=</span> <span class="bu">dict</span>(dbname<span class="op">=</span><span class="st">"curso"</span>, host<span class="op">=</span><span class="st">"localhost"</span>, port<span class="op">=</span><span class="dv">5432</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>           user<span class="op">=</span><span class="st">"postgres"</span>, password<span class="op">=</span>os.getenv(<span class="st">"POSTGRES_PASSWORD"</span>,<span class="st">"postgres"</span>))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> psycopg2.<span class="ex">connect</span>(<span class="op">**</span>dsn) <span class="im">as</span> conn:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> closing(conn.cursor()) <span class="im">as</span> cur:</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        cur.execute(<span class="st">"""</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">            SELECT e.sigla, COUNT(p.id_prof) AS professores</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="st">            FROM   escola e</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="st">            LEFT JOIN professor p ON p.id_escola = e.id_escola</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="st">            GROUP BY e.sigla</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="st">            ORDER BY professores DESC</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> sigla, total <span class="kw">in</span> cur.fetchall():</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>sigla<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss"> professor(es)"</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    conn.commit()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -772,86 +1081,56 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>O <code>with psycopg2.connect(...)</code> chama <code>conn.commit()</code> ao sair sem exceção, ou <code>conn.rollback()</code> se uma exceção ocorrer.</p>
 </div>
 </div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
-</tr>
-</tbody>
-</table>
+<hr>
+</section>
+<section id="para-praticar" class="level2">
+<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
+<p>Os trechos abaixo são exercícios para executar localmente (requerem Python + psycopg2):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercício 1: listar alunos de um curso específico</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2, os</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> alunos_do_curso(id_curso: <span class="bu">int</span>):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    conn <span class="op">=</span> psycopg2.<span class="ex">connect</span>(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        dbname<span class="op">=</span><span class="st">"curso"</span>, host<span class="op">=</span><span class="st">"localhost"</span>, port<span class="op">=</span><span class="dv">5432</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">"postgres"</span>, password<span class="op">=</span>os.getenv(<span class="st">"POSTGRES_PASSWORD"</span>,<span class="st">"postgres"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    cur.execute(<span class="st">"""</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT a.nome, a.ano_ingresso</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM   aluno a</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE  a.id_curso = </span><span class="sc">%s</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="st">        ORDER BY a.nome</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span>, (id_curso,))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> nome, ano <span class="kw">in</span> cur.fetchall():</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>nome<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>ano<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    cur.close()</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    conn.close()</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>alunos_do_curso(<span class="dv">311</span>)   <span class="co"># Engenharia de Software</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercício 2: matrícula segura — trata violações de FK e UNIQUE</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> matricular(conn, id_aluno, id_disciplina, ano, semestre, turma):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        cur.execute(<span class="st">"""</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">            INSERT INTO matricula_disciplina</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">                (id_disciplina, ano, semestre, turma, id_aluno)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">            VALUES (</span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">, </span><span class="sc">%s</span><span class="st">)</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>, (id_disciplina, ano, semestre, turma, id_aluno))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Matrícula realizada."</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> psycopg2.errors.ForeignKeyViolation:</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        conn.rollback()</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Turma não encontrada — matrícula cancelada."</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> psycopg2.errors.UniqueViolation:</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        conn.rollback()</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Aluno já matriculado nesta turma."</span>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span>:</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        cur.close()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1643,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap05/index.html" class="pagination-link" aria-label="Visão Geral">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Visão Geral</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/02-funcoes-procedimentos.html" class="pagination-link" aria-label="Funções e Procedimentos">
+        <span class="nav-page-text"><span class="chapter-title">Funções e Procedimentos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

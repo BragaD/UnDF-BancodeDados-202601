@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
 
-<title>Notações Alternativas – Bases da Engenharia de Software 4</title>
+<title>Transações – Bases da Engenharia de Software 4</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,23 +69,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/13-resumo.html" rel="next">
-<link href="../../content/cap04/11-decisoes-projeto.html" rel="prev">
+<link href="../../content/cap04/04-integridade.html" rel="next">
+<link href="../../content/cap04/02-views.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-663e73f9dec64fbea7d0ce06426dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -269,7 +306,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/12-notacoes.html"><span class="chapter-title">Notações Alternativas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-transacoes.html"><span class="chapter-title">Transações</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -523,7 +560,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 4: SQL Intermediário</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -536,67 +573,164 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  <a href="../../content/cap04/01-joins.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Expressões de Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  <a href="../../content/cap04/03-transacoes.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Transações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  <a href="../../content/cap04/06-indices.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Índices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  <a href="../../content/cap04/07-autorizacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Autorização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 5: SQL Avançado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Notações Alternativas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap05/05-agregacao-avancada.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação Avançada</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -611,12 +745,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#comparação-de-notações" id="toc-comparação-de-notações" class="nav-link active" data-scroll-target="#comparação-de-notações">Comparação de Notações</a></li>
-  <li><a href="#crows-foot-idef1x" id="toc-crows-foot-idef1x" class="nav-link" data-scroll-target="#crows-foot-idef1x">Crow’s Foot (IDEF1X)</a></li>
-  <li><a href="#equivalências-er-chen-crows-foot" id="toc-equivalências-er-chen-crows-foot" class="nav-link" data-scroll-target="#equivalências-er-chen-crows-foot">Equivalências: ER (Chen) × Crow’s Foot</a></li>
-  <li><a href="#uml-diagramas-de-classes" id="toc-uml-diagramas-de-classes" class="nav-link" data-scroll-target="#uml-diagramas-de-classes">UML — Diagramas de Classes</a></li>
-  <li><a href="#correspondências-er-uml" id="toc-correspondências-er-uml" class="nav-link" data-scroll-target="#correspondências-er-uml">Correspondências ER × UML</a></li>
-  <li><a href="#inversão-na-leitura-de-cardinalidade" id="toc-inversão-na-leitura-de-cardinalidade" class="nav-link" data-scroll-target="#inversão-na-leitura-de-cardinalidade">Inversão na Leitura de Cardinalidade</a></li>
+  <li><a href="#o-que-é-uma-transação" id="toc-o-que-é-uma-transação" class="nav-link active" data-scroll-target="#o-que-é-uma-transação">O Que é uma Transação</a></li>
+  <li><a href="#propriedades-acid" id="toc-propriedades-acid" class="nav-link" data-scroll-target="#propriedades-acid">Propriedades ACID</a></li>
+  <li><a href="#commit-e-rollback" id="toc-commit-e-rollback" class="nav-link" data-scroll-target="#commit-e-rollback">COMMIT e ROLLBACK</a></li>
+  <li><a href="#violação-de-constraint-e-transações" id="toc-violação-de-constraint-e-transações" class="nav-link" data-scroll-target="#violação-de-constraint-e-transações">Violação de Constraint e Transações</a>
+  <ul>
+  <li><a href="#savepoints" id="toc-savepoints" class="nav-link" data-scroll-target="#savepoints">Savepoints</a></li>
+  </ul></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -625,9 +760,9 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/12-notacoes.html"><span class="chapter-title">Notações Alternativas</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-transacoes.html"><span class="chapter-title">Transações</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Notações Alternativas</span></h1>
+<h1 class="title"><span class="chapter-title">Transações</span></h1>
 </div>
 
 
@@ -650,99 +785,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O diagrama ER apresentado neste capítulo usa a <strong>notação de Chen</strong> (1976). Na prática, existem outras notações amplamente usadas em ferramentas de modelagem e em engenharia de software.</p>
-<section id="comparação-de-notações" class="level2">
-<h2 class="anchored" data-anchor-id="comparação-de-notações">Comparação de Notações</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Notação</th>
-<th>Uso típico</th>
-<th>Caractísticas</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Chen</strong></td>
-<td>Acadêmico, livros-texto</td>
-<td>Losangos para relacionamentos, elipses para atributos</td>
-</tr>
-<tr class="even">
-<td><strong>IDEF1X / Crow’s Foot</strong></td>
-<td>Ferramentas CASE, modelagem física</td>
-<td>Atributos dentro das caixas, pés de corvo para “muitos”</td>
-</tr>
-<tr class="odd">
-<td><strong>UML (Diagrama de Classes)</strong></td>
-<td>Engenharia de software</td>
-<td>Herança nativa, operações, multiplicidades</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="crows-foot-idef1x" class="level2">
-<h2 class="anchored" data-anchor-id="crows-foot-idef1x">Crow’s Foot (IDEF1X)</h2>
-<p>A notação <em>crow’s foot</em> (pé de corvo) é a mais usada em ferramentas de modelagem de dados como MySQL Workbench, dbdiagram.io e DBeaver.</p>
+<p>Uma <strong>transação</strong> é uma unidade lógica de trabalho composta por uma sequência de operações SQL. O conceito é fundamental para garantir que o banco de dados permaneça em um estado consistente mesmo diante de falhas ou acessos concorrentes.</p>
+<section id="o-que-é-uma-transação" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-é-uma-transação">O Que é uma Transação</h2>
 <div class="conceito">
-<p>Na notação crow’s foot: - <strong>Retângulos</strong> representam entidades (com atributos listados internamente) - <strong>Linhas</strong> conectam entidades (sem losangos) - <strong>Símbolos nas extremidades</strong> indicam cardinalidade e participação: - <code>|</code> — exatamente um (participação total, lado “um”) - <code>O</code> — zero (participação parcial) - <code>&lt;</code> — muitos (pé de corvo)</p>
-<p>Os símbolos são combinados: - <code>|&lt;</code> — um ou mais (total, muitos) - <code>O&lt;</code> — zero ou mais (parcial, muitos) - <code>||</code> — exatamente um (total, um) - <code>O|</code> — zero ou um (parcial, um)</p>
-</div>
-</section>
-<section id="equivalências-er-chen-crows-foot" class="level2">
-<h2 class="anchored" data-anchor-id="equivalências-er-chen-crows-foot">Equivalências: ER (Chen) × Crow’s Foot</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Conceito ER (Chen)</th>
-<th>Crow’s Foot</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1:N, participação parcial no N</td>
-<td><code>||</code> no lado 1, <code>O&lt;</code> no lado N</td>
-</tr>
-<tr class="even">
-<td>1:N, participação total no N</td>
-<td><code>||</code> no lado 1, <code>|&lt;</code> no lado N</td>
-</tr>
-<tr class="odd">
-<td>N:N</td>
-<td><code>O&lt;</code> nos dois lados</td>
-</tr>
-<tr class="even">
-<td>1:1</td>
-<td><code>||</code> nos dois lados (ou com O para parcial)</td>
-</tr>
-</tbody>
-</table>
-<div class="exemplo">
-<p>O relacionamento <code>professor</code> (N:1, parcial) com <code>escola</code> (1, parcial):</p>
-<p><strong>Chen</strong>: professor —— lotado_em —→ escola (linha simples dos dois lados, seta para escola)</p>
-<p><strong>Crow’s Foot</strong>:</p>
-<pre><code>professor |o---||  escola</code></pre>
+<p>Uma <strong>transação</strong> consiste em uma sequência de declarações de consulta e/ou atualização que são tratadas como uma <strong>unidade atômica de trabalho</strong>. Ela deve terminar com uma das seguintes declarações:</p>
 <ul>
-<li>Lado <code>professor</code>: <code>|o</code> — zero ou um (um professor pode existir sem estar lotado? Não neste caso; seria <code>|</code>|)</li>
-<li>Lado <code>escola</code>: <code>||</code> — exatamente uma escola por professor; <code>o&lt;</code> — uma escola pode ter zero ou mais professores</li>
+<li><code>COMMIT</code> — as alterações tornam-se permanentes no banco de dados.</li>
+<li><code>ROLLBACK</code> — todas as alterações realizadas pela transação são desfeitas.</li>
 </ul>
-<p>Para o banco da UnDF (todo professor tem escola, uma escola pode ter 0 ou mais professores):</p>
-<pre><code>professor ||---o&lt;  escola</code></pre>
 </div>
+<p>O padrão SQL especifica que uma transação começa implicitamente quando qualquer instrução SQL é executada. O PostgreSQL, por padrão, opera em modo <em>autocommit</em> — cada instrução individual é automaticamente confirmada como uma transação. Para agrupar múltiplas instruções em uma transação, usa-se <code>BEGIN</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- instrução 1</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- instrução 2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- instrução 3</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;   <span class="co">-- ou ROLLBACK para desfazer tudo</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="uml-diagramas-de-classes" class="level2">
-<h2 class="anchored" data-anchor-id="uml-diagramas-de-classes">UML — Diagramas de Classes</h2>
-<p>O UML (<em>Unified Modeling Language</em>) usa <strong>diagramas de classes</strong> para modelagem conceitual. É a linguagem padrão em engenharia de software.</p>
+<section id="propriedades-acid" class="level2">
+<h2 class="anchored" data-anchor-id="propriedades-acid">Propriedades ACID</h2>
 <div class="conceito">
-<p>Em diagramas de classes UML: - <strong>Retângulos com três compartimentos</strong>: nome da classe (topo), atributos (meio), operações (base) - <strong>Linhas de associação</strong>: sem losangos; o nome da associação aparece sobre a linha - <strong>Multiplicidade</strong>: expressa na forma <code>min..max</code> nas extremidades das linhas - <code>1</code> ou <code>1..1</code> — exatamente um - <code>0..1</code> — zero ou um - <code>*</code> ou <code>0..*</code> — zero ou mais - <code>1..*</code> — um ou mais - <strong>Generalização</strong>: seta com ponta aberta (triângulo) apontando para o nível superior</p>
-</div>
-</section>
-<section id="correspondências-er-uml" class="level2">
-<h2 class="anchored" data-anchor-id="correspondências-er-uml">Correspondências ER × UML</h2>
+<p>Transações devem satisfazer as propriedades <strong>ACID</strong>:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -750,61 +813,97 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Elemento ER</th>
-<th>Equivalente UML</th>
+<th>Propriedade</th>
+<th>Descrição</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Conjunto de entidades</td>
-<td>Classe</td>
+<td><strong>Atomicidade</strong> (<em>Atomicity</em>)</td>
+<td>A transação é executada por completo ou não é executada de jeito algum — não há estado intermediário visível.</td>
 </tr>
 <tr class="even">
-<td>Atributo</td>
-<td>Atributo da classe</td>
+<td><strong>Consistência</strong> (<em>Consistency</em>)</td>
+<td>A execução de uma transação isolada preserva a consistência do banco de dados.</td>
 </tr>
 <tr class="odd">
-<td>Relacionamento binário</td>
-<td>Associação com nome</td>
+<td><strong>Isolamento</strong> (<em>Isolation</em>)</td>
+<td>Apesar da execução concorrente de múltiplas transações, cada uma deve parecer executar isoladamente das demais.</td>
 </tr>
 <tr class="even">
-<td>Cardinalidade 1:N</td>
-<td>Multiplicidade <code>1</code> num lado, <code>*</code> no outro</td>
-</tr>
-<tr class="odd">
-<td>Participação total</td>
-<td>Multiplicidade mínima ≥ 1</td>
-</tr>
-<tr class="even">
-<td>Especialização/Generalização</td>
-<td>Herança (seta de generalização)</td>
-</tr>
-<tr class="odd">
-<td>Relacionamento com atributos</td>
-<td>Classe de associação (<em>association class</em>)</td>
+<td><strong>Durabilidade</strong> (<em>Durability</em>)</td>
+<td>Após um <code>COMMIT</code>, as alterações persistem mesmo em caso de falha do sistema.</td>
 </tr>
 </tbody>
 </table>
-<div class="exemplo">
-<p>O relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code> com atributos:</p>
-<p><strong>ER (Chen)</strong>: <code>professor</code> —— ◇<code>ministra</code>(ano, semestre, turma, horario, sala) —— <code>disciplina</code></p>
-<p><strong>UML</strong>:</p>
-<pre><code>Professor           Disciplina
-───────────         ──────────
-matricula_prof      codigo
-nome           *─────────── ─────────────* nome_disciplina
-escola         ministra                    sigla_curso
-ch_semanal     ┄┄┄┄┄┄┄┄┄
-salario        ano
-               semestre
-               turma
-               horario
-               sala</code></pre>
-<p>Na UML, <code>ministra</code> seria uma <strong>classe de associação</strong> com os atributos do relacionamento.</p>
 </div>
 </section>
-<section id="inversão-na-leitura-de-cardinalidade" class="level2">
-<h2 class="anchored" data-anchor-id="inversão-na-leitura-de-cardinalidade">Inversão na Leitura de Cardinalidade</h2>
+<section id="commit-e-rollback" class="level2">
+<h2 class="anchored" data-anchor-id="commit-e-rollback">COMMIT e ROLLBACK</h2>
+<p>O <code>COMMIT</code> torna permanentes todas as alterações desde o início da transação. O <code>ROLLBACK</code> desfaz todas elas.</p>
+<div class="exemplo">
+<p><strong>Matriculando um aluno em uma disciplina de forma segura:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verifica se já existe matrícula (evita duplicação)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Se a inserção falhar (violação de constraint), o ROLLBACK desfaz tudo</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3110401</span>, <span class="dv">2026</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2025311001</span>, <span class="kw">NULL</span>, <span class="kw">NULL</span>);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Só chega aqui se a inserção teve sucesso</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Se a inserção violar uma constraint (por exemplo, o aluno já estar matriculado), o PostgreSQL rejeita a instrução e a transação fica em estado de erro até o <code>ROLLBACK</code>.</p>
+</div>
+<div class="exemplo">
+<p><strong>Permutando dois professores entre turmas — operação que exige duas atualizações atômicas:</strong></p>
+<p>Gustavo (31200001) e Helena (31400002) precisam trocar de turma por motivo de agenda. A permuta envolve duas atualizações que devem ocorrer juntas: se apenas uma for aplicada, um professor ficará sem turma e outro com duas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- (1) Helena assume a turma de Gustavo em ENS-0401 (3110401, 2025/2, turma 1)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> ministra</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    id_prof <span class="op">=</span> <span class="dv">31400002</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110401</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  ano <span class="op">=</span> <span class="dv">2025</span> <span class="kw">AND</span> semestre <span class="op">=</span> <span class="dv">2</span> <span class="kw">AND</span> turma <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- (2) Gustavo assume a turma de Helena em ENS-0202 (3110202, 2025/2, turma 1)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> ministra</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    id_prof <span class="op">=</span> <span class="dv">31200001</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110202</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  ano <span class="op">=</span> <span class="dv">2025</span> <span class="kw">AND</span> semestre <span class="op">=</span> <span class="dv">2</span> <span class="kw">AND</span> turma <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ambas as trocas são efetivadas juntas ou nenhuma delas é</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Se o sistema falhar entre as duas instruções, o <code>ROLLBACK</code> automático garante que nenhuma das alterações persiste — evitando que Gustavo apareça sem turma enquanto Helena ainda não assumiu a dele.</p>
+</div>
+<div class="exemplo">
+<p><strong>Erro de digitação no segundo UPDATE — nenhuma das trocas é efetivada:</strong></p>
+<p>O operador digita <code>31400099</code> em vez de <code>31400002</code>. A FK em <code>ministra.id_prof</code> rejeita o valor porque esse professor não existe. Com <code>ROLLBACK</code>, o primeiro UPDATE também é desfeito — as turmas permanecem com seus professores originais.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- (1) Helena (31400002) assume ENS-0401 — executa sem erro</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> ministra</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    id_prof <span class="op">=</span> <span class="dv">31400002</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110401</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  ano <span class="op">=</span> <span class="dv">2025</span> <span class="kw">AND</span> semestre <span class="op">=</span> <span class="dv">2</span> <span class="kw">AND</span> turma <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- (2) Gustavo assume ENS-0202 — erro: professor 31400099 não existe (typo)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> ministra</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    id_prof <span class="op">=</span> <span class="dv">31400099</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110202</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  ano <span class="op">=</span> <span class="dv">2025</span> <span class="kw">AND</span> semestre <span class="op">=</span> <span class="dv">2</span> <span class="kw">AND</span> turma <span class="op">=</span> <span class="dv">1</span>;</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: insert or update on table "ministra" violates foreign key constraint</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- DETAIL: Key (id_prof)=(31400099) is not present in table "professor".</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- A transação está agora em estado de erro; COMMIT seria ignorado</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span>;</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- Resultado: ENS-0401 volta a ter Gustavo, ENS-0202 volta a ter Helena</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="violação-de-constraint-e-transações" class="level2">
+<h2 class="anchored" data-anchor-id="violação-de-constraint-e-transações">Violação de Constraint e Transações</h2>
+<p>Quando uma restrição de integridade é violada <strong>durante uma transação</strong>, o SGBD rejeita a instrução e marca a transação como abortada. O <code>ROLLBACK</code> é necessário para limpar o estado antes de tentar novamente.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -815,95 +914,73 @@ Aviso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Atenção à inversão de posição</strong>: na notação UML, a multiplicidade aparece do <strong>lado oposto</strong> ao da notação ER (Chen).</p>
-<ul>
-<li><strong>ER (Chen)</strong>: a cardinalidade é colocada <strong>próxima à entidade</strong> que ela restringe</li>
-<li><strong>UML</strong>: a multiplicidade é colocada <strong>próxima à entidade</strong> do lado contrário ao que ela descreve</li>
-</ul>
-<p>Exemplo: em ER, <code>1</code> próximo a <code>escola</code> significa “um professor está em uma escola”. Em UML, <code>1</code> no lado de <code>escola</code> significa “cada professor se associa a 1 escola” — o significado é o mesmo, mas a posição é diferente. Sempre leia as multiplicidades no contexto de ambas as extremidades.</p>
+<p>No PostgreSQL, após um erro dentro de um bloco <code>BEGIN</code>/<code>COMMIT</code>, todas as instruções subsequentes são ignoradas até que um <code>ROLLBACK</code> (ou <code>ROLLBACK TO SAVEPOINT</code>) seja emitido. A transação fica “travada” no estado de erro.</p>
 </div>
 </div>
+<section id="savepoints" class="level3">
+<h3 class="anchored" data-anchor-id="savepoints">Savepoints</h3>
+<p>O PostgreSQL suporta <strong>savepoints</strong>, que permitem desfazer apenas uma parte da transação:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (id_aluno, nome, id_curso, ano_ingresso)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">2026311004</span>, <span class="st">'Renata Lima'</span>, <span class="dv">311</span>, <span class="dv">2026</span>);</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SAVEPOINT</span> ponto_1;</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tentativa que pode falhar</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    (id_disciplina, ano, semestre, turma, id_aluno)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">3110401</span>, <span class="dv">2026</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2026311004</span>);</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Se falhou, volta apenas ao ponto_1 (mantém o INSERT do aluno)</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span> <span class="kw">TO</span> <span class="kw">SAVEPOINT</span> ponto_1;</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
+</section>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Traduzir para crow’s foot.</strong> Traduza os seguintes relacionamentos da UnDF para notação crow’s foot (escreva as linhas com símbolos como <code>||</code>, <code>o&lt;</code>, <code>|&lt;</code>, <code>o|</code>):</p>
-<ol type="a">
-<li><code>aluno</code> matriculado_em <code>curso</code> (todo aluno está em exatamente um curso; um curso pode ter zero ou mais alunos)</li>
-<li><code>professor</code> ministra <code>disciplina</code> (um professor pode ministrar zero ou mais disciplinas; uma disciplina pode ser ministrada por zero ou mais professores)</li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<p>Os exemplos abaixo ilustram o comportamento transacional — execute-os em um cliente PostgreSQL interativo (como o <code>psql</code>) para observar o efeito do <code>COMMIT</code> e do <code>ROLLBACK</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exemplo 1: ROLLBACK desfaz tudo</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor <span class="kw">SET</span> salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.10</span> <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">31</span>;</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">31</span>;  <span class="co">-- vê o aumento</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span>;</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">31</span>;  <span class="co">-- valores originais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exemplo 2: COMMIT torna a alteração permanente</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor <span class="kw">SET</span> salario <span class="op">=</span> salario <span class="op">*</span> <span class="fl">1.05</span> <span class="kw">WHERE</span> ch_semanal <span class="op">=</span> <span class="dv">20</span>;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario, ch_semanal <span class="kw">FROM</span> professor <span class="kw">ORDER</span> <span class="kw">BY</span> salario;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exemplo 3: Savepoint — desfaz apenas parte da transação</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span>;</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> aluno (id_aluno, nome, id_curso, ano_ingresso)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">2026111004</span>, <span class="st">'Cláudio Ramos'</span>, <span class="dv">111</span>, <span class="dv">2026</span>);</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SAVEPOINT</span> antes_da_matricula;</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tentativa de matrícula em disciplina inexistente (id_disciplina 9999999)</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">9999999</span>, <span class="dv">2026</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2026111004</span>);</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- ERROR: violação de FK</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ROLLBACK</span> <span class="kw">TO</span> <span class="kw">SAVEPOINT</span> antes_da_matricula;</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aluno foi inserido; matrícula inválida foi desfeita</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="kw">COMMIT</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
+Nota
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>(a)</strong> <code>aluno ||---o&lt; curso</code>
-<ul>
-<li>Lado <code>aluno</code>: <code>||</code> — exatamente um curso por aluno</li>
-<li>Lado <code>curso</code>: <code>o&lt;</code> — zero ou mais alunos por curso</li>
-</ul></li>
-<li><strong>(b)</strong> <code>professor o&lt;---o&lt; disciplina</code>
-<ul>
-<li>Lado <code>professor</code> (lido da perspectiva de <code>disciplina</code>): <code>o&lt;</code> — zero ou mais professores por disciplina</li>
-<li>Lado <code>disciplina</code> (lido da perspectiva de <code>professor</code>): <code>o&lt;</code> — zero ou mais disciplinas por professor</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>2. Ler multiplicidade UML.</strong> Dado o seguinte trecho de um diagrama de classes UML:</p>
-<pre><code>Aluno 1..* ─── cursa ─── 0..* Disciplina</code></pre>
-<p>O que essa multiplicidade significa para <code>Aluno</code> e para <code>Disciplina</code>?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Do lado de <code>Disciplina</code></strong>: a multiplicidade <code>1..*</code> diz que, para cada <code>Disciplina</code>, há <strong>um ou mais</strong> <code>Aluno</code>s cursando — ou seja, uma disciplina só é registrada se tiver ao menos um aluno.</li>
-<li><strong>Do lado de <code>Aluno</code></strong>: a multiplicidade <code>0..*</code> diz que, para cada <code>Aluno</code>, pode haver <strong>zero ou mais</strong> <code>Disciplina</code>s cursadas — um aluno pode existir sem ter cursado nenhuma disciplina ainda.</li>
-</ul>
-<p>Na notação UML, a multiplicidade fica no lado <strong>oposto</strong> ao da entidade que ela descreve: <code>1..*</code> próximo a <code>Disciplina</code> descreve <strong>quantas disciplinas</strong> cada aluno pode cursar? Não — descreve quantos alunos cada disciplina tem. Esse é o ponto de confusão mais comum ao ler UML.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>3. Classe de associação.</strong> Em UML, o relacionamento <code>ministra</code> com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code> deve ser representado como <strong>classe de associação</strong>. Por quê essa construção é necessária, e o que aconteceria se tentássemos colocar esses atributos diretamente em <code>Professor</code> ou em <code>Disciplina</code>?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Os atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code> descrevem <strong>a associação em si</strong> — não pertencem ao professor nem à disciplina individualmente:</p>
-<ul>
-<li>Um mesmo professor pode ministrar ENS-201 em 2024/1 (sala 201) e ENS-401 em 2024/2 (sala 301). Colocar <code>sala</code> em <code>Professor</code> permitiria apenas uma sala por professor.</li>
-<li>A mesma disciplina pode ser ministrada por professores diferentes com horários diferentes. Colocar <code>horario</code> em <code>Disciplina</code> impediria múltiplas ofertas.</li>
-</ul>
-<p>A <strong>classe de associação</strong> em UML existe exatamente para esse caso: atributos que descrevem uma associação N:N e não podem ser colocados em nenhuma das classes extremas. Ela gera, na conversão relacional, uma tabela de junção com os atributos — exatamente o que é <code>ministra</code> no banco da UnDF.</p>
-</div>
+<p>Nos chunks SQL dos arquivos <code>.qmd</code> deste livro, cada instrução é enviada ao banco em modo autocommit. Para testar transações interativas com <code>ROLLBACK</code>, use o <code>psql</code> ou DBeaver diretamente.</p>
 </div>
 </div>
 
@@ -1420,13 +1497,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/11-decisoes-projeto.html" class="pagination-link" aria-label="Decisões de Projeto">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Decisões de Projeto</span></span>
+      <a href="../../content/cap04/02-views.html" class="pagination-link" aria-label="Visões">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Visões</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/13-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <span class="nav-page-text"><span class="chapter-title">Resumo e Exercícios</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/04-integridade.html" class="pagination-link" aria-label="Restrições de Integridade">
+        <span class="nav-page-text"><span class="chapter-title">Restrições de Integridade</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

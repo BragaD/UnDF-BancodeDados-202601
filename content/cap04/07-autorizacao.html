@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
 
-<title>Conjuntos de Relacionamentos – Bases da Engenharia de Software 4</title>
+<title>Autorização – Bases da Engenharia de Software 4</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,23 +69,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/04-atributos.html" rel="next">
-<link href="../../content/cap04/02-entidades.html" rel="prev">
+<link href="../../content/cap04/08-resumo.html" rel="next">
+<link href="../../content/cap04/06-indices.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-663e73f9dec64fbea7d0ce06426dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -76,35 +113,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -298,7 +306,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-relacionamentos.html"><span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/07-autorizacao.html"><span class="chapter-title">Autorização</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -552,7 +560,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 4: SQL Intermediário</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -565,67 +573,164 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  <a href="../../content/cap04/01-joins.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Expressões de Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  <a href="../../content/cap04/03-transacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  <a href="../../content/cap04/06-indices.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Índices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  <a href="../../content/cap04/07-autorizacao.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Autorização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 5: SQL Avançado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap05/05-agregacao-avancada.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação Avançada</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -640,11 +745,18 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
-  <li><a href="#atributos-de-relacionamentos" id="toc-atributos-de-relacionamentos" class="nav-link" data-scroll-target="#atributos-de-relacionamentos">Atributos de Relacionamentos</a></li>
-  <li><a href="#representação-em-diagrama-er" id="toc-representação-em-diagrama-er" class="nav-link" data-scroll-target="#representação-em-diagrama-er">Representação em Diagrama ER</a></li>
-  <li><a href="#papéis-roles" id="toc-papéis-roles" class="nav-link" data-scroll-target="#papéis-roles">Papéis (<em>Roles</em>)</a></li>
-  <li><a href="#grau-de-um-relacionamento" id="toc-grau-de-um-relacionamento" class="nav-link" data-scroll-target="#grau-de-um-relacionamento">Grau de um Relacionamento</a></li>
+  <li><a href="#formas-de-autorização" id="toc-formas-de-autorização" class="nav-link active" data-scroll-target="#formas-de-autorização">Formas de Autorização</a></li>
+  <li><a href="#grant-concedendo-privilégios" id="toc-grant-concedendo-privilégios" class="nav-link" data-scroll-target="#grant-concedendo-privilégios">GRANT: Concedendo Privilégios</a></li>
+  <li><a href="#revoke-revogando-privilégios" id="toc-revoke-revogando-privilégios" class="nav-link" data-scroll-target="#revoke-revogando-privilégios">REVOKE: Revogando Privilégios</a>
+  <ul>
+  <li><a href="#cascade-e-restrict" id="toc-cascade-e-restrict" class="nav-link" data-scroll-target="#cascade-e-restrict">CASCADE e RESTRICT</a></li>
+  </ul></li>
+  <li><a href="#with-grant-option-transferência-de-privilégios" id="toc-with-grant-option-transferência-de-privilégios" class="nav-link" data-scroll-target="#with-grant-option-transferência-de-privilégios">WITH GRANT OPTION: Transferência de Privilégios</a></li>
+  <li><a href="#roles-papéis" id="toc-roles-papéis" class="nav-link" data-scroll-target="#roles-papéis">Roles: Papéis</a>
+  <ul>
+  <li><a href="#herança-de-papéis" id="toc-herança-de-papéis" class="nav-link" data-scroll-target="#herança-de-papéis">Herança de Papéis</a></li>
+  </ul></li>
+  <li><a href="#autorização-em-visões" id="toc-autorização-em-visões" class="nav-link" data-scroll-target="#autorização-em-visões">Autorização em Visões</a></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -653,9 +765,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/03-relacionamentos.html"><span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/07-autorizacao.html"><span class="chapter-title">Autorização</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Conjuntos de Relacionamentos</span></h1>
+<h1 class="title"><span class="chapter-title">Autorização</span></h1>
 </div>
 
 
@@ -678,358 +790,380 @@ window.Quarto = {
 </header>
 
 
-<section id="definição" class="level2">
-<h2 class="anchored" data-anchor-id="definição">Definição</h2>
+<p>A <strong>autorização</strong> controla quais usuários podem realizar quais operações sobre quais partes do banco de dados. É o mecanismo de segurança que separa o que cada usuário pode ver e modificar.</p>
+<section id="formas-de-autorização" class="level2">
+<h2 class="anchored" data-anchor-id="formas-de-autorização">Formas de Autorização</h2>
 <div class="conceito">
-<p>Um <strong>relacionamento</strong> é uma associação entre duas ou mais entidades.</p>
-<p>Um <strong>conjunto de relacionamentos</strong> (<em>relationship set</em>) é uma relação matemática entre <span class="math inline">\(n \geq 2\)</span> conjuntos de entidades:</p>
-<p><span class="math display">\[\{(e_1, e_2, \ldots, e_n) \mid e_1 \in E_1,\ e_2 \in E_2,\ \ldots,\ e_n \in E_n\}\]</span></p>
-<p>onde cada <span class="math inline">\((e_1, e_2, \ldots, e_n)\)</span> é um relacionamento individual.</p>
-</div>
-<div class="exemplo">
-<p>No banco da UnDF, o conjunto de relacionamentos <code>ministra</code> associa entidades de <code>professor</code> e <code>disciplina</code>:</p>
-<p><span class="math display">\[ministra \subseteq professor \times disciplina\]</span></p>
-<p>Cada par (Gustavo Costa, ENS-201) é um relacionamento que significa “Gustavo ministra ENS-201”.</p>
-</div>
-</section>
-<section id="atributos-de-relacionamentos" class="level2">
-<h2 class="anchored" data-anchor-id="atributos-de-relacionamentos">Atributos de Relacionamentos</h2>
-<p>Assim como conjuntos de entidades, conjuntos de relacionamentos podem ter <strong>atributos próprios</strong> — informações que descrevem a associação em si, não as entidades participantes.</p>
-<div class="exemplo">
-<p>O relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code> tem os atributos:</p>
+<p>Existem dois grupos de privilégios em SQL:</p>
+<p><strong>Sobre os dados:</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Atributo</th>
-<th>Descrição</th>
+<th>Privilégio</th>
+<th>Permite</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>ano</code></td>
-<td>Ano letivo em que a turma foi oferecida</td>
+<td><code>SELECT</code></td>
+<td>Leitura dos dados (consultas)</td>
 </tr>
 <tr class="even">
-<td><code>semestre</code></td>
-<td>Semestre (1 ou 2)</td>
+<td><code>INSERT</code></td>
+<td>Inserção de novas linhas</td>
 </tr>
 <tr class="odd">
-<td><code>turma</code></td>
-<td>Identificador da turma (A, B…)</td>
+<td><code>UPDATE</code></td>
+<td>Modificação de linhas existentes</td>
 </tr>
 <tr class="even">
-<td><code>horario</code></td>
-<td>Horário semanal das aulas</td>
-</tr>
-<tr class="odd">
-<td><code>sala</code></td>
-<td>Sala onde as aulas ocorrem</td>
+<td><code>DELETE</code></td>
+<td>Exclusão de linhas</td>
 </tr>
 </tbody>
 </table>
-<p>Esses atributos não pertencem nem ao professor nem à disciplina — pertencem ao <strong>ato de ministrar</strong> aquela disciplina naquele contexto específico.</p>
+<p><strong>Sobre o esquema:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Privilégio</th>
+<th>Permite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INDEX</code></td>
+<td>Criar e excluir índices</td>
+</tr>
+<tr class="even">
+<td><code>RESOURCES</code></td>
+<td>Criar novas relações</td>
+</tr>
+<tr class="odd">
+<td><code>ALTERATION</code></td>
+<td>Adicionar ou remover atributos</td>
+</tr>
+<tr class="even">
+<td><code>DROP</code></td>
+<td>Excluir relações</td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
-<section id="representação-em-diagrama-er" class="level2">
-<h2 class="anchored" data-anchor-id="representação-em-diagrama-er">Representação em Diagrama ER</h2>
-<div class="conceito">
-<p>Na notação ER: - <strong>Losango</strong>: representa um conjunto de relacionamentos - <strong>Linhas</strong>: conectam o losango aos retângulos dos conjuntos de entidades participantes - <strong>Elipses</strong> ligadas ao losango: atributos do relacionamento</p>
-</div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 295.42 584.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 580)">
-<title>er_relacionamento</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-580 291.42,-580 291.42,4 -4,4"></polygon>
-<!-- professor -->
-<g id="node1" class="node">
-<title>professor</title>
-<polygon fill="#aed6f1" stroke="black" points="56.9,-306 0.03,-306 0.03,-270 56.9,-270 56.9,-306"></polygon>
-<text text-anchor="middle" x="28.47" y="-284.7" font-family="Times New Roman" font-size="11.00">professor</text>
-</g>
-<!-- ministra -->
-<g id="node3" class="node">
-<title>ministra</title>
-<polygon fill="#f9e79f" stroke="black" points="138.47,-306 92.89,-288 138.47,-270 184.05,-288 138.47,-306"></polygon>
-<text text-anchor="middle" x="138.47" y="-284.7" font-family="Times New Roman" font-size="11.00">ministra</text>
-</g>
-<!-- professor&#45;&#45;ministra -->
-<g id="edge1" class="edge">
-<title>professor--ministra</title>
-<path fill="none" stroke="black" d="M57,-288C67.88,-288 80.65,-288 92.78,-288"></path>
-</g>
-<!-- disciplina -->
-<g id="node2" class="node">
-<title>disciplina</title>
-<polygon fill="#aed6f1" stroke="black" points="282.99,-576 224.45,-576 224.45,-540 282.99,-540 282.99,-576"></polygon>
-<text text-anchor="middle" x="253.72" y="-554.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
-</g>
-<!-- ministra&#45;&#45;disciplina -->
-<g id="edge2" class="edge">
-<title>ministra--disciplina</title>
-<path fill="none" stroke="black" d="M145.89,-303.29C165.4,-349.81 223.99,-489.51 245.06,-539.75"></path>
-</g>
-<!-- ano -->
-<g id="node4" class="node">
-<title>ano</title>
-<ellipse fill="none" stroke="black" cx="253.72" cy="-450" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="253.72" y="-446.7" font-family="Times New Roman" font-size="11.00">ano</text>
-</g>
-<!-- ministra&#45;&#45;ano -->
-<g id="edge3" class="edge">
-<title>ministra--ano</title>
-<path fill="none" stroke="black" d="M149.13,-301.81C169.99,-331.65 219.17,-402.01 241.43,-433.85"></path>
-</g>
-<!-- semestre -->
-<g id="node5" class="node">
-<title>semestre</title>
-<ellipse fill="none" stroke="black" cx="253.72" cy="-342" rx="33.91" ry="18"></ellipse>
-<text text-anchor="middle" x="253.72" y="-338.7" font-family="Times New Roman" font-size="11.00">semestre</text>
-</g>
-<!-- ministra&#45;&#45;semestre -->
-<g id="edge4" class="edge">
-<title>ministra--semestre</title>
-<path fill="none" stroke="black" d="M159.72,-297.65C178.8,-306.76 207.45,-320.42 227.91,-330.17"></path>
-</g>
-<!-- turma -->
-<g id="node6" class="node">
-<title>turma</title>
-<ellipse fill="none" stroke="black" cx="253.72" cy="-234" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="253.72" y="-230.7" font-family="Times New Roman" font-size="11.00">turma</text>
-</g>
-<!-- ministra&#45;&#45;turma -->
-<g id="edge5" class="edge">
-<title>ministra--turma</title>
-<path fill="none" stroke="black" d="M159.72,-278.35C179.82,-268.76 210.54,-254.11 231.1,-244.31"></path>
-</g>
-<!-- horario -->
-<g id="node7" class="node">
-<title>horario</title>
-<ellipse fill="none" stroke="black" cx="253.72" cy="-126" rx="29.6" ry="18"></ellipse>
-<text text-anchor="middle" x="253.72" y="-122.7" font-family="Times New Roman" font-size="11.00">horario</text>
-</g>
-<!-- ministra&#45;&#45;horario -->
-<g id="edge6" class="edge">
-<title>ministra--horario</title>
-<path fill="none" stroke="black" d="M149.13,-274.19C169.88,-244.5 218.67,-174.71 241.08,-142.64"></path>
-</g>
-<!-- sala -->
-<g id="node8" class="node">
-<title>sala</title>
-<ellipse fill="none" stroke="black" cx="253.72" cy="-18" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="253.72" y="-14.7" font-family="Times New Roman" font-size="11.00">sala</text>
-</g>
-<!-- ministra&#45;&#45;sala -->
-<g id="edge7" class="edge">
-<title>ministra--sala</title>
-<path fill="none" stroke="black" d="M145.89,-272.71C165.54,-225.86 224.84,-84.47 245.51,-35.18"></path>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="papéis-roles" class="level2">
-<h2 class="anchored" data-anchor-id="papéis-roles">Papéis (<em>Roles</em>)</h2>
-<p>Quando o mesmo conjunto de entidades participa mais de uma vez em um relacionamento, os papéis (<em>roles</em>) explicitam o significado de cada participação.</p>
+<section id="grant-concedendo-privilégios" class="level2">
+<h2 class="anchored" data-anchor-id="grant-concedendo-privilégios">GRANT: Concedendo Privilégios</h2>
+<p>A instrução <code>GRANT</code> concede um ou mais privilégios a um ou mais usuários ou papéis:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="op">&lt;</span>lista de privilégios<span class="op">&gt;</span> <span class="kw">ON</span> <span class="op">&lt;</span>relação ou visão<span class="op">&gt;</span> <span class="kw">TO</span> <span class="op">&lt;</span>lista de usuários<span class="op">&gt;</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="exemplo">
-<p>O relacionamento <code>prereq</code> em <code>disciplina</code> é <strong>autorreferencial</strong> — uma disciplina é pré-requisito de outra:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 226.41 58.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 54)">
-<title>er_roles</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-54 222.41,-54 222.41,4 -4,4"></polygon>
-<!-- disciplina -->
-<g id="node1" class="node">
-<title>disciplina</title>
-<polygon fill="#aed6f1" stroke="black" points="58.66,-50 0.11,-50 0.11,-14 58.66,-14 58.66,-50"></polygon>
-<text text-anchor="middle" x="29.39" y="-28.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
-</g>
-<!-- prereq -->
-<g id="node2" class="node">
-<title>prereq</title>
-<polygon fill="#f9e79f" stroke="black" points="179.83,-50 141.18,-32 179.83,-14 218.49,-32 179.83,-50"></polygon>
-<text text-anchor="middle" x="179.83" y="-28.7" font-family="Times New Roman" font-size="11.00">prereq</text>
-</g>
-<!-- disciplina&#45;&#45;prereq -->
-<g id="edge1" class="edge">
-<title>disciplina--prereq</title>
-<path fill="none" stroke="black" d="M58.66,-32C82.04,-32 115.46,-32 141.13,-32"></path>
-<text text-anchor="middle" x="100.01" y="-34.7" font-family="Times,serif" font-size="9.00">disciplina</text>
-</g>
-<!-- prereq&#45;&#45;disciplina -->
-<g id="edge2" class="edge">
-<title>prereq--disciplina</title>
-<path fill="none" stroke="black" d="M141.13,-32C115.46,-32 82.04,-32 58.66,-32"></path>
-<text text-anchor="middle" x="100.01" y="-2.7" font-family="Times,serif" font-size="9.00">pré-requisito</text>
-</g>
-</g>
-</svg>
+<p><strong>Conceder leitura da tabela professor a dois usuários:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">TO</span> ana_coordenadora, joao_secretaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Conceder inserção e atualização de matrículas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">INSERT</span>, <span class="kw">UPDATE</span> <span class="kw">ON</span> matricula_disciplina <span class="kw">TO</span> sistema_academico;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Conceder todos os privilégios de dados:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> aluno <span class="kw">TO</span> admin_academico;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p></p></figure><p></p>
+<p>O destinatário especial <code>PUBLIC</code> concede o privilégio a <strong>todos</strong> os usuários válidos do banco:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Qualquer usuário pode consultar a tabela de cursos</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> curso <span class="kw">TO</span> <span class="kw">PUBLIC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>Conceder privilégios sobre uma <strong>visão</strong> não implica conceder privilégios sobre as tabelas base subjacentes. Um usuário que recebe <code>SELECT</code> na visão <code>professores_publico</code> pode consultá-la sem ter acesso direto à tabela <code>professor</code>.</p>
 </div>
-<p>Os rótulos “disciplina” e “pré-requisito” são os <strong>papéis</strong> — indicam qual papel cada participação de <code>disciplina</code> desempenha no relacionamento.</p>
 </div>
 </section>
-<section id="grau-de-um-relacionamento" class="level2">
-<h2 class="anchored" data-anchor-id="grau-de-um-relacionamento">Grau de um Relacionamento</h2>
-<div class="conceito">
-<p>O <strong>grau</strong> de um relacionamento é o número de conjuntos de entidades que participam dele:</p>
-<ul>
-<li><strong>Binário</strong> (grau 2): o mais comum. Envolve exatamente dois conjuntos de entidades.</li>
-<li><strong>Ternário</strong> (grau 3): envolve três conjuntos de entidades simultaneamente.</li>
-<li><strong>N-ário</strong>: envolve <span class="math inline">\(n\)</span> conjuntos de entidades (raro na prática).</li>
-</ul>
-</div>
-<p>A grande maioria dos relacionamentos em sistemas reais é binária. Relacionamentos ternários aparecem quando a associação entre duas entidades depende de uma terceira.</p>
+<section id="revoke-revogando-privilégios" class="level2">
+<h2 class="anchored" data-anchor-id="revoke-revogando-privilégios">REVOKE: Revogando Privilégios</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="op">&lt;</span>lista de privilégios<span class="op">&gt;</span> <span class="kw">ON</span> <span class="op">&lt;</span>relação ou visão<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>lista de usuários<span class="op">&gt;</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="exemplo">
-<p>Se quiséssemos registrar que um aluno é orientado por um professor em um projeto específico, o relacionamento <code>orienta</code> seria ternário entre <code>aluno</code>, <code>professor</code> e <code>projeto</code>:</p>
-<div class="cell" data-layout-align="default">
+<p><strong>Revogar leitura da tabela professor:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">FROM</span> joao_secretaria;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Revogar todos os privilégios:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> matricula_disciplina <span class="kw">FROM</span> sistema_legado;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Se o mesmo privilégio foi concedido ao usuário por dois granters diferentes, revogar de um deles pode não bastar — o usuário retém o privilégio pelo outro concedente.</p>
+<section id="cascade-e-restrict" class="level3">
+<h3 class="anchored" data-anchor-id="cascade-e-restrict">CASCADE e RESTRICT</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- RESTRICT: falha se o privilégio foi repassado a outros usuários</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">FROM</span> ana_coordenadora <span class="kw">RESTRICT</span>;</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- CASCADE: revoga também de todos que receberam o privilégio de ana_coordenadora</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">FROM</span> ana_coordenadora <span class="kw">CASCADE</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="with-grant-option-transferência-de-privilégios" class="level2">
+<h2 class="anchored" data-anchor-id="with-grant-option-transferência-de-privilégios">WITH GRANT OPTION: Transferência de Privilégios</h2>
+<p>Um usuário pode receber autorização para repassar um privilégio usando <code>WITH GRANT OPTION</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ana_coordenadora pode consultar E também conceder este privilégio a outros</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">TO</span> ana_coordenadora <span class="kw">WITH</span> <span class="kw">GRANT</span> <span class="kw">OPTION</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="roles-papéis" class="level2">
+<h2 class="anchored" data-anchor-id="roles-papéis">Roles: Papéis</h2>
+<div class="conceito">
+<p>Um <strong>papel</strong> (<em>role</em>) é um agrupamento nomeado de privilégios. Em vez de conceder privilégios individualmente a cada usuário, define-se o papel com os privilégios necessários e associa-se usuários ao papel.</p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Criar os papéis</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> aluno_undf;</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> secretaria;</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> coordenador;</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Conceder privilégios aos papéis</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> curso, disciplina, aluno, prereq <span class="kw">TO</span> aluno_undf;</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span>, <span class="kw">INSERT</span>, <span class="kw">UPDATE</span> <span class="kw">ON</span> matricula_disciplina <span class="kw">TO</span> secretaria;</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professor <span class="kw">TO</span> secretaria;</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> <span class="kw">ALL</span> <span class="kw">TABLES</span> <span class="kw">IN</span> <span class="kw">SCHEMA</span> <span class="kw">public</span> <span class="kw">TO</span> coordenador;</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Associar usuários aos papéis</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> aluno_undf   <span class="kw">TO</span> usuario_pedro;</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> secretaria   <span class="kw">TO</span> usuario_carla;</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> coordenador  <span class="kw">TO</span> usuario_gustavo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="herança-de-papéis" class="level3">
+<h3 class="anchored" data-anchor-id="herança-de-papéis">Herança de Papéis</h3>
+<p>Papéis podem ser concedidos a outros papéis, criando uma hierarquia de privilégios:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- coordenador herda todos os privilégios de secretaria</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> secretaria <span class="kw">TO</span> coordenador;</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- diretor herda tudo de coordenador (e, transitivamente, de secretaria)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> diretor;</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> coordenador <span class="kw">TO</span> diretor;</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> diretor <span class="kw">TO</span> usuario_helena;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="exemplo">
+<p><strong>Cadeia de papéis na UnDF:</strong></p>
+<pre><code>aluno_undf  →  secretaria  →  coordenador  →  diretor
+              (herda aluno)   (herda secret.)  (herda coord.)</code></pre>
+</div>
+</section>
+</section>
+<section id="autorização-em-visões" class="level2">
+<h2 class="anchored" data-anchor-id="autorização-em-visões">Autorização em Visões</h2>
+<p>Visões são um mecanismo poderoso de controle de acesso: permitem expor apenas os dados necessários sem revelar as tabelas base.</p>
+<div class="exemplo">
+<p><strong>Concedendo acesso apenas à visão pública de professores:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alunos podem ver nome e escola do professor, mas não o salário</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> professores_publico <span class="kw">TO</span> aluno_undf;</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nenhum acesso direto à tabela professor</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">REVOKE</span> <span class="kw">ALL</span> <span class="kw">ON</span> professor <span class="kw">FROM</span> aluno_undf;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Um usuário com <code>aluno_undf</code> pode executar:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> professores_publico;  <span class="co">-- funciona</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> professor;            <span class="co">-- erro: permissão negada</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>O criador de uma visão precisa ter os privilégios necessários sobre as tabelas base no momento da criação. Conceder <code>SELECT</code> na visão a outro usuário não exige que esse usuário tenha privilégios sobre as tabelas base.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Visualizar papéis (roles) existentes no PostgreSQL</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> rolname <span class="kw">AS</span> papel,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       rolsuper <span class="kw">AS</span> superusuario,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>       rolcreatedb <span class="kw">AS</span> pode_criar_bd,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       rolcreaterole <span class="kw">AS</span> pode_criar_papel</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   pg_roles</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  rolname <span class="kw">NOT</span> <span class="kw">LIKE</span> <span class="st">'pg_%'</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> rolname;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 288.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>er_ternario</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 284,-112 284,4 -4,4"></polygon>
-<!-- aluno -->
-<g id="node1" class="node">
-<title>aluno</title>
-<polygon fill="#aed6f1" stroke="black" points="54,-108 0,-108 0,-72 54,-72 54,-108"></polygon>
-<text text-anchor="middle" x="27" y="-86.7" font-family="Times New Roman" font-size="11.00">aluno</text>
-</g>
-<!-- orienta -->
-<g id="node4" class="node">
-<title>orienta</title>
-<polygon fill="#f9e79f" stroke="black" points="140,-36 99.06,-18 140,0 180.94,-18 140,-36"></polygon>
-<text text-anchor="middle" x="140" y="-14.7" font-family="Times New Roman" font-size="11.00">orienta</text>
-</g>
-<!-- aluno&#45;&#45;orienta -->
-<g id="edge1" class="edge">
-<title>aluno--orienta</title>
-<path fill="none" stroke="black" d="M54.07,-72.23C75.74,-58.8 105.44,-40.41 123.64,-29.13"></path>
-</g>
-<!-- professor -->
-<g id="node2" class="node">
-<title>professor</title>
-<polygon fill="#aed6f1" stroke="black" points="168.43,-108 111.57,-108 111.57,-72 168.43,-72 168.43,-108"></polygon>
-<text text-anchor="middle" x="140" y="-86.7" font-family="Times New Roman" font-size="11.00">professor</text>
-</g>
-<!-- professor&#45;&#45;orienta -->
-<g id="edge2" class="edge">
-<title>professor--orienta</title>
-<path fill="none" stroke="black" d="M140,-71.7C140,-60.85 140,-46.92 140,-36.1"></path>
-</g>
-<!-- projeto -->
-<g id="node3" class="node">
-<title>projeto</title>
-<polygon fill="#aed6f1" stroke="black" points="280,-108 226,-108 226,-72 280,-72 280,-108"></polygon>
-<text text-anchor="middle" x="253" y="-86.7" font-family="Times New Roman" font-size="11.00">projeto</text>
-</g>
-<!-- projeto&#45;&#45;orienta -->
-<g id="edge3" class="edge">
-<title>projeto--orienta</title>
-<path fill="none" stroke="black" d="M225.93,-72.23C204.26,-58.8 174.56,-40.41 156.36,-29.13"></path>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">papel</th>
+<th style="text-align: left;">superusuario</th>
+<th style="text-align: left;">pode_criar_bd</th>
+<th style="text-align: left;">pode_criar_papel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">TRUE</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Visualizar privilégios concedidos nas tabelas do banco</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> grantee <span class="kw">AS</span> destinatario,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       table_name <span class="kw">AS</span> tabela,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>       privilege_type <span class="kw">AS</span> privilegio,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>       is_grantable <span class="kw">AS</span> pode_repassar</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.role_table_grants</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  table_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> table_name, grantee, privilegio;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">destinatario</th>
+<th style="text-align: left;">tabela</th>
+<th style="text-align: left;">privilegio</th>
+<th style="text-align: left;">pode_repassar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">DELETE</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">INSERT</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">REFERENCES</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">SELECT</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">TRIGGER</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">TRUNCATE</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">UPDATE</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">DELETE</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">INSERT</td>
+<td style="text-align: left;">YES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">postgres</td>
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">REFERENCES</td>
+<td style="text-align: left;">YES</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Não há como dividir <code>orienta</code> em dois relacionamentos binários sem perder informação: saber que um professor orienta um aluno e que um professor orienta um projeto não é suficiente para saber quem orienta quem em qual projeto.</p>
 </div>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Atributo de entidade ou de relacionamento?</strong> No relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>, a <code>sala</code> onde as aulas ocorrem deve ser atributo do relacionamento ou da entidade <code>disciplina</code>? Justifique.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><code>sala</code> deve ser atributo do <strong>relacionamento</strong> <code>ministra</code>. A mesma disciplina (ENS-201) pode ser oferecida em salas diferentes em semestres distintos, por professores diferentes. A sala não é uma propriedade intrínseca da disciplina — é uma propriedade da oferta específica daquela disciplina naquele semestre/turma. Colocar <code>sala</code> em <code>disciplina</code> forçaria a escolha de uma sala única e permanente, o que não corresponde à realidade.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>2. Autorreferência e papéis.</strong> Na tabela <code>prereq</code> do banco da UnDF, o par <code>(ENS-601, ENS-401)</code> significa que ENS-401 é pré-requisito de ENS-601. Qual é o papel de ENS-601 e qual é o papel de ENS-401 nessa tupla?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>ENS-601</strong> exerce o papel de <strong>disciplina</strong> (a que tem o pré-requisito).</li>
-<li><strong>ENS-401</strong> exerce o papel de <strong>pré-requisito</strong> (a que precisa ser cursada antes).</li>
-</ul>
-<p>Na tabela, a coluna <code>codigo</code> armazena quem tem o pré-requisito e <code>prereq_codigo</code> armazena quem é o pré-requisito.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>3. Grau do relacionamento.</strong> Analise o seguinte requisito: “Registrar que um aluno cursou uma disciplina em uma turma específica (identificada por disciplina, ano, semestre e turma) e obteve uma nota”. Qual o grau do relacionamento <code>cursa</code>? Quais os conjuntos de entidades envolvidos?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>O relacionamento <code>cursa</code> associa <code>aluno</code> à turma de uma disciplina. A “turma” (identificada por disciplina+ano+semestre+turma) é ela própria um relacionamento (<code>ministra</code>) e não uma entidade simples. Isso caracteriza <strong>agregação</strong> — veremos na seção 4.10. Uma simplificação possível é tratar <code>cursa</code> como binário entre <code>aluno</code> e uma entidade <code>oferta</code> (representando a turma), com atributos <code>nota</code> e <code>aprovado</code>.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>4. Limites do relacionamento binário.</strong> Suponha que queiramos registrar que um professor supervisionou a entrega de um projeto por um aluno em uma disciplina específica. Por que um único relacionamento binário professor–aluno não é suficiente?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Um relacionamento binário professor–aluno diria apenas “este professor supervisionou este aluno”, sem especificar <strong>em qual disciplina</strong> ocorreu a supervisão. Se um professor supervisiona o mesmo aluno em duas disciplinas diferentes, não haveria como distinguir as duas supervisões. É necessário um relacionamento ternário professor–aluno–disciplina, ou uma modelagem com agregação.</p>
-</div>
+<p>Os comandos abaixo devem ser executados em um cliente PostgreSQL com um usuário que tenha privilégios de administrador (como <code>postgres</code>). Em ambiente de produção, a gestão de roles é parte fundamental da segurança do banco.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Cenário: configurar papéis para o sistema acadêmico da UnDF</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- 1. Criar papéis</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> portal_aluno;</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> sistema_notas;</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">ROLE</span> admin_academico;</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- 2. Definir privilégios por papel</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> curso, disciplina, prereq          <span class="kw">TO</span> portal_aluno;</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> aluno, matricula_disciplina        <span class="kw">TO</span> portal_aluno;</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span>, <span class="kw">UPDATE</span> (nota, aprovado)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> matricula_disciplina                        <span class="kw">TO</span> sistema_notas;</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> <span class="kw">ALL</span> <span class="kw">TABLES</span> <span class="kw">IN</span> <span class="kw">SCHEMA</span> <span class="kw">public</span> <span class="kw">TO</span> admin_academico;</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- 3. Associar usuários</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> portal_aluno   <span class="kw">TO</span> usuario_discente;</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> sistema_notas  <span class="kw">TO</span> usuario_professor;</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> admin_academico <span class="kw">TO</span> usuario_direcao;</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- 4. Criar visão para notas sem dados pessoais (para relatórios anônimos)</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> notas_anonimas <span class="kw">AS</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, ano, semestre, turma,</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>       nota, aprovado</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina;</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> notas_anonimas <span class="kw">TO</span> <span class="kw">PUBLIC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar o dono das tabelas do banco</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> tablename <span class="kw">AS</span> tabela, tableowner <span class="kw">AS</span> dono</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   pg_tables</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  schemaname <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tablename;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">tabela</th>
+<th style="text-align: left;">dono</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">aluno</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">centro</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">curso</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">disciplina</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">escola</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">evento_academico</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ministra</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">prereq</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">professor</td>
+<td style="text-align: left;">postgres</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -1546,13 +1680,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/02-entidades.html" class="pagination-link" aria-label="Conjuntos de Entidades">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Conjuntos de Entidades</span></span>
+      <a href="../../content/cap04/06-indices.html" class="pagination-link" aria-label="Índices">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Índices</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/04-atributos.html" class="pagination-link" aria-label="Tipos de Atributos">
-        <span class="nav-page-text"><span class="chapter-title">Tipos de Atributos</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap04/08-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
+        <span class="nav-page-text"><span class="chapter-title">Resumo e Exercícios</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

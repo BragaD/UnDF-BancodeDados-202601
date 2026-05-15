@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Projeto de Banco de Dados com o Modelo ER – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -53,8 +53,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap08/01-fases-projeto.html" rel="next">
+<link href="../../content/cap05/05-agregacao-avancada.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +290,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +405,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -649,7 +649,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -737,9 +737,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Projeto de Banco de Dados com o Modelo ER</span></h1>
 </div>
 
 
@@ -772,18 +772,23 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Este capítulo é baseado no Capítulo 6 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
 </div>
 </div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
+<p>O projeto de um banco de dados começa muito antes de escrever a primeira linha de SQL. É necessário entender o que o sistema deve representar, identificar os objetos relevantes do mundo real e capturar as relações entre eles — tudo isso de forma independente de qualquer tecnologia específica.</p>
+<p>O <strong>modelo Entidade-Relacionamento (ER)</strong> é a ferramenta padrão para essa etapa conceitual. Ele permite especificar a estrutura lógica de um banco de dados por meio de três conceitos fundamentais: conjuntos de entidades, conjuntos de relacionamentos e atributos. O resultado é um <strong>diagrama ER</strong>, que comunica a estrutura do banco de dados de forma visual e independente de implementação.</p>
+<p>Ao final deste capítulo, você será capaz de:</p>
 <ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
+<li>Descrever as fases do projeto de banco de dados e as armadilhas a evitar</li>
+<li>Identificar conjuntos de entidades, relacionamentos e atributos em um domínio de problema</li>
+<li>Classificar atributos em simples, compostos, multivalorados e derivados</li>
+<li>Representar cardinalidades (1:1, 1:N, N:N) e participação (total/parcial)</li>
+<li>Modelar entidades fracas e seus relacionamentos identificadores</li>
+<li>Construir um diagrama ER completo para um domínio real</li>
+<li>Converter um diagrama ER em esquemas relacionais</li>
+<li>Aplicar especialização, generalização e agregação quando apropriado</li>
+<li>Tomar decisões de projeto fundamentadas: entidade vs.&nbsp;atributo, binário vs.&nbsp;n-ário</li>
+<li>Reconhecer as notações alternativas UML e crow’s foot</li>
 </ul>
 <section id="seções" class="level2">
 <h2 class="anchored" data-anchor-id="seções">Seções</h2>
@@ -796,51 +801,55 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td><a href="../../content/cap08/01-fases-projeto.html">4.1</a></td>
+<td>Fases do Projeto</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
+<td><a href="../../content/cap08/02-entidades.html">4.2</a></td>
+<td>Conjuntos de Entidades</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
+<td><a href="../../content/cap08/03-relacionamentos.html">4.3</a></td>
+<td>Conjuntos de Relacionamentos</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
+<td><a href="../../content/cap08/04-atributos.html">4.4</a></td>
+<td>Tipos de Atributos</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
+<td><a href="../../content/cap08/05-cardinalidade.html">4.5</a></td>
+<td>Cardinalidade e Participação</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
+<td><a href="../../content/cap08/06-entidades-fracas.html">4.6</a></td>
+<td>Entidades Fracas</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
+<td><a href="../../content/cap08/07-diagrama-er-undf.html">4.7</a></td>
+<td>Diagrama ER da UnDF</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
+<td><a href="../../content/cap08/08-conversao-relacional.html">4.8</a></td>
+<td>Conversão ER → Relacional</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
+<td><a href="../../content/cap08/09-especializacao.html">4.9</a></td>
+<td>Especialização e Generalização</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
+<td><a href="../../content/cap08/10-agregacao.html">4.10</a></td>
+<td>Agregação</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
+<td><a href="../../content/cap08/11-decisoes-projeto.html">4.11</a></td>
+<td>Decisões de Projeto</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
+<td><a href="../../content/cap08/12-notacoes.html">4.12</a></td>
+<td>Notações Alternativas</td>
+</tr>
+<tr class="odd">
+<td><a href="../../content/cap08/13-resumo.html">Resumo</a></td>
 <td>Resumo e Exercícios</td>
 </tr>
 </tbody>
@@ -1364,13 +1373,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap05/05-agregacao-avancada.html" class="pagination-link" aria-label="Agregação Avançada">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Agregação Avançada</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap08/01-fases-projeto.html" class="pagination-link" aria-label="Fases do Projeto">
+        <span class="nav-page-text"><span class="chapter-title">Fases do Projeto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

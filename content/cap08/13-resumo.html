@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
 
-<title>Conversão ER → Esquema Relacional – Bases da Engenharia de Software 4</title>
+<title>Resumo e Exercícios – Bases da Engenharia de Software 4</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -66,23 +69,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/09-especializacao.html" rel="next">
-<link href="../../content/cap04/07-diagrama-er-undf.html" rel="prev">
+<link href="../../content/cap08/12-notacoes.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-663e73f9dec64fbea7d0ce06426dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,35 +112,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -333,7 +305,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/08-conversao-relacional.html"><span class="chapter-title">Conversão ER → Relacional</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/13-resumo.html"><span class="chapter-title">Resumo e Exercícios</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -587,7 +559,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 4: SQL Intermediário</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -600,67 +572,164 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  <a href="../../content/cap04/01-joins.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Expressões de Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  <a href="../../content/cap04/03-transacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  <a href="../../content/cap04/06-indices.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Índices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  <a href="../../content/cap04/07-autorizacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Autorização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 5: SQL Avançado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap05/05-agregacao-avancada.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação Avançada</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/13-resumo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -675,15 +744,9 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#regra-1-entidade-forte" id="toc-regra-1-entidade-forte" class="nav-link active" data-scroll-target="#regra-1-entidade-forte">Regra 1: Entidade Forte</a></li>
-  <li><a href="#regra-2-entidade-fraca" id="toc-regra-2-entidade-fraca" class="nav-link" data-scroll-target="#regra-2-entidade-fraca">Regra 2: Entidade Fraca</a></li>
-  <li><a href="#regra-3-atributo-composto" id="toc-regra-3-atributo-composto" class="nav-link" data-scroll-target="#regra-3-atributo-composto">Regra 3: Atributo Composto</a></li>
-  <li><a href="#regra-4-atributo-multivalorado" id="toc-regra-4-atributo-multivalorado" class="nav-link" data-scroll-target="#regra-4-atributo-multivalorado">Regra 4: Atributo Multivalorado</a></li>
-  <li><a href="#regra-5-relacionamento-nn" id="toc-regra-5-relacionamento-nn" class="nav-link" data-scroll-target="#regra-5-relacionamento-nn">Regra 5: Relacionamento N:N</a></li>
-  <li><a href="#regra-6-relacionamento-n1-e-1n" id="toc-regra-6-relacionamento-n1-e-1n" class="nav-link" data-scroll-target="#regra-6-relacionamento-n1-e-1n">Regra 6: Relacionamento N:1 (e 1:N)</a></li>
-  <li><a href="#regra-7-relacionamento-11" id="toc-regra-7-relacionamento-11" class="nav-link" data-scroll-target="#regra-7-relacionamento-11">Regra 7: Relacionamento 1:1</a></li>
-  <li><a href="#esquema-completo-da-undf" id="toc-esquema-completo-da-undf" class="nav-link" data-scroll-target="#esquema-completo-da-undf">Esquema Completo da UnDF</a></li>
-  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
+  <li><a href="#conceitos-principais" id="toc-conceitos-principais" class="nav-link active" data-scroll-target="#conceitos-principais">Conceitos Principais</a></li>
+  <li><a href="#processo-de-projeto" id="toc-processo-de-projeto" class="nav-link" data-scroll-target="#processo-de-projeto">Processo de Projeto</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -691,9 +754,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/08-conversao-relacional.html"><span class="chapter-title">Conversão ER → Relacional</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/13-resumo.html"><span class="chapter-title">Resumo e Exercícios</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Conversão ER → Esquema Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Resumo e Exercícios</span></h1>
 </div>
 
 
@@ -716,159 +779,155 @@ window.Quarto = {
 </header>
 
 
-<p>Um diagrama ER é uma ferramenta conceitual. Para implementar o banco de dados, precisamos convertê-lo em <strong>esquemas relacionais</strong> (tabelas). As regras de conversão são sistemáticas.</p>
-<section id="regra-1-entidade-forte" class="level2">
-<h2 class="anchored" data-anchor-id="regra-1-entidade-forte">Regra 1: Entidade Forte</h2>
-<div class="conceito">
-<p>Cada <strong>conjunto de entidades forte</strong> gera um schema com os mesmos atributos. A chave primária do ER torna-se a chave primária da relação.</p>
-</div>
-<div class="exemplo">
-<p>As entidades fortes da UnDF geram diretamente suas relações:</p>
-<pre><code>centro(id_centro, sigla, nome_centro)
-  PK: id_centro
-
-escola(id_escola, sigla, nome_escola, id_centro)
-  PK: id_escola
-
-professor(id_prof, nome, id_escola, ch_semanal, salario)
-  PK: id_prof</code></pre>
-</div>
+<section id="conceitos-principais" class="level2">
+<h2 class="anchored" data-anchor-id="conceitos-principais">Conceitos Principais</h2>
+<p>O <strong>modelo Entidade-Relacionamento (ER)</strong> é a ferramenta padrão para o projeto conceitual de bancos de dados. Os conceitos centrais são:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Conceito</th>
+<th>Notação ER</th>
+<th>Conversão Relacional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conjunto de entidades forte</td>
+<td>Retângulo</td>
+<td>Tabela com atributos da entidade</td>
+</tr>
+<tr class="even">
+<td>Conjunto de entidades fraco</td>
+<td>Retângulo duplo</td>
+<td>Tabela com PK da entidade identificadora + discriminador</td>
+</tr>
+<tr class="odd">
+<td>Relacionamento</td>
+<td>Losango</td>
+<td>Tabela própria (N:N) ou FK embutida (N:1)</td>
+</tr>
+<tr class="even">
+<td>Atributo simples</td>
+<td>Elipse</td>
+<td>Coluna</td>
+</tr>
+<tr class="odd">
+<td>Atributo composto</td>
+<td>Elipse com sub-elipses</td>
+<td>Uma coluna por componente</td>
+</tr>
+<tr class="even">
+<td>Atributo multivalorado</td>
+<td>Elipse dupla</td>
+<td>Tabela separada com FK</td>
+</tr>
+<tr class="odd">
+<td>Atributo derivado</td>
+<td>Elipse tracejada</td>
+<td>Não armazenado</td>
+</tr>
+<tr class="even">
+<td>Cardinalidade 1:N</td>
+<td>Seta para o “um”</td>
+<td>FK embutida no lado N</td>
+</tr>
+<tr class="odd">
+<td>Cardinalidade N:N</td>
+<td>Linhas nos dois lados</td>
+<td>Tabela de junção</td>
+</tr>
+<tr class="even">
+<td>Participação total</td>
+<td>Linha dupla</td>
+<td>FK com NOT NULL</td>
+</tr>
+<tr class="odd">
+<td>Especialização/Generalização</td>
+<td>Triângulo ISA</td>
+<td>Schema por nível ou por subconjunto</td>
+</tr>
+<tr class="even">
+<td>Agregação</td>
+<td>Caixa tracejada ao redor do relacionamento</td>
+<td>Schema do relacionamento externo referencia PK do relacionamento base</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="regra-2-entidade-fraca" class="level2">
-<h2 class="anchored" data-anchor-id="regra-2-entidade-fraca">Regra 2: Entidade Fraca</h2>
-<div class="conceito">
-<p>Cada <strong>conjunto de entidades fraco</strong> gera um schema que inclui: - Todos os seus atributos (incluindo o discriminador) - A <strong>chave primária da entidade identificadora</strong></p>
-<p>A chave primária da relação é a união da PK da entidade identificadora com o discriminador.</p>
-</div>
-<div class="exemplo">
-<p>Se <code>turma</code> fosse modelada como entidade fraca de <code>disciplina</code> com discriminador <code>(ano, semestre, id_turma)</code>:</p>
-<pre><code>turma(id_disciplina, ano, semestre, id_turma, horario, sala)
-  PK: (id_disciplina, ano, semestre, id_turma)
-  FK: id_disciplina → disciplina(id_disciplina)</code></pre>
-</div>
+<section id="processo-de-projeto" class="level2">
+<h2 class="anchored" data-anchor-id="processo-de-projeto">Processo de Projeto</h2>
+<pre><code>Requisitos → Diagrama ER → Schemas Relacionais → DDL → Banco de Dados
+   (análise)   (conceitual)    (lógico)        (físico)</code></pre>
+<ol type="1">
+<li><strong>Identificar</strong> conjuntos de entidades e relacionamentos</li>
+<li><strong>Classificar</strong> atributos (simples, composto, multivalorado, derivado)</li>
+<li><strong>Definir</strong> cardinalidades e participações</li>
+<li><strong>Verificar</strong> se há entidades fracas, especializações ou necessidade de agregação</li>
+<li><strong>Converter</strong> para schemas relacionais usando as regras sistemáticas</li>
+<li><strong>Aplicar</strong> normalização (Capítulo 7) para garantir qualidade do schema</li>
+</ol>
+<hr>
 </section>
-<section id="regra-3-atributo-composto" class="level2">
-<h2 class="anchored" data-anchor-id="regra-3-atributo-composto">Regra 3: Atributo Composto</h2>
-<div class="conceito">
-<p><strong>Atributos compostos</strong> são <strong>achatados</strong> (<em>flattened</em>): cria-se uma coluna separada para cada componente.</p>
-</div>
-<div class="exemplo">
-<p>Se <code>nome</code> fosse composto em <code>(primeiro_nome, nome_do_meio, sobrenome)</code>:</p>
-<pre><code>-- Em vez de: nome VARCHAR(100)
-primeiro_nome VARCHAR(50)  NOT NULL,
-nome_do_meio  VARCHAR(50),
-sobrenome     VARCHAR(50)  NOT NULL</code></pre>
-<p>O prefixo do atributo composto pode ser omitido se não houver ambiguidade (usa-se <code>primeiro_nome</code> em vez de <code>nome_primeiro_nome</code>).</p>
-</div>
-</section>
-<section id="regra-4-atributo-multivalorado" class="level2">
-<h2 class="anchored" data-anchor-id="regra-4-atributo-multivalorado">Regra 4: Atributo Multivalorado</h2>
-<div class="conceito">
-<p>Um <strong>atributo multivalorado</strong> <span class="math inline">\(M\)</span> da entidade <span class="math inline">\(E\)</span> gera um schema separado <span class="math inline">\(EM\)</span> contendo: - A chave primária de <span class="math inline">\(E\)</span> (como chave estrangeira) - O atributo <span class="math inline">\(M\)</span></p>
-<p>A chave primária de <span class="math inline">\(EM\)</span> é a combinação da PK de <span class="math inline">\(E\)</span> com <span class="math inline">\(M\)</span>.</p>
-</div>
-<div class="exemplo">
-<p>Se <code>professor</code> tiver atributo multivalorado <code>telefone</code>:</p>
-<pre><code>telefone_professor(id_prof, telefone)
-  PK: (id_prof, telefone)
-  FK: id_prof → professor(id_prof)</code></pre>
-<p>Cada número de telefone vira uma tupla separada.</p>
-</div>
-</section>
-<section id="regra-5-relacionamento-nn" class="level2">
-<h2 class="anchored" data-anchor-id="regra-5-relacionamento-nn">Regra 5: Relacionamento N:N</h2>
-<div class="conceito">
-<p>Um relacionamento <strong>N:N</strong> gera um novo schema contendo: - A chave primária de cada entidade participante (como FKs) - Os atributos próprios do relacionamento</p>
-<p>A chave primária é a união das PKs das entidades participantes.</p>
-</div>
-<div class="exemplo">
-<p>O relacionamento <code>ministra</code> (N:N entre <code>professor</code> e <code>disciplina</code>):</p>
-<pre><code>ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
-  PK: (id_disciplina, ano, semestre, turma)
-  FK: id_disciplina → disciplina(id_disciplina)
-  FK: id_prof → professor(id_prof)</code></pre>
-<p>Nota: como <code>ministra</code> tem atributos <code>ano</code>, <code>semestre</code> e <code>turma</code>, a PK inclui esses atributos para distinguir ofertas da mesma disciplina em semestres diferentes.</p>
-</div>
-</section>
-<section id="regra-6-relacionamento-n1-e-1n" class="level2">
-<h2 class="anchored" data-anchor-id="regra-6-relacionamento-n1-e-1n">Regra 6: Relacionamento N:1 (e 1:N)</h2>
-<div class="conceito">
-<p>Em um relacionamento <strong>N:1</strong> com participação total no lado N, em vez de criar um schema separado, <strong>adiciona-se a chave primária do lado “1” como atributo extra (FK) no schema do lado “N”</strong>.</p>
-<p>Isso é mais eficiente e evita uma JOIN desnecessária.</p>
-</div>
-<div class="exemplo">
-<p>O relacionamento <code>lotado_em</code> (professor N:1 escola) não precisa de tabela própria:</p>
-<pre><code>-- Sem otimização (schema separado):
-lotado_em(id_prof, id_escola)
-
--- Com otimização (FK embutida em professor):
-professor(id_prof, nome, id_escola, ch_semanal, salario)
-  FK: id_escola → escola(id_escola)</code></pre>
-<p>O mesmo se aplica a <code>pertence_a</code>, <code>ofertado_por</code>, <code>compoe</code> e <code>matriculado_em</code>.</p>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<section id="exercícios" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios">Exercícios</h2>
+<p><strong>1. ER de uma locadora de veículos.</strong> Uma locadora possui veículos (placa, modelo, ano, categoria: econômico/executivo/SUV) e clientes (CPF, nome, CNH, telefones). Um cliente pode fazer várias locações; cada locação envolve um veículo, tem data de retirada, data de devolução prevista e km_inicial. Ao devolver, registra-se km_final e valor_cobrado.</p>
+<ol type="a">
+<li>Identifique os conjuntos de entidades, relacionamentos, atributos e cardinalidades.</li>
+<li>Desenhe (ou descreva) o diagrama ER.</li>
+<li>Converta para schemas relacionais.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Aviso
+<span class="screen-reader-only">Dica</span>Resposta
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Se a participação do lado N for <strong>parcial</strong> (alguns podem não ter o relacionamento), a coluna FK adicionada pode conter NULL. Isso é semanticamente correto, mas deve ser documentado. Se NULL não for desejado, pode-se criar um schema separado para o relacionamento.</p>
-</div>
-</div>
-</section>
-<section id="regra-7-relacionamento-11" class="level2">
-<h2 class="anchored" data-anchor-id="regra-7-relacionamento-11">Regra 7: Relacionamento 1:1</h2>
-<p>Para relacionamentos <strong>1:1</strong>, a chave primária de qualquer um dos dois lados pode ser adicionada como FK no outro. A escolha normalmente cai no lado com participação total (evita NULLs).</p>
-</section>
-<section id="esquema-completo-da-undf" class="level2">
-<h2 class="anchored" data-anchor-id="esquema-completo-da-undf">Esquema Completo da UnDF</h2>
-<p>Aplicando todas as regras ao diagrama ER da UnDF:</p>
-<pre><code>centro(id_centro, sigla, nome_centro)
-
-escola(id_escola, sigla, nome_escola, id_centro)
-  FK: id_centro → centro(id_centro)
-
-curso(id_curso, sigla_curso, nome_curso, id_escola, n_semestres, carga_horaria, tipo_curso)
-  FK: id_escola → escola(id_escola)
-
-professor(id_prof, nome, id_escola, ch_semanal, salario)
-  FK: id_escola → escola(id_escola)
-
-aluno(id_aluno, nome, id_curso, ano_ingresso)
-  FK: id_curso → curso(id_curso)
-
-disciplina(id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria)
-  FK: id_curso → curso(id_curso)
-
-ministra(id_disciplina, ano, semestre, turma, id_prof, horario, sala)
-  PK: (id_disciplina, ano, semestre, turma)
-  FK: id_disciplina → disciplina(id_disciplina)
-  FK: id_prof → professor(id_prof)
-
-prereq(id_disciplina, id_prereq)
-  PK: (id_disciplina, id_prereq)
-  FK: id_disciplina → disciplina(id_disciplina)
-  FK: id_prereq → disciplina(id_disciplina)
-
-matricula_disciplina(id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
-  PK: (id_disciplina, ano, semestre, turma, id_aluno)
-  FK: (id_disciplina, ano, semestre, turma) → ministra(...)
-  FK: id_aluno → aluno(id_aluno)</code></pre>
-<hr>
-</section>
-<section id="para-praticar" class="level2">
-<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Aplicar as regras.</strong> Dado o seguinte fragmento ER de uma biblioteca:</p>
+<p><strong>a. Identificação:</strong></p>
 <ul>
-<li>Entidade <code>livro</code>(ISBN, título, ano)</li>
-<li>Entidade <code>autor</code>(id_autor, nome)</li>
-<li>Relacionamento N:N <code>escreve</code> entre <code>autor</code> e <code>livro</code>, com atributo <code>ordem</code> (posição do autor na lista de autores)</li>
+<li>Entidades: <code>veiculo</code>(placa PK, modelo, ano, categoria), <code>cliente</code>(cpf PK, nome, cnh)</li>
+<li>Atributo multivalorado: <code>telefone</code> de <code>cliente</code></li>
+<li>Relacionamento: <code>locacao</code> entre <code>cliente</code> e <code>veiculo</code> (N:N: um cliente faz várias locações; um veículo é locado várias vezes)</li>
+<li>Atributos de <code>locacao</code>: data_retirada, data_devolucao_prevista, km_inicial, km_final (pode ser NULL se ainda não devolvido), valor_cobrado (NULL se em aberto)</li>
+<li>Cardinalidade: N:N (um cliente pode ter múltiplas locações simultâneas? Se não, N:1 por período)</li>
 </ul>
-<p>Escreva o schema relacional resultante.</p>
+<p><strong>b. Diagrama (descrição):</strong> - Retângulo <code>veiculo</code> com atributos placa(PK), modelo, ano, categoria - Retângulo <code>cliente</code> com atributos cpf(PK), nome, cnh; elipse dupla para telefone - Losango <code>locacao</code> conectando os dois com linhas (N dos dois lados) - Elipses de <code>locacao</code>: data_retirada, data_devolucao_prevista, km_inicial, km_final, valor_cobrado</p>
+<p><strong>c.&nbsp;Schemas:</strong></p>
+<pre><code>veiculo(placa, modelo, ano, categoria)
+  PK: placa
+
+cliente(cpf, nome, cnh)
+  PK: cpf
+
+telefone_cliente(cpf, telefone)
+  PK: (cpf, telefone)
+  FK: cpf → cliente(cpf)
+
+locacao(id_locacao, cpf_cliente, placa_veiculo, data_retirada,
+        data_devolucao_prevista, km_inicial, km_final, valor_cobrado)
+  PK: id_locacao
+  FK: cpf_cliente → cliente(cpf)
+  FK: placa_veiculo → veiculo(placa)</code></pre>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Entidade fraca: capítulos de livro.</strong> Uma editora possui <code>livro</code>(isbn, titulo, ano, editora) e cada livro tem <code>capitulo</code>s identificados pelo número dentro do livro (cap. 1, 2, 3…), com atributos título_capitulo e numero_paginas.</p>
+<ol type="a">
+<li><code>capitulo</code> é entidade fraca ou forte? Justifique.</li>
+<li>Escreva o schema relacional de <code>capitulo</code>.</li>
+<li>Qual restrição SQL garante que ao excluir um livro, seus capítulos sejam excluídos automaticamente?</li>
+</ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -881,22 +940,22 @@ matricula_disciplina(id_disciplina, ano, semestre, turma, id_aluno, nota, aprova
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre><code>livro(ISBN, titulo, ano)
-  PK: ISBN
-
-autor(id_autor, nome)
-  PK: id_autor
-
-escreve(id_autor, ISBN, ordem)
-  PK: (id_autor, ISBN)
-  FK: id_autor → autor(id_autor)
-  FK: ISBN → livro(ISBN)</code></pre>
-<p>O atributo <code>ordem</code> fica no schema de <code>escreve</code>, pois descreve a posição do autor <strong>naquele livro específico</strong> — não é propriedade do autor nem do livro isoladamente.</p>
+<p><strong>a.</strong> <code>capitulo</code> é <strong>entidade fraca</strong> em relação a <code>livro</code>. O número do capítulo (discriminador) identifica unicamente o capítulo <strong>dentro de um livro</strong>, mas dois livros podem ter um “capítulo 3” — não há como distingui-los sem saber a qual livro pertencem. O capítulo não existe sem o livro.</p>
+<p><strong>b.</strong></p>
+<pre><code>capitulo(isbn, numero_capitulo, titulo_capitulo, numero_paginas)
+  PK: (isbn, numero_capitulo)
+  FK: isbn → livro(isbn) ON DELETE CASCADE</code></pre>
+<p><strong>c.</strong> A cláusula <code>ON DELETE CASCADE</code> na FK garante que, ao excluir um livro, todos os seus capítulos sejam automaticamente excluídos — refletindo a dependência existencial do conjunto de entidades fraco.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>2. Redundância de schema.</strong> Por que o schema do relacionamento <code>pertence_a</code> entre <code>escola</code> e <code>centro</code> é <strong>redundante</strong> quando <code>escola</code> já tem o atributo <code>centro</code>?</p>
+<p><strong>3. Especialização e herança.</strong> A UnDF decide diferenciar professores em dois tipos: <code>professor_efetivo</code> (com atributos data_posse, regime_juridico) e <code>professor_substituto</code> (com atributos data_inicio_contrato, data_fim_contrato). Todo professor é de um dos dois tipos.</p>
+<ol type="a">
+<li>Que tipo de especialização é essa (total/parcial, disjunta/sobreposta)?</li>
+<li>Qual método de conversão você escolheria? Escreva os schemas.</li>
+<li>Escreva uma consulta SQL (sem executar) que lista todos os professores efetivos da ESETI com suas datas de posse.</li>
+</ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -909,12 +968,33 @@ escreve(id_autor, ISBN, ordem)
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>O relacionamento <code>pertence_a</code> (N:1) foi absorvido pelo schema de <code>escola</code> pela Regra 6: adicionou-se a FK <code>id_centro</code> diretamente em <code>escola</code>. Um schema separado <code>pertence_a(id_escola, id_centro)</code> conteria exatamente a mesma informação já presente na tabela <code>escola</code> — seria uma duplicação. Por isso, o schema de <code>pertence_a</code> é redundante e deve ser descartado.</p>
+<p><strong>a.</strong> Total e disjunta: todo professor é efetivo ou substituto (total), e nenhum professor é os dois ao mesmo tempo (disjunta).</p>
+<p><strong>b.</strong> Com especialização total e disjunta, o Método 1 (schema por nível) é apropriado:</p>
+<pre><code>professor(matricula_prof, nome, escola, ch_semanal, salario)
+  PK: matricula_prof
+
+professor_efetivo(matricula_prof, data_posse, regime_juridico)
+  PK: matricula_prof
+  FK: matricula_prof → professor(matricula_prof)
+
+professor_substituto(matricula_prof, data_inicio_contrato, data_fim_contrato)
+  PK: matricula_prof
+  FK: matricula_prof → professor(matricula_prof)</code></pre>
+<p><strong>c.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, e.data_posse, e.regime_juridico</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor p</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor_efetivo e <span class="kw">ON</span> p.matricula_prof <span class="op">=</span> e.matricula_prof</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.escola <span class="op">=</span> <span class="st">'ESETI'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> p.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>3. Atributo composto e consulta.</strong> Se <code>endereco</code> de <code>aluno</code> fosse decomposto em <code>(rua, numero, cidade, cep)</code>, escreva uma consulta SQL que busca todos os alunos de Brasília. Compare com a versão onde <code>endereco</code> é uma coluna única.</p>
+<p><strong>4. Diagrama ER → Relacional com agregação.</strong> Um sistema de avaliação de estágios funciona assim: uma empresa oferece vagas de estágio; um aluno candidata-se a uma vaga (relacionamento <code>candidatura</code>); um coordenador avalia cada candidatura com uma nota e um parecer.</p>
+<ol type="a">
+<li>Identifique onde a agregação é necessária.</li>
+<li>Escreva os schemas relacionais completos.</li>
+</ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -927,13 +1007,30 @@ escreve(id_autor, ISBN, ordem)
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Com decomposição:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> aluno <span class="kw">WHERE</span> cidade <span class="op">=</span> <span class="st">'Brasília'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Simples, eficiente, indexável.</p>
-<p><strong>Com coluna única:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> aluno <span class="kw">WHERE</span> endereco <span class="kw">LIKE</span> <span class="st">'%Brasília%'</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ineficiente (sem uso de índice), frágil (pode pegar “Rua Brasília” erroneamente), e dependente do formato da string armazenada.</p>
-<p>A decomposição do atributo composto é sempre preferível quando buscas por partes do endereço são esperadas.</p>
+<p><strong>a.</strong> A agregação é necessária porque o coordenador avalia a <strong>candidatura</strong> (relacionamento entre aluno e vaga) — não o aluno ou a vaga isoladamente. O relacionamento <code>candidatura</code> precisa ser “entificado” para que <code>avaliacao</code> possa referenciá-lo.</p>
+<p><strong>b.</strong></p>
+<pre><code>empresa(cnpj, nome, setor)
+  PK: cnpj
+
+vaga(id_vaga, descricao, cnpj_empresa, salario_estagio)
+  PK: id_vaga
+  FK: cnpj_empresa → empresa(cnpj)
+
+aluno(matricula, nome, sigla_curso, ano_ingresso)
+  PK: matricula
+
+candidatura(id_candidatura, matricula_aluno, id_vaga, data_candidatura)
+  PK: id_candidatura
+  FK: matricula_aluno → aluno(matricula)
+  FK: id_vaga → vaga(id_vaga)
+
+coordenador(matricula_coord, nome, departamento)
+  PK: matricula_coord
+
+avaliacao(id_candidatura, matricula_coord, nota, parecer, data_avaliacao)
+  PK: (id_candidatura, matricula_coord)
+  FK: id_candidatura → candidatura(id_candidatura)
+  FK: matricula_coord → coordenador(matricula_coord)</code></pre>
 </div>
 </div>
 </div>
@@ -1451,14 +1548,11 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/07-diagrama-er-undf.html" class="pagination-link" aria-label="Diagrama ER da UnDF">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Diagrama ER da UnDF</span></span>
+      <a href="../../content/cap08/12-notacoes.html" class="pagination-link" aria-label="Notações Alternativas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Notações Alternativas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/09-especializacao.html" class="pagination-link" aria-label="Especialização e Generalização">
-        <span class="nav-page-text"><span class="chapter-title">Especialização e Generalização</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

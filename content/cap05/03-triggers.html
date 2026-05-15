@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Introdução ao Modelo Relacional – Bases da Engenharia de Software 4</title>
+<title>Triggers – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap02/01-estrutura.html" rel="next">
-<link href="../../content/cap01/13-hands-on-postgresql.html" rel="prev">
+<link href="../../content/cap05/04-consultas-recursivas.html" rel="next">
+<link href="../../content/cap05/02-funcoes-procedimentos.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -290,7 +306,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/03-triggers.html"><span class="chapter-title">Triggers</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -405,7 +421,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visão Geral</span></a>
+  <a href="../../content/cap02/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -623,7 +639,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,7 +745,17 @@ div.csl-indent {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#estrutura-de-um-trigger-no-postgresql" id="toc-estrutura-de-um-trigger-no-postgresql" class="nav-link active" data-scroll-target="#estrutura-de-um-trigger-no-postgresql">Estrutura de um Trigger no PostgreSQL</a></li>
+  <li><a href="#before-vs.-after" id="toc-before-vs.-after" class="nav-link" data-scroll-target="#before-vs.-after">BEFORE vs.&nbsp;AFTER</a></li>
+  <li><a href="#for-each-row-vs.-for-each-statement" id="toc-for-each-row-vs.-for-each-statement" class="nav-link" data-scroll-target="#for-each-row-vs.-for-each-statement">FOR EACH ROW vs.&nbsp;FOR EACH STATEMENT</a></li>
+  <li><a href="#exemplo-1-after-update-auditoria-de-salários" id="toc-exemplo-1-after-update-auditoria-de-salários" class="nav-link" data-scroll-target="#exemplo-1-after-update-auditoria-de-salários">Exemplo 1 — AFTER UPDATE: Auditoria de Salários</a>
+  <ul>
+  <li><a href="#demonstração" id="toc-demonstração" class="nav-link" data-scroll-target="#demonstração">Demonstração</a></li>
+  </ul></li>
+  <li><a href="#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota" id="toc-exemplo-2-before-insert-or-update-derivando-aprovado-da-nota" class="nav-link" data-scroll-target="#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota">Exemplo 2 — BEFORE INSERT OR UPDATE: Derivando <code>aprovado</code> da Nota</a></li>
+  <li><a href="#listando-triggers-do-banco" id="toc-listando-triggers-do-banco" class="nav-link" data-scroll-target="#listando-triggers-do-banco">Listando Triggers do Banco</a></li>
+  <li><a href="#quando-não-usar-triggers" id="toc-quando-não-usar-triggers" class="nav-link" data-scroll-target="#quando-não-usar-triggers">Quando Não Usar Triggers</a></li>
+  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -737,9 +763,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap02/index.html">Capítulo 2: Modelo Relacional</a></li><li class="breadcrumb-item"><a href="../../content/cap02/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap05/index.html">Capítulo 5: SQL Avançado</a></li><li class="breadcrumb-item"><a href="../../content/cap05/03-triggers.html"><span class="chapter-title">Triggers</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Introdução ao Modelo Relacional</span></h1>
+<h1 class="title"><span class="chapter-title">Triggers</span></h1>
 </div>
 
 
@@ -762,6 +788,284 @@ div.csl-indent {
 </header>
 
 
+<div class="conceito">
+<p>Um <strong>trigger</strong> é uma instrução executada automaticamente pelo SGBD como efeito colateral de uma modificação no banco de dados. Para projetar um trigger, é preciso especificar:</p>
+<ol type="1">
+<li>O <strong>evento</strong> que dispara o trigger (<code>INSERT</code>, <code>UPDATE</code> ou <code>DELETE</code>)</li>
+<li>O <strong>momento</strong> em que ele executa (<code>BEFORE</code> ou <code>AFTER</code> o evento)</li>
+<li>A <strong>ação</strong> a ser tomada (um procedimento PL/pgSQL)</li>
+</ol>
+</div>
+<p>Triggers foram introduzidos no padrão SQL:1999 e são amplamente suportados — embora a sintaxe varie entre SGBDs. Os exemplos aqui usam a sintaxe do PostgreSQL.</p>
+<section id="estrutura-de-um-trigger-no-postgresql" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-de-um-trigger-no-postgresql">Estrutura de um Trigger no PostgreSQL</h2>
+<p>No PostgreSQL, um trigger é sempre associado a uma <strong>função de trigger</strong> (que retorna <code>TRIGGER</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- 1. Cria a função que implementa a ação</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> nome_funcao()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="kw">TRIGGER</span> <span class="kw">AS</span> $$</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- lógica usando NEW e/ou OLD</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">RETURN</span> <span class="kw">NEW</span>;   <span class="co">-- para BEFORE; AFTER pode retornar NULL</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- 2. Associa a função ao evento na tabela</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> nome_trigger</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>{ <span class="kw">BEFORE</span> | <span class="kw">AFTER</span> } { <span class="kw">INSERT</span> | <span class="kw">UPDATE</span> | <span class="kw">DELETE</span> } [<span class="kw">OF</span> coluna, <span class="op">..</span>.]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> tabela</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">FOR</span> <span class="kw">EACH</span> { <span class="kw">ROW</span> | STATEMENT }</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">EXECUTE</span> <span class="kw">FUNCTION</span> nome_funcao();</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="conceito">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variável especial</th>
+<th>Disponível em</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NEW</code></td>
+<td><code>INSERT</code>, <code>UPDATE</code></td>
+<td>Linha <strong>nova</strong> (após a operação)</td>
+</tr>
+<tr class="even">
+<td><code>OLD</code></td>
+<td><code>UPDATE</code>, <code>DELETE</code></td>
+<td>Linha <strong>antiga</strong> (antes da operação)</td>
+</tr>
+</tbody>
+</table>
+<p>Em triggers <code>BEFORE</code>, alterar <code>NEW</code> antes de <code>RETURN NEW</code> modifica o valor que será gravado.</p>
+</div>
+</section>
+<section id="before-vs.-after" class="level2">
+<h2 class="anchored" data-anchor-id="before-vs.-after">BEFORE vs.&nbsp;AFTER</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>BEFORE</code></th>
+<th><code>AFTER</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quando executa</td>
+<td>Antes da modificação</td>
+<td>Depois que a linha foi alterada</td>
+</tr>
+<tr class="even">
+<td>Pode cancelar a operação</td>
+<td>Sim (retornando <code>NULL</code>)</td>
+<td>Não</td>
+</tr>
+<tr class="odd">
+<td>Uso típico</td>
+<td>Validação, derivação de valores</td>
+<td>Auditoria, propagação a outras tabelas</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="for-each-row-vs.-for-each-statement" class="level2">
+<h2 class="anchored" data-anchor-id="for-each-row-vs.-for-each-statement">FOR EACH ROW vs.&nbsp;FOR EACH STATEMENT</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>FOR EACH ROW</code></th>
+<th><code>FOR EACH STATEMENT</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Execuções por instrução</td>
+<td>Uma por linha afetada</td>
+<td>Uma por instrução SQL</td>
+</tr>
+<tr class="even">
+<td>Acesso a <code>NEW</code>/<code>OLD</code></td>
+<td>Sim</td>
+<td>Não (usa <code>referencing new/old table</code>)</td>
+</tr>
+<tr class="odd">
+<td>Uso típico</td>
+<td>Auditoria por linha, derivações</td>
+<td>Totalizadores pós-lote</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exemplo-1-after-update-auditoria-de-salários" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-1-after-update-auditoria-de-salários">Exemplo 1 — AFTER UPDATE: Auditoria de Salários</h2>
+<p>O trigger <code>trg_log_salario</code> registra toda alteração de salário de professores em uma tabela de log.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> log_salario (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    id_log           SERIAL       <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    id_prof          <span class="dt">INT</span>          <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    salario_anterior <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    salario_novo     <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    alterado_em      <span class="dt">TIMESTAMP</span>    <span class="kw">DEFAULT</span> <span class="fu">CURRENT_TIMESTAMP</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> fn_log_salario()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="kw">TRIGGER</span> <span class="kw">AS</span> $$</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> <span class="kw">NEW</span>.salario <span class="op">&lt;&gt;</span> <span class="kw">OLD</span>.salario <span class="cf">THEN</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">INSERT</span> <span class="kw">INTO</span> log_salario (id_prof, salario_anterior, salario_novo)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">VALUES</span> (<span class="kw">OLD</span>.id_prof, <span class="kw">OLD</span>.salario, <span class="kw">NEW</span>.salario);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">RETURN</span> <span class="kw">NEW</span>;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TRIGGER</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> trg_log_salario <span class="kw">ON</span> professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> trg_log_salario</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">AFTER</span> <span class="kw">UPDATE</span> <span class="kw">OF</span> salario <span class="kw">ON</span> professor</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">FOR</span> <span class="kw">EACH</span> <span class="kw">ROW</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">EXECUTE</span> <span class="kw">FUNCTION</span> fn_log_salario();</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="demonstração" class="level3">
+<h3 class="anchored" data-anchor-id="demonstração">Demonstração</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Limpa entradas de demos anteriores</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">TRUNCATE</span> log_salario RESTART IDENTITY;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Salário original de Gustavo Costa (31200001)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, salario <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_prof <span class="op">=</span> <span class="dv">31200001</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">salario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: right;">3300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aplica reajuste de 10% — trigger deve registrar a mudança</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor <span class="kw">SET</span> salario <span class="op">=</span> <span class="fl">3630.00</span> <span class="kw">WHERE</span> id_prof <span class="op">=</span> <span class="dv">31200001</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Log registrado pelo trigger</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_prof, salario_anterior, salario_novo, alterado_em</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   log_salario</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_log;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>1 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_prof</th>
+<th style="text-align: right;">salario_anterior</th>
+<th style="text-align: right;">salario_novo</th>
+<th style="text-align: left;">alterado_em</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">31200001</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">3630</td>
+<td style="text-align: left;">2026-05-15 18:19:17</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Restaura o salário original</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor <span class="kw">SET</span> salario <span class="op">=</span> <span class="fl">3300.00</span> <span class="kw">WHERE</span> id_prof <span class="op">=</span> <span class="dv">31200001</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Log após restauração: dois registros (aumento e restauração)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_prof, salario_anterior, salario_novo</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   log_salario</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> id_log;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_prof</th>
+<th style="text-align: right;">salario_anterior</th>
+<th style="text-align: right;">salario_novo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">31200001</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">3630</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31200001</td>
+<td style="text-align: right;">3630</td>
+<td style="text-align: right;">3300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>O trigger disparou automaticamente nas duas atualizações — sem nenhuma ação explícita do código que executou o <code>UPDATE</code>.</p>
+</section>
+</section>
+<section id="exemplo-2-before-insert-or-update-derivando-aprovado-da-nota" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-2-before-insert-or-update-derivando-aprovado-da-nota">Exemplo 2 — BEFORE INSERT OR UPDATE: Derivando <code>aprovado</code> da Nota</h2>
+<p>O campo <code>aprovado</code> em <code>matricula_disciplina</code> pode ser computado automaticamente a partir de <code>nota</code>, eliminando a necessidade de a aplicação calcular e inserir esse valor.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> fn_calcular_aprovado()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="kw">TRIGGER</span> <span class="kw">AS</span> $$</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Só deriva aprovado se nota foi fornecida</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> <span class="kw">NEW</span>.nota <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">NEW</span>.aprovado <span class="op">:=</span> <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="kw">NEW</span>.nota <span class="op">&gt;=</span> <span class="fl">6.0</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>;</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">RETURN</span> <span class="kw">NEW</span>;   <span class="co">-- BEFORE: RETURN NEW grava o valor modificado</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TRIGGER</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> trg_aprovado <span class="kw">ON</span> matricula_disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> trg_aprovado</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">BEFORE</span> <span class="kw">INSERT</span> <span class="kw">OR</span> <span class="kw">UPDATE</span> <span class="kw">OF</span> nota <span class="kw">ON</span> matricula_disciplina</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">FOR</span> <span class="kw">EACH</span> <span class="kw">ROW</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">EXECUTE</span> <span class="kw">FUNCTION</span> fn_calcular_aprovado();</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Com este trigger ativo, uma instrução como:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> matricula_disciplina</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    (id_disciplina, ano, semestre, turma, id_aluno, nota)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">3110401</span>, <span class="dv">2026</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2025311001</span>, <span class="fl">7.5</span>);</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- aprovado será automaticamente definido como 1 pelo trigger</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>…insere a linha com <code>aprovado = 1</code> sem que o código da aplicação precise calcular esse valor.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -772,86 +1076,147 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 2 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Teste este trigger no <code>psql</code> ou DBeaver, inserindo uma linha com <code>nota = 4.5</code> e verificando que <code>aprovado</code> fica <code>0</code>, ou com <code>nota = 8.0</code> para <code>aprovado = 1</code>.</p>
 </div>
 </div>
-<p>Este capítulo apresenta o <strong>modelo relacional</strong>, que é a base de praticamente todos os sistemas de banco de dados modernos. Ao final, você será capaz de:</p>
-<ul>
-<li>Descrever a estrutura de um banco de dados relacional (relações, tuplas e atributos)</li>
-<li>Distinguir schema de instância</li>
-<li>Identificar superchaves, chaves candidatas, chaves primárias e chaves estrangeiras</li>
-<li>Interpretar um diagrama de schema</li>
-<li>Reconhecer os tipos de linguagens de consulta relacionais</li>
-<li>Aplicar os operadores básicos da álgebra relacional: seleção, projeção, produto cartesiano, junção, operações de conjunto e renomeação</li>
-<li>Usar funções de agregação para sumarizar dados</li>
-</ul>
-<section id="seções" class="level2">
-<h2 class="anchored" data-anchor-id="seções">Seções</h2>
-<table class="caption-top table">
+</section>
+<section id="listando-triggers-do-banco" class="level2">
+<h2 class="anchored" data-anchor-id="listando-triggers-do-banco">Listando Triggers do Banco</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> trigger_name         <span class="kw">AS</span> <span class="kw">trigger</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       event_object_table   <span class="kw">AS</span> tabela,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       event_manipulation   <span class="kw">AS</span> evento,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>       action_timing        <span class="kw">AS</span> momento,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       action_orientation   <span class="kw">AS</span> nivel</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.<span class="kw">triggers</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  trigger_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tabela, trigger_name, evento;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>3 records</caption>
 <thead>
 <tr class="header">
-<th>Seção</th>
-<th>Tópico</th>
+<th style="text-align: left;">trigger</th>
+<th style="text-align: left;">tabela</th>
+<th style="text-align: left;">evento</th>
+<th style="text-align: left;">momento</th>
+<th style="text-align: left;">nivel</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap02/01-estrutura.html">2.1</a></td>
-<td>Estrutura do Banco de Dados Relacional</td>
+<td style="text-align: left;">trg_aprovado</td>
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">INSERT</td>
+<td style="text-align: left;">BEFORE</td>
+<td style="text-align: left;">ROW</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap02/02-schema.html">2.2</a></td>
-<td>Schema e Instância</td>
+<td style="text-align: left;">trg_aprovado</td>
+<td style="text-align: left;">matricula_disciplina</td>
+<td style="text-align: left;">UPDATE</td>
+<td style="text-align: left;">BEFORE</td>
+<td style="text-align: left;">ROW</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap02/03-chaves.html">2.3</a></td>
-<td>Chaves</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/04-diagrama-schema.html">2.4</a></td>
-<td>Diagrama de Schema</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/05-linguagens-consulta.html">2.5</a></td>
-<td>Linguagens de Consulta Relacional</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/06-algebra-relacional.html">2.6</a></td>
-<td>Álgebra Relacional</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/07-selecao.html">2.7</a></td>
-<td>Operação de Seleção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/08-projecao.html">2.8</a></td>
-<td>Operação de Projeção</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/09-produto-juncao.html">2.9</a></td>
-<td>Produto Cartesiano e Junção</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/10-operacoes-conjunto.html">2.10</a></td>
-<td>Operações de Conjunto</td>
-</tr>
-<tr class="odd">
-<td><a href="../../content/cap02/11-operacoes-adicionais.html">2.11</a></td>
-<td>Operações Adicionais</td>
-</tr>
-<tr class="even">
-<td><a href="../../content/cap02/12-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td style="text-align: left;">trg_log_salario</td>
+<td style="text-align: left;">professor</td>
+<td style="text-align: left;">UPDATE</td>
+<td style="text-align: left;">AFTER</td>
+<td style="text-align: left;">ROW</td>
 </tr>
 </tbody>
 </table>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
 </div>
 </div>
+</section>
+<section id="quando-não-usar-triggers" class="level2">
+<h2 class="anchored" data-anchor-id="quando-não-usar-triggers">Quando Não Usar Triggers</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Triggers são poderosos, mas podem tornar o sistema difícil de depurar e manter:</p>
+<ul>
+<li><strong>Efeitos ocultos</strong>: quem escreve um <code>UPDATE</code> pode não saber que um trigger será disparado.</li>
+<li><strong>Cascata inesperada</strong>: um trigger pode disparar outros triggers, criando cadeias difíceis de rastrear.</li>
+<li><strong>Performance</strong>: triggers <code>FOR EACH ROW</code> em operações em lote (carga de milhares de linhas) podem ser lentos.</li>
+</ul>
+<p>Prefira triggers quando a regra é <strong>invariante</strong> e deve ser aplicada independente de qual aplicação acessa o banco. Para lógica específica de uma aplicação, mantenha-a na camada de aplicação.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="para-praticar" class="level2">
+<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar se o log capturou corretamente as mudanças de salário</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> l.id_prof,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       p.nome,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>       l.salario_anterior,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>       l.salario_novo,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>       l.salario_novo <span class="op">-</span> l.salario_anterior <span class="kw">AS</span> diferenca</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   log_salario l</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor   p <span class="kw">ON</span> p.id_prof <span class="op">=</span> l.id_prof</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> l.id_log;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>2 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_prof</th>
+<th style="text-align: left;">nome</th>
+<th style="text-align: right;">salario_anterior</th>
+<th style="text-align: right;">salario_novo</th>
+<th style="text-align: right;">diferenca</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">31200001</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">3630</td>
+<td style="text-align: right;">330</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31200001</td>
+<td style="text-align: left;">Gustavo Costa</td>
+<td style="text-align: right;">3630</td>
+<td style="text-align: right;">3300</td>
+<td style="text-align: right;">-330</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exercício: criar um trigger que impede que o salário seja reduzido</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">FUNCTION</span> fn_proteger_salario()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>RETURNS <span class="kw">TRIGGER</span> <span class="kw">AS</span> $$</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> <span class="kw">NEW</span>.salario <span class="op">&lt;</span> <span class="kw">OLD</span>.salario <span class="cf">THEN</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        RAISE <span class="kw">EXCEPTION</span> <span class="st">'Redução de salário não permitida: % → %'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">OLD</span>.salario, <span class="kw">NEW</span>.salario;</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="cf">IF</span>;</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">RETURN</span> <span class="kw">NEW</span>;</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>;</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>$$ LANGUAGE plpgsql;</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TRIGGER</span> trg_proteger_salario</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="kw">BEFORE</span> <span class="kw">UPDATE</span> <span class="kw">OF</span> salario <span class="kw">ON</span> professor</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="cf">FOR</span> <span class="kw">EACH</span> <span class="kw">ROW</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">EXECUTE</span> <span class="kw">FUNCTION</span> fn_proteger_salario();</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Teste: tente reduzir o salário de um professor — deve falhar</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> professor <span class="kw">SET</span> salario <span class="op">=</span> <span class="fl">1000.00</span> <span class="kw">WHERE</span> id_prof <span class="op">=</span> <span class="dv">31400002</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1364,13 +1729,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap01/13-hands-on-postgresql.html" class="pagination-link" aria-label="Hands-on: PostgreSQL">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Hands-on: PostgreSQL</span></span>
+      <a href="../../content/cap05/02-funcoes-procedimentos.html" class="pagination-link" aria-label="Funções e Procedimentos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Funções e Procedimentos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap02/01-estrutura.html" class="pagination-link" aria-label="Estrutura do Banco de Dados Relacional">
-        <span class="nav-page-text"><span class="chapter-title">Estrutura do Banco de Dados Relacional</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap05/04-consultas-recursivas.html" class="pagination-link" aria-label="Consultas Recursivas">
+        <span class="nav-page-text"><span class="chapter-title">Consultas Recursivas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

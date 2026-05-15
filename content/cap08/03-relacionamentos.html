@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Braga">
 
-<title>Conjuntos de Entidades – Bases da Engenharia de Software 4</title>
+<title>Conjuntos de Relacionamentos – Bases da Engenharia de Software 4</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -31,23 +34,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/03-relacionamentos.html" rel="next">
-<link href="../../content/cap04/01-fases-projeto.html" rel="prev">
+<link href="../../content/cap08/04-atributos.html" rel="next">
+<link href="../../content/cap08/02-entidades.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e633485d289851b820481f4b6dc4ea51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-663e73f9dec64fbea7d0ce06426dad2b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2a10d0346db92f4f4683709d27f46b3b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -76,6 +78,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -269,7 +300,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-entidades.html"><span class="chapter-title">Conjuntos de Entidades</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/03-relacionamentos.html"><span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -523,7 +554,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 4: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 4: SQL Intermediário</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -536,67 +567,164 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  <a href="../../content/cap04/01-joins.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Expressões de Junção</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-entidades.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/03-relacionamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  <a href="../../content/cap04/03-transacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  <a href="../../content/cap04/04-integridade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Restrições de Integridade</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  <a href="../../content/cap04/05-tipos-dados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Dados SQL</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  <a href="../../content/cap04/06-indices.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Índices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  <a href="../../content/cap04/07-autorizacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Autorização</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  <a href="../../content/cap04/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 5: SQL Avançado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap05/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  <a href="../../content/cap05/01-acesso-python.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Acesso ao Banco via Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  <a href="../../content/cap05/02-funcoes-procedimentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Funções e Procedimentos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  <a href="../../content/cap05/03-triggers.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Triggers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  <a href="../../content/cap05/04-consultas-recursivas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Consultas Recursivas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap05/05-agregacao-avancada.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação Avançada</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/01-fases-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fases do Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/02-entidades.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conjuntos de Entidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/03-relacionamentos.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Conjuntos de Relacionamentos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/04-atributos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Tipos de Atributos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/05-cardinalidade.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cardinalidade e Participação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/06-entidades-fracas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Entidades Fracas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/07-diagrama-er-undf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diagrama ER da UnDF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/08-conversao-relacional.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conversão ER → Relacional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/09-especializacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Especialização e Generalização</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/10-agregacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Agregação</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/11-decisoes-projeto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Decisões de Projeto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/12-notacoes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Notações Alternativas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap08/13-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
   </div>
 </li>
       </ul>
@@ -611,10 +739,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#entidade-e-conjunto-de-entidades" id="toc-entidade-e-conjunto-de-entidades" class="nav-link active" data-scroll-target="#entidade-e-conjunto-de-entidades">Entidade e Conjunto de Entidades</a></li>
-  <li><a href="#chave-primária-do-conjunto-de-entidades" id="toc-chave-primária-do-conjunto-de-entidades" class="nav-link" data-scroll-target="#chave-primária-do-conjunto-de-entidades">Chave Primária do Conjunto de Entidades</a></li>
+  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
+  <li><a href="#atributos-de-relacionamentos" id="toc-atributos-de-relacionamentos" class="nav-link" data-scroll-target="#atributos-de-relacionamentos">Atributos de Relacionamentos</a></li>
   <li><a href="#representação-em-diagrama-er" id="toc-representação-em-diagrama-er" class="nav-link" data-scroll-target="#representação-em-diagrama-er">Representação em Diagrama ER</a></li>
-  <li><a href="#instância-vs.-conjunto" id="toc-instância-vs.-conjunto" class="nav-link" data-scroll-target="#instância-vs.-conjunto">Instância vs.&nbsp;Conjunto</a></li>
+  <li><a href="#papéis-roles" id="toc-papéis-roles" class="nav-link" data-scroll-target="#papéis-roles">Papéis (<em>Roles</em>)</a></li>
+  <li><a href="#grau-de-um-relacionamento" id="toc-grau-de-um-relacionamento" class="nav-link" data-scroll-target="#grau-de-um-relacionamento">Grau de um Relacionamento</a></li>
   <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -623,9 +752,9 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-entidades.html"><span class="chapter-title">Conjuntos de Entidades</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap08/index.html">Capítulo 8: Projeto com o Modelo ER</a></li><li class="breadcrumb-item"><a href="../../content/cap08/03-relacionamentos.html"><span class="chapter-title">Conjuntos de Relacionamentos</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Conjuntos de Entidades</span></h1>
+<h1 class="title"><span class="chapter-title">Conjuntos de Relacionamentos</span></h1>
 </div>
 
 
@@ -648,146 +777,154 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="entidade-e-conjunto-de-entidades" class="level2">
-<h2 class="anchored" data-anchor-id="entidade-e-conjunto-de-entidades">Entidade e Conjunto de Entidades</h2>
+<section id="definição" class="level2">
+<h2 class="anchored" data-anchor-id="definição">Definição</h2>
 <div class="conceito">
-<p>Uma <strong>entidade</strong> é um objeto do mundo real distinguível de outros objetos. Pode ser concreta (uma pessoa, um prédio) ou abstrata (um curso, uma matrícula).</p>
-<p>Um <strong>conjunto de entidades</strong> (<em>entity set</em>) é a coleção de todas as entidades do mesmo tipo que compartilham as mesmas propriedades.</p>
+<p>Um <strong>relacionamento</strong> é uma associação entre duas ou mais entidades.</p>
+<p>Um <strong>conjunto de relacionamentos</strong> (<em>relationship set</em>) é uma relação matemática entre <span class="math inline">\(n \geq 2\)</span> conjuntos de entidades:</p>
+<p><span class="math display">\[\{(e_1, e_2, \ldots, e_n) \mid e_1 \in E_1,\ e_2 \in E_2,\ \ldots,\ e_n \in E_n\}\]</span></p>
+<p>onde cada <span class="math inline">\((e_1, e_2, \ldots, e_n)\)</span> é um relacionamento individual.</p>
 </div>
-<p>Cada entidade é descrita por um conjunto de <strong>atributos</strong> — propriedades descritivas pertencentes a todos os membros do conjunto.</p>
 <div class="exemplo">
-<p>No banco da UnDF, temos os seguintes conjuntos de entidades:</p>
+<p>No banco da UnDF, o conjunto de relacionamentos <code>ministra</code> associa entidades de <code>professor</code> e <code>disciplina</code>:</p>
+<p><span class="math display">\[ministra \subseteq professor \times disciplina\]</span></p>
+<p>Cada par (Gustavo Costa, ENS-201) é um relacionamento que significa “Gustavo ministra ENS-201”.</p>
+</div>
+</section>
+<section id="atributos-de-relacionamentos" class="level2">
+<h2 class="anchored" data-anchor-id="atributos-de-relacionamentos">Atributos de Relacionamentos</h2>
+<p>Assim como conjuntos de entidades, conjuntos de relacionamentos podem ter <strong>atributos próprios</strong> — informações que descrevem a associação em si, não as entidades participantes.</p>
+<div class="exemplo">
+<p>O relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code> tem os atributos:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Conjunto de Entidades</th>
-<th>Atributos</th>
+<th>Atributo</th>
+<th>Descrição</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>professor</code></td>
-<td>matricula_prof, nome, escola, ch_semanal, salario</td>
+<td><code>ano</code></td>
+<td>Ano letivo em que a turma foi oferecida</td>
 </tr>
 <tr class="even">
-<td><code>aluno</code></td>
-<td>matricula, nome, sigla_curso, ano_ingresso</td>
+<td><code>semestre</code></td>
+<td>Semestre (1 ou 2)</td>
 </tr>
 <tr class="odd">
-<td><code>disciplina</code></td>
-<td>codigo, nome_disciplina, sigla_curso, semestre, carga_horaria</td>
+<td><code>turma</code></td>
+<td>Identificador da turma (A, B…)</td>
 </tr>
 <tr class="even">
-<td><code>curso</code></td>
-<td>sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso</td>
+<td><code>horario</code></td>
+<td>Horário semanal das aulas</td>
 </tr>
 <tr class="odd">
-<td><code>escola</code></td>
-<td>escola, nome_escola, centro</td>
-</tr>
-<tr class="even">
-<td><code>centro</code></td>
-<td>centro, nome_centro</td>
+<td><code>sala</code></td>
+<td>Sala onde as aulas ocorrem</td>
 </tr>
 </tbody>
 </table>
-</div>
-</section>
-<section id="chave-primária-do-conjunto-de-entidades" class="level2">
-<h2 class="anchored" data-anchor-id="chave-primária-do-conjunto-de-entidades">Chave Primária do Conjunto de Entidades</h2>
-<p>Um subconjunto dos atributos cujos valores identificam unicamente cada entidade forma a <strong>chave primária</strong> do conjunto de entidades. Nos diagramas ER, os atributos da chave primária são sublinhados.</p>
-<div class="exemplo">
-<ul>
-<li><code>professor</code>: chave primária = <code>matricula_prof</code> (ex.: PROF20230031)</li>
-<li><code>aluno</code>: chave primária = <code>matricula</code> (ex.: ENS-2023-001)</li>
-<li><code>disciplina</code>: chave primária = <code>codigo</code> (ex.: ENS-201)</li>
-<li><code>curso</code>: chave primária = <code>sigla_curso</code> (ex.: ENS)</li>
-</ul>
+<p>Esses atributos não pertencem nem ao professor nem à disciplina — pertencem ao <strong>ato de ministrar</strong> aquela disciplina naquele contexto específico.</p>
 </div>
 </section>
 <section id="representação-em-diagrama-er" class="level2">
 <h2 class="anchored" data-anchor-id="representação-em-diagrama-er">Representação em Diagrama ER</h2>
-<p>Na notação ER tradicional:</p>
 <div class="conceito">
-<ul>
-<li><strong>Retângulo</strong>: representa um conjunto de entidades</li>
-<li><strong>Elipses</strong>: representam atributos, conectadas ao retângulo por linhas</li>
-<li><strong>Atributo sublinhado</strong>: indica que é parte da chave primária</li>
-</ul>
+<p>Na notação ER: - <strong>Losango</strong>: representa um conjunto de relacionamentos - <strong>Linhas</strong>: conectam o losango aos retângulos dos conjuntos de entidades participantes - <strong>Elipses</strong> ligadas ao losango: atributos do relacionamento</p>
 </div>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<svg width="672" height="480" viewbox="0.00 0.00 530.41 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>er_entidade</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 526.41,-112 526.41,4 -4,4"></polygon>
+<svg width="672" height="480" viewbox="0.00 0.00 295.42 584.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 580)">
+<title>er_relacionamento</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-580 291.42,-580 291.42,4 -4,4"></polygon>
 <!-- professor -->
 <g id="node1" class="node">
 <title>professor</title>
-<polygon fill="#aed6f1" stroke="black" points="347.81,-108 290.94,-108 290.94,-72 347.81,-72 347.81,-108"></polygon>
-<text text-anchor="middle" x="319.37" y="-86.7" font-family="Times New Roman" font-size="11.00">professor</text>
+<polygon fill="#aed6f1" stroke="black" points="56.9,-306 0.03,-306 0.03,-270 56.9,-270 56.9,-306"></polygon>
+<text text-anchor="middle" x="28.47" y="-284.7" font-family="Times New Roman" font-size="11.00">professor</text>
 </g>
-<!-- matricula_prof -->
-<g id="node2" class="node">
-<title>matricula_prof</title>
-<ellipse fill="none" stroke="black" cx="101.37" cy="-18" rx="101.24" ry="18"></ellipse>
-<text text-anchor="start" x="27.44" y="-14.7" font-family="Times New Roman" font-size="11.00">̲m̲a̲t̲r̲i̲c̲u̲l̲a̲_̲p̲r̲o̲f̲</text>
-</g>
-<!-- professor&#45;&#45;matricula_prof -->
-<g id="edge1" class="edge">
-<title>professor--matricula_prof</title>
-<path fill="none" stroke="black" d="M290.87,-79.85C254.63,-68.21 191.57,-47.96 148.21,-34.04"></path>
-</g>
-<!-- nome -->
+<!-- ministra -->
 <g id="node3" class="node">
-<title>nome</title>
-<ellipse fill="none" stroke="black" cx="247.37" cy="-18" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="247.37" y="-14.7" font-family="Times New Roman" font-size="11.00">nome</text>
+<title>ministra</title>
+<polygon fill="#f9e79f" stroke="black" points="138.47,-306 92.89,-288 138.47,-270 184.05,-288 138.47,-306"></polygon>
+<text text-anchor="middle" x="138.47" y="-284.7" font-family="Times New Roman" font-size="11.00">ministra</text>
 </g>
-<!-- professor&#45;&#45;nome -->
+<!-- professor&#45;&#45;ministra -->
+<g id="edge1" class="edge">
+<title>professor--ministra</title>
+<path fill="none" stroke="black" d="M57,-288C67.88,-288 80.65,-288 92.78,-288"></path>
+</g>
+<!-- disciplina -->
+<g id="node2" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="282.99,-576 224.45,-576 224.45,-540 282.99,-540 282.99,-576"></polygon>
+<text text-anchor="middle" x="253.72" y="-554.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- ministra&#45;&#45;disciplina -->
 <g id="edge2" class="edge">
-<title>professor--nome</title>
-<path fill="none" stroke="black" d="M301.57,-71.7C289.41,-59.87 273.49,-44.4 262.06,-33.28"></path>
+<title>ministra--disciplina</title>
+<path fill="none" stroke="black" d="M145.89,-303.29C165.4,-349.81 223.99,-489.51 245.06,-539.75"></path>
 </g>
-<!-- escola -->
+<!-- ano -->
 <g id="node4" class="node">
-<title>escola</title>
-<ellipse fill="none" stroke="black" cx="319.37" cy="-18" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="319.37" y="-14.7" font-family="Times New Roman" font-size="11.00">escola</text>
+<title>ano</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-450" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-446.7" font-family="Times New Roman" font-size="11.00">ano</text>
 </g>
-<!-- professor&#45;&#45;escola -->
+<!-- ministra&#45;&#45;ano -->
 <g id="edge3" class="edge">
-<title>professor--escola</title>
-<path fill="none" stroke="black" d="M319.37,-71.7C319.37,-60.85 319.37,-46.92 319.37,-36.1"></path>
+<title>ministra--ano</title>
+<path fill="none" stroke="black" d="M149.13,-301.81C169.99,-331.65 219.17,-402.01 241.43,-433.85"></path>
 </g>
-<!-- ch -->
+<!-- semestre -->
 <g id="node5" class="node">
-<title>ch</title>
-<ellipse fill="none" stroke="black" cx="406.37" cy="-18" rx="42.04" ry="18"></ellipse>
-<text text-anchor="middle" x="406.37" y="-14.7" font-family="Times New Roman" font-size="11.00">ch_semanal</text>
+<title>semestre</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-342" rx="33.91" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-338.7" font-family="Times New Roman" font-size="11.00">semestre</text>
 </g>
-<!-- professor&#45;&#45;ch -->
+<!-- ministra&#45;&#45;semestre -->
 <g id="edge4" class="edge">
-<title>professor--ch</title>
-<path fill="none" stroke="black" d="M340.88,-71.7C355.17,-60.2 373.76,-45.24 387.48,-34.2"></path>
+<title>ministra--semestre</title>
+<path fill="none" stroke="black" d="M159.72,-297.65C178.8,-306.76 207.45,-320.42 227.91,-330.17"></path>
 </g>
-<!-- salario -->
+<!-- turma -->
 <g id="node6" class="node">
-<title>salario</title>
-<ellipse fill="none" stroke="black" cx="494.37" cy="-18" rx="28.08" ry="18"></ellipse>
-<text text-anchor="middle" x="494.37" y="-14.7" font-family="Times New Roman" font-size="11.00">salario</text>
+<title>turma</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-230.7" font-family="Times New Roman" font-size="11.00">turma</text>
 </g>
-<!-- professor&#45;&#45;salario -->
+<!-- ministra&#45;&#45;turma -->
 <g id="edge5" class="edge">
-<title>professor--salario</title>
-<path fill="none" stroke="black" d="M347.88,-77.6C382.26,-63.84 439.39,-40.99 471.19,-28.27"></path>
+<title>ministra--turma</title>
+<path fill="none" stroke="black" d="M159.72,-278.35C179.82,-268.76 210.54,-254.11 231.1,-244.31"></path>
+</g>
+<!-- horario -->
+<g id="node7" class="node">
+<title>horario</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-126" rx="29.6" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-122.7" font-family="Times New Roman" font-size="11.00">horario</text>
+</g>
+<!-- ministra&#45;&#45;horario -->
+<g id="edge6" class="edge">
+<title>ministra--horario</title>
+<path fill="none" stroke="black" d="M149.13,-274.19C169.88,-244.5 218.67,-174.71 241.08,-142.64"></path>
+</g>
+<!-- sala -->
+<g id="node8" class="node">
+<title>sala</title>
+<ellipse fill="none" stroke="black" cx="253.72" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="253.72" y="-14.7" font-family="Times New Roman" font-size="11.00">sala</text>
+</g>
+<!-- ministra&#45;&#45;sala -->
+<g id="edge7" class="edge">
+<title>ministra--sala</title>
+<path fill="none" stroke="black" d="M145.89,-272.71C165.54,-225.86 224.84,-84.47 245.51,-35.18"></path>
 </g>
 </g>
 </svg>
@@ -796,51 +933,148 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</section>
+<section id="papéis-roles" class="level2">
+<h2 class="anchored" data-anchor-id="papéis-roles">Papéis (<em>Roles</em>)</h2>
+<p>Quando o mesmo conjunto de entidades participa mais de uma vez em um relacionamento, os papéis (<em>roles</em>) explicitam o significado de cada participação.</p>
+<div class="exemplo">
+<p>O relacionamento <code>prereq</code> em <code>disciplina</code> é <strong>autorreferencial</strong> — uma disciplina é pré-requisito de outra:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 226.41 58.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 54)">
+<title>er_roles</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-54 222.41,-54 222.41,4 -4,4"></polygon>
+<!-- disciplina -->
+<g id="node1" class="node">
+<title>disciplina</title>
+<polygon fill="#aed6f1" stroke="black" points="58.66,-50 0.11,-50 0.11,-14 58.66,-14 58.66,-50"></polygon>
+<text text-anchor="middle" x="29.39" y="-28.7" font-family="Times New Roman" font-size="11.00">disciplina</text>
+</g>
+<!-- prereq -->
+<g id="node2" class="node">
+<title>prereq</title>
+<polygon fill="#f9e79f" stroke="black" points="179.83,-50 141.18,-32 179.83,-14 218.49,-32 179.83,-50"></polygon>
+<text text-anchor="middle" x="179.83" y="-28.7" font-family="Times New Roman" font-size="11.00">prereq</text>
+</g>
+<!-- disciplina&#45;&#45;prereq -->
+<g id="edge1" class="edge">
+<title>disciplina--prereq</title>
+<path fill="none" stroke="black" d="M58.66,-32C82.04,-32 115.46,-32 141.13,-32"></path>
+<text text-anchor="middle" x="100.01" y="-34.7" font-family="Times,serif" font-size="9.00">disciplina</text>
+</g>
+<!-- prereq&#45;&#45;disciplina -->
+<g id="edge2" class="edge">
+<title>prereq--disciplina</title>
+<path fill="none" stroke="black" d="M141.13,-32C115.46,-32 82.04,-32 58.66,-32"></path>
+<text text-anchor="middle" x="100.01" y="-2.7" font-family="Times,serif" font-size="9.00">pré-requisito</text>
+</g>
+</g>
+</svg>
 </div>
-<div class="callout-title-container flex-fill">
-Nota
+<p></p></figure><p></p>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>A elipse com atributo sublinhado representa a chave primária. Como o Graphviz não suporta sublinhado nativo em labels de elipse de forma simples, nos diagramas completos do capítulo usa-se a convenção de indicar a PK em negrito ou com asterisco quando necessário.</p>
 </div>
+<p>Os rótulos “disciplina” e “pré-requisito” são os <strong>papéis</strong> — indicam qual papel cada participação de <code>disciplina</code> desempenha no relacionamento.</p>
 </div>
 </section>
-<section id="instância-vs.-conjunto" class="level2">
-<h2 class="anchored" data-anchor-id="instância-vs.-conjunto">Instância vs.&nbsp;Conjunto</h2>
-<p>É importante distinguir o <strong>conjunto de entidades</strong> (o tipo, definido no schema) da <strong>instância</strong> (os dados reais armazenados):</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Conceito</th>
-<th>Exemplo</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Conjunto de entidades <code>professor</code></td>
-<td>Todos os professores da UnDF</td>
-</tr>
-<tr class="even">
-<td>Entidade individual</td>
-<td>Gustavo Costa (PROF20230031, ESETI, 40h, R$ 3.300)</td>
-</tr>
-</tbody>
-</table>
-<p>O conjunto de entidades corresponde ao schema da tabela; cada entidade corresponde a uma linha (tupla) da tabela.</p>
+<section id="grau-de-um-relacionamento" class="level2">
+<h2 class="anchored" data-anchor-id="grau-de-um-relacionamento">Grau de um Relacionamento</h2>
+<div class="conceito">
+<p>O <strong>grau</strong> de um relacionamento é o número de conjuntos de entidades que participam dele:</p>
+<ul>
+<li><strong>Binário</strong> (grau 2): o mais comum. Envolve exatamente dois conjuntos de entidades.</li>
+<li><strong>Ternário</strong> (grau 3): envolve três conjuntos de entidades simultaneamente.</li>
+<li><strong>N-ário</strong>: envolve <span class="math inline">\(n\)</span> conjuntos de entidades (raro na prática).</li>
+</ul>
+</div>
+<p>A grande maioria dos relacionamentos em sistemas reais é binária. Relacionamentos ternários aparecem quando a associação entre duas entidades depende de uma terceira.</p>
+<div class="exemplo">
+<p>Se quiséssemos registrar que um aluno é orientado por um professor em um projeto específico, o relacionamento <code>orienta</code> seria ternário entre <code>aluno</code>, <code>professor</code> e <code>projeto</code>:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 288.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>er_ternario</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 284,-112 284,4 -4,4"></polygon>
+<!-- aluno -->
+<g id="node1" class="node">
+<title>aluno</title>
+<polygon fill="#aed6f1" stroke="black" points="54,-108 0,-108 0,-72 54,-72 54,-108"></polygon>
+<text text-anchor="middle" x="27" y="-86.7" font-family="Times New Roman" font-size="11.00">aluno</text>
+</g>
+<!-- orienta -->
+<g id="node4" class="node">
+<title>orienta</title>
+<polygon fill="#f9e79f" stroke="black" points="140,-36 99.06,-18 140,0 180.94,-18 140,-36"></polygon>
+<text text-anchor="middle" x="140" y="-14.7" font-family="Times New Roman" font-size="11.00">orienta</text>
+</g>
+<!-- aluno&#45;&#45;orienta -->
+<g id="edge1" class="edge">
+<title>aluno--orienta</title>
+<path fill="none" stroke="black" d="M54.07,-72.23C75.74,-58.8 105.44,-40.41 123.64,-29.13"></path>
+</g>
+<!-- professor -->
+<g id="node2" class="node">
+<title>professor</title>
+<polygon fill="#aed6f1" stroke="black" points="168.43,-108 111.57,-108 111.57,-72 168.43,-72 168.43,-108"></polygon>
+<text text-anchor="middle" x="140" y="-86.7" font-family="Times New Roman" font-size="11.00">professor</text>
+</g>
+<!-- professor&#45;&#45;orienta -->
+<g id="edge2" class="edge">
+<title>professor--orienta</title>
+<path fill="none" stroke="black" d="M140,-71.7C140,-60.85 140,-46.92 140,-36.1"></path>
+</g>
+<!-- projeto -->
+<g id="node3" class="node">
+<title>projeto</title>
+<polygon fill="#aed6f1" stroke="black" points="280,-108 226,-108 226,-72 280,-72 280,-108"></polygon>
+<text text-anchor="middle" x="253" y="-86.7" font-family="Times New Roman" font-size="11.00">projeto</text>
+</g>
+<!-- projeto&#45;&#45;orienta -->
+<g id="edge3" class="edge">
+<title>projeto--orienta</title>
+<path fill="none" stroke="black" d="M225.93,-72.23C204.26,-58.8 174.56,-40.41 156.36,-29.13"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Não há como dividir <code>orienta</code> em dois relacionamentos binários sem perder informação: saber que um professor orienta um aluno e que um professor orienta um projeto não é suficiente para saber quem orienta quem em qual projeto.</p>
+</div>
 <hr>
 </section>
 <section id="para-praticar" class="level2">
 <h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<p><strong>1. Identificar conjuntos de entidades.</strong> Um sistema de biblioteca universitária precisa registrar: livros (ISBN, título, ano), exemplares físicos (número de tombamento, localização na estante), autores (nome, nacionalidade) e empréstimos (data de retirada, data de devolução, usuário). Quais são os conjuntos de entidades? Quais são os atributos de cada um?</p>
+<p><strong>1. Atributo de entidade ou de relacionamento?</strong> No relacionamento <code>ministra</code> entre <code>professor</code> e <code>disciplina</code>, a <code>sala</code> onde as aulas ocorrem deve ser atributo do relacionamento ou da entidade <code>disciplina</code>? Justifique.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>sala</code> deve ser atributo do <strong>relacionamento</strong> <code>ministra</code>. A mesma disciplina (ENS-201) pode ser oferecida em salas diferentes em semestres distintos, por professores diferentes. A sala não é uma propriedade intrínseca da disciplina — é uma propriedade da oferta específica daquela disciplina naquele semestre/turma. Colocar <code>sala</code> em <code>disciplina</code> forçaria a escolha de uma sala única e permanente, o que não corresponde à realidade.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>2. Autorreferência e papéis.</strong> Na tabela <code>prereq</code> do banco da UnDF, o par <code>(ENS-601, ENS-401)</code> significa que ENS-401 é pré-requisito de ENS-601. Qual é o papel de ENS-601 e qual é o papel de ENS-401 nessa tupla?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -854,17 +1088,15 @@ Nota
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>livro</strong>: ISBN (PK), título, ano</li>
-<li><strong>exemplar</strong>: numero_tombamento (PK), localizacao</li>
-<li><strong>autor</strong>: id_autor (PK), nome, nacionalidade</li>
-<li><strong>usuario</strong>: id_usuario (PK), nome</li>
+<li><strong>ENS-601</strong> exerce o papel de <strong>disciplina</strong> (a que tem o pré-requisito).</li>
+<li><strong>ENS-401</strong> exerce o papel de <strong>pré-requisito</strong> (a que precisa ser cursada antes).</li>
 </ul>
-<p><code>emprestimo</code> é melhor modelado como um <strong>relacionamento</strong> entre exemplar e usuário, com atributos data_retirada e data_devolucao — não como uma entidade separada (embora ambas as abordagens sejam válidas, discutiremos isso na seção 4.11).</p>
+<p>Na tabela, a coluna <code>codigo</code> armazena quem tem o pré-requisito e <code>prereq_codigo</code> armazena quem é o pré-requisito.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>2. Chave primária composta.</strong> Por que o atributo <code>nome</code> não é adequado como chave primária do conjunto de entidades <code>professor</code>? Que problema surge se dois professores tiverem o mesmo nome?</p>
+<p><strong>3. Grau do relacionamento.</strong> Analise o seguinte requisito: “Registrar que um aluno cursou uma disciplina em uma turma específica (identificada por disciplina, ano, semestre e turma) e obteve uma nota”. Qual o grau do relacionamento <code>cursa</code>? Quais os conjuntos de entidades envolvidos?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -877,12 +1109,12 @@ Nota
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>O nome não é garantidamente único — dois professores diferentes podem ter o mesmo nome (ex.: dois “Carlos Silva” na mesma instituição). Se <code>nome</code> fosse a PK, seria impossível distingui-los no banco de dados. Por isso usa-se <code>matricula_prof</code>, que é atribuída pela instituição e garantidamente única.</p>
+<p>O relacionamento <code>cursa</code> associa <code>aluno</code> à turma de uma disciplina. A “turma” (identificada por disciplina+ano+semestre+turma) é ela própria um relacionamento (<code>ministra</code>) e não uma entidade simples. Isso caracteriza <strong>agregação</strong> — veremos na seção 4.10. Uma simplificação possível é tratar <code>cursa</code> como binário entre <code>aluno</code> e uma entidade <code>oferta</code> (representando a turma), com atributos <code>nota</code> e <code>aprovado</code>.</p>
 </div>
 </div>
 </div>
 <hr>
-<p><strong>3. Entidade ou atributo?</strong> Um projetista quer registrar os telefones de contato de cada professor. Ele propõe adicionar uma coluna <code>telefone VARCHAR(20)</code> à tabela <code>professor</code>. Qual o problema dessa abordagem quando um professor tem mais de um telefone?</p>
+<p><strong>4. Limites do relacionamento binário.</strong> Suponha que queiramos registrar que um professor supervisionou a entrega de um projeto por um aluno em uma disciplina específica. Por que um único relacionamento binário professor–aluno não é suficiente?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -895,30 +1127,7 @@ Nota
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Uma coluna simples suporta apenas um valor — é um <strong>atributo monovalorado</strong>. Para múltiplos telefones, as alternativas são:</p>
-<ol type="1">
-<li>Criar um conjunto de entidades separado <code>telefone_professor(matricula_prof, telefone)</code> com uma linha por número — <strong>atributo multivalorado representado como entidade</strong>.</li>
-<li>Modelar <code>telefone</code> como um <strong>atributo multivalorado</strong> no ER (elipse com borda dupla), que depois vira uma tabela separada na conversão relacional.</li>
-</ol>
-<p>Empurrar múltiplos valores em uma única coluna (ex.: “11-9999-0001, 11-9888-0002”) viola a primeira forma normal e dificulta buscas e atualizações.</p>
-</div>
-</div>
-</div>
-<hr>
-<p><strong>4. Limites de um conjunto de entidades.</strong> Considere <code>ministra</code> no banco da UnDF: um professor ministra uma disciplina em um determinado ano, semestre e turma. <code>ministra</code> deve ser modelado como conjunto de entidades ou como relacionamento?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Resposta
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><code>ministra</code> é melhor modelado como um <strong>relacionamento</strong> entre <code>professor</code> e <code>disciplina</code>, com atributos <code>ano</code>, <code>semestre</code>, <code>turma</code>, <code>horario</code> e <code>sala</code>. Relacionamentos descrevem associações entre entidades; aqui, a associação “um professor ministra uma disciplina em dado contexto” é exatamente isso. Veremos essa modelagem na seção 4.3.</p>
+<p>Um relacionamento binário professor–aluno diria apenas “este professor supervisionou este aluno”, sem especificar <strong>em qual disciplina</strong> ocorreu a supervisão. Se um professor supervisiona o mesmo aluno em duas disciplinas diferentes, não haveria como distinguir as duas supervisões. É necessário um relacionamento ternário professor–aluno–disciplina, ou uma modelagem com agregação.</p>
 </div>
 </div>
 </div>
@@ -1436,13 +1645,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/01-fases-projeto.html" class="pagination-link" aria-label="Fases do Projeto">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Fases do Projeto</span></span>
+      <a href="../../content/cap08/02-entidades.html" class="pagination-link" aria-label="Conjuntos de Entidades">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Conjuntos de Entidades</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/03-relacionamentos.html" class="pagination-link" aria-label="Conjuntos de Relacionamentos">
-        <span class="nav-page-text"><span class="chapter-title">Conjuntos de Relacionamentos</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap08/04-atributos.html" class="pagination-link" aria-label="Tipos de Atributos">
+        <span class="nav-page-text"><span class="chapter-title">Tipos de Atributos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
