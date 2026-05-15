@@ -1,0 +1,104 @@
+# Resumo e Exercícios
+
+## Resumo
+
+Neste capítulo, expandimos o repertório SQL para além das consultas básicas. Os principais recursos abordados foram:
+
+| Recurso | Finalidade |
+|---|---|
+| `NATURAL JOIN` | Une relações pelos atributos de mesmo nome (risco de homônimos não relacionados) |
+| `INNER JOIN ON` / `JOIN USING` | Junção explícita e segura por predicado ou coluna nomeada |
+| `LEFT / RIGHT / FULL OUTER JOIN` | Preserva tuplas sem correspondência com `NULL` nos atributos ausentes |
+| `CREATE VIEW` | Define uma relação virtual a partir de uma expressão de consulta |
+| `CREATE MATERIALIZED VIEW` | Visão com resultado fisicamente armazenado; requer `REFRESH` manual |
+| `REFRESH MATERIALIZED VIEW` | Atualiza o conteúdo de uma visão materializada |
+| `BEGIN` / `COMMIT` / `ROLLBACK` | Delimita e controla transações (atomicidade) |
+| `SAVEPOINT` | Permite desfazer apenas parte de uma transação |
+| `NOT NULL` | Impede valores nulos em um atributo |
+| `UNIQUE` | Garante unicidade de valores (admite `NULL`) |
+| `CHECK (P)` | Valida que toda tupla satisfaz o predicado P |
+| `FOREIGN KEY REFERENCES` | Garante integridade referencial entre tabelas |
+| `ON DELETE CASCADE` | Propaga exclusão em cascata para as tabelas filhas |
+| `ON DELETE SET NULL` | Define como `NULL` as FKs dos registros filhos ao excluir o pai |
+| `DATE`, `TIME`, `TIMESTAMP`, `INTERVAL` | Tipos temporais do SQL |
+| `BYTEA` / `TEXT` | Tipos de objetos grandes (binário e texto) no PostgreSQL |
+| `CREATE TYPE` | Define um novo tipo de dado |
+| `CREATE DOMAIN` | Define um tipo com constraints embutidas (reutilizável) |
+| `CREATE INDEX` | Cria estrutura de acesso rápido a valores de um atributo |
+| `GRANT` | Concede privilégios a usuários ou papéis |
+| `REVOKE` | Revoga privilégios concedidos |
+| `CREATE ROLE` | Cria um papel (agrupamento de privilégios) |
+| `WITH GRANT OPTION` | Permite que o destinatário repasse o privilégio a outros |
+
+## Exercícios
+
+Os exercícios abaixo usam as tabelas do banco de dados da UnDF: `centro`, `escola`, `curso`, `professor`, `aluno`, `disciplina`, `ministra`, `prereq` e `matricula_disciplina`.
+
+---
+
+**Exercício 1.** Liste os nomes de todos os alunos junto com o nome de seu curso e da escola responsável, usando `JOIN` explícito (não use natural join). Ordene pelo nome da escola, depois pelo nome do curso.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Encadeie três `JOIN`: `aluno → curso → escola`. Use `USING (id_curso)` e `USING (id_escola)`.
+:::
+
+---
+
+**Exercício 2.** Liste todos os professores e, para cada um, a quantidade de turmas que ministraram (zero se nunca ministraram). Ordene do mais ativo ao menos ativo.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `LEFT JOIN` entre `professor` e `ministra` e agrupe com `GROUP BY` e `COUNT(id_disciplina)` (que retorna 0 quando não há registros em `ministra`).
+:::
+
+---
+
+**Exercício 3.** Crie uma visão chamada `v_turmas_completas` que mostre o nome da disciplina, o nome do professor, o ano, o semestre e a turma de cada oferta. Use essa visão para listar todas as turmas do ano 2025.
+
+::: {.callout-tip collapse="true"}
+## Dica
+A visão une `ministra`, `disciplina` e `professor`. Depois consulte a visão com `WHERE ano = 2025`.
+:::
+
+---
+
+**Exercício 4.** Explique por que o seguinte natural join pode produzir resultados inesperados, e reescreva a consulta de forma correta:
+
+```sql
+SELECT d.nome_disciplina, m.ano, m.semestre
+FROM   disciplina d
+NATURAL JOIN ministra m;
+```
+
+::: {.callout-tip collapse="true"}
+## Dica
+Identifique quais colunas `disciplina` e `ministra` têm em comum. Além de `id_disciplina`, ambas possuem `semestre` — mas com significados diferentes (semestre curricular vs. semestre de oferta). Use `JOIN ... USING (id_disciplina)` para corrigir.
+:::
+
+---
+
+**Exercício 5.** Escreva o comando DDL para adicionar uma restrição `CHECK` na tabela `aluno` garantindo que `ano_ingresso` seja maior ou igual a 2020. Escreva também o comando para remover essa restrição depois.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `ALTER TABLE aluno ADD CONSTRAINT chk_ano_ingresso CHECK (ano_ingresso >= 2020)`. Para remover: `ALTER TABLE aluno DROP CONSTRAINT chk_ano_ingresso`.
+:::
+
+---
+
+**Exercício 6.** Crie um papel (`ROLE`) chamado `monitor_disciplina` com permissão de leitura nas tabelas `disciplina`, `ministra`, `matricula_disciplina` e `prereq`, e permissão de atualização apenas na coluna `nota` de `matricula_disciplina`. Escreva os comandos SQL necessários.
+
+::: {.callout-tip collapse="true"}
+## Dica
+Use `CREATE ROLE monitor_disciplina`, depois `GRANT SELECT ON ... TO monitor_disciplina` e `GRANT UPDATE (nota) ON matricula_disciplina TO monitor_disciplina`.
+:::
+
+---
+
+**Exercício 7.** Sem executar, explique o que acontece quando uma turma é excluída da tabela `ministra`, supondo que `matricula_disciplina` tenha `ON DELETE CASCADE` na foreign key que referencia `ministra`. Qual seria o comportamento se a ação fosse `ON DELETE SET NULL`?
+
+::: {.callout-tip collapse="true"}
+## Dica
+Com `CASCADE`: todas as matrículas daquela turma são excluídas automaticamente. Com `SET NULL`: os campos da FK em `matricula_disciplina` receberiam `NULL` — mas isso exigiria que as colunas da FK admitissem `NULL`, o que conflita com a chave primária de `matricula_disciplina` (onde essas colunas fazem parte da PK e portanto são `NOT NULL`).
+:::

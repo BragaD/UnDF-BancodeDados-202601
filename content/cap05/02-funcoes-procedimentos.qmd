@@ -1,0 +1,285 @@
+# Funções e Procedimentos
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+**Funções** e **procedimentos** permitem armazenar lógica de negócio diretamente no banco de dados, onde ela pode ser invocada por qualquer aplicação conectada — independente de linguagem ou plataforma.
+
+::: {.conceito}
+| Característica | Função (`FUNCTION`) | Procedimento (`PROCEDURE`) |
+|---|---|---|
+| Retorna valor | Sim (escalar ou tabela) | Não (ou via parâmetros `OUT`) |
+| Pode ser usada em `SELECT` | Sim | Não |
+| Chamada com | Expressão SQL | `CALL nome(...)` |
+| Controle de transação | Não (herda da transação chamante) | Sim (pode `COMMIT`/`ROLLBACK`) |
+:::
+
+## Funções SQL Simples
+
+A forma mais direta: o corpo é uma única expressão SQL.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION total_alunos_curso(p_id_curso INT)
+RETURNS BIGINT AS $$
+    SELECT COUNT(*) FROM aluno WHERE id_curso = p_id_curso;
+$$ LANGUAGE sql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Usando a função em uma consulta
+SELECT nome_curso,
+       total_alunos_curso(id_curso) AS total_alunos
+FROM   curso
+ORDER BY total_alunos DESC;
+```
+
+Funções SQL são ideais quando o corpo cabe em uma única instrução. Para lógica mais complexa, usa-se PL/pgSQL.
+
+## Funções PL/pgSQL
+
+PL/pgSQL é a linguagem procedural nativa do PostgreSQL. Suporta variáveis, condicionais, laços e tratamento de exceções.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION classificar_nota(p_nota NUMERIC)
+RETURNS TEXT AS $$
+BEGIN
+    IF    p_nota IS NULL     THEN RETURN 'Em curso';
+    ELSIF p_nota >= 9.0      THEN RETURN 'SS — Superior';
+    ELSIF p_nota >= 7.0      THEN RETURN 'MS — Médio Superior';
+    ELSIF p_nota >= 6.0      THEN RETURN 'MM — Médio';
+    ELSIF p_nota >= 4.0      THEN RETURN 'MI — Médio Inferior';
+    ELSE                          RETURN 'II — Inferior';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Classificar notas dos alunos de ENS
+SELECT a.nome,
+       d.nome_disciplina,
+       md.nota,
+       classificar_nota(md.nota) AS conceito
+FROM   matricula_disciplina md
+JOIN   aluno      a USING (id_aluno)
+JOIN   disciplina d USING (id_disciplina)
+WHERE  d.id_curso = 311
+ORDER BY a.nome, d.semestre;
+```
+
+### Estruturas de Controle
+
+PL/pgSQL suporta as estruturas usuais de linguagens procedurais:
+
+```sql
+-- IF / ELSIF / ELSE
+IF condicao THEN
+    ...
+ELSIF outra_condicao THEN
+    ...
+ELSE
+    ...
+END IF;
+
+-- WHILE
+WHILE condicao LOOP
+    ...
+END LOOP;
+
+-- FOR sobre resultado de consulta
+FOR registro IN SELECT ... FROM ... LOOP
+    -- registro.coluna
+END LOOP;
+```
+
+### Exemplo: Função com Laço FOR
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION media_escola(p_id_escola INT)
+RETURNS NUMERIC AS $$
+DECLARE
+    v_total   NUMERIC := 0;
+    v_count   INT     := 0;
+    v_salario NUMERIC;
+BEGIN
+    FOR v_salario IN
+        SELECT salario FROM professor WHERE id_escola = p_id_escola
+    LOOP
+        v_total := v_total + v_salario;
+        v_count := v_count + 1;
+    END LOOP;
+
+    IF v_count = 0 THEN RETURN NULL; END IF;
+    RETURN ROUND(v_total / v_count, 2);
+END;
+$$ LANGUAGE plpgsql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Média salarial calculada via função vs. AVG nativo
+SELECT e.sigla,
+       media_escola(e.id_escola)          AS media_fn,
+       ROUND(AVG(p.salario), 2)           AS media_avg
+FROM   escola e
+JOIN   professor p ON p.id_escola = e.id_escola
+GROUP BY e.id_escola, e.sigla
+ORDER BY e.sigla;
+```
+
+## Funções que Retornam Tabelas
+
+O padrão SQL (e o PostgreSQL) permite que funções retornem um conjunto de linhas — chamadas de **table functions**.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION professores_da_escola(p_id_escola INT)
+RETURNS TABLE(nome VARCHAR, ch_semanal INT, salario NUMERIC) AS $$
+    SELECT nome, ch_semanal, salario
+    FROM   professor
+    WHERE  id_escola = p_id_escola
+    ORDER BY salario DESC;
+$$ LANGUAGE sql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Professores da ESETI (escola 31) via table function
+SELECT * FROM professores_da_escola(31);
+```
+
+A função pode ser usada diretamente na cláusula `FROM`, como uma tabela.
+
+## Procedimentos Armazenados
+
+`PROCEDURE` difere de `FUNCTION` por não retornar um valor e por poder controlar transações internamente.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE PROCEDURE reajustar_salarios(p_id_escola INT, p_percentual NUMERIC)
+LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE professor
+    SET    salario = ROUND(salario * (1 + p_percentual / 100), 2)
+    WHERE  id_escola = p_id_escola;
+
+    RAISE NOTICE 'Reajuste de % %% aplicado a % professor(es) da escola %',
+        p_percentual,
+        (SELECT COUNT(*) FROM professor WHERE id_escola = p_id_escola),
+        p_id_escola;
+END;
+$$;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Salários antes do reajuste
+SELECT nome, salario FROM professor WHERE id_escola = 11 ORDER BY nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Chamar o procedimento (5% de reajuste para ESG)
+CALL reajustar_salarios(11, 5);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Salários após o reajuste
+SELECT nome, salario FROM professor WHERE id_escola = 11 ORDER BY nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Desfazer o reajuste para não alterar os dados base do livro
+CALL reajustar_salarios(11, -100.0 * 5 / 105);
+```
+
+## Listando Funções Criadas
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Funções e procedimentos definidos no schema public
+SELECT routine_name        AS nome,
+       routine_type        AS tipo,
+       data_type           AS retorno
+FROM   information_schema.routines
+WHERE  routine_schema = 'public'
+ORDER BY routine_type, routine_name;
+```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Chamar classificar_nota para ver a distribuição de conceitos em ENS
+SELECT classificar_nota(nota)   AS conceito,
+       COUNT(*)                  AS quantidade
+FROM   matricula_disciplina
+JOIN   disciplina USING (id_disciplina)
+WHERE  id_curso = 311
+  AND  nota IS NOT NULL
+GROUP BY conceito
+ORDER BY quantidade DESC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Total de alunos por escola usando a função + JOIN
+SELECT e.sigla,
+       SUM(total_alunos_curso(c.id_curso)) AS total_alunos
+FROM   escola e
+JOIN   curso  c ON c.id_escola = e.id_escola
+GROUP BY e.id_escola, e.sigla
+ORDER BY total_alunos DESC;
+```

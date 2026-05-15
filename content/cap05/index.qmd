@@ -1,0 +1,25 @@
+# SQL Avançado
+
+O SQL padrão vai muito além das consultas básicas. Este capítulo cobre as extensões que tornam o SQL uma linguagem completa para engenharia de sistemas — desde integrar o banco a programas Python até automatizar regras de negócio com triggers.
+
+## Tópicos
+
+| Seção | O que você vai aprender |
+|---|---|
+| **Acesso via Python** | Conectar um programa Python ao PostgreSQL, executar consultas com segurança e controlar transações |
+| **Funções e Procedimentos** | Armazenar lógica de negócio no próprio banco usando PL/pgSQL |
+| **Triggers** | Executar ações automaticamente em resposta a `INSERT`, `UPDATE` ou `DELETE` |
+| **Consultas Recursivas** | Percorrer hierarquias e calcular fechamentos transitivos com `WITH RECURSIVE` |
+| **Agregação Avançada** | Funções de janela (`RANK`, `DENSE_RANK`, `ROW_NUMBER`), `ROLLUP` e `CUBE` para análise multidimensional |
+
+## Por Que SQL Precisa de Extensões?
+
+O SQL puro é expressivo para consultas declarativas, mas tem limitações naturais:
+
+- **Não suporta iteração arbitrária** — loops e lógica condicional exigem PL/pgSQL ou outra linguagem hospedeira.
+- **Não interage com o usuário** — formulários, relatórios e interfaces precisam de uma aplicação.
+- **Não executa efeitos colaterais automaticamente** — registrar auditoria, enviar e-mails ou manter totais derivados requer triggers ou lógica na aplicação.
+
+A solução padrão é **combinar SQL com uma linguagem de programação**: o SQL cuida dos dados; a linguagem cuida da lógica de apresentação e controle de fluxo. O banco, por sua vez, pode encapsular regras complexas em funções e triggers — próximas aos dados e independentes de qualquer linguagem cliente.
+
+Os exemplos deste capítulo continuam usando o banco da UnDF. Novos objetos criados ao longo do capítulo (tabelas de log, funções, triggers) usam nomes prefixados com `fn_`, `trg_` ou `log_` para fácil identificação.

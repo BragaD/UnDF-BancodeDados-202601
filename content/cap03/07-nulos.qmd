@@ -112,6 +112,59 @@ A lógica de três valores do SQL define como `AND`, `OR` e `NOT` se comportam q
 A cláusula `WHERE` retém apenas as linhas para as quais a condição é avaliada como **TRUE**. Linhas com resultado **UNKNOWN** são **descartadas**, da mesma forma que linhas com resultado FALSE.
 :::
 
+## NULL em Funções de Agregação
+
+As funções de agregação (`AVG`, `SUM`, `COUNT`, `MIN`, `MAX`) **ignoram** valores nulos em sua computação:
+
+Para demonstrar, inserimos uma matrícula com nota ainda não lançada para o aluno Pedro (`2023311001`), aproveitando a turma `(3110401, 2025, 2, 1)` na qual ele ainda não estava matriculado:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+INSERT INTO matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+VALUES (3110401, 2025, 2, 1, 2023311001, NULL, NULL)
+ON CONFLICT DO NOTHING;
+```
+
+Pedro agora tem 7 matrículas — 6 com nota lançada e 1 ainda em curso (`NULL`):
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Matrículas de Pedro: 6 notas lançadas + 1 em curso (NULL)
+SELECT id_disciplina, ano, semestre, nota
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023311001
+ORDER BY ano, semestre, id_disciplina;
+```
+
+`AVG(nota)` **ignora** a linha com `NULL` — o denominador é 6 (notas lançadas), não 7 (total de matrículas):
+
+```{sql}
+--| connection: con
+--| eval: true
+-- COUNT(*) conta tudo; COUNT(nota) e AVG ignoram NULLs
+SELECT COUNT(*)                      AS total_matriculas,
+       COUNT(nota)                   AS matriculas_com_nota,
+       ROUND(AVG(nota)::NUMERIC, 2)  AS media_nota
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023311001;
+```
+
+`IS NOT NULL` filtra apenas as matrículas com nota lançada:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Apenas disciplinas já avaliadas
+SELECT id_disciplina, ano, semestre, nota
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023311001
+  AND  nota IS NOT NULL
+ORDER BY ano, semestre;
+```
+
 ## IS NULL e IS NOT NULL
 
 Para verificar a presença ou ausência de valores nulos, SQL oferece predicados especiais:
@@ -134,31 +187,6 @@ SELECT id_disciplina, ano, semestre, turma
 FROM   ministra
 WHERE  horario IS NULL
 LIMIT 5;
-```
-
-## NULL em Funções de Agregação
-
-As funções de agregação (`AVG`, `SUM`, `COUNT`, `MIN`, `MAX`) **ignoram** valores nulos em sua computação:
-
-::: {.exemplo}
-Suponha que a tabela `matricula_disciplina` tivesse 3 notas: `9.0`, `NULL` e `7.4`:
-
-```sql
-SELECT AVG(nota) FROM matricula_disciplina WHERE id_aluno = 2023311001;
--- Resultado: (9.0 + 7.4) / 2 = 8.2
--- O NULL é ignorado; o denominador é 2, não 3
-```
-
-Exceção: `COUNT(*)` conta **todas** as linhas, incluindo aquelas com valores nulos em qualquer coluna.
-:::
-
-```{sql}
---| connection: con
---| eval: true
--- COUNT(*) conta todas as linhas; COUNT(nota) ignora notas nulas
-SELECT COUNT(*)    AS total_registros,
-       COUNT(nota) AS registros_com_nota
-FROM   matricula_disciplina;
 ```
 
 ## Boas Práticas
@@ -187,13 +215,26 @@ LIMIT 5;
 ```{sql}
 --| connection: con
 --| eval: true
+--| output: false
+-- Turmas de demonstração: horário ausente, sala ausente, e ambos ausentes
+INSERT INTO ministra (id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+VALUES
+    (3110201, 2026, 2, 1, 31200001, NULL,             'ESETI-SALA-010'),
+    (3110202, 2026, 2, 1, 31400002, '5f-13:45-16:15', NULL            ),
+    (3110401, 2026, 2, 1, 31200001, NULL,             NULL            )
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
 -- COALESCE: substituir NULL por um valor padrão
 SELECT id_disciplina, ano, semestre, turma,
        COALESCE(horario, 'Horário não definido') AS horario_exibido,
        COALESCE(sala,    'Sala não definida')    AS sala_exibida
 FROM   ministra
-WHERE  horario IS NULL OR sala IS NULL
-LIMIT 10;
+ORDER BY horario NULLS FIRST, sala NULLS FIRST
+LIMIT 5;
 ```
 
 ```{sql}
@@ -218,3 +259,24 @@ WHERE  nota IS NULL;
 ::: {.callout-warning}
 **Armadilha clássica:** `WHERE coluna = NULL` nunca retorna linhas — a comparação com `NULL` usando `=` sempre resulta em `NULL` (desconhecido), não `TRUE`. Use sempre `IS NULL` ou `IS NOT NULL`.
 :::
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+-- Remover a matrícula de demonstração inserida neste capítulo
+DELETE FROM matricula_disciplina
+WHERE  id_disciplina = 3110401
+  AND  ano = 2025 AND semestre = 2 AND turma = 1
+  AND  id_aluno = 2023311001;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+-- Remover as turmas de demonstração inseridas neste capítulo
+DELETE FROM ministra
+WHERE  ano = 2026 AND semestre = 2 AND turma = 1
+  AND  id_disciplina IN (3110201, 3110202, 3110401);
+```

@@ -1,0 +1,236 @@
+# Consultas Recursivas
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Algumas consultas são naturalmente recursivas: encontrar todos os pré-requisitos de uma disciplina (incluindo pré-requisitos de pré-requisitos), percorrer uma hierarquia de cargos, ou descobrir todos os nós alcançáveis em um grafo. O SQL padrão suporta isso com **CTEs recursivas**.
+
+## Common Table Expressions (WITH)
+
+Antes de introduzir a recursão, revisamos as CTEs — expressões de tabela nomeadas que tornam consultas complexas mais legíveis:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- CTE simples: disciplinas de semestre par de ENS
+WITH disciplinas_par AS (
+    SELECT id_disciplina, nome_disciplina, semestre
+    FROM   disciplina
+    WHERE  id_curso = 311
+      AND  semestre % 2 = 0
+)
+SELECT dp.nome_disciplina, dp.semestre,
+       COUNT(pr.id_prereq) AS num_prereqs
+FROM   disciplinas_par dp
+LEFT JOIN prereq pr ON pr.id_disciplina = dp.id_disciplina
+GROUP BY dp.id_disciplina, dp.nome_disciplina, dp.semestre
+ORDER BY dp.semestre, dp.nome_disciplina;
+```
+
+## WITH RECURSIVE
+
+::: {.conceito}
+Uma CTE recursiva define uma relação em termos de si mesma. A estrutura é sempre:
+
+```sql
+WITH RECURSIVE nome_cte(colunas) AS (
+    -- Caso base: consulta inicial (não recursiva)
+    SELECT ...
+    UNION [ALL]
+    -- Caso recursivo: referencia nome_cte
+    SELECT ... FROM ... JOIN nome_cte ON ...
+)
+SELECT ... FROM nome_cte;
+```
+
+O SGBD executa a CTE iterativamente:
+1. Avalia o caso base → resultado inicial `R₀`
+2. Avalia o caso recursivo usando `R₀` → produz `R₁`
+3. Avalia usando `R₁` → produz `R₂`
+4. Continua até que o caso recursivo produza um conjunto vazio
+5. O resultado final é a união de todos os `Rᵢ`
+:::
+
+`UNION` elimina duplicatas entre iterações (importante quando o grafo pode ter caminhos múltiplos para o mesmo nó). `UNION ALL` mantém todas as ocorrências.
+
+## Exemplo 1 — Pré-requisitos Transitivos
+
+A tabela `prereq` registra relações diretas: "a disciplina X requer Y". Para encontrar **todos** os pré-requisitos de uma disciplina (incluindo os transitivos), precisamos de recursão.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Estrutura de pré-requisitos diretos no banco
+SELECT pr.id_disciplina,
+       d1.nome_disciplina AS disciplina,
+       pr.id_prereq,
+       d2.nome_disciplina AS prerequisito
+FROM   prereq pr
+JOIN   disciplina d1 ON d1.id_disciplina = pr.id_disciplina
+JOIN   disciplina d2 ON d2.id_disciplina = pr.id_prereq
+ORDER BY pr.id_disciplina, pr.id_prereq;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Todos os pré-requisitos transitivos de cada disciplina
+WITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) AS (
+    -- Caso base: pré-requisitos diretos
+    SELECT id_disciplina, id_prereq, 1
+    FROM   prereq
+
+    UNION
+
+    -- Caso recursivo: pré-requisitos dos pré-requisitos
+    SELECT pt.id_disciplina_raiz, p.id_prereq, pt.profundidade + 1
+    FROM   prereqs_transitivos pt
+    JOIN   prereq p ON p.id_disciplina = pt.id_prereq
+)
+SELECT pt.id_disciplina_raiz                 AS disciplina_id,
+       d_raiz.nome_disciplina                AS disciplina,
+       pt.id_prereq                          AS prereq_id,
+       d_prereq.nome_disciplina              AS prerequisito,
+       pt.profundidade                       AS nivel
+FROM   prereqs_transitivos pt
+JOIN   disciplina d_raiz   ON d_raiz.id_disciplina   = pt.id_disciplina_raiz
+JOIN   disciplina d_prereq ON d_prereq.id_disciplina = pt.id_prereq
+ORDER BY disciplina, nivel, prereq_id;
+```
+
+A coluna `nivel` indica a distância: `1` = pré-requisito direto; `2` = pré-requisito do pré-requisito; e assim por diante.
+
+## Exemplo 2 — Caminho Mínimo: Quantos Semestres de Antecedência?
+
+Combinando a recursão com `MIN`, podemos responder: "qual a distância máxima na cadeia de pré-requisitos de cada disciplina?"
+
+```{sql}
+--| connection: con
+--| eval: true
+WITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) AS (
+    SELECT id_disciplina, id_prereq, 1
+    FROM   prereq
+    UNION
+    SELECT pt.id_disciplina_raiz, p.id_prereq, pt.profundidade + 1
+    FROM   prereqs_transitivos pt
+    JOIN   prereq p ON p.id_disciplina = pt.id_prereq
+)
+SELECT d.nome_disciplina            AS disciplina,
+       d.semestre                   AS semestre_curriculo,
+       COUNT(DISTINCT pt.id_prereq) AS total_prereqs_transitivos,
+       MAX(pt.profundidade)         AS profundidade_maxima
+FROM   disciplina d
+JOIN   prereqs_transitivos pt ON pt.id_disciplina_raiz = d.id_disciplina
+GROUP BY d.id_disciplina, d.nome_disciplina, d.semestre
+ORDER BY profundidade_maxima DESC, total_prereqs_transitivos DESC;
+```
+
+## Exemplo 3 — Hierarquia de Estrutura Acadêmica
+
+A estrutura Centro → Escola → Curso → Disciplina é uma hierarquia. Embora tenhamos JOINs diretos para ela, o padrão WITH RECURSIVE funciona igualmente para qualquer árvore onde a relação pai–filho é armazenada em tabela:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Hierarquia completa: centro → escola → curso (sem recursão, mas ilustra o padrão)
+WITH estrutura AS (
+    SELECT ce.nome_centro  AS nivel1,
+           es.nome_escola  AS nivel2,
+           cu.nome_curso   AS nivel3,
+           cu.id_curso
+    FROM   centro  ce
+    JOIN   escola  es ON es.id_centro = ce.id_centro
+    JOIN   curso   cu ON cu.id_escola = es.id_escola
+)
+SELECT e.nivel1, e.nivel2, e.nivel3,
+       COUNT(a.id_aluno) AS alunos
+FROM   estrutura e
+LEFT JOIN aluno a ON a.id_curso = e.id_curso
+GROUP BY e.nivel1, e.nivel2, e.nivel3
+ORDER BY e.nivel1, e.nivel2, e.nivel3;
+```
+
+## Guardas Contra Recursão Infinita
+
+::: {.callout-warning}
+Se o grafo contiver **ciclos** (A → B → A), a CTE recursiva pode não terminar. Estratégias de proteção:
+
+1. **`UNION` em vez de `UNION ALL`**: elimina duplicatas entre iterações — se um nó já foi visitado, não é reinserido na próxima iteração.
+2. **Contador de profundidade com `WHERE profundidade < N`**: limita o número de iterações.
+3. **Array de caminho**: acumula os nós visitados e verifica se o próximo já está no array (PostgreSQL específico).
+
+No banco da UnDF, `prereq` não deveria ter ciclos (uma disciplina não pode ser pré-requisito de si mesma transitivamente), mas em dados reais essa verificação é importante.
+:::
+
+```sql
+-- Exemplo de guarda com profundidade máxima
+WITH RECURSIVE prereqs_limitados(id_raiz, id_prereq, profundidade) AS (
+    SELECT id_disciplina, id_prereq, 1 FROM prereq
+    UNION
+    SELECT pt.id_raiz, p.id_prereq, pt.profundidade + 1
+    FROM   prereqs_limitados pt
+    JOIN   prereq p ON p.id_disciplina = pt.id_prereq
+    WHERE  pt.profundidade < 10   -- guarda: no máximo 10 níveis
+)
+SELECT ...
+```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas sem nenhum pré-requisito (pontos de entrada do grafo)
+SELECT d.id_disciplina, d.nome_disciplina, d.semestre
+FROM   disciplina d
+WHERE  d.id_disciplina NOT IN (SELECT id_disciplina FROM prereq)
+  AND  d.id_curso = 311
+ORDER BY d.semestre;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas "folha": possuem pré-requisitos mas não são pré-requisito de ninguém
+SELECT d.id_disciplina, d.nome_disciplina, d.semestre
+FROM   disciplina d
+WHERE  d.id_disciplina IN  (SELECT id_disciplina FROM prereq)   -- tem prereq
+  AND  d.id_disciplina NOT IN (SELECT id_prereq   FROM prereq)   -- não é prereq de ninguém
+ORDER BY d.semestre;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Quantos pré-requisitos transitivos tem cada disciplina de ENS?
+WITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq) AS (
+    SELECT id_disciplina, id_prereq FROM prereq
+    UNION
+    SELECT pt.id_disciplina_raiz, p.id_prereq
+    FROM   prereqs_transitivos pt
+    JOIN   prereq p ON p.id_disciplina = pt.id_prereq
+)
+SELECT d.nome_disciplina,
+       d.semestre,
+       COALESCE(COUNT(DISTINCT pt.id_prereq), 0) AS total_prereqs_transitivos
+FROM   disciplina d
+LEFT JOIN prereqs_transitivos pt ON pt.id_disciplina_raiz = d.id_disciplina
+WHERE  d.id_curso = 311
+GROUP BY d.id_disciplina, d.nome_disciplina, d.semestre
+ORDER BY total_prereqs_transitivos DESC, d.semestre;
+```

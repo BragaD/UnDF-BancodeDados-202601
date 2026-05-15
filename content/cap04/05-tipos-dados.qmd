@@ -1,0 +1,314 @@
+# Tipos de Dados SQL
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+O SQL define um conjunto de tipos de dados embutidos e mecanismos para criar tipos definidos pelo usuário. Conhecer os tipos disponíveis é essencial para modelar o banco de dados com precisão e eficiência.
+
+## Tipos Temporais
+
+::: {.conceito}
+| Tipo | Descrição | Exemplo |
+|---|---|---|
+| `DATE` | Data (ano, mês, dia) | `'2025-03-15'` |
+| `TIME` | Hora do dia (horas, minutos, segundos) | `'14:30:00'` |
+| `TIMESTAMP` | Data + hora | `'2025-03-15 14:30:00'` |
+| `INTERVAL` | Período de tempo | `INTERVAL '30 days'` |
+:::
+
+A subtração entre dois `DATE` produz um inteiro (número de dias); a subtração entre dois `TIME` produz um `INTERVAL`; somar um `INTERVAL` a uma data produz outra data.
+
+Para demonstrar cada tipo com saída concreta, criamos a tabela `evento_academico` — eventos institucionais da UnDF com data de início e fim, horário, e registro de criação com timestamp.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TABLE IF NOT EXISTS evento_academico (
+    id_evento   SERIAL        PRIMARY KEY,
+    nome        VARCHAR(100)  NOT NULL,
+    tipo        VARCHAR(30)   NOT NULL,
+    id_escola   INT           NOT NULL REFERENCES escola (id_escola),
+    data_inicio DATE          NOT NULL,
+    data_fim    DATE          NOT NULL,
+    hora_inicio TIME          NOT NULL,
+    hora_fim    TIME          NOT NULL,
+    criado_em   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (nome, data_inicio)
+);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+INSERT INTO evento_academico
+    (nome, tipo, id_escola, data_inicio, data_fim, hora_inicio, hora_fim)
+VALUES
+    ('Semana Acadêmica de Engenharia de Software', 'Semana Acadêmica', 31, '2025-10-06', '2025-10-10', '08:00', '18:00'),
+    ('Workshop de Banco de Dados',                 'Workshop',         31, '2026-03-20', '2026-03-20', '09:00', '17:00'),
+    ('Palestra sobre Inteligência Artificial',     'Palestra',         21, '2026-06-10', '2026-06-10', '19:00', '21:00'),
+    ('Jornada Pedagógica',                         'Semana Acadêmica', 21, '2025-07-28', '2025-08-01', '08:00', '17:00'),
+    ('Defesa de TCC — Pedro Alves',                'Defesa',           31, '2026-05-15', '2026-05-15', '14:00', '16:00'),
+    ('Defesa de TCC — Camila Rocha',               'Defesa',           31, '2026-07-20', '2026-07-20', '10:00', '12:00')
+ON CONFLICT (nome, data_inicio) DO NOTHING;
+```
+
+### DATE
+
+Colunas `DATE` armazenam apenas a data (sem hora). A subtração entre dois `DATE` retorna o número de dias entre elas.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Datas de início e fim de cada evento; duração em dias
+SELECT nome, tipo,
+       data_inicio,
+       data_fim,
+       (data_fim - data_inicio + 1) AS duracao_dias
+FROM   evento_academico
+ORDER BY data_inicio;
+```
+
+### TIME
+
+Colunas `TIME` armazenam apenas o horário. A subtração entre dois `TIME` retorna um `INTERVAL`.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Horário de início e fim de cada evento; carga horária diária
+SELECT nome,
+       hora_inicio,
+       hora_fim,
+       hora_fim - hora_inicio AS carga_horaria_diaria
+FROM   evento_academico
+ORDER BY hora_inicio;
+```
+
+### TIMESTAMP
+
+`TIMESTAMP` armazena data e hora juntas. A coluna `criado_em` é preenchida automaticamente com `CURRENT_TIMESTAMP` na inserção.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Timestamp de criação de cada registro e diferença em relação à hora atual
+SELECT nome,
+       criado_em,
+       CURRENT_TIMESTAMP                    AS agora,
+       AGE(CURRENT_TIMESTAMP, criado_em)   AS tempo_desde_insercao
+FROM   evento_academico
+ORDER BY criado_em;
+```
+
+### INTERVAL e aritmética de datas
+
+`INTERVAL` representa uma duração. O PostgreSQL infere `INTERVAL` de subtrações entre datas e horas e aceita literais como `INTERVAL '7 days'` ou `INTERVAL '2 hours 30 minutes'`.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Dias até cada evento a partir de hoje; status (passado / futuro)
+SELECT nome,
+       data_inicio,
+       (data_inicio - CURRENT_DATE)         AS dias_ate_evento,
+       CASE
+           WHEN data_inicio > CURRENT_DATE THEN 'futuro'
+           WHEN data_inicio = CURRENT_DATE THEN 'hoje'
+           ELSE 'passado'
+       END                                  AS status
+FROM   evento_academico
+ORDER BY data_inicio;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- EXTRACT: componentes individuais de uma data
+SELECT nome,
+       data_inicio,
+       EXTRACT(YEAR  FROM data_inicio)::INT AS ano,
+       EXTRACT(MONTH FROM data_inicio)::INT AS mes,
+       EXTRACT(DOW   FROM data_inicio)::INT AS dia_semana,  -- 0=Dom … 6=Sáb
+       TO_CHAR(data_inicio, 'TMDay, DD "de" TMMonth "de" YYYY') AS data_extenso
+FROM   evento_academico
+ORDER BY data_inicio;
+```
+
+## Tipos de Texto
+
+O SQL padrão define:
+
+::: {.conceito}
+| Tipo | Descrição |
+|---|---|
+| `CHAR(n)` | String de tamanho fixo n (preenchida com espaços) |
+| `VARCHAR(n)` | String de tamanho variável, máximo n caracteres |
+| `TEXT` | String de tamanho ilimitado (extensão do PostgreSQL, equivalente ao `CLOB`) |
+:::
+
+O PostgreSQL não distingue `CHAR` de `VARCHAR` em desempenho — ambos são armazenados de forma compacta. O tipo `TEXT` é preferido para textos sem limite predefinido.
+
+## Tipos Numéricos
+
+::: {.conceito}
+| Tipo | Descrição |
+|---|---|
+| `SMALLINT` | Inteiro de 2 bytes (-32.768 a 32.767) |
+| `INT` / `INTEGER` | Inteiro de 4 bytes |
+| `BIGINT` | Inteiro de 8 bytes |
+| `NUMERIC(p, s)` | Decimal exato com p dígitos totais e s casas decimais |
+| `REAL` / `FLOAT` | Ponto flutuante (precisão aproximada) |
+:::
+
+No banco da UnDF, `salario` é `NUMERIC(10,2)` para garantir precisão exata em valores monetários — evitando erros de arredondamento que ocorreriam com `FLOAT`.
+
+## Tipos de Objetos Grandes (LOB)
+
+Para armazenar objetos grandes (fotos, vídeos, documentos):
+
+::: {.conceito}
+| Tipo padrão SQL | Equivalente PostgreSQL | Descrição |
+|---|---|---|
+| `BLOB` | `BYTEA` | Dados binários (fotos, PDFs, executáveis) |
+| `CLOB` | `TEXT` | Texto de tamanho arbitrário |
+:::
+
+Quando uma consulta retorna um objeto grande, o SGBD geralmente retorna um **ponteiro** para o objeto em vez dos dados completos — pois transferir gigabytes pela rede seria inviável.
+
+```sql
+-- Exemplo: tabela com foto de perfil armazenada como binário
+CREATE TABLE perfil_aluno (
+    id_aluno   INT     PRIMARY KEY REFERENCES aluno (id_aluno),
+    foto       BYTEA,          -- blob: foto em formato binário
+    curriculo  TEXT            -- clob: texto livre do currículo
+);
+```
+
+## Tipos Definidos pelo Usuário
+
+### CREATE TYPE
+
+O SQL:1999 introduziu `CREATE TYPE`, que permite definir novos tipos com base em tipos existentes:
+
+```sql
+-- Tipo Reais: valores monetários em reais
+CREATE TYPE Reais AS NUMERIC(12, 2) FINAL;
+
+-- Uso em uma tabela
+CREATE TABLE orcamento_escola (
+    id_escola  INT    PRIMARY KEY REFERENCES escola (id_escola),
+    valor      Reais
+);
+```
+
+::: {.callout-note}
+No PostgreSQL, o `CREATE TYPE` tem uso mais amplo: cria tipos compostos, tipos enumerados (`ENUM`) e tipos de range. O `ENUM` é especialmente útil para representar conjuntos fixos de valores:
+
+```sql
+CREATE TYPE tipo_curso_enum AS ENUM ('Bacharelado', 'Licenciatura', 'Tecnólogo');
+
+-- Usando o tipo enum
+ALTER TABLE curso ALTER COLUMN tipo_curso TYPE tipo_curso_enum
+    USING tipo_curso::tipo_curso_enum;
+```
+:::
+
+### CREATE DOMAIN
+
+Um **domínio** é semelhante a um tipo, mas pode incluir constraints. É uma camada de abstração que permite reutilizar validações em várias tabelas:
+
+```sql
+-- Domínio para ch_semanal: apenas 20 ou 40 horas
+CREATE DOMAIN ch_semanal_valida AS INT
+    NOT NULL
+    CHECK (VALUE IN (20, 40));
+
+-- Domínio para nota: entre 0.0 e 10.0
+CREATE DOMAIN nota_disciplina AS NUMERIC(4, 2)
+    CHECK (VALUE BETWEEN 0.0 AND 10.0);
+```
+
+Diferença entre `TYPE` e `DOMAIN`:
+- `TYPE` define a estrutura dos dados.
+- `DOMAIN` é um tipo com constraints embutidas — reutilizável como uma regra de negócio.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Tipos definidos no banco atual (domínios e tipos customizados)
+SELECT typname AS tipo, typtype AS categoria
+FROM   pg_type
+WHERE  typnamespace = (SELECT oid FROM pg_namespace WHERE nspname = 'public')
+ORDER BY typname;
+```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Funções de data: extraindo partes de uma data
+SELECT nome,
+       ano_ingresso,
+       EXTRACT(YEAR  FROM CURRENT_DATE)                AS ano_atual,
+       EXTRACT(YEAR  FROM CURRENT_DATE) - ano_ingresso AS tempo_na_undf
+FROM   aluno
+ORDER BY tempo_na_undf DESC, nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Formatando valores numéricos: salário em formato brasileiro
+SELECT nome,
+       TO_CHAR(salario, 'FM"R$" 999.990,00') AS salario_formatado,
+       ch_semanal
+FROM   professor
+ORDER BY salario DESC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- CAST entre tipos: convertendo id_aluno para texto e extraindo partes
+SELECT id_aluno,
+       nome,
+       CAST(id_aluno AS TEXT)                 AS id_texto,
+       LEFT(CAST(id_aluno AS TEXT), 4)        AS ano_ingresso_extraido,
+       SUBSTRING(CAST(id_aluno AS TEXT), 5, 3) AS id_curso_extraido
+FROM   aluno
+LIMIT 5;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Aritmética de datas com INTERVAL: quantos dias faltam para a conclusão estimada
+-- de cada aluno de ENS (4 anos após ingresso, em 15/12)
+SELECT nome,
+       ano_ingresso,
+       make_date(ano_ingresso + 4, 12, 15)           AS conclusao_estimada,
+       make_date(ano_ingresso + 4, 12, 15) - CURRENT_DATE AS dias_restantes
+FROM   aluno
+WHERE  id_curso = 311
+ORDER BY conclusao_estimada;
+```

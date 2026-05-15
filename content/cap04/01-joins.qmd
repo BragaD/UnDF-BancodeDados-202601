@@ -1,0 +1,258 @@
+# Expressões de Junção
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
+Operações de **junção** tomam duas relações e retornam uma nova relação. São tipicamente usadas como subexpressões na cláusula `FROM`. Existem três grandes categorias: *natural join*, *inner join* e *outer join*.
+
+## Natural Join
+
+::: {.conceito}
+O **natural join** combina tuplas que possuem o **mesmo valor em todos os atributos de mesmo nome** entre as duas relações. No resultado, cada atributo comum aparece apenas uma vez.
+
+```sql
+SELECT A₁, A₂, …, Aₙ
+FROM   r₁ NATURAL JOIN r₂;
+```
+:::
+
+No banco da UnDF, `aluno` e `curso` compartilham o atributo `id_curso`. O natural join entre elas une cada aluno ao seu curso sem precisar escrever a condição explicitamente.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Nome do aluno e nome do curso (natural join elimina a coluna duplicada id_curso)
+SELECT a.nome AS aluno, c.nome_curso
+FROM   aluno a
+NATURAL JOIN curso c
+ORDER BY c.nome_curso, a.nome;
+```
+
+Podemos encadear vários natural joins em uma única cláusula `FROM`:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Aluno → curso → escola: atravessa três tabelas com natural join encadeado
+SELECT a.nome AS aluno, c.nome_curso, e.nome_escola
+FROM   aluno a
+NATURAL JOIN curso c
+NATURAL JOIN escola e
+ORDER BY e.nome_escola, c.nome_curso, a.nome;
+```
+
+### O Perigo do Natural Join
+
+::: {.callout-warning}
+O natural join junta **todos** os atributos de mesmo nome — inclusive os que são coincidentemente homônimos mas semanticamente diferentes. Isso pode produzir resultados incorretos sem nenhuma mensagem de erro.
+:::
+
+Considere o atributo `semestre`: ele existe tanto em `ministra` (o semestre em que a turma foi oferecida) quanto em `disciplina` (o semestre sugerido do currículo). Um natural join entre as duas incluiria `semestre` na condição de junção — o que raramente é o que se quer, pois uma disciplina do semestre 4 do currículo pode ser ministrada no semestre 1 ou 2 de qualquer ano.
+
+Versão **incorreta** (une também pelo semestre curricular):
+
+```sql
+-- ATENÇÃO: produz resultado errado — filtra ministra pelo semestre do currículo
+SELECT d.nome_disciplina, m.ano, m.semestre, m.turma
+FROM   disciplina d
+NATURAL JOIN ministra m;
+```
+
+Versão **correta** (junta apenas pelo `id_disciplina`):
+
+```sql
+-- Correto: especifica explicitamente a coluna de junção com USING
+SELECT d.nome_disciplina, m.ano, m.semestre, m.turma
+FROM   disciplina d
+JOIN   ministra m USING (id_disciplina);
+```
+
+## Inner Join: ON e USING
+
+O **inner join** é a junção padrão: retorna apenas as tuplas que satisfazem a condição de junção. Tuplas sem correspondência são descartadas.
+
+### JOIN ... ON
+
+A cláusula `ON` permite especificar um predicado arbitrário de junção:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Turmas ministradas com nome do professor e nome da disciplina
+SELECT p.nome         AS professor,
+       d.nome_disciplina,
+       m.ano, m.semestre, m.turma
+FROM   ministra m
+INNER JOIN professor p ON p.id_prof  = m.id_prof
+INNER JOIN disciplina d ON d.id_disciplina = m.id_disciplina
+ORDER BY m.ano DESC, m.semestre, d.nome_disciplina;
+```
+
+### JOIN ... USING
+
+Quando as colunas de junção têm o mesmo nome nas duas tabelas, `USING` é mais conciso que `ON` e, ao contrário do natural join, é explícito sobre quais colunas são usadas:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos com suas notas: JOIN USING evita ambiguidade sem precisar qualificar
+SELECT a.nome AS aluno, d.nome_disciplina, md.nota, md.aprovado
+FROM   matricula_disciplina md
+JOIN   aluno      a USING (id_aluno)
+JOIN   disciplina d USING (id_disciplina)
+WHERE  md.nota IS NOT NULL
+ORDER BY a.nome, d.nome_disciplina;
+```
+
+## Outer Join
+
+::: {.conceito}
+O **outer join** é uma extensão do inner join que **preserva tuplas sem correspondência**. Tuplas que não têm par na outra relação são incluídas no resultado com valores `NULL` nas colunas da relação que não possuía correspondência.
+
+Existem três formas:
+
+| Forma | Preserva |
+|---|---|
+| `LEFT OUTER JOIN` | Todas as tuplas da relação da **esquerda** |
+| `RIGHT OUTER JOIN` | Todas as tuplas da relação da **direita** |
+| `FULL OUTER JOIN` | Todas as tuplas de **ambas** as relações |
+:::
+
+### Left Outer Join
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Professores e suas turmas: LEFT JOIN preserva professores que nunca ministraram
+SELECT p.nome        AS professor,
+       p.id_escola,
+       m.ano, m.semestre, m.turma, m.id_disciplina
+FROM   professor p
+LEFT OUTER JOIN ministra m ON m.id_prof = p.id_prof
+ORDER BY p.id_escola, p.nome, m.ano NULLS LAST;
+```
+
+Professores que não aparecem em `ministra` surgem no resultado com `NULL` nas colunas de `ministra` — evidenciando quem ainda não foi alocado a nenhuma turma.
+
+### Right Outer Join
+
+O right outer join preserva todas as tuplas da relação da direita. A consulta abaixo é equivalente ao left outer join anterior com as tabelas invertidas:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas e suas turmas: RIGHT JOIN preserva disciplinas sem turma cadastrada
+SELECT d.nome_disciplina, d.semestre AS sem_curriculo,
+       m.ano, m.semestre AS sem_oferta, m.turma
+FROM   ministra m
+RIGHT OUTER JOIN disciplina d ON d.id_disciplina = m.id_disciplina
+ORDER BY d.id_curso, d.semestre, m.ano NULLS LAST;
+```
+
+### Full Outer Join
+
+O full outer join combina o efeito do left e do right: preserva tuplas sem correspondência de ambos os lados.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Professores e escolas: FULL OUTER JOIN preserva escolas sem professor
+-- e professores sem escola (este segundo caso é prevenido por FK, mas o
+-- padrão é ilustrado)
+SELECT e.sigla AS escola, e.nome_escola,
+       p.nome  AS professor, p.ch_semanal
+FROM   escola e
+FULL OUTER JOIN professor p ON p.id_escola = e.id_escola
+ORDER BY e.sigla NULLS LAST, p.nome NULLS LAST;
+```
+
+::: {.callout-note}
+Com as tabelas do banco da UnDF todas as escolas têm professores, então não aparecem linhas com `professor IS NULL`. O full outer join brilha quando os dados realmente têm lacunas dos dois lados — por exemplo, antes de a carga inicial estar completa, ou quando uma tabela de referência contém itens não usados.
+:::
+
+## Resumo: Tipos e Condições de Junção
+
+::: {.conceito}
+| Tipo de junção | Comportamento |
+|---|---|
+| `INNER JOIN` | Apenas tuplas com correspondência (padrão quando se escreve só `JOIN`) |
+| `LEFT OUTER JOIN` | Todas da esquerda; NULL nas colunas da direita quando sem par |
+| `RIGHT OUTER JOIN` | Todas da direita; NULL nas colunas da esquerda quando sem par |
+| `FULL OUTER JOIN` | Todas de ambos os lados; NULL onde não há par |
+
+| Condição de junção | Efeito |
+|---|---|
+| `NATURAL` | Une por todos os atributos de mesmo nome (perigoso) |
+| `ON <predicado>` | Une pelo predicado arbitrário especificado |
+| `USING (A₁, A₂, …)` | Une pelas colunas listadas; mantém uma só cópia |
+:::
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos e seus cursos com escola: encadeamento de três joins explícitos
+SELECT a.nome       AS aluno,
+       c.sigla_curso,
+       e.sigla      AS escola,
+       a.ano_ingresso
+FROM   aluno a
+JOIN   curso  c ON c.id_curso  = a.id_curso
+JOIN   escola e ON e.id_escola = c.id_escola
+ORDER BY e.sigla, c.sigla_curso, a.ano_ingresso;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Professores com a quantidade de turmas ministradas (incluindo os sem turma)
+SELECT p.nome        AS professor,
+       p.id_escola,
+       COUNT(m.id_disciplina) AS turmas_ministradas
+FROM   professor p
+LEFT JOIN ministra m ON m.id_prof = p.id_prof
+GROUP BY p.id_prof, p.nome, p.id_escola
+ORDER BY turmas_ministradas DESC, p.nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas com nome do pré-requisito (self-join em disciplina via prereq)
+SELECT d.nome_disciplina         AS disciplina,
+       dp.nome_disciplina        AS prerequisito
+FROM   prereq pr
+JOIN   disciplina d  ON d.id_disciplina  = pr.id_disciplina
+JOIN   disciplina dp ON dp.id_disciplina = pr.id_prereq
+ORDER BY d.id_disciplina, dp.id_disciplina;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Alunos com nota média por disciplina: JOIN USING + agregação
+SELECT a.nome AS aluno,
+       ROUND(AVG(md.nota), 2) AS media_geral,
+       COUNT(*)               AS disciplinas_cursadas,
+       SUM(CASE WHEN md.aprovado = 1 THEN 1 ELSE 0 END) AS aprovacoes
+FROM   matricula_disciplina md
+JOIN   aluno a USING (id_aluno)
+WHERE  md.nota IS NOT NULL
+GROUP BY a.id_aluno, a.nome
+ORDER BY media_geral DESC NULLS LAST;
+```

@@ -1,0 +1,207 @@
+# Transações
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
+Uma **transação** é uma unidade lógica de trabalho composta por uma sequência de operações SQL. O conceito é fundamental para garantir que o banco de dados permaneça em um estado consistente mesmo diante de falhas ou acessos concorrentes.
+
+## O Que é uma Transação
+
+::: {.conceito}
+Uma **transação** consiste em uma sequência de declarações de consulta e/ou atualização que são tratadas como uma **unidade atômica de trabalho**. Ela deve terminar com uma das seguintes declarações:
+
+- `COMMIT` — as alterações tornam-se permanentes no banco de dados.
+- `ROLLBACK` — todas as alterações realizadas pela transação são desfeitas.
+:::
+
+O padrão SQL especifica que uma transação começa implicitamente quando qualquer instrução SQL é executada. O PostgreSQL, por padrão, opera em modo *autocommit* — cada instrução individual é automaticamente confirmada como uma transação. Para agrupar múltiplas instruções em uma transação, usa-se `BEGIN`:
+
+```sql
+BEGIN;
+  -- instrução 1
+  -- instrução 2
+  -- instrução 3
+COMMIT;   -- ou ROLLBACK para desfazer tudo
+```
+
+## Propriedades ACID
+
+::: {.conceito}
+Transações devem satisfazer as propriedades **ACID**:
+
+| Propriedade | Descrição |
+|---|---|
+| **Atomicidade** (*Atomicity*) | A transação é executada por completo ou não é executada de jeito algum — não há estado intermediário visível. |
+| **Consistência** (*Consistency*) | A execução de uma transação isolada preserva a consistência do banco de dados. |
+| **Isolamento** (*Isolation*) | Apesar da execução concorrente de múltiplas transações, cada uma deve parecer executar isoladamente das demais. |
+| **Durabilidade** (*Durability*) | Após um `COMMIT`, as alterações persistem mesmo em caso de falha do sistema. |
+:::
+
+## COMMIT e ROLLBACK
+
+O `COMMIT` torna permanentes todas as alterações desde o início da transação. O `ROLLBACK` desfaz todas elas.
+
+::: {.exemplo}
+**Matriculando um aluno em uma disciplina de forma segura:**
+
+```sql
+BEGIN;
+
+-- Verifica se já existe matrícula (evita duplicação)
+-- Se a inserção falhar (violação de constraint), o ROLLBACK desfaz tudo
+INSERT INTO matricula_disciplina
+    (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+VALUES
+    (3110401, 2026, 1, 1, 2025311001, NULL, NULL);
+
+-- Só chega aqui se a inserção teve sucesso
+COMMIT;
+```
+
+Se a inserção violar uma constraint (por exemplo, o aluno já estar matriculado), o PostgreSQL rejeita a instrução e a transação fica em estado de erro até o `ROLLBACK`.
+:::
+
+::: {.exemplo}
+**Permutando dois professores entre turmas — operação que exige duas atualizações atômicas:**
+
+Gustavo (31200001) e Helena (31400002) precisam trocar de turma por motivo de agenda. A permuta envolve duas atualizações que devem ocorrer juntas: se apenas uma for aplicada, um professor ficará sem turma e outro com duas.
+
+```sql
+BEGIN;
+
+-- (1) Helena assume a turma de Gustavo em ENS-0401 (3110401, 2025/2, turma 1)
+UPDATE ministra
+SET    id_prof = 31400002
+WHERE  id_disciplina = 3110401
+  AND  ano = 2025 AND semestre = 2 AND turma = 1;
+
+-- (2) Gustavo assume a turma de Helena em ENS-0202 (3110202, 2025/2, turma 1)
+UPDATE ministra
+SET    id_prof = 31200001
+WHERE  id_disciplina = 3110202
+  AND  ano = 2025 AND semestre = 2 AND turma = 1;
+
+-- Ambas as trocas são efetivadas juntas ou nenhuma delas é
+COMMIT;
+```
+
+Se o sistema falhar entre as duas instruções, o `ROLLBACK` automático garante que nenhuma das alterações persiste — evitando que Gustavo apareça sem turma enquanto Helena ainda não assumiu a dele.
+:::
+
+::: {.exemplo}
+**Erro de digitação no segundo UPDATE — nenhuma das trocas é efetivada:**
+
+O operador digita `31400099` em vez de `31400002`. A FK em `ministra.id_prof` rejeita o valor porque esse professor não existe. Com `ROLLBACK`, o primeiro UPDATE também é desfeito — as turmas permanecem com seus professores originais.
+
+```sql
+BEGIN;
+
+-- (1) Helena (31400002) assume ENS-0401 — executa sem erro
+UPDATE ministra
+SET    id_prof = 31400002
+WHERE  id_disciplina = 3110401
+  AND  ano = 2025 AND semestre = 2 AND turma = 1;
+
+-- (2) Gustavo assume ENS-0202 — erro: professor 31400099 não existe (typo)
+UPDATE ministra
+SET    id_prof = 31400099
+WHERE  id_disciplina = 3110202
+  AND  ano = 2025 AND semestre = 2 AND turma = 1;
+-- ERROR: insert or update on table "ministra" violates foreign key constraint
+-- DETAIL: Key (id_prof)=(31400099) is not present in table "professor".
+
+-- A transação está agora em estado de erro; COMMIT seria ignorado
+ROLLBACK;
+-- Resultado: ENS-0401 volta a ter Gustavo, ENS-0202 volta a ter Helena
+```
+:::
+
+## Violação de Constraint e Transações
+
+Quando uma restrição de integridade é violada **durante uma transação**, o SGBD rejeita a instrução e marca a transação como abortada. O `ROLLBACK` é necessário para limpar o estado antes de tentar novamente.
+
+::: {.callout-warning}
+No PostgreSQL, após um erro dentro de um bloco `BEGIN`/`COMMIT`, todas as instruções subsequentes são ignoradas até que um `ROLLBACK` (ou `ROLLBACK TO SAVEPOINT`) seja emitido. A transação fica "travada" no estado de erro.
+:::
+
+### Savepoints
+
+O PostgreSQL suporta **savepoints**, que permitem desfazer apenas uma parte da transação:
+
+```sql
+BEGIN;
+
+INSERT INTO aluno (id_aluno, nome, id_curso, ano_ingresso)
+VALUES (2026311004, 'Renata Lima', 311, 2026);
+
+SAVEPOINT ponto_1;
+
+-- Tentativa que pode falhar
+INSERT INTO matricula_disciplina
+    (id_disciplina, ano, semestre, turma, id_aluno)
+VALUES (3110401, 2026, 1, 1, 2026311004);
+
+-- Se falhou, volta apenas ao ponto_1 (mantém o INSERT do aluno)
+ROLLBACK TO SAVEPOINT ponto_1;
+
+COMMIT;
+```
+
+---
+
+## Para Praticar
+
+Os exemplos abaixo ilustram o comportamento transacional — execute-os em um cliente PostgreSQL interativo (como o `psql`) para observar o efeito do `COMMIT` e do `ROLLBACK`.
+
+```sql
+-- Exemplo 1: ROLLBACK desfaz tudo
+BEGIN;
+UPDATE professor SET salario = salario * 1.10 WHERE id_escola = 31;
+SELECT nome, salario FROM professor WHERE id_escola = 31;  -- vê o aumento
+ROLLBACK;
+SELECT nome, salario FROM professor WHERE id_escola = 31;  -- valores originais
+```
+
+```sql
+-- Exemplo 2: COMMIT torna a alteração permanente
+BEGIN;
+UPDATE professor SET salario = salario * 1.05 WHERE ch_semanal = 20;
+COMMIT;
+SELECT nome, salario, ch_semanal FROM professor ORDER BY salario;
+```
+
+```sql
+-- Exemplo 3: Savepoint — desfaz apenas parte da transação
+BEGIN;
+
+INSERT INTO aluno (id_aluno, nome, id_curso, ano_ingresso)
+VALUES (2026111004, 'Cláudio Ramos', 111, 2026);
+
+SAVEPOINT antes_da_matricula;
+
+-- Tentativa de matrícula em disciplina inexistente (id_disciplina 9999999)
+INSERT INTO matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno)
+VALUES (9999999, 2026, 1, 1, 2026111004);
+-- ERROR: violação de FK
+
+ROLLBACK TO SAVEPOINT antes_da_matricula;
+
+-- Aluno foi inserido; matrícula inválida foi desfeita
+COMMIT;
+```
+
+::: {.callout-note}
+Nos chunks SQL dos arquivos `.qmd` deste livro, cada instrução é enviada ao banco em modo autocommit. Para testar transações interativas com `ROLLBACK`, use o `psql` ou DBeaver diretamente.
+:::

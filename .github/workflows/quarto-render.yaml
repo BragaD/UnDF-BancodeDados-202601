@@ -48,6 +48,14 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install psycopg2-binary jupyter
+
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:

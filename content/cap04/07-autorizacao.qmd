@@ -1,0 +1,266 @@
+# Autorização
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
+A **autorização** controla quais usuários podem realizar quais operações sobre quais partes do banco de dados. É o mecanismo de segurança que separa o que cada usuário pode ver e modificar.
+
+## Formas de Autorização
+
+::: {.conceito}
+Existem dois grupos de privilégios em SQL:
+
+**Sobre os dados:**
+
+| Privilégio | Permite |
+|---|---|
+| `SELECT` | Leitura dos dados (consultas) |
+| `INSERT` | Inserção de novas linhas |
+| `UPDATE` | Modificação de linhas existentes |
+| `DELETE` | Exclusão de linhas |
+
+**Sobre o esquema:**
+
+| Privilégio | Permite |
+|---|---|
+| `INDEX` | Criar e excluir índices |
+| `RESOURCES` | Criar novas relações |
+| `ALTERATION` | Adicionar ou remover atributos |
+| `DROP` | Excluir relações |
+:::
+
+## GRANT: Concedendo Privilégios
+
+A instrução `GRANT` concede um ou mais privilégios a um ou mais usuários ou papéis:
+
+```sql
+GRANT <lista de privilégios> ON <relação ou visão> TO <lista de usuários>;
+```
+
+::: {.exemplo}
+**Conceder leitura da tabela professor a dois usuários:**
+
+```sql
+GRANT SELECT ON professor TO ana_coordenadora, joao_secretaria;
+```
+
+**Conceder inserção e atualização de matrículas:**
+
+```sql
+GRANT INSERT, UPDATE ON matricula_disciplina TO sistema_academico;
+```
+
+**Conceder todos os privilégios de dados:**
+
+```sql
+GRANT ALL PRIVILEGES ON aluno TO admin_academico;
+```
+:::
+
+O destinatário especial `PUBLIC` concede o privilégio a **todos** os usuários válidos do banco:
+
+```sql
+-- Qualquer usuário pode consultar a tabela de cursos
+GRANT SELECT ON curso TO PUBLIC;
+```
+
+::: {.callout-warning}
+Conceder privilégios sobre uma **visão** não implica conceder privilégios sobre as tabelas base subjacentes. Um usuário que recebe `SELECT` na visão `professores_publico` pode consultá-la sem ter acesso direto à tabela `professor`.
+:::
+
+## REVOKE: Revogando Privilégios
+
+```sql
+REVOKE <lista de privilégios> ON <relação ou visão> FROM <lista de usuários>;
+```
+
+::: {.exemplo}
+**Revogar leitura da tabela professor:**
+
+```sql
+REVOKE SELECT ON professor FROM joao_secretaria;
+```
+
+**Revogar todos os privilégios:**
+
+```sql
+REVOKE ALL PRIVILEGES ON matricula_disciplina FROM sistema_legado;
+```
+:::
+
+Se o mesmo privilégio foi concedido ao usuário por dois granters diferentes, revogar de um deles pode não bastar — o usuário retém o privilégio pelo outro concedente.
+
+### CASCADE e RESTRICT
+
+```sql
+-- RESTRICT: falha se o privilégio foi repassado a outros usuários
+REVOKE SELECT ON professor FROM ana_coordenadora RESTRICT;
+
+-- CASCADE: revoga também de todos que receberam o privilégio de ana_coordenadora
+REVOKE SELECT ON professor FROM ana_coordenadora CASCADE;
+```
+
+## WITH GRANT OPTION: Transferência de Privilégios
+
+Um usuário pode receber autorização para repassar um privilégio usando `WITH GRANT OPTION`:
+
+```sql
+-- ana_coordenadora pode consultar E também conceder este privilégio a outros
+GRANT SELECT ON professor TO ana_coordenadora WITH GRANT OPTION;
+```
+
+## Roles: Papéis
+
+::: {.conceito}
+Um **papel** (*role*) é um agrupamento nomeado de privilégios. Em vez de conceder privilégios individualmente a cada usuário, define-se o papel com os privilégios necessários e associa-se usuários ao papel.
+:::
+
+```sql
+-- Criar os papéis
+CREATE ROLE aluno_undf;
+CREATE ROLE secretaria;
+CREATE ROLE coordenador;
+
+-- Conceder privilégios aos papéis
+GRANT SELECT ON curso, disciplina, aluno, prereq TO aluno_undf;
+GRANT SELECT, INSERT, UPDATE ON matricula_disciplina TO secretaria;
+GRANT SELECT ON professor TO secretaria;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO coordenador;
+
+-- Associar usuários aos papéis
+GRANT aluno_undf   TO usuario_pedro;
+GRANT secretaria   TO usuario_carla;
+GRANT coordenador  TO usuario_gustavo;
+```
+
+### Herança de Papéis
+
+Papéis podem ser concedidos a outros papéis, criando uma hierarquia de privilégios:
+
+```sql
+-- coordenador herda todos os privilégios de secretaria
+GRANT secretaria TO coordenador;
+
+-- diretor herda tudo de coordenador (e, transitivamente, de secretaria)
+CREATE ROLE diretor;
+GRANT coordenador TO diretor;
+GRANT diretor TO usuario_helena;
+```
+
+::: {.exemplo}
+**Cadeia de papéis na UnDF:**
+
+```
+aluno_undf  →  secretaria  →  coordenador  →  diretor
+              (herda aluno)   (herda secret.)  (herda coord.)
+```
+:::
+
+## Autorização em Visões
+
+Visões são um mecanismo poderoso de controle de acesso: permitem expor apenas os dados necessários sem revelar as tabelas base.
+
+::: {.exemplo}
+**Concedendo acesso apenas à visão pública de professores:**
+
+```sql
+-- Alunos podem ver nome e escola do professor, mas não o salário
+GRANT SELECT ON professores_publico TO aluno_undf;
+
+-- Nenhum acesso direto à tabela professor
+REVOKE ALL ON professor FROM aluno_undf;
+```
+
+Um usuário com `aluno_undf` pode executar:
+```sql
+SELECT * FROM professores_publico;  -- funciona
+SELECT * FROM professor;            -- erro: permissão negada
+```
+:::
+
+O criador de uma visão precisa ter os privilégios necessários sobre as tabelas base no momento da criação. Conceder `SELECT` na visão a outro usuário não exige que esse usuário tenha privilégios sobre as tabelas base.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Visualizar papéis (roles) existentes no PostgreSQL
+SELECT rolname AS papel,
+       rolsuper AS superusuario,
+       rolcreatedb AS pode_criar_bd,
+       rolcreaterole AS pode_criar_papel
+FROM   pg_roles
+WHERE  rolname NOT LIKE 'pg_%'
+ORDER BY rolname;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Visualizar privilégios concedidos nas tabelas do banco
+SELECT grantee AS destinatario,
+       table_name AS tabela,
+       privilege_type AS privilegio,
+       is_grantable AS pode_repassar
+FROM   information_schema.role_table_grants
+WHERE  table_schema = 'public'
+ORDER BY table_name, grantee, privilegio;
+```
+
+---
+
+## Para Praticar
+
+Os comandos abaixo devem ser executados em um cliente PostgreSQL com um usuário que tenha privilégios de administrador (como `postgres`). Em ambiente de produção, a gestão de roles é parte fundamental da segurança do banco.
+
+```sql
+-- Cenário: configurar papéis para o sistema acadêmico da UnDF
+
+-- 1. Criar papéis
+CREATE ROLE portal_aluno;
+CREATE ROLE sistema_notas;
+CREATE ROLE admin_academico;
+
+-- 2. Definir privilégios por papel
+GRANT SELECT ON curso, disciplina, prereq          TO portal_aluno;
+GRANT SELECT ON aluno, matricula_disciplina        TO portal_aluno;
+
+GRANT SELECT, UPDATE (nota, aprovado)
+    ON matricula_disciplina                        TO sistema_notas;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO admin_academico;
+
+-- 3. Associar usuários
+GRANT portal_aluno   TO usuario_discente;
+GRANT sistema_notas  TO usuario_professor;
+GRANT admin_academico TO usuario_direcao;
+
+-- 4. Criar visão para notas sem dados pessoais (para relatórios anônimos)
+CREATE OR REPLACE VIEW notas_anonimas AS
+SELECT id_disciplina, ano, semestre, turma,
+       nota, aprovado
+FROM   matricula_disciplina;
+
+GRANT SELECT ON notas_anonimas TO PUBLIC;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Verificar o dono das tabelas do banco
+SELECT tablename AS tabela, tableowner AS dono
+FROM   pg_tables
+WHERE  schemaname = 'public'
+ORDER BY tablename;
+```

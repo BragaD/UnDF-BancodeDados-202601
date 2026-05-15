@@ -1,0 +1,443 @@
+# Restrições de Integridade
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+**Restrições de integridade** protegem o banco de dados contra alterações acidentais que comprometeriam a consistência dos dados. Elas garantem que mudanças autorizadas não resultem em perda de consistência.
+
+## Restrições sobre uma Única Relação
+
+As principais restrições que podem ser declaradas em uma tabela são:
+
+::: {.conceito}
+| Restrição | Efeito |
+|---|---|
+| `NOT NULL` | O atributo não pode ter valor nulo |
+| `PRIMARY KEY` | Identifica univocamente cada tupla; implica `NOT NULL` e `UNIQUE` |
+| `UNIQUE` | Não podem existir duas tuplas com o mesmo valor nesse atributo (admite `NULL`) |
+| `CHECK (P)` | Toda tupla inserida ou atualizada deve satisfazer o predicado P |
+:::
+
+Para demonstrar cada restrição de forma executável, criaremos duas tabelas auxiliares no domínio da UnDF: `sala` (salas de aula disponíveis para reserva) e `reserva_sala` (reservas feitas por professores). Essas tabelas concentram todos os tipos de restrição estudados nesta seção.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TABLE IF NOT EXISTS sala (
+    id_sala    INT          PRIMARY KEY,
+    codigo     VARCHAR(10)  NOT NULL UNIQUE,                             -- NOT NULL + UNIQUE
+    capacidade INT          NOT NULL CHECK (capacidade BETWEEN 10 AND 500),  -- CHECK
+    bloco      CHAR(1)      NOT NULL
+);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TABLE IF NOT EXISTS reserva_sala (
+    id_reserva   SERIAL  PRIMARY KEY,
+    id_sala      INT     NOT NULL,
+    id_prof      INT     NOT NULL,
+    data_reserva DATE    NOT NULL,
+    hora_inicio  TIME    NOT NULL,
+    hora_fim     TIME    NOT NULL,
+    UNIQUE (id_sala, id_prof, data_reserva),          -- sem reservas duplicadas
+    CHECK  (hora_fim > hora_inicio),                  -- CHECK entre dois atributos
+    FOREIGN KEY (id_sala) REFERENCES sala (id_sala)
+        ON DELETE CASCADE,
+    FOREIGN KEY (id_prof) REFERENCES professor (id_prof)
+);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+INSERT INTO sala (id_sala, codigo, capacidade, bloco) VALUES
+    (1, 'A101',    40, 'A'),
+    (2, 'A102',    40, 'A'),
+    (3, 'B201',    80, 'B'),
+    (4, 'LAB-01',  30, 'C'),
+    (5, 'AUDIT',  200, 'D')
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+INSERT INTO reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim) VALUES
+    (1, 31200001, '2026-03-10', '08:00', '10:00'),
+    (2, 31400002, '2026-03-10', '10:00', '12:00'),
+    (3, 31200003, '2026-03-11', '14:00', '16:00'),
+    (4, 31200001, '2026-03-12', '08:00', '10:00')
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Salas cadastradas
+SELECT * FROM sala ORDER BY id_sala;
+```
+
+### NOT NULL
+
+`NOT NULL` impede que um atributo receba valor nulo. Em `sala`, os atributos `codigo`, `capacidade` e `bloco` são `NOT NULL`: nenhuma sala pode ser cadastrada sem essas informações.
+
+::: {.exemplo}
+**Tentativa de inserir uma sala sem código (`NOT NULL`):**
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DO $$
+BEGIN
+    INSERT INTO sala (id_sala, codigo, capacidade, bloco)
+    VALUES (99, NULL, 30, 'Z');
+EXCEPTION
+    WHEN not_null_violation THEN
+        RAISE NOTICE 'Correto: NOT NULL — o código da sala não pode ser nulo';
+END;
+$$;
+```
+
+O SGBD rejeita a instrução com `not_null_violation`. A linha com `id_sala = 99` não é inserida e a tabela permanece inalterada.
+:::
+
+### UNIQUE
+
+`UNIQUE` garante que nenhum valor se repita no atributo (ou combinação de atributos). Diferente de `PRIMARY KEY`, permite `NULL` — e múltiplos `NULL` são tratados como distintos entre si pelo SQL.
+
+Em `sala`, o atributo `codigo` é `UNIQUE`: duas salas não podem ter o mesmo código de identificação.
+
+::: {.exemplo}
+**Tentativa de inserir uma sala com código `'A101'` — que já existe:**
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DO $$
+BEGIN
+    INSERT INTO sala (id_sala, codigo, capacidade, bloco)
+    VALUES (99, 'A101', 50, 'A');
+EXCEPTION
+    WHEN unique_violation THEN
+        RAISE NOTICE 'Correto: UNIQUE — já existe uma sala com código A101';
+END;
+$$;
+```
+:::
+
+### CHECK
+
+`CHECK (P)` especifica um predicado P que toda tupla da relação deve satisfazer. O predicado pode referenciar uma única coluna ou múltiplas colunas da mesma tabela.
+
+::: {.exemplo}
+**Capacidade fora do intervalo permitido (`CHECK` em coluna única):**
+
+A restrição `CHECK (capacidade BETWEEN 10 AND 500)` impede salas com menos de 10 ou mais de 500 lugares.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DO $$
+BEGIN
+    INSERT INTO sala (id_sala, codigo, capacidade, bloco)
+    VALUES (99, 'Z999', 5, 'Z');   -- 5 < 10: viola o CHECK
+EXCEPTION
+    WHEN check_violation THEN
+        RAISE NOTICE 'Correto: CHECK — capacidade deve estar entre 10 e 500';
+END;
+$$;
+```
+:::
+
+::: {.exemplo}
+**Horário de fim anterior ao de início (`CHECK` entre dois atributos):**
+
+A restrição `CHECK (hora_fim > hora_inicio)` em `reserva_sala` envolve dois atributos da mesma tupla — o tipo de predicado mais comum na prática.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DO $$
+BEGIN
+    INSERT INTO reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)
+    VALUES (1, 31200001, '2026-04-01', '14:00', '12:00');  -- 12:00 < 14:00
+EXCEPTION
+    WHEN check_violation THEN
+        RAISE NOTICE 'Correto: CHECK — hora_fim deve ser maior que hora_inicio';
+END;
+$$;
+```
+:::
+
+Verificando as restrições `CHECK` ativas no banco:
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT tc.table_name, tc.constraint_name, cc.check_clause
+FROM   information_schema.table_constraints  tc
+JOIN   information_schema.check_constraints  cc
+       USING (constraint_catalog, constraint_schema, constraint_name)
+WHERE  tc.table_schema = 'public'
+  AND  tc.constraint_type = 'CHECK'
+ORDER BY tc.table_name, tc.constraint_name;
+```
+
+## Integridade Referencial
+
+::: {.conceito}
+A **integridade referencial** garante que um valor que aparece em uma relação para um conjunto de atributos também apareça para um conjunto de atributos correspondente em outra relação.
+
+Se A é um conjunto de atributos da relação R e S é outra relação cujo atributo A é chave primária, então A é uma **chave estrangeira** (*foreign key*) de R se para todo valor de A em R esse valor também aparece em S.
+:::
+
+Em `reserva_sala`:
+
+- `id_sala` referencia `sala (id_sala)` — não é possível reservar uma sala inexistente.
+- `id_prof` referencia `professor (id_prof)` — apenas professores cadastrados podem fazer reservas.
+
+::: {.exemplo}
+**Tentativa de reservar uma sala com `id_sala = 999` (não existe):**
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DO $$
+BEGIN
+    INSERT INTO reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)
+    VALUES (999, 31200001, '2026-05-01', '10:00', '12:00');
+EXCEPTION
+    WHEN foreign_key_violation THEN
+        RAISE NOTICE 'Correto: FK — sala 999 não existe na tabela sala';
+END;
+$$;
+```
+:::
+
+Verificando todas as chaves estrangeiras definidas no banco:
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT tc.table_name        AS tabela,
+       kcu.column_name      AS coluna,
+       ccu.table_name       AS referencia_tabela,
+       ccu.column_name      AS referencia_coluna
+FROM   information_schema.table_constraints    tc
+JOIN   information_schema.key_column_usage     kcu
+       ON kcu.constraint_name = tc.constraint_name
+       AND kcu.table_schema   = tc.table_schema
+JOIN   information_schema.constraint_column_usage ccu
+       ON ccu.constraint_name = tc.constraint_name
+       AND ccu.table_schema   = tc.table_schema
+WHERE  tc.constraint_type = 'FOREIGN KEY'
+  AND  tc.table_schema    = 'public'
+ORDER BY tc.table_name, kcu.column_name;
+```
+
+## Ações em Cascata
+
+Quando uma restrição referencial é violada por uma operação de exclusão ou atualização, o comportamento padrão é **rejeitar** a operação. Alternativas podem ser configuradas com `ON DELETE` e `ON UPDATE`:
+
+::: {.conceito}
+| Ação | Efeito quando o registro pai é excluído/atualizado |
+|---|---|
+| `RESTRICT` (padrão) | Rejeita a operação |
+| `CASCADE` | Propaga a exclusão/atualização para os registros filhos |
+| `SET NULL` | Define as colunas da FK como `NULL` nos registros filhos |
+| `SET DEFAULT` | Define as colunas da FK com seu valor padrão |
+:::
+
+A tabela `reserva_sala` foi criada com `ON DELETE CASCADE` na FK que referencia `sala`: excluir uma sala apaga automaticamente todas as suas reservas. Para observar o efeito, inserimos uma sala temporária `'DEMO'` com uma reserva associada:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+INSERT INTO sala (id_sala, codigo, capacidade, bloco)
+VALUES (99, 'DEMO', 50, 'Z')
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+INSERT INTO reserva_sala (id_sala, id_prof, data_reserva, hora_inicio, hora_fim)
+VALUES (99, 31200001, '2026-06-01', '10:00', '12:00')
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Reserva vinculada à sala DEMO — deve aparecer 1 linha
+SELECT r.id_reserva, s.codigo AS sala, p.nome AS professor, r.data_reserva
+FROM   reserva_sala r
+JOIN   sala         s ON s.id_sala = r.id_sala
+JOIN   professor    p ON p.id_prof = r.id_prof
+WHERE  r.id_sala = 99;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Excluir a sala DEMO — o CASCADE propaga a exclusão para reserva_sala
+DELETE FROM sala WHERE id_sala = 99;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Reservas da sala 99 após a exclusão em cascata — deve retornar 0
+SELECT COUNT(*) AS reservas_restantes
+FROM   reserva_sala
+WHERE  id_sala = 99;
+```
+
+::: {.callout-warning}
+O `CASCADE` é conveniente, mas deve ser usado com cuidado. Uma exclusão em cascata pode propagar-se por múltiplas tabelas e apagar dados que seriam difíceis de recuperar.
+:::
+
+## Violação Durante Transações
+
+Algumas restrições são difíceis de satisfazer durante a inserção porque os dados dependem uns dos outros. Por exemplo, em uma tabela onde pai e mãe são chaves estrangeiras para a própria tabela `pessoa`, não é possível inserir uma pessoa antes de inserir seus pais — mas os pais também são pessoas.
+
+Soluções:
+1. Inserir pai e mãe antes da própria pessoa.
+2. Inserir a pessoa com `NULL` nos campos pai/mãe e atualizar depois (exige que `NOT NULL` não esteja definido).
+3. Adiar a verificação da constraint para o momento do `COMMIT` com `DEFERRABLE INITIALLY DEFERRED` (suportado pelo PostgreSQL).
+
+::: {.exemplo}
+**Constraint deferível — verificação postergada até o COMMIT:**
+
+```sql
+ALTER TABLE prereq
+    ADD CONSTRAINT prereq_existe
+    FOREIGN KEY (id_prereq) REFERENCES disciplina (id_disciplina)
+    DEFERRABLE INITIALLY DEFERRED;
+```
+:::
+
+## Assertions
+
+::: {.conceito}
+Uma **assertion** é um predicado que o banco de dados deve satisfazer em todo momento. Diferente do `CHECK`, uma assertion pode envolver múltiplas tabelas.
+
+```sql
+CREATE ASSERTION <nome> CHECK (<predicado>);
+```
+:::
+
+::: {.callout-note}
+O padrão SQL define `CREATE ASSERTION`, mas a maioria dos SGBDs — incluindo o PostgreSQL — **não implementa** esse recurso diretamente. Em vez disso, usa-se *triggers* para obter efeito equivalente.
+
+**Exemplo conceitual** (não executável no PostgreSQL):
+
+```sql
+-- Garante que nenhuma disciplina tenha carga horária maior que a do curso ao qual pertence
+CREATE ASSERTION carga_disciplina_valida CHECK (
+    NOT EXISTS (
+        SELECT 1
+        FROM   disciplina d
+        JOIN   curso c ON c.id_curso = d.id_curso
+        WHERE  d.carga_horaria > c.carga_horaria
+    )
+);
+```
+:::
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Chaves primárias de todas as tabelas do banco
+SELECT tc.table_name,
+       STRING_AGG(kcu.column_name, ', ' ORDER BY kcu.ordinal_position) AS colunas_pk
+FROM   information_schema.table_constraints   tc
+JOIN   information_schema.key_column_usage    kcu
+       ON kcu.constraint_name = tc.constraint_name
+WHERE  tc.table_schema    = 'public'
+  AND  tc.constraint_type = 'PRIMARY KEY'
+GROUP BY tc.table_name
+ORDER BY tc.table_name;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Reservas agendadas: sala, professor, data e horário
+SELECT s.codigo AS sala, s.bloco,
+       p.nome   AS professor,
+       r.data_reserva,
+       r.hora_inicio, r.hora_fim
+FROM   reserva_sala r
+JOIN   sala         s ON s.id_sala = r.id_sala
+JOIN   professor    p ON p.id_prof = r.id_prof
+ORDER BY r.data_reserva, r.hora_inicio;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Tentativa de inserir um professor com escola inexistente (violação de FK)
+DO $$
+BEGIN
+    INSERT INTO professor (id_prof, nome, id_escola, ch_semanal, salario)
+    VALUES (99999999, 'Teste Inválido', 99, 40, 5000.00);
+EXCEPTION
+    WHEN foreign_key_violation THEN
+        RAISE NOTICE 'Correto: FK violation — escola 99 não existe';
+END;
+$$;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Disciplinas com pelo menos um pré-requisito
+SELECT COUNT(DISTINCT id_disciplina) AS disciplinas_com_prereq
+FROM   prereq;
+```

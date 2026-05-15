@@ -1,0 +1,247 @@
+# Visões
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Em muitas situações, não é desejável que todos os usuários vejam o modelo lógico completo do banco de dados. Uma **visão** (*view*) é uma relação virtual — não armazenada fisicamente — que expõe apenas os dados relevantes para cada perfil de usuário.
+
+::: {.conceito}
+Uma **visão** é qualquer relação que não faz parte do modelo conceitual mas que é tornada visível ao usuário como uma relação virtual. Ela é definida por uma expressão de consulta e não ocupa espaço de armazenamento próprio.
+:::
+
+## Definindo uma Visão
+
+A sintaxe de criação é:
+
+```sql
+CREATE VIEW <nome> AS <expressão de consulta>;
+```
+
+A definição da visão é **salva** pelo SGBD; a expressão de consulta é executada toda vez que a visão é referenciada em uma consulta.
+
+::: {.exemplo}
+**Visão pública de professores** — oculta o salário:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE VIEW professores_publico AS
+SELECT id_prof, nome, id_escola, ch_semanal
+FROM   professor;
+```
+:::
+
+::: {.exemplo}
+**Visão de carga salarial por escola:**
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE VIEW salario_escola(id_escola, total_salario, n_professores) AS
+SELECT id_escola, SUM(salario), COUNT(*)
+FROM   professor
+GROUP BY id_escola;
+```
+:::
+
+## Usando Visões
+
+Uma vez definida, a visão pode ser usada em consultas exatamente como uma tabela real:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Consulta a visão pública (sem salário)
+SELECT nome, ch_semanal
+FROM   professores_publico
+WHERE  id_escola = 31
+ORDER BY nome;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Junta a visão de salário com a tabela escola
+SELECT e.nome_escola, s.total_salario, s.n_professores,
+       ROUND(s.total_salario::numeric / s.n_professores, 2) AS media_salario
+FROM   salario_escola s
+JOIN   escola e USING (id_escola)
+ORDER BY s.total_salario DESC;
+```
+
+## Visões Definidas sobre Outras Visões
+
+Uma visão pode referenciar outra visão em sua definição. Dizemos que a visão *v₁* **depende diretamente** de *v₂* quando *v₂* é usada na expressão que define *v₁*, e que *v₁* **depende** de *v₂* se há uma cadeia de dependências entre elas.
+
+::: {.exemplo}
+**Visão de professores de tempo integral de cada escola** (usa a visão `professores_publico`):
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE VIEW professores_40h AS
+SELECT id_prof, nome, id_escola
+FROM   professores_publico
+WHERE  ch_semanal = 40;
+```
+:::
+
+::: {.exemplo}
+**Consulta que usa a visão derivada:**
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT e.sigla AS escola, p.nome AS professor
+FROM   professores_40h p
+JOIN   escola e USING (id_escola)
+ORDER BY e.sigla, p.nome;
+```
+:::
+
+### Expansão de Visão
+
+Quando uma consulta usa uma visão, o SGBD substitui a referência à visão pela expressão de consulta que a define — processo chamado de **expansão de visão**. Isso se repete recursivamente até que nenhuma visão permaneça na expressão final.
+
+::: {.conceito}
+A expansão funciona substituindo iterativamente cada visão *vᵢ* encontrada na expressão *e₁* pela sua definição. O processo termina quando não há mais visões na expressão — desde que as definições não sejam recursivas.
+:::
+
+## Visões Materializadas
+
+::: {.conceito}
+Uma **visão materializada** (*materialized view*) é uma visão cujo resultado é fisicamente armazenado no banco de dados. Diferentemente de uma visão comum, ela ocupa espaço em disco e precisa ser **mantida** (atualizada) quando as tabelas subjacentes mudam.
+:::
+
+O PostgreSQL suporta visões materializadas com `CREATE MATERIALIZED VIEW`. O refresco é manual com `REFRESH MATERIALIZED VIEW`.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_desempenho_aluno AS
+SELECT a.id_aluno, a.nome, a.id_curso,
+       COUNT(*)                                       AS disciplinas_cursadas,
+       ROUND(AVG(md.nota), 2)                        AS media_geral,
+       SUM(CASE WHEN md.aprovado = 1 THEN 1 ELSE 0 END) AS aprovacoes
+FROM   aluno a
+JOIN   matricula_disciplina md USING (id_aluno)
+WHERE  md.nota IS NOT NULL
+GROUP BY a.id_aluno, a.nome, a.id_curso;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Consultando a visão materializada
+SELECT nome, media_geral, aprovacoes, disciplinas_cursadas
+FROM   mv_desempenho_aluno
+ORDER BY media_geral DESC NULLS LAST;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Refresco manual (atualiza a visão com os dados atuais das tabelas base)
+REFRESH MATERIALIZED VIEW mv_desempenho_aluno;
+```
+
+## Atualização de Visões
+
+Em geral, uma visão só pode ser atualizada (suportar `INSERT`, `UPDATE`, `DELETE`) quando satisfaz certas condições que garantem que a operação pode ser traduzida univocamente para a tabela base.
+
+::: {.conceito}
+Uma visão é considerada **atualizável** pelo SQL quando:
+
+- A cláusula `FROM` contém **apenas uma** tabela base.
+- A cláusula `SELECT` contém **apenas nomes de atributos** (sem expressões, agregações ou `DISTINCT`).
+- Todo atributo não listado no `SELECT` pode receber `NULL`.
+- A consulta não contém `GROUP BY` nem `HAVING`.
+:::
+
+::: {.exemplo}
+A visão `professores_publico` é atualizável — contém uma única tabela base e apenas nomes de colunas. No entanto, inserir via ela exige que `salario` (não exposto) aceite `NULL`:
+
+```sql
+-- Insere um professor novo pela visão (salario ficará NULL na tabela base)
+INSERT INTO professores_publico (id_prof, nome, id_escola, ch_semanal)
+VALUES (31200004, 'Julia Mendes', 31, 20);
+```
+:::
+
+Visões como `salario_escola` (que usam `GROUP BY`) **não são atualizáveis**. Tentativas de inserção ou atualização direta são rejeitadas pelo SGBD.
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Visão de disciplinas com pré-requisitos: mostra o nome de ambas
+CREATE OR REPLACE VIEW v_prereqs AS
+SELECT d.id_disciplina,
+       d.nome_disciplina              AS disciplina,
+       dp.nome_disciplina             AS prerequisito,
+       d.id_curso,
+       d.semestre
+FROM   prereq pr
+JOIN   disciplina d  ON d.id_disciplina  = pr.id_disciplina
+JOIN   disciplina dp ON dp.id_disciplina = pr.id_prereq;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Usando a visão para listar pré-requisitos do curso ENS
+SELECT disciplina, prerequisito, semestre
+FROM   v_prereqs
+WHERE  id_curso = 311
+ORDER BY semestre, disciplina;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Visão de alunos reprovados com informação do curso
+CREATE OR REPLACE VIEW v_alunos_reprovados AS
+SELECT a.nome AS aluno, c.sigla_curso, d.nome_disciplina,
+       md.nota, md.ano, md.semestre
+FROM   matricula_disciplina md
+JOIN   aluno      a USING (id_aluno)
+JOIN   disciplina d USING (id_disciplina)
+JOIN   curso      c ON c.id_curso = a.id_curso
+WHERE  md.aprovado = 0;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT * FROM v_alunos_reprovados ORDER BY sigla_curso, aluno;
+```

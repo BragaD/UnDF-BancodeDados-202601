@@ -1,0 +1,306 @@
+# Triggers
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+::: {.conceito}
+Um **trigger** é uma instrução executada automaticamente pelo SGBD como efeito colateral de uma modificação no banco de dados. Para projetar um trigger, é preciso especificar:
+
+1. O **evento** que dispara o trigger (`INSERT`, `UPDATE` ou `DELETE`)
+2. O **momento** em que ele executa (`BEFORE` ou `AFTER` o evento)
+3. A **ação** a ser tomada (um procedimento PL/pgSQL)
+:::
+
+Triggers foram introduzidos no padrão SQL:1999 e são amplamente suportados — embora a sintaxe varie entre SGBDs. Os exemplos aqui usam a sintaxe do PostgreSQL.
+
+## Estrutura de um Trigger no PostgreSQL
+
+No PostgreSQL, um trigger é sempre associado a uma **função de trigger** (que retorna `TRIGGER`):
+
+```sql
+-- 1. Cria a função que implementa a ação
+CREATE OR REPLACE FUNCTION nome_funcao()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- lógica usando NEW e/ou OLD
+    RETURN NEW;   -- para BEFORE; AFTER pode retornar NULL
+END;
+$$ LANGUAGE plpgsql;
+
+-- 2. Associa a função ao evento na tabela
+CREATE TRIGGER nome_trigger
+{ BEFORE | AFTER } { INSERT | UPDATE | DELETE } [OF coluna, ...]
+ON tabela
+FOR EACH { ROW | STATEMENT }
+EXECUTE FUNCTION nome_funcao();
+```
+
+::: {.conceito}
+| Variável especial | Disponível em | Conteúdo |
+|---|---|---|
+| `NEW` | `INSERT`, `UPDATE` | Linha **nova** (após a operação) |
+| `OLD` | `UPDATE`, `DELETE` | Linha **antiga** (antes da operação) |
+
+Em triggers `BEFORE`, alterar `NEW` antes de `RETURN NEW` modifica o valor que será gravado.
+:::
+
+## BEFORE vs. AFTER
+
+| | `BEFORE` | `AFTER` |
+|---|---|---|
+| Quando executa | Antes da modificação | Depois que a linha foi alterada |
+| Pode cancelar a operação | Sim (retornando `NULL`) | Não |
+| Uso típico | Validação, derivação de valores | Auditoria, propagação a outras tabelas |
+
+## FOR EACH ROW vs. FOR EACH STATEMENT
+
+| | `FOR EACH ROW` | `FOR EACH STATEMENT` |
+|---|---|---|
+| Execuções por instrução | Uma por linha afetada | Uma por instrução SQL |
+| Acesso a `NEW`/`OLD` | Sim | Não (usa `referencing new/old table`) |
+| Uso típico | Auditoria por linha, derivações | Totalizadores pós-lote |
+
+## Exemplo 1 — AFTER UPDATE: Auditoria de Salários
+
+O trigger `trg_log_salario` registra toda alteração de salário de professores em uma tabela de log.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TABLE IF NOT EXISTS log_salario (
+    id_log           SERIAL       PRIMARY KEY,
+    id_prof          INT          NOT NULL,
+    salario_anterior NUMERIC(10,2),
+    salario_novo     NUMERIC(10,2),
+    alterado_em      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION fn_log_salario()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.salario <> OLD.salario THEN
+        INSERT INTO log_salario (id_prof, salario_anterior, salario_novo)
+        VALUES (OLD.id_prof, OLD.salario, NEW.salario);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DROP TRIGGER IF EXISTS trg_log_salario ON professor;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TRIGGER trg_log_salario
+AFTER UPDATE OF salario ON professor
+FOR EACH ROW
+EXECUTE FUNCTION fn_log_salario();
+```
+
+### Demonstração
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Limpa entradas de demos anteriores
+TRUNCATE log_salario RESTART IDENTITY;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Salário original de Gustavo Costa (31200001)
+SELECT nome, salario FROM professor WHERE id_prof = 31200001;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Aplica reajuste de 10% — trigger deve registrar a mudança
+UPDATE professor SET salario = 3630.00 WHERE id_prof = 31200001;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Log registrado pelo trigger
+SELECT id_prof, salario_anterior, salario_novo, alterado_em
+FROM   log_salario
+ORDER BY id_log;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Restaura o salário original
+UPDATE professor SET salario = 3300.00 WHERE id_prof = 31200001;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Log após restauração: dois registros (aumento e restauração)
+SELECT id_prof, salario_anterior, salario_novo
+FROM   log_salario
+ORDER BY id_log;
+```
+
+O trigger disparou automaticamente nas duas atualizações — sem nenhuma ação explícita do código que executou o `UPDATE`.
+
+## Exemplo 2 — BEFORE INSERT OR UPDATE: Derivando `aprovado` da Nota
+
+O campo `aprovado` em `matricula_disciplina` pode ser computado automaticamente a partir de `nota`, eliminando a necessidade de a aplicação calcular e inserir esse valor.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE OR REPLACE FUNCTION fn_calcular_aprovado()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Só deriva aprovado se nota foi fornecida
+    IF NEW.nota IS NOT NULL THEN
+        NEW.aprovado := CASE WHEN NEW.nota >= 6.0 THEN 1 ELSE 0 END;
+    END IF;
+    RETURN NEW;   -- BEFORE: RETURN NEW grava o valor modificado
+END;
+$$ LANGUAGE plpgsql;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+DROP TRIGGER IF EXISTS trg_aprovado ON matricula_disciplina;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+CREATE TRIGGER trg_aprovado
+BEFORE INSERT OR UPDATE OF nota ON matricula_disciplina
+FOR EACH ROW
+EXECUTE FUNCTION fn_calcular_aprovado();
+```
+
+Com este trigger ativo, uma instrução como:
+
+```sql
+INSERT INTO matricula_disciplina
+    (id_disciplina, ano, semestre, turma, id_aluno, nota)
+VALUES (3110401, 2026, 2, 1, 2025311001, 7.5);
+-- aprovado será automaticamente definido como 1 pelo trigger
+```
+
+...insere a linha com `aprovado = 1` sem que o código da aplicação precise calcular esse valor.
+
+::: {.callout-note}
+Teste este trigger no `psql` ou DBeaver, inserindo uma linha com `nota = 4.5` e verificando que `aprovado` fica `0`, ou com `nota = 8.0` para `aprovado = 1`.
+:::
+
+## Listando Triggers do Banco
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT trigger_name         AS trigger,
+       event_object_table   AS tabela,
+       event_manipulation   AS evento,
+       action_timing        AS momento,
+       action_orientation   AS nivel
+FROM   information_schema.triggers
+WHERE  trigger_schema = 'public'
+ORDER BY tabela, trigger_name, evento;
+```
+
+## Quando Não Usar Triggers
+
+::: {.callout-warning}
+Triggers são poderosos, mas podem tornar o sistema difícil de depurar e manter:
+
+- **Efeitos ocultos**: quem escreve um `UPDATE` pode não saber que um trigger será disparado.
+- **Cascata inesperada**: um trigger pode disparar outros triggers, criando cadeias difíceis de rastrear.
+- **Performance**: triggers `FOR EACH ROW` em operações em lote (carga de milhares de linhas) podem ser lentos.
+
+Prefira triggers quando a regra é **invariante** e deve ser aplicada independente de qual aplicação acessa o banco. Para lógica específica de uma aplicação, mantenha-a na camada de aplicação.
+:::
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Verificar se o log capturou corretamente as mudanças de salário
+SELECT l.id_prof,
+       p.nome,
+       l.salario_anterior,
+       l.salario_novo,
+       l.salario_novo - l.salario_anterior AS diferenca
+FROM   log_salario l
+JOIN   professor   p ON p.id_prof = l.id_prof
+ORDER BY l.id_log;
+```
+
+```sql
+-- Exercício: criar um trigger que impede que o salário seja reduzido
+CREATE OR REPLACE FUNCTION fn_proteger_salario()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.salario < OLD.salario THEN
+        RAISE EXCEPTION 'Redução de salário não permitida: % → %',
+            OLD.salario, NEW.salario;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_proteger_salario
+BEFORE UPDATE OF salario ON professor
+FOR EACH ROW
+EXECUTE FUNCTION fn_proteger_salario();
+
+-- Teste: tente reduzir o salário de um professor — deve falhar
+UPDATE professor SET salario = 1000.00 WHERE id_prof = 31400002;
+```

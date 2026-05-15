@@ -1,17 +1,27 @@
-SELECT sigla_curso, nome_curso, escola, tipo_curso
+-- =============================================================
+-- Parte 4 — Verificação dos Dados
+-- Atividade Prática 1 — Bases de Dados IV / UnDF 2026.1
+-- =============================================================
+-- Execute após a carga para confirmar que os dados estão corretos.
+
+-- Todos os cursos (esperado: 3 registros)
+SELECT id_curso, sigla_curso, nome_curso, id_escola, tipo_curso
 FROM curso
-ORDER BY sigla_curso;
+ORDER BY id_curso;
 
-SELECT escola, COUNT(*) AS n_professores
+-- Professores por escola (esperado: 11→2, 21→2, 31→3)
+SELECT id_escola, COUNT(*) AS n_professores
 FROM professor
-GROUP BY escola
-ORDER BY escola;
+GROUP BY id_escola
+ORDER BY id_escola;
 
-SELECT codigo, nome_disciplina, sigla_curso, carga_horaria
+-- Disciplinas com carga horária acima de 100h (esperado: 7 registros, todas de ENS)
+SELECT id_disciplina, nome_disciplina, id_curso, carga_horaria
 FROM disciplina
 WHERE carga_horaria > 100
 ORDER BY carga_horaria DESC;
 
-SELECT matricula, nome, ano_ingresso
+-- Alunos de Engenharia de Software ingressantes em 2023 (esperado: 2 registros)
+SELECT id_aluno, nome, ano_ingresso
 FROM aluno
-WHERE sigla_curso = 'ENS' AND ano_ingresso = 2023;
+WHERE id_curso = 311 AND ano_ingresso = 2023;

@@ -1,0 +1,153 @@
+# Índices
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Muitas consultas acessam apenas uma pequena fração das tuplas de uma tabela. Percorrer todas as linhas para encontrar as que satisfazem um predicado — **varredura sequencial** (*sequential scan*) — é ineficiente quando a tabela é grande. Um **índice** resolve esse problema.
+
+## O Que é um Índice
+
+::: {.conceito}
+Um **índice** sobre um atributo de uma relação é uma estrutura de dados que permite ao SGBD encontrar as tuplas que possuem um valor específico para aquele atributo **sem precisar percorrer todas as tuplas da relação**.
+
+A sintaxe para criar um índice é:
+
+```sql
+CREATE INDEX <nome> ON <relação> (<atributo>);
+```
+:::
+
+O índice mais comum em SGBDs relacionais é a **B-tree** (árvore-B), que suporta eficientemente buscas por igualdade, comparações e ordenações. O PostgreSQL também oferece índices `HASH`, `GIN` e `GiST` para casos específicos.
+
+## Criando Índices
+
+```sql
+-- Índice simples sobre id_curso na tabela aluno
+-- Acelera consultas como: WHERE id_curso = 311
+CREATE INDEX idx_aluno_curso ON aluno (id_curso);
+```
+
+```sql
+-- Índice composto: acelera consultas que filtram por ano E semestre
+CREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);
+```
+
+```sql
+-- Índice único: garante unicidade além de acelerar buscas
+CREATE UNIQUE INDEX idx_prof_nome_escola ON professor (nome, id_escola);
+```
+
+Verificando os índices criados no banco:
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT tablename AS tabela,
+       indexname AS indice,
+       indexdef  AS definicao
+FROM   pg_indexes
+WHERE  schemaname = 'public'
+ORDER BY tablename, indexname;
+```
+
+## Por Que Índices Aceleram Consultas
+
+Sem índice, para executar:
+
+```sql
+SELECT * FROM aluno WHERE id_curso = 311;
+```
+
+o SGBD lê **cada linha** da tabela `aluno` e verifica o predicado — O(n) operações.
+
+Com um índice B-tree sobre `id_curso`, o SGBD percorre a árvore em O(log n) para encontrar as entradas com `id_curso = 311`, depois acessa diretamente as páginas de disco onde essas linhas estão armazenadas.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- EXPLAIN mostra o plano de execução: com índice vs. sem índice
+-- (Com tabelas pequenas como a da UnDF, o planner pode preferir seq scan mesmo com índice)
+EXPLAIN
+SELECT *
+FROM   aluno
+WHERE  id_curso = 311;
+```
+
+## Tradeoffs dos Índices
+
+::: {.callout-warning}
+Índices não são gratuitos. Cada índice:
+
+- **Ocupa espaço em disco** — pode ser significativo em tabelas grandes.
+- **Retarda inserções, atualizações e exclusões** — o SGBD precisa manter o índice sincronizado com os dados.
+- **Não é sempre utilizado** — o otimizador de consultas decide quando usar um índice com base em estatísticas da tabela.
+
+Boas candidatas a índice: colunas usadas frequentemente em `WHERE`, `JOIN ON`, `ORDER BY` e que têm **alta cardinalidade** (muitos valores distintos).
+
+Más candidatas: colunas booleanas ou com poucos valores distintos (como `aprovado IN (0, 1)`) — o índice raramente compensa o custo.
+:::
+
+## Índice Parcial
+
+O PostgreSQL permite criar índices **parciais** — que indexam apenas as linhas que satisfazem um predicado. São menores e mais eficientes que índices completos quando o caso de uso foco em um subconjunto:
+
+```sql
+-- Índice apenas para matrículas reprovadas (aprovado = 0)
+-- Útil se consultas de reprovados são frequentes
+CREATE INDEX idx_reprovados ON matricula_disciplina (id_aluno)
+WHERE aprovado = 0;
+```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+--| warning: false
+-- Criar índice na coluna nome de aluno (busca por nome é comum)
+CREATE INDEX IF NOT EXISTS idx_aluno_nome ON aluno (nome);
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Listar índices criados explicitamente (excluindo os de PK e FK automáticos)
+SELECT indexname, tablename, indexdef
+FROM   pg_indexes
+WHERE  schemaname = 'public'
+  AND  indexname NOT LIKE 'pg_%'
+  AND  indexname NOT LIKE '%_pkey'
+ORDER BY tablename, indexname;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- EXPLAIN ANALYZE: tempo real de execução com e sem uso de índice
+-- (resultado varia conforme o tamanho dos dados e as estatísticas do planner)
+EXPLAIN ANALYZE
+SELECT a.nome, c.nome_curso
+FROM   aluno a
+JOIN   curso c USING (id_curso)
+WHERE  a.nome LIKE 'A%';
+```
+
+::: {.callout-note}
+Com o banco da UnDF (18 alunos, 7 professores), o planner PostgreSQL tende a usar *sequential scan* porque as tabelas são pequenas demais para justificar o overhead de acessar um índice. Em produção, com milhares ou milhões de linhas, índices fazem diferença substancial.
+:::

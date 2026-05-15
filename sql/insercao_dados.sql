@@ -1,83 +1,79 @@
-TRUNCATE matricula_disciplina, ministra, disciplina,
+-- =============================================================
+-- Parte 3 — Carga de Dados
+-- Atividade Prática 1 — Bases de Dados IV / UnDF 2026.1
+-- =============================================================
+-- Ordem de inserção importa: tabelas pai devem ser populadas antes das filhas.
+-- centro → escola → curso → professor → aluno → disciplina → prereq → ministra → matricula_disciplina
+
+-- Limpa todos os dados em ordem inversa (CASCADE propaga para filhas)
+TRUNCATE matricula_disciplina, ministra, prereq, disciplina,
          aluno, professor, curso, escola, centro CASCADE;
 
-INSERT INTO centro (centro, nome_centro) VALUES
-    ('COCHCMA', 'CIÊNCIAS HUMANAS, CIDADANIA E MEIO AMBIENTE'),
-    ('COEMAG',  'CENTRO DE EDUCAÇÃO, MAGISTÉRIO E ARTES'),
-    ('COETI',   'CENTRO DE ENGENHARIAS, TECNOLOGIA E INOVAÇÃO');
+-- ---------------------------------------------------------------
+-- centro (3 linhas) — INSERT INTO: tabela pequena, dados fixos
+-- ---------------------------------------------------------------
+INSERT INTO centro (id_centro, sigla, nome_centro) VALUES
+    (1, 'COCHCMA', 'Ciências Humanas, Cidadania e Meio Ambiente'),
+    (2, 'COEMAG',  'Centro de Educação, Magistério e Artes'),
+    (3, 'COETI',   'Centro de Engenharias, Tecnologia e Inovação');
 
-INSERT INTO escola (escola, nome_escola, centro) VALUES
-    ('ESG',   'Escola Superior de Gestão',                               'COCHCMA'),
-    ('EEMA',  'Escola de Educação, Magistério e Arte',                   'COEMAG'),
-    ('ESETI', 'Escola Superior de Engenharias, Tecnologia e Inovação',   'COETI');
+-- ---------------------------------------------------------------
+-- escola (3 linhas) — FK id_centro referencia centro
+-- id_escola: prefixo = id_centro + sequencial
+-- ---------------------------------------------------------------
+INSERT INTO escola (id_escola, sigla, nome_escola, id_centro) VALUES
+    (11, 'ESG',   'Escola Superior de Gestão',                              1),
+    (21, 'EEMA',  'Escola de Educação, Magistério e Arte',                  2),
+    (31, 'ESETI', 'Escola Superior de Engenharias, Tecnologia e Inovação',  3);
 
-INSERT INTO curso (sigla_curso, nome_curso, escola, n_semestres, carga_horaria, tipo_curso) VALUES
-    ('ENS', 'Engenharia de Software', 'ESETI', 8, 3200, 'bacharelado'),
-    ('ECO', 'Ciências Econômicas',    'ESG',   8, 3000, 'bacharelado'),
-    ('PED', 'Pedagogia',              'EEMA',  8, 3410, 'licenciatura');
+-- ---------------------------------------------------------------
+-- curso (3 linhas) — FK id_escola referencia escola
+-- ---------------------------------------------------------------
+INSERT INTO curso (id_curso, sigla_curso, nome_curso, id_escola,
+                   n_semestres, carga_horaria, tipo_curso) VALUES
+    (111, 'ECO', 'Ciências Econômicas',    11, 8, 3000, 'bacharelado'),
+    (211, 'PED', 'Pedagogia',              21, 8, 3410, 'licenciatura'),
+    (311, 'ENS', 'Engenharia de Software', 31, 8, 3200, 'bacharelado');
 
-INSERT INTO professor (matricula_prof, nome, escola, ch_semanal, salario) VALUES
-    ('PROF20230005', 'Eduarda Souza',   'EEMA',  20, 3200),
-    ('PROF20230006', 'Felipe Araujo',   'EEMA',  40, 6400),
-    ('PROF20230031', 'Gustavo Costa',   'ESETI', 20, 3300),
-    ('PROF20230032', 'Helena Carvalho', 'ESETI', 40, 6700),
-    ('PROF20230033', 'Igor Melo',       'ESETI', 20, 3100),
-    ('PROF20230042', 'Bruno Teixeira',  'ESG',   40, 6500),
-    ('PROF20230043', 'Carla Pinto',     'ESG',   40, 6600);
+-- ---------------------------------------------------------------
+-- professor (7 linhas) — FK id_escola referencia escola
+-- id_prof: id_escola(2d) + ch_semanal(2d) + seq(4d)
+-- ---------------------------------------------------------------
+INSERT INTO professor (id_prof, nome, id_escola, ch_semanal, salario) VALUES
+    (11400001, 'Bruno Teixeira',  11, 40, 6500.00),
+    (11400002, 'Carla Pinto',     11, 40, 6600.00),
+    (21200001, 'Eduarda Souza',   21, 20, 3200.00),
+    (21400002, 'Felipe Araujo',   21, 40, 6400.00),
+    (31200001, 'Gustavo Costa',   31, 20, 3300.00),
+    (31400002, 'Helena Carvalho', 31, 40, 6700.00),
+    (31200003, 'Igor Melo',       31, 20, 3100.00);
 
-INSERT INTO aluno (matricula, nome, sigla_curso, ano_ingresso) VALUES
-    ('2023007001', 'Beatriz Carvalho', 'ECO', 2023),
-    ('2023007002', 'Lucas Santos',     'ECO', 2023),
-    ('2024007001', 'Gabriel Ribeiro',  'ECO', 2024),
-    ('2024007002', 'Fernanda Martins', 'ECO', 2024),
-    ('2025007001', 'Rodrigo Lima',     'ECO', 2025),
-    ('2025007002', 'Camila Teixeira',  'ECO', 2025),
-    ('2023002001', 'Matheus Silva',    'ENS', 2023),
-    ('2023002002', 'Larissa Araújo',   'ENS', 2023),
-    ('2024002001', 'Pedro Carvalho',   'ENS', 2024),
-    ('2024002002', 'Isabela Freitas',  'ENS', 2024),
-    ('2025002001', 'Diego Correia',    'ENS', 2025),
-    ('2025002002', 'Juliana Nunes',    'ENS', 2025),
-    ('2023009001', 'Amanda Moreira',   'PED', 2023),
-    ('2023009002', 'Thiago Gomes',     'PED', 2023),
-    ('2024009001', 'Carolina Lima',    'PED', 2024),
-    ('2024009002', 'Rafael Costa',     'PED', 2024),
-    ('2025009001', 'Vinícius Pereira', 'PED', 2025),
-    ('2025009002', 'Letícia Souza',    'PED', 2025);
+-- ---------------------------------------------------------------
+-- Tabelas grandes — COPY a partir dos CSVs em dados/amostra/
+-- Ajuste o caminho absoluto conforme necessário.
+-- ---------------------------------------------------------------
 
-INSERT INTO disciplina (codigo, nome_disciplina, sigla_curso, semestre, carga_horaria) VALUES
-    ('ECO-201', 'História Econômica Geral',            'ECO', 2,  75),
-    ('ECO-202', 'Culturas Digitais',                   'ECO', 2,  60),
-    ('ECO-401', 'Microeconomia 2',                     'ECO', 4,  75),
-    ('ECO-402', 'Macroeconomia 2',                     'ECO', 4,  95),
-    ('ECO-601', 'Economia Brasileira',                 'ECO', 6,  75),
-    ('ECO-602', 'Orçamento e Finanças Públicas',       'ECO', 6,  75),
-    ('ECO-801', 'Monografia',                          'ECO', 8, 100),
-    ('ECO-802', 'Desenvolvimento Econômico',           'ECO', 8,  90),
-    ('ENS-201', 'Bases da Engenharia de Software 2',                   'ENS', 2, 150),
-    ('ENS-202', 'Projeto Aplicado 2 (site WEB)',                       'ENS', 2, 120),
-    ('ENS-401', 'Bases da Engenharia de Software 4',                   'ENS', 4, 180),
-    ('ENS-402', 'Projeto Aplicado 4 (blockchain)',                     'ENS', 4, 120),
-    ('ENS-601', 'Bases da Engenharia de Software 6',                   'ENS', 6, 150),
-    ('ENS-602', 'Projeto Aplicado 6 (Machine Learning)',               'ENS', 6, 120),
-    ('ENS-801', 'Bases da Engenharia de Software 8',                   'ENS', 8, 100),
-    ('ENS-802', 'Projeto Aplicado 8 (Sistema em Tempo Real)',          'ENS', 8, 160),
-    ('PED-203', 'Desenvolvimento Humano',              'PED', 2,  60),
-    ('PED-204', 'Didática Geral',                      'PED', 2,  60),
-    ('PED-403', 'Eletiva I',                           'PED', 4,  80),
-    ('PED-404', 'Fundamentos e Orientações Metodológicas - Ed. Infantil - BNCC', 'PED', 4, 80),
-    ('PED-603', 'Eletiva II',                          'PED', 6,  80),
-    ('PED-604', 'Educação do Campo, Indígena e Quilombola', 'PED', 6, 40),
-    ('PED-803', 'Tecnologia Educacional - Design',     'PED', 8,  60),
-    ('PED-804', 'Estatística Aplicada',                'PED', 8,  50);
+-- aluno (18 linhas) — id_aluno: ano(4d) + id_curso(3d) + seq(3d)
+COPY aluno (id_aluno, nome, id_curso, ano_ingresso)
+FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/alunos_amostra.csv'
+DELIMITER ';' CSV HEADER;
 
-/* Inserção de dados na tabela ministra */
-/* utiliza leitor de csv do postgreSQL para inserir os dados do arquivo csv localizado em /Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/ministra_amostra.csv */
+-- disciplina (24 linhas) — id_disciplina: id_curso(3d) + semestre(2d) + seq(2d)
+COPY disciplina (id_disciplina, nome_disciplina, id_curso, semestre, carga_horaria)
+FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/disciplinas_amostra.csv'
+DELIMITER ';' CSV HEADER;
 
-COPY ministra (cod_disciplina, ano, semestre, turma, matricula_prof, horario, sala)
-FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/ministra_amostra.csv' DELIMITER ';' CSV HEADER;
+-- prereq (16 linhas) — pares (id_disciplina, id_prereq)
+COPY prereq (id_disciplina, id_prereq)
+FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/prereq_amostra.csv'
+DELIMITER ';' CSV HEADER;
 
-SELECT * FROM ministra
+-- ministra (36 linhas) — turmas ofertadas
+COPY ministra (id_disciplina, ano, semestre, turma, id_prof, horario, sala)
+FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/ministra_amostra.csv'
+DELIMITER ';' CSV HEADER;
 
-COPY matricula_disciplina (cod_disciplina, ano, semestre, turma, cod_matricula, nota)
-FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/matricula_disciplina_amostra.csv' DELIMITER ';' CSV HEADER;
+-- matricula_disciplina (56 linhas) — matrículas de alunos em turmas
+COPY matricula_disciplina (id_disciplina, ano, semestre, turma, id_aluno, nota, aprovado)
+FROM '/Users/douglasbraga/Documents/UnDF/202601/BasesIV_EngSoft_BD/dados/amostra/matricula_disciplina_amostra.csv'
+DELIMITER ';' CSV HEADER;

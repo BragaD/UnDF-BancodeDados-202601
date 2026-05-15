@@ -1,0 +1,298 @@
+# Agregação Avançada
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+As funções de agregação básicas (`SUM`, `AVG`, `COUNT`) agrupam linhas e produzem um único valor por grupo. Este capítulo apresenta duas extensões poderosas: **funções de janela** e **agregação multidimensional** (`ROLLUP`, `CUBE`, `GROUPING SETS`).
+
+## Funções de Janela (Window Functions)
+
+::: {.conceito}
+Uma **função de janela** calcula um valor para cada linha com base em um conjunto de linhas relacionadas — a **janela** — sem colapsar as linhas em grupos como `GROUP BY` faz. A cláusula `OVER` define a janela.
+
+```sql
+função() OVER (
+    [PARTITION BY coluna, ...]
+    [ORDER BY coluna [ASC|DESC], ...]
+    [ROWS | RANGE BETWEEN ... AND ...]
+)
+```
+:::
+
+A diferença fundamental:
+
+| `GROUP BY` | `OVER` |
+|---|---|
+| Retorna uma linha por grupo | Retorna uma linha por linha da tabela |
+| Agrega e colapsa | Calcula sem colapsar |
+| Não pode misturar colunas de grupo e não-grupo | Pode misturar livremente |
+
+## Ranking: RANK, DENSE_RANK, ROW_NUMBER
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Professores ranqueados por salário (geral)
+SELECT nome,
+       id_escola,
+       salario,
+       RANK()       OVER (ORDER BY salario DESC)          AS rank_geral,
+       DENSE_RANK() OVER (ORDER BY salario DESC)          AS dense_rank_geral,
+       ROW_NUMBER() OVER (ORDER BY salario DESC, id_prof) AS row_num
+FROM   professor
+ORDER BY rank_geral;
+```
+
+::: {.conceito}
+| Função | Comportamento com empates |
+|---|---|
+| `RANK()` | Posições iguais para empates; **salta** posições após |
+| `DENSE_RANK()` | Posições iguais para empates; **não salta** posições |
+| `ROW_NUMBER()` | Numera linhas sequencialmente; sem empates |
+:::
+
+### Ranking por Partição
+
+`PARTITION BY` reinicia o ranking dentro de cada grupo:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Ranking de salário dentro de cada escola
+SELECT p.nome,
+       e.sigla                                          AS escola,
+       p.salario,
+       RANK() OVER (PARTITION BY p.id_escola
+                    ORDER BY p.salario DESC)             AS rank_na_escola
+FROM   professor p
+JOIN   escola   e ON e.id_escola = p.id_escola
+ORDER BY e.sigla, rank_na_escola;
+```
+
+## NTILE — Dividindo em Quartis (ou N grupos)
+
+`NTILE(n)` distribui as linhas em *n* grupos de tamanhos iguais (ou o mais próximo possível):
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Distribuição dos alunos em quartis de nota (apenas notas lançadas)
+SELECT a.nome,
+       md.nota,
+       NTILE(4) OVER (ORDER BY md.nota DESC NULLS LAST) AS quartil
+FROM   matricula_disciplina md
+JOIN   aluno a USING (id_aluno)
+WHERE  md.nota IS NOT NULL
+ORDER BY quartil, md.nota DESC;
+```
+
+## Funções de Janela com Agregação
+
+Funções de janela podem usar qualquer agregado (`SUM`, `AVG`, `COUNT`) com `OVER`:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Nota de cada aluno vs. média da turma (por disciplina/ano/semestre)
+SELECT d.nome_disciplina,
+       a.nome                                      AS aluno,
+       md.nota,
+       ROUND(AVG(md.nota) OVER (
+           PARTITION BY md.id_disciplina, md.ano, md.semestre
+       ), 2)                                       AS media_turma,
+       md.nota - ROUND(AVG(md.nota) OVER (
+           PARTITION BY md.id_disciplina, md.ano, md.semestre
+       ), 2)                                       AS desvio_da_media
+FROM   matricula_disciplina md
+JOIN   aluno      a USING (id_aluno)
+JOIN   disciplina d USING (id_disciplina)
+WHERE  md.nota IS NOT NULL
+ORDER BY d.nome_disciplina, md.nota DESC;
+```
+
+## Windowing — Janelas Deslizantes
+
+A especificação `ROWS BETWEEN` define uma janela móvel de linhas relativas à linha atual:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Média acumulada de notas por aluno (ordenadas por semestre da disciplina)
+SELECT a.nome,
+       d.semestre,
+       d.nome_disciplina,
+       md.nota,
+       ROUND(AVG(md.nota) OVER (
+           PARTITION BY md.id_aluno
+           ORDER BY d.semestre
+           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+       ), 2) AS media_acumulada
+FROM   matricula_disciplina md
+JOIN   aluno      a USING (id_aluno)
+JOIN   disciplina d USING (id_disciplina)
+WHERE  md.nota IS NOT NULL
+ORDER BY a.nome, d.semestre;
+```
+
+::: {.conceito}
+Especificações de janela comuns:
+
+| Especificação | Significado |
+|---|---|
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` | Da primeira linha até a atual (acumulado) |
+| `ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING` | Linha anterior, atual e próxima (média móvel de 3) |
+| `ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING` | Da atual até a última |
+:::
+
+## Agregação Multidimensional: ROLLUP e CUBE
+
+O `GROUP BY` padrão gera um único nível de agrupamento. `ROLLUP` e `CUBE` geram múltiplos níveis de agrupamento em uma única consulta — equivalentes a várias consultas com `GROUP BY` e `UNION ALL`.
+
+### ROLLUP — Subtotais Hierárquicos
+
+`ROLLUP(A, B, C)` gera a união de:
+`(A, B, C)`, `(A, B)`, `(A)`, `()`
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Total de alunos por escola, por curso, e total geral (ROLLUP)
+SELECT e.sigla                            AS escola,
+       c.sigla_curso                      AS curso,
+       COUNT(a.id_aluno)                  AS total_alunos
+FROM   escola e
+JOIN   curso  c ON c.id_escola = e.id_escola
+LEFT JOIN aluno a ON a.id_curso = c.id_curso
+GROUP BY ROLLUP(e.sigla, c.sigla_curso)
+ORDER BY escola NULLS LAST, curso NULLS LAST;
+```
+
+As linhas com `NULL` em `curso` são os subtotais por escola; a linha com `NULL` em ambas é o total geral.
+
+### CUBE — Todos os Agrupamentos Possíveis
+
+`CUBE(A, B)` gera a união de todos os 2² = 4 subconjuntos: `(A, B)`, `(A)`, `(B)`, `()`.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Salário médio cruzando escola × carga horária semanal (CUBE)
+SELECT e.sigla                             AS escola,
+       p.ch_semanal,
+       ROUND(AVG(p.salario), 2)            AS media_salarial,
+       COUNT(*)                            AS professores
+FROM   professor p
+JOIN   escola   e ON e.id_escola = p.id_escola
+GROUP BY CUBE(e.sigla, p.ch_semanal)
+ORDER BY escola NULLS LAST, ch_semanal NULLS LAST;
+```
+
+### GROUPING() — Distinguindo NULL de Agregação vs. NULL de Dado
+
+Quando um atributo tem `NULL` no resultado de `ROLLUP`/`CUBE`, é difícil saber se é um `NULL` genuíno do dado ou um `NULL` que representa "todos". A função `GROUPING()` resolve isso:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- GROUPING identifica linhas de subtotal (1 = agregado, 0 = valor real)
+SELECT COALESCE(e.sigla, '*** TOTAL ***')  AS escola,
+       COALESCE(c.sigla_curso, '---')      AS curso,
+       COUNT(a.id_aluno)                   AS alunos,
+       GROUPING(e.sigla)                   AS flag_escola,
+       GROUPING(c.sigla_curso)             AS flag_curso
+FROM   escola e
+JOIN   curso  c ON c.id_escola = e.id_escola
+LEFT JOIN aluno a ON a.id_curso = c.id_curso
+GROUP BY ROLLUP(e.sigla, c.sigla_curso)
+ORDER BY flag_escola, flag_curso, escola, curso;
+```
+
+### GROUPING SETS — Controle Granular
+
+`GROUPING SETS` permite especificar exatamente quais agrupamentos gerar, sem precisar dos padrões de `ROLLUP` ou `CUBE`:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Apenas os agrupamentos por escola e por carga horária (sem combinação)
+SELECT e.sigla        AS escola,
+       p.ch_semanal,
+       COUNT(*)       AS professores,
+       ROUND(AVG(p.salario), 2) AS media_salarial
+FROM   professor p
+JOIN   escola   e ON e.id_escola = p.id_escola
+GROUP BY GROUPING SETS (
+    (e.sigla),          -- total por escola
+    (p.ch_semanal),     -- total por carga horária
+    ()                  -- total geral
+)
+ORDER BY escola NULLS LAST, ch_semanal NULLS LAST;
+```
+
+---
+
+## Para Praticar
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Top-2 alunos por nota em cada disciplina (usando RANK com PARTITION)
+WITH ranked AS (
+    SELECT d.nome_disciplina,
+           a.nome                            AS aluno,
+           md.nota,
+           RANK() OVER (
+               PARTITION BY md.id_disciplina
+               ORDER BY md.nota DESC NULLS LAST
+           ) AS rank_na_turma
+    FROM   matricula_disciplina md
+    JOIN   aluno      a USING (id_aluno)
+    JOIN   disciplina d USING (id_disciplina)
+    WHERE  md.nota IS NOT NULL
+)
+SELECT nome_disciplina, aluno, nota, rank_na_turma
+FROM   ranked
+WHERE  rank_na_turma <= 2
+ORDER BY nome_disciplina, rank_na_turma;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Resumo executivo: total de alunos e média salarial por centro (ROLLUP)
+SELECT COALESCE(ce.nome_centro, 'TOTAL GERAL') AS centro,
+       COUNT(DISTINCT a.id_aluno)              AS total_alunos,
+       ROUND(AVG(p.salario), 2)                AS media_salario_prof
+FROM   centro ce
+JOIN   escola  es ON es.id_centro = ce.id_centro
+LEFT JOIN curso c ON c.id_escola = es.id_escola
+LEFT JOIN aluno a ON a.id_curso  = c.id_curso
+LEFT JOIN professor p ON p.id_escola = es.id_escola
+GROUP BY ROLLUP(ce.nome_centro)
+ORDER BY centro NULLS LAST;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Percentil de cada professor no ranking salarial geral
+SELECT nome,
+       salario,
+       ROUND((PERCENT_RANK() OVER (ORDER BY salario) * 100)::NUMERIC, 1) AS percentil,
+       ROUND((CUME_DIST()    OVER (ORDER BY salario) * 100)::NUMERIC, 1) AS dist_acumulada
+FROM   professor
+ORDER BY salario;
+```

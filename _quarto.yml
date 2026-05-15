@@ -108,35 +108,69 @@ book:
           text: "Modificação do Banco de Dados"
         - href: content/cap03/11-resumo.qmd
           text: "Resumo e Exercícios"
-    - part: "Capítulo 4: Projeto com o Modelo ER"
+    - part: "Capítulo 4: SQL Intermediário"
       chapters:
         - href: content/cap04/index.qmd
           text: "Visão Geral"
-        - href: content/cap04/01-fases-projeto.qmd
+        - href: content/cap04/01-joins.qmd
+          text: "Expressões de Junção"
+        - href: content/cap04/02-views.qmd
+          text: "Visões"
+        - href: content/cap04/03-transacoes.qmd
+          text: "Transações"
+        - href: content/cap04/04-integridade.qmd
+          text: "Restrições de Integridade"
+        - href: content/cap04/05-tipos-dados.qmd
+          text: "Tipos de Dados SQL"
+        - href: content/cap04/06-indices.qmd
+          text: "Índices"
+        - href: content/cap04/07-autorizacao.qmd
+          text: "Autorização"
+        - href: content/cap04/08-resumo.qmd
+          text: "Resumo e Exercícios"
+    - part: "Capítulo 5: SQL Avançado"
+      chapters:
+        - href: content/cap05/index.qmd
+          text: "Visão Geral"
+        - href: content/cap05/01-acesso-python.qmd
+          text: "Acesso ao Banco via Python"
+        - href: content/cap05/02-funcoes-procedimentos.qmd
+          text: "Funções e Procedimentos"
+        - href: content/cap05/03-triggers.qmd
+          text: "Triggers"
+        - href: content/cap05/04-consultas-recursivas.qmd
+          text: "Consultas Recursivas"
+        - href: content/cap05/05-agregacao-avancada.qmd
+          text: "Agregação Avançada"
+    - part: "Capítulo 8: Projeto com o Modelo ER"
+      chapters:
+        - href: content/cap08/index.qmd
+          text: "Visão Geral"
+        - href: content/cap08/01-fases-projeto.qmd
           text: "Fases do Projeto"
-        - href: content/cap04/02-entidades.qmd
+        - href: content/cap08/02-entidades.qmd
           text: "Conjuntos de Entidades"
-        - href: content/cap04/03-relacionamentos.qmd
+        - href: content/cap08/03-relacionamentos.qmd
           text: "Conjuntos de Relacionamentos"
-        - href: content/cap04/04-atributos.qmd
+        - href: content/cap08/04-atributos.qmd
           text: "Tipos de Atributos"
-        - href: content/cap04/05-cardinalidade.qmd
+        - href: content/cap08/05-cardinalidade.qmd
           text: "Cardinalidade e Participação"
-        - href: content/cap04/06-entidades-fracas.qmd
+        - href: content/cap08/06-entidades-fracas.qmd
           text: "Entidades Fracas"
-        - href: content/cap04/07-diagrama-er-undf.qmd
+        - href: content/cap08/07-diagrama-er-undf.qmd
           text: "Diagrama ER da UnDF"
-        - href: content/cap04/08-conversao-relacional.qmd
+        - href: content/cap08/08-conversao-relacional.qmd
           text: "Conversão ER → Relacional"
-        - href: content/cap04/09-especializacao.qmd
+        - href: content/cap08/09-especializacao.qmd
           text: "Especialização e Generalização"
-        - href: content/cap04/10-agregacao.qmd
+        - href: content/cap08/10-agregacao.qmd
           text: "Agregação"
-        - href: content/cap04/11-decisoes-projeto.qmd
+        - href: content/cap08/11-decisoes-projeto.qmd
           text: "Decisões de Projeto"
-        - href: content/cap04/12-notacoes.qmd
+        - href: content/cap08/12-notacoes.qmd
           text: "Notações Alternativas"
-        - href: content/cap04/13-resumo.qmd
+        - href: content/cap08/13-resumo.qmd
           text: "Resumo e Exercícios"
 
 page-navigation: true
