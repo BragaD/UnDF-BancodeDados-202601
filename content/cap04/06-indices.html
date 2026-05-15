@@ -1036,10 +1036,10 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Nested Loop (cost=0.14..9.46 rows=1 width=336) (actual time=0.011..0.012 rows=1 loops=1)</td>
+<td style="text-align: left;">Nested Loop (cost=0.14..9.46 rows=1 width=336) (actual time=0.010..0.011 rows=1 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Seq Scan on aluno a (cost=0.00..1.23 rows=1 width=122) (actual time=0.006..0.007 rows=1 loops=1)</td>
+<td style="text-align: left;">-&gt; Seq Scan on aluno a (cost=0.00..1.23 rows=1 width=122) (actual time=0.005..0.006 rows=1 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Filter: ((nome)::text <sub></sub> ‘A%’::text)</td>
@@ -1054,10 +1054,10 @@ Aviso
 <td style="text-align: left;">Index Cond: (id_curso = a.id_curso)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.305 ms</td>
+<td style="text-align: left;">Planning Time: 0.277 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 0.022 ms</td>
+<td style="text-align: left;">Execution Time: 0.021 ms</td>
 </tr>
 </tbody>
 </table>
