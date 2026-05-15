@@ -8,6 +8,7 @@ name: Render and Publish
 env:
   LANG: "pt_BR.UTF-8"
   POSTGRES_PASSWORD: postgres
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-website:
