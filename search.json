@@ -2419,7 +2419,7 @@
     "href": "content/cap04/05-tipos-dados.html#tipos-temporais",
     "title": "Tipos de Dados SQL",
     "section": "",
-    "text": "Tipo\nDescrição\nExemplo\n\n\n\n\nDATE\nData (ano, mês, dia)\n'2025-03-15'\n\n\nTIME\nHora do dia (horas, minutos, segundos)\n'14:30:00'\n\n\nTIMESTAMP\nData + hora\n'2025-03-15 14:30:00'\n\n\nINTERVAL\nPeríodo de tempo\nINTERVAL '30 days'\n\n\n\n\n\n\n\n\n\nDATE\nColunas DATE armazenam apenas a data (sem hora). A subtração entre dois DATE retorna o número de dias entre elas.\n\n-- Datas de início e fim de cada evento; duração em dias\nSELECT nome, tipo,\n       data_inicio,\n       data_fim,\n       (data_fim - data_inicio + 1) AS duracao_dias\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\n\nnome\ntipo\ndata_inicio\ndata_fim\nduracao_dias\n\n\n\n\nJornada Pedagógica\nSemana Acadêmica\n2025-07-28\n2025-08-01\n5\n\n\nSemana Acadêmica de Engenharia de Software\nSemana Acadêmica\n2025-10-06\n2025-10-10\n5\n\n\nWorkshop de Banco de Dados\nWorkshop\n2026-03-20\n2026-03-20\n1\n\n\nDefesa de TCC — Pedro Alves\nDefesa\n2026-05-15\n2026-05-15\n1\n\n\nPalestra sobre Inteligência Artificial\nPalestra\n2026-06-10\n2026-06-10\n1\n\n\nDefesa de TCC — Camila Rocha\nDefesa\n2026-07-20\n2026-07-20\n1\n\n\n\n\n\n\n\nTIME\nColunas TIME armazenam apenas o horário. A subtração entre dois TIME retorna um INTERVAL.\n\n-- Horário de início e fim de cada evento; carga horária diária\nSELECT nome,\n       hora_inicio,\n       hora_fim,\n       hora_fim - hora_inicio AS carga_horaria_diaria\nFROM   evento_academico\nORDER BY hora_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\nhora_inicio\nhora_fim\ncarga_horaria_diaria\n\n\n\n\nSemana Acadêmica de Engenharia de Software\n08:00:00\n18:00:00\n10:00:00\n\n\nJornada Pedagógica\n08:00:00\n17:00:00\n09:00:00\n\n\nWorkshop de Banco de Dados\n09:00:00\n17:00:00\n08:00:00\n\n\nDefesa de TCC — Camila Rocha\n10:00:00\n12:00:00\n02:00:00\n\n\nDefesa de TCC — Pedro Alves\n14:00:00\n16:00:00\n02:00:00\n\n\nPalestra sobre Inteligência Artificial\n19:00:00\n21:00:00\n02:00:00\n\n\n\n\n\n\n\nTIMESTAMP\nTIMESTAMP armazena data e hora juntas. A coluna criado_em é preenchida automaticamente com CURRENT_TIMESTAMP na inserção.\n\n-- Timestamp de criação de cada registro e diferença em relação à hora atual\nSELECT nome,\n       criado_em,\n       CURRENT_TIMESTAMP                    AS agora,\n       AGE(CURRENT_TIMESTAMP, criado_em)   AS tempo_desde_insercao\nFROM   evento_academico\nORDER BY criado_em;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\ncriado_em\nagora\ntempo_desde_insercao\n\n\n\n\nSemana Acadêmica de Engenharia de Software\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\nWorkshop de Banco de Dados\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\nPalestra sobre Inteligência Artificial\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\nJornada Pedagógica\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\nDefesa de TCC — Pedro Alves\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\nDefesa de TCC — Camila Rocha\n2026-05-15 18:25:41\n2026-05-15 18:25:41\n00:00:00.024799\n\n\n\n\n\n\n\nINTERVAL e aritmética de datas\nINTERVAL representa uma duração. O PostgreSQL infere INTERVAL de subtrações entre datas e horas e aceita literais como INTERVAL '7 days' ou INTERVAL '2 hours 30 minutes'.\n\n-- Dias até cada evento a partir de hoje; status (passado / futuro)\nSELECT nome,\n       data_inicio,\n       (data_inicio - CURRENT_DATE)         AS dias_ate_evento,\n       CASE\n           WHEN data_inicio &gt; CURRENT_DATE THEN 'futuro'\n           WHEN data_inicio = CURRENT_DATE THEN 'hoje'\n           ELSE 'passado'\n       END                                  AS status\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\ndata_inicio\ndias_ate_evento\nstatus\n\n\n\n\nJornada Pedagógica\n2025-07-28\n-291\npassado\n\n\nSemana Acadêmica de Engenharia de Software\n2025-10-06\n-221\npassado\n\n\nWorkshop de Banco de Dados\n2026-03-20\n-56\npassado\n\n\nDefesa de TCC — Pedro Alves\n2026-05-15\n0\nhoje\n\n\nPalestra sobre Inteligência Artificial\n2026-06-10\n26\nfuturo\n\n\nDefesa de TCC — Camila Rocha\n2026-07-20\n66\nfuturo\n\n\n\n\n\n\n-- EXTRACT: componentes individuais de uma data\nSELECT nome,\n       data_inicio,\n       EXTRACT(YEAR  FROM data_inicio)::INT AS ano,\n       EXTRACT(MONTH FROM data_inicio)::INT AS mes,\n       EXTRACT(DOW   FROM data_inicio)::INT AS dia_semana,  -- 0=Dom … 6=Sáb\n       TO_CHAR(data_inicio, 'TMDay, DD \"de\" TMMonth \"de\" YYYY') AS data_extenso\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\n\n\nnome\ndata_inicio\nano\nmes\ndia_semana\ndata_extenso\n\n\n\n\nJornada Pedagógica\n2025-07-28\n2025\n7\n1\nMonday, 28 de July de 2025\n\n\nSemana Acadêmica de Engenharia de Software\n2025-10-06\n2025\n10\n1\nMonday, 06 de October de 2025\n\n\nWorkshop de Banco de Dados\n2026-03-20\n2026\n3\n5\nFriday, 20 de March de 2026\n\n\nDefesa de TCC — Pedro Alves\n2026-05-15\n2026\n5\n5\nFriday, 15 de May de 2026\n\n\nPalestra sobre Inteligência Artificial\n2026-06-10\n2026\n6\n3\nWednesday, 10 de June de 2026\n\n\nDefesa de TCC — Camila Rocha\n2026-07-20\n2026\n7\n1\nMonday, 20 de July de 2026",
+    "text": "Tipo\nDescrição\nExemplo\n\n\n\n\nDATE\nData (ano, mês, dia)\n'2025-03-15'\n\n\nTIME\nHora do dia (horas, minutos, segundos)\n'14:30:00'\n\n\nTIMESTAMP\nData + hora\n'2025-03-15 14:30:00'\n\n\nINTERVAL\nPeríodo de tempo\nINTERVAL '30 days'\n\n\n\n\n\n\n\n\n\nDATE\nColunas DATE armazenam apenas a data (sem hora). A subtração entre dois DATE retorna o número de dias entre elas.\n\n-- Datas de início e fim de cada evento; duração em dias\nSELECT nome, tipo,\n       data_inicio,\n       data_fim,\n       (data_fim - data_inicio + 1) AS duracao_dias\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\n\nnome\ntipo\ndata_inicio\ndata_fim\nduracao_dias\n\n\n\n\nJornada Pedagógica\nSemana Acadêmica\n2025-07-28\n2025-08-01\n5\n\n\nSemana Acadêmica de Engenharia de Software\nSemana Acadêmica\n2025-10-06\n2025-10-10\n5\n\n\nWorkshop de Banco de Dados\nWorkshop\n2026-03-20\n2026-03-20\n1\n\n\nDefesa de TCC — Pedro Alves\nDefesa\n2026-05-15\n2026-05-15\n1\n\n\nPalestra sobre Inteligência Artificial\nPalestra\n2026-06-10\n2026-06-10\n1\n\n\nDefesa de TCC — Camila Rocha\nDefesa\n2026-07-20\n2026-07-20\n1\n\n\n\n\n\n\n\nTIME\nColunas TIME armazenam apenas o horário. A subtração entre dois TIME retorna um INTERVAL.\n\n-- Horário de início e fim de cada evento; carga horária diária\nSELECT nome,\n       hora_inicio,\n       hora_fim,\n       hora_fim - hora_inicio AS carga_horaria_diaria\nFROM   evento_academico\nORDER BY hora_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\nhora_inicio\nhora_fim\ncarga_horaria_diaria\n\n\n\n\nSemana Acadêmica de Engenharia de Software\n08:00:00\n18:00:00\n10:00:00\n\n\nJornada Pedagógica\n08:00:00\n17:00:00\n09:00:00\n\n\nWorkshop de Banco de Dados\n09:00:00\n17:00:00\n08:00:00\n\n\nDefesa de TCC — Camila Rocha\n10:00:00\n12:00:00\n02:00:00\n\n\nDefesa de TCC — Pedro Alves\n14:00:00\n16:00:00\n02:00:00\n\n\nPalestra sobre Inteligência Artificial\n19:00:00\n21:00:00\n02:00:00\n\n\n\n\n\n\n\nTIMESTAMP\nTIMESTAMP armazena data e hora juntas. A coluna criado_em é preenchida automaticamente com CURRENT_TIMESTAMP na inserção.\n\n-- Timestamp de criação de cada registro e diferença em relação à hora atual\nSELECT nome,\n       criado_em,\n       CURRENT_TIMESTAMP                    AS agora,\n       AGE(CURRENT_TIMESTAMP, criado_em)   AS tempo_desde_insercao\nFROM   evento_academico\nORDER BY criado_em;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\ncriado_em\nagora\ntempo_desde_insercao\n\n\n\n\nSemana Acadêmica de Engenharia de Software\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\nWorkshop de Banco de Dados\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\nPalestra sobre Inteligência Artificial\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\nJornada Pedagógica\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\nDefesa de TCC — Pedro Alves\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\nDefesa de TCC — Camila Rocha\n2026-05-31 15:58:04\n2026-05-31 15:58:04\n00:00:00.033627\n\n\n\n\n\n\n\nINTERVAL e aritmética de datas\nINTERVAL representa uma duração. O PostgreSQL infere INTERVAL de subtrações entre datas e horas e aceita literais como INTERVAL '7 days' ou INTERVAL '2 hours 30 minutes'.\n\n-- Dias até cada evento a partir de hoje; status (passado / futuro)\nSELECT nome,\n       data_inicio,\n       (data_inicio - CURRENT_DATE)         AS dias_ate_evento,\n       CASE\n           WHEN data_inicio &gt; CURRENT_DATE THEN 'futuro'\n           WHEN data_inicio = CURRENT_DATE THEN 'hoje'\n           ELSE 'passado'\n       END                                  AS status\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\nnome\ndata_inicio\ndias_ate_evento\nstatus\n\n\n\n\nJornada Pedagógica\n2025-07-28\n-307\npassado\n\n\nSemana Acadêmica de Engenharia de Software\n2025-10-06\n-237\npassado\n\n\nWorkshop de Banco de Dados\n2026-03-20\n-72\npassado\n\n\nDefesa de TCC — Pedro Alves\n2026-05-15\n-16\npassado\n\n\nPalestra sobre Inteligência Artificial\n2026-06-10\n10\nfuturo\n\n\nDefesa de TCC — Camila Rocha\n2026-07-20\n50\nfuturo\n\n\n\n\n\n\n-- EXTRACT: componentes individuais de uma data\nSELECT nome,\n       data_inicio,\n       EXTRACT(YEAR  FROM data_inicio)::INT AS ano,\n       EXTRACT(MONTH FROM data_inicio)::INT AS mes,\n       EXTRACT(DOW   FROM data_inicio)::INT AS dia_semana,  -- 0=Dom … 6=Sáb\n       TO_CHAR(data_inicio, 'TMDay, DD \"de\" TMMonth \"de\" YYYY') AS data_extenso\nFROM   evento_academico\nORDER BY data_inicio;\n\n\n6 records\n\n\n\n\n\n\n\n\n\n\nnome\ndata_inicio\nano\nmes\ndia_semana\ndata_extenso\n\n\n\n\nJornada Pedagógica\n2025-07-28\n2025\n7\n1\nMonday, 28 de July de 2025\n\n\nSemana Acadêmica de Engenharia de Software\n2025-10-06\n2025\n10\n1\nMonday, 06 de October de 2025\n\n\nWorkshop de Banco de Dados\n2026-03-20\n2026\n3\n5\nFriday, 20 de March de 2026\n\n\nDefesa de TCC — Pedro Alves\n2026-05-15\n2026\n5\n5\nFriday, 15 de May de 2026\n\n\nPalestra sobre Inteligência Artificial\n2026-06-10\n2026\n6\n3\nWednesday, 10 de June de 2026\n\n\nDefesa de TCC — Camila Rocha\n2026-07-20\n2026\n7\n1\nMonday, 20 de July de 2026",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>46</span>  <span class='chapter-title'>Tipos de Dados SQL</span>"
@@ -2474,7 +2474,7 @@
     "href": "content/cap04/05-tipos-dados.html#para-praticar",
     "title": "Tipos de Dados SQL",
     "section": "Para Praticar",
-    "text": "Para Praticar\n\n-- Funções de data: extraindo partes de uma data\nSELECT nome,\n       ano_ingresso,\n       EXTRACT(YEAR  FROM CURRENT_DATE)                AS ano_atual,\n       EXTRACT(YEAR  FROM CURRENT_DATE) - ano_ingresso AS tempo_na_undf\nFROM   aluno\nORDER BY tempo_na_undf DESC, nome;\n\n\nDisplaying records 1 - 10\n\n\nnome\nano_ingresso\nano_atual\ntempo_na_undf\n\n\n\n\nAmanda Moreira\n2023\n2026\n3\n\n\nBeatriz Carvalho\n2023\n2026\n3\n\n\nLarissa Araújo\n2023\n2026\n3\n\n\nLucas Santos\n2023\n2026\n3\n\n\nMatheus Silva\n2023\n2026\n3\n\n\nThiago Gomes\n2023\n2026\n3\n\n\nCarolina Lima\n2024\n2026\n2\n\n\nFernanda Martins\n2024\n2026\n2\n\n\nGabriel Ribeiro\n2024\n2026\n2\n\n\nIsabela Freitas\n2024\n2026\n2\n\n\n\n\n\n\n-- Formatando valores numéricos: salário em formato brasileiro\nSELECT nome,\n       TO_CHAR(salario, 'FM\"R$\" 999.990,00') AS salario_formatado,\n       ch_semanal\nFROM   professor\nORDER BY salario DESC;\n\n\n7 records\n\n\nnome\nsalario_formatado\nch_semanal\n\n\n\n\nHelena Carvalho\nR$ ###.###,##\n40\n\n\nCarla Pinto\nR$ ###.###,##\n40\n\n\nBruno Teixeira\nR$ ###.###,##\n40\n\n\nFelipe Araujo\nR$ ###.###,##\n40\n\n\nGustavo Costa\nR$ ###.###,##\n20\n\n\nEduarda Souza\nR$ ###.###,##\n20\n\n\nIgor Melo\nR$ ###.###,##\n20\n\n\n\n\n\n\n-- CAST entre tipos: convertendo id_aluno para texto e extraindo partes\nSELECT id_aluno,\n       nome,\n       CAST(id_aluno AS TEXT)                 AS id_texto,\n       LEFT(CAST(id_aluno AS TEXT), 4)        AS ano_ingresso_extraido,\n       SUBSTRING(CAST(id_aluno AS TEXT), 5, 3) AS id_curso_extraido\nFROM   aluno\nLIMIT 5;\n\n\n5 records\n\n\n\n\n\n\n\n\n\nid_aluno\nnome\nid_texto\nano_ingresso_extraido\nid_curso_extraido\n\n\n\n\n2023111001\nBeatriz Carvalho\n2023111001\n2023\n111\n\n\n2023111002\nLucas Santos\n2023111002\n2023\n111\n\n\n2024111001\nGabriel Ribeiro\n2024111001\n2024\n111\n\n\n2024111002\nFernanda Martins\n2024111002\n2024\n111\n\n\n2025111001\nRodrigo Lima\n2025111001\n2025\n111\n\n\n\n\n\n\n-- Aritmética de datas com INTERVAL: quantos dias faltam para a conclusão estimada\n-- de cada aluno de ENS (4 anos após ingresso, em 15/12)\nSELECT nome,\n       ano_ingresso,\n       make_date(ano_ingresso + 4, 12, 15)           AS conclusao_estimada,\n       make_date(ano_ingresso + 4, 12, 15) - CURRENT_DATE AS dias_restantes\nFROM   aluno\nWHERE  id_curso = 311\nORDER BY conclusao_estimada;\n\n\n6 records\n\n\nnome\nano_ingresso\nconclusao_estimada\ndias_restantes\n\n\n\n\nMatheus Silva\n2023\n2027-12-15\n579\n\n\nLarissa Araújo\n2023\n2027-12-15\n579\n\n\nPedro Carvalho\n2024\n2028-12-15\n945\n\n\nIsabela Freitas\n2024\n2028-12-15\n945\n\n\nDiego Correia\n2025\n2029-12-15\n1310\n\n\nJuliana Nunes\n2025\n2029-12-15\n1310",
+    "text": "Para Praticar\n\n-- Funções de data: extraindo partes de uma data\nSELECT nome,\n       ano_ingresso,\n       EXTRACT(YEAR  FROM CURRENT_DATE)                AS ano_atual,\n       EXTRACT(YEAR  FROM CURRENT_DATE) - ano_ingresso AS tempo_na_undf\nFROM   aluno\nORDER BY tempo_na_undf DESC, nome;\n\n\nDisplaying records 1 - 10\n\n\nnome\nano_ingresso\nano_atual\ntempo_na_undf\n\n\n\n\nAmanda Moreira\n2023\n2026\n3\n\n\nBeatriz Carvalho\n2023\n2026\n3\n\n\nLarissa Araújo\n2023\n2026\n3\n\n\nLucas Santos\n2023\n2026\n3\n\n\nMatheus Silva\n2023\n2026\n3\n\n\nThiago Gomes\n2023\n2026\n3\n\n\nCarolina Lima\n2024\n2026\n2\n\n\nFernanda Martins\n2024\n2026\n2\n\n\nGabriel Ribeiro\n2024\n2026\n2\n\n\nIsabela Freitas\n2024\n2026\n2\n\n\n\n\n\n\n-- Formatando valores numéricos: salário em formato brasileiro\nSELECT nome,\n       TO_CHAR(salario, 'FM\"R$\" 999.990,00') AS salario_formatado,\n       ch_semanal\nFROM   professor\nORDER BY salario DESC;\n\n\n7 records\n\n\nnome\nsalario_formatado\nch_semanal\n\n\n\n\nHelena Carvalho\nR$ ###.###,##\n40\n\n\nCarla Pinto\nR$ ###.###,##\n40\n\n\nBruno Teixeira\nR$ ###.###,##\n40\n\n\nFelipe Araujo\nR$ ###.###,##\n40\n\n\nGustavo Costa\nR$ ###.###,##\n20\n\n\nEduarda Souza\nR$ ###.###,##\n20\n\n\nIgor Melo\nR$ ###.###,##\n20\n\n\n\n\n\n\n-- CAST entre tipos: convertendo id_aluno para texto e extraindo partes\nSELECT id_aluno,\n       nome,\n       CAST(id_aluno AS TEXT)                 AS id_texto,\n       LEFT(CAST(id_aluno AS TEXT), 4)        AS ano_ingresso_extraido,\n       SUBSTRING(CAST(id_aluno AS TEXT), 5, 3) AS id_curso_extraido\nFROM   aluno\nLIMIT 5;\n\n\n5 records\n\n\n\n\n\n\n\n\n\nid_aluno\nnome\nid_texto\nano_ingresso_extraido\nid_curso_extraido\n\n\n\n\n2023111001\nBeatriz Carvalho\n2023111001\n2023\n111\n\n\n2023111002\nLucas Santos\n2023111002\n2023\n111\n\n\n2024111001\nGabriel Ribeiro\n2024111001\n2024\n111\n\n\n2024111002\nFernanda Martins\n2024111002\n2024\n111\n\n\n2025111001\nRodrigo Lima\n2025111001\n2025\n111\n\n\n\n\n\n\n-- Aritmética de datas com INTERVAL: quantos dias faltam para a conclusão estimada\n-- de cada aluno de ENS (4 anos após ingresso, em 15/12)\nSELECT nome,\n       ano_ingresso,\n       make_date(ano_ingresso + 4, 12, 15)           AS conclusao_estimada,\n       make_date(ano_ingresso + 4, 12, 15) - CURRENT_DATE AS dias_restantes\nFROM   aluno\nWHERE  id_curso = 311\nORDER BY conclusao_estimada;\n\n\n6 records\n\n\nnome\nano_ingresso\nconclusao_estimada\ndias_restantes\n\n\n\n\nMatheus Silva\n2023\n2027-12-15\n563\n\n\nLarissa Araújo\n2023\n2027-12-15\n563\n\n\nPedro Carvalho\n2024\n2028-12-15\n929\n\n\nIsabela Freitas\n2024\n2028-12-15\n929\n\n\nDiego Correia\n2025\n2029-12-15\n1294\n\n\nJuliana Nunes\n2025\n2029-12-15\n1294",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>46</span>  <span class='chapter-title'>Tipos de Dados SQL</span>"
@@ -2503,11 +2503,22 @@
     ]
   },
   {
+    "objectID": "content/cap04/06-indices.html#demonstração-com-dados-reais",
+    "href": "content/cap04/06-indices.html#demonstração-com-dados-reais",
+    "title": "Índices",
+    "section": "Demonstração com Dados Reais",
+    "text": "Demonstração com Dados Reais\n\n\n\n\n\n\nNota\n\n\n\nOs exemplos desta seção utilizam a base de dados completa da UnDF — com 2.720 alunos, 730 disciplinas, 6.172 ofertas de turmas e 71.053 matrículas — em vez da amostra com 18 alunos usada nos capítulos anteriores. Com esse volume de dados, o impacto dos índices é perceptível nos tempos de execução.\n\n\n\nSELECT\n  'aluno'                AS tabela, COUNT(*) AS linhas FROM aluno\nUNION ALL\nSELECT 'disciplina',               COUNT(*)           FROM disciplina\nUNION ALL\nSELECT 'ministra',                 COUNT(*)           FROM ministra\nUNION ALL\nSELECT 'matricula_disciplina',     COUNT(*)           FROM matricula_disciplina\nORDER BY linhas DESC;\n\n\n4 records\n\n\ntabela\nlinhas\n\n\n\n\nmatricula_disciplina\n71053\n\n\nministra\n6172\n\n\naluno\n2720\n\n\ndisciplina\n729\n\n\n\n\n\n\nSem índice — varredura sequencial\nVamos buscar todas as matrículas de um aluno específico. Primeiro, sem nenhum índice extra sobre id_aluno:\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, nota, aprovado\nFROM   matricula_disciplina\nWHERE  id_aluno = 2023111001;\n\n\n5 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nSeq Scan on matricula_disciplina (cost=0.00..1519.20 rows=377 width=18) (actual time=0.008..4.350 rows=5 loops=1)\n\n\nFilter: (id_aluno = 2023111001)\n\n\nRows Removed by Filter: 71048\n\n\nPlanning Time: 0.057 ms\n\n\nExecution Time: 4.361 ms\n\n\n\n\n\nO plano exibe Seq Scan com rows=71053: o PostgreSQL lê a tabela inteira para encontrar as matrículas do aluno. O campo actual time mostra o tempo real gasto.\n\n\nCom índice — acesso direto\nCriamos um índice B-tree sobre id_aluno:\n\nCREATE INDEX idx_mat_aluno ON matricula_disciplina (id_aluno);\n\nA mesma consulta agora usa o índice:\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, nota, aprovado\nFROM   matricula_disciplina\nWHERE  id_aluno = 2023111001;\n\n\n7 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nBitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=18) (actual time=0.025..0.026 rows=5 loops=1)\n\n\nRecheck Cond: (id_aluno = 2023111001)\n\n\nHeap Blocks: exact=1\n\n\n-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.020..0.020 rows=5 loops=1)\n\n\nIndex Cond: (id_aluno = 2023111001)\n\n\nPlanning Time: 0.149 ms\n\n\nExecution Time: 0.038 ms\n\n\n\n\n\nO plano muda para Index Scan (ou Bitmap Index Scan). O PostgreSQL percorre a árvore B-tree em O(log n) para localizar as entradas de 2023111001, depois acessa diretamente as páginas de disco onde essas linhas estão — sem ler o restante da tabela.\n\n\nÍndice em junções\nÍndices também aceleram JOINs. Sem índice em aluno(id_curso):\n\nEXPLAIN ANALYZE\nSELECT a.nome, c.nome_curso\nFROM   aluno a\nJOIN   curso c USING (id_curso)\nWHERE  c.sigla_curso = 'ENS';\n\n\n9 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nHash Join (cost=8.17..67.44 rows=8 width=336) (actual time=0.084..0.400 rows=160 loops=1)\n\n\nHash Cond: (a.id_curso = c.id_curso)\n\n\n-&gt; Seq Scan on aluno a (cost=0.00..54.36 rows=1836 width=122) (actual time=0.005..0.202 rows=2720 loops=1)\n\n\n-&gt; Hash (cost=8.16..8.16 rows=1 width=222) (actual time=0.010..0.011 rows=1 loops=1)\n\n\nBuckets: 1024 Batches: 1 Memory Usage: 9kB\n\n\n-&gt; Index Scan using curso_sigla_curso_key on curso c (cost=0.14..8.16 rows=1 width=222) (actual time=0.008..0.008 rows=1 loops=1)\n\n\nIndex Cond: ((sigla_curso)::text = ‘ENS’::text)\n\n\nPlanning Time: 0.182 ms\n\n\nExecution Time: 0.418 ms\n\n\n\n\n\nApós criar o índice:\n\nCREATE INDEX idx_aluno_curso ON aluno (id_curso);\n\n\nEXPLAIN ANALYZE\nSELECT a.nome, c.nome_curso\nFROM   aluno a\nJOIN   curso c USING (id_curso)\nWHERE  c.sigla_curso = 'ENS';\n\n\n10 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nNested Loop (cost=4.53..40.08 rows=12 width=336) (actual time=0.039..0.071 rows=160 loops=1)\n\n\n-&gt; Index Scan using curso_sigla_curso_key on curso c (cost=0.14..8.16 rows=1 width=222) (actual time=0.005..0.005 rows=1 loops=1)\n\n\nIndex Cond: ((sigla_curso)::text = ‘ENS’::text)\n\n\n-&gt; Bitmap Heap Scan on aluno a (cost=4.39..31.78 rows=14 width=122) (actual time=0.032..0.046 rows=160 loops=1)\n\n\nRecheck Cond: (id_curso = c.id_curso)\n\n\nHeap Blocks: exact=4\n\n\n-&gt; Bitmap Index Scan on idx_aluno_curso (cost=0.00..4.39 rows=14 width=0) (actual time=0.027..0.027 rows=160 loops=1)\n\n\nIndex Cond: (id_curso = c.id_curso)\n\n\nPlanning Time: 0.157 ms\n\n\nExecution Time: 0.092 ms",
+    "crumbs": [
+      "Capítulo 4: SQL Intermediário",
+      "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
+    ]
+  },
+  {
     "objectID": "content/cap04/06-indices.html#criando-índices",
     "href": "content/cap04/06-indices.html#criando-índices",
     "title": "Índices",
     "section": "Criando Índices",
-    "text": "Criando Índices\n-- Índice simples sobre id_curso na tabela aluno\n-- Acelera consultas como: WHERE id_curso = 311\nCREATE INDEX idx_aluno_curso ON aluno (id_curso);\n-- Índice composto: acelera consultas que filtram por ano E semestre\nCREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);\n-- Índice único: garante unicidade além de acelerar buscas\nCREATE UNIQUE INDEX idx_prof_nome_escola ON professor (nome, id_escola);\nVerificando os índices criados no banco:\n\nSELECT tablename AS tabela,\n       indexname AS indice,\n       indexdef  AS definicao\nFROM   pg_indexes\nWHERE  schemaname = 'public'\nORDER BY tablename, indexname;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\ntabela\nindice\ndefinicao\n\n\n\n\naluno\naluno_pkey\nCREATE UNIQUE INDEX aluno_pkey ON public.aluno USING btree (id_aluno)\n\n\ncentro\ncentro_pkey\nCREATE UNIQUE INDEX centro_pkey ON public.centro USING btree (id_centro)\n\n\ncentro\ncentro_sigla_key\nCREATE UNIQUE INDEX centro_sigla_key ON public.centro USING btree (sigla)\n\n\ncurso\ncurso_pkey\nCREATE UNIQUE INDEX curso_pkey ON public.curso USING btree (id_curso)\n\n\ncurso\ncurso_sigla_curso_key\nCREATE UNIQUE INDEX curso_sigla_curso_key ON public.curso USING btree (sigla_curso)\n\n\ndisciplina\ndisciplina_pkey\nCREATE UNIQUE INDEX disciplina_pkey ON public.disciplina USING btree (id_disciplina)\n\n\nescola\nescola_pkey\nCREATE UNIQUE INDEX escola_pkey ON public.escola USING btree (id_escola)\n\n\nescola\nescola_sigla_key\nCREATE UNIQUE INDEX escola_sigla_key ON public.escola USING btree (sigla)\n\n\nevento_academico\nevento_academico_nome_data_inicio_key\nCREATE UNIQUE INDEX evento_academico_nome_data_inicio_key ON public.evento_academico USING btree (nome, data_inicio)\n\n\nevento_academico\nevento_academico_pkey\nCREATE UNIQUE INDEX evento_academico_pkey ON public.evento_academico USING btree (id_evento)",
+    "text": "Criando Índices\n-- Índice simples\nCREATE INDEX idx_aluno_curso ON aluno (id_curso);\n\n-- Índice composto: acelera filtros que combinam ano E semestre\nCREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);\n\n-- Índice único: garante unicidade além de acelerar buscas\nCREATE UNIQUE INDEX idx_prof_nome_escola ON professor (nome, id_escola);\nÍndice composto — consultas frequentes por ano e semestre em ministra:\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, id_prof, sala\nFROM   ministra\nWHERE  ano = 2024 AND semestre = 1;\n\n\n5 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nSeq Scan on ministra (cost=0.00..123.20 rows=1 width=66) (actual time=0.007..0.539 rows=535 loops=1)\n\n\nFilter: ((ano = 2024) AND (semestre = 1))\n\n\nRows Removed by Filter: 5637\n\n\nPlanning Time: 0.035 ms\n\n\nExecution Time: 0.566 ms\n\n\n\n\n\n\nCriando o índice composto:\n\nCREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);\n\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, id_prof, sala\nFROM   ministra\nWHERE  ano = 2024 AND semestre = 1;\n\n\n4 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nIndex Scan using idx_ministra_ano_sem on ministra (cost=0.28..8.30 rows=1 width=66) (actual time=0.025..0.144 rows=535 loops=1)\n\n\nIndex Cond: ((ano = 2024) AND (semestre = 1))\n\n\nPlanning Time: 0.112 ms\n\n\nExecution Time: 0.172 ms\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nUm índice composto (a, b) também serve para buscas só por a (o prefixo), mas não para buscas só por b. Se precisar filtrar apenas pelo segundo componente, crie um índice separado.\n\n\nUtilizando o índice para consultar apenas para uma coluna do índice composto:\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, id_prof, sala\nFROM   ministra\nWHERE  ano = 2024;\n\n\n7 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nBitmap Heap Scan on ministra (cost=4.52..64.44 rows=31 width=66) (actual time=0.045..0.167 rows=963 loops=1)\n\n\nRecheck Cond: (ano = 2024)\n\n\nHeap Blocks: exact=50\n\n\n-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..4.51 rows=31 width=0) (actual time=0.036..0.037 rows=963 loops=1)\n\n\nIndex Cond: (ano = 2024)\n\n\nPlanning Time: 0.052 ms\n\n\nExecution Time: 0.209 ms\n\n\n\n\n\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, id_prof, sala\nFROM   ministra\nWHERE  semestre = 1;\n\n\n7 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nBitmap Heap Scan on ministra (cost=78.58..138.50 rows=31 width=66) (actual time=0.118..0.546 rows=3388 loops=1)\n\n\nRecheck Cond: (semestre = 1)\n\n\nHeap Blocks: exact=63\n\n\n-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..78.57 rows=31 width=0) (actual time=0.106..0.106 rows=3388 loops=1)\n\n\nIndex Cond: (semestre = 1)\n\n\nPlanning Time: 0.033 ms\n\n\nExecution Time: 0.684 ms\n\n\n\n\n\nVerificando os índices criados:\n\nSELECT tablename AS tabela,\n       indexname AS indice,\n       indexdef  AS definicao\nFROM   pg_indexes\nWHERE  schemaname = 'public'\nORDER BY tablename, indexname;\n\n\n15 records\n\n\n\n\n\n\n\ntabela\nindice\ndefinicao\n\n\n\n\naluno\naluno_pkey\nCREATE UNIQUE INDEX aluno_pkey ON public.aluno USING btree (id_aluno)\n\n\naluno\nidx_aluno_curso\nCREATE INDEX idx_aluno_curso ON public.aluno USING btree (id_curso)\n\n\ncentro\ncentro_pkey\nCREATE UNIQUE INDEX centro_pkey ON public.centro USING btree (id_centro)\n\n\ncentro\ncentro_sigla_key\nCREATE UNIQUE INDEX centro_sigla_key ON public.centro USING btree (sigla)\n\n\ncurso\ncurso_pkey\nCREATE UNIQUE INDEX curso_pkey ON public.curso USING btree (id_curso)\n\n\ncurso\ncurso_sigla_curso_key\nCREATE UNIQUE INDEX curso_sigla_curso_key ON public.curso USING btree (sigla_curso)\n\n\ndisciplina\ndisciplina_pkey\nCREATE UNIQUE INDEX disciplina_pkey ON public.disciplina USING btree (id_disciplina)\n\n\nescola\nescola_pkey\nCREATE UNIQUE INDEX escola_pkey ON public.escola USING btree (id_escola)\n\n\nescola\nescola_sigla_key\nCREATE UNIQUE INDEX escola_sigla_key ON public.escola USING btree (sigla)\n\n\nmatricula_disciplina\nidx_mat_aluno\nCREATE INDEX idx_mat_aluno ON public.matricula_disciplina USING btree (id_aluno)\n\n\nmatricula_disciplina\nmatricula_disciplina_pkey\nCREATE UNIQUE INDEX matricula_disciplina_pkey ON public.matricula_disciplina USING btree (id_disciplina, ano, semestre, turma, id_aluno)\n\n\nministra\nidx_ministra_ano_sem\nCREATE INDEX idx_ministra_ano_sem ON public.ministra USING btree (ano, semestre)\n\n\nministra\nministra_pkey\nCREATE UNIQUE INDEX ministra_pkey ON public.ministra USING btree (id_disciplina, ano, semestre, turma)\n\n\nprereq\nprereq_pkey\nCREATE UNIQUE INDEX prereq_pkey ON public.prereq USING btree (id_disciplina, id_prereq)\n\n\nprofessor\nprofessor_pkey\nCREATE UNIQUE INDEX professor_pkey ON public.professor USING btree (id_prof)",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
@@ -2518,7 +2529,18 @@
     "href": "content/cap04/06-indices.html#por-que-índices-aceleram-consultas",
     "title": "Índices",
     "section": "Por Que Índices Aceleram Consultas",
-    "text": "Por Que Índices Aceleram Consultas\nSem índice, para executar:\nSELECT * FROM aluno WHERE id_curso = 311;\no SGBD lê cada linha da tabela aluno e verifica o predicado — O(n) operações.\nCom um índice B-tree sobre id_curso, o SGBD percorre a árvore em O(log n) para encontrar as entradas com id_curso = 311, depois acessa diretamente as páginas de disco onde essas linhas estão armazenadas.\n\n-- EXPLAIN mostra o plano de execução: com índice vs. sem índice\n-- (Com tabelas pequenas como a da UnDF, o planner pode preferir seq scan mesmo com índice)\nEXPLAIN\nSELECT *\nFROM   aluno\nWHERE  id_curso = 311;\n\n\n2 records\n\n\nQUERY PLAN\n\n\n\n\nSeq Scan on aluno (cost=0.00..16.38 rows=3 width=130)\n\n\nFilter: (id_curso = 311)",
+    "text": "Por Que Índices Aceleram Consultas\nSem índice, para executar:\nSELECT * FROM aluno WHERE id_curso = 311;\no SGBD lê cada linha da tabela — O(n) operações de I/O.\nCom um índice B-tree sobre id_curso, o SGBD percorre a árvore em O(log n) para encontrar as entradas com id_curso = 311, depois acessa diretamente as páginas de disco onde essas linhas estão. Para uma tabela de 1 milhão de linhas, isso reduz de ~1.000.000 leituras para ~20.",
+    "crumbs": [
+      "Capítulo 4: SQL Intermediário",
+      "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap04/06-indices.html#cardinalidade-quando-o-índice-não-ajuda",
+    "href": "content/cap04/06-indices.html#cardinalidade-quando-o-índice-não-ajuda",
+    "title": "Índices",
+    "section": "Cardinalidade: Quando o Índice Não Ajuda",
+    "text": "Cardinalidade: Quando o Índice Não Ajuda\nCardinalidade é o número de valores distintos de uma coluna. Colunas com baixa cardinalidade (como aprovado, que assume apenas 0 ou 1) são más candidatas a índice: quando metade das linhas satisfaz o predicado, o SGBD pode preferir varredura sequencial — percorrer o índice para então acessar metade da tabela pode ser mais lento do que ler tudo sequencialmente, ou o ganho ser marginal.\n\nEXPLAIN ANALYZE\nSELECT COUNT(*) FROM matricula_disciplina WHERE aprovado = 1;\n\n\n6 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nAggregate (cost=1465.05..1465.06 rows=1 width=8) (actual time=8.945..8.945 rows=1 loops=1)\n\n\n-&gt; Seq Scan on matricula_disciplina (cost=0.00..1464.16 rows=355 width=0) (actual time=0.006..6.416 rows=65328 loops=1)\n\n\nFilter: (aprovado = 1)\n\n\nRows Removed by Filter: 5725\n\n\nPlanning Time: 0.047 ms\n\n\nExecution Time: 8.957 ms\n\n\n\n\n\n\nCREATE INDEX idx_mat_aprovado ON matricula_disciplina (aprovado);\n\n\nEXPLAIN ANALYZE\nSELECT COUNT(*) FROM matricula_disciplina WHERE aprovado = 1;\n\n\n8 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nAggregate (cost=539.63..539.64 rows=1 width=8) (actual time=8.671..8.671 rows=1 loops=1)\n\n\n-&gt; Bitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=0) (actual time=1.477..6.143 rows=65328 loops=1)\n\n\nRecheck Cond: (aprovado = 1)\n\n\nHeap Blocks: exact=523\n\n\n-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=1.419..1.419 rows=65328 loops=1)\n\n\nIndex Cond: (aprovado = 1)\n\n\nPlanning Time: 0.099 ms\n\n\nExecution Time: 8.685 ms\n\n\n\n\n\nObserve que o plano provavelmente ignora o índice e usa Seq Scan — o otimizador estimou que percorrer metade da tabela via índice custaria mais do que ler tudo em sequência.",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
@@ -2529,7 +2551,7 @@
     "href": "content/cap04/06-indices.html#tradeoffs-dos-índices",
     "title": "Índices",
     "section": "Tradeoffs dos Índices",
-    "text": "Tradeoffs dos Índices\n\n\n\n\n\n\nAviso\n\n\n\nÍndices não são gratuitos. Cada índice:\n\nOcupa espaço em disco — pode ser significativo em tabelas grandes.\nRetarda inserções, atualizações e exclusões — o SGBD precisa manter o índice sincronizado com os dados.\nNão é sempre utilizado — o otimizador de consultas decide quando usar um índice com base em estatísticas da tabela.\n\nBoas candidatas a índice: colunas usadas frequentemente em WHERE, JOIN ON, ORDER BY e que têm alta cardinalidade (muitos valores distintos).\nMás candidatas: colunas booleanas ou com poucos valores distintos (como aprovado IN (0, 1)) — o índice raramente compensa o custo.",
+    "text": "Tradeoffs dos Índices\n\n\n\n\n\n\nAviso\n\n\n\nÍndices não são gratuitos. Cada índice:\n\nOcupa espaço em disco — pode ser significativo em tabelas grandes.\nRetarda inserções, atualizações e exclusões — o SGBD precisa manter o índice sincronizado com os dados.\nNão é sempre utilizado — o otimizador decide quando usar um índice com base em estatísticas da tabela.\n\nBoas candidatas a índice: colunas usadas frequentemente em WHERE, JOIN ON, ORDER BY com alta cardinalidade (muitos valores distintos).\nMás candidatas: colunas booleanas ou com poucos valores distintos (como aprovado).",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
@@ -2540,7 +2562,7 @@
     "href": "content/cap04/06-indices.html#índice-parcial",
     "title": "Índices",
     "section": "Índice Parcial",
-    "text": "Índice Parcial\nO PostgreSQL permite criar índices parciais — que indexam apenas as linhas que satisfazem um predicado. São menores e mais eficientes que índices completos quando o caso de uso foco em um subconjunto:\n-- Índice apenas para matrículas reprovadas (aprovado = 0)\n-- Útil se consultas de reprovados são frequentes\nCREATE INDEX idx_reprovados ON matricula_disciplina (id_aluno)\nWHERE aprovado = 0;",
+    "text": "Índice Parcial\nO PostgreSQL permite criar índices parciais — que indexam apenas as linhas que satisfazem um predicado. São menores e mais eficientes quando o caso de uso foca em um subconjunto:\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, nota\nFROM   matricula_disciplina\nWHERE  id_aluno = 2023111001\n  AND  aprovado = 0;\n\n\n9 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nBitmap Heap Scan on matricula_disciplina (cost=14.16..21.84 rows=2 width=16) (actual time=0.241..0.242 rows=0 loops=1)\n\n\nRecheck Cond: ((aprovado = 0) AND (id_aluno = 2023111001))\n\n\n-&gt; BitmapAnd (cost=14.16..14.16 rows=2 width=0) (actual time=0.239..0.240 rows=0 loops=1)\n\n\n-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=0.221..0.221 rows=5725 loops=1)\n\n\nIndex Cond: (aprovado = 0)\n\n\n-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.004..0.004 rows=5 loops=1)\n\n\nIndex Cond: (id_aluno = 2023111001)\n\n\nPlanning Time: 0.044 ms\n\n\nExecution Time: 0.254 ms\n\n\n\n\n\n\n-- Índice apenas para matrículas reprovadas (aprovado = 0)\nCREATE INDEX idx_reprovados ON matricula_disciplina (id_aluno)\nWHERE aprovado = 0;\n\n\nEXPLAIN ANALYZE\nSELECT id_disciplina, nota\nFROM   matricula_disciplina\nWHERE  id_aluno = 2023111001\n  AND  aprovado = 0;\n\n\n6 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nBitmap Heap Scan on matricula_disciplina (cost=4.30..11.97 rows=2 width=16) (actual time=0.022..0.022 rows=0 loops=1)\n\n\nRecheck Cond: ((id_aluno = 2023111001) AND (aprovado = 0))\n\n\n-&gt; Bitmap Index Scan on idx_reprovados (cost=0.00..4.30 rows=2 width=0) (actual time=0.021..0.021 rows=0 loops=1)\n\n\nIndex Cond: (id_aluno = 2023111001)\n\n\nPlanning Time: 0.125 ms\n\n\nExecution Time: 0.032 ms\n\n\n\n\n\nO índice parcial é menor que um índice completo sobre (id_aluno) porque armazena entradas apenas das linhas reprovadas — tipicamente uma fração da tabela.",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
@@ -2551,7 +2573,7 @@
     "href": "content/cap04/06-indices.html#para-praticar",
     "title": "Índices",
     "section": "Para Praticar",
-    "text": "Para Praticar\n\n-- Criar índice na coluna nome de aluno (busca por nome é comum)\nCREATE INDEX IF NOT EXISTS idx_aluno_nome ON aluno (nome);\n\n\n-- Listar índices criados explicitamente (excluindo os de PK e FK automáticos)\nSELECT indexname, tablename, indexdef\nFROM   pg_indexes\nWHERE  schemaname = 'public'\n  AND  indexname NOT LIKE 'pg_%'\n  AND  indexname NOT LIKE '%_pkey'\nORDER BY tablename, indexname;\n\n\n7 records\n\n\n\n\n\n\n\nindexname\ntablename\nindexdef\n\n\n\n\nidx_aluno_nome\naluno\nCREATE INDEX idx_aluno_nome ON public.aluno USING btree (nome)\n\n\ncentro_sigla_key\ncentro\nCREATE UNIQUE INDEX centro_sigla_key ON public.centro USING btree (sigla)\n\n\ncurso_sigla_curso_key\ncurso\nCREATE UNIQUE INDEX curso_sigla_curso_key ON public.curso USING btree (sigla_curso)\n\n\nescola_sigla_key\nescola\nCREATE UNIQUE INDEX escola_sigla_key ON public.escola USING btree (sigla)\n\n\nevento_academico_nome_data_inicio_key\nevento_academico\nCREATE UNIQUE INDEX evento_academico_nome_data_inicio_key ON public.evento_academico USING btree (nome, data_inicio)\n\n\nreserva_sala_id_sala_id_prof_data_reserva_key\nreserva_sala\nCREATE UNIQUE INDEX reserva_sala_id_sala_id_prof_data_reserva_key ON public.reserva_sala USING btree (id_sala, id_prof, data_reserva)\n\n\nsala_codigo_key\nsala\nCREATE UNIQUE INDEX sala_codigo_key ON public.sala USING btree (codigo)\n\n\n\n\n\n\n-- EXPLAIN ANALYZE: tempo real de execução com e sem uso de índice\n-- (resultado varia conforme o tamanho dos dados e as estatísticas do planner)\nEXPLAIN ANALYZE\nSELECT a.nome, c.nome_curso\nFROM   aluno a\nJOIN   curso c USING (id_curso)\nWHERE  a.nome LIKE 'A%';\n\n\n8 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nNested Loop (cost=0.14..9.46 rows=1 width=336) (actual time=0.010..0.011 rows=1 loops=1)\n\n\n-&gt; Seq Scan on aluno a (cost=0.00..1.23 rows=1 width=122) (actual time=0.005..0.006 rows=1 loops=1)\n\n\nFilter: ((nome)::text  ‘A%’::text)\n\n\nRows Removed by Filter: 17\n\n\n-&gt; Index Scan using curso_pkey on curso c (cost=0.14..8.16 rows=1 width=222) (actual time=0.003..0.003 rows=1 loops=1)\n\n\nIndex Cond: (id_curso = a.id_curso)\n\n\nPlanning Time: 0.277 ms\n\n\nExecution Time: 0.021 ms\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nCom o banco da UnDF (18 alunos, 7 professores), o planner PostgreSQL tende a usar sequential scan porque as tabelas são pequenas demais para justificar o overhead de acessar um índice. Em produção, com milhares ou milhões de linhas, índices fazem diferença substancial.",
+    "text": "Para Praticar\n\n-- Crie um índice no nome do aluno\nCREATE INDEX IF NOT EXISTS idx_aluno_nome ON aluno (nome);\n\n\n-- Busca por prefixo de nome: o índice é usado?\nEXPLAIN ANALYZE\nSELECT id_aluno, nome, id_curso\nFROM   aluno\nWHERE  nome LIKE 'A%';\n\n\n5 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nSeq Scan on aluno (cost=0.00..70.00 rows=14 width=126) (actual time=0.011..0.188 rows=136 loops=1)\n\n\nFilter: ((nome)::text  ‘A%’::text)\n\n\nRows Removed by Filter: 2584\n\n\nPlanning Time: 0.117 ms\n\n\nExecution Time: 0.198 ms\n\n\n\n\n\n\n-- Busca por intervalo de nota: o índice é usado?\nEXPLAIN ANALYZE\nSELECT id_aluno, nota\nFROM   matricula_disciplina\nWHERE  nota BETWEEN 9.0 AND 10.0;\n\n\n5 records\n\n\n\n\n\nQUERY PLAN\n\n\n\n\nSeq Scan on matricula_disciplina (cost=0.00..1641.80 rows=355 width=16) (actual time=0.008..7.755 rows=13511 loops=1)\n\n\nFilter: ((nota &gt;= 9.0) AND (nota &lt;= 10.0))\n\n\nRows Removed by Filter: 57542\n\n\nPlanning Time: 0.031 ms\n\n\nExecution Time: 8.206 ms\n\n\n\n\n\n\n-- Liste todos os índices criados explicitamente (sem PKs automáticas)\nSELECT indexname, tablename, indexdef\nFROM   pg_indexes\nWHERE  schemaname = 'public'\n  AND  indexname NOT LIKE '%_pkey'\nORDER BY tablename, indexname;\n\n\n9 records\n\n\n\n\n\n\n\nindexname\ntablename\nindexdef\n\n\n\n\nidx_aluno_curso\naluno\nCREATE INDEX idx_aluno_curso ON public.aluno USING btree (id_curso)\n\n\nidx_aluno_nome\naluno\nCREATE INDEX idx_aluno_nome ON public.aluno USING btree (nome)\n\n\ncentro_sigla_key\ncentro\nCREATE UNIQUE INDEX centro_sigla_key ON public.centro USING btree (sigla)\n\n\ncurso_sigla_curso_key\ncurso\nCREATE UNIQUE INDEX curso_sigla_curso_key ON public.curso USING btree (sigla_curso)\n\n\nescola_sigla_key\nescola\nCREATE UNIQUE INDEX escola_sigla_key ON public.escola USING btree (sigla)\n\n\nidx_mat_aluno\nmatricula_disciplina\nCREATE INDEX idx_mat_aluno ON public.matricula_disciplina USING btree (id_aluno)\n\n\nidx_mat_aprovado\nmatricula_disciplina\nCREATE INDEX idx_mat_aprovado ON public.matricula_disciplina USING btree (aprovado)\n\n\nidx_reprovados\nmatricula_disciplina\nCREATE INDEX idx_reprovados ON public.matricula_disciplina USING btree (id_aluno) WHERE (aprovado = 0)\n\n\nidx_ministra_ano_sem\nministra\nCREATE INDEX idx_ministra_ano_sem ON public.ministra USING btree (ano, semestre)",
     "crumbs": [
       "Capítulo 4: SQL Intermediário",
       "<span class='chapter-number'>47</span>  <span class='chapter-title'>Índices</span>"
@@ -2712,432 +2734,432 @@
     ]
   },
   {
-    "objectID": "content/cap05/01-acesso-python.html",
-    "href": "content/cap05/01-acesso-python.html",
-    "title": "Acesso ao Banco via Python",
-    "section": "",
-    "text": "Instalação\nO SQL não é uma linguagem de programação completa: não suporta laços, entrada de usuário, chamadas de rede ou lógica de apresentação. Para construir uma aplicação real, é preciso combinar SQL com uma linguagem hospedeira — aqui, Python.\nEm Python, a biblioteca padrão para PostgreSQL é o psycopg2, que implementa a especificação DB-API 2.0 (PEP 249) — a mesma interface usada por sqlite3, pymysql e outras.",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#instalação",
-    "href": "content/cap05/01-acesso-python.html#instalação",
-    "title": "Acesso ao Banco via Python",
-    "section": "",
-    "text": "pip install psycopg2-binary",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#conectando-ao-postgresql",
-    "href": "content/cap05/01-acesso-python.html#conectando-ao-postgresql",
-    "title": "Acesso ao Banco via Python",
-    "section": "Conectando ao PostgreSQL",
-    "text": "Conectando ao PostgreSQL\nimport psycopg2\nimport os\n\nconn = psycopg2.connect(\n    dbname   = \"curso\",\n    host     = \"localhost\",\n    port     = 5432,\n    user     = \"postgres\",\n    password = os.getenv(\"POSTGRES_PASSWORD\", \"postgres\")\n)\n\n\n\n\n\n\n\n\nObjeto\nPapel\n\n\n\n\nconn\nRepresenta a sessão com o banco; mantém estado de transação\n\n\ncur = conn.cursor()\nCanal pelo qual se enviam SQL e se recebem resultados",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#executando-consultas-select",
-    "href": "content/cap05/01-acesso-python.html#executando-consultas-select",
-    "title": "Acesso ao Banco via Python",
-    "section": "Executando Consultas SELECT",
-    "text": "Executando Consultas SELECT\n\ncur = conn.cursor()\ncur.execute(\"SELECT nome, salario FROM professor ORDER BY salario DESC\")\n\nfor nome, salario in cur.fetchall():\n    print(f\"{nome}: R$ {salario:.2f}\")\n\ncur.close()\n\nHelena Carvalho: R$ 6700.00\nCarla Pinto: R$ 6600.00\nBruno Teixeira: R$ 6500.00\nFelipe Araujo: R$ 6400.00\nGustavo Costa: R$ 3300.00\nEduarda Souza: R$ 3200.00\nIgor Melo: R$ 3100.00\n\n\nAlternativas de fetch:\n\n\n\nMétodo\nRetorna\n\n\n\n\nfetchone()\nPróxima linha (ou None)\n\n\nfetchmany(n)\nAté n linhas\n\n\nfetchall()\nTodas as linhas restantes",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#sql-injection-o-perigo-das-strings-concatenadas",
-    "href": "content/cap05/01-acesso-python.html#sql-injection-o-perigo-das-strings-concatenadas",
-    "title": "Acesso ao Banco via Python",
-    "section": "SQL Injection — O Perigo das Strings Concatenadas",
-    "text": "SQL Injection — O Perigo das Strings Concatenadas\n\n\n\n\n\n\nAviso\n\n\n\nSQL Injection é uma das vulnerabilidades mais críticas (OWASP Top 10). Ocorre quando dados do usuário são inseridos diretamente em uma string SQL — permitindo que um atacante altere a estrutura da consulta.\n\n\n\nExemplo inseguro\nO código abaixo concatena o input do usuário diretamente na string SQL:\n# VULNERÁVEL — nunca faça isso\nescola_id = input(\"ID da escola: \")\n\nsql = \"SELECT nome FROM professor WHERE id_escola = \" + escola_id\ncur.execute(sql)\nQuando o usuário digita 31 OR 1=1 --, a variável sql fica:\nSELECT nome FROM professor WHERE id_escola = 31 OR 1=1 --\nO fragmento OR 1=1 é sempre verdadeiro — o filtro é completamente ignorado. Executando exatamente essa query no banco:\n\ncur = conn.cursor()\n\n# Simulando o código vulnerável com input malicioso\nescola_id_malicioso = \"31 OR 1=1 --\"\nsql_injetado = \"SELECT nome FROM professor WHERE id_escola = \" + escola_id_malicioso\n\ncur.execute(sql_injetado)\nrows = cur.fetchall()\n\nprint(f\"Professores retornados com input '{escola_id_malicioso}':\")\nprint(f\"  → {len(rows)} linha(s) — deveria retornar apenas os da escola 31\\n\")\nfor (nome,) in rows:\n    print(f\"  {nome}\")\n\ncur.close()\n\nProfessores retornados com input '31 OR 1=1 --':\n  → 7 linha(s) — deveria retornar apenas os da escola 31\n\n  Eduarda Souza\n  Felipe Araujo\n  Gustavo Costa\n  Helena Carvalho\n  Igor Melo\n  Bruno Teixeira\n  Carla Pinto\n\n\nTodos os professores foram retornados — independente da escola pedida. Além do OR 1=1, um atacante pode usar UNION SELECT para exfiltrar dados de outras tabelas ou ; DROP TABLE para destruir dados.\n\n\nSolução: Consultas Parametrizadas\nCom consultas parametrizadas, o valor do usuário é enviado separado da query — nunca como parte do texto SQL:\n# SEGURO — use sempre parâmetros\nescola_id = input(\"ID da escola: \")\n\ncur.execute(\n    \"SELECT nome FROM professor WHERE id_escola = %s\",\n    (escola_id,)   # psycopg2 envia como parâmetro $1, nunca concatena no SQL\n)\nQuando escola_id = \"31 OR 1=1 --\", psycopg2 envia ao PostgreSQL:\n\nQuery template: SELECT nome FROM professor WHERE id_escola = $1\nParâmetro $1: a string literal 31 OR 1=1 --\n\nO PostgreSQL recebe um texto e tenta compará-lo com a coluna id_escola (tipo INTEGER). Como \"31 OR 1=1 --\" não é um inteiro válido, o banco rejeita e lança um erro — que o Python captura normalmente:\n\nimport psycopg2.errors\n\ncur = conn.cursor()\nescola_id_malicioso = \"31 OR 1=1 --\"\n\ntry:\n    cur.execute(\n        \"SELECT nome FROM professor WHERE id_escola = %s\",\n        (escola_id_malicioso,)\n    )\n    rows = cur.fetchall()\n    print(f\"{len(rows)} linha(s) retornada(s)\")\nexcept psycopg2.errors.InvalidTextRepresentation as e:\n    conn.rollback()  # limpa o estado de erro da conexão\n    print(\"PostgreSQL bloqueou a operação:\")\n    print(f\"  {e.diag.message_primary}\")\n    print(f\"\\n  → O input foi tratado como DADO, não como SQL.\")\n    print(f\"  → A estrutura da query permanece intacta.\")\n\ncur.close()\n\nPostgreSQL bloqueou a operação:\n  invalid input syntax for type integer: \"31 OR 1=1 --\"\n\n  → O input foi tratado como DADO, não como SQL.\n  → A estrutura da query permanece intacta.\n\n\nMesmo que o atacante forneça um input que seja um inteiro válido (como \"999\"), a query simplesmente retorna 0 linhas — nenhum SQL extra é executado:\n\ncur = conn.cursor()\nescola_id_invalido = \"999\"\n\ncur.execute(\n    \"SELECT nome FROM professor WHERE id_escola = %s\",\n    (int(escola_id_invalido),)\n)\nrows = cur.fetchall()\nprint(f\"Escola {escola_id_invalido}: {len(rows)} professor(es) — escola inexistente, 0 linhas.\")\ncur.close()\n\nEscola 999: 0 professor(es) — escola inexistente, 0 linhas.\n\n\n\nEm psycopg2, o marcador de posição é %s para qualquer tipo. A biblioteca envia query e parâmetros separadamente ao servidor via protocolo wire — o SQL enviado nunca contém os dados do usuário concatenados como texto.\nCompare com JDBC (Java), onde o marcador é ? em PreparedStatement — o mesmo princípio.",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#operações-dml-insert-update-delete",
-    "href": "content/cap05/01-acesso-python.html#operações-dml-insert-update-delete",
-    "title": "Acesso ao Banco via Python",
-    "section": "Operações DML (INSERT, UPDATE, DELETE)",
-    "text": "Operações DML (INSERT, UPDATE, DELETE)\ncur = conn.cursor()\n\n# INSERT com parâmetros\ncur.execute(\n    \"\"\"\n    INSERT INTO evento_academico\n        (nome, tipo, id_escola, data_inicio, data_fim, hora_inicio, hora_fim)\n    VALUES (%s, %s, %s, %s, %s, %s, %s)\n    \"\"\",\n    (\"Hackathon UnDF\", \"Workshop\", 31, \"2026-09-15\", \"2026-09-16\", \"08:00\", \"22:00\")\n)\n\n# UPDATE\ncur.execute(\n    \"UPDATE professor SET salario = %s WHERE id_prof = %s\",\n    (6900.00, 31400002)\n)\nprint(f\"Linhas afetadas: {cur.rowcount}\")\n\nconn.commit()\ncur.close()",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#controle-de-transações",
-    "href": "content/cap05/01-acesso-python.html#controle-de-transações",
-    "title": "Acesso ao Banco via Python",
-    "section": "Controle de Transações",
-    "text": "Controle de Transações\nPor padrão, psycopg2 inicia uma transação implicitamente na primeira instrução. Para confirmar ou desfazer:\ncur = conn.cursor()\ntry:\n    # As duas instruções são atômicas: confirmam juntas ou nenhuma confirma\n    cur.execute(\"UPDATE professor SET salario = salario * 1.10 WHERE id_escola = 31\")\n    cur.execute(\"UPDATE professor SET salario = salario * 0.95 WHERE id_escola = 21\")\n    conn.commit()\n    print(\"Transação confirmada.\")\nexcept Exception as e:\n    conn.rollback()\n    print(f\"Erro — rollback realizado: {e}\")\nfinally:\n    cur.close()\nPara operações de leitura simples onde transação explícita não é necessária:\nconn.autocommit = True   # cada instrução é confirmada imediatamente",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#padrão-completo-com-context-manager",
-    "href": "content/cap05/01-acesso-python.html#padrão-completo-com-context-manager",
-    "title": "Acesso ao Banco via Python",
-    "section": "Padrão Completo com Context Manager",
-    "text": "Padrão Completo com Context Manager\nimport psycopg2, os\nfrom contextlib import closing\n\ndsn = dict(dbname=\"curso\", host=\"localhost\", port=5432,\n           user=\"postgres\", password=os.getenv(\"POSTGRES_PASSWORD\",\"postgres\"))\n\nwith psycopg2.connect(**dsn) as conn:\n    with closing(conn.cursor()) as cur:\n        cur.execute(\"\"\"\n            SELECT e.sigla, COUNT(p.id_prof) AS professores\n            FROM   escola e\n            LEFT JOIN professor p ON p.id_escola = e.id_escola\n            GROUP BY e.sigla\n            ORDER BY professores DESC\n        \"\"\")\n        for sigla, total in cur.fetchall():\n            print(f\"{sigla}: {total} professor(es)\")\n    conn.commit()\n\n\n\n\n\n\nNota\n\n\n\nO with psycopg2.connect(...) chama conn.commit() ao sair sem exceção, ou conn.rollback() se uma exceção ocorrer.",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/01-acesso-python.html#para-praticar",
-    "href": "content/cap05/01-acesso-python.html#para-praticar",
-    "title": "Acesso ao Banco via Python",
-    "section": "Para Praticar",
-    "text": "Para Praticar\nOs trechos abaixo são exercícios para executar localmente (requerem Python + psycopg2):\n# Exercício 1: listar alunos de um curso específico\nimport psycopg2, os\n\ndef alunos_do_curso(id_curso: int):\n    conn = psycopg2.connect(\n        dbname=\"curso\", host=\"localhost\", port=5432,\n        user=\"postgres\", password=os.getenv(\"POSTGRES_PASSWORD\",\"postgres\")\n    )\n    cur = conn.cursor()\n    cur.execute(\"\"\"\n        SELECT a.nome, a.ano_ingresso\n        FROM   aluno a\n        WHERE  a.id_curso = %s\n        ORDER BY a.nome\n    \"\"\", (id_curso,))\n    for nome, ano in cur.fetchall():\n        print(f\"  {nome} ({ano})\")\n    cur.close()\n    conn.close()\n\nalunos_do_curso(311)   # Engenharia de Software\n# Exercício 2: matrícula segura — trata violações de FK e UNIQUE\ndef matricular(conn, id_aluno, id_disciplina, ano, semestre, turma):\n    cur = conn.cursor()\n    try:\n        cur.execute(\"\"\"\n            INSERT INTO matricula_disciplina\n                (id_disciplina, ano, semestre, turma, id_aluno)\n            VALUES (%s, %s, %s, %s, %s)\n        \"\"\", (id_disciplina, ano, semestre, turma, id_aluno))\n        conn.commit()\n        print(\"Matrícula realizada.\")\n    except psycopg2.errors.ForeignKeyViolation:\n        conn.rollback()\n        print(\"Turma não encontrada — matrícula cancelada.\")\n    except psycopg2.errors.UniqueViolation:\n        conn.rollback()\n        print(\"Aluno já matriculado nesta turma.\")\n    finally:\n        cur.close()",
-    "crumbs": [
-      "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
-    ]
-  },
-  {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html",
-    "href": "content/cap05/02-funcoes-procedimentos.html",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html",
+    "href": "content/cap05/01-funcoes-procedimentos.html",
     "title": "Funções e Procedimentos",
     "section": "",
     "text": "Funções SQL Simples\nFunções e procedimentos permitem armazenar lógica de negócio diretamente no banco de dados, onde ela pode ser invocada por qualquer aplicação conectada — independente de linguagem ou plataforma.\nA forma mais direta: o corpo é uma única expressão SQL.\nCREATE OR REPLACE FUNCTION total_alunos_curso(p_id_curso INT)\nRETURNS BIGINT AS $$\n    SELECT COUNT(*) FROM aluno WHERE id_curso = p_id_curso;\n$$ LANGUAGE sql;\n-- Usando a função em uma consulta\nSELECT nome_curso,\n       total_alunos_curso(id_curso) AS total_alunos\nFROM   curso\nORDER BY total_alunos DESC;\n\n\n3 records\n\n\nnome_curso\ntotal_alunos\n\n\n\n\nEngenharia de Software\n6\n\n\nCiências Econômicas\n6\n\n\nPedagogia\n6\nFunções SQL são ideais quando o corpo cabe em uma única instrução. Para lógica mais complexa, usa-se PL/pgSQL.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html#funções-plpgsql",
-    "href": "content/cap05/02-funcoes-procedimentos.html#funções-plpgsql",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html#funções-plpgsql",
+    "href": "content/cap05/01-funcoes-procedimentos.html#funções-plpgsql",
     "title": "Funções e Procedimentos",
     "section": "Funções PL/pgSQL",
     "text": "Funções PL/pgSQL\nPL/pgSQL é a linguagem procedural nativa do PostgreSQL. Suporta variáveis, condicionais, laços e tratamento de exceções.\n\nCREATE OR REPLACE FUNCTION classificar_nota(p_nota NUMERIC)\nRETURNS TEXT AS $$\nBEGIN\n    IF    p_nota IS NULL     THEN RETURN 'Em curso';\n    ELSIF p_nota &gt;= 9.0      THEN RETURN 'SS — Superior';\n    ELSIF p_nota &gt;= 7.0      THEN RETURN 'MS — Médio Superior';\n    ELSIF p_nota &gt;= 6.0      THEN RETURN 'MM — Médio';\n    ELSIF p_nota &gt;= 4.0      THEN RETURN 'MI — Médio Inferior';\n    ELSE                          RETURN 'II — Inferior';\n    END IF;\nEND;\n$$ LANGUAGE plpgsql;\n\n\n-- Classificar notas dos alunos de ENS\nSELECT a.nome,\n       d.nome_disciplina,\n       md.nota,\n       classificar_nota(md.nota) AS conceito\nFROM   matricula_disciplina md\nJOIN   aluno      a USING (id_aluno)\nJOIN   disciplina d USING (id_disciplina)\nWHERE  d.id_curso = 311\nORDER BY a.nome, d.semestre;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\nnome\nnome_disciplina\nnota\nconceito\n\n\n\n\nDiego Correia\nProjeto Aplicado 2 - site WEB\n6.8\nMM — Médio\n\n\nDiego Correia\nBases da Eng. de Software 2\n6.1\nMM — Médio\n\n\nIsabela Freitas\nBases da Eng. de Software 2\n4.3\nMI — Médio Inferior\n\n\nIsabela Freitas\nProjeto Aplicado 2 - site WEB\n7.2\nMS — Médio Superior\n\n\nIsabela Freitas\nBases da Eng. de Software 4\n7.7\nMS — Médio Superior\n\n\nIsabela Freitas\nProjeto Aplicado 4 - blockchain\n0.4\nII — Inferior\n\n\nJuliana Nunes\nProjeto Aplicado 2 - site WEB\n6.1\nMM — Médio\n\n\nJuliana Nunes\nBases da Eng. de Software 2\n1.9\nII — Inferior\n\n\nLarissa Araújo\nProjeto Aplicado 2 - site WEB\n6.3\nMM — Médio\n\n\nLarissa Araújo\nBases da Eng. de Software 2\n6.1\nMM — Médio\n\n\n\n\n\n\nEstruturas de Controle\nPL/pgSQL suporta as estruturas usuais de linguagens procedurais:\n-- IF / ELSIF / ELSE\nIF condicao THEN\n    ...\nELSIF outra_condicao THEN\n    ...\nELSE\n    ...\nEND IF;\n\n-- WHILE\nWHILE condicao LOOP\n    ...\nEND LOOP;\n\n-- FOR sobre resultado de consulta\nFOR registro IN SELECT ... FROM ... LOOP\n    -- registro.coluna\nEND LOOP;\n\n\nExemplo: Função com Laço FOR\n\nCREATE OR REPLACE FUNCTION media_escola(p_id_escola INT)\nRETURNS NUMERIC AS $$\nDECLARE\n    v_total   NUMERIC := 0;\n    v_count   INT     := 0;\n    v_salario NUMERIC;\nBEGIN\n    FOR v_salario IN\n        SELECT salario FROM professor WHERE id_escola = p_id_escola\n    LOOP\n        v_total := v_total + v_salario;\n        v_count := v_count + 1;\n    END LOOP;\n\n    IF v_count = 0 THEN RETURN NULL; END IF;\n    RETURN ROUND(v_total / v_count, 2);\nEND;\n$$ LANGUAGE plpgsql;\n\n\n-- Média salarial calculada via função vs. AVG nativo\nSELECT e.sigla,\n       media_escola(e.id_escola)          AS media_fn,\n       ROUND(AVG(p.salario), 2)           AS media_avg\nFROM   escola e\nJOIN   professor p ON p.id_escola = e.id_escola\nGROUP BY e.id_escola, e.sigla\nORDER BY e.sigla;\n\n\n3 records\n\n\nsigla\nmedia_fn\nmedia_avg\n\n\n\n\nEEMA\n4800.00\n4800.00\n\n\nESETI\n4366.67\n4366.67\n\n\nESG\n6550.00\n6550.00",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html#funções-que-retornam-tabelas",
-    "href": "content/cap05/02-funcoes-procedimentos.html#funções-que-retornam-tabelas",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html#funções-que-retornam-tabelas",
+    "href": "content/cap05/01-funcoes-procedimentos.html#funções-que-retornam-tabelas",
     "title": "Funções e Procedimentos",
     "section": "Funções que Retornam Tabelas",
     "text": "Funções que Retornam Tabelas\nO padrão SQL (e o PostgreSQL) permite que funções retornem um conjunto de linhas — chamadas de table functions.\n\nCREATE OR REPLACE FUNCTION professores_da_escola(p_id_escola INT)\nRETURNS TABLE(nome VARCHAR, ch_semanal INT, salario NUMERIC) AS $$\n    SELECT nome, ch_semanal, salario\n    FROM   professor\n    WHERE  id_escola = p_id_escola\n    ORDER BY salario DESC;\n$$ LANGUAGE sql;\n\n\n-- Professores da ESETI (escola 31) via table function\nSELECT * FROM professores_da_escola(31);\n\n\n3 records\n\n\nnome\nch_semanal\nsalario\n\n\n\n\nHelena Carvalho\n40\n6700\n\n\nGustavo Costa\n20\n3300\n\n\nIgor Melo\n20\n3100\n\n\n\n\n\nA função pode ser usada diretamente na cláusula FROM, como uma tabela.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html#procedimentos-armazenados",
-    "href": "content/cap05/02-funcoes-procedimentos.html#procedimentos-armazenados",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html#procedimentos-armazenados",
+    "href": "content/cap05/01-funcoes-procedimentos.html#procedimentos-armazenados",
     "title": "Funções e Procedimentos",
     "section": "Procedimentos Armazenados",
     "text": "Procedimentos Armazenados\nPROCEDURE difere de FUNCTION por não retornar um valor e por poder controlar transações internamente.\n\nCREATE OR REPLACE PROCEDURE reajustar_salarios(p_id_escola INT, p_percentual NUMERIC)\nLANGUAGE plpgsql AS $$\nBEGIN\n    UPDATE professor\n    SET    salario = ROUND(salario * (1 + p_percentual / 100), 2)\n    WHERE  id_escola = p_id_escola;\n\n    RAISE NOTICE 'Reajuste de % %% aplicado a % professor(es) da escola %',\n        p_percentual,\n        (SELECT COUNT(*) FROM professor WHERE id_escola = p_id_escola),\n        p_id_escola;\nEND;\n$$;\n\n\n-- Salários antes do reajuste\nSELECT nome, salario FROM professor WHERE id_escola = 11 ORDER BY nome;\n\n\n2 records\n\n\nnome\nsalario\n\n\n\n\nBruno Teixeira\n6500\n\n\nCarla Pinto\n6600\n\n\n\n\n\n\n-- Chamar o procedimento (5% de reajuste para ESG)\nCALL reajustar_salarios(11, 5);\n\n\n-- Salários após o reajuste\nSELECT nome, salario FROM professor WHERE id_escola = 11 ORDER BY nome;\n\n\n2 records\n\n\nnome\nsalario\n\n\n\n\nBruno Teixeira\n6825\n\n\nCarla Pinto\n6930\n\n\n\n\n\n\n-- Desfazer o reajuste para não alterar os dados base do livro\nCALL reajustar_salarios(11, -100.0 * 5 / 105);",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html#listando-funções-criadas",
-    "href": "content/cap05/02-funcoes-procedimentos.html#listando-funções-criadas",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html#listando-funções-criadas",
+    "href": "content/cap05/01-funcoes-procedimentos.html#listando-funções-criadas",
     "title": "Funções e Procedimentos",
     "section": "Listando Funções Criadas",
     "text": "Listando Funções Criadas\n\n-- Funções e procedimentos definidos no schema public\nSELECT routine_name        AS nome,\n       routine_type        AS tipo,\n       data_type           AS retorno\nFROM   information_schema.routines\nWHERE  routine_schema = 'public'\nORDER BY routine_type, routine_name;\n\n\n5 records\n\n\nnome\ntipo\nretorno\n\n\n\n\nclassificar_nota\nFUNCTION\ntext\n\n\nmedia_escola\nFUNCTION\nnumeric\n\n\nprofessores_da_escola\nFUNCTION\nrecord\n\n\ntotal_alunos_curso\nFUNCTION\nbigint\n\n\nreajustar_salarios\nPROCEDURE\nNA",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/02-funcoes-procedimentos.html#para-praticar",
-    "href": "content/cap05/02-funcoes-procedimentos.html#para-praticar",
+    "objectID": "content/cap05/01-funcoes-procedimentos.html#para-praticar",
+    "href": "content/cap05/01-funcoes-procedimentos.html#para-praticar",
     "title": "Funções e Procedimentos",
     "section": "Para Praticar",
     "text": "Para Praticar\n\n-- Chamar classificar_nota para ver a distribuição de conceitos em ENS\nSELECT classificar_nota(nota)   AS conceito,\n       COUNT(*)                  AS quantidade\nFROM   matricula_disciplina\nJOIN   disciplina USING (id_disciplina)\nWHERE  id_curso = 311\n  AND  nota IS NOT NULL\nGROUP BY conceito\nORDER BY quantidade DESC;\n\n\n5 records\n\n\nconceito\nquantidade\n\n\n\n\nMS — Médio Superior\n7\n\n\nMM — Médio\n6\n\n\nII — Inferior\n3\n\n\nMI — Médio Inferior\n2\n\n\nSS — Superior\n2\n\n\n\n\n\n\n-- Total de alunos por escola usando a função + JOIN\nSELECT e.sigla,\n       SUM(total_alunos_curso(c.id_curso)) AS total_alunos\nFROM   escola e\nJOIN   curso  c ON c.id_escola = e.id_escola\nGROUP BY e.id_escola, e.sigla\nORDER BY total_alunos DESC;\n\n\n3 records\n\n\nsigla\ntotal_alunos\n\n\n\n\nESG\n6\n\n\nEEMA\n6\n\n\nESETI\n6",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
+      "<span class='chapter-number'>51</span>  <span class='chapter-title'>Funções e Procedimentos</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html",
-    "href": "content/cap05/03-triggers.html",
+    "objectID": "content/cap05/02-triggers.html",
+    "href": "content/cap05/02-triggers.html",
     "title": "Triggers",
     "section": "",
     "text": "Estrutura de um Trigger no PostgreSQL\nTriggers foram introduzidos no padrão SQL:1999 e são amplamente suportados — embora a sintaxe varie entre SGBDs. Os exemplos aqui usam a sintaxe do PostgreSQL.\nNo PostgreSQL, um trigger é sempre associado a uma função de trigger (que retorna TRIGGER):",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#estrutura-de-um-trigger-no-postgresql",
-    "href": "content/cap05/03-triggers.html#estrutura-de-um-trigger-no-postgresql",
+    "objectID": "content/cap05/02-triggers.html#estrutura-de-um-trigger-no-postgresql",
+    "href": "content/cap05/02-triggers.html#estrutura-de-um-trigger-no-postgresql",
     "title": "Triggers",
     "section": "",
     "text": "-- 1. Cria a função que implementa a ação\nCREATE OR REPLACE FUNCTION nome_funcao()\nRETURNS TRIGGER AS $$\nBEGIN\n    -- lógica usando NEW e/ou OLD\n    RETURN NEW;   -- para BEFORE; AFTER pode retornar NULL\nEND;\n$$ LANGUAGE plpgsql;\n\n-- 2. Associa a função ao evento na tabela\nCREATE TRIGGER nome_trigger\n{ BEFORE | AFTER } { INSERT | UPDATE | DELETE } [OF coluna, ...]\nON tabela\nFOR EACH { ROW | STATEMENT }\nEXECUTE FUNCTION nome_funcao();\n\n\n\n\nVariável especial\nDisponível em\nConteúdo\n\n\n\n\nNEW\nINSERT, UPDATE\nLinha nova (após a operação)\n\n\nOLD\nUPDATE, DELETE\nLinha antiga (antes da operação)\n\n\n\nEm triggers BEFORE, alterar NEW antes de RETURN NEW modifica o valor que será gravado.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#before-vs.-after",
-    "href": "content/cap05/03-triggers.html#before-vs.-after",
+    "objectID": "content/cap05/02-triggers.html#before-vs.-after",
+    "href": "content/cap05/02-triggers.html#before-vs.-after",
     "title": "Triggers",
     "section": "BEFORE vs. AFTER",
     "text": "BEFORE vs. AFTER\n\n\n\n\n\n\n\n\n\nBEFORE\nAFTER\n\n\n\n\nQuando executa\nAntes da modificação\nDepois que a linha foi alterada\n\n\nPode cancelar a operação\nSim (retornando NULL)\nNão\n\n\nUso típico\nValidação, derivação de valores\nAuditoria, propagação a outras tabelas",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#for-each-row-vs.-for-each-statement",
-    "href": "content/cap05/03-triggers.html#for-each-row-vs.-for-each-statement",
+    "objectID": "content/cap05/02-triggers.html#for-each-row-vs.-for-each-statement",
+    "href": "content/cap05/02-triggers.html#for-each-row-vs.-for-each-statement",
     "title": "Triggers",
     "section": "FOR EACH ROW vs. FOR EACH STATEMENT",
     "text": "FOR EACH ROW vs. FOR EACH STATEMENT\n\n\n\n\n\n\n\n\n\nFOR EACH ROW\nFOR EACH STATEMENT\n\n\n\n\nExecuções por instrução\nUma por linha afetada\nUma por instrução SQL\n\n\nAcesso a NEW/OLD\nSim\nNão (usa referencing new/old table)\n\n\nUso típico\nAuditoria por linha, derivações\nTotalizadores pós-lote",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#exemplo-1-after-update-auditoria-de-salários",
-    "href": "content/cap05/03-triggers.html#exemplo-1-after-update-auditoria-de-salários",
+    "objectID": "content/cap05/02-triggers.html#exemplo-1-after-update-auditoria-de-salários",
+    "href": "content/cap05/02-triggers.html#exemplo-1-after-update-auditoria-de-salários",
     "title": "Triggers",
     "section": "Exemplo 1 — AFTER UPDATE: Auditoria de Salários",
-    "text": "Exemplo 1 — AFTER UPDATE: Auditoria de Salários\nO trigger trg_log_salario registra toda alteração de salário de professores em uma tabela de log.\n\nCREATE TABLE IF NOT EXISTS log_salario (\n    id_log           SERIAL       PRIMARY KEY,\n    id_prof          INT          NOT NULL,\n    salario_anterior NUMERIC(10,2),\n    salario_novo     NUMERIC(10,2),\n    alterado_em      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP\n);\n\n\nCREATE OR REPLACE FUNCTION fn_log_salario()\nRETURNS TRIGGER AS $$\nBEGIN\n    IF NEW.salario &lt;&gt; OLD.salario THEN\n        INSERT INTO log_salario (id_prof, salario_anterior, salario_novo)\n        VALUES (OLD.id_prof, OLD.salario, NEW.salario);\n    END IF;\n    RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;\n\n\nDROP TRIGGER IF EXISTS trg_log_salario ON professor;\n\n\nCREATE TRIGGER trg_log_salario\nAFTER UPDATE OF salario ON professor\nFOR EACH ROW\nEXECUTE FUNCTION fn_log_salario();\n\n\nDemonstração\n\n-- Limpa entradas de demos anteriores\nTRUNCATE log_salario RESTART IDENTITY;\n\n\n-- Salário original de Gustavo Costa (31200001)\nSELECT nome, salario FROM professor WHERE id_prof = 31200001;\n\n\n1 records\n\n\nnome\nsalario\n\n\n\n\nGustavo Costa\n3300\n\n\n\n\n\n\n-- Aplica reajuste de 10% — trigger deve registrar a mudança\nUPDATE professor SET salario = 3630.00 WHERE id_prof = 31200001;\n\n\n-- Log registrado pelo trigger\nSELECT id_prof, salario_anterior, salario_novo, alterado_em\nFROM   log_salario\nORDER BY id_log;\n\n\n1 records\n\n\nid_prof\nsalario_anterior\nsalario_novo\nalterado_em\n\n\n\n\n31200001\n3300\n3630\n2026-05-15 18:26:00\n\n\n\n\n\n\n-- Restaura o salário original\nUPDATE professor SET salario = 3300.00 WHERE id_prof = 31200001;\n\n\n-- Log após restauração: dois registros (aumento e restauração)\nSELECT id_prof, salario_anterior, salario_novo\nFROM   log_salario\nORDER BY id_log;\n\n\n2 records\n\n\nid_prof\nsalario_anterior\nsalario_novo\n\n\n\n\n31200001\n3300\n3630\n\n\n31200001\n3630\n3300\n\n\n\n\n\nO trigger disparou automaticamente nas duas atualizações — sem nenhuma ação explícita do código que executou o UPDATE.",
+    "text": "Exemplo 1 — AFTER UPDATE: Auditoria de Salários\nO trigger trg_log_salario registra toda alteração de salário de professores em uma tabela de log.\n\nCREATE TABLE IF NOT EXISTS log_salario (\n    id_log           SERIAL       PRIMARY KEY,\n    id_prof          INT          NOT NULL,\n    salario_anterior NUMERIC(10,2),\n    salario_novo     NUMERIC(10,2),\n    alterado_em      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP\n);\n\n\nCREATE OR REPLACE FUNCTION fn_log_salario()\nRETURNS TRIGGER AS $$\nBEGIN\n    IF NEW.salario &lt;&gt; OLD.salario THEN\n        INSERT INTO log_salario (id_prof, salario_anterior, salario_novo)\n        VALUES (OLD.id_prof, OLD.salario, NEW.salario);\n    END IF;\n    RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;\n\n\nDROP TRIGGER IF EXISTS trg_log_salario ON professor;\n\n\nCREATE TRIGGER trg_log_salario\nAFTER UPDATE OF salario ON professor\nFOR EACH ROW\nEXECUTE FUNCTION fn_log_salario();\n\n\nDemonstração\n\n-- Limpa entradas de demos anteriores\nTRUNCATE log_salario RESTART IDENTITY;\n\n\n-- Salário original de Gustavo Costa (31200001)\nSELECT nome, salario FROM professor WHERE id_prof = 31200001;\n\n\n1 records\n\n\nnome\nsalario\n\n\n\n\nGustavo Costa\n3300\n\n\n\n\n\n\n-- Aplica reajuste de 10% — trigger deve registrar a mudança\nUPDATE professor SET salario = 3630.00 WHERE id_prof = 31200001;\n\n\n-- Log registrado pelo trigger\nSELECT id_prof, salario_anterior, salario_novo, alterado_em\nFROM   log_salario\nORDER BY id_log;\n\n\n1 records\n\n\nid_prof\nsalario_anterior\nsalario_novo\nalterado_em\n\n\n\n\n31200001\n3300\n3630\n2026-05-31 15:58:22\n\n\n\n\n\n\n-- Restaura o salário original\nUPDATE professor SET salario = 3300.00 WHERE id_prof = 31200001;\n\n\n-- Log após restauração: dois registros (aumento e restauração)\nSELECT id_prof, salario_anterior, salario_novo\nFROM   log_salario\nORDER BY id_log;\n\n\n2 records\n\n\nid_prof\nsalario_anterior\nsalario_novo\n\n\n\n\n31200001\n3300\n3630\n\n\n31200001\n3630\n3300\n\n\n\n\n\nO trigger disparou automaticamente nas duas atualizações — sem nenhuma ação explícita do código que executou o UPDATE.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota",
-    "href": "content/cap05/03-triggers.html#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota",
+    "objectID": "content/cap05/02-triggers.html#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota",
+    "href": "content/cap05/02-triggers.html#exemplo-2-before-insert-or-update-derivando-aprovado-da-nota",
     "title": "Triggers",
     "section": "Exemplo 2 — BEFORE INSERT OR UPDATE: Derivando aprovado da Nota",
     "text": "Exemplo 2 — BEFORE INSERT OR UPDATE: Derivando aprovado da Nota\nO campo aprovado em matricula_disciplina pode ser computado automaticamente a partir de nota, eliminando a necessidade de a aplicação calcular e inserir esse valor.\n\nCREATE OR REPLACE FUNCTION fn_calcular_aprovado()\nRETURNS TRIGGER AS $$\nBEGIN\n    -- Só deriva aprovado se nota foi fornecida\n    IF NEW.nota IS NOT NULL THEN\n        NEW.aprovado := CASE WHEN NEW.nota &gt;= 6.0 THEN 1 ELSE 0 END;\n    END IF;\n    RETURN NEW;   -- BEFORE: RETURN NEW grava o valor modificado\nEND;\n$$ LANGUAGE plpgsql;\n\n\nDROP TRIGGER IF EXISTS trg_aprovado ON matricula_disciplina;\n\n\nCREATE TRIGGER trg_aprovado\nBEFORE INSERT OR UPDATE OF nota ON matricula_disciplina\nFOR EACH ROW\nEXECUTE FUNCTION fn_calcular_aprovado();\n\nCom este trigger ativo, uma instrução como:\nINSERT INTO matricula_disciplina\n    (id_disciplina, ano, semestre, turma, id_aluno, nota)\nVALUES (3110401, 2026, 2, 1, 2025311001, 7.5);\n-- aprovado será automaticamente definido como 1 pelo trigger\n…insere a linha com aprovado = 1 sem que o código da aplicação precise calcular esse valor.\n\n\n\n\n\n\nNota\n\n\n\nTeste este trigger no psql ou DBeaver, inserindo uma linha com nota = 4.5 e verificando que aprovado fica 0, ou com nota = 8.0 para aprovado = 1.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#listando-triggers-do-banco",
-    "href": "content/cap05/03-triggers.html#listando-triggers-do-banco",
+    "objectID": "content/cap05/02-triggers.html#listando-triggers-do-banco",
+    "href": "content/cap05/02-triggers.html#listando-triggers-do-banco",
     "title": "Triggers",
     "section": "Listando Triggers do Banco",
     "text": "Listando Triggers do Banco\n\nSELECT trigger_name         AS trigger,\n       event_object_table   AS tabela,\n       event_manipulation   AS evento,\n       action_timing        AS momento,\n       action_orientation   AS nivel\nFROM   information_schema.triggers\nWHERE  trigger_schema = 'public'\nORDER BY tabela, trigger_name, evento;\n\n\n3 records\n\n\ntrigger\ntabela\nevento\nmomento\nnivel\n\n\n\n\ntrg_aprovado\nmatricula_disciplina\nINSERT\nBEFORE\nROW\n\n\ntrg_aprovado\nmatricula_disciplina\nUPDATE\nBEFORE\nROW\n\n\ntrg_log_salario\nprofessor\nUPDATE\nAFTER\nROW",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#quando-não-usar-triggers",
-    "href": "content/cap05/03-triggers.html#quando-não-usar-triggers",
+    "objectID": "content/cap05/02-triggers.html#quando-não-usar-triggers",
+    "href": "content/cap05/02-triggers.html#quando-não-usar-triggers",
     "title": "Triggers",
     "section": "Quando Não Usar Triggers",
     "text": "Quando Não Usar Triggers\n\n\n\n\n\n\nAviso\n\n\n\nTriggers são poderosos, mas podem tornar o sistema difícil de depurar e manter:\n\nEfeitos ocultos: quem escreve um UPDATE pode não saber que um trigger será disparado.\nCascata inesperada: um trigger pode disparar outros triggers, criando cadeias difíceis de rastrear.\nPerformance: triggers FOR EACH ROW em operações em lote (carga de milhares de linhas) podem ser lentos.\n\nPrefira triggers quando a regra é invariante e deve ser aplicada independente de qual aplicação acessa o banco. Para lógica específica de uma aplicação, mantenha-a na camada de aplicação.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/03-triggers.html#para-praticar",
-    "href": "content/cap05/03-triggers.html#para-praticar",
+    "objectID": "content/cap05/02-triggers.html#para-praticar",
+    "href": "content/cap05/02-triggers.html#para-praticar",
     "title": "Triggers",
     "section": "Para Praticar",
     "text": "Para Praticar\n\n-- Verificar se o log capturou corretamente as mudanças de salário\nSELECT l.id_prof,\n       p.nome,\n       l.salario_anterior,\n       l.salario_novo,\n       l.salario_novo - l.salario_anterior AS diferenca\nFROM   log_salario l\nJOIN   professor   p ON p.id_prof = l.id_prof\nORDER BY l.id_log;\n\n\n2 records\n\n\nid_prof\nnome\nsalario_anterior\nsalario_novo\ndiferenca\n\n\n\n\n31200001\nGustavo Costa\n3300\n3630\n330\n\n\n31200001\nGustavo Costa\n3630\n3300\n-330\n\n\n\n\n\n-- Exercício: criar um trigger que impede que o salário seja reduzido\nCREATE OR REPLACE FUNCTION fn_proteger_salario()\nRETURNS TRIGGER AS $$\nBEGIN\n    IF NEW.salario &lt; OLD.salario THEN\n        RAISE EXCEPTION 'Redução de salário não permitida: % → %',\n            OLD.salario, NEW.salario;\n    END IF;\n    RETURN NEW;\nEND;\n$$ LANGUAGE plpgsql;\n\nCREATE TRIGGER trg_proteger_salario\nBEFORE UPDATE OF salario ON professor\nFOR EACH ROW\nEXECUTE FUNCTION fn_proteger_salario();\n\n-- Teste: tente reduzir o salário de um professor — deve falhar\nUPDATE professor SET salario = 1000.00 WHERE id_prof = 31400002;",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Triggers</span>"
+      "<span class='chapter-number'>52</span>  <span class='chapter-title'>Triggers</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html",
-    "href": "content/cap05/04-consultas-recursivas.html",
+    "objectID": "content/cap05/03-consultas-recursivas.html",
+    "href": "content/cap05/03-consultas-recursivas.html",
     "title": "Consultas Recursivas",
     "section": "",
     "text": "Common Table Expressions (WITH)\nAlgumas consultas são naturalmente recursivas: encontrar todos os pré-requisitos de uma disciplina (incluindo pré-requisitos de pré-requisitos), percorrer uma hierarquia de cargos, ou descobrir todos os nós alcançáveis em um grafo. O SQL padrão suporta isso com CTEs recursivas.\nAntes de introduzir a recursão, revisamos as CTEs — expressões de tabela nomeadas que tornam consultas complexas mais legíveis:\n-- CTE simples: disciplinas de semestre par de ENS\nWITH disciplinas_par AS (\n    SELECT id_disciplina, nome_disciplina, semestre\n    FROM   disciplina\n    WHERE  id_curso = 311\n      AND  semestre % 2 = 0\n)\nSELECT dp.nome_disciplina, dp.semestre,\n       COUNT(pr.id_prereq) AS num_prereqs\nFROM   disciplinas_par dp\nLEFT JOIN prereq pr ON pr.id_disciplina = dp.id_disciplina\nGROUP BY dp.id_disciplina, dp.nome_disciplina, dp.semestre\nORDER BY dp.semestre, dp.nome_disciplina;\n\n\n8 records\n\n\nnome_disciplina\nsemestre\nnum_prereqs\n\n\n\n\nBases da Eng. de Software 2\n2\n0\n\n\nProjeto Aplicado 2 - site WEB\n2\n0\n\n\nBases da Eng. de Software 4\n4\n1\n\n\nProjeto Aplicado 4 - blockchain\n4\n1\n\n\nBases da Eng. de Software 6\n6\n2\n\n\nProjeto Aplicado 6 - Machine Learning\n6\n1\n\n\nBases da Eng. de Software 8\n8\n1\n\n\nProjeto Aplicado 8 - Sistema em Tempo Real\n8\n2",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#with-recursive",
-    "href": "content/cap05/04-consultas-recursivas.html#with-recursive",
+    "objectID": "content/cap05/03-consultas-recursivas.html#with-recursive",
+    "href": "content/cap05/03-consultas-recursivas.html#with-recursive",
     "title": "Consultas Recursivas",
     "section": "WITH RECURSIVE",
     "text": "WITH RECURSIVE\n\nUma CTE recursiva define uma relação em termos de si mesma. A estrutura é sempre:\nWITH RECURSIVE nome_cte(colunas) AS (\n    -- Caso base: consulta inicial (não recursiva)\n    SELECT ...\n    UNION [ALL]\n    -- Caso recursivo: referencia nome_cte\n    SELECT ... FROM ... JOIN nome_cte ON ...\n)\nSELECT ... FROM nome_cte;\nO SGBD executa a CTE iterativamente: 1. Avalia o caso base → resultado inicial R₀ 2. Avalia o caso recursivo usando R₀ → produz R₁ 3. Avalia usando R₁ → produz R₂ 4. Continua até que o caso recursivo produza um conjunto vazio 5. O resultado final é a união de todos os Rᵢ\n\nUNION elimina duplicatas entre iterações (importante quando o grafo pode ter caminhos múltiplos para o mesmo nó). UNION ALL mantém todas as ocorrências.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#exemplo-1-pré-requisitos-transitivos",
-    "href": "content/cap05/04-consultas-recursivas.html#exemplo-1-pré-requisitos-transitivos",
+    "objectID": "content/cap05/03-consultas-recursivas.html#exemplo-1-pré-requisitos-transitivos",
+    "href": "content/cap05/03-consultas-recursivas.html#exemplo-1-pré-requisitos-transitivos",
     "title": "Consultas Recursivas",
     "section": "Exemplo 1 — Pré-requisitos Transitivos",
     "text": "Exemplo 1 — Pré-requisitos Transitivos\nA tabela prereq registra relações diretas: “a disciplina X requer Y”. Para encontrar todos os pré-requisitos de uma disciplina (incluindo os transitivos), precisamos de recursão.\n\n-- Estrutura de pré-requisitos diretos no banco\nSELECT pr.id_disciplina,\n       d1.nome_disciplina AS disciplina,\n       pr.id_prereq,\n       d2.nome_disciplina AS prerequisito\nFROM   prereq pr\nJOIN   disciplina d1 ON d1.id_disciplina = pr.id_disciplina\nJOIN   disciplina d2 ON d2.id_disciplina = pr.id_prereq\nORDER BY pr.id_disciplina, pr.id_prereq;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\nid_disciplina\ndisciplina\nid_prereq\nprerequisito\n\n\n\n\n1110401\nMicroeconomia 2\n1110201\nHistória Econômica Geral\n\n\n1110601\nEconomia Brasileira\n1110401\nMicroeconomia 2\n\n\n1110602\nOrçamento e Finanças Públicas\n1110402\nMacroeconomia 2\n\n\n1110801\nMonografia\n1110601\nEconomia Brasileira\n\n\n1110801\nMonografia\n1110602\nOrçamento e Finanças Públicas\n\n\n2110401\nEletiva I\n2110201\nDesenvolvimento Humano\n\n\n2110601\nEletiva II\n2110401\nEletiva I\n\n\n2110801\nTecnologia Educacional - Design\n2110601\nEletiva II\n\n\n3110401\nBases da Eng. de Software 4\n3110201\nBases da Eng. de Software 2\n\n\n3110402\nProjeto Aplicado 4 - blockchain\n3110202\nProjeto Aplicado 2 - site WEB\n\n\n\n\n\n\n-- Todos os pré-requisitos transitivos de cada disciplina\nWITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) AS (\n    -- Caso base: pré-requisitos diretos\n    SELECT id_disciplina, id_prereq, 1\n    FROM   prereq\n\n    UNION\n\n    -- Caso recursivo: pré-requisitos dos pré-requisitos\n    SELECT pt.id_disciplina_raiz, p.id_prereq, pt.profundidade + 1\n    FROM   prereqs_transitivos pt\n    JOIN   prereq p ON p.id_disciplina = pt.id_prereq\n)\nSELECT pt.id_disciplina_raiz                 AS disciplina_id,\n       d_raiz.nome_disciplina                AS disciplina,\n       pt.id_prereq                          AS prereq_id,\n       d_prereq.nome_disciplina              AS prerequisito,\n       pt.profundidade                       AS nivel\nFROM   prereqs_transitivos pt\nJOIN   disciplina d_raiz   ON d_raiz.id_disciplina   = pt.id_disciplina_raiz\nJOIN   disciplina d_prereq ON d_prereq.id_disciplina = pt.id_prereq\nORDER BY disciplina, nivel, prereq_id;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\ndisciplina_id\ndisciplina\nprereq_id\nprerequisito\nnivel\n\n\n\n\n3110401\nBases da Eng. de Software 4\n3110201\nBases da Eng. de Software 2\n1\n\n\n3110601\nBases da Eng. de Software 6\n3110401\nBases da Eng. de Software 4\n1\n\n\n3110601\nBases da Eng. de Software 6\n3110402\nProjeto Aplicado 4 - blockchain\n1\n\n\n3110601\nBases da Eng. de Software 6\n3110201\nBases da Eng. de Software 2\n2\n\n\n3110601\nBases da Eng. de Software 6\n3110202\nProjeto Aplicado 2 - site WEB\n2\n\n\n3110801\nBases da Eng. de Software 8\n3110601\nBases da Eng. de Software 6\n1\n\n\n3110801\nBases da Eng. de Software 8\n3110401\nBases da Eng. de Software 4\n2\n\n\n3110801\nBases da Eng. de Software 8\n3110402\nProjeto Aplicado 4 - blockchain\n2\n\n\n3110801\nBases da Eng. de Software 8\n3110201\nBases da Eng. de Software 2\n3\n\n\n3110801\nBases da Eng. de Software 8\n3110202\nProjeto Aplicado 2 - site WEB\n3\n\n\n\n\n\nA coluna nivel indica a distância: 1 = pré-requisito direto; 2 = pré-requisito do pré-requisito; e assim por diante.",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência",
-    "href": "content/cap05/04-consultas-recursivas.html#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência",
+    "objectID": "content/cap05/03-consultas-recursivas.html#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência",
+    "href": "content/cap05/03-consultas-recursivas.html#exemplo-2-caminho-mínimo-quantos-semestres-de-antecedência",
     "title": "Consultas Recursivas",
     "section": "Exemplo 2 — Caminho Mínimo: Quantos Semestres de Antecedência?",
     "text": "Exemplo 2 — Caminho Mínimo: Quantos Semestres de Antecedência?\nCombinando a recursão com MIN, podemos responder: “qual a distância máxima na cadeia de pré-requisitos de cada disciplina?”\n\nWITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq, profundidade) AS (\n    SELECT id_disciplina, id_prereq, 1\n    FROM   prereq\n    UNION\n    SELECT pt.id_disciplina_raiz, p.id_prereq, pt.profundidade + 1\n    FROM   prereqs_transitivos pt\n    JOIN   prereq p ON p.id_disciplina = pt.id_prereq\n)\nSELECT d.nome_disciplina            AS disciplina,\n       d.semestre                   AS semestre_curriculo,\n       COUNT(DISTINCT pt.id_prereq) AS total_prereqs_transitivos,\n       MAX(pt.profundidade)         AS profundidade_maxima\nFROM   disciplina d\nJOIN   prereqs_transitivos pt ON pt.id_disciplina_raiz = d.id_disciplina\nGROUP BY d.id_disciplina, d.nome_disciplina, d.semestre\nORDER BY profundidade_maxima DESC, total_prereqs_transitivos DESC;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\ndisciplina\nsemestre_curriculo\ntotal_prereqs_transitivos\nprofundidade_maxima\n\n\n\n\nProjeto Aplicado 8 - Sistema em Tempo Real\n8\n6\n3\n\n\nMonografia\n8\n5\n3\n\n\nBases da Eng. de Software 8\n8\n5\n3\n\n\nTecnologia Educacional - Design\n8\n3\n3\n\n\nBases da Eng. de Software 6\n6\n4\n2\n\n\nProjeto Aplicado 6 - Machine Learning\n6\n2\n2\n\n\nEletiva II\n6\n2\n2\n\n\nEconomia Brasileira\n6\n2\n2\n\n\nOrçamento e Finanças Públicas\n6\n1\n1\n\n\nProjeto Aplicado 4 - blockchain\n4\n1\n1",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#exemplo-3-hierarquia-de-estrutura-acadêmica",
-    "href": "content/cap05/04-consultas-recursivas.html#exemplo-3-hierarquia-de-estrutura-acadêmica",
+    "objectID": "content/cap05/03-consultas-recursivas.html#exemplo-3-hierarquia-de-estrutura-acadêmica",
+    "href": "content/cap05/03-consultas-recursivas.html#exemplo-3-hierarquia-de-estrutura-acadêmica",
     "title": "Consultas Recursivas",
     "section": "Exemplo 3 — Hierarquia de Estrutura Acadêmica",
     "text": "Exemplo 3 — Hierarquia de Estrutura Acadêmica\nA estrutura Centro → Escola → Curso → Disciplina é uma hierarquia. Embora tenhamos JOINs diretos para ela, o padrão WITH RECURSIVE funciona igualmente para qualquer árvore onde a relação pai–filho é armazenada em tabela:\n\n-- Hierarquia completa: centro → escola → curso (sem recursão, mas ilustra o padrão)\nWITH estrutura AS (\n    SELECT ce.nome_centro  AS nivel1,\n           es.nome_escola  AS nivel2,\n           cu.nome_curso   AS nivel3,\n           cu.id_curso\n    FROM   centro  ce\n    JOIN   escola  es ON es.id_centro = ce.id_centro\n    JOIN   curso   cu ON cu.id_escola = es.id_escola\n)\nSELECT e.nivel1, e.nivel2, e.nivel3,\n       COUNT(a.id_aluno) AS alunos\nFROM   estrutura e\nLEFT JOIN aluno a ON a.id_curso = e.id_curso\nGROUP BY e.nivel1, e.nivel2, e.nivel3\nORDER BY e.nivel1, e.nivel2, e.nivel3;\n\n\n3 records\n\n\n\n\n\n\n\n\nnivel1\nnivel2\nnivel3\nalunos\n\n\n\n\nCentro de Educação, Magistério e Artes\nEscola de Educação, Magistério e Arte\nPedagogia\n6\n\n\nCentro de Engenharias, Tecnologia e Inovação\nEscola Superior de Engenharias, Tecnologia e Inovação\nEngenharia de Software\n6\n\n\nCiências Humanas, Cidadania e Meio Ambiente\nEscola Superior de Gestão\nCiências Econômicas\n6",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#guardas-contra-recursão-infinita",
-    "href": "content/cap05/04-consultas-recursivas.html#guardas-contra-recursão-infinita",
+    "objectID": "content/cap05/03-consultas-recursivas.html#guardas-contra-recursão-infinita",
+    "href": "content/cap05/03-consultas-recursivas.html#guardas-contra-recursão-infinita",
     "title": "Consultas Recursivas",
     "section": "Guardas Contra Recursão Infinita",
     "text": "Guardas Contra Recursão Infinita\n\n\n\n\n\n\nAviso\n\n\n\nSe o grafo contiver ciclos (A → B → A), a CTE recursiva pode não terminar. Estratégias de proteção:\n\nUNION em vez de UNION ALL: elimina duplicatas entre iterações — se um nó já foi visitado, não é reinserido na próxima iteração.\nContador de profundidade com WHERE profundidade &lt; N: limita o número de iterações.\nArray de caminho: acumula os nós visitados e verifica se o próximo já está no array (PostgreSQL específico).\n\nNo banco da UnDF, prereq não deveria ter ciclos (uma disciplina não pode ser pré-requisito de si mesma transitivamente), mas em dados reais essa verificação é importante.\n\n\n-- Exemplo de guarda com profundidade máxima\nWITH RECURSIVE prereqs_limitados(id_raiz, id_prereq, profundidade) AS (\n    SELECT id_disciplina, id_prereq, 1 FROM prereq\n    UNION\n    SELECT pt.id_raiz, p.id_prereq, pt.profundidade + 1\n    FROM   prereqs_limitados pt\n    JOIN   prereq p ON p.id_disciplina = pt.id_prereq\n    WHERE  pt.profundidade &lt; 10   -- guarda: no máximo 10 níveis\n)\nSELECT ...",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/04-consultas-recursivas.html#para-praticar",
-    "href": "content/cap05/04-consultas-recursivas.html#para-praticar",
+    "objectID": "content/cap05/03-consultas-recursivas.html#para-praticar",
+    "href": "content/cap05/03-consultas-recursivas.html#para-praticar",
     "title": "Consultas Recursivas",
     "section": "Para Praticar",
     "text": "Para Praticar\n\n-- Disciplinas sem nenhum pré-requisito (pontos de entrada do grafo)\nSELECT d.id_disciplina, d.nome_disciplina, d.semestre\nFROM   disciplina d\nWHERE  d.id_disciplina NOT IN (SELECT id_disciplina FROM prereq)\n  AND  d.id_curso = 311\nORDER BY d.semestre;\n\n\n2 records\n\n\nid_disciplina\nnome_disciplina\nsemestre\n\n\n\n\n3110201\nBases da Eng. de Software 2\n2\n\n\n3110202\nProjeto Aplicado 2 - site WEB\n2\n\n\n\n\n\n\n-- Disciplinas \"folha\": possuem pré-requisitos mas não são pré-requisito de ninguém\nSELECT d.id_disciplina, d.nome_disciplina, d.semestre\nFROM   disciplina d\nWHERE  d.id_disciplina IN  (SELECT id_disciplina FROM prereq)   -- tem prereq\n  AND  d.id_disciplina NOT IN (SELECT id_prereq   FROM prereq)   -- não é prereq de ninguém\nORDER BY d.semestre;\n\n\n4 records\n\n\nid_disciplina\nnome_disciplina\nsemestre\n\n\n\n\n1110801\nMonografia\n8\n\n\n2110801\nTecnologia Educacional - Design\n8\n\n\n3110801\nBases da Eng. de Software 8\n8\n\n\n3110802\nProjeto Aplicado 8 - Sistema em Tempo Real\n8\n\n\n\n\n\n\n-- Quantos pré-requisitos transitivos tem cada disciplina de ENS?\nWITH RECURSIVE prereqs_transitivos(id_disciplina_raiz, id_prereq) AS (\n    SELECT id_disciplina, id_prereq FROM prereq\n    UNION\n    SELECT pt.id_disciplina_raiz, p.id_prereq\n    FROM   prereqs_transitivos pt\n    JOIN   prereq p ON p.id_disciplina = pt.id_prereq\n)\nSELECT d.nome_disciplina,\n       d.semestre,\n       COALESCE(COUNT(DISTINCT pt.id_prereq), 0) AS total_prereqs_transitivos\nFROM   disciplina d\nLEFT JOIN prereqs_transitivos pt ON pt.id_disciplina_raiz = d.id_disciplina\nWHERE  d.id_curso = 311\nGROUP BY d.id_disciplina, d.nome_disciplina, d.semestre\nORDER BY total_prereqs_transitivos DESC, d.semestre;\n\n\n8 records\n\n\n\n\n\n\n\nnome_disciplina\nsemestre\ntotal_prereqs_transitivos\n\n\n\n\nProjeto Aplicado 8 - Sistema em Tempo Real\n8\n6\n\n\nBases da Eng. de Software 8\n8\n5\n\n\nBases da Eng. de Software 6\n6\n4\n\n\nProjeto Aplicado 6 - Machine Learning\n6\n2\n\n\nProjeto Aplicado 4 - blockchain\n4\n1\n\n\nBases da Eng. de Software 4\n4\n1\n\n\nBases da Eng. de Software 2\n2\n0\n\n\nProjeto Aplicado 2 - site WEB\n2\n0",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Consultas Recursivas</span>"
+      "<span class='chapter-number'>53</span>  <span class='chapter-title'>Consultas Recursivas</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html",
-    "href": "content/cap05/05-agregacao-avancada.html",
+    "objectID": "content/cap05/04-agregacao-avancada.html",
+    "href": "content/cap05/04-agregacao-avancada.html",
     "title": "Agregação Avançada",
     "section": "",
     "text": "Funções de Janela (Window Functions)\nAs funções de agregação básicas (SUM, AVG, COUNT) agrupam linhas e produzem um único valor por grupo. Este capítulo apresenta duas extensões poderosas: funções de janela e agregação multidimensional (ROLLUP, CUBE, GROUPING SETS).\nA diferença fundamental:",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#funções-de-janela-window-functions",
-    "href": "content/cap05/05-agregacao-avancada.html#funções-de-janela-window-functions",
+    "objectID": "content/cap05/04-agregacao-avancada.html#funções-de-janela-window-functions",
+    "href": "content/cap05/04-agregacao-avancada.html#funções-de-janela-window-functions",
     "title": "Agregação Avançada",
     "section": "",
     "text": "Uma função de janela calcula um valor para cada linha com base em um conjunto de linhas relacionadas — a janela — sem colapsar as linhas em grupos como GROUP BY faz. A cláusula OVER define a janela.\nfunção() OVER (\n    [PARTITION BY coluna, ...]\n    [ORDER BY coluna [ASC|DESC], ...]\n    [ROWS | RANGE BETWEEN ... AND ...]\n)\n\n\n\n\n\n\n\n\n\nGROUP BY\nOVER\n\n\n\n\nRetorna uma linha por grupo\nRetorna uma linha por linha da tabela\n\n\nAgrega e colapsa\nCalcula sem colapsar\n\n\nNão pode misturar colunas de grupo e não-grupo\nPode misturar livremente",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#ranking-rank-dense_rank-row_number",
-    "href": "content/cap05/05-agregacao-avancada.html#ranking-rank-dense_rank-row_number",
+    "objectID": "content/cap05/04-agregacao-avancada.html#ranking-rank-dense_rank-row_number",
+    "href": "content/cap05/04-agregacao-avancada.html#ranking-rank-dense_rank-row_number",
     "title": "Agregação Avançada",
     "section": "Ranking: RANK, DENSE_RANK, ROW_NUMBER",
     "text": "Ranking: RANK, DENSE_RANK, ROW_NUMBER\n\n-- Professores ranqueados por salário (geral)\nSELECT nome,\n       id_escola,\n       salario,\n       RANK()       OVER (ORDER BY salario DESC)          AS rank_geral,\n       DENSE_RANK() OVER (ORDER BY salario DESC)          AS dense_rank_geral,\n       ROW_NUMBER() OVER (ORDER BY salario DESC, id_prof) AS row_num\nFROM   professor\nORDER BY rank_geral;\n\n\n7 records\n\n\n\n\n\n\n\n\n\n\nnome\nid_escola\nsalario\nrank_geral\ndense_rank_geral\nrow_num\n\n\n\n\nHelena Carvalho\n31\n6700\n1\n1\n1\n\n\nCarla Pinto\n11\n6600\n2\n2\n2\n\n\nBruno Teixeira\n11\n6500\n3\n3\n3\n\n\nFelipe Araujo\n21\n6400\n4\n4\n4\n\n\nGustavo Costa\n31\n3300\n5\n5\n5\n\n\nEduarda Souza\n21\n3200\n6\n6\n6\n\n\nIgor Melo\n31\n3100\n7\n7\n7\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunção\nComportamento com empates\n\n\n\n\nRANK()\nPosições iguais para empates; salta posições após\n\n\nDENSE_RANK()\nPosições iguais para empates; não salta posições\n\n\nROW_NUMBER()\nNumera linhas sequencialmente; sem empates\n\n\n\n\n\nRanking por Partição\nPARTITION BY reinicia o ranking dentro de cada grupo:\n\n-- Ranking de salário dentro de cada escola\nSELECT p.nome,\n       e.sigla                                          AS escola,\n       p.salario,\n       RANK() OVER (PARTITION BY p.id_escola\n                    ORDER BY p.salario DESC)             AS rank_na_escola\nFROM   professor p\nJOIN   escola   e ON e.id_escola = p.id_escola\nORDER BY e.sigla, rank_na_escola;\n\n\n7 records\n\n\nnome\nescola\nsalario\nrank_na_escola\n\n\n\n\nFelipe Araujo\nEEMA\n6400\n1\n\n\nEduarda Souza\nEEMA\n3200\n2\n\n\nHelena Carvalho\nESETI\n6700\n1\n\n\nGustavo Costa\nESETI\n3300\n2\n\n\nIgor Melo\nESETI\n3100\n3\n\n\nCarla Pinto\nESG\n6600\n1\n\n\nBruno Teixeira\nESG\n6500\n2",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#ntile-dividindo-em-quartis-ou-n-grupos",
-    "href": "content/cap05/05-agregacao-avancada.html#ntile-dividindo-em-quartis-ou-n-grupos",
+    "objectID": "content/cap05/04-agregacao-avancada.html#ntile-dividindo-em-quartis-ou-n-grupos",
+    "href": "content/cap05/04-agregacao-avancada.html#ntile-dividindo-em-quartis-ou-n-grupos",
     "title": "Agregação Avançada",
     "section": "NTILE — Dividindo em Quartis (ou N grupos)",
     "text": "NTILE — Dividindo em Quartis (ou N grupos)\nNTILE(n) distribui as linhas em n grupos de tamanhos iguais (ou o mais próximo possível):\n\n-- Distribuição dos alunos em quartis de nota (apenas notas lançadas)\nSELECT a.nome,\n       md.nota,\n       NTILE(4) OVER (ORDER BY md.nota DESC NULLS LAST) AS quartil\nFROM   matricula_disciplina md\nJOIN   aluno a USING (id_aluno)\nWHERE  md.nota IS NOT NULL\nORDER BY quartil, md.nota DESC;\n\n\nDisplaying records 1 - 10\n\n\nnome\nnota\nquartil\n\n\n\n\nThiago Gomes\n10.0\n1\n\n\nCamila Teixeira\n9.9\n1\n\n\nBeatriz Carvalho\n9.8\n1\n\n\nCarolina Lima\n9.7\n1\n\n\nCarolina Lima\n9.2\n1\n\n\nMatheus Silva\n9.0\n1\n\n\nLarissa Araújo\n9.0\n1\n\n\nAmanda Moreira\n8.8\n1\n\n\nBeatriz Carvalho\n8.8\n1\n\n\nRafael Costa\n8.7\n1",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#funções-de-janela-com-agregação",
-    "href": "content/cap05/05-agregacao-avancada.html#funções-de-janela-com-agregação",
+    "objectID": "content/cap05/04-agregacao-avancada.html#funções-de-janela-com-agregação",
+    "href": "content/cap05/04-agregacao-avancada.html#funções-de-janela-com-agregação",
     "title": "Agregação Avançada",
     "section": "Funções de Janela com Agregação",
     "text": "Funções de Janela com Agregação\nFunções de janela podem usar qualquer agregado (SUM, AVG, COUNT) com OVER:\n\n-- Nota de cada aluno vs. média da turma (por disciplina/ano/semestre)\nSELECT d.nome_disciplina,\n       a.nome                                      AS aluno,\n       md.nota,\n       ROUND(AVG(md.nota) OVER (\n           PARTITION BY md.id_disciplina, md.ano, md.semestre\n       ), 2)                                       AS media_turma,\n       md.nota - ROUND(AVG(md.nota) OVER (\n           PARTITION BY md.id_disciplina, md.ano, md.semestre\n       ), 2)                                       AS desvio_da_media\nFROM   matricula_disciplina md\nJOIN   aluno      a USING (id_aluno)\nJOIN   disciplina d USING (id_disciplina)\nWHERE  md.nota IS NOT NULL\nORDER BY d.nome_disciplina, md.nota DESC;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\nnome_disciplina\naluno\nnota\nmedia_turma\ndesvio_da_media\n\n\n\n\nBases da Eng. de Software 2\nMatheus Silva\n9.0\n7.55\n1.45\n\n\nBases da Eng. de Software 2\nLarissa Araújo\n6.1\n7.55\n-1.45\n\n\nBases da Eng. de Software 2\nDiego Correia\n6.1\n4.00\n2.10\n\n\nBases da Eng. de Software 2\nIsabela Freitas\n4.3\n4.30\n0.00\n\n\nBases da Eng. de Software 2\nJuliana Nunes\n1.9\n4.00\n-2.10\n\n\nBases da Eng. de Software 4\nLarissa Araújo\n9.0\n8.25\n0.75\n\n\nBases da Eng. de Software 4\nIsabela Freitas\n7.7\n7.70\n0.00\n\n\nBases da Eng. de Software 4\nMatheus Silva\n7.5\n8.25\n-0.75\n\n\nBases da Eng. de Software 6\nMatheus Silva\n4.1\n2.20\n1.90\n\n\nBases da Eng. de Software 6\nLarissa Araújo\n0.3\n2.20\n-1.90",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#windowing-janelas-deslizantes",
-    "href": "content/cap05/05-agregacao-avancada.html#windowing-janelas-deslizantes",
+    "objectID": "content/cap05/04-agregacao-avancada.html#windowing-janelas-deslizantes",
+    "href": "content/cap05/04-agregacao-avancada.html#windowing-janelas-deslizantes",
     "title": "Agregação Avançada",
     "section": "Windowing — Janelas Deslizantes",
     "text": "Windowing — Janelas Deslizantes\nA especificação ROWS BETWEEN define uma janela móvel de linhas relativas à linha atual:\n\n-- Média acumulada de notas por aluno (ordenadas por semestre da disciplina)\nSELECT a.nome,\n       d.semestre,\n       d.nome_disciplina,\n       md.nota,\n       ROUND(AVG(md.nota) OVER (\n           PARTITION BY md.id_aluno\n           ORDER BY d.semestre\n           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n       ), 2) AS media_acumulada\nFROM   matricula_disciplina md\nJOIN   aluno      a USING (id_aluno)\nJOIN   disciplina d USING (id_disciplina)\nWHERE  md.nota IS NOT NULL\nORDER BY a.nome, d.semestre;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\nnome\nsemestre\nnome_disciplina\nnota\nmedia_acumulada\n\n\n\n\nAmanda Moreira\n2\nDesenvolvimento Humano\n8.4\n8.40\n\n\nAmanda Moreira\n2\nDidática Geral\n8.2\n8.30\n\n\nAmanda Moreira\n4\nEletiva I\n8.5\n8.37\n\n\nAmanda Moreira\n4\nFundamentos e Orientações Metodológicas - Ed. Infantil - BNCC\n8.8\n8.48\n\n\nAmanda Moreira\n6\nEducação do Campo, Indígena e Quilombola\n6.2\n7.70\n\n\nAmanda Moreira\n6\nEletiva II\n6.1\n8.00\n\n\nBeatriz Carvalho\n2\nHistória Econômica Geral\n9.8\n9.80\n\n\nBeatriz Carvalho\n2\nCulturas Digitais\n8.8\n9.30\n\n\nCamila Teixeira\n2\nHistória Econômica Geral\n6.1\n8.00\n\n\nCamila Teixeira\n2\nCulturas Digitais\n9.9\n9.90\n\n\n\n\n\n\nEspecificações de janela comuns:\n\n\n\n\n\n\n\nEspecificação\nSignificado\n\n\n\n\nROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\nDa primeira linha até a atual (acumulado)\n\n\nROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING\nLinha anterior, atual e próxima (média móvel de 3)\n\n\nROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING\nDa atual até a última",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#agregação-multidimensional-rollup-e-cube",
-    "href": "content/cap05/05-agregacao-avancada.html#agregação-multidimensional-rollup-e-cube",
+    "objectID": "content/cap05/04-agregacao-avancada.html#agregação-multidimensional-rollup-e-cube",
+    "href": "content/cap05/04-agregacao-avancada.html#agregação-multidimensional-rollup-e-cube",
     "title": "Agregação Avançada",
     "section": "Agregação Multidimensional: ROLLUP e CUBE",
     "text": "Agregação Multidimensional: ROLLUP e CUBE\nO GROUP BY padrão gera um único nível de agrupamento. ROLLUP e CUBE geram múltiplos níveis de agrupamento em uma única consulta — equivalentes a várias consultas com GROUP BY e UNION ALL.\n\nROLLUP — Subtotais Hierárquicos\nROLLUP(A, B, C) gera a união de: (A, B, C), (A, B), (A), ()\n\n-- Total de alunos por escola, por curso, e total geral (ROLLUP)\nSELECT e.sigla                            AS escola,\n       c.sigla_curso                      AS curso,\n       COUNT(a.id_aluno)                  AS total_alunos\nFROM   escola e\nJOIN   curso  c ON c.id_escola = e.id_escola\nLEFT JOIN aluno a ON a.id_curso = c.id_curso\nGROUP BY ROLLUP(e.sigla, c.sigla_curso)\nORDER BY escola NULLS LAST, curso NULLS LAST;\n\n\n7 records\n\n\nescola\ncurso\ntotal_alunos\n\n\n\n\nEEMA\nPED\n6\n\n\nEEMA\nNA\n6\n\n\nESETI\nENS\n6\n\n\nESETI\nNA\n6\n\n\nESG\nECO\n6\n\n\nESG\nNA\n6\n\n\nNA\nNA\n18\n\n\n\n\n\nAs linhas com NULL em curso são os subtotais por escola; a linha com NULL em ambas é o total geral.\n\n\nCUBE — Todos os Agrupamentos Possíveis\nCUBE(A, B) gera a união de todos os 2² = 4 subconjuntos: (A, B), (A), (B), ().\n\n-- Salário médio cruzando escola × carga horária semanal (CUBE)\nSELECT e.sigla                             AS escola,\n       p.ch_semanal,\n       ROUND(AVG(p.salario), 2)            AS media_salarial,\n       COUNT(*)                            AS professores\nFROM   professor p\nJOIN   escola   e ON e.id_escola = p.id_escola\nGROUP BY CUBE(e.sigla, p.ch_semanal)\nORDER BY escola NULLS LAST, ch_semanal NULLS LAST;\n\n\nDisplaying records 1 - 10\n\n\nescola\nch_semanal\nmedia_salarial\nprofessores\n\n\n\n\nEEMA\n20\n3200.00\n1\n\n\nEEMA\n40\n6400.00\n1\n\n\nEEMA\nNA\n4800.00\n2\n\n\nESETI\n20\n3200.00\n2\n\n\nESETI\n40\n6700.00\n1\n\n\nESETI\nNA\n4366.67\n3\n\n\nESG\n40\n6550.00\n2\n\n\nESG\nNA\n6550.00\n2\n\n\nNA\n20\n3200.00\n3\n\n\nNA\n40\n6550.00\n4\n\n\n\n\n\n\n\nGROUPING() — Distinguindo NULL de Agregação vs. NULL de Dado\nQuando um atributo tem NULL no resultado de ROLLUP/CUBE, é difícil saber se é um NULL genuíno do dado ou um NULL que representa “todos”. A função GROUPING() resolve isso:\n\n-- GROUPING identifica linhas de subtotal (1 = agregado, 0 = valor real)\nSELECT COALESCE(e.sigla, '*** TOTAL ***')  AS escola,\n       COALESCE(c.sigla_curso, '---')      AS curso,\n       COUNT(a.id_aluno)                   AS alunos,\n       GROUPING(e.sigla)                   AS flag_escola,\n       GROUPING(c.sigla_curso)             AS flag_curso\nFROM   escola e\nJOIN   curso  c ON c.id_escola = e.id_escola\nLEFT JOIN aluno a ON a.id_curso = c.id_curso\nGROUP BY ROLLUP(e.sigla, c.sigla_curso)\nORDER BY flag_escola, flag_curso, escola, curso;\n\n\n7 records\n\n\nescola\ncurso\nalunos\nflag_escola\nflag_curso\n\n\n\n\nEEMA\nPED\n6\n0\n0\n\n\nESETI\nENS\n6\n0\n0\n\n\nESG\nECO\n6\n0\n0\n\n\nEEMA\n—\n6\n0\n1\n\n\nESETI\n—\n6\n0\n1\n\n\nESG\n—\n6\n0\n1\n\n\n*** TOTAL ***\n—\n18\n1\n1\n\n\n\n\n\n\n\nGROUPING SETS — Controle Granular\nGROUPING SETS permite especificar exatamente quais agrupamentos gerar, sem precisar dos padrões de ROLLUP ou CUBE:\n\n-- Apenas os agrupamentos por escola e por carga horária (sem combinação)\nSELECT e.sigla        AS escola,\n       p.ch_semanal,\n       COUNT(*)       AS professores,\n       ROUND(AVG(p.salario), 2) AS media_salarial\nFROM   professor p\nJOIN   escola   e ON e.id_escola = p.id_escola\nGROUP BY GROUPING SETS (\n    (e.sigla),          -- total por escola\n    (p.ch_semanal),     -- total por carga horária\n    ()                  -- total geral\n)\nORDER BY escola NULLS LAST, ch_semanal NULLS LAST;\n\n\n6 records\n\n\nescola\nch_semanal\nprofessores\nmedia_salarial\n\n\n\n\nEEMA\nNA\n2\n4800.00\n\n\nESETI\nNA\n3\n4366.67\n\n\nESG\nNA\n2\n6550.00\n\n\nNA\n20\n3\n3200.00\n\n\nNA\n40\n4\n6550.00\n\n\nNA\nNA\n7\n5114.29",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
     ]
   },
   {
-    "objectID": "content/cap05/05-agregacao-avancada.html#para-praticar",
-    "href": "content/cap05/05-agregacao-avancada.html#para-praticar",
+    "objectID": "content/cap05/04-agregacao-avancada.html#para-praticar",
+    "href": "content/cap05/04-agregacao-avancada.html#para-praticar",
     "title": "Agregação Avançada",
     "section": "Para Praticar",
     "text": "Para Praticar\n\n-- Top-2 alunos por nota em cada disciplina (usando RANK com PARTITION)\nWITH ranked AS (\n    SELECT d.nome_disciplina,\n           a.nome                            AS aluno,\n           md.nota,\n           RANK() OVER (\n               PARTITION BY md.id_disciplina\n               ORDER BY md.nota DESC NULLS LAST\n           ) AS rank_na_turma\n    FROM   matricula_disciplina md\n    JOIN   aluno      a USING (id_aluno)\n    JOIN   disciplina d USING (id_disciplina)\n    WHERE  md.nota IS NOT NULL\n)\nSELECT nome_disciplina, aluno, nota, rank_na_turma\nFROM   ranked\nWHERE  rank_na_turma &lt;= 2\nORDER BY nome_disciplina, rank_na_turma;\n\n\nDisplaying records 1 - 10\n\n\nnome_disciplina\naluno\nnota\nrank_na_turma\n\n\n\n\nBases da Eng. de Software 2\nMatheus Silva\n9.0\n1\n\n\nBases da Eng. de Software 2\nDiego Correia\n6.1\n2\n\n\nBases da Eng. de Software 2\nLarissa Araújo\n6.1\n2\n\n\nBases da Eng. de Software 4\nLarissa Araújo\n9.0\n1\n\n\nBases da Eng. de Software 4\nIsabela Freitas\n7.7\n2\n\n\nBases da Eng. de Software 6\nMatheus Silva\n4.1\n1\n\n\nBases da Eng. de Software 6\nLarissa Araújo\n0.3\n2\n\n\nCulturas Digitais\nCamila Teixeira\n9.9\n1\n\n\nCulturas Digitais\nBeatriz Carvalho\n8.8\n2\n\n\nDesenvolvimento Humano\nLetícia Souza\n8.4\n1\n\n\n\n\n\n\n-- Resumo executivo: total de alunos e média salarial por centro (ROLLUP)\nSELECT COALESCE(ce.nome_centro, 'TOTAL GERAL') AS centro,\n       COUNT(DISTINCT a.id_aluno)              AS total_alunos,\n       ROUND(AVG(p.salario), 2)                AS media_salario_prof\nFROM   centro ce\nJOIN   escola  es ON es.id_centro = ce.id_centro\nLEFT JOIN curso c ON c.id_escola = es.id_escola\nLEFT JOIN aluno a ON a.id_curso  = c.id_curso\nLEFT JOIN professor p ON p.id_escola = es.id_escola\nGROUP BY ROLLUP(ce.nome_centro)\nORDER BY centro NULLS LAST;\n\n\n4 records\n\n\n\n\n\n\n\ncentro\ntotal_alunos\nmedia_salario_prof\n\n\n\n\nCentro de Educação, Magistério e Artes\n6\n4800.00\n\n\nCentro de Engenharias, Tecnologia e Inovação\n6\n4366.67\n\n\nCiências Humanas, Cidadania e Meio Ambiente\n6\n6550.00\n\n\nTOTAL GERAL\n18\n5114.29\n\n\n\n\n\n\n-- Percentil de cada professor no ranking salarial geral\nSELECT nome,\n       salario,\n       ROUND((PERCENT_RANK() OVER (ORDER BY salario) * 100)::NUMERIC, 1) AS percentil,\n       ROUND((CUME_DIST()    OVER (ORDER BY salario) * 100)::NUMERIC, 1) AS dist_acumulada\nFROM   professor\nORDER BY salario;\n\n\n7 records\n\n\nnome\nsalario\npercentil\ndist_acumulada\n\n\n\n\nIgor Melo\n3100\n0.0\n14.3\n\n\nEduarda Souza\n3200\n16.7\n28.6\n\n\nGustavo Costa\n3300\n33.3\n42.9\n\n\nFelipe Araujo\n6400\n50.0\n57.1\n\n\nBruno Teixeira\n6500\n66.7\n71.4\n\n\nCarla Pinto\n6600\n83.3\n85.7\n\n\nHelena Carvalho\n6700\n100.0\n100.0",
     "crumbs": [
       "Capítulo 5: SQL Avançado",
-      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Agregação Avançada</span>"
+      "<span class='chapter-number'>54</span>  <span class='chapter-title'>Agregação Avançada</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html",
+    "href": "content/cap05/05-acesso-python.html",
+    "title": "Acesso ao Banco via Python",
+    "section": "",
+    "text": "Instalação\nO SQL não é uma linguagem de programação completa: não suporta laços, entrada de usuário, chamadas de rede ou lógica de apresentação. Para construir uma aplicação real, é preciso combinar SQL com uma linguagem hospedeira — aqui, Python.\nEm Python, a biblioteca padrão para PostgreSQL é o psycopg2, que implementa a especificação DB-API 2.0 (PEP 249) — a mesma interface usada por sqlite3, pymysql e outras.",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#instalação",
+    "href": "content/cap05/05-acesso-python.html#instalação",
+    "title": "Acesso ao Banco via Python",
+    "section": "",
+    "text": "pip install psycopg2-binary",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#conectando-ao-postgresql",
+    "href": "content/cap05/05-acesso-python.html#conectando-ao-postgresql",
+    "title": "Acesso ao Banco via Python",
+    "section": "Conectando ao PostgreSQL",
+    "text": "Conectando ao PostgreSQL\nimport psycopg2\nimport os\n\nconn = psycopg2.connect(\n    dbname   = \"curso\",\n    host     = \"localhost\",\n    port     = 5432,\n    user     = \"postgres\",\n    password = os.getenv(\"POSTGRES_PASSWORD\", \"postgres\")\n)\n\n\n\n\n\n\n\n\nObjeto\nPapel\n\n\n\n\nconn\nRepresenta a sessão com o banco; mantém estado de transação\n\n\ncur = conn.cursor()\nCanal pelo qual se enviam SQL e se recebem resultados",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#executando-consultas-select",
+    "href": "content/cap05/05-acesso-python.html#executando-consultas-select",
+    "title": "Acesso ao Banco via Python",
+    "section": "Executando Consultas SELECT",
+    "text": "Executando Consultas SELECT\n\ncur = conn.cursor()\ncur.execute(\"SELECT nome, salario FROM professor ORDER BY salario DESC\")\n\nfor nome, salario in cur.fetchall():\n    print(f\"{nome}: R$ {salario:.2f}\")\n\ncur.close()\n\nHelena Carvalho: R$ 6700.00\nCarla Pinto: R$ 6600.00\nBruno Teixeira: R$ 6500.00\nFelipe Araujo: R$ 6400.00\nGustavo Costa: R$ 3300.00\nEduarda Souza: R$ 3200.00\nIgor Melo: R$ 3100.00\n\n\nAlternativas de fetch:\n\n\n\nMétodo\nRetorna\n\n\n\n\nfetchone()\nPróxima linha (ou None)\n\n\nfetchmany(n)\nAté n linhas\n\n\nfetchall()\nTodas as linhas restantes",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#sql-injection-o-perigo-das-strings-concatenadas",
+    "href": "content/cap05/05-acesso-python.html#sql-injection-o-perigo-das-strings-concatenadas",
+    "title": "Acesso ao Banco via Python",
+    "section": "SQL Injection — O Perigo das Strings Concatenadas",
+    "text": "SQL Injection — O Perigo das Strings Concatenadas\n\n\n\n\n\n\nAviso\n\n\n\nSQL Injection é uma das vulnerabilidades mais críticas (OWASP Top 10). Ocorre quando dados do usuário são inseridos diretamente em uma string SQL — permitindo que um atacante altere a estrutura da consulta.\n\n\n\nExemplo inseguro\nO código abaixo concatena o input do usuário diretamente na string SQL:\n# VULNERÁVEL — nunca faça isso\nescola_id = input(\"ID da escola: \")\n\nsql = \"SELECT nome FROM professor WHERE id_escola = \" + escola_id\ncur.execute(sql)\nQuando o usuário digita 31 OR 1=1 --, a variável sql fica:\nSELECT nome FROM professor WHERE id_escola = 31 OR 1=1 --\nO fragmento OR 1=1 é sempre verdadeiro — o filtro é completamente ignorado. Executando exatamente essa query no banco:\n\ncur = conn.cursor()\n\n# Simulando o código vulnerável com input malicioso\nescola_id_malicioso = \"31 OR 1=1 --\"\nsql_injetado = \"SELECT nome FROM professor WHERE id_escola = \" + escola_id_malicioso\n\ncur.execute(sql_injetado)\nrows = cur.fetchall()\n\nprint(f\"Professores retornados com input '{escola_id_malicioso}':\")\nprint(f\"  → {len(rows)} linha(s) — deveria retornar apenas os da escola 31\\n\")\nfor (nome,) in rows:\n    print(f\"  {nome}\")\n\ncur.close()\n\nProfessores retornados com input '31 OR 1=1 --':\n  → 7 linha(s) — deveria retornar apenas os da escola 31\n\n  Eduarda Souza\n  Felipe Araujo\n  Helena Carvalho\n  Igor Melo\n  Bruno Teixeira\n  Carla Pinto\n  Gustavo Costa\n\n\nTodos os professores foram retornados — independente da escola pedida. Além do OR 1=1, um atacante pode usar UNION SELECT para exfiltrar dados de outras tabelas ou ; DROP TABLE para destruir dados.\n\n\nSolução: Consultas Parametrizadas\nCom consultas parametrizadas, o valor do usuário é enviado separado da query — nunca como parte do texto SQL:\n# SEGURO — use sempre parâmetros\nescola_id = input(\"ID da escola: \")\n\ncur.execute(\n    \"SELECT nome FROM professor WHERE id_escola = %s\",\n    (escola_id,)   # psycopg2 envia como parâmetro $1, nunca concatena no SQL\n)\nQuando escola_id = \"31 OR 1=1 --\", psycopg2 envia ao PostgreSQL:\n\nQuery template: SELECT nome FROM professor WHERE id_escola = $1\nParâmetro $1: a string literal 31 OR 1=1 --\n\nO PostgreSQL recebe um texto e tenta compará-lo com a coluna id_escola (tipo INTEGER). Como \"31 OR 1=1 --\" não é um inteiro válido, o banco rejeita e lança um erro — que o Python captura normalmente:\n\nimport psycopg2.errors\n\ncur = conn.cursor()\nescola_id_malicioso = \"31 OR 1=1 --\"\n\ntry:\n    cur.execute(\n        \"SELECT nome FROM professor WHERE id_escola = %s\",\n        (escola_id_malicioso,)\n    )\n    rows = cur.fetchall()\n    print(f\"{len(rows)} linha(s) retornada(s)\")\nexcept psycopg2.errors.InvalidTextRepresentation as e:\n    conn.rollback()  # limpa o estado de erro da conexão\n    print(\"PostgreSQL bloqueou a operação:\")\n    print(f\"  {e.diag.message_primary}\")\n    print(f\"\\n  → O input foi tratado como DADO, não como SQL.\")\n    print(f\"  → A estrutura da query permanece intacta.\")\n\ncur.close()\n\nPostgreSQL bloqueou a operação:\n  invalid input syntax for type integer: \"31 OR 1=1 --\"\n\n  → O input foi tratado como DADO, não como SQL.\n  → A estrutura da query permanece intacta.\n\n\nMesmo que o atacante forneça um input que seja um inteiro válido (como \"999\"), a query simplesmente retorna 0 linhas — nenhum SQL extra é executado:\n\ncur = conn.cursor()\nescola_id_invalido = \"999\"\n\ncur.execute(\n    \"SELECT nome FROM professor WHERE id_escola = %s\",\n    (int(escola_id_invalido),)\n)\nrows = cur.fetchall()\nprint(f\"Escola {escola_id_invalido}: {len(rows)} professor(es) — escola inexistente, 0 linhas.\")\ncur.close()\n\nEscola 999: 0 professor(es) — escola inexistente, 0 linhas.\n\n\n\nEm psycopg2, o marcador de posição é %s para qualquer tipo. A biblioteca envia query e parâmetros separadamente ao servidor via protocolo wire — o SQL enviado nunca contém os dados do usuário concatenados como texto.\nCompare com JDBC (Java), onde o marcador é ? em PreparedStatement — o mesmo princípio.",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#operações-dml-insert-update-delete",
+    "href": "content/cap05/05-acesso-python.html#operações-dml-insert-update-delete",
+    "title": "Acesso ao Banco via Python",
+    "section": "Operações DML (INSERT, UPDATE, DELETE)",
+    "text": "Operações DML (INSERT, UPDATE, DELETE)\ncur = conn.cursor()\n\n# INSERT com parâmetros\ncur.execute(\n    \"\"\"\n    INSERT INTO evento_academico\n        (nome, tipo, id_escola, data_inicio, data_fim, hora_inicio, hora_fim)\n    VALUES (%s, %s, %s, %s, %s, %s, %s)\n    \"\"\",\n    (\"Hackathon UnDF\", \"Workshop\", 31, \"2026-09-15\", \"2026-09-16\", \"08:00\", \"22:00\")\n)\n\n# UPDATE\ncur.execute(\n    \"UPDATE professor SET salario = %s WHERE id_prof = %s\",\n    (6900.00, 31400002)\n)\nprint(f\"Linhas afetadas: {cur.rowcount}\")\n\nconn.commit()\ncur.close()",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#controle-de-transações",
+    "href": "content/cap05/05-acesso-python.html#controle-de-transações",
+    "title": "Acesso ao Banco via Python",
+    "section": "Controle de Transações",
+    "text": "Controle de Transações\nPor padrão, psycopg2 inicia uma transação implicitamente na primeira instrução. Para confirmar ou desfazer:\ncur = conn.cursor()\ntry:\n    # As duas instruções são atômicas: confirmam juntas ou nenhuma confirma\n    cur.execute(\"UPDATE professor SET salario = salario * 1.10 WHERE id_escola = 31\")\n    cur.execute(\"UPDATE professor SET salario = salario * 0.95 WHERE id_escola = 21\")\n    conn.commit()\n    print(\"Transação confirmada.\")\nexcept Exception as e:\n    conn.rollback()\n    print(f\"Erro — rollback realizado: {e}\")\nfinally:\n    cur.close()\nPara operações de leitura simples onde transação explícita não é necessária:\nconn.autocommit = True   # cada instrução é confirmada imediatamente",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#padrão-completo-com-context-manager",
+    "href": "content/cap05/05-acesso-python.html#padrão-completo-com-context-manager",
+    "title": "Acesso ao Banco via Python",
+    "section": "Padrão Completo com Context Manager",
+    "text": "Padrão Completo com Context Manager\nimport psycopg2, os\nfrom contextlib import closing\n\ndsn = dict(dbname=\"curso\", host=\"localhost\", port=5432,\n           user=\"postgres\", password=os.getenv(\"POSTGRES_PASSWORD\",\"postgres\"))\n\nwith psycopg2.connect(**dsn) as conn:\n    with closing(conn.cursor()) as cur:\n        cur.execute(\"\"\"\n            SELECT e.sigla, COUNT(p.id_prof) AS professores\n            FROM   escola e\n            LEFT JOIN professor p ON p.id_escola = e.id_escola\n            GROUP BY e.sigla\n            ORDER BY professores DESC\n        \"\"\")\n        for sigla, total in cur.fetchall():\n            print(f\"{sigla}: {total} professor(es)\")\n    conn.commit()\n\n\n\n\n\n\nNota\n\n\n\nO with psycopg2.connect(...) chama conn.commit() ao sair sem exceção, ou conn.rollback() se uma exceção ocorrer.",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
+    ]
+  },
+  {
+    "objectID": "content/cap05/05-acesso-python.html#para-praticar",
+    "href": "content/cap05/05-acesso-python.html#para-praticar",
+    "title": "Acesso ao Banco via Python",
+    "section": "Para Praticar",
+    "text": "Para Praticar\nOs trechos abaixo são exercícios para executar localmente (requerem Python + psycopg2):\n# Exercício 1: listar alunos de um curso específico\nimport psycopg2, os\n\ndef alunos_do_curso(id_curso: int):\n    conn = psycopg2.connect(\n        dbname=\"curso\", host=\"localhost\", port=5432,\n        user=\"postgres\", password=os.getenv(\"POSTGRES_PASSWORD\",\"postgres\")\n    )\n    cur = conn.cursor()\n    cur.execute(\"\"\"\n        SELECT a.nome, a.ano_ingresso\n        FROM   aluno a\n        WHERE  a.id_curso = %s\n        ORDER BY a.nome\n    \"\"\", (id_curso,))\n    for nome, ano in cur.fetchall():\n        print(f\"  {nome} ({ano})\")\n    cur.close()\n    conn.close()\n\nalunos_do_curso(311)   # Engenharia de Software\n# Exercício 2: matrícula segura — trata violações de FK e UNIQUE\ndef matricular(conn, id_aluno, id_disciplina, ano, semestre, turma):\n    cur = conn.cursor()\n    try:\n        cur.execute(\"\"\"\n            INSERT INTO matricula_disciplina\n                (id_disciplina, ano, semestre, turma, id_aluno)\n            VALUES (%s, %s, %s, %s, %s)\n        \"\"\", (id_disciplina, ano, semestre, turma, id_aluno))\n        conn.commit()\n        print(\"Matrícula realizada.\")\n    except psycopg2.errors.ForeignKeyViolation:\n        conn.rollback()\n        print(\"Turma não encontrada — matrícula cancelada.\")\n    except psycopg2.errors.UniqueViolation:\n        conn.rollback()\n        print(\"Aluno já matriculado nesta turma.\")\n    finally:\n        cur.close()",
+    "crumbs": [
+      "Capítulo 5: SQL Avançado",
+      "<span class='chapter-number'>55</span>  <span class='chapter-title'>Acesso ao Banco via Python</span>"
     ]
   },
   {
