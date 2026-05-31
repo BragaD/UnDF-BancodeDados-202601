@@ -879,7 +879,7 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Seq Scan on matricula_disciplina (cost=0.00..1519.20 rows=377 width=18) (actual time=0.008..4.350 rows=5 loops=1)</td>
+<td style="text-align: left;">Seq Scan on matricula_disciplina (cost=0.00..1519.20 rows=377 width=18) (actual time=0.007..4.173 rows=5 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Filter: (id_aluno = 2023111001)</td>
@@ -888,10 +888,10 @@ Nota
 <td style="text-align: left;">Rows Removed by Filter: 71048</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.057 ms</td>
+<td style="text-align: left;">Planning Time: 0.042 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 4.361 ms</td>
+<td style="text-align: left;">Execution Time: 4.183 ms</td>
 </tr>
 </tbody>
 </table>
@@ -924,7 +924,7 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=18) (actual time=0.025..0.026 rows=5 loops=1)</td>
+<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=18) (actual time=0.022..0.023 rows=5 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recheck Cond: (id_aluno = 2023111001)</td>
@@ -933,16 +933,16 @@ Nota
 <td style="text-align: left;">Heap Blocks: exact=1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.020..0.020 rows=5 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.019..0.019 rows=5 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: (id_aluno = 2023111001)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.149 ms</td>
+<td style="text-align: left;">Planning Time: 0.106 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.038 ms</td>
+<td style="text-align: left;">Execution Time: 0.033 ms</td>
 </tr>
 </tbody>
 </table>
@@ -972,16 +972,16 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Hash Join (cost=8.17..67.44 rows=8 width=336) (actual time=0.084..0.400 rows=160 loops=1)</td>
+<td style="text-align: left;">Hash Join (cost=8.17..67.44 rows=8 width=336) (actual time=0.083..0.396 rows=160 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hash Cond: (a.id_curso = c.id_curso)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-&gt; Seq Scan on aluno a (cost=0.00..54.36 rows=1836 width=122) (actual time=0.005..0.202 rows=2720 loops=1)</td>
+<td style="text-align: left;">-&gt; Seq Scan on aluno a (cost=0.00..54.36 rows=1836 width=122) (actual time=0.004..0.175 rows=2720 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Hash (cost=8.16..8.16 rows=1 width=222) (actual time=0.010..0.011 rows=1 loops=1)</td>
+<td style="text-align: left;">-&gt; Hash (cost=8.16..8.16 rows=1 width=222) (actual time=0.010..0.010 rows=1 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Buckets: 1024 Batches: 1 Memory Usage: 9kB</td>
@@ -993,10 +993,10 @@ Nota
 <td style="text-align: left;">Index Cond: ((sigla_curso)::text = ‘ENS’::text)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.182 ms</td>
+<td style="text-align: left;">Planning Time: 0.158 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.418 ms</td>
+<td style="text-align: left;">Execution Time: 0.413 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1025,16 +1025,16 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Nested Loop (cost=4.53..40.08 rows=12 width=336) (actual time=0.039..0.071 rows=160 loops=1)</td>
+<td style="text-align: left;">Nested Loop (cost=4.53..40.08 rows=12 width=336) (actual time=0.035..0.061 rows=160 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Index Scan using curso_sigla_curso_key on curso c (cost=0.14..8.16 rows=1 width=222) (actual time=0.005..0.005 rows=1 loops=1)</td>
+<td style="text-align: left;">-&gt; Index Scan using curso_sigla_curso_key on curso c (cost=0.14..8.16 rows=1 width=222) (actual time=0.005..0.006 rows=1 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: ((sigla_curso)::text = ‘ENS’::text)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Heap Scan on aluno a (cost=4.39..31.78 rows=14 width=122) (actual time=0.032..0.046 rows=160 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Heap Scan on aluno a (cost=4.39..31.78 rows=14 width=122) (actual time=0.027..0.039 rows=160 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Recheck Cond: (id_curso = c.id_curso)</td>
@@ -1043,16 +1043,16 @@ Nota
 <td style="text-align: left;">Heap Blocks: exact=4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_aluno_curso (cost=0.00..4.39 rows=14 width=0) (actual time=0.027..0.027 rows=160 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_aluno_curso (cost=0.00..4.39 rows=14 width=0) (actual time=0.023..0.023 rows=160 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Index Cond: (id_curso = c.id_curso)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.157 ms</td>
+<td style="text-align: left;">Planning Time: 0.135 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 0.092 ms</td>
+<td style="text-align: left;">Execution Time: 0.078 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1089,7 +1089,7 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Seq Scan on ministra (cost=0.00..123.20 rows=1 width=66) (actual time=0.007..0.539 rows=535 loops=1)</td>
+<td style="text-align: left;">Seq Scan on ministra (cost=0.00..123.20 rows=1 width=66) (actual time=0.006..0.425 rows=535 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Filter: ((ano = 2024) AND (semestre = 1))</td>
@@ -1098,10 +1098,10 @@ Nota
 <td style="text-align: left;">Rows Removed by Filter: 5637</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.035 ms</td>
+<td style="text-align: left;">Planning Time: 0.029 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.566 ms</td>
+<td style="text-align: left;">Execution Time: 0.449 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1130,16 +1130,16 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Index Scan using idx_ministra_ano_sem on ministra (cost=0.28..8.30 rows=1 width=66) (actual time=0.025..0.144 rows=535 loops=1)</td>
+<td style="text-align: left;">Index Scan using idx_ministra_ano_sem on ministra (cost=0.28..8.30 rows=1 width=66) (actual time=0.021..0.096 rows=535 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Index Cond: ((ano = 2024) AND (semestre = 1))</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.112 ms</td>
+<td style="text-align: left;">Planning Time: 0.085 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 0.172 ms</td>
+<td style="text-align: left;">Execution Time: 0.120 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1177,7 +1177,7 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bitmap Heap Scan on ministra (cost=4.52..64.44 rows=31 width=66) (actual time=0.045..0.167 rows=963 loops=1)</td>
+<td style="text-align: left;">Bitmap Heap Scan on ministra (cost=4.52..64.44 rows=31 width=66) (actual time=0.040..0.158 rows=963 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recheck Cond: (ano = 2024)</td>
@@ -1186,16 +1186,16 @@ Nota
 <td style="text-align: left;">Heap Blocks: exact=50</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..4.51 rows=31 width=0) (actual time=0.036..0.037 rows=963 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..4.51 rows=31 width=0) (actual time=0.032..0.032 rows=963 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: (ano = 2024)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.052 ms</td>
+<td style="text-align: left;">Planning Time: 0.026 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.209 ms</td>
+<td style="text-align: left;">Execution Time: 0.198 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1219,7 +1219,7 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bitmap Heap Scan on ministra (cost=78.58..138.50 rows=31 width=66) (actual time=0.118..0.546 rows=3388 loops=1)</td>
+<td style="text-align: left;">Bitmap Heap Scan on ministra (cost=78.58..138.50 rows=31 width=66) (actual time=0.093..0.443 rows=3388 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recheck Cond: (semestre = 1)</td>
@@ -1228,16 +1228,16 @@ Nota
 <td style="text-align: left;">Heap Blocks: exact=63</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..78.57 rows=31 width=0) (actual time=0.106..0.106 rows=3388 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_ministra_ano_sem (cost=0.00..78.57 rows=31 width=0) (actual time=0.084..0.084 rows=3388 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: (semestre = 1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.033 ms</td>
+<td style="text-align: left;">Planning Time: 0.026 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.684 ms</td>
+<td style="text-align: left;">Execution Time: 0.562 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1374,10 +1374,10 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Aggregate (cost=1465.05..1465.06 rows=1 width=8) (actual time=8.945..8.945 rows=1 loops=1)</td>
+<td style="text-align: left;">Aggregate (cost=1465.05..1465.06 rows=1 width=8) (actual time=8.877..8.878 rows=1 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Seq Scan on matricula_disciplina (cost=0.00..1464.16 rows=355 width=0) (actual time=0.006..6.416 rows=65328 loops=1)</td>
+<td style="text-align: left;">-&gt; Seq Scan on matricula_disciplina (cost=0.00..1464.16 rows=355 width=0) (actual time=0.013..6.375 rows=65328 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Filter: (aprovado = 1)</td>
@@ -1386,10 +1386,10 @@ Nota
 <td style="text-align: left;">Rows Removed by Filter: 5725</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.047 ms</td>
+<td style="text-align: left;">Planning Time: 0.038 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 8.957 ms</td>
+<td style="text-align: left;">Execution Time: 8.888 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1414,10 +1414,10 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Aggregate (cost=539.63..539.64 rows=1 width=8) (actual time=8.671..8.671 rows=1 loops=1)</td>
+<td style="text-align: left;">Aggregate (cost=539.63..539.64 rows=1 width=8) (actual time=8.672..8.672 rows=1 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=0) (actual time=1.477..6.143 rows=65328 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Heap Scan on matricula_disciplina (cost=7.04..538.74 rows=355 width=0) (actual time=1.447..6.144 rows=65328 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Recheck Cond: (aprovado = 1)</td>
@@ -1426,16 +1426,16 @@ Nota
 <td style="text-align: left;">Heap Blocks: exact=523</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=1.419..1.419 rows=65328 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=1.389..1.389 rows=65328 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Index Cond: (aprovado = 1)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.099 ms</td>
+<td style="text-align: left;">Planning Time: 0.117 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 8.685 ms</td>
+<td style="text-align: left;">Execution Time: 8.686 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1488,31 +1488,31 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=14.16..21.84 rows=2 width=16) (actual time=0.241..0.242 rows=0 loops=1)</td>
+<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=14.16..21.84 rows=2 width=16) (actual time=0.195..0.196 rows=0 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recheck Cond: ((aprovado = 0) AND (id_aluno = 2023111001))</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-&gt; BitmapAnd (cost=14.16..14.16 rows=2 width=0) (actual time=0.239..0.240 rows=0 loops=1)</td>
+<td style="text-align: left;">-&gt; BitmapAnd (cost=14.16..14.16 rows=2 width=0) (actual time=0.194..0.194 rows=0 loops=1)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=0.221..0.221 rows=5725 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aprovado (cost=0.00..6.96 rows=355 width=0) (actual time=0.157..0.157 rows=5725 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: (aprovado = 0)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.004..0.004 rows=5 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_mat_aluno (cost=0.00..6.96 rows=355 width=0) (actual time=0.025..0.026 rows=5 loops=1)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Index Cond: (id_aluno = 2023111001)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.044 ms</td>
+<td style="text-align: left;">Planning Time: 0.035 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.254 ms</td>
+<td style="text-align: left;">Execution Time: 0.206 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1542,22 +1542,22 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=4.30..11.97 rows=2 width=16) (actual time=0.022..0.022 rows=0 loops=1)</td>
+<td style="text-align: left;">Bitmap Heap Scan on matricula_disciplina (cost=4.30..11.97 rows=2 width=16) (actual time=0.018..0.019 rows=0 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recheck Cond: ((id_aluno = 2023111001) AND (aprovado = 0))</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_reprovados (cost=0.00..4.30 rows=2 width=0) (actual time=0.021..0.021 rows=0 loops=1)</td>
+<td style="text-align: left;">-&gt; Bitmap Index Scan on idx_reprovados (cost=0.00..4.30 rows=2 width=0) (actual time=0.018..0.018 rows=0 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Index Cond: (id_aluno = 2023111001)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Planning Time: 0.125 ms</td>
+<td style="text-align: left;">Planning Time: 0.104 ms</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Execution Time: 0.032 ms</td>
+<td style="text-align: left;">Execution Time: 0.033 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1591,7 +1591,7 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Seq Scan on aluno (cost=0.00..70.00 rows=14 width=126) (actual time=0.011..0.188 rows=136 loops=1)</td>
+<td style="text-align: left;">Seq Scan on aluno (cost=0.00..70.00 rows=14 width=126) (actual time=0.006..0.207 rows=136 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Filter: ((nome)::text <sub></sub> ‘A%’::text)</td>
@@ -1600,10 +1600,10 @@ Aviso
 <td style="text-align: left;">Rows Removed by Filter: 2584</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.117 ms</td>
+<td style="text-align: left;">Planning Time: 0.120 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 0.198 ms</td>
+<td style="text-align: left;">Execution Time: 0.217 ms</td>
 </tr>
 </tbody>
 </table>
@@ -1628,7 +1628,7 @@ Aviso
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Seq Scan on matricula_disciplina (cost=0.00..1641.80 rows=355 width=16) (actual time=0.008..7.755 rows=13511 loops=1)</td>
+<td style="text-align: left;">Seq Scan on matricula_disciplina (cost=0.00..1641.80 rows=355 width=16) (actual time=0.007..7.740 rows=13511 loops=1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Filter: ((nota &gt;= 9.0) AND (nota &lt;= 10.0))</td>
@@ -1637,10 +1637,10 @@ Aviso
 <td style="text-align: left;">Rows Removed by Filter: 57542</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Planning Time: 0.031 ms</td>
+<td style="text-align: left;">Planning Time: 0.026 ms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Execution Time: 8.206 ms</td>
+<td style="text-align: left;">Execution Time: 8.187 ms</td>
 </tr>
 </tbody>
 </table>
