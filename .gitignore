@@ -32,6 +32,10 @@ matriz-curricular/
 # dados scripts
 dados/*.py
 
+# dados taxi arquivos
+dados/taxi/*.csv
+dados/taxi/*.parquet
+
 # VSCode
 .vscode/
 
