@@ -184,3 +184,30 @@ Chunks SQL usam `--| connection: con` (prefixo `--`, não `#|`).
 ### Carregamento dos dados
 
 O arquivo `content/cap01/13-hands-on-postgresql.qmd` cria todas as tabelas via DDL e carrega os CSVs com `dbWriteTable(con, tabela, df, append=TRUE)`, lendo de `dados/amostra/`. A limpeza antes do reload usa `DELETE FROM` em ordem reversa de FK (dentro de `tryCatch`). **Não usar `overwrite=TRUE`** — isso derrubaria as constraints FK.
+
+## Dados Completos (dados/ vs dados/amostra/)
+
+Em `dados/` existem CSVs completos da UnDF (sem `/amostra/`):
+- `alunos.csv` — 2.720 linhas; `matricula_disciplina.csv` — 71.053 linhas
+- Separador `;` (igual aos CSVs de amostra)
+- Usar para demos de performance (índices, EXPLAIN ANALYZE)
+
+DDL diferente do banco `curso` ao usar esses CSVs:
+- `nome_disciplina TEXT` — alguns nomes têm até 209 caracteres (não `VARCHAR(100)`)
+- `CHECK (carga_horaria >= 0)` — "Atividades Complementares" tem `carga_horaria = 0`
+
+## Caminho Relativo em Chunks R
+
+O diretório de trabalho de cada `.qmd` é o diretório do **arquivo**, não a raiz do projeto. Um arquivo em `content/cap04/` deve referenciar os CSVs como `../../dados/arquivo.csv`.
+
+## Banco Separado para Demos de Performance
+
+Padrão usado em `content/cap04/06-indices.qmd`: criar `curso_grande` com o dataset completo, conectar via `con_grande`, e destruir as tabelas ao final. Todo o setup fica em chunks `include: false`. Conectar ao banco `postgres` (admin) para emitir `CREATE DATABASE`. Use `dbGetQuery` (não `dbExecute`) para `pg_terminate_backend`, que retorna linhas.
+
+## Saída de Chunks SQL — Limite de Linhas
+
+Por padrão o knitr trunca a saída SQL em ~10 linhas. Para mostrar EXPLAIN ANALYZE completo, adicionar ao chunk de setup da página: `knitr::opts_chunk$set(max.print = NA)`
+
+## Reordenar Seções de um Capítulo
+
+Usar `git mv` para renomear arquivos numerados e atualizar `_quarto.yml` na mesma operação. A ordem no sidebar é definida por `_quarto.yml`, não pelo nome do arquivo.

@@ -1,0 +1,133 @@
+---
+title: "Trabalho em Dupla — Bancos de Dados NoSQL"
+subtitle: "Bases da Engenharia de Software 4 — Banco de Dados"
+author: "Douglas Braga"
+date: "2026-05-25"
+lang: pt
+format:
+  pdf:
+    documentclass: article
+    papersize: a4
+    geometry: "top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm"
+    fontsize: 11pt
+    linestretch: 1.3
+    toc: true
+    toc-title: "Sumário"
+    number-sections: true
+    colorlinks: true
+    linkcolor: NavyBlue
+    urlcolor: NavyBlue
+    include-in-header:
+      text: |
+        \usepackage{fancyhdr}
+        \usepackage{xcolor}
+        \usepackage{mdframed}
+        \usepackage{booktabs}
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[L]{\small Bases da Eng. de Software 4 --- Banco de Dados}
+        \fancyhead[R]{\small UnDF / 2026.1}
+        \fancyfoot[C]{\thepage}
+        \renewcommand{\headrulewidth}{0.4pt}
+        \definecolor{entregabox}{RGB}{230,245,230}
+        \definecolor{atencaobox}{RGB}{255,243,205}
+execute:
+  echo: false
+  eval: false
+---
+
+\newmdenv[backgroundcolor=entregabox, linecolor=green!50!black, linewidth=1pt, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt]{entregabox}
+
+\newmdenv[backgroundcolor=atencaobox, linecolor=orange!80!black, linewidth=1pt, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt]{atencaobox}
+
+---
+
+# Apresentação
+
+Este trabalho tem como objetivo apresentar à turma diferentes soluções de armazenamento de dados fora do modelo relacional tradicional — os chamados bancos de dados **NoSQL** (*Not Only SQL*). Cada dupla irá pesquisar um banco de dados específico, preparar uma apresentação oral e compartilhar com a turma as características, vantagens, limitações e casos reais de uso do sistema escolhido.
+
+Não é necessária a entrega de relatório escrito. A avaliação será feita inteiramente com base na apresentação oral.
+
+---
+
+# Escolha do Tema
+
+Cada dupla deve escolher **um** dos temas da lista abaixo. **Não é permitida a repetição de temas** — a escolha será registrada em sala de aula por ordem de manifestação.
+
+| \# | Banco de Dados | Categoria |
+|:---:|---|---|
+| 1 | **MongoDB** | Orientado a Documentos |
+| 2 | **Apache CouchDB** | Orientado a Documentos |
+| 3 | **Neo4j** | Grafos |
+| 4 | **Amazon Neptune** | Grafos |
+| 5 | **Apache Cassandra** | Colunar |
+| 6 | **Apache HBase** | Colunar |
+| 7 | **ClickHouse** | Analítico (OLAP) |
+| 8 | **DuckDB** | Analítico (OLAP) |
+| 9 | **Redis** | Chave-Valor / In-Memory |
+| 10 | **ObjectDB** | Orientado a Objetos |
+
+---
+
+# Conteúdo Obrigatório
+
+A apresentação deve cobrir, obrigatoriamente, os seguintes tópicos:
+
+## O que é e como funciona
+
+Explique o modelo de dados utilizado: como as informações são organizadas e armazenadas, qual a unidade básica de dados (documento, nó, coluna, objeto, chave-valor), como são feitas as consultas e qual linguagem ou API é usada para isso.
+
+## Exemplos de Aplicações
+
+Descreva **pelo menos três tipos de problemas ou domínios** nos quais esse banco de dados é adequado. Explique por que o modelo NoSQL escolhido é mais apropriado que um banco relacional nesses contextos.
+
+## Vantagens e Desvantagens
+
+Apresente os pontos fortes e as limitações do banco. Compare com bancos relacionais e, quando pertinente, com outros bancos NoSQL. Seja específico: evite afirmações genéricas como "é mais rápido" sem contextualizar em que cenário e por quê.
+
+## Aplicação Real
+
+Escolha **uma empresa ou sistema real** que utiliza esse banco de dados em produção. Descreva:
+
+- Qual problema o banco resolve nesse contexto;
+- A escala aproximada de dados ou usuários;
+- Por que esse banco foi escolhido em vez de alternativas.
+
+## Hardware e Escalabilidade
+
+Descreva o tipo de infraestrutura típica para esse banco:
+
+- Escalabilidade horizontal (mais máquinas) ou vertical (máquinas maiores)?
+- Como o banco lida com particionamento e replicação dos dados?
+- Qual o perfil de hardware recomendado (memória, disco, rede)?
+- Existe suporte a nuvem (AWS, GCP, Azure)? Há versão gerenciada disponível?
+
+---
+
+# Critérios de Avaliação
+
+| Critério | Peso |
+|---|---|
+| Domínio do conteúdo técnico — profundidade e precisão | 40% |
+| Qualidade dos exemplos e da aplicação real | 25% |
+| Clareza, organização e objetividade da apresentação | 20% |
+| Cumprimento do tempo (15 a 20 minutos) | 15% |
+
+\begin{atencaobox}
+\textbf{Atenção:} A apresentação deve ser feita pelos dois integrantes da dupla. A participação ativa de ambos é parte da avaliação. Leituras de slides sem explicação própria serão avaliadas negativamente.
+\end{atencaobox}
+
+---
+
+# Dicas de Pesquisa
+
+- Documentação oficial do banco de dados (sempre a fonte mais confiável);
+- Site **db-engines.com** — ranking e comparações entre bancos de dados;
+- Canal do YouTube e blog oficial de cada banco frequentemente publicam casos de uso reais;
+- Artigos técnicos de empresas como Netflix, Uber, LinkedIn e Airbnb descrevem em detalhes por que e como usam determinados bancos.
+
+---
+
+\begin{entregabox}
+\textbf{Apresentações:} As datas serão definidas em sala de aula. Cada dupla terá entre 15 e 20 minutos para a apresentação, seguidos de até 5 minutos de perguntas da turma e do professor. O uso de slides é recomendado, mas não obrigatório. Não é necessária a entrega de relatório ou material escrito.
+\end{entregabox}

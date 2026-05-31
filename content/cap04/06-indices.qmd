@@ -13,7 +13,140 @@ con <- dbConnect(
   user     = "postgres",
   password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
 )
-knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(warning = FALSE, max.print = NA)
+```
+
+```{r}
+#| label: setup-grande
+#| include: false
+
+# Cria o banco curso_grande com os CSVs completos (oculto do livro)
+pg_pwd <- Sys.getenv("POSTGRES_PASSWORD", "postgres")
+
+con_admin <- dbConnect(
+  RPostgres::Postgres(),
+  dbname = "postgres", host = "localhost", port = 5432,
+  user = "postgres", password = pg_pwd
+)
+
+# Encerra conexões ativas ao banco (se existir) e o recria
+dbGetQuery(con_admin,
+  "SELECT pg_terminate_backend(pid)
+   FROM   pg_stat_activity
+   WHERE  datname = 'curso_grande' AND pid <> pg_backend_pid()"
+)
+dbExecute(con_admin, "DROP DATABASE IF EXISTS curso_grande")
+dbExecute(con_admin, "CREATE DATABASE curso_grande")
+dbDisconnect(con_admin)
+
+con_grande <- dbConnect(
+  RPostgres::Postgres(),
+  dbname = "curso_grande", host = "localhost", port = 5432,
+  user = "postgres", password = pg_pwd
+)
+
+# DDL idêntico ao banco curso (com constraints FK)
+dbExecute(con_grande, "
+  CREATE TABLE centro (
+    id_centro   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
+    nome_centro VARCHAR(100) NOT NULL
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE escola (
+    id_escola   INTEGER      PRIMARY KEY,
+    sigla       VARCHAR(10)  NOT NULL UNIQUE,
+    nome_escola VARCHAR(100) NOT NULL,
+    id_centro   INTEGER      REFERENCES centro(id_centro)
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE curso (
+    id_curso      INTEGER      PRIMARY KEY,
+    sigla_curso   VARCHAR(5)   NOT NULL UNIQUE,
+    nome_curso    VARCHAR(100) NOT NULL,
+    id_escola     INTEGER      REFERENCES escola(id_escola),
+    n_semestres   INTEGER      NOT NULL,
+    carga_horaria INTEGER      NOT NULL,
+    tipo_curso    VARCHAR(20)  NOT NULL
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE professor (
+    id_prof    INTEGER       PRIMARY KEY,
+    nome       VARCHAR(50)   NOT NULL,
+    id_escola  INTEGER       REFERENCES escola(id_escola),
+    ch_semanal INTEGER       NOT NULL,
+    salario    NUMERIC(10,2) NOT NULL
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE aluno (
+    id_aluno     INTEGER     PRIMARY KEY,
+    nome         VARCHAR(50) NOT NULL,
+    id_curso     INTEGER     REFERENCES curso(id_curso),
+    ano_ingresso INTEGER     NOT NULL
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE disciplina (
+    id_disciplina   INTEGER      PRIMARY KEY,
+    nome_disciplina TEXT NOT NULL,
+    id_curso        INTEGER      REFERENCES curso(id_curso),
+    semestre        INTEGER      NOT NULL,
+    carga_horaria   INTEGER      NOT NULL CHECK (carga_horaria >= 0)
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE prereq (
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    id_prereq     INTEGER REFERENCES disciplina(id_disciplina),
+    PRIMARY KEY (id_disciplina, id_prereq)
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE ministra (
+    id_disciplina INTEGER REFERENCES disciplina(id_disciplina),
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_prof       INTEGER REFERENCES professor(id_prof),
+    horario       VARCHAR(50),
+    sala          VARCHAR(20),
+    PRIMARY KEY (id_disciplina, ano, semestre, turma)
+  )")
+
+dbExecute(con_grande, "
+  CREATE TABLE matricula_disciplina (
+    id_disciplina INTEGER NOT NULL,
+    ano           INTEGER NOT NULL,
+    semestre      INTEGER NOT NULL,
+    turma         INTEGER NOT NULL,
+    id_aluno      INTEGER REFERENCES aluno(id_aluno),
+    nota          NUMERIC(4,1),
+    aprovado      SMALLINT,
+    PRIMARY KEY (id_disciplina, ano, semestre, turma, id_aluno),
+    FOREIGN KEY (id_disciplina, ano, semestre, turma)
+      REFERENCES ministra(id_disciplina, ano, semestre, turma)
+  )")
+
+# Carrega CSVs na ordem correta de FKs
+load_csv <- function(file, tabela, con) {
+  df <- read.csv(file, sep = ";", stringsAsFactors = FALSE)
+  dbWriteTable(con, tabela, df, append = TRUE)
+}
+
+raiz <- "../../dados"
+load_csv(file.path(raiz, "centros.csv"),              "centro",               con_grande)
+load_csv(file.path(raiz, "escolas.csv"),              "escola",               con_grande)
+load_csv(file.path(raiz, "cursos.csv"),               "curso",                con_grande)
+load_csv(file.path(raiz, "professores.csv"),          "professor",            con_grande)
+load_csv(file.path(raiz, "alunos.csv"),               "aluno",                con_grande)
+load_csv(file.path(raiz, "disciplinas.csv"),          "disciplina",           con_grande)
+load_csv(file.path(raiz, "prereq.csv"),               "prereq",               con_grande)
+load_csv(file.path(raiz, "ministra.csv"),             "ministra",             con_grande)
+load_csv(file.path(raiz, "matricula_disciplina.csv"), "matricula_disciplina", con_grande)
 ```
 
 Muitas consultas acessam apenas uma pequena fração das tuplas de uma tabela. Percorrer todas as linhas para encontrar as que satisfazem um predicado — **varredura sequencial** (*sequential scan*) — é ineficiente quando a tabela é grande. Um **índice** resolve esse problema.
@@ -32,28 +165,167 @@ CREATE INDEX <nome> ON <relação> (<atributo>);
 
 O índice mais comum em SGBDs relacionais é a **B-tree** (árvore-B), que suporta eficientemente buscas por igualdade, comparações e ordenações. O PostgreSQL também oferece índices `HASH`, `GIN` e `GiST` para casos específicos.
 
-## Criando Índices
+## Demonstração com Dados Reais
 
-```sql
--- Índice simples sobre id_curso na tabela aluno
--- Acelera consultas como: WHERE id_curso = 311
+::: {.callout-note}
+Os exemplos desta seção utilizam a **base de dados completa** da UnDF — com 2.720 alunos, 730 disciplinas, 6.172 ofertas de turmas e **71.053 matrículas** — em vez da amostra com 18 alunos usada nos capítulos anteriores. Com esse volume de dados, o impacto dos índices é perceptível nos tempos de execução.
+:::
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+SELECT
+  'aluno'                AS tabela, COUNT(*) AS linhas FROM aluno
+UNION ALL
+SELECT 'disciplina',               COUNT(*)           FROM disciplina
+UNION ALL
+SELECT 'ministra',                 COUNT(*)           FROM ministra
+UNION ALL
+SELECT 'matricula_disciplina',     COUNT(*)           FROM matricula_disciplina
+ORDER BY linhas DESC;
+```
+
+### Sem índice — varredura sequencial
+
+Vamos buscar todas as matrículas de um aluno específico. Primeiro, **sem nenhum índice extra** sobre `id_aluno`:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, nota, aprovado
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023111001;
+```
+
+O plano exibe **Seq Scan** com `rows=71053`: o PostgreSQL lê a tabela inteira para encontrar as matrículas do aluno. O campo `actual time` mostra o tempo real gasto.
+
+### Com índice — acesso direto
+
+Criamos um índice B-tree sobre `id_aluno`:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+--| output: false
+CREATE INDEX idx_mat_aluno ON matricula_disciplina (id_aluno);
+```
+
+A mesma consulta agora usa o índice:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, nota, aprovado
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023111001;
+```
+
+O plano muda para **Index Scan** (ou **Bitmap Index Scan**). O PostgreSQL percorre a árvore B-tree em O(log n) para localizar as entradas de `2023111001`, depois acessa diretamente as páginas de disco onde essas linhas estão — sem ler o restante da tabela.
+
+### Índice em junções
+
+Índices também aceleram JOINs. Sem índice em `aluno(id_curso)`:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT a.nome, c.nome_curso
+FROM   aluno a
+JOIN   curso c USING (id_curso)
+WHERE  c.sigla_curso = 'ENS';
+```
+
+Após criar o índice:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+--| output: false
 CREATE INDEX idx_aluno_curso ON aluno (id_curso);
 ```
 
-```sql
--- Índice composto: acelera consultas que filtram por ano E semestre
-CREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT a.nome, c.nome_curso
+FROM   aluno a
+JOIN   curso c USING (id_curso)
+WHERE  c.sigla_curso = 'ENS';
 ```
 
+## Criando Índices
+
 ```sql
+-- Índice simples
+CREATE INDEX idx_aluno_curso ON aluno (id_curso);
+
+-- Índice composto: acelera filtros que combinam ano E semestre
+CREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);
+
 -- Índice único: garante unicidade além de acelerar buscas
 CREATE UNIQUE INDEX idx_prof_nome_escola ON professor (nome, id_escola);
 ```
 
-Verificando os índices criados no banco:
+**Índice composto** — consultas frequentes por ano e semestre em `ministra`:
 
 ```{sql}
---| connection: con
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, id_prof, sala
+FROM   ministra
+WHERE  ano = 2024 AND semestre = 1;
+```
+
+### Criando o índice composto:
+```{sql}
+--| connection: con_grande
+--| eval: true
+--| output: false
+CREATE INDEX idx_ministra_ano_sem ON ministra (ano, semestre);
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, id_prof, sala
+FROM   ministra
+WHERE  ano = 2024 AND semestre = 1;
+```
+
+::: {.callout-note}
+Um índice composto `(a, b)` também serve para buscas só por `a` (o prefixo), mas **não** para buscas só por `b`. Se precisar filtrar apenas pelo segundo componente, crie um índice separado.
+:::
+
+Utilizando o índice para consultar apenas para uma coluna do índice composto:
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, id_prof, sala
+FROM   ministra
+WHERE  ano = 2024;
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, id_prof, sala
+FROM   ministra
+WHERE  semestre = 1;
+```
+
+Verificando os índices criados:
+
+```{sql}
+--| connection: con_grande
 --| eval: true
 SELECT tablename AS tabela,
        indexname AS indice,
@@ -71,20 +343,36 @@ Sem índice, para executar:
 SELECT * FROM aluno WHERE id_curso = 311;
 ```
 
-o SGBD lê **cada linha** da tabela `aluno` e verifica o predicado — O(n) operações.
+o SGBD lê **cada linha** da tabela — O(n) operações de I/O.
 
-Com um índice B-tree sobre `id_curso`, o SGBD percorre a árvore em O(log n) para encontrar as entradas com `id_curso = 311`, depois acessa diretamente as páginas de disco onde essas linhas estão armazenadas.
+Com um índice B-tree sobre `id_curso`, o SGBD percorre a árvore em O(log n) para encontrar as entradas com `id_curso = 311`, depois acessa diretamente as páginas de disco onde essas linhas estão. Para uma tabela de 1 milhão de linhas, isso reduz de ~1.000.000 leituras para ~20.
+
+## Cardinalidade: Quando o Índice Não Ajuda
+
+**Cardinalidade** é o número de valores distintos de uma coluna. Colunas com baixa cardinalidade (como `aprovado`, que assume apenas `0` ou `1`) são más candidatas a índice: quando metade das linhas satisfaz o predicado, o SGBD pode preferir varredura sequencial — percorrer o índice para então acessar metade da tabela pode ser mais lento do que ler tudo sequencialmente, ou o ganho ser marginal.
 
 ```{sql}
---| connection: con
+--| connection: con_grande
 --| eval: true
--- EXPLAIN mostra o plano de execução: com índice vs. sem índice
--- (Com tabelas pequenas como a da UnDF, o planner pode preferir seq scan mesmo com índice)
-EXPLAIN
-SELECT *
-FROM   aluno
-WHERE  id_curso = 311;
+EXPLAIN ANALYZE
+SELECT COUNT(*) FROM matricula_disciplina WHERE aprovado = 1;
 ```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+--| output: false
+CREATE INDEX idx_mat_aprovado ON matricula_disciplina (aprovado);
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT COUNT(*) FROM matricula_disciplina WHERE aprovado = 1;
+```
+
+Observe que o plano provavelmente ignora o índice e usa **Seq Scan** — o otimizador estimou que percorrer metade da tabela via índice custaria mais do que ler tudo em sequência.
 
 ## Tradeoffs dos Índices
 
@@ -93,61 +381,99 @@ WHERE  id_curso = 311;
 
 - **Ocupa espaço em disco** — pode ser significativo em tabelas grandes.
 - **Retarda inserções, atualizações e exclusões** — o SGBD precisa manter o índice sincronizado com os dados.
-- **Não é sempre utilizado** — o otimizador de consultas decide quando usar um índice com base em estatísticas da tabela.
+- **Não é sempre utilizado** — o otimizador decide quando usar um índice com base em estatísticas da tabela.
 
-Boas candidatas a índice: colunas usadas frequentemente em `WHERE`, `JOIN ON`, `ORDER BY` e que têm **alta cardinalidade** (muitos valores distintos).
+Boas candidatas a índice: colunas usadas frequentemente em `WHERE`, `JOIN ON`, `ORDER BY` com **alta cardinalidade** (muitos valores distintos).
 
-Más candidatas: colunas booleanas ou com poucos valores distintos (como `aprovado IN (0, 1)`) — o índice raramente compensa o custo.
+Más candidatas: colunas booleanas ou com poucos valores distintos (como `aprovado`).
 :::
 
 ## Índice Parcial
 
-O PostgreSQL permite criar índices **parciais** — que indexam apenas as linhas que satisfazem um predicado. São menores e mais eficientes que índices completos quando o caso de uso foco em um subconjunto:
+O PostgreSQL permite criar índices **parciais** — que indexam apenas as linhas que satisfazem um predicado. São menores e mais eficientes quando o caso de uso foca em um subconjunto:
 
-```sql
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, nota
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023111001
+  AND  aprovado = 0;
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+--| output: false
 -- Índice apenas para matrículas reprovadas (aprovado = 0)
--- Útil se consultas de reprovados são frequentes
 CREATE INDEX idx_reprovados ON matricula_disciplina (id_aluno)
 WHERE aprovado = 0;
 ```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+EXPLAIN ANALYZE
+SELECT id_disciplina, nota
+FROM   matricula_disciplina
+WHERE  id_aluno = 2023111001
+  AND  aprovado = 0;
+```
+
+O índice parcial é menor que um índice completo sobre `(id_aluno)` porque armazena entradas apenas das linhas reprovadas — tipicamente uma fração da tabela.
 
 ---
 
 ## Para Praticar
 
 ```{sql}
---| connection: con
+--| connection: con_grande
 --| eval: true
 --| output: false
---| warning: false
--- Criar índice na coluna nome de aluno (busca por nome é comum)
+-- Crie um índice no nome do aluno
 CREATE INDEX IF NOT EXISTS idx_aluno_nome ON aluno (nome);
 ```
 
 ```{sql}
---| connection: con
+--| connection: con_grande
 --| eval: true
--- Listar índices criados explicitamente (excluindo os de PK e FK automáticos)
+-- Busca por prefixo de nome: o índice é usado?
+EXPLAIN ANALYZE
+SELECT id_aluno, nome, id_curso
+FROM   aluno
+WHERE  nome LIKE 'A%';
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+-- Busca por intervalo de nota: o índice é usado?
+EXPLAIN ANALYZE
+SELECT id_aluno, nota
+FROM   matricula_disciplina
+WHERE  nota BETWEEN 9.0 AND 10.0;
+```
+
+```{sql}
+--| connection: con_grande
+--| eval: true
+-- Liste todos os índices criados explicitamente (sem PKs automáticas)
 SELECT indexname, tablename, indexdef
 FROM   pg_indexes
 WHERE  schemaname = 'public'
-  AND  indexname NOT LIKE 'pg_%'
   AND  indexname NOT LIKE '%_pkey'
 ORDER BY tablename, indexname;
 ```
 
-```{sql}
---| connection: con
---| eval: true
--- EXPLAIN ANALYZE: tempo real de execução com e sem uso de índice
--- (resultado varia conforme o tamanho dos dados e as estatísticas do planner)
-EXPLAIN ANALYZE
-SELECT a.nome, c.nome_curso
-FROM   aluno a
-JOIN   curso c USING (id_curso)
-WHERE  a.nome LIKE 'A%';
-```
+```{r}
+#| label: cleanup-grande
+#| include: false
 
-::: {.callout-note}
-Com o banco da UnDF (18 alunos, 7 professores), o planner PostgreSQL tende a usar *sequential scan* porque as tabelas são pequenas demais para justificar o overhead de acessar um índice. Em produção, com milhares ou milhões de linhas, índices fazem diferença substancial.
-:::
+# Remove todas as tabelas do banco curso_grande na ordem inversa das FKs
+for (tbl in c("matricula_disciplina", "ministra", "prereq",
+              "disciplina", "aluno", "professor", "curso", "escola", "centro")) {
+  dbExecute(con_grande, paste0("DROP TABLE IF EXISTS ", tbl, " CASCADE"))
+}
+dbDisconnect(con_grande)
+```

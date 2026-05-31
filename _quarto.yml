@@ -132,16 +132,16 @@ book:
       chapters:
         - href: content/cap05/index.qmd
           text: "Visão Geral"
-        - href: content/cap05/01-acesso-python.qmd
-          text: "Acesso ao Banco via Python"
-        - href: content/cap05/02-funcoes-procedimentos.qmd
+        - href: content/cap05/01-funcoes-procedimentos.qmd
           text: "Funções e Procedimentos"
-        - href: content/cap05/03-triggers.qmd
+        - href: content/cap05/02-triggers.qmd
           text: "Triggers"
-        - href: content/cap05/04-consultas-recursivas.qmd
+        - href: content/cap05/03-consultas-recursivas.qmd
           text: "Consultas Recursivas"
-        - href: content/cap05/05-agregacao-avancada.qmd
+        - href: content/cap05/04-agregacao-avancada.qmd
           text: "Agregação Avançada"
+        - href: content/cap05/05-acesso-python.qmd
+          text: "Acesso ao Banco via Python"
     - part: "Capítulo 8: Projeto com o Modelo ER"
       chapters:
         - href: content/cap08/index.qmd
