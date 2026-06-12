@@ -347,6 +347,12 @@ DELETE FROM prereq WHERE id_disciplina = 3110801 AND id_prereq = 3110402;
 --| eval: true
 --| output: false
 DROP TRIGGER IF EXISTS tg_prereq_sem_ciclos ON prereq;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
 DROP FUNCTION IF EXISTS verificar_ciclo_prereq();
 ```
 
