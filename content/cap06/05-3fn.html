@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Visões – Bases da Engenharia de Software 4</title>
+<title>Terceira Forma Normal (3FN) – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,8 +69,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap04/03-transacoes.html" rel="next">
-<link href="../../content/cap04/01-joins.html" rel="prev">
+<link href="../../content/cap06/06-4fn.html" rel="next">
+<link href="../../content/cap06/04-bcnf.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -113,6 +113,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -306,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-views.html"><span class="chapter-title">Visões</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-3fn.html"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -578,7 +607,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Visões</span></a>
+  <a href="../../content/cap04/02-views.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visões</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -690,7 +719,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -796,15 +825,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#definindo-uma-visão" id="toc-definindo-uma-visão" class="nav-link active" data-scroll-target="#definindo-uma-visão">Definindo uma Visão</a></li>
-  <li><a href="#usando-visões" id="toc-usando-visões" class="nav-link" data-scroll-target="#usando-visões">Usando Visões</a></li>
-  <li><a href="#visões-definidas-sobre-outras-visões" id="toc-visões-definidas-sobre-outras-visões" class="nav-link" data-scroll-target="#visões-definidas-sobre-outras-visões">Visões Definidas sobre Outras Visões</a>
-  <ul>
-  <li><a href="#expansão-de-visão" id="toc-expansão-de-visão" class="nav-link" data-scroll-target="#expansão-de-visão">Expansão de Visão</a></li>
-  </ul></li>
-  <li><a href="#visões-materializadas" id="toc-visões-materializadas" class="nav-link" data-scroll-target="#visões-materializadas">Visões Materializadas</a></li>
-  <li><a href="#atualização-de-visões" id="toc-atualização-de-visões" class="nav-link" data-scroll-target="#atualização-de-visões">Atualização de Visões</a></li>
-  <li><a href="#para-praticar" id="toc-para-praticar" class="nav-link" data-scroll-target="#para-praticar">Para Praticar</a></li>
+  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
+  <li><a href="#o-exemplo-orienta" id="toc-o-exemplo-orienta" class="nav-link" data-scroll-target="#o-exemplo-orienta">O Exemplo <code>orienta</code></a></li>
+  <li><a href="#redundância-residual-na-3fn" id="toc-redundância-residual-na-3fn" class="nav-link" data-scroll-target="#redundância-residual-na-3fn">Redundância Residual na 3FN</a></li>
+  <li><a href="#algoritmo-de-decomposição-em-3fn" id="toc-algoritmo-de-decomposição-em-3fn" class="nav-link" data-scroll-target="#algoritmo-de-decomposição-em-3fn">Algoritmo de Decomposição em 3FN</a></li>
+  <li><a href="#exemplo-do-livro-cust_banker_branch" id="toc-exemplo-do-livro-cust_banker_branch" class="nav-link" data-scroll-target="#exemplo-do-livro-cust_banker_branch">Exemplo do Livro: cust_banker_branch</a></li>
+  <li><a href="#aplicação-no-banco-da-undf-relação-orienta" id="toc-aplicação-no-banco-da-undf-relação-orienta" class="nav-link" data-scroll-target="#aplicação-no-banco-da-undf-relação-orienta">Aplicação no Banco da UnDF: Relação <code>orienta</code></a></li>
+  <li><a href="#bcnf-versus-3fn-quando-usar-cada-uma" id="toc-bcnf-versus-3fn-quando-usar-cada-uma" class="nav-link" data-scroll-target="#bcnf-versus-3fn-quando-usar-cada-uma">BCNF versus 3FN: Quando Usar Cada Uma</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -812,9 +839,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap04/index.html">Capítulo 4: SQL Intermediário</a></li><li class="breadcrumb-item"><a href="../../content/cap04/02-views.html"><span class="chapter-title">Visões</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-3fn.html"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Visões</span></h1>
+<h1 class="title"><span class="chapter-title">Terceira Forma Normal (3FN)</span></h1>
 </div>
 
 
@@ -837,471 +864,312 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Em muitas situações, não é desejável que todos os usuários vejam o modelo lógico completo do banco de dados. Uma <strong>visão</strong> (<em>view</em>) é uma relação virtual — não armazenada fisicamente — que expõe apenas os dados relevantes para cada perfil de usuário.</p>
+<p>Quando a decomposição em BCNF não preserva todas as dependências, a <strong>3FN</strong> oferece um compromisso: permite uma dose controlada de redundância em troca de garantia de preservação de dependências e join sem perda.</p>
+<section id="definição" class="level2">
+<h2 class="anchored" data-anchor-id="definição">Definição</h2>
 <div class="conceito">
-<p>Uma <strong>visão</strong> é qualquer relação que não faz parte do modelo conceitual mas que é tornada visível ao usuário como uma relação virtual. Ela é definida por uma expressão de consulta e não ocupa espaço de armazenamento próprio.</p>
-</div>
-<section id="definindo-uma-visão" class="level2">
-<h2 class="anchored" data-anchor-id="definindo-uma-visão">Definindo uma Visão</h2>
-<p>A sintaxe de criação é:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> <span class="op">&lt;</span>nome<span class="op">&gt;</span> <span class="kw">AS</span> <span class="op">&lt;</span>expressão de consulta<span class="op">&gt;</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A definição da visão é <strong>salva</strong> pelo SGBD; a expressão de consulta é executada toda vez que a visão é referenciada em uma consulta.</p>
-<div class="exemplo">
-<p><strong>Visão pública de professores</strong> — oculta o salário:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> professores_publico <span class="kw">AS</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_prof, nome, id_escola, ch_semanal</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="exemplo">
-<p><strong>Visão de carga salarial por escola:</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> salario_escola(id_escola, total_salario, n_professores) <span class="kw">AS</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_escola, <span class="fu">SUM</span>(salario), <span class="fu">COUNT</span>(<span class="op">*</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professor</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> id_escola;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>Um esquema R está na <strong>Terceira Forma Normal (3FN)</strong> em relação a F se, para toda DF não-trivial α → β ∈ F⁺:</p>
+<ol type="1">
+<li>α é superchave de R, <strong>OU</strong></li>
+<li>cada atributo A ∈ (β − α) está contido em alguma chave candidata de R</li>
+</ol>
+<p>A condição 2 é a “relaxação mínima” em relação à BCNF: permite que o lado direito da DF contenha atributos de chave candidata, mesmo quando o lado esquerdo não é superchave.</p>
+<p><strong>BCNF ⊂ 3FN</strong>: todo esquema em BCNF está em 3FN (mas não o contrário).</p>
 </div>
 </section>
-<section id="usando-visões" class="level2">
-<h2 class="anchored" data-anchor-id="usando-visões">Usando Visões</h2>
-<p>Uma vez definida, a visão pode ser usada em consultas exatamente como uma tabela real:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consulta a visão pública (sem salário)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, ch_semanal</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professores_publico</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_escola <span class="op">=</span> <span class="dv">31</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
+<section id="o-exemplo-orienta" class="level2">
+<h2 class="anchored" data-anchor-id="o-exemplo-orienta">O Exemplo <code>orienta</code></h2>
+<p>A relação que resistiu à decomposição em BCNF está em 3FN:</p>
+<p><span class="math display">\[\textit{orienta}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_escola})\]</span></p>
+<p>DFs: - <code>id_prof → id_escola</code> - <code>id_aluno, id_escola → id_prof</code></p>
+<p>Chaves candidatas: <code>{id_aluno, id_prof}</code> e <code>{id_aluno, id_escola}</code></p>
+<p><strong>Verificação da 3FN:</strong></p>
+<p>Para <code>id_prof → id_escola</code>: - <code>id_prof</code> não é superchave ← condição 1 falha - <code>id_escola</code> ∈ chave candidata <code>{id_aluno, id_escola}</code> ← condição 2 satisfeita ✓</p>
+<p>Para <code>id_aluno, id_escola → id_prof</code>: - <code>{id_aluno, id_escola}</code> é chave candidata ← condição 1 satisfeita ✓</p>
+<p><strong><code>orienta</code> está em 3FN.</strong> ✓ (mas não em BCNF)</p>
+</section>
+<section id="redundância-residual-na-3fn" class="level2">
+<h2 class="anchored" data-anchor-id="redundância-residual-na-3fn">Redundância Residual na 3FN</h2>
+<p>A permissão da condição 2 vem com custo: a 3FN ainda admite alguma redundância.</p>
+<p><strong>Exemplo clássico do livro-texto</strong> (esquema R = (J, K, L), F = {JK → L, L → K}):</p>
+<p>Chaves candidatas: <code>{J, K}</code> e <code>{J, L}</code></p>
+<table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">ch_semanal</th>
+<th>J</th>
+<th>K</th>
+<th>L</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Gustavo Costa</td>
-<td style="text-align: right;">20</td>
+<td>j1</td>
+<td>k1</td>
+<td>l1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Helena Carvalho</td>
-<td style="text-align: right;">40</td>
+<td>j2</td>
+<td>k1</td>
+<td>l1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: right;">20</td>
+<td>j3</td>
+<td>k1</td>
+<td>l1</td>
+</tr>
+<tr class="even">
+<td>NULL</td>
+<td>k2</td>
+<td>l2</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Junta a visão de salário com a tabela escola</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.nome_escola, s.total_salario, s.n_professores,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(s.total_salario:<span class="ch">:numeric</span> <span class="op">/</span> s.n_professores, <span class="dv">2</span>) <span class="kw">AS</span> media_salario</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   salario_escola s</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola e <span class="kw">USING</span> (id_escola)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> s.total_salario <span class="kw">DESC</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>3 records</caption>
-<colgroup>
-<col style="width: 56%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome_escola</th>
-<th style="text-align: right;">total_salario</th>
-<th style="text-align: right;">n_professores</th>
-<th style="text-align: right;">media_salario</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Escola Superior de Gestão</td>
-<td style="text-align: right;">13100</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">6550.00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Escola Superior de Engenharias, Tecnologia e Inovação</td>
-<td style="text-align: right;">13100</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4366.67</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Escola de Educação, Magistério e Arte</td>
-<td style="text-align: right;">9600</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4800.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p>Problemas: - <strong>Repetição</strong>: o par (k1, l1) aparece três vezes - <strong>Valores nulos</strong>: para registrar o par (k2, l2), é preciso inserir J = NULL</p>
+<p>Esses problemas são inerentes à 3FN quando a condição 2 é necessária — e mostram por que BCNF é preferida quando possível.</p>
 </section>
-<section id="visões-definidas-sobre-outras-visões" class="level2">
-<h2 class="anchored" data-anchor-id="visões-definidas-sobre-outras-visões">Visões Definidas sobre Outras Visões</h2>
-<p>Uma visão pode referenciar outra visão em sua definição. Dizemos que a visão <em>v₁</em> <strong>depende diretamente</strong> de <em>v₂</em> quando <em>v₂</em> é usada na expressão que define <em>v₁</em>, e que <em>v₁</em> <strong>depende</strong> de <em>v₂</em> se há uma cadeia de dependências entre elas.</p>
-<div class="exemplo">
-<p><strong>Visão de professores de tempo integral de cada escola</strong> (usa a visão <code>professores_publico</code>):</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> professores_40h <span class="kw">AS</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_prof, nome, id_escola</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professores_publico</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  ch_semanal <span class="op">=</span> <span class="dv">40</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="exemplo">
-<p><strong>Consulta que usa a visão derivada:</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.sigla <span class="kw">AS</span> escola, p.nome <span class="kw">AS</span> professor</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   professores_40h p</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola e <span class="kw">USING</span> (id_escola)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> e.sigla, p.nome;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>4 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">escola</th>
-<th style="text-align: left;">professor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">EEMA</td>
-<td style="text-align: left;">Felipe Araujo</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ESETI</td>
-<td style="text-align: left;">Helena Carvalho</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ESG</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ESG</td>
-<td style="text-align: left;">Carla Pinto</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<section id="expansão-de-visão" class="level3">
-<h3 class="anchored" data-anchor-id="expansão-de-visão">Expansão de Visão</h3>
-<p>Quando uma consulta usa uma visão, o SGBD substitui a referência à visão pela expressão de consulta que a define — processo chamado de <strong>expansão de visão</strong>. Isso se repete recursivamente até que nenhuma visão permaneça na expressão final.</p>
+<section id="algoritmo-de-decomposição-em-3fn" class="level2">
+<h2 class="anchored" data-anchor-id="algoritmo-de-decomposição-em-3fn">Algoritmo de Decomposição em 3FN</h2>
 <div class="conceito">
-<p>A expansão funciona substituindo iterativamente cada visão <em>vᵢ</em> encontrada na expressão <em>e₁</em> pela sua definição. O processo termina quando não há mais visões na expressão — desde que as definições não sejam recursivas.</p>
+<p><strong>Entrada</strong>: Esquema R com conjunto de DFs F.</p>
+<p><strong>Saída</strong>: Decomposição em 3FN com join sem perda e preservação de dependências.</p>
+<pre><code>Fc ← cobertura canônica de F
+i ← 0
+para cada DF α → β em Fc:
+  se nenhum dos Rj (j ≤ i) contém αβ:
+    i ← i + 1
+    Ri ← αβ
+
+se nenhum Rj contém uma chave candidata de R:
+  i ← i + 1
+  Ri ← qualquer chave candidata de R
+
+(opcional: remover esquemas Rj contidos em algum Rk)
+retornar (R1, R2, ..., Ri)</code></pre>
+<p><strong>Propriedades garantidas:</strong> - Cada Rᵢ está em 3FN ✓ - Decomposição tem join sem perda ✓ - Decomposição preserva dependências ✓</p>
 </div>
 </section>
+<section id="exemplo-do-livro-cust_banker_branch" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-do-livro-cust_banker_branch">Exemplo do Livro: cust_banker_branch</h2>
+<p>Relação: <code>cust_banker_branch(id_cliente, id_funcionario, nome_agencia, tipo_conta)</code></p>
+<p>DFs: - <code>id_cliente, id_funcionario → nome_agencia, tipo_conta</code> - <code>id_funcionario → nome_agencia</code> - <code>id_cliente, nome_agencia → id_funcionario</code></p>
+<p><strong>Passo 1: Cobertura canônica</strong></p>
+<p>Em <code>id_cliente, id_funcionario → nome_agencia, tipo_conta</code>: - <code>nome_agencia</code> é estranho? Verifique <code>{id_cliente, id_funcionario}⁺</code> sem <code>nome_agencia</code> no lado direito: pelo algoritmo, <code>{id_cliente, id_funcionario}⁺ = {id_cliente, id_funcionario, nome_agencia, tipo_conta}</code> — <code>nome_agencia</code> já é derivada por <code>id_funcionario → nome_agencia</code>. Sim, estranho → remove.</p>
+<p>F_c = { <code>id_cliente, id_funcionario → tipo_conta</code>, <code>id_funcionario → nome_agencia</code>, <code>id_cliente, nome_agencia → id_funcionario</code> }</p>
+<p><strong>Passo 2: Criar esquemas para cada DF de F_c</strong></p>
+<ul>
+<li>R₁ = (<strong>id_cliente, id_funcionario</strong>, tipo_conta)</li>
+<li>R₂ = (<strong>id_funcionario</strong>, nome_agencia)</li>
+<li>R₃ = (<strong>id_cliente, nome_agencia</strong>, id_funcionario)</li>
+</ul>
+<p><strong>Passo 3: Verificar chave candidata</strong></p>
+<p>As chaves candidatas originais de R são <code>{id_cliente, id_funcionario}</code> e <code>{id_cliente, nome_agencia}</code>. A chave <code>{id_cliente, id_funcionario}</code> já está em R₁. ✓</p>
+<p><strong>Passo 4: Remover redundantes</strong></p>
+<p>R₂ = (id_funcionario, nome_agencia) está contido em R₃? Não — R₃ tem id_cliente a mais. Nenhum esquema é subconjunto de outro.</p>
+<p><strong>Resultado final</strong>: {R₁, R₂, R₃} — todos em 3FN, join sem perda, preserva dependências.</p>
 </section>
-<section id="visões-materializadas" class="level2">
-<h2 class="anchored" data-anchor-id="visões-materializadas">Visões Materializadas</h2>
-<div class="conceito">
-<p>Uma <strong>visão materializada</strong> (<em>materialized view</em>) é uma visão cujo resultado é fisicamente armazenado no banco de dados. Diferentemente de uma visão comum, ela ocupa espaço em disco e precisa ser <strong>mantida</strong> (atualizada) quando as tabelas subjacentes mudam.</p>
-</div>
-<p>O PostgreSQL suporta visões materializadas com <code>CREATE MATERIALIZED VIEW</code>. O refresco é manual com <code>REFRESH MATERIALIZED VIEW</code>.</p>
+<section id="aplicação-no-banco-da-undf-relação-orienta" class="level2">
+<h2 class="anchored" data-anchor-id="aplicação-no-banco-da-undf-relação-orienta">Aplicação no Banco da UnDF: Relação <code>orienta</code></h2>
+<p>Na UnDF, considere o relacionamento entre aluno, professor e escola na orientação de TCCs:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">MATERIALIZED</span> <span class="kw">VIEW</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> mv_desempenho_aluno <span class="kw">AS</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.id_aluno, a.nome, a.id_curso,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">COUNT</span>(<span class="op">*</span>)                                       <span class="kw">AS</span> disciplinas_cursadas,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(md.nota), <span class="dv">2</span>)                        <span class="kw">AS</span> media_geral,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> md.aprovado <span class="op">=</span> <span class="dv">1</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> aprovacoes</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   matricula_disciplina md <span class="kw">USING</span> (id_aluno)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  md.nota <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> a.id_aluno, a.nome, a.id_curso;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> orienta (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    id_aluno  <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> aluno(id_aluno),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    id_prof   <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> professor(id_prof),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    id_escola <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> escola(id_escola),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_aluno, id_prof)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Consultando a visão materializada</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome, media_geral, aprovacoes, disciplinas_cursadas</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   mv_desempenho_aluno</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> media_geral <span class="kw">DESC</span> <span class="kw">NULLS</span> <span class="fu">LAST</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Popula com exemplos: cada aluno tem um orientador de sua escola</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> orienta (id_aluno, id_prof, id_escola)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.id_aluno,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       p.id_prof,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       p.id_escola</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   curso c   <span class="kw">ON</span> c.id_curso  <span class="op">=</span> a.id_curso</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola e  <span class="kw">ON</span> e.id_escola <span class="op">=</span> c.id_escola</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_escola <span class="op">=</span> e.id_escola</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.ch_semanal <span class="op">=</span> <span class="dv">40</span>   <span class="co">-- professores de 40h são orientadores</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> a.id_aluno, p.id_prof</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> o.id_aluno,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       a.nome   <span class="kw">AS</span> aluno,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       o.id_prof,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       p.nome   <span class="kw">AS</span> professor,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       o.id_escola,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       e.sigla  <span class="kw">AS</span> escola</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   orienta o</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   aluno   a <span class="kw">ON</span> a.id_aluno  <span class="op">=</span> o.id_aluno</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_prof  <span class="op">=</span> o.id_prof</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola  e <span class="kw">ON</span> e.id_escola <span class="op">=</span> o.id_escola</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> o.id_escola, o.id_aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">media_geral</th>
-<th style="text-align: right;">aprovacoes</th>
-<th style="text-align: right;">disciplinas_cursadas</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Beatriz Carvalho</td>
-<td style="text-align: right;">9.30</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Camila Teixeira</td>
-<td style="text-align: right;">8.00</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Carolina Lima</td>
-<td style="text-align: right;">8.00</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Letícia Souza</td>
-<td style="text-align: right;">7.90</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rafael Costa</td>
-<td style="text-align: right;">7.75</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Amanda Moreira</td>
-<td style="text-align: right;">7.70</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gabriel Ribeiro</td>
-<td style="text-align: right;">7.25</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Matheus Silva</td>
-<td style="text-align: right;">7.22</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rodrigo Lima</td>
-<td style="text-align: right;">6.60</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Vinícius Pereira</td>
-<td style="text-align: right;">6.55</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Refresco manual (atualiza a visão com os dados atuais das tabelas base)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">REFRESH</span> <span class="kw">MATERIALIZED</span> <span class="kw">VIEW</span> mv_desempenho_aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="atualização-de-visões" class="level2">
-<h2 class="anchored" data-anchor-id="atualização-de-visões">Atualização de Visões</h2>
-<p>Em geral, uma visão só pode ser atualizada (suportar <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>) quando satisfaz certas condições que garantem que a operação pode ser traduzida univocamente para a tabela base.</p>
-<div class="conceito">
-<p>Uma visão é considerada <strong>atualizável</strong> pelo SQL quando:</p>
-<ul>
-<li>A cláusula <code>FROM</code> contém <strong>apenas uma</strong> tabela base.</li>
-<li>A cláusula <code>SELECT</code> contém <strong>apenas nomes de atributos</strong> (sem expressões, agregações ou <code>DISTINCT</code>).</li>
-<li>Todo atributo não listado no <code>SELECT</code> pode receber <code>NULL</code>.</li>
-<li>A consulta não contém <code>GROUP BY</code> nem <code>HAVING</code>.</li>
-</ul>
-</div>
-<div class="exemplo">
-<p>A visão <code>professores_publico</code> é atualizável — contém uma única tabela base e apenas nomes de colunas. No entanto, inserir via ela exige que <code>salario</code> (não exposto) aceite <code>NULL</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Insere um professor novo pela visão (salario ficará NULL na tabela base)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> professores_publico (id_prof, nome, id_escola, ch_semanal)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (<span class="dv">31200004</span>, <span class="st">'Julia Mendes'</span>, <span class="dv">31</span>, <span class="dv">20</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Visões como <code>salario_escola</code> (que usam <code>GROUP BY</code>) <strong>não são atualizáveis</strong>. Tentativas de inserção ou atualização direta são rejeitadas pelo SGBD.</p>
-<hr>
-</section>
-<section id="para-praticar" class="level2">
-<h2 class="anchored" data-anchor-id="para-praticar">Para Praticar</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Visão de disciplinas com pré-requisitos: mostra o nome de ambas</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> v_prereqs <span class="kw">AS</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> d.id_disciplina,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       d.nome_disciplina              <span class="kw">AS</span> disciplina,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       dp.nome_disciplina             <span class="kw">AS</span> prerequisito,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       d.id_curso,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       d.semestre</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prereq pr</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d  <span class="kw">ON</span> d.id_disciplina  <span class="op">=</span> pr.id_disciplina</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina dp <span class="kw">ON</span> dp.id_disciplina <span class="op">=</span> pr.id_prereq;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usando a visão para listar pré-requisitos do curso ENS</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> disciplina, prerequisito, semestre</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   v_prereqs</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_curso <span class="op">=</span> <span class="dv">311</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> semestre, disciplina;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>8 records</caption>
 <colgroup>
-<col style="width: 47%">
-<col style="width: 42%">
+<col style="width: 15%">
+<col style="width: 24%">
+<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 14%">
 <col style="width: 10%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">disciplina</th>
-<th style="text-align: left;">prerequisito</th>
-<th style="text-align: right;">semestre</th>
+<th style="text-align: right;">id_aluno</th>
+<th style="text-align: left;">aluno</th>
+<th style="text-align: right;">id_prof</th>
+<th style="text-align: left;">professor</th>
+<th style="text-align: right;">id_escola</th>
+<th style="text-align: left;">escola</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Bases da Eng. de Software 4</td>
-<td style="text-align: left;">Bases da Eng. de Software 2</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">2023111001</td>
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: right;">11400001</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
-<td style="text-align: left;">Projeto Aplicado 2 - site WEB</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">2023111001</td>
+<td style="text-align: left;">Beatriz Carvalho</td>
+<td style="text-align: right;">11400002</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: left;">Bases da Eng. de Software 4</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">2023111002</td>
+<td style="text-align: left;">Lucas Santos</td>
+<td style="text-align: right;">11400001</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">2023111002</td>
+<td style="text-align: left;">Lucas Santos</td>
+<td style="text-align: right;">11400002</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
-<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">2024111001</td>
+<td style="text-align: left;">Gabriel Ribeiro</td>
+<td style="text-align: right;">11400002</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bases da Eng. de Software 8</td>
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">2024111001</td>
+<td style="text-align: left;">Gabriel Ribeiro</td>
+<td style="text-align: right;">11400001</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">2024111002</td>
+<td style="text-align: left;">Fernanda Martins</td>
+<td style="text-align: right;">11400001</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Projeto Aplicado 8 - Sistema em Tempo Real</td>
-<td style="text-align: left;">Projeto Aplicado 6 - Machine Learning</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">2024111002</td>
+<td style="text-align: left;">Fernanda Martins</td>
+<td style="text-align: right;">11400002</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2025111001</td>
+<td style="text-align: left;">Rodrigo Lima</td>
+<td style="text-align: right;">11400001</td>
+<td style="text-align: left;">Bruno Teixeira</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2025111001</td>
+<td style="text-align: left;">Rodrigo Lima</td>
+<td style="text-align: right;">11400002</td>
+<td style="text-align: left;">Carla Pinto</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">ESG</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<p>A relação <code>orienta(id_aluno, id_prof, id_escola)</code> está em 3FN com as DFs: - <code>id_prof → id_escola</code> (professor pertence a uma escola) - <code>id_aluno, id_escola → id_prof</code> (cada aluno tem no máximo um orientador por escola)</p>
+<p>Não está em BCNF — e não há decomposição em BCNF que preserve ambas as DFs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Visão de alunos reprovados com informação do curso</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> v_alunos_reprovados <span class="kw">AS</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.nome <span class="kw">AS</span> aluno, c.sigla_curso, d.nome_disciplina,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       md.nota, md.ano, md.semestre</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina md</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   aluno      a <span class="kw">USING</span> (id_aluno)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   disciplina d <span class="kw">USING</span> (id_disciplina)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   curso      c <span class="kw">ON</span> c.id_curso <span class="op">=</span> a.id_curso</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  md.aprovado <span class="op">=</span> <span class="dv">0</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> orienta;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> v_alunos_reprovados <span class="kw">ORDER</span> <span class="kw">BY</span> sigla_curso, aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>7 records</caption>
+</section>
+<section id="bcnf-versus-3fn-quando-usar-cada-uma" class="level2">
+<h2 class="anchored" data-anchor-id="bcnf-versus-3fn-quando-usar-cada-uma">BCNF versus 3FN: Quando Usar Cada Uma</h2>
+<table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 15%">
-<col style="width: 40%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 11%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">aluno</th>
-<th style="text-align: left;">sigla_curso</th>
-<th style="text-align: left;">nome_disciplina</th>
-<th style="text-align: right;">nota</th>
-<th style="text-align: right;">ano</th>
-<th style="text-align: right;">semestre</th>
+<th>Critério</th>
+<th>BCNF</th>
+<th>3FN</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Fernanda Martins</td>
-<td style="text-align: left;">ECO</td>
-<td style="text-align: left;">História Econômica Geral</td>
-<td style="text-align: right;">3.4</td>
-<td style="text-align: right;">2024</td>
-<td style="text-align: right;">2</td>
+<td>Redundância</td>
+<td>Eliminada</td>
+<td>Pode restar</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Isabela Freitas</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Projeto Aplicado 4 - blockchain</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">2025</td>
-<td style="text-align: right;">2</td>
+<td>Join sem perda</td>
+<td>Garantido</td>
+<td>Garantido</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Isabela Freitas</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Bases da Eng. de Software 2</td>
-<td style="text-align: right;">4.3</td>
-<td style="text-align: right;">2024</td>
-<td style="text-align: right;">2</td>
+<td>Preservação de dependências</td>
+<td>Não garantida</td>
+<td>Garantida</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Juliana Nunes</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Bases da Eng. de Software 2</td>
-<td style="text-align: right;">1.9</td>
-<td style="text-align: right;">2025</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Larissa Araújo</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">2025</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Matheus Silva</td>
-<td style="text-align: left;">ENS</td>
-<td style="text-align: left;">Bases da Eng. de Software 6</td>
-<td style="text-align: right;">4.1</td>
-<td style="text-align: right;">2025</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Thiago Gomes</td>
-<td style="text-align: left;">PED</td>
-<td style="text-align: left;">Eletiva II</td>
-<td style="text-align: right;">1.3</td>
-<td style="text-align: right;">2025</td>
-<td style="text-align: right;">2</td>
+<td>Quando usar</td>
+<td>Prioridade é consistência sem custo de join</td>
+<td>Necessário verificar DFs sem join</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Objetivo ideal</strong>: BCNF + join sem perda + preservação de dependências. Quando não é possível alcançar os três, aceita-se:</p>
+<ul>
+<li>Falta de preservação de dependências (com verificação via join eventualmente), <strong>ou</strong></li>
+<li>Redundância controlada da 3FN.</li>
+</ul>
+<p>Na prática, a maioria dos bancos de dados relacionais bem projetados está em BCNF. A 3FN é necessária em situações específicas onde certas DFs entre atributos não-chave precisam ser verificadas eficientemente.</p>
 </div>
 </div>
 
@@ -1818,13 +1686,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap04/01-joins.html" class="pagination-link" aria-label="Expressões de Junção">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Expressões de Junção</span></span>
+      <a href="../../content/cap06/04-bcnf.html" class="pagination-link" aria-label="Forma Normal de Boyce-Codd (BCNF)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap04/03-transacoes.html" class="pagination-link" aria-label="Transações">
-        <span class="nav-page-text"><span class="chapter-title">Transações</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/06-4fn.html" class="pagination-link" aria-label="Dependências Multivaloradas e 4FN">
+        <span class="nav-page-text"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
