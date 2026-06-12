@@ -150,7 +150,12 @@ CREATE TABLE IF NOT EXISTS orienta (
     id_escola INTEGER REFERENCES escola(id_escola),
     PRIMARY KEY (id_aluno, id_prof)
 );
+```
 
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
 -- Popula com exemplos: cada aluno tem um orientador de sua escola
 INSERT INTO orienta (id_aluno, id_prof, id_escola)
 SELECT a.id_aluno,

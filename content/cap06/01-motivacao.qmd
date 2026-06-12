@@ -35,7 +35,12 @@ CREATE TABLE IF NOT EXISTS professor_escola_desnorm (
     nome_escola  VARCHAR(100),
     id_centro    INTEGER
 );
+```
 
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
 INSERT INTO professor_escola_desnorm
 SELECT p.id_prof, p.nome, p.ch_semanal, p.salario,
        e.id_escola, e.nome_escola, e.id_centro

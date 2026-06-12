@@ -32,7 +32,12 @@ CREATE TABLE IF NOT EXISTS prof_info (
     area     VARCHAR(50),
     PRIMARY KEY (id_prof, telefone, area)
 );
+```
 
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
 INSERT INTO prof_info VALUES
     (31200003, '61-98001-0001', 'Programação'),
     (31200003, '61-98001-0001', 'Redes'),
