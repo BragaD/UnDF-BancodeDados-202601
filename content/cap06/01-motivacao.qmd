@@ -1,0 +1,154 @@
+# Motivação: Bom e Mau Design
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Por que é necessário decompor relações? A resposta está nos problemas que surgem quando atributos são agrupados sem critério formal.
+
+## Uma Relação Mal Projetada
+
+Imagine que, em vez de tabelas separadas para `professor` e `escola`, o banco da UnDF usasse uma relação única que combinasse essas informações:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+CREATE TABLE IF NOT EXISTS professor_escola_desnorm (
+    id_prof      INTEGER,
+    nome_prof    VARCHAR(50),
+    ch_semanal   INTEGER,
+    salario      NUMERIC(10,2),
+    id_escola    INTEGER,
+    nome_escola  VARCHAR(100),
+    id_centro    INTEGER
+);
+
+INSERT INTO professor_escola_desnorm
+SELECT p.id_prof, p.nome, p.ch_semanal, p.salario,
+       e.id_escola, e.nome_escola, e.id_centro
+FROM   professor p
+JOIN   escola e ON e.id_escola = p.id_escola;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT id_prof, nome_prof, salario, id_escola, nome_escola, id_centro
+FROM   professor_escola_desnorm
+ORDER BY id_escola, id_prof;
+```
+
+Repare: `nome_escola` e `id_centro` estão **repetidos** para cada professor da mesma escola.
+
+## Três Anomalias
+
+Esse esquema sofre de três tipos clássicos de anomalia:
+
+::: {.callout-warning}
+**Anomalia de atualização** (*update anomaly*): Se a ESG mudar de nome, é preciso atualizar **todas** as linhas onde `id_escola = 11`. Esquecer uma linha deixa o banco inconsistente — duas linhas com o mesmo `id_escola` mas `nome_escola` diferentes.
+
+```sql
+-- Atualizar o nome da ESG: exige tocar N linhas
+UPDATE professor_escola_desnorm
+SET    nome_escola = 'Escola Superior de Gestão e Negócios'
+WHERE  id_escola = 11;
+-- Quantas linhas? Uma por professor da ESG.
+```
+:::
+
+::: {.callout-warning}
+**Anomalia de inserção** (*insert anomaly*): Não é possível registrar uma escola nova se ela ainda não tiver professores. Para inserir a ESETI (id_escola = 31) antes de contratar qualquer professor, seria necessário usar `NULL` em `id_prof`, `nome_prof` e `salario` — valores sem sentido para uma escola.
+
+```sql
+-- Tentar registrar nova escola sem professores
+INSERT INTO professor_escola_desnorm
+VALUES (NULL, NULL, NULL, NULL, 41, 'Escola de Artes e Letras', 1);
+-- id_prof = NULL viola a semântica
+```
+:::
+
+::: {.callout-warning}
+**Anomalia de exclusão** (*delete anomaly*): Se todos os professores de uma escola forem demitidos, as informações da escola (nome, id_centro) são perdidas junto.
+
+```sql
+-- Demitir todos os professores da EEMA (id_escola = 21)
+DELETE FROM professor_escola_desnorm WHERE id_escola = 21;
+-- As informações da EEMA desaparecem do banco
+```
+:::
+
+## Causa Raiz: Dependência Funcional Violada
+
+O problema tem uma causa precisa. Na relação `professor_escola_desnorm`, o atributo `nome_escola` depende de `id_escola` — e não da chave completa da relação. Formalmente:
+
+$$\textit{id\_escola} \to \textit{nome\_escola}, \textit{id\_centro}$$
+
+Mas `id_escola` **não é superchave** de `professor_escola_desnorm` (a chave é `id_prof`). Essa violação é exatamente o que a normalização detecta e elimina.
+
+## A Solução: Decomposição
+
+A solução correta é decompor a relação em duas:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- As tabelas já existem no banco normalizado:
+SELECT id_escola, nome_escola, id_centro FROM escola ORDER BY id_escola;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT id_prof, nome, ch_semanal, salario, id_escola FROM professor ORDER BY id_escola, id_prof;
+```
+
+Agora `nome_escola` aparece **uma única vez** — na tabela `escola`. Atualizar o nome exige apenas uma linha; cadastrar uma escola sem professores é trivial; excluir todos os professores de uma escola não apaga a escola.
+
+::: {.conceito}
+**Decomposição sem perda** (*lossless decomposition*): A decomposição de R em R₁ e R₂ é sem perda se o join natural de R₁ e R₂ reconstrói exatamente R. Formalmente:
+
+$$\pi_{R_1}(r) \bowtie \pi_{R_2}(r) = r$$
+
+Para ser sem perda, basta que os atributos comuns a R₁ e R₂ formem uma superchave de ao menos um dos dois.
+:::
+
+Verificamos: ao decompor `professor_escola_desnorm` em `professor(id_prof, nome, ch_semanal, salario, id_escola)` e `escola(id_escola, nome_escola, id_centro)`, o atributo comum é `id_escola`, que é chave primária de `escola`. Logo a decomposição é sem perda. ✓
+
+## Decomposição com Perda
+
+Nem toda decomposição é boa. Considere o esquema de exemplo:
+
+$$\textit{funcionario}(\underline{\textit{id}},\ \textit{nome},\ \textit{rua},\ \textit{cidade},\ \textit{salario})$$
+
+Se decompormos em:
+
+- $\textit{func1}(\textit{id},\ \textit{nome})$
+- $\textit{func2}(\textit{nome},\ \textit{rua},\ \textit{cidade},\ \textit{salario})$
+
+O atributo comum é `nome`. Se dois funcionários tiverem o mesmo nome (ex.: dois "João Silva"), o join produzirá linhas espúrias — associando o `id` de um ao endereço do outro. A informação original não é recuperável. Essa é uma **decomposição com perda** (*lossy decomposition*).
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+DROP TABLE IF EXISTS professor_escola_desnorm;
+```
+
+```{r}
+#| label: teardown
+#| include: false
+dbDisconnect(con)
+```

@@ -1,0 +1,176 @@
+# Dependências Funcionais
+
+A teoria da normalização é construída sobre um conceito central: a **dependência funcional** (DF). Ela formaliza o que intuitivamente sabemos sobre o mundo real — "o nome de um professor é determinado pelo seu número de identificação".
+
+## Definição
+
+::: {.conceito}
+Seja R um esquema de relação, e α ⊆ R e β ⊆ R conjuntos de atributos. A **dependência funcional α → β** vale em R se, para toda instância legal r(R), dois registros que concordam nos atributos α também concordam em β:
+
+$$t_1[\alpha] = t_2[\alpha] \implies t_1[\beta] = t_2[\beta]$$
+
+Diz-se que α **determina funcionalmente** β, ou que β é **funcionalmente dependente** de α.
+:::
+
+A DF é uma restrição sobre **todas** as instâncias legais — não apenas a atual. Se dois registros por acaso têm o mesmo valor em β, isso não significa que α → β vale; a DF precisa valer por definição do negócio.
+
+## Dependências Funcionais no Banco da UnDF
+
+O esquema da UnDF é rico em DFs naturais:
+
+| Dependência | Interpretação |
+|---|---|
+| `id_prof → nome, id_escola, ch_semanal, salario` | Todo professor tem identificação única |
+| `id_escola → nome_escola, sigla, id_centro` | Cada escola tem nome e centro únicos |
+| `id_centro → nome_centro, sigla` | Cada centro tem nome único |
+| `id_curso → nome_curso, id_escola, n_semestres, carga_horaria` | Cada curso tem características únicas |
+| `id_disciplina → nome_disciplina, id_curso, semestre, carga_horaria` | Disciplina determinada por seu ID |
+| `id_aluno → nome, id_curso, ano_ingresso` | Aluno tem um único curso matriculado |
+| `id_disciplina, ano, semestre, turma → id_prof, sala, horario` | Uma oferta determina seu professor e sala |
+
+Algumas DFs **não** valem no banco da UnDF:
+
+| Não-DF | Por quê? |
+|---|---|
+| `nome → id_prof` | Pode haver dois professores com o mesmo nome |
+| `id_escola → id_prof` | Uma escola tem vários professores |
+| `id_curso → id_aluno` | Um curso tem vários alunos |
+
+## Tipos de Dependências Funcionais
+
+::: {.conceito}
+**DF trivial**: α → β é trivial se β ⊆ α. Toda relação satisfaz trivialmente essas dependências.
+
+Exemplos triviais:
+- `id_prof, nome → id_prof`
+- `nome → nome`
+
+**DF não-trivial**: β ⊄ α — há informação nova no lado direito.
+:::
+
+A normalização se preocupa apenas com DFs não-triviais.
+
+## Chaves e Dependências Funcionais
+
+As DFs generalizam o conceito de chave:
+
+::: {.conceito}
+- **Superchave**: K é superchave de R se K → R (K determina todos os atributos).
+- **Chave candidata**: K é superchave e nenhum subconjunto próprio de K é superchave.
+:::
+
+Exemplos no banco da UnDF:
+
+- `{id_prof}` é chave de `professor` pois `id_prof → id_prof, nome, id_escola, ch_semanal, salario`
+- `{id_disciplina, ano, semestre, turma}` é chave de `ministra`
+- `{id_disciplina, ano, semestre, turma, id_aluno}` é chave de `matricula_disciplina`
+
+## Fecho de um Conjunto de DFs
+
+Dado um conjunto F de DFs, outras DFs são logicamente implicadas. O **fecho de F** (denotado F⁺) é o conjunto de todas as DFs logicamente implicadas por F.
+
+::: {.conceito}
+**Regras de Armstrong** — conjunto completo e correto de regras de inferência:
+
+1. **Reflexividade**: Se β ⊆ α, então α → β
+2. **Aumento**: Se α → β, então γα → γβ
+3. **Transitividade**: Se α → β e β → γ, então α → γ
+
+Regras derivadas (úteis na prática):
+
+4. **União**: Se α → β e α → γ, então α → βγ
+5. **Decomposição**: Se α → βγ, então α → β e α → γ
+6. **Pseudo-transitividade**: Se α → β e γβ → δ, então αγ → δ
+:::
+
+**Exemplo com o banco da UnDF:**
+
+Dado F = {`id_prof → id_escola`, `id_escola → id_centro`}:
+
+- Por transitividade: `id_prof → id_centro` ∈ F⁺
+- Por aumento: `id_prof, salario → id_escola, salario` ∈ F⁺
+
+## Fecho de um Conjunto de Atributos
+
+Para verificar se uma DF α → β está em F⁺ sem calcular F⁺ inteiro, calculamos o **fecho de α** (α⁺): o conjunto de atributos determinados por α.
+
+::: {.conceito}
+**Algoritmo para calcular α⁺:**
+
+```
+resultado := α
+repita:
+  para cada DF β → γ em F:
+    se β ⊆ resultado então resultado := resultado ∪ γ
+até resultado não mudar
+```
+
+α é superchave de R se e somente se α⁺ ⊇ R.
+:::
+
+**Exemplo com a UnDF:**
+
+Seja F = {`id_prof → id_escola`, `id_escola → id_centro, nome_escola`}.
+Calcular `{id_prof}⁺`:
+
+1. resultado = {id_prof}
+2. `id_prof → id_escola` é aplicável → resultado = {id_prof, id_escola}
+3. `id_escola → id_centro, nome_escola` é aplicável → resultado = {id_prof, id_escola, id_centro, nome_escola}
+4. Nenhuma outra regra é aplicável.
+
+Logo, `{id_prof}⁺ = {id_prof, id_escola, id_centro, nome_escola}`.
+`id_prof` determina seu centro e o nome da escola — mesmo que essas informações estejam em outra tabela.
+
+**Exemplo do livro-texto:**
+
+Seja R = (A, B, C, G, H, I) e F = {A → B, A → C, CG → H, CG → I, B → H}.
+
+Calcular `{AG}⁺`:
+
+1. resultado = {A, G}
+2. `A → B` → resultado = {A, B, G}
+3. `A → C` → resultado = {A, B, C, G}
+4. `CG → H` (CG ⊆ resultado) → resultado = {A, B, C, G, H}
+5. `CG → I` (CG ⊆ resultado) → resultado = {A, B, C, G, H, I}
+
+`{AG}⁺ = R`, portanto AG é superchave. É também candidata? Verificando A+ = {A, B, C, H} ≠ R e G+ = {G} ≠ R — nenhum subconjunto próprio é superchave. Logo **AG é chave candidata**. ✓
+
+## Cobertura Canônica
+
+Sistemas de gerenciamento verificam as DFs a cada atualização. É vantajoso ter um conjunto mínimo equivalente.
+
+::: {.conceito}
+A **cobertura canônica** F_c de F é um conjunto de DFs tal que:
+
+1. F logicamente implica todas as DFs em F_c
+2. F_c logicamente implica todas as DFs em F (F_c⁺ = F⁺)
+3. Nenhuma DF em F_c tem **atributo estranho** (atributo removível sem mudar F_c⁺)
+4. Cada lado esquerdo em F_c é único (sem duas DFs com mesmo lado esquerdo)
+
+**Atributo estranho**: A ∈ α é estranho em α → β se `(α - A)⁺` ainda contém β.
+A ∈ β é estranho em α → β se α⁺ sem o efeito de A ainda contém A.
+:::
+
+**Algoritmo:**
+
+```
+Fc := F
+repita:
+  (1) Para DFs com mesmo lado esquerdo, aplique a regra da União
+  (2) Para cada DF α → β em Fc:
+      - Verifique se algum A ∈ α é estranho (calcule (α-A)⁺ com Fc)
+      - Verifique se algum A ∈ β é estranho (calcule α⁺ em Fc sem α→β, somando α→(β-A))
+      - Se estranho, remova-o
+até Fc não mudar
+```
+
+**Exemplo:**
+
+Seja R = (A, B, C) e F = {A → BC, B → C, A → B, AB → C}.
+
+1. União: A → BC e A → B fundem-se em A → BC. F_c = {A → BC, B → C, AB → C}
+2. Em AB → C: A é estranho? `{B}⁺` = {B, C} ⊇ {C}. Sim → remove A. F_c = {A → BC, B → C}
+3. Em A → BC: C é estranho? Com F_c' = {A → B, B → C}, `{A}⁺` = {A, B, C} ⊇ {C}. Sim → remove C.
+4. F_c final = **{A → B, B → C}**
+
+Verificação: F_c⁺ = F⁺? Sim — A → C segue por transitividade. ✓

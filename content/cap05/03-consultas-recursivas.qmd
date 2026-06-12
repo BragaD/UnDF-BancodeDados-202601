@@ -190,6 +190,172 @@ SELECT ...
 
 ---
 
+## Aplicação Prática: Trigger com CTE Recursiva para Detecção de Ciclos
+
+A seção anterior mostrou que ciclos na tabela `prereq` são perigosos — uma CTE recursiva sem guarda entraria em loop infinito. Uma abordagem mais robusta é **impedir a criação de ciclos na própria escrita**, usando um trigger que executa a detecção recursiva antes de cada INSERT ou UPDATE.
+
+::: {.conceito}
+O grafo de pré-requisitos é um **DAG** (Directed Acyclic Graph — grafo dirigido acíclico). Um ciclo ocorre quando, adicionando a aresta A → B, B já alcança A transitivamente pelo grafo existente.
+
+```
+Estado atual:   BES6 → BES4 → BES2
+Tentativa:      BES2 → BES6  ← criaria BES6 → BES4 → BES2 → BES6
+```
+
+O trigger precisa verificar, antes de inserir `(id_disciplina=A, id_prereq=B)`:
+**"B consegue alcançar A seguindo os pré-requisitos existentes?"**
+Se sim, a inserção criaria um ciclo e deve ser rejeitada.
+:::
+
+### A Função de Detecção
+
+A lógica central é uma CTE recursiva dentro de uma função PL/pgSQL. A função recebe a linha nova via `NEW` e caminha o grafo a partir do pré-requisito proposto:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+CREATE OR REPLACE FUNCTION verificar_ciclo_prereq()
+RETURNS TRIGGER AS $$
+DECLARE
+    tem_ciclo BOOLEAN;
+BEGIN
+    WITH RECURSIVE alcancaveis(id) AS (
+        -- Caso base: começa no pré-requisito proposto (NEW.id_prereq)
+        SELECT NEW.id_prereq
+
+        UNION
+
+        -- Caso recursivo: expande pelos pré-requisitos de cada nó já visitado
+        -- UNION (sem ALL) garante que cada nó seja visitado no máximo uma vez,
+        -- evitando loops mesmo se o grafo existente já tiver algum ciclo residual
+        SELECT p.id_prereq
+        FROM   prereq p
+        JOIN   alcancaveis a ON p.id_disciplina = a.id
+    )
+    SELECT INTO tem_ciclo
+        EXISTS (SELECT 1 FROM alcancaveis WHERE id = NEW.id_disciplina);
+
+    IF tem_ciclo THEN
+        RAISE EXCEPTION
+            E'Ciclo de pré-requisitos detectado.\n'
+            '  Tentativa: % (id=%) requer % (id=%)\n'
+            '  Problema : % já é pré-requisito transitivo de %',
+            (SELECT nome_disciplina FROM disciplina WHERE id_disciplina = NEW.id_disciplina),
+            NEW.id_disciplina,
+            (SELECT nome_disciplina FROM disciplina WHERE id_disciplina = NEW.id_prereq),
+            NEW.id_prereq,
+            NEW.id_disciplina,
+            NEW.id_prereq;
+    END IF;
+
+    RETURN NEW;   -- permite a operação seguir em frente
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### O Trigger
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+CREATE OR REPLACE TRIGGER tg_prereq_sem_ciclos
+BEFORE INSERT OR UPDATE ON prereq
+FOR EACH ROW
+EXECUTE FUNCTION verificar_ciclo_prereq();
+```
+
+`BEFORE` garante que a verificação ocorre antes de qualquer escrita. Se a função lançar uma exceção, a linha nunca chega ao disco.
+
+### Demonstração
+
+**Caso 1 — auto-referência** (a disciplina como pré-requisito de si mesma):
+
+```{sql}
+--| connection: con
+--| eval: true
+--| error: true
+INSERT INTO prereq (id_disciplina, id_prereq)
+VALUES (3110401, 3110401);   -- BES4 requer BES4?
+```
+
+**Caso 2 — ciclo direto** (inverter uma aresta existente):
+
+A relação `BES6 → BES4` já existe. Tentar adicionar `BES4 → BES6` fecha o loop imediatamente:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| error: true
+INSERT INTO prereq (id_disciplina, id_prereq)
+VALUES (3110401, 3110601);   -- BES4 requer BES6, mas BES6 já requer BES4
+```
+
+**Caso 3 — ciclo transitivo** (três passos de distância):
+
+A cadeia `BES6 → BES4 → BES2` já existe no grafo. Tentar adicionar `BES2 → BES6` fecharia o ciclo `BES6 → BES4 → BES2 → BES6`:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| error: true
+INSERT INTO prereq (id_disciplina, id_prereq)
+VALUES (3110201, 3110601);   -- BES2 (sem 2) requer BES6 (sem 6)?
+```
+
+A CTE recursiva expandiu o grafo a partir de BES6 e encontrou BES2 entre os nós alcançáveis — detectando o ciclo antes mesmo de tocar o disco.
+
+**Caso 4 — inserção válida** (sem ciclo):
+
+Adicionar "BES8 requer PA4 blockchain" não cria nenhum ciclo: a cadeia PA4 → PA2 não leva de volta a BES8.
+
+```{sql}
+--| connection: con
+--| eval: true
+INSERT INTO prereq (id_disciplina, id_prereq)
+VALUES (3110801, 3110402);   -- BES8 requer PA4 blockchain ✓
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Confirma que a inserção foi aceita
+SELECT pr.id_disciplina,
+       d1.nome_disciplina AS disciplina,
+       pr.id_prereq,
+       d2.nome_disciplina AS prerequisito
+FROM   prereq pr
+JOIN   disciplina d1 ON d1.id_disciplina = pr.id_disciplina
+JOIN   disciplina d2 ON d2.id_disciplina = pr.id_prereq
+WHERE  pr.id_disciplina = 3110801
+ORDER BY pr.id_prereq;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+-- Desfaz o INSERT de demonstração para não alterar os dados de amostra
+DELETE FROM prereq WHERE id_disciplina = 3110801 AND id_prereq = 3110402;
+```
+
+### Limpeza
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+DROP TRIGGER IF EXISTS tg_prereq_sem_ciclos ON prereq;
+DROP FUNCTION IF EXISTS verificar_ciclo_prereq();
+```
+
+::: {.callout-note}
+Este padrão — **CTE recursiva dentro de trigger** — é útil sempre que uma relação hierárquica precisa permanecer acíclica: categorias de produtos, organogramas, dependências de pacotes, grafos de tarefas. A guarda `UNION` (sem `ALL`) na CTE é essencial: ela garante que cada nó seja visitado no máximo uma vez, evitando loop infinito mesmo se dados históricos tiverem inconsistências.
+:::
+
+---
+
 ## Para Praticar
 
 ```{sql}

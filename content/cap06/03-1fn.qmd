@@ -1,0 +1,101 @@
+# Primeira Forma Normal (1FN)
+
+Antes de qualquer normalização mais avançada, uma relação precisa satisfazer a forma mais básica: os valores de todos os atributos devem ser **atômicos**.
+
+## Definição
+
+::: {.conceito}
+Um domínio é **atômico** se seus elementos são unidades indivisíveis do ponto de vista do banco de dados.
+
+Uma relação está na **Primeira Forma Normal (1FN)** se os domínios de todos os seus atributos são atômicos.
+:::
+
+**Exemplos de domínios não-atômicos:**
+
+| Atributo | Tipo problemático | Motivo |
+|---|---|---|
+| `disciplinas` | conjunto `{BES2, BES4, PA4}` | valor multivalorado |
+| `endereco` | `"Rua das Flores, 10, Ap 3"` | valor composto (rua, número, complemento misturados) |
+| `codigo_curso` | `"ENS-311"` | informação codificada que o sistema "abre" |
+
+## Violação: Atributo Multivalorado
+
+Suponha que o banco da UnDF armazenasse as disciplinas de cada aluno em uma única coluna de texto:
+
+```sql
+-- Esquema problemático (NÃO-1FN)
+CREATE TABLE matricula_resumida (
+    id_aluno     INTEGER,
+    nome_aluno   VARCHAR(50),
+    disciplinas  TEXT   -- ex: "3110401, 3110601, 3110801"
+);
+```
+
+Instância de exemplo:
+
+| id_aluno | nome_aluno | disciplinas |
+|---|---|---|
+| 2024311001 | Pedro Alves | 3110401, 3110601 |
+| 2024311002 | Ana Lima | 3110401 |
+
+Problemas desta estrutura:
+
+- Para filtrar alunos matriculados em `3110601`, a query precisa usar `LIKE '%3110601%'` — não usa índice
+- Impossível fazer join com a tabela `disciplina` por `id_disciplina`
+- Adicionar uma disciplina obriga a concatenar string — com risco de corrupção de formato
+- Contar disciplinas exige parsing no aplicativo
+
+## A Forma Correta na UnDF
+
+O banco da UnDF já está em 1FN: cada combinação de `(id_disciplina, ano, semestre, turma, id_aluno)` ocupa uma linha separada em `matricula_disciplina`.
+
+```sql
+-- Cada tupla representa uma matrícula individual — domínios atômicos ✓
+SELECT id_disciplina, ano, semestre, turma, id_aluno, nota
+FROM   matricula_disciplina
+LIMIT  5;
+```
+
+## Atomicidade é Contextual
+
+A atomicidade depende de como a aplicação usa o dado:
+
+- `nome_disciplina = 'Bases da Engenharia de Software 4'` é atômico se o sistema nunca extrai partes do nome.
+- Se existisse uma regra do negócio que dissesse "os dois primeiros caracteres do nome identificam a área", então o domínio não seria atômico — e o sistema estaria codificando informação na string.
+
+::: {.callout-note}
+A 1FN é pressuposta em todo o restante do capítulo. A teoria de dependências funcionais (BCNF, 3FN, 4FN) se aplica apenas a relações já em 1FN.
+:::
+
+## Violação: Atributos em Colunas Separadas por Ano
+
+Outro padrão problemático que viola o espírito da 1FN é armazenar valores de diferentes períodos em colunas separadas:
+
+```sql
+-- Esquema problemático para salários históricos
+CREATE TABLE historico_salario (
+    id_prof       INTEGER PRIMARY KEY,
+    salario_2023  NUMERIC(10,2),
+    salario_2024  NUMERIC(10,2),
+    salario_2025  NUMERIC(10,2),
+    salario_2026  NUMERIC(10,2)
+);
+```
+
+Problemas:
+
+- A cada novo ano, é necessário alterar o DDL (`ALTER TABLE ADD COLUMN`)
+- Consultas como "qual foi o salário no ano X?" exigem lógica condicional (`CASE WHEN`)
+- Agregar por ano é impossível sem `UNION` ou `UNPIVOT`
+
+A solução correta é uma relação separada com `ano` como atributo:
+
+```sql
+-- Esquema correto
+CREATE TABLE historico_salario (
+    id_prof  INTEGER REFERENCES professor(id_prof),
+    ano      INTEGER,
+    salario  NUMERIC(10,2),
+    PRIMARY KEY (id_prof, ano)
+);
+```

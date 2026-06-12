@@ -1,0 +1,35 @@
+# Visão Geral
+
+::: {.callout-note}
+Este capítulo é baseado no Capítulo 7 de @silberschatz2019.
+:::
+
+Um banco de dados pode ser tecnicamente correto — sem erros de SQL, com todas as chaves estrangeiras satisfeitas — e ainda assim ser um **mau projeto**. Atributos agrupados de forma equivocada em uma relação causam repetição de informação, dificultam atualizações e exigem valores nulos para representar situações simples.
+
+A **teoria da normalização** fornece critérios formais para avaliar se um esquema está bem projetado e algoritmos sistemáticos para decompô-lo quando não está. O instrumento central é a **dependência funcional**: uma restrição do mundo real que diz "sempre que dois registros concordam em um conjunto de atributos, devem concordar em outro".
+
+Todos os exemplos usam, quando possível, o banco de dados da UnDF dos capítulos anteriores. Em outros casos são criadas variantes propositalmente mal projetadas para ilustrar os problemas — e depois decompostas na forma correta.
+
+Ao final deste capítulo, você será capaz de:
+
+- Identificar anomalias de inserção, atualização e exclusão em esquemas mal projetados
+- Definir dependência funcional e calcular o fecho de um conjunto de atributos
+- Aplicar as Regras de Armstrong para derivar novas dependências
+- Calcular a cobertura canônica de um conjunto de dependências funcionais
+- Verificar se um esquema está em 1FN, BCNF, 3FN ou 4FN
+- Decompor um esquema em BCNF usando o algoritmo de decomposição
+- Decompor um esquema em 3FN preservando dependências e o join sem perda
+- Distinguir quando usar BCNF e quando aceitar a 3FN
+- Identificar dependências multivaloradas e a 4FN
+
+## Seções
+
+| Seção | Tópico |
+|---|---|
+| [6.1](01-motivacao.qmd) | Motivação: Bom e Mau Design |
+| [6.2](02-dependencias-funcionais.qmd) | Dependências Funcionais |
+| [6.3](03-1fn.qmd) | Primeira Forma Normal (1FN) |
+| [6.4](04-bcnf.qmd) | Forma Normal de Boyce-Codd (BCNF) |
+| [6.5](05-3fn.qmd) | Terceira Forma Normal (3FN) |
+| [6.6](06-4fn.qmd) | Dependências Multivaloradas e 4FN |
+| [Resumo](07-resumo.qmd) | Resumo e Exercícios |

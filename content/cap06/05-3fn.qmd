@@ -1,0 +1,219 @@
+# Terceira Forma Normal (3FN)
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Quando a decomposição em BCNF não preserva todas as dependências, a **3FN** oferece um compromisso: permite uma dose controlada de redundância em troca de garantia de preservação de dependências e join sem perda.
+
+## Definição
+
+::: {.conceito}
+Um esquema R está na **Terceira Forma Normal (3FN)** em relação a F se, para toda DF não-trivial α → β ∈ F⁺:
+
+1. α é superchave de R, **OU**
+2. cada atributo A ∈ (β − α) está contido em alguma chave candidata de R
+
+A condição 2 é a "relaxação mínima" em relação à BCNF: permite que o lado direito da DF contenha atributos de chave candidata, mesmo quando o lado esquerdo não é superchave.
+
+**BCNF ⊂ 3FN**: todo esquema em BCNF está em 3FN (mas não o contrário).
+:::
+
+## O Exemplo `orienta`
+
+A relação que resistiu à decomposição em BCNF está em 3FN:
+
+$$\textit{orienta}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_escola})$$
+
+DFs:
+- `id_prof → id_escola`
+- `id_aluno, id_escola → id_prof`
+
+Chaves candidatas: `{id_aluno, id_prof}` e `{id_aluno, id_escola}`
+
+**Verificação da 3FN:**
+
+Para `id_prof → id_escola`:
+- `id_prof` não é superchave ← condição 1 falha
+- `id_escola` ∈ chave candidata `{id_aluno, id_escola}` ← condição 2 satisfeita ✓
+
+Para `id_aluno, id_escola → id_prof`:
+- `{id_aluno, id_escola}` é chave candidata ← condição 1 satisfeita ✓
+
+**`orienta` está em 3FN.** ✓ (mas não em BCNF)
+
+## Redundância Residual na 3FN
+
+A permissão da condição 2 vem com custo: a 3FN ainda admite alguma redundância.
+
+**Exemplo clássico do livro-texto** (esquema R = (J, K, L), F = {JK → L, L → K}):
+
+Chaves candidatas: `{J, K}` e `{J, L}`
+
+| J | K | L |
+|---|---|---|
+| j1 | k1 | l1 |
+| j2 | k1 | l1 |
+| j3 | k1 | l1 |
+| NULL | k2 | l2 |
+
+Problemas:
+- **Repetição**: o par (k1, l1) aparece três vezes
+- **Valores nulos**: para registrar o par (k2, l2), é preciso inserir J = NULL
+
+Esses problemas são inerentes à 3FN quando a condição 2 é necessária — e mostram por que BCNF é preferida quando possível.
+
+## Algoritmo de Decomposição em 3FN
+
+::: {.conceito}
+**Entrada**: Esquema R com conjunto de DFs F.
+
+**Saída**: Decomposição em 3FN com join sem perda e preservação de dependências.
+
+```
+Fc ← cobertura canônica de F
+i ← 0
+para cada DF α → β em Fc:
+  se nenhum dos Rj (j ≤ i) contém αβ:
+    i ← i + 1
+    Ri ← αβ
+
+se nenhum Rj contém uma chave candidata de R:
+  i ← i + 1
+  Ri ← qualquer chave candidata de R
+
+(opcional: remover esquemas Rj contidos em algum Rk)
+retornar (R1, R2, ..., Ri)
+```
+
+**Propriedades garantidas:**
+- Cada Rᵢ está em 3FN ✓
+- Decomposição tem join sem perda ✓
+- Decomposição preserva dependências ✓
+:::
+
+## Exemplo do Livro: cust_banker_branch
+
+Relação: `cust_banker_branch(id_cliente, id_funcionario, nome_agencia, tipo_conta)`
+
+DFs:
+- `id_cliente, id_funcionario → nome_agencia, tipo_conta`
+- `id_funcionario → nome_agencia`
+- `id_cliente, nome_agencia → id_funcionario`
+
+**Passo 1: Cobertura canônica**
+
+Em `id_cliente, id_funcionario → nome_agencia, tipo_conta`:
+- `nome_agencia` é estranho? Verifique `{id_cliente, id_funcionario}⁺` sem `nome_agencia` no lado direito: pelo algoritmo, `{id_cliente, id_funcionario}⁺ = {id_cliente, id_funcionario, nome_agencia, tipo_conta}` — `nome_agencia` já é derivada por `id_funcionario → nome_agencia`. Sim, estranho → remove.
+
+F_c = { `id_cliente, id_funcionario → tipo_conta`, `id_funcionario → nome_agencia`, `id_cliente, nome_agencia → id_funcionario` }
+
+**Passo 2: Criar esquemas para cada DF de F_c**
+
+- R₁ = (**id_cliente, id_funcionario**, tipo_conta)
+- R₂ = (**id_funcionario**, nome_agencia)
+- R₃ = (**id_cliente, nome_agencia**, id_funcionario)
+
+**Passo 3: Verificar chave candidata**
+
+As chaves candidatas originais de R são `{id_cliente, id_funcionario}` e `{id_cliente, nome_agencia}`. A chave `{id_cliente, id_funcionario}` já está em R₁. ✓
+
+**Passo 4: Remover redundantes**
+
+R₂ = (id_funcionario, nome_agencia) está contido em R₃? Não — R₃ tem id_cliente a mais. Nenhum esquema é subconjunto de outro.
+
+**Resultado final**: {R₁, R₂, R₃} — todos em 3FN, join sem perda, preserva dependências.
+
+## Aplicação no Banco da UnDF: Relação `orienta`
+
+Na UnDF, considere o relacionamento entre aluno, professor e escola na orientação de TCCs:
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+CREATE TABLE IF NOT EXISTS orienta (
+    id_aluno  INTEGER REFERENCES aluno(id_aluno),
+    id_prof   INTEGER REFERENCES professor(id_prof),
+    id_escola INTEGER REFERENCES escola(id_escola),
+    PRIMARY KEY (id_aluno, id_prof)
+);
+
+-- Popula com exemplos: cada aluno tem um orientador de sua escola
+INSERT INTO orienta (id_aluno, id_prof, id_escola)
+SELECT a.id_aluno,
+       p.id_prof,
+       p.id_escola
+FROM   aluno a
+JOIN   curso c   ON c.id_curso  = a.id_curso
+JOIN   escola e  ON e.id_escola = c.id_escola
+JOIN   professor p ON p.id_escola = e.id_escola
+WHERE  p.ch_semanal = 40   -- professores de 40h são orientadores
+ORDER  BY a.id_aluno, p.id_prof
+ON CONFLICT DO NOTHING;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT o.id_aluno,
+       a.nome   AS aluno,
+       o.id_prof,
+       p.nome   AS professor,
+       o.id_escola,
+       e.sigla  AS escola
+FROM   orienta o
+JOIN   aluno   a ON a.id_aluno  = o.id_aluno
+JOIN   professor p ON p.id_prof  = o.id_prof
+JOIN   escola  e ON e.id_escola = o.id_escola
+ORDER  BY o.id_escola, o.id_aluno;
+```
+
+A relação `orienta(id_aluno, id_prof, id_escola)` está em 3FN com as DFs:
+- `id_prof → id_escola` (professor pertence a uma escola)
+- `id_aluno, id_escola → id_prof` (cada aluno tem no máximo um orientador por escola)
+
+Não está em BCNF — e não há decomposição em BCNF que preserve ambas as DFs.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+DROP TABLE IF EXISTS orienta;
+```
+
+## BCNF versus 3FN: Quando Usar Cada Uma
+
+| Critério | BCNF | 3FN |
+|---|---|---|
+| Redundância | Eliminada | Pode restar |
+| Join sem perda | Garantido | Garantido |
+| Preservação de dependências | Não garantida | Garantida |
+| Quando usar | Prioridade é consistência sem custo de join | Necessário verificar DFs sem join |
+
+::: {.callout-note}
+**Objetivo ideal**: BCNF + join sem perda + preservação de dependências. Quando não é possível alcançar os três, aceita-se:
+
+- Falta de preservação de dependências (com verificação via join eventualmente), **ou**
+- Redundância controlada da 3FN.
+
+Na prática, a maioria dos bancos de dados relacionais bem projetados está em BCNF. A 3FN é necessária em situações específicas onde certas DFs entre atributos não-chave precisam ser verificadas eficientemente.
+:::
+
+```{r}
+#| label: teardown
+#| include: false
+dbDisconnect(con)
+```

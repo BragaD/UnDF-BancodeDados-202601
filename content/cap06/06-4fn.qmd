@@ -1,0 +1,147 @@
+# Dependências Multivaloradas e 4FN
+
+Algumas relações estão em BCNF — sem dependência funcional não-trivial com lado esquerdo não-superchave — e ainda assim apresentam anomalias. A causa são as **dependências multivaloradas**.
+
+## O Problema: Independência Entre Conjuntos de Valores
+
+Considere que a UnDF registra, para cada professor, dois tipos de informação independente entre si: os **telefones de contato** e as **áreas de atuação**. Se o professor Igor Melo tem dois telefones e dois idiomas de ensino, qual seria a representação correta?
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+CREATE TABLE IF NOT EXISTS prof_info (
+    id_prof  INTEGER,
+    telefone VARCHAR(20),
+    area     VARCHAR(50),
+    PRIMARY KEY (id_prof, telefone, area)
+);
+
+INSERT INTO prof_info VALUES
+    (31200003, '61-98001-0001', 'Programação'),
+    (31200003, '61-98001-0001', 'Redes'),
+    (31200003, '61-98001-0002', 'Programação'),
+    (31200003, '61-98001-0002', 'Redes');
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT p.nome, pi.telefone, pi.area
+FROM   prof_info pi
+JOIN   professor p ON p.id_prof = pi.id_prof
+ORDER  BY pi.telefone, pi.area;
+```
+
+A relação `prof_info` está em BCNF: não existem DFs não-triviais (nenhum subconjunto próprio dos atributos determina outro). Mas os dados repetem combinações — cada telefone aparece com cada área, resultando em **produto cartesiano**.
+
+Anomalias:
+- **Inserção**: Adicionar um terceiro telefone exige inserir **duas** linhas (uma por área)
+- **Exclusão**: Remover uma área pode apagar a associação do telefone junto
+
+## Dependências Multivaloradas
+
+::: {.conceito}
+Uma **dependência multivalorada** (DM) α →→ β em R significa que, para qualquer par de tuplas t₁, t₂ com t₁[α] = t₂[α], existe uma tupla t₃ em r tal que:
+
+- t₃[α] = t₁[α]
+- t₃[β] = t₁[β]
+- t₃[R − α − β] = t₂[R − α − β]
+
+Informalmente: α →→ β diz que o conjunto de valores de β associados a um valor de α é **independente** do conjunto de valores dos demais atributos.
+:::
+
+No exemplo: `id_prof →→ telefone` e `id_prof →→ area` — os telefones de um professor são independentes de suas áreas. Toda combinação deve existir.
+
+**Relação entre DFs e DMs:** toda DF α → β implica α →→ β (a DF é caso especial da DM quando β tem exatamente um valor).
+
+## Quarta Forma Normal (4FN)
+
+::: {.conceito}
+Um esquema R está na **4FN** em relação ao conjunto D de DFs e DMs se, para toda DM não-trivial α →→ β ∈ D⁺:
+
+$$\alpha \text{ é superchave de } R$$
+
+Uma DM α →→ β é **trivial** se β ⊆ α ou α ∪ β = R.
+
+**4FN implica BCNF**: toda relação em 4FN está em BCNF (pois toda DF é caso especial de DM).
+:::
+
+`prof_info` não está em 4FN: `id_prof →→ telefone` e `id_prof` não é superchave (a chave é `{id_prof, telefone, area}`).
+
+## Algoritmo de Decomposição em 4FN
+
+Análogo ao de BCNF, mas usando DMs:
+
+```
+resultado := {R}
+enquanto existir Ri não em 4FN:
+  seja α →→ β DM não-trivial em Ri com α não superchave
+  decompõe Ri em:
+    (α ∪ β)
+    (Ri − β)
+```
+
+**Aplicando a `prof_info(id_prof, telefone, area)`:**
+
+DM violadora: `id_prof →→ telefone`
+- α = {id_prof}, β = {telefone}
+- R₁ = (id_prof, telefone) — em 4FN ✓
+- R₂ = (id_prof, area) — em 4FN ✓
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Forma correta: duas tabelas independentes
+SELECT DISTINCT id_prof, telefone FROM prof_info ORDER BY telefone;
+```
+
+```{sql}
+--| connection: con
+--| eval: true
+SELECT DISTINCT id_prof, area FROM prof_info ORDER BY area;
+```
+
+Agora adicionar um terceiro telefone exige apenas **uma linha** em `prof_telefone` — sem duplicar as áreas.
+
+## Quando a 4FN Importa
+
+A 4FN é necessária quando uma entidade possui **dois ou mais atributos multivalorados independentes**. Exemplos comuns:
+
+| Entidade | Atributo 1 | Atributo 2 |
+|---|---|---|
+| Professor | Telefones | Áreas de ensino |
+| Produto | Fornecedores | Países de venda |
+| Filme | Atores | Idiomas de dublagem |
+| Curso | Pré-requisitos | Modalidades de oferta |
+
+Se os dois conjuntos de valores são **dependentes** (cada fornecedor vende em um país específico), não há DM e a relação pode ser mantida unida.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+DROP TABLE IF EXISTS prof_info;
+```
+
+```{r}
+#| label: teardown
+#| include: false
+dbDisconnect(con)
+```

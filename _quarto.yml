@@ -142,6 +142,24 @@ book:
           text: "Agregação Avançada"
         - href: content/cap05/05-acesso-python.qmd
           text: "Acesso ao Banco via Python"
+    - part: "Capítulo 6: Normalização"
+      chapters:
+        - href: content/cap06/index.qmd
+          text: "Visão Geral"
+        - href: content/cap06/01-motivacao.qmd
+          text: "Motivação: Bom e Mau Design"
+        - href: content/cap06/02-dependencias-funcionais.qmd
+          text: "Dependências Funcionais"
+        - href: content/cap06/03-1fn.qmd
+          text: "Primeira Forma Normal (1FN)"
+        - href: content/cap06/04-bcnf.qmd
+          text: "Forma Normal de Boyce-Codd (BCNF)"
+        - href: content/cap06/05-3fn.qmd
+          text: "Terceira Forma Normal (3FN)"
+        - href: content/cap06/06-4fn.qmd
+          text: "Dependências Multivaloradas e 4FN"
+        - href: content/cap06/07-resumo.qmd
+          text: "Resumo e Exercícios"
     - part: "Capítulo 8: Projeto com o Modelo ER"
       chapters:
         - href: content/cap08/index.qmd

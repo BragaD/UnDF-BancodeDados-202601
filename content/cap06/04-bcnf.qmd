@@ -1,0 +1,169 @@
+# Forma Normal de Boyce-Codd (BCNF)
+
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+A Forma Normal de Boyce-Codd é a forma normal mais usada na prática. Ela elimina completamente a redundância causada por dependências funcionais — com a ressalva de que pode não preservar todas as dependências.
+
+## Definição
+
+::: {.conceito}
+Um esquema R está na **BCNF** em relação ao conjunto F de DFs se, para toda DF não-trivial α → β ∈ F⁺:
+
+$$\alpha \text{ é superchave de } R$$
+
+Em outras palavras: o único lado esquerdo de uma DF não-trivial permitido é uma superchave.
+:::
+
+**Teste rápido**: Para cada DF α → β em F:
+1. Se β ⊆ α → trivial, ignorar
+2. Calcular α⁺
+3. Se α⁺ ⊇ R → α é superchave, OK
+4. Senão → **violação de BCNF**
+
+## Violação no Banco da UnDF
+
+Retomamos a relação `professor_escola_desnorm` da seção anterior:
+
+$$\textit{professor\_escola}(\underline{\textit{id\_prof}},\ \textit{nome\_prof},\ \textit{ch\_semanal},\ \textit{salario},\ \textit{id\_escola},\ \textit{nome\_escola},\ \textit{id\_centro})$$
+
+**Dependências funcionais:**
+
+- `id_prof → nome_prof, ch_semanal, salario, id_escola, nome_escola, id_centro` (chave)
+- `id_escola → nome_escola, id_centro` ← **violação!**
+
+Para a segunda DF: `{id_escola}⁺ = {id_escola, nome_escola, id_centro}` ≠ R (não inclui id_prof, nome_prof, ...). Logo `id_escola` não é superchave — a DF viola BCNF.
+
+## Algoritmo de Decomposição em BCNF
+
+::: {.conceito}
+Dado esquema R com DF α → β causando violação de BCNF, decompor em:
+
+- **(α ∪ β)** — relação que "isola" a dependência problemática
+- **(R − (β − α))** — relação residual
+
+O processo repete até que todas as relações estejam em BCNF. O resultado é sempre um **join sem perda**.
+:::
+
+**Aplicando ao exemplo professor_escola:**
+
+Violação: `id_escola → nome_escola, id_centro`
+- α = {id_escola}, β = {nome_escola, id_centro}
+- R₁ = α ∪ β = **(id_escola, nome_escola, id_centro)** → esta é a tabela `escola` ✓
+- R₂ = R − (β − α) = **(id_prof, nome_prof, ch_semanal, salario, id_escola)** → esta é a tabela `professor` ✓
+
+Verificação de join sem perda: o atributo comum é `id_escola`, que é chave primária em R₁. ✓
+
+## Exemplo do Livro: Decomposição em Múltiplos Passos
+
+O slide usa a relação `class` com 11 atributos:
+
+$$\textit{class}(\underline{\textit{course\_id}},\ \textit{title},\ \textit{dept\_name},\ \textit{credits},\ \underline{\textit{sec\_id}},\ \underline{\textit{semester}},\ \underline{\textit{year}},\ \textit{building},\ \textit{room\_number},\ \textit{capacity},\ \textit{time\_slot\_id})$$
+
+Chave candidata: `{course_id, sec_id, semester, year}`
+
+DFs identificadas:
+- `course_id → title, dept_name, credits`
+- `building, room_number → capacity`
+- `course_id, sec_id, semester, year → building, room_number, time_slot_id`
+
+**Passo 1**: `course_id → title, dept_name, credits` viola BCNF (course_id não é superchave de `class`).
+
+Decompõe em:
+- **course**(course_id, title, dept_name, credits) ← em BCNF ✓
+- **class-1**(course_id, sec_id, semester, year, building, room_number, capacity, time_slot_id)
+
+**Passo 2**: Em class-1, `building, room_number → capacity` viola BCNF.
+
+Decompõe em:
+- **classroom**(building, room_number, capacity) ← em BCNF ✓
+- **section**(course_id, sec_id, semester, year, building, room_number, time_slot_id) ← em BCNF ✓
+
+Resultado final: três relações, todas em BCNF, decomposição sem perda.
+
+## Verificando o Banco da UnDF
+
+O banco da UnDF já foi projetado de forma normalizada. Vamos verificar que as tabelas principais estão em BCNF:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Verificação informal: cada atributo não-chave depende apenas da PK
+-- Tabela professor: PK = id_prof
+SELECT column_name, data_type
+FROM   information_schema.columns
+WHERE  table_name = 'professor'
+  AND  table_schema = 'public'
+ORDER  BY ordinal_position;
+```
+
+- `id_prof → nome, id_escola, ch_semanal, salario` ← id_prof é chave ✓
+- Não há DF entre atributos não-chave
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Tabela ministra: PK composta
+SELECT column_name, data_type
+FROM   information_schema.columns
+WHERE  table_name = 'ministra'
+  AND  table_schema = 'public'
+ORDER  BY ordinal_position;
+```
+
+- `(id_disciplina, ano, semestre, turma) → id_prof, horario, sala` ← é a própria chave ✓
+- Não há DF entre atributos não-chave (id_prof, horario, sala são independentes entre si)
+
+## BCNF e Preservação de Dependências
+
+::: {.callout-warning}
+**Limitação da BCNF**: Nem sempre é possível decompor em BCNF **e** preservar todas as dependências funcionais.
+
+**Preservação de dependências**: Uma decomposição preserva dependências se F₁ ∪ F₂ ∪ ... ∪ Fₙ implica todas as DFs em F, onde Fᵢ é o conjunto de DFs de F⁺ que envolvem apenas atributos de Rᵢ.
+
+Se uma dependência não for preservada, verificá-la exige um join — operação cara em tempo real.
+:::
+
+**Exemplo onde BCNF não preserva dependências:**
+
+Considere a relação de orientação acadêmica:
+
+$$\textit{orienta}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_escola})$$
+
+Contexto: cada professor pertence a uma escola (`id_prof → id_escola`) e cada aluno pode ter apenas um orientador por escola (`id_aluno, id_escola → id_prof`).
+
+DFs:
+- `id_prof → id_escola`
+- `id_aluno, id_escola → id_prof`
+
+Chaves candidatas: `{id_aluno, id_prof}` e `{id_aluno, id_escola}`.
+
+A DF `id_prof → id_escola` viola BCNF (id_prof não é superchave). Qualquer decomposição que separe id_prof de id_escola perderá a DF `id_aluno, id_escola → id_prof` — pois os três atributos precisam estar juntos para verificá-la.
+
+Portanto: **não há decomposição em BCNF que preserve todas as DFs de `orienta`**.
+
+```{sql}
+--| connection: con
+--| eval: true
+--| output: false
+DROP TABLE IF EXISTS orienta_demo;
+```
+
+```{r}
+#| label: teardown
+#| include: false
+dbDisconnect(con)
+```
