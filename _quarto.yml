@@ -142,23 +142,41 @@ book:
           text: "Agregação Avançada"
         - href: content/cap05/05-acesso-python.qmd
           text: "Acesso ao Banco via Python"
-    - part: "Capítulo 6: Normalização"
+    - part: "Capítulo 6: Bancos Distribuídos, Consistência e NoSQL"
       chapters:
         - href: content/cap06/index.qmd
           text: "Visão Geral"
-        - href: content/cap06/01-motivacao.qmd
-          text: "Motivação: Bom e Mau Design"
-        - href: content/cap06/02-dependencias-funcionais.qmd
-          text: "Dependências Funcionais"
-        - href: content/cap06/03-1fn.qmd
-          text: "Primeira Forma Normal (1FN)"
-        - href: content/cap06/04-bcnf.qmd
-          text: "Forma Normal de Boyce-Codd (BCNF)"
-        - href: content/cap06/05-3fn.qmd
-          text: "Terceira Forma Normal (3FN)"
-        - href: content/cap06/06-4fn.qmd
-          text: "Dependências Multivaloradas e 4FN"
+        - href: content/cap06/01-por-que-distribuir.qmd
+          text: "Por Que Distribuir Dados?"
+        - href: content/cap06/02-transacoes-distribuidas.qmd
+          text: "Transações ACID em Bancos Distribuídos"
+        - href: content/cap06/03-concorrencia-e-contencao.qmd
+          text: "Concorrência, Contenção e Réplicas"
+        - href: content/cap06/04-teorema-cap.qmd
+          text: "Teorema CAP"
+        - href: content/cap06/05-base-e-consistencia-eventual.qmd
+          text: "BASE e Consistência Eventual"
+        - href: content/cap06/06-acid-ou-base.qmd
+          text: "Quando Usar ACID ou BASE"
         - href: content/cap06/07-resumo.qmd
+          text: "Resumo e Decisão"
+    - part: "Capítulo 7: Normalização"
+      chapters:
+        - href: content/cap07/index.qmd
+          text: "Visão Geral"
+        - href: content/cap07/01-motivacao.qmd
+          text: "Motivação: Bom e Mau Design"
+        - href: content/cap07/02-dependencias-funcionais.qmd
+          text: "Dependências Funcionais"
+        - href: content/cap07/03-1fn.qmd
+          text: "Primeira Forma Normal (1FN)"
+        - href: content/cap07/04-bcnf.qmd
+          text: "Forma Normal de Boyce-Codd (BCNF)"
+        - href: content/cap07/05-3fn.qmd
+          text: "Terceira Forma Normal (3FN)"
+        - href: content/cap07/06-4fn.qmd
+          text: "Dependências Multivaloradas e 4FN"
+        - href: content/cap07/07-resumo.qmd
           text: "Resumo e Exercícios"
     - part: "Capítulo 8: Projeto com o Modelo ER"
       chapters:

@@ -1,0 +1,57 @@
+# Quando Usar ACID ou BASE
+
+A escolha entre ACID e BASE não deve ser tratada como uma guerra entre tecnologias. Ela é uma decisão de projeto. O ponto central é entender quais invariantes do sistema precisam ser preservados imediatamente e quais informações podem convergir depois.
+
+::: {.conceito}
+Um **invariante** é uma regra que deve permanecer verdadeira para o sistema continuar correto. Exemplos: "saldo não pode ficar negativo" ou "uma vaga não pode ser ocupada por dois alunos".
+:::
+
+## Quando Ficar com ACID
+
+ACID é a escolha natural quando inconsistência temporária pode causar erro material, fraude, perda financeira, violação legal ou quebra de confiança.
+
+| Situação | Por que ACID importa |
+|---|---|
+| Transferência bancária | Débito e crédito precisam acontecer como uma unidade |
+| Matrícula com limite de vagas | Duas pessoas não podem ocupar a mesma vaga |
+| Estoque crítico | Não vender mais unidades do que existem |
+| Prontuário médico | Atualizações conflitantes podem afetar decisões clínicas |
+| Controle financeiro | Auditoria exige histórico consistente |
+
+Nesses casos, disponibilidade menor pode ser aceitável. É melhor recusar temporariamente uma operação do que confirmar uma operação incorreta.
+
+## Quando BASE Pode Ser Melhor
+
+BASE é atraente quando o sistema precisa continuar respondendo e pequenas divergências temporárias não prejudicam o significado principal.
+
+| Situação | Por que BASE pode bastar |
+|---|---|
+| Feed de notícias | Ordem e contagem podem variar por alguns segundos |
+| Curtidas e visualizações | Valores aproximados são aceitáveis no curto prazo |
+| Recomendação | Resultado não precisa ser exatamente igual para todos |
+| Cache de catálogo | Dados podem ser atualizados em seguida |
+| Telemetria | Eventos podem ser agregados com atraso |
+
+Nesses casos, a experiência do usuário pode melhorar quando o sistema responde rápido, mesmo que os dados ainda estejam convergindo.
+
+## Uma Pergunta Prática
+
+Antes de escolher a tecnologia, faça esta pergunta:
+
+::: {.conceito}
+Se dois usuários lerem respostas diferentes por alguns segundos, o sistema continua correto?
+:::
+
+Se a resposta for "não", provavelmente há uma parte do domínio que precisa de garantias fortes. Se a resposta for "sim", consistência eventual pode ser uma solução simples e escalável.
+
+## Sistemas Mistos
+
+Muitos sistemas reais combinam as duas abordagens:
+
+- pagamentos usam transações fortes;
+- catálogo usa cache e replicação eventual;
+- feed usa ordenação aproximada;
+- auditoria usa gravação durável;
+- busca é atualizada de forma assíncrona.
+
+O resultado não é "SQL ou NoSQL", mas uma arquitetura que escolhe garantias diferentes para partes diferentes do problema.

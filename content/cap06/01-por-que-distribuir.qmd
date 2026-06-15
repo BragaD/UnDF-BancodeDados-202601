@@ -1,0 +1,42 @@
+# Por Que Distribuir Dados?
+
+Um banco centralizado é conceitualmente simples: os dados ficam em um servidor principal, e todas as aplicações conversam com esse servidor. Enquanto o volume é moderado, essa arquitetura funciona bem. O problema aparece quando o sistema passa a ter muitos usuários, muitas leituras, muitas escritas ou usuários espalhados geograficamente.
+
+::: {.conceito}
+Um **banco de dados distribuído** armazena e processa dados em mais de um nó. Esses nós podem estar no mesmo datacenter, em datacenters diferentes ou em regiões geográficas distintas.
+:::
+
+Distribuir dados não é apenas uma escolha tecnológica; é uma resposta a necessidades de engenharia:
+
+- **Escalabilidade**: dividir a carga entre vários servidores permite atender mais requisições.
+- **Disponibilidade**: se um nó falha, outro pode continuar atendendo parte do sistema.
+- **Baixa latência**: dados próximos ao usuário reduzem tempo de resposta.
+- **Tolerância a falhas**: réplicas reduzem o risco de perda ou indisponibilidade.
+- **Crescimento incremental**: novos nós podem ser adicionados conforme o sistema cresce.
+
+## Replicação e Particionamento
+
+Duas estratégias aparecem com frequência:
+
+| Estratégia | Ideia | Exemplo |
+|---|---|---|
+| **Replicação** | Manter cópias dos mesmos dados em vários nós | Uma tabela de produtos copiada para leitura rápida |
+| **Particionamento** | Dividir dados entre nós diferentes | Clientes de regiões diferentes em servidores diferentes |
+
+Em muitos sistemas reais, as duas estratégias são combinadas: cada partição tem réplicas, e cada réplica pode atender consultas.
+
+## O Preço da Distribuição
+
+Distribuir dados melhora capacidade e disponibilidade, mas troca simplicidade por coordenação. Agora o banco precisa responder perguntas que não existiam no modelo centralizado:
+
+- Qual réplica tem o valor mais recente?
+- O que acontece se uma atualização chega a um nó, mas não chega a outro?
+- Uma transação pode envolver dados em servidores diferentes?
+- O sistema deve responder mesmo se parte da rede falhar?
+- É aceitável mostrar temporariamente um valor antigo?
+
+::: {.exemplo}
+Em uma rede social, uma curtida pode aparecer para alguns usuários antes de aparecer para todos. Em um sistema bancário, porém, dois saldos conflitantes podem ser inaceitáveis. A diferença não está apenas no banco usado, mas no significado do dado para o negócio.
+:::
+
+Essa tensão entre escala, disponibilidade e consistência é o ponto de partida para entender bancos NoSQL.

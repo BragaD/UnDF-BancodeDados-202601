@@ -1,0 +1,143 @@
+# Resumo e Exercícios
+
+## Resumo
+
+A teoria da normalização fornece critérios formais para avaliar e melhorar projetos de banco de dados relacionais.
+
+| Conceito | Definição resumida |
+|---|---|
+| **Dependência funcional α → β** | Valores iguais em α implicam valores iguais em β em toda instância legal |
+| **Trivial** | β ⊆ α — satisfeita por qualquer relação, não é restrição real |
+| **Superchave** | Conjunto α tal que α → R (determina todos os atributos) |
+| **Chave candidata** | Superchave minimal (sem subconjunto próprio que também seja superchave) |
+| **Fecho α⁺** | Conjunto de atributos determinados por α sob F |
+| **Fecho F⁺** | Conjunto de todas as DFs logicamente implicadas por F |
+| **Regras de Armstrong** | Reflexividade, Aumento, Transitividade — conjunto completo e correto |
+| **Cobertura canônica F_c** | Conjunto minimal de DFs com o mesmo fecho que F |
+| **Atributo estranho** | Atributo removível de uma DF sem alterar F_c⁺ |
+| **1FN** | Todos os domínios são atômicos (sem conjuntos ou compostos) |
+| **BCNF** | Para toda DF não-trivial α → β: α é superchave |
+| **3FN** | Para toda DF não-trivial α → β: α é superchave **ou** cada A ∈ (β−α) está em chave candidata |
+| **Decomposição sem perda** | π_{R₁}(r) ⋈ π_{R₂}(r) = r para toda instância legal |
+| **Preservação de dependências** | F₁ ∪ ... ∪ Fₙ implica todas as DFs em F |
+| **Dependência multivalorada α →→ β** | O conjunto de valores de β é independente dos demais atributos para cada α |
+| **4FN** | Para toda DM não-trivial α →→ β: α é superchave |
+
+### Hierarquia das Formas Normais
+
+$$4FN \subset BCNF \subset 3FN \subset 2FN \subset 1FN$$
+
+### Comparativo BCNF × 3FN
+
+| | BCNF | 3FN |
+|---|---|---|
+| Join sem perda | Garantido | Garantido |
+| Preservação de dependências | **Não garantida** | Garantida |
+| Redundância | Eliminada | Pode restar |
+| Quando usar | Padrão geral | Quando DFs precisam ser verificadas sem join |
+
+---
+
+## Exercícios
+
+Os exercícios abaixo usam as tabelas do banco de dados da UnDF (`professor`, `escola`, `curso`, `disciplina`, `ministra`, `prereq`, `aluno`, `matricula_disciplina`) e variantes desnormalizadas criadas especificamente para praticar.
+
+---
+
+**Exercício 1.** Considere a relação abaixo, que representa o histórico acadêmico de alunos em uma única tabela desnormalizada:
+
+$$\textit{historico}(\textit{id\_aluno},\ \textit{nome\_aluno},\ \textit{id\_curso},\ \textit{nome\_curso},\ \textit{id\_escola},\ \textit{nome\_escola},\ \textit{id\_disciplina},\ \textit{nota})$$
+
+a) Liste todas as dependências funcionais não-triviais que você consegue identificar no domínio da UnDF.
+b) Qual é a chave candidata desta relação?
+c) Quais dependências violam a BCNF? Justifique.
+d) Decomponha `historico` em BCNF. A decomposição preserva todas as dependências?
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+As DFs incluem: `id_aluno → nome_aluno, id_curso`; `id_curso → nome_curso, id_escola`; `id_escola → nome_escola`; `id_aluno, id_disciplina → nota`.
+
+A chave é `{id_aluno, id_disciplina}`. As violações são as DFs onde o lado esquerdo não é superchave.
+
+Decomponha progressivamente: primeiro isole `id_escola → nome_escola`, depois `id_curso → nome_curso, id_escola`, depois `id_aluno → nome_aluno, id_curso`.
+:::
+
+---
+
+**Exercício 2.** Seja R = (A, B, C, D, E) com F = {AB → C, BC → AD, D → E, CF → B}.
+
+a) Calcule `{AB}⁺`.
+b) AB é chave candidata de R? Justifique.
+c) Verifique se a DF D → E viola BCNF.
+d) Decomponha R em BCNF passo a passo.
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+Para calcular `{AB}⁺`: comece com {A, B}, aplique AB → C → resultado = {A,B,C}, aplique BC → AD → resultado = {A,B,C,D}, aplique D → E → resultado = {A,B,C,D,E}. Sim, AB é superchave.
+
+Para verificar se é candidata, tente A+ e B+ separadamente.
+
+Para BCNF: D → E viola (D não é superchave). Decompõe em (D, E) e R' = (A,B,C,D). Verifique R' e continue.
+:::
+
+---
+
+**Exercício 3.** Considere o conjunto de DFs abaixo para o contexto de matrículas:
+
+F = { `id_aluno, id_disciplina, ano, semestre → nota`, `id_disciplina → id_curso`, `id_aluno → id_curso` }
+
+a) Esses dados violam alguma restrição lógica (uma DF implica outra contraditória)?
+b) Calcule a cobertura canônica de F.
+c) Existe atributo estranho em alguma DF?
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+Verifique se `id_aluno → id_curso` e `id_disciplina → id_curso` juntas implicam algo interessante. Para a cobertura canônica, tente remover `id_disciplina` do lado esquerdo de `id_aluno, id_disciplina, ano, semestre → nota` — calcule `{id_aluno, ano, semestre}⁺`. Se não incluir `nota`, o atributo não é estranho.
+:::
+
+---
+
+**Exercício 4.** Aplique o algoritmo de decomposição em 3FN à relação abaixo:
+
+$$\textit{turma\_orientacao}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_disciplina},\ \textit{id\_escola})$$
+
+com DFs: `id_prof → id_escola`, `id_disciplina → id_escola`, `id_aluno, id_escola → id_prof`.
+
+a) Calcule as chaves candidatas.
+b) Esta relação está em BCNF? Em 3FN?
+c) Execute o algoritmo de decomposição em 3FN e apresente o resultado.
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+As chaves candidatas incluem `{id_aluno, id_prof}` e `{id_aluno, id_escola}`. Para a 3FN, verifique se `id_escola` nas DFs violadoras pertence a alguma chave candidata. Para a decomposição, a cobertura canônica vai determinar os esquemas gerados.
+:::
+
+---
+
+**Exercício 5.** Identifique se as situações abaixo caracterizam uma dependência multivalorada ou funcional, e diga se a relação resultante está em 4FN:
+
+a) A relação `curso_idioma_prof(id_curso, id_idioma, id_prof)` onde cada curso exige professores de certos idiomas, e a lista de idiomas exigidos e a lista de professores aptos são conjuntos independentes por curso.
+
+b) A relação `prof_especializacao(id_prof, id_area, id_instituicao)` onde cada especialização de um professor é em uma área cursada numa instituição específica (a área e a instituição são dependentes).
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+Em (a): se os conjuntos são independentes, temos `id_curso →→ id_idioma` e `id_curso →→ id_prof`. Isso viola 4FN — decompor em `(id_curso, id_idioma)` e `(id_curso, id_prof)`.
+
+Em (b): a área e a instituição formam um par, então a DF é `id_prof, id_area → id_instituicao` — não há DM, a relação pode estar em 3FN ou BCNF dependendo da chave.
+:::
+
+---
+
+**Exercício 6.** O projeto da tabela `matricula_disciplina` do banco da UnDF utiliza uma chave composta por cinco atributos. Justifique por que essa chave é necessária e argumente se a tabela está em BCNF ou 3FN, listando explicitamente as DFs relevantes.
+
+::: {.callout-tip collapse="true"}
+## Dica
+
+A chave `(id_disciplina, ano, semestre, turma, id_aluno)` é necessária porque uma mesma disciplina pode ser oferecida em anos/semestres diferentes, e um aluno pode (hipoticamente) cursar a mesma oferta novamente. As DFs relevantes: a chave toda determina `nota` e `aprovado`; não há DF entre atributos não-chave. Como toda DF não-trivial tem superchave no lado esquerdo, a tabela está em BCNF.
+:::

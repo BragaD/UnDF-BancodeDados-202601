@@ -1,0 +1,66 @@
+# Teorema CAP
+
+O Teorema CAP é uma forma clássica de explicar uma limitação fundamental de sistemas distribuídos. Ele não diz que bancos distribuídos são ruins. Ele diz que, diante de uma partição de rede, certas garantias não podem ser mantidas ao mesmo tempo.
+
+::: {.conceito}
+O **Teorema CAP** afirma que, na presença de uma partição de rede, um sistema distribuído precisa escolher entre manter consistência forte ou manter disponibilidade.
+:::
+
+As três letras são:
+
+| Letra | Significado | Intuição |
+|---|---|---|
+| **C** | Consistency | Todos os clientes veem uma visão consistente dos dados |
+| **A** | Availability | Toda requisição a um nó ativo recebe resposta |
+| **P** | Partition tolerance | O sistema continua operando apesar de falhas de comunicação entre nós |
+
+## Partição de Rede
+
+Uma partição ocorre quando parte dos nós não consegue se comunicar com outra parte. Os servidores podem estar ligados, mas a rede entre eles falha.
+
+Imagine duas réplicas de um mesmo dado:
+
+```text
+Antes da falha:
+
+Cliente -> Nó A <---- rede ----> Nó B
+              saldo = 100       saldo = 100
+
+Durante a partição:
+
+Cliente -> Nó A      X      Nó B <- Cliente
+              ?                 ?
+```
+
+Se um cliente atualiza o saldo no Nó A, mas o Nó A não consegue falar com o Nó B, o sistema tem uma escolha.
+
+## Escolha CP
+
+Um sistema que privilegia consistência pode recusar ou atrasar operações até conseguir coordenar os nós necessários.
+
+| Vantagem | Custo |
+|---|---|
+| Evita respostas conflitantes | Pode deixar parte dos usuários sem resposta |
+
+Essa escolha faz sentido quando uma resposta errada é pior que uma resposta indisponível.
+
+## Escolha AP
+
+Um sistema que privilegia disponibilidade pode continuar respondendo em cada lado da partição, mesmo sem coordenação imediata.
+
+| Vantagem | Custo |
+|---|---|
+| Mantém o serviço funcionando | Pode produzir leituras temporariamente inconsistentes |
+
+Essa escolha faz sentido quando o sistema pode reconciliar dados depois e quando pequenas divergências temporárias são aceitáveis.
+
+## O Que CAP Não Diz
+
+CAP é frequentemente simplificado demais. Alguns cuidados:
+
+- CAP se torna decisivo **durante partições de rede**.
+- Partição tolerante não é uma escolha opcional em sistemas distribuídos reais: redes falham.
+- Consistência em CAP não é a mesma palavra ampla usada em ACID; aqui a ideia está próxima de todos os clientes observarem uma ordem consistente de operações.
+- Sistemas reais fazem escolhas graduais, não apenas rótulos puros como "CP" ou "AP".
+
+CAP não substitui projeto de banco de dados. Ele ajuda a formular a pergunta certa: **em caso de falha de comunicação, preferimos esperar para preservar consistência forte ou responder aceitando inconsistência temporária?**

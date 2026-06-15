@@ -1,0 +1,44 @@
+# Transações ACID em Bancos Distribuídos
+
+Transações ACID são uma das grandes forças dos bancos relacionais. Elas permitem que o desenvolvedor pense em operações complexas como uma unidade lógica: ou tudo acontece, ou nada acontece.
+
+::: {.conceito}
+**ACID** resume quatro propriedades de transações: Atomicidade, Consistência, Isolamento e Durabilidade.
+:::
+
+Em um único servidor, o SGBD controla logs, bloqueios, versões e commits no mesmo ambiente. Em um banco distribuído, a transação pode depender de vários nós. Isso torna cada propriedade mais cara.
+
+| Propriedade | Em um servidor | Em vários servidores |
+|---|---|---|
+| Atomicidade | Um log local registra commit ou rollback | Vários nós precisam concordar sobre commit ou rollback |
+| Consistência | Constraints são verificadas localmente | Regras podem depender de dados espalhados |
+| Isolamento | Bloqueios ou versões são coordenados localmente | Concorrência precisa ser coordenada entre nós |
+| Durabilidade | Escrita persistida no log local | Escrita pode precisar ser replicada antes da resposta |
+
+## O Problema do Commit Distribuído
+
+Imagine uma compra que atualiza três informações:
+
+1. reduz o estoque em um nó;
+2. registra o pagamento em outro;
+3. cria o pedido em um terceiro.
+
+Se todos confirmam, a compra está concluída. Se todos abortam, nada muda. O caso difícil é intermediário: dois nós confirmam, mas o terceiro fica inacessível.
+
+::: {.conceito}
+Um **commit distribuído** tenta garantir que todos os participantes de uma transação distribuída cheguem à mesma decisão: confirmar ou abortar.
+:::
+
+Protocolos como o commit em duas fases ajudam a coordenar essa decisão. A intuição é simples: primeiro os nós dizem se estão prontos; depois um coordenador decide o resultado final. O custo também é simples de entender: mais mensagens, mais espera e mais pontos de bloqueio.
+
+## Por Que Isso Dói em Alta Escala?
+
+Quanto mais nós participam de uma transação, maior a chance de atraso ou falha. Em cargas com alta frequência de leituras e escritas, isso pode produzir:
+
+- transações esperando por nós lentos;
+- bloqueios mantidos por mais tempo;
+- aumento de latência para o usuário;
+- maior chance de timeout;
+- queda de vazão quando muitos clientes competem pelos mesmos dados.
+
+ACID continua sendo valioso. O ponto é que, em sistemas distribuídos, suas garantias exigem coordenação, e coordenação tem custo.
