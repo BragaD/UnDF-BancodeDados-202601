@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Dependências Multivaloradas e 4FN – Bases da Engenharia de Software 4</title>
+<title>BASE e Consistência Eventual – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,41 +24,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -69,8 +34,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/07-resumo.html" rel="next">
-<link href="../../content/cap06/05-3fn.html" rel="prev">
+<link href="../../content/cap06/06-acid-ou-base.html" rel="next">
+<link href="../../content/cap06/04-teorema-cap.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -113,35 +78,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -335,7 +271,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-4fn.html"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -686,7 +622,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 6: Normalização</span></a>
+ <span class="menu-text">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -699,37 +635,37 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  <a href="../../content/cap06/01-por-que-distribuir.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por Que Distribuir Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  <a href="../../content/cap06/02-transacoes-distribuidas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  <a href="../../content/cap06/04-teorema-cap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Teorema CAP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-4fn.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -737,12 +673,63 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 7: Normalização</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
@@ -825,11 +812,10 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#o-problema-independência-entre-conjuntos-de-valores" id="toc-o-problema-independência-entre-conjuntos-de-valores" class="nav-link active" data-scroll-target="#o-problema-independência-entre-conjuntos-de-valores">O Problema: Independência Entre Conjuntos de Valores</a></li>
-  <li><a href="#dependências-multivaloradas" id="toc-dependências-multivaloradas" class="nav-link" data-scroll-target="#dependências-multivaloradas">Dependências Multivaloradas</a></li>
-  <li><a href="#quarta-forma-normal-4fn" id="toc-quarta-forma-normal-4fn" class="nav-link" data-scroll-target="#quarta-forma-normal-4fn">Quarta Forma Normal (4FN)</a></li>
-  <li><a href="#algoritmo-de-decomposição-em-4fn" id="toc-algoritmo-de-decomposição-em-4fn" class="nav-link" data-scroll-target="#algoritmo-de-decomposição-em-4fn">Algoritmo de Decomposição em 4FN</a></li>
-  <li><a href="#quando-a-4fn-importa" id="toc-quando-a-4fn-importa" class="nav-link" data-scroll-target="#quando-a-4fn-importa">Quando a 4FN Importa</a></li>
+  <li><a href="#as-três-ideias" id="toc-as-três-ideias" class="nav-link active" data-scroll-target="#as-três-ideias">As Três Ideias</a></li>
+  <li><a href="#um-exemplo-simples" id="toc-um-exemplo-simples" class="nav-link" data-scroll-target="#um-exemplo-simples">Um Exemplo Simples</a></li>
+  <li><a href="#onde-base-costuma-fazer-sentido" id="toc-onde-base-costuma-fazer-sentido" class="nav-link" data-scroll-target="#onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</a></li>
+  <li><a href="#o-preço-da-flexibilidade" id="toc-o-preço-da-flexibilidade" class="nav-link" data-scroll-target="#o-preço-da-flexibilidade">O Preço da Flexibilidade</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -837,9 +823,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-4fn.html"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></h1>
+<h1 class="title"><span class="chapter-title">BASE e Consistência Eventual</span></h1>
 </div>
 
 
@@ -862,192 +848,81 @@ window.Quarto = {
 </header>
 
 
-<p>Algumas relações estão em BCNF — sem dependência funcional não-trivial com lado esquerdo não-superchave — e ainda assim apresentam anomalias. A causa são as <strong>dependências multivaloradas</strong>.</p>
-<section id="o-problema-independência-entre-conjuntos-de-valores" class="level2">
-<h2 class="anchored" data-anchor-id="o-problema-independência-entre-conjuntos-de-valores">O Problema: Independência Entre Conjuntos de Valores</h2>
-<p>Considere que a UnDF registra, para cada professor, dois tipos de informação independente entre si: os <strong>telefones de contato</strong> e as <strong>áreas de atuação</strong>. Se o professor Igor Melo tem dois telefones e dois idiomas de ensino, qual seria a representação correta?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> prof_info (</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    id_prof  <span class="dt">INTEGER</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    telefone <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    area     <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_prof, telefone, area)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> prof_info <span class="kw">VALUES</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200003</span>, <span class="st">'61-98001-0001'</span>, <span class="st">'Programação'</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200003</span>, <span class="st">'61-98001-0001'</span>, <span class="st">'Redes'</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200003</span>, <span class="st">'61-98001-0002'</span>, <span class="st">'Programação'</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31200003</span>, <span class="st">'61-98001-0002'</span>, <span class="st">'Redes'</span>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.nome, pi.telefone, pi.area</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   prof_info pi</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_prof <span class="op">=</span> pi.id_prof</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> pi.telefone, pi.area;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>4 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">nome</th>
-<th style="text-align: left;">telefone</th>
-<th style="text-align: left;">area</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">61-98001-0001</td>
-<td style="text-align: left;">Programação</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">61-98001-0001</td>
-<td style="text-align: left;">Redes</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">61-98001-0002</td>
-<td style="text-align: left;">Programação</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Igor Melo</td>
-<td style="text-align: left;">61-98001-0002</td>
-<td style="text-align: left;">Redes</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>A relação <code>prof_info</code> está em BCNF: não existem DFs não-triviais (nenhum subconjunto próprio dos atributos determina outro). Mas os dados repetem combinações — cada telefone aparece com cada área, resultando em <strong>produto cartesiano</strong>.</p>
-<p>Anomalias: - <strong>Inserção</strong>: Adicionar um terceiro telefone exige inserir <strong>duas</strong> linhas (uma por área) - <strong>Exclusão</strong>: Remover uma área pode apagar a associação do telefone junto</p>
-</section>
-<section id="dependências-multivaloradas" class="level2">
-<h2 class="anchored" data-anchor-id="dependências-multivaloradas">Dependências Multivaloradas</h2>
+<p>Se ACID representa garantias fortes, BASE representa uma postura mais flexível para certos sistemas distribuídos. A ideia não é abandonar qualidade; é aceitar que algumas aplicações funcionam melhor quando trocam consistência imediata por disponibilidade e baixa latência.</p>
 <div class="conceito">
-<p>Uma <strong>dependência multivalorada</strong> (DM) α →→ β em R significa que, para qualquer par de tuplas t₁, t₂ com t₁[α] = t₂[α], existe uma tupla t₃ em r tal que:</p>
-<ul>
-<li>t₃[α] = t₁[α]</li>
-<li>t₃[β] = t₁[β]</li>
-<li>t₃[R − α − β] = t₂[R − α − β]</li>
-</ul>
-<p>Informalmente: α →→ β diz que o conjunto de valores de β associados a um valor de α é <strong>independente</strong> do conjunto de valores dos demais atributos.</p>
+<p><strong>BASE</strong> significa Basically Available, Soft state, Eventual consistency. Em português: basicamente disponível, estado flexível e consistência eventual.</p>
 </div>
-<p>No exemplo: <code>id_prof →→ telefone</code> e <code>id_prof →→ area</code> — os telefones de um professor são independentes de suas áreas. Toda combinação deve existir.</p>
-<p><strong>Relação entre DFs e DMs:</strong> toda DF α → β implica α →→ β (a DF é caso especial da DM quando β tem exatamente um valor).</p>
-</section>
-<section id="quarta-forma-normal-4fn" class="level2">
-<h2 class="anchored" data-anchor-id="quarta-forma-normal-4fn">Quarta Forma Normal (4FN)</h2>
-<div class="conceito">
-<p>Um esquema R está na <strong>4FN</strong> em relação ao conjunto D de DFs e DMs se, para toda DM não-trivial α →→ β ∈ D⁺:</p>
-<p><span class="math display">\[\alpha \text{ é superchave de } R\]</span></p>
-<p>Uma DM α →→ β é <strong>trivial</strong> se β ⊆ α ou α ∪ β = R.</p>
-<p><strong>4FN implica BCNF</strong>: toda relação em 4FN está em BCNF (pois toda DF é caso especial de DM).</p>
-</div>
-<p><code>prof_info</code> não está em 4FN: <code>id_prof →→ telefone</code> e <code>id_prof</code> não é superchave (a chave é <code>{id_prof, telefone, area}</code>).</p>
-</section>
-<section id="algoritmo-de-decomposição-em-4fn" class="level2">
-<h2 class="anchored" data-anchor-id="algoritmo-de-decomposição-em-4fn">Algoritmo de Decomposição em 4FN</h2>
-<p>Análogo ao de BCNF, mas usando DMs:</p>
-<pre><code>resultado := {R}
-enquanto existir Ri não em 4FN:
-  seja α →→ β DM não-trivial em Ri com α não superchave
-  decompõe Ri em:
-    (α ∪ β)
-    (Ri − β)</code></pre>
-<p><strong>Aplicando a <code>prof_info(id_prof, telefone, area)</code>:</strong></p>
-<p>DM violadora: <code>id_prof →→ telefone</code> - α = {id_prof}, β = {telefone} - R₁ = (id_prof, telefone) — em 4FN ✓ - R₂ = (id_prof, area) — em 4FN ✓</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Forma correta: duas tabelas independentes</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_prof, telefone <span class="kw">FROM</span> prof_info <span class="kw">ORDER</span> <span class="kw">BY</span> telefone;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>2 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">telefone</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">61-98001-0001</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">61-98001-0002</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> id_prof, area <span class="kw">FROM</span> prof_info <span class="kw">ORDER</span> <span class="kw">BY</span> area;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>2 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">area</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">Programação</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">31200003</td>
-<td style="text-align: left;">Redes</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Agora adicionar um terceiro telefone exige apenas <strong>uma linha</strong> em <code>prof_telefone</code> — sem duplicar as áreas.</p>
-</section>
-<section id="quando-a-4fn-importa" class="level2">
-<h2 class="anchored" data-anchor-id="quando-a-4fn-importa">Quando a 4FN Importa</h2>
-<p>A 4FN é necessária quando uma entidade possui <strong>dois ou mais atributos multivalorados independentes</strong>. Exemplos comuns:</p>
+<section id="as-três-ideias" class="level2">
+<h2 class="anchored" data-anchor-id="as-três-ideias">As Três Ideias</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Entidade</th>
-<th>Atributo 1</th>
-<th>Atributo 2</th>
+<th>Ideia</th>
+<th>Significado</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Professor</td>
-<td>Telefones</td>
-<td>Áreas de ensino</td>
+<td>Basically Available</td>
+<td>O sistema tenta responder mesmo diante de falhas parciais</td>
 </tr>
 <tr class="even">
-<td>Produto</td>
-<td>Fornecedores</td>
-<td>Países de venda</td>
+<td>Soft state</td>
+<td>O estado pode mudar ao longo do tempo sem uma nova entrada explícita do usuário, por causa de sincronização interna</td>
 </tr>
 <tr class="odd">
-<td>Filme</td>
-<td>Atores</td>
-<td>Idiomas de dublagem</td>
-</tr>
-<tr class="even">
-<td>Curso</td>
-<td>Pré-requisitos</td>
-<td>Modalidades de oferta</td>
+<td>Eventual consistency</td>
+<td>Se novas atualizações pararem, as réplicas tendem a convergir para o mesmo valor</td>
 </tr>
 </tbody>
 </table>
-<p>Se os dois conjuntos de valores são <strong>dependentes</strong> (cada fornecedor vende em um país específico), não há DM e a relação pode ser mantida unida.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> prof_info;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="conceito">
+<p><strong>Consistência eventual</strong> significa que réplicas podem divergir temporariamente, mas devem convergir quando o sistema tiver tempo suficiente para propagar e reconciliar atualizações.</p>
 </div>
+</section>
+<section id="um-exemplo-simples" class="level2">
+<h2 class="anchored" data-anchor-id="um-exemplo-simples">Um Exemplo Simples</h2>
+<p>Considere a contagem de curtidas em uma postagem.</p>
+<ol type="1">
+<li>Um usuário curte a postagem no servidor A.</li>
+<li>Outro usuário lê a postagem pelo servidor B.</li>
+<li>Por alguns segundos, B ainda mostra a contagem antiga.</li>
+<li>Depois da sincronização, A e B mostram a mesma contagem.</li>
+</ol>
+<p>Nesse caso, a inconsistência temporária costuma ser aceitável. O usuário talvez veja <code>128</code> curtidas em vez de <code>129</code>, mas o significado do sistema não é destruído.</p>
+</section>
+<section id="onde-base-costuma-fazer-sentido" class="level2">
+<h2 class="anchored" data-anchor-id="onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</h2>
+<p>BASE aparece bem em sistemas nos quais disponibilidade e latência são mais importantes que consistência imediata:</p>
+<ul>
+<li>feeds de redes sociais;</li>
+<li>contadores de visualização;</li>
+<li>recomendações;</li>
+<li>cache de produtos;</li>
+<li>logs e telemetria;</li>
+<li>carrinhos que podem ser reconciliados depois;</li>
+<li>sistemas de busca e indexação.</li>
+</ul>
+</section>
+<section id="o-preço-da-flexibilidade" class="level2">
+<h2 class="anchored" data-anchor-id="o-preço-da-flexibilidade">O Preço da Flexibilidade</h2>
+<p>BASE exige que a aplicação saiba lidar com incerteza. Isso muda o trabalho do desenvolvedor:</p>
+<ul>
+<li>projetar operações idempotentes;</li>
+<li>definir regras de reconciliação;</li>
+<li>tolerar leituras antigas;</li>
+<li>exibir estados intermediários ao usuário;</li>
+<li>decidir quanto atraso é aceitável;</li>
+<li>monitorar divergências e convergência.</li>
+</ul>
+<div class="exemplo">
+<p>Em um catálogo, mostrar por alguns segundos uma descrição antiga de produto pode ser aceitável. Em uma transferência bancária, mostrar saldo incorreto pode violar regras de negócio e confiança do usuário.</p>
+</div>
+<p>BASE não é “menos correto” por definição. Ele é correto para domínios em que consistência eventual preserva o significado do sistema.</p>
 
 
 </section>
@@ -1562,13 +1437,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/05-3fn.html" class="pagination-link" aria-label="Terceira Forma Normal (3FN)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Terceira Forma Normal (3FN)</span></span>
+      <a href="../../content/cap06/04-teorema-cap.html" class="pagination-link" aria-label="Teorema CAP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Teorema CAP</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/07-resumo.html" class="pagination-link" aria-label="Resumo e Exercícios">
-        <span class="nav-page-text"><span class="chapter-title">Resumo e Exercícios</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/06-acid-ou-base.html" class="pagination-link" aria-label="Quando Usar ACID ou BASE">
+        <span class="nav-page-text"><span class="chapter-title">Quando Usar ACID ou BASE</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

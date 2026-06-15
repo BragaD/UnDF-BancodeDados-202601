@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Visão Geral – Bases da Engenharia de Software 4</title>
+<title>Bancos Distribuídos, Consistência e NoSQL – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,7 +34,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/01-motivacao.html" rel="next">
+<link href="../../content/cap06/01-por-que-distribuir.html" rel="next">
 <link href="../../content/cap05/05-acesso-python.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -290,7 +271,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -641,7 +622,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 6: Normalização</span></a>
+ <span class="menu-text">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -654,37 +635,37 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  <a href="../../content/cap06/01-por-que-distribuir.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por Que Distribuir Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  <a href="../../content/cap06/02-transacoes-distribuidas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  <a href="../../content/cap06/04-teorema-cap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Teorema CAP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -692,12 +673,63 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 7: Normalização</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
@@ -788,9 +820,9 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/index.html"><span class="chapter-title">Visão Geral</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Visão Geral</span></h1>
+<h1 class="title"><span class="chapter-title">Bancos Distribuídos, Consistência e NoSQL</span></h1>
 </div>
 
 
@@ -823,23 +855,20 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo é baseado no Capítulo 7 de <span class="citation" data-cites="silberschatz2019">Silberschatz et al. (<a href="#ref-silberschatz2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Este capítulo serve como ponte entre transações SQL e o seminário sobre bancos NoSQL.</p>
 </div>
 </div>
-<p>Um banco de dados pode ser tecnicamente correto — sem erros de SQL, com todas as chaves estrangeiras satisfeitas — e ainda assim ser um <strong>mau projeto</strong>. Atributos agrupados de forma equivocada em uma relação causam repetição de informação, dificultam atualizações e exigem valores nulos para representar situações simples.</p>
-<p>A <strong>teoria da normalização</strong> fornece critérios formais para avaliar se um esquema está bem projetado e algoritmos sistemáticos para decompô-lo quando não está. O instrumento central é a <strong>dependência funcional</strong>: uma restrição do mundo real que diz “sempre que dois registros concordam em um conjunto de atributos, devem concordar em outro”.</p>
-<p>Todos os exemplos usam, quando possível, o banco de dados da UnDF dos capítulos anteriores. Em outros casos são criadas variantes propositalmente mal projetadas para ilustrar os problemas — e depois decompostas na forma correta.</p>
+<p>Até aqui, o banco de dados apareceu como uma unidade relativamente simples: uma aplicação envia comandos SQL para um servidor PostgreSQL, e o SGBD garante integridade, concorrência e persistência. Esse modelo é poderoso, mas muitos sistemas modernos precisam operar em uma escala que rompe essa simplicidade.</p>
+<p>Aplicações com milhões de usuários, acessos globais, alta disponibilidade e grande volume de leitura e escrita não podem depender apenas de uma máquina central. Elas distribuem dados entre vários servidores, regiões e réplicas. Essa distribuição aumenta capacidade e disponibilidade, mas cria um novo problema central: <strong>o que significa manter dados corretos quando várias cópias existem ao mesmo tempo e a rede pode falhar?</strong></p>
+<p>Este capítulo apresenta a motivação para bancos distribuídos, mostra por que transações ACID ficam mais difíceis nesse ambiente e introduz o Teorema CAP. A partir dele, discutimos BASE e consistência eventual como alternativas pragmáticas usadas por muitos sistemas NoSQL.</p>
 <p>Ao final deste capítulo, você será capaz de:</p>
 <ul>
-<li>Identificar anomalias de inserção, atualização e exclusão em esquemas mal projetados</li>
-<li>Definir dependência funcional e calcular o fecho de um conjunto de atributos</li>
-<li>Aplicar as Regras de Armstrong para derivar novas dependências</li>
-<li>Calcular a cobertura canônica de um conjunto de dependências funcionais</li>
-<li>Verificar se um esquema está em 1FN, BCNF, 3FN ou 4FN</li>
-<li>Decompor um esquema em BCNF usando o algoritmo de decomposição</li>
-<li>Decompor um esquema em 3FN preservando dependências e o join sem perda</li>
-<li>Distinguir quando usar BCNF e quando aceitar a 3FN</li>
-<li>Identificar dependências multivaloradas e a 4FN</li>
+<li>Explicar por que bancos de dados são distribuídos em sistemas modernos</li>
+<li>Identificar os custos de coordenação de transações ACID em ambientes distribuídos</li>
+<li>Relacionar concorrência, contenção e replicação em cargas com muitas leituras e escritas</li>
+<li>Interpretar corretamente o Teorema CAP durante partições de rede</li>
+<li>Definir BASE e consistência eventual</li>
+<li>Comparar situações em que ACID é indispensável com situações em que BASE pode ser aceitável</li>
 </ul>
 <section id="seções" class="level2">
 <h2 class="anchored" data-anchor-id="seções">Seções</h2>
@@ -852,42 +881,37 @@ Nota
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../../content/cap06/01-motivacao.html">6.1</a></td>
-<td>Motivação: Bom e Mau Design</td>
+<td><a href="../../content/cap06/01-por-que-distribuir.html">6.1</a></td>
+<td>Por Que Distribuir Dados?</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap06/02-dependencias-funcionais.html">6.2</a></td>
-<td>Dependências Funcionais</td>
+<td><a href="../../content/cap06/02-transacoes-distribuidas.html">6.2</a></td>
+<td>Transações ACID em Bancos Distribuídos</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap06/03-1fn.html">6.3</a></td>
-<td>Primeira Forma Normal (1FN)</td>
+<td><a href="../../content/cap06/03-concorrencia-e-contencao.html">6.3</a></td>
+<td>Concorrência, Contenção e Réplicas</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap06/04-bcnf.html">6.4</a></td>
-<td>Forma Normal de Boyce-Codd (BCNF)</td>
+<td><a href="../../content/cap06/04-teorema-cap.html">6.4</a></td>
+<td>Teorema CAP</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap06/05-3fn.html">6.5</a></td>
-<td>Terceira Forma Normal (3FN)</td>
+<td><a href="../../content/cap06/05-base-e-consistencia-eventual.html">6.5</a></td>
+<td>BASE e Consistência Eventual</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap06/06-4fn.html">6.6</a></td>
-<td>Dependências Multivaloradas e 4FN</td>
+<td><a href="../../content/cap06/06-acid-ou-base.html">6.6</a></td>
+<td>Quando Usar ACID ou BASE</td>
 </tr>
 <tr class="odd">
 <td><a href="../../content/cap06/07-resumo.html">Resumo</a></td>
-<td>Resumo e Exercícios</td>
+<td>Resumo e Decisão</td>
 </tr>
 </tbody>
 </table>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-silberschatz2019" class="csl-entry" role="listitem">
-Silberschatz, Abraham, Henry F. Korth, e S. Sudarshan. 2019. <em>Database System Concepts</em>. 7th ed. McGraw-Hill Education.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -1405,8 +1429,8 @@ document.addEventListener('DOMContentLoaded', function () {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/01-motivacao.html" class="pagination-link" aria-label="Motivação: Bom e Mau Design">
-        <span class="nav-page-text"><span class="chapter-title">Motivação: Bom e Mau Design</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/01-por-que-distribuir.html" class="pagination-link" aria-label="Por Que Distribuir Dados?">
+        <span class="nav-page-text"><span class="chapter-title">Por Que Distribuir Dados?</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Terceira Forma Normal (3FN) – Bases da Engenharia de Software 4</title>
+<title>Concorrência, Contenção e Réplicas – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,41 +24,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -69,8 +34,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/06-4fn.html" rel="next">
-<link href="../../content/cap06/04-bcnf.html" rel="prev">
+<link href="../../content/cap06/04-teorema-cap.html" rel="next">
+<link href="../../content/cap06/02-transacoes-distribuidas.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -113,35 +78,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -335,7 +271,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-3fn.html"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-concorrencia-e-contencao.html"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -686,7 +622,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 6: Normalização</span></a>
+ <span class="menu-text">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -699,37 +635,37 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  <a href="../../content/cap06/01-por-que-distribuir.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por Que Distribuir Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  <a href="../../content/cap06/02-transacoes-distribuidas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  <a href="../../content/cap06/04-teorema-cap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Teorema CAP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -737,12 +673,63 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 7: Normalização</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
@@ -825,13 +812,10 @@ window.Quarto = {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
-  <li><a href="#o-exemplo-orienta" id="toc-o-exemplo-orienta" class="nav-link" data-scroll-target="#o-exemplo-orienta">O Exemplo <code>orienta</code></a></li>
-  <li><a href="#redundância-residual-na-3fn" id="toc-redundância-residual-na-3fn" class="nav-link" data-scroll-target="#redundância-residual-na-3fn">Redundância Residual na 3FN</a></li>
-  <li><a href="#algoritmo-de-decomposição-em-3fn" id="toc-algoritmo-de-decomposição-em-3fn" class="nav-link" data-scroll-target="#algoritmo-de-decomposição-em-3fn">Algoritmo de Decomposição em 3FN</a></li>
-  <li><a href="#exemplo-do-livro-cust_banker_branch" id="toc-exemplo-do-livro-cust_banker_branch" class="nav-link" data-scroll-target="#exemplo-do-livro-cust_banker_branch">Exemplo do Livro: cust_banker_branch</a></li>
-  <li><a href="#aplicação-no-banco-da-undf-relação-orienta" id="toc-aplicação-no-banco-da-undf-relação-orienta" class="nav-link" data-scroll-target="#aplicação-no-banco-da-undf-relação-orienta">Aplicação no Banco da UnDF: Relação <code>orienta</code></a></li>
-  <li><a href="#bcnf-versus-3fn-quando-usar-cada-uma" id="toc-bcnf-versus-3fn-quando-usar-cada-uma" class="nav-link" data-scroll-target="#bcnf-versus-3fn-quando-usar-cada-uma">BCNF versus 3FN: Quando Usar Cada Uma</a></li>
+  <li><a href="#registros-quentes" id="toc-registros-quentes" class="nav-link active" data-scroll-target="#registros-quentes">Registros Quentes</a></li>
+  <li><a href="#leituras-rápidas-escritas-difíceis" id="toc-leituras-rápidas-escritas-difíceis" class="nav-link" data-scroll-target="#leituras-rápidas-escritas-difíceis">Leituras Rápidas, Escritas Difíceis</a></li>
+  <li><a href="#conflitos-de-atualização" id="toc-conflitos-de-atualização" class="nav-link" data-scroll-target="#conflitos-de-atualização">Conflitos de Atualização</a></li>
+  <li><a href="#o-papel-do-modelo-de-dados" id="toc-o-papel-do-modelo-de-dados" class="nav-link" data-scroll-target="#o-papel-do-modelo-de-dados">O Papel do Modelo de Dados</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -839,9 +823,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-3fn.html"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-concorrencia-e-contencao.html"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Terceira Forma Normal (3FN)</span></h1>
+<h1 class="title"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></h1>
 </div>
 
 
@@ -864,260 +848,21 @@ window.Quarto = {
 </header>
 
 
-<p>Quando a decomposição em BCNF não preserva todas as dependências, a <strong>3FN</strong> oferece um compromisso: permite uma dose controlada de redundância em troca de garantia de preservação de dependências e join sem perda.</p>
-<section id="definição" class="level2">
-<h2 class="anchored" data-anchor-id="definição">Definição</h2>
+<p>Um banco distribuído normalmente existe para atender muitas requisições ao mesmo tempo. O desafio não é apenas armazenar mais dados; é manter comportamento aceitável quando milhares de operações disputam os mesmos recursos.</p>
 <div class="conceito">
-<p>Um esquema R está na <strong>Terceira Forma Normal (3FN)</strong> em relação a F se, para toda DF não-trivial α → β ∈ F⁺:</p>
-<ol type="1">
-<li>α é superchave de R, <strong>OU</strong></li>
-<li>cada atributo A ∈ (β − α) está contido em alguma chave candidata de R</li>
-</ol>
-<p>A condição 2 é a “relaxação mínima” em relação à BCNF: permite que o lado direito da DF contenha atributos de chave candidata, mesmo quando o lado esquerdo não é superchave.</p>
-<p><strong>BCNF ⊂ 3FN</strong>: todo esquema em BCNF está em 3FN (mas não o contrário).</p>
+<p><strong>Concorrência</strong> ocorre quando várias operações são executadas ao mesmo tempo. <strong>Contenção</strong> ocorre quando essas operações disputam o mesmo dado, índice, bloqueio, partição ou recurso de rede.</p>
 </div>
+<section id="registros-quentes" class="level2">
+<h2 class="anchored" data-anchor-id="registros-quentes">Registros Quentes</h2>
+<p>Alguns dados concentram muitas operações. São os chamados pontos quentes.</p>
+<div class="exemplo">
+<p>Em uma matrícula online, a disciplina mais desejada pode receber centenas de tentativas de matrícula no mesmo minuto. Mesmo que o banco esteja distribuído, todas essas operações disputam o mesmo conjunto de vagas.</p>
+</div>
+<p>Nesses casos, adicionar mais servidores nem sempre resolve. Se todos precisam atualizar o mesmo contador, o sistema continua tendo um gargalo lógico.</p>
 </section>
-<section id="o-exemplo-orienta" class="level2">
-<h2 class="anchored" data-anchor-id="o-exemplo-orienta">O Exemplo <code>orienta</code></h2>
-<p>A relação que resistiu à decomposição em BCNF está em 3FN:</p>
-<p><span class="math display">\[\textit{orienta}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_escola})\]</span></p>
-<p>DFs: - <code>id_prof → id_escola</code> - <code>id_aluno, id_escola → id_prof</code></p>
-<p>Chaves candidatas: <code>{id_aluno, id_prof}</code> e <code>{id_aluno, id_escola}</code></p>
-<p><strong>Verificação da 3FN:</strong></p>
-<p>Para <code>id_prof → id_escola</code>: - <code>id_prof</code> não é superchave ← condição 1 falha - <code>id_escola</code> ∈ chave candidata <code>{id_aluno, id_escola}</code> ← condição 2 satisfeita ✓</p>
-<p>Para <code>id_aluno, id_escola → id_prof</code>: - <code>{id_aluno, id_escola}</code> é chave candidata ← condição 1 satisfeita ✓</p>
-<p><strong><code>orienta</code> está em 3FN.</strong> ✓ (mas não em BCNF)</p>
-</section>
-<section id="redundância-residual-na-3fn" class="level2">
-<h2 class="anchored" data-anchor-id="redundância-residual-na-3fn">Redundância Residual na 3FN</h2>
-<p>A permissão da condição 2 vem com custo: a 3FN ainda admite alguma redundância.</p>
-<p><strong>Exemplo clássico do livro-texto</strong> (esquema R = (J, K, L), F = {JK → L, L → K}):</p>
-<p>Chaves candidatas: <code>{J, K}</code> e <code>{J, L}</code></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>J</th>
-<th>K</th>
-<th>L</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>j1</td>
-<td>k1</td>
-<td>l1</td>
-</tr>
-<tr class="even">
-<td>j2</td>
-<td>k1</td>
-<td>l1</td>
-</tr>
-<tr class="odd">
-<td>j3</td>
-<td>k1</td>
-<td>l1</td>
-</tr>
-<tr class="even">
-<td>NULL</td>
-<td>k2</td>
-<td>l2</td>
-</tr>
-</tbody>
-</table>
-<p>Problemas: - <strong>Repetição</strong>: o par (k1, l1) aparece três vezes - <strong>Valores nulos</strong>: para registrar o par (k2, l2), é preciso inserir J = NULL</p>
-<p>Esses problemas são inerentes à 3FN quando a condição 2 é necessária — e mostram por que BCNF é preferida quando possível.</p>
-</section>
-<section id="algoritmo-de-decomposição-em-3fn" class="level2">
-<h2 class="anchored" data-anchor-id="algoritmo-de-decomposição-em-3fn">Algoritmo de Decomposição em 3FN</h2>
-<div class="conceito">
-<p><strong>Entrada</strong>: Esquema R com conjunto de DFs F.</p>
-<p><strong>Saída</strong>: Decomposição em 3FN com join sem perda e preservação de dependências.</p>
-<pre><code>Fc ← cobertura canônica de F
-i ← 0
-para cada DF α → β em Fc:
-  se nenhum dos Rj (j ≤ i) contém αβ:
-    i ← i + 1
-    Ri ← αβ
-
-se nenhum Rj contém uma chave candidata de R:
-  i ← i + 1
-  Ri ← qualquer chave candidata de R
-
-(opcional: remover esquemas Rj contidos em algum Rk)
-retornar (R1, R2, ..., Ri)</code></pre>
-<p><strong>Propriedades garantidas:</strong> - Cada Rᵢ está em 3FN ✓ - Decomposição tem join sem perda ✓ - Decomposição preserva dependências ✓</p>
-</div>
-</section>
-<section id="exemplo-do-livro-cust_banker_branch" class="level2">
-<h2 class="anchored" data-anchor-id="exemplo-do-livro-cust_banker_branch">Exemplo do Livro: cust_banker_branch</h2>
-<p>Relação: <code>cust_banker_branch(id_cliente, id_funcionario, nome_agencia, tipo_conta)</code></p>
-<p>DFs: - <code>id_cliente, id_funcionario → nome_agencia, tipo_conta</code> - <code>id_funcionario → nome_agencia</code> - <code>id_cliente, nome_agencia → id_funcionario</code></p>
-<p><strong>Passo 1: Cobertura canônica</strong></p>
-<p>Em <code>id_cliente, id_funcionario → nome_agencia, tipo_conta</code>: - <code>nome_agencia</code> é estranho? Verifique <code>{id_cliente, id_funcionario}⁺</code> sem <code>nome_agencia</code> no lado direito: pelo algoritmo, <code>{id_cliente, id_funcionario}⁺ = {id_cliente, id_funcionario, nome_agencia, tipo_conta}</code> — <code>nome_agencia</code> já é derivada por <code>id_funcionario → nome_agencia</code>. Sim, estranho → remove.</p>
-<p>F_c = { <code>id_cliente, id_funcionario → tipo_conta</code>, <code>id_funcionario → nome_agencia</code>, <code>id_cliente, nome_agencia → id_funcionario</code> }</p>
-<p><strong>Passo 2: Criar esquemas para cada DF de F_c</strong></p>
-<ul>
-<li>R₁ = (<strong>id_cliente, id_funcionario</strong>, tipo_conta)</li>
-<li>R₂ = (<strong>id_funcionario</strong>, nome_agencia)</li>
-<li>R₃ = (<strong>id_cliente, nome_agencia</strong>, id_funcionario)</li>
-</ul>
-<p><strong>Passo 3: Verificar chave candidata</strong></p>
-<p>As chaves candidatas originais de R são <code>{id_cliente, id_funcionario}</code> e <code>{id_cliente, nome_agencia}</code>. A chave <code>{id_cliente, id_funcionario}</code> já está em R₁. ✓</p>
-<p><strong>Passo 4: Remover redundantes</strong></p>
-<p>R₂ = (id_funcionario, nome_agencia) está contido em R₃? Não — R₃ tem id_cliente a mais. Nenhum esquema é subconjunto de outro.</p>
-<p><strong>Resultado final</strong>: {R₁, R₂, R₃} — todos em 3FN, join sem perda, preserva dependências.</p>
-</section>
-<section id="aplicação-no-banco-da-undf-relação-orienta" class="level2">
-<h2 class="anchored" data-anchor-id="aplicação-no-banco-da-undf-relação-orienta">Aplicação no Banco da UnDF: Relação <code>orienta</code></h2>
-<p>Na UnDF, considere o relacionamento entre aluno, professor e escola na orientação de TCCs:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> orienta (</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    id_aluno  <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> aluno(id_aluno),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    id_prof   <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> professor(id_prof),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    id_escola <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> escola(id_escola),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_aluno, id_prof)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Popula com exemplos: cada aluno tem um orientador de sua escola</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> orienta (id_aluno, id_prof, id_escola)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> a.id_aluno,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       p.id_prof,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       p.id_escola</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   aluno a</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   curso c   <span class="kw">ON</span> c.id_curso  <span class="op">=</span> a.id_curso</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola e  <span class="kw">ON</span> e.id_escola <span class="op">=</span> c.id_escola</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_escola <span class="op">=</span> e.id_escola</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  p.ch_semanal <span class="op">=</span> <span class="dv">40</span>   <span class="co">-- professores de 40h são orientadores</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> a.id_aluno, p.id_prof</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> o.id_aluno,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       a.nome   <span class="kw">AS</span> aluno,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       o.id_prof,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>       p.nome   <span class="kw">AS</span> professor,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       o.id_escola,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       e.sigla  <span class="kw">AS</span> escola</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   orienta o</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   aluno   a <span class="kw">ON</span> a.id_aluno  <span class="op">=</span> o.id_aluno</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   professor p <span class="kw">ON</span> p.id_prof  <span class="op">=</span> o.id_prof</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span>   escola  e <span class="kw">ON</span> e.id_escola <span class="op">=</span> o.id_escola</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> o.id_escola, o.id_aluno;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
-<colgroup>
-<col style="width: 15%">
-<col style="width: 24%">
-<col style="width: 13%">
-<col style="width: 21%">
-<col style="width: 14%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_aluno</th>
-<th style="text-align: left;">aluno</th>
-<th style="text-align: right;">id_prof</th>
-<th style="text-align: left;">professor</th>
-<th style="text-align: right;">id_escola</th>
-<th style="text-align: left;">escola</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2023111001</td>
-<td style="text-align: left;">Beatriz Carvalho</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2023111001</td>
-<td style="text-align: left;">Beatriz Carvalho</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2023111002</td>
-<td style="text-align: left;">Lucas Santos</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2023111002</td>
-<td style="text-align: left;">Lucas Santos</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2024111001</td>
-<td style="text-align: left;">Gabriel Ribeiro</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2024111001</td>
-<td style="text-align: left;">Gabriel Ribeiro</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2024111002</td>
-<td style="text-align: left;">Fernanda Martins</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2024111002</td>
-<td style="text-align: left;">Fernanda Martins</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2025111001</td>
-<td style="text-align: left;">Rodrigo Lima</td>
-<td style="text-align: right;">11400001</td>
-<td style="text-align: left;">Bruno Teixeira</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2025111001</td>
-<td style="text-align: left;">Rodrigo Lima</td>
-<td style="text-align: right;">11400002</td>
-<td style="text-align: left;">Carla Pinto</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">ESG</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>A relação <code>orienta(id_aluno, id_prof, id_escola)</code> está em 3FN com as DFs: - <code>id_prof → id_escola</code> (professor pertence a uma escola) - <code>id_aluno, id_escola → id_prof</code> (cada aluno tem no máximo um orientador por escola)</p>
-<p>Não está em BCNF — e não há decomposição em BCNF que preserve ambas as DFs.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> orienta;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="bcnf-versus-3fn-quando-usar-cada-uma" class="level2">
-<h2 class="anchored" data-anchor-id="bcnf-versus-3fn-quando-usar-cada-uma">BCNF versus 3FN: Quando Usar Cada Uma</h2>
+<section id="leituras-rápidas-escritas-difíceis" class="level2">
+<h2 class="anchored" data-anchor-id="leituras-rápidas-escritas-difíceis">Leituras Rápidas, Escritas Difíceis</h2>
+<p>Replicar dados ajuda muito nas leituras: várias réplicas podem responder consultas em paralelo. O problema aparece nas escritas. Uma atualização precisa chegar às réplicas, e isso pode ocorrer de formas diferentes:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -1126,52 +871,44 @@ retornar (R1, R2, ..., Ri)</code></pre>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Critério</th>
-<th>BCNF</th>
-<th>3FN</th>
+<th>Estratégia</th>
+<th>Comportamento</th>
+<th>Custo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Redundância</td>
-<td>Eliminada</td>
-<td>Pode restar</td>
+<td>Escrita síncrona</td>
+<td>A resposta espera várias réplicas confirmarem</td>
+<td>Mais consistência, maior latência</td>
 </tr>
 <tr class="even">
-<td>Join sem perda</td>
-<td>Garantido</td>
-<td>Garantido</td>
-</tr>
-<tr class="odd">
-<td>Preservação de dependências</td>
-<td>Não garantida</td>
-<td>Garantida</td>
-</tr>
-<tr class="even">
-<td>Quando usar</td>
-<td>Prioridade é consistência sem custo de join</td>
-<td>Necessário verificar DFs sem join</td>
+<td>Escrita assíncrona</td>
+<td>A resposta vem antes de todas as réplicas atualizarem</td>
+<td>Menor latência, risco de leitura desatualizada</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Objetivo ideal</strong>: BCNF + join sem perda + preservação de dependências. Quando não é possível alcançar os três, aceita-se:</p>
+<p>Não existe mágica: se o sistema responde antes de todas as cópias serem atualizadas, alguém pode ler uma cópia antiga.</p>
+</section>
+<section id="conflitos-de-atualização" class="level2">
+<h2 class="anchored" data-anchor-id="conflitos-de-atualização">Conflitos de Atualização</h2>
+<p>Conflitos surgem quando duas operações alteram dados relacionados antes que o sistema consiga sincronizar todos os nós.</p>
+<p>Exemplos:</p>
 <ul>
-<li>Falta de preservação de dependências (com verificação via join eventualmente), <strong>ou</strong></li>
-<li>Redundância controlada da 3FN.</li>
+<li>dois usuários tentam comprar o último item de um estoque;</li>
+<li>duas réplicas recebem atualizações diferentes do mesmo perfil;</li>
+<li>uma aplicação lê um valor antigo e toma uma decisão errada;</li>
+<li>uma operação é repetida depois de timeout e precisa ser idempotente.</li>
 </ul>
-<p>Na prática, a maioria dos bancos de dados relacionais bem projetados está em BCNF. A 3FN é necessária em situações específicas onde certas DFs entre atributos não-chave precisam ser verificadas eficientemente.</p>
+<div class="conceito">
+<p>Uma operação <strong>idempotente</strong> pode ser executada mais de uma vez sem alterar o resultado final além da primeira execução. Em sistemas distribuídos, isso ajuda a lidar com tentativas repetidas após falhas de rede.</p>
 </div>
-</div>
+</section>
+<section id="o-papel-do-modelo-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="o-papel-do-modelo-de-dados">O Papel do Modelo de Dados</h2>
+<p>Em bancos relacionais, normalização reduz redundância e facilita integridade. Em muitos bancos NoSQL, o modelo pode aceitar redundância para reduzir coordenação. Dados que seriam separados em várias tabelas podem ser duplicados em documentos, colunas ou caches para responder rápido.</p>
+<p>Essa duplicação, porém, empurra uma pergunta para o projeto do sistema: <strong>quando as cópias ficarem temporariamente diferentes, isso é aceitável?</strong></p>
 
 
 </section>
@@ -1686,13 +1423,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/04-bcnf.html" class="pagination-link" aria-label="Forma Normal de Boyce-Codd (BCNF)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></span>
+      <a href="../../content/cap06/02-transacoes-distribuidas.html" class="pagination-link" aria-label="Transações ACID em Bancos Distribuídos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/06-4fn.html" class="pagination-link" aria-label="Dependências Multivaloradas e 4FN">
-        <span class="nav-page-text"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/04-teorema-cap.html" class="pagination-link" aria-label="Teorema CAP">
+        <span class="nav-page-text"><span class="chapter-title">Teorema CAP</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

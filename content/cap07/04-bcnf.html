@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Dependências Funcionais – Bases da Engenharia de Software 4</title>
+<title>Forma Normal de Boyce-Codd (BCNF) – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -34,8 +69,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/03-1fn.html" rel="next">
-<link href="../../content/cap06/01-motivacao.html" rel="prev">
+<link href="../../content/cap07/05-3fn.html" rel="next">
+<link href="../../content/cap07/03-1fn.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -300,7 +335,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/02-dependencias-funcionais.html"><span class="chapter-title">Dependências Funcionais</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap07/index.html">Capítulo 7: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap07/04-bcnf.html"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -651,7 +686,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 6: Normalização</span></a>
+ <span class="menu-text">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -664,37 +699,37 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  <a href="../../content/cap06/01-por-que-distribuir.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por Que Distribuir Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Dependências Funcionais</span></a>
+  <a href="../../content/cap06/02-transacoes-distribuidas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  <a href="../../content/cap06/04-teorema-cap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Teorema CAP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -702,12 +737,63 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 7: Normalização</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/04-bcnf.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
@@ -791,12 +877,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
-  <li><a href="#dependências-funcionais-no-banco-da-undf" id="toc-dependências-funcionais-no-banco-da-undf" class="nav-link" data-scroll-target="#dependências-funcionais-no-banco-da-undf">Dependências Funcionais no Banco da UnDF</a></li>
-  <li><a href="#tipos-de-dependências-funcionais" id="toc-tipos-de-dependências-funcionais" class="nav-link" data-scroll-target="#tipos-de-dependências-funcionais">Tipos de Dependências Funcionais</a></li>
-  <li><a href="#chaves-e-dependências-funcionais" id="toc-chaves-e-dependências-funcionais" class="nav-link" data-scroll-target="#chaves-e-dependências-funcionais">Chaves e Dependências Funcionais</a></li>
-  <li><a href="#fecho-de-um-conjunto-de-dfs" id="toc-fecho-de-um-conjunto-de-dfs" class="nav-link" data-scroll-target="#fecho-de-um-conjunto-de-dfs">Fecho de um Conjunto de DFs</a></li>
-  <li><a href="#fecho-de-um-conjunto-de-atributos" id="toc-fecho-de-um-conjunto-de-atributos" class="nav-link" data-scroll-target="#fecho-de-um-conjunto-de-atributos">Fecho de um Conjunto de Atributos</a></li>
-  <li><a href="#cobertura-canônica" id="toc-cobertura-canônica" class="nav-link" data-scroll-target="#cobertura-canônica">Cobertura Canônica</a></li>
+  <li><a href="#violação-no-banco-da-undf" id="toc-violação-no-banco-da-undf" class="nav-link" data-scroll-target="#violação-no-banco-da-undf">Violação no Banco da UnDF</a></li>
+  <li><a href="#algoritmo-de-decomposição-em-bcnf" id="toc-algoritmo-de-decomposição-em-bcnf" class="nav-link" data-scroll-target="#algoritmo-de-decomposição-em-bcnf">Algoritmo de Decomposição em BCNF</a></li>
+  <li><a href="#exemplo-do-livro-decomposição-em-múltiplos-passos" id="toc-exemplo-do-livro-decomposição-em-múltiplos-passos" class="nav-link" data-scroll-target="#exemplo-do-livro-decomposição-em-múltiplos-passos">Exemplo do Livro: Decomposição em Múltiplos Passos</a></li>
+  <li><a href="#verificando-o-banco-da-undf" id="toc-verificando-o-banco-da-undf" class="nav-link" data-scroll-target="#verificando-o-banco-da-undf">Verificando o Banco da UnDF</a></li>
+  <li><a href="#bcnf-e-preservação-de-dependências" id="toc-bcnf-e-preservação-de-dependências" class="nav-link" data-scroll-target="#bcnf-e-preservação-de-dependências">BCNF e Preservação de Dependências</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -804,9 +889,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/02-dependencias-funcionais.html"><span class="chapter-title">Dependências Funcionais</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap07/index.html">Capítulo 7: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap07/04-bcnf.html"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Dependências Funcionais</span></h1>
+<h1 class="title"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></h1>
 </div>
 
 
@@ -829,198 +914,184 @@ window.Quarto = {
 </header>
 
 
-<p>A teoria da normalização é construída sobre um conceito central: a <strong>dependência funcional</strong> (DF). Ela formaliza o que intuitivamente sabemos sobre o mundo real — “o nome de um professor é determinado pelo seu número de identificação”.</p>
+<p>A Forma Normal de Boyce-Codd é a forma normal mais usada na prática. Ela elimina completamente a redundância causada por dependências funcionais — com a ressalva de que pode não preservar todas as dependências.</p>
 <section id="definição" class="level2">
 <h2 class="anchored" data-anchor-id="definição">Definição</h2>
 <div class="conceito">
-<p>Seja R um esquema de relação, e α ⊆ R e β ⊆ R conjuntos de atributos. A <strong>dependência funcional α → β</strong> vale em R se, para toda instância legal r(R), dois registros que concordam nos atributos α também concordam em β:</p>
-<p><span class="math display">\[t_1[\alpha] = t_2[\alpha] \implies t_1[\beta] = t_2[\beta]\]</span></p>
-<p>Diz-se que α <strong>determina funcionalmente</strong> β, ou que β é <strong>funcionalmente dependente</strong> de α.</p>
+<p>Um esquema R está na <strong>BCNF</strong> em relação ao conjunto F de DFs se, para toda DF não-trivial α → β ∈ F⁺:</p>
+<p><span class="math display">\[\alpha \text{ é superchave de } R\]</span></p>
+<p>Em outras palavras: o único lado esquerdo de uma DF não-trivial permitido é uma superchave.</p>
 </div>
-<p>A DF é uma restrição sobre <strong>todas</strong> as instâncias legais — não apenas a atual. Se dois registros por acaso têm o mesmo valor em β, isso não significa que α → β vale; a DF precisa valer por definição do negócio.</p>
+<p><strong>Teste rápido</strong>: Para cada DF α → β em F: 1. Se β ⊆ α → trivial, ignorar 2. Calcular α⁺ 3. Se α⁺ ⊇ R → α é superchave, OK 4. Senão → <strong>violação de BCNF</strong></p>
 </section>
-<section id="dependências-funcionais-no-banco-da-undf" class="level2">
-<h2 class="anchored" data-anchor-id="dependências-funcionais-no-banco-da-undf">Dependências Funcionais no Banco da UnDF</h2>
-<p>O esquema da UnDF é rico em DFs naturais:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
+<section id="violação-no-banco-da-undf" class="level2">
+<h2 class="anchored" data-anchor-id="violação-no-banco-da-undf">Violação no Banco da UnDF</h2>
+<p>Retomamos a relação <code>professor_escola_desnorm</code> da seção anterior:</p>
+<p><span class="math display">\[\textit{professor\_escola}(\underline{\textit{id\_prof}},\ \textit{nome\_prof},\ \textit{ch\_semanal},\ \textit{salario},\ \textit{id\_escola},\ \textit{nome\_escola},\ \textit{id\_centro})\]</span></p>
+<p><strong>Dependências funcionais:</strong></p>
+<ul>
+<li><code>id_prof → nome_prof, ch_semanal, salario, id_escola, nome_escola, id_centro</code> (chave)</li>
+<li><code>id_escola → nome_escola, id_centro</code> ← <strong>violação!</strong></li>
+</ul>
+<p>Para a segunda DF: <code>{id_escola}⁺ = {id_escola, nome_escola, id_centro}</code> ≠ R (não inclui id_prof, nome_prof, …). Logo <code>id_escola</code> não é superchave — a DF viola BCNF.</p>
+</section>
+<section id="algoritmo-de-decomposição-em-bcnf" class="level2">
+<h2 class="anchored" data-anchor-id="algoritmo-de-decomposição-em-bcnf">Algoritmo de Decomposição em BCNF</h2>
+<div class="conceito">
+<p>Dado esquema R com DF α → β causando violação de BCNF, decompor em:</p>
+<ul>
+<li><strong>(α ∪ β)</strong> — relação que “isola” a dependência problemática</li>
+<li><strong>(R − (β − α))</strong> — relação residual</li>
+</ul>
+<p>O processo repete até que todas as relações estejam em BCNF. O resultado é sempre um <strong>join sem perda</strong>.</p>
+</div>
+<p><strong>Aplicando ao exemplo professor_escola:</strong></p>
+<p>Violação: <code>id_escola → nome_escola, id_centro</code> - α = {id_escola}, β = {nome_escola, id_centro} - R₁ = α ∪ β = <strong>(id_escola, nome_escola, id_centro)</strong> → esta é a tabela <code>escola</code> ✓ - R₂ = R − (β − α) = <strong>(id_prof, nome_prof, ch_semanal, salario, id_escola)</strong> → esta é a tabela <code>professor</code> ✓</p>
+<p>Verificação de join sem perda: o atributo comum é <code>id_escola</code>, que é chave primária em R₁. ✓</p>
+</section>
+<section id="exemplo-do-livro-decomposição-em-múltiplos-passos" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-do-livro-decomposição-em-múltiplos-passos">Exemplo do Livro: Decomposição em Múltiplos Passos</h2>
+<p>O slide usa a relação <code>class</code> com 11 atributos:</p>
+<p><span class="math display">\[\textit{class}(\underline{\textit{course\_id}},\ \textit{title},\ \textit{dept\_name},\ \textit{credits},\ \underline{\textit{sec\_id}},\ \underline{\textit{semester}},\ \underline{\textit{year}},\ \textit{building},\ \textit{room\_number},\ \textit{capacity},\ \textit{time\_slot\_id})\]</span></p>
+<p>Chave candidata: <code>{course_id, sec_id, semester, year}</code></p>
+<p>DFs identificadas: - <code>course_id → title, dept_name, credits</code> - <code>building, room_number → capacity</code> - <code>course_id, sec_id, semester, year → building, room_number, time_slot_id</code></p>
+<p><strong>Passo 1</strong>: <code>course_id → title, dept_name, credits</code> viola BCNF (course_id não é superchave de <code>class</code>).</p>
+<p>Decompõe em: - <strong>course</strong>(course_id, title, dept_name, credits) ← em BCNF ✓ - <strong>class-1</strong>(course_id, sec_id, semester, year, building, room_number, capacity, time_slot_id)</p>
+<p><strong>Passo 2</strong>: Em class-1, <code>building, room_number → capacity</code> viola BCNF.</p>
+<p>Decompõe em: - <strong>classroom</strong>(building, room_number, capacity) ← em BCNF ✓ - <strong>section</strong>(course_id, sec_id, semester, year, building, room_number, time_slot_id) ← em BCNF ✓</p>
+<p>Resultado final: três relações, todas em BCNF, decomposição sem perda.</p>
+</section>
+<section id="verificando-o-banco-da-undf" class="level2">
+<h2 class="anchored" data-anchor-id="verificando-o-banco-da-undf">Verificando o Banco da UnDF</h2>
+<p>O banco da UnDF já foi projetado de forma normalizada. Vamos verificar que as tabelas principais estão em BCNF:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificação informal: cada atributo não-chave depende apenas da PK</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tabela professor: PK = id_prof</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column_name, data_type</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.<span class="kw">columns</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  table_name <span class="op">=</span> <span class="st">'professor'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  table_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> ordinal_position;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>5 records</caption>
 <thead>
 <tr class="header">
-<th>Dependência</th>
-<th>Interpretação</th>
+<th style="text-align: left;">column_name</th>
+<th style="text-align: left;">data_type</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>id_prof → nome, id_escola, ch_semanal, salario</code></td>
-<td>Todo professor tem identificação única</td>
+<td style="text-align: left;">id_prof</td>
+<td style="text-align: left;">integer</td>
 </tr>
 <tr class="even">
-<td><code>id_escola → nome_escola, sigla, id_centro</code></td>
-<td>Cada escola tem nome e centro únicos</td>
+<td style="text-align: left;">nome</td>
+<td style="text-align: left;">character varying</td>
 </tr>
 <tr class="odd">
-<td><code>id_centro → nome_centro, sigla</code></td>
-<td>Cada centro tem nome único</td>
+<td style="text-align: left;">id_escola</td>
+<td style="text-align: left;">integer</td>
 </tr>
 <tr class="even">
-<td><code>id_curso → nome_curso, id_escola, n_semestres, carga_horaria</code></td>
-<td>Cada curso tem características únicas</td>
+<td style="text-align: left;">ch_semanal</td>
+<td style="text-align: left;">integer</td>
 </tr>
 <tr class="odd">
-<td><code>id_disciplina → nome_disciplina, id_curso, semestre, carga_horaria</code></td>
-<td>Disciplina determinada por seu ID</td>
-</tr>
-<tr class="even">
-<td><code>id_aluno → nome, id_curso, ano_ingresso</code></td>
-<td>Aluno tem um único curso matriculado</td>
-</tr>
-<tr class="odd">
-<td><code>id_disciplina, ano, semestre, turma → id_prof, sala, horario</code></td>
-<td>Uma oferta determina seu professor e sala</td>
+<td style="text-align: left;">salario</td>
+<td style="text-align: left;">numeric</td>
 </tr>
 </tbody>
 </table>
-<p>Algumas DFs <strong>não</strong> valem no banco da UnDF:</p>
-<table class="caption-top table">
+</div>
+</div>
+<ul>
+<li><code>id_prof → nome, id_escola, ch_semanal, salario</code> ← id_prof é chave ✓</li>
+<li>Não há DF entre atributos não-chave</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Tabela ministra: PK composta</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column_name, data_type</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   information_schema.<span class="kw">columns</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  table_name <span class="op">=</span> <span class="st">'ministra'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  table_schema <span class="op">=</span> <span class="st">'public'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span>  <span class="kw">BY</span> ordinal_position;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>7 records</caption>
 <thead>
 <tr class="header">
-<th>Não-DF</th>
-<th>Por quê?</th>
+<th style="text-align: left;">column_name</th>
+<th style="text-align: left;">data_type</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>nome → id_prof</code></td>
-<td>Pode haver dois professores com o mesmo nome</td>
+<td style="text-align: left;">id_disciplina</td>
+<td style="text-align: left;">integer</td>
 </tr>
 <tr class="even">
-<td><code>id_escola → id_prof</code></td>
-<td>Uma escola tem vários professores</td>
+<td style="text-align: left;">ano</td>
+<td style="text-align: left;">integer</td>
 </tr>
 <tr class="odd">
-<td><code>id_curso → id_aluno</code></td>
-<td>Um curso tem vários alunos</td>
+<td style="text-align: left;">semestre</td>
+<td style="text-align: left;">integer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">turma</td>
+<td style="text-align: left;">integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">id_prof</td>
+<td style="text-align: left;">integer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">horario</td>
+<td style="text-align: left;">character varying</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sala</td>
+<td style="text-align: left;">character varying</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="tipos-de-dependências-funcionais" class="level2">
-<h2 class="anchored" data-anchor-id="tipos-de-dependências-funcionais">Tipos de Dependências Funcionais</h2>
-<div class="conceito">
-<p><strong>DF trivial</strong>: α → β é trivial se β ⊆ α. Toda relação satisfaz trivialmente essas dependências.</p>
-<p>Exemplos triviais: - <code>id_prof, nome → id_prof</code> - <code>nome → nome</code></p>
-<p><strong>DF não-trivial</strong>: β ⊄ α — há informação nova no lado direito.</p>
 </div>
-<p>A normalização se preocupa apenas com DFs não-triviais.</p>
-</section>
-<section id="chaves-e-dependências-funcionais" class="level2">
-<h2 class="anchored" data-anchor-id="chaves-e-dependências-funcionais">Chaves e Dependências Funcionais</h2>
-<p>As DFs generalizam o conceito de chave:</p>
-<div class="conceito">
-<ul>
-<li><strong>Superchave</strong>: K é superchave de R se K → R (K determina todos os atributos).</li>
-<li><strong>Chave candidata</strong>: K é superchave e nenhum subconjunto próprio de K é superchave.</li>
-</ul>
 </div>
-<p>Exemplos no banco da UnDF:</p>
 <ul>
-<li><code>{id_prof}</code> é chave de <code>professor</code> pois <code>id_prof → id_prof, nome, id_escola, ch_semanal, salario</code></li>
-<li><code>{id_disciplina, ano, semestre, turma}</code> é chave de <code>ministra</code></li>
-<li><code>{id_disciplina, ano, semestre, turma, id_aluno}</code> é chave de <code>matricula_disciplina</code></li>
+<li><code>(id_disciplina, ano, semestre, turma) → id_prof, horario, sala</code> ← é a própria chave ✓</li>
+<li>Não há DF entre atributos não-chave (id_prof, horario, sala são independentes entre si)</li>
 </ul>
 </section>
-<section id="fecho-de-um-conjunto-de-dfs" class="level2">
-<h2 class="anchored" data-anchor-id="fecho-de-um-conjunto-de-dfs">Fecho de um Conjunto de DFs</h2>
-<p>Dado um conjunto F de DFs, outras DFs são logicamente implicadas. O <strong>fecho de F</strong> (denotado F⁺) é o conjunto de todas as DFs logicamente implicadas por F.</p>
-<div class="conceito">
-<p><strong>Regras de Armstrong</strong> — conjunto completo e correto de regras de inferência:</p>
-<ol type="1">
-<li><strong>Reflexividade</strong>: Se β ⊆ α, então α → β</li>
-<li><strong>Aumento</strong>: Se α → β, então γα → γβ</li>
-<li><strong>Transitividade</strong>: Se α → β e β → γ, então α → γ</li>
-</ol>
-<p>Regras derivadas (úteis na prática):</p>
-<ol start="4" type="1">
-<li><strong>União</strong>: Se α → β e α → γ, então α → βγ</li>
-<li><strong>Decomposição</strong>: Se α → βγ, então α → β e α → γ</li>
-<li><strong>Pseudo-transitividade</strong>: Se α → β e γβ → δ, então αγ → δ</li>
-</ol>
+<section id="bcnf-e-preservação-de-dependências" class="level2">
+<h2 class="anchored" data-anchor-id="bcnf-e-preservação-de-dependências">BCNF e Preservação de Dependências</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p><strong>Exemplo com o banco da UnDF:</strong></p>
-<p>Dado F = {<code>id_prof → id_escola</code>, <code>id_escola → id_centro</code>}:</p>
-<ul>
-<li>Por transitividade: <code>id_prof → id_centro</code> ∈ F⁺</li>
-<li>Por aumento: <code>id_prof, salario → id_escola, salario</code> ∈ F⁺</li>
-</ul>
-</section>
-<section id="fecho-de-um-conjunto-de-atributos" class="level2">
-<h2 class="anchored" data-anchor-id="fecho-de-um-conjunto-de-atributos">Fecho de um Conjunto de Atributos</h2>
-<p>Para verificar se uma DF α → β está em F⁺ sem calcular F⁺ inteiro, calculamos o <strong>fecho de α</strong> (α⁺): o conjunto de atributos determinados por α.</p>
-<div class="conceito">
-<p><strong>Algoritmo para calcular α⁺:</strong></p>
-<pre><code>resultado := α
-repita:
-  para cada DF β → γ em F:
-    se β ⊆ resultado então resultado := resultado ∪ γ
-até resultado não mudar</code></pre>
-<p>α é superchave de R se e somente se α⁺ ⊇ R.</p>
+<div class="callout-title-container flex-fill">
+Aviso
 </div>
-<p><strong>Exemplo com a UnDF:</strong></p>
-<p>Seja F = {<code>id_prof → id_escola</code>, <code>id_escola → id_centro, nome_escola</code>}. Calcular <code>{id_prof}⁺</code>:</p>
-<ol type="1">
-<li>resultado = {id_prof}</li>
-<li><code>id_prof → id_escola</code> é aplicável → resultado = {id_prof, id_escola}</li>
-<li><code>id_escola → id_centro, nome_escola</code> é aplicável → resultado = {id_prof, id_escola, id_centro, nome_escola}</li>
-<li>Nenhuma outra regra é aplicável.</li>
-</ol>
-<p>Logo, <code>{id_prof}⁺ = {id_prof, id_escola, id_centro, nome_escola}</code>. <code>id_prof</code> determina seu centro e o nome da escola — mesmo que essas informações estejam em outra tabela.</p>
-<p><strong>Exemplo do livro-texto:</strong></p>
-<p>Seja R = (A, B, C, G, H, I) e F = {A → B, A → C, CG → H, CG → I, B → H}.</p>
-<p>Calcular <code>{AG}⁺</code>:</p>
-<ol type="1">
-<li>resultado = {A, G}</li>
-<li><code>A → B</code> → resultado = {A, B, G}</li>
-<li><code>A → C</code> → resultado = {A, B, C, G}</li>
-<li><code>CG → H</code> (CG ⊆ resultado) → resultado = {A, B, C, G, H}</li>
-<li><code>CG → I</code> (CG ⊆ resultado) → resultado = {A, B, C, G, H, I}</li>
-</ol>
-<p><code>{AG}⁺ = R</code>, portanto AG é superchave. É também candidata? Verificando A+ = {A, B, C, H} ≠ R e G+ = {G} ≠ R — nenhum subconjunto próprio é superchave. Logo <strong>AG é chave candidata</strong>. ✓</p>
-</section>
-<section id="cobertura-canônica" class="level2">
-<h2 class="anchored" data-anchor-id="cobertura-canônica">Cobertura Canônica</h2>
-<p>Sistemas de gerenciamento verificam as DFs a cada atualização. É vantajoso ter um conjunto mínimo equivalente.</p>
-<div class="conceito">
-<p>A <strong>cobertura canônica</strong> F_c de F é um conjunto de DFs tal que:</p>
-<ol type="1">
-<li>F logicamente implica todas as DFs em F_c</li>
-<li>F_c logicamente implica todas as DFs em F (F_c⁺ = F⁺)</li>
-<li>Nenhuma DF em F_c tem <strong>atributo estranho</strong> (atributo removível sem mudar F_c⁺)</li>
-<li>Cada lado esquerdo em F_c é único (sem duas DFs com mesmo lado esquerdo)</li>
-</ol>
-<p><strong>Atributo estranho</strong>: A ∈ α é estranho em α → β se <code>(α - A)⁺</code> ainda contém β. A ∈ β é estranho em α → β se α⁺ sem o efeito de A ainda contém A.</p>
 </div>
-<p><strong>Algoritmo:</strong></p>
-<pre><code>Fc := F
-repita:
-  (1) Para DFs com mesmo lado esquerdo, aplique a regra da União
-  (2) Para cada DF α → β em Fc:
-      - Verifique se algum A ∈ α é estranho (calcule (α-A)⁺ com Fc)
-      - Verifique se algum A ∈ β é estranho (calcule α⁺ em Fc sem α→β, somando α→(β-A))
-      - Se estranho, remova-o
-até Fc não mudar</code></pre>
-<p><strong>Exemplo:</strong></p>
-<p>Seja R = (A, B, C) e F = {A → BC, B → C, A → B, AB → C}.</p>
-<ol type="1">
-<li>União: A → BC e A → B fundem-se em A → BC. F_c = {A → BC, B → C, AB → C}</li>
-<li>Em AB → C: A é estranho? <code>{B}⁺</code> = {B, C} ⊇ {C}. Sim → remove A. F_c = {A → BC, B → C}</li>
-<li>Em A → BC: C é estranho? Com F_c’ = {A → B, B → C}, <code>{A}⁺</code> = {A, B, C} ⊇ {C}. Sim → remove C.</li>
-<li>F_c final = <strong>{A → B, B → C}</strong></li>
-</ol>
-<p>Verificação: F_c⁺ = F⁺? Sim — A → C segue por transitividade. ✓</p>
+<div class="callout-body-container callout-body">
+<p><strong>Limitação da BCNF</strong>: Nem sempre é possível decompor em BCNF <strong>e</strong> preservar todas as dependências funcionais.</p>
+<p><strong>Preservação de dependências</strong>: Uma decomposição preserva dependências se F₁ ∪ F₂ ∪ … ∪ Fₙ implica todas as DFs em F, onde Fᵢ é o conjunto de DFs de F⁺ que envolvem apenas atributos de Rᵢ.</p>
+<p>Se uma dependência não for preservada, verificá-la exige um join — operação cara em tempo real.</p>
+</div>
+</div>
+<p><strong>Exemplo onde BCNF não preserva dependências:</strong></p>
+<p>Considere a relação de orientação acadêmica:</p>
+<p><span class="math display">\[\textit{orienta}(\textit{id\_aluno},\ \textit{id\_prof},\ \textit{id\_escola})\]</span></p>
+<p>Contexto: cada professor pertence a uma escola (<code>id_prof → id_escola</code>) e cada aluno pode ter apenas um orientador por escola (<code>id_aluno, id_escola → id_prof</code>).</p>
+<p>DFs: - <code>id_prof → id_escola</code> - <code>id_aluno, id_escola → id_prof</code></p>
+<p>Chaves candidatas: <code>{id_aluno, id_prof}</code> e <code>{id_aluno, id_escola}</code>.</p>
+<p>A DF <code>id_prof → id_escola</code> viola BCNF (id_prof não é superchave). Qualquer decomposição que separe id_prof de id_escola perderá a DF <code>id_aluno, id_escola → id_prof</code> — pois os três atributos precisam estar juntos para verificá-la.</p>
+<p>Portanto: <strong>não há decomposição em BCNF que preserve todas as DFs de <code>orienta</code></strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> orienta_demo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
 </section>
@@ -1535,13 +1606,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/01-motivacao.html" class="pagination-link" aria-label="Motivação: Bom e Mau Design">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Motivação: Bom e Mau Design</span></span>
+      <a href="../../content/cap07/03-1fn.html" class="pagination-link" aria-label="Primeira Forma Normal (1FN)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Primeira Forma Normal (1FN)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/03-1fn.html" class="pagination-link" aria-label="Primeira Forma Normal (1FN)">
-        <span class="nav-page-text"><span class="chapter-title">Primeira Forma Normal (1FN)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap07/05-3fn.html" class="pagination-link" aria-label="Terceira Forma Normal (3FN)">
+        <span class="nav-page-text"><span class="chapter-title">Terceira Forma Normal (3FN)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

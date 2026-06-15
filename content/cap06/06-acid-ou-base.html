@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Primeira Forma Normal (1FN) – Bases da Engenharia de Software 4</title>
+<title>Quando Usar ACID ou BASE – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,41 +24,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -69,8 +34,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/04-bcnf.html" rel="next">
-<link href="../../content/cap06/02-dependencias-funcionais.html" rel="prev">
+<link href="../../content/cap06/07-resumo.html" rel="next">
+<link href="../../content/cap06/05-base-e-consistencia-eventual.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -306,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-1fn.html"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -657,7 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 6: Normalização</span></a>
+ <span class="menu-text">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -670,37 +635,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  <a href="../../content/cap06/01-por-que-distribuir.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por Que Distribuir Dados?</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  <a href="../../content/cap06/02-transacoes-distribuidas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-1fn.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  <a href="../../content/cap06/04-teorema-cap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Teorema CAP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -708,12 +673,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+ <span class="menu-text">Capítulo 7: Normalização</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/01-motivacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Motivação: Bom e Mau Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/02-dependencias-funcionais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Funcionais</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/03-1fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/04-bcnf.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/05-3fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Terceira Forma Normal (3FN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/06-4fn.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dependências Multivaloradas e 4FN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap07/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Exercícios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Capítulo 8: Projeto com o Modelo ER</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/cap08/index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visão Geral</span></a>
@@ -796,11 +812,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#definição" id="toc-definição" class="nav-link active" data-scroll-target="#definição">Definição</a></li>
-  <li><a href="#violação-atributo-multivalorado" id="toc-violação-atributo-multivalorado" class="nav-link" data-scroll-target="#violação-atributo-multivalorado">Violação: Atributo Multivalorado</a></li>
-  <li><a href="#a-forma-correta-na-undf" id="toc-a-forma-correta-na-undf" class="nav-link" data-scroll-target="#a-forma-correta-na-undf">A Forma Correta na UnDF</a></li>
-  <li><a href="#atomicidade-é-contextual" id="toc-atomicidade-é-contextual" class="nav-link" data-scroll-target="#atomicidade-é-contextual">Atomicidade é Contextual</a></li>
-  <li><a href="#violação-atributos-em-colunas-separadas-por-ano" id="toc-violação-atributos-em-colunas-separadas-por-ano" class="nav-link" data-scroll-target="#violação-atributos-em-colunas-separadas-por-ano">Violação: Atributos em Colunas Separadas por Ano</a></li>
+  <li><a href="#quando-ficar-com-acid" id="toc-quando-ficar-com-acid" class="nav-link active" data-scroll-target="#quando-ficar-com-acid">Quando Ficar com ACID</a></li>
+  <li><a href="#quando-base-pode-ser-melhor" id="toc-quando-base-pode-ser-melhor" class="nav-link" data-scroll-target="#quando-base-pode-ser-melhor">Quando BASE Pode Ser Melhor</a></li>
+  <li><a href="#uma-pergunta-prática" id="toc-uma-pergunta-prática" class="nav-link" data-scroll-target="#uma-pergunta-prática">Uma Pergunta Prática</a></li>
+  <li><a href="#sistemas-mistos" id="toc-sistemas-mistos" class="nav-link" data-scroll-target="#sistemas-mistos">Sistemas Mistos</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -808,9 +823,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Normalização</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-1fn.html"><span class="chapter-title">Primeira Forma Normal (1FN)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Primeira Forma Normal (1FN)</span></h1>
+<h1 class="title"><span class="chapter-title">Quando Usar ACID ou BASE</span></h1>
 </div>
 
 
@@ -833,139 +848,107 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Antes de qualquer normalização mais avançada, uma relação precisa satisfazer a forma mais básica: os valores de todos os atributos devem ser <strong>atômicos</strong>.</p>
-<section id="definição" class="level2">
-<h2 class="anchored" data-anchor-id="definição">Definição</h2>
+<p>A escolha entre ACID e BASE não deve ser tratada como uma guerra entre tecnologias. Ela é uma decisão de projeto. O ponto central é entender quais invariantes do sistema precisam ser preservados imediatamente e quais informações podem convergir depois.</p>
 <div class="conceito">
-<p>Um domínio é <strong>atômico</strong> se seus elementos são unidades indivisíveis do ponto de vista do banco de dados.</p>
-<p>Uma relação está na <strong>Primeira Forma Normal (1FN)</strong> se os domínios de todos os seus atributos são atômicos.</p>
+<p>Um <strong>invariante</strong> é uma regra que deve permanecer verdadeira para o sistema continuar correto. Exemplos: “saldo não pode ficar negativo” ou “uma vaga não pode ser ocupada por dois alunos”.</p>
 </div>
-<p><strong>Exemplos de domínios não-atômicos:</strong></p>
+<section id="quando-ficar-com-acid" class="level2">
+<h2 class="anchored" data-anchor-id="quando-ficar-com-acid">Quando Ficar com ACID</h2>
+<p>ACID é a escolha natural quando inconsistência temporária pode causar erro material, fraude, perda financeira, violação legal ou quebra de confiança.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Atributo</th>
-<th>Tipo problemático</th>
-<th>Motivo</th>
+<th>Situação</th>
+<th>Por que ACID importa</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>disciplinas</code></td>
-<td>conjunto <code>{BES2, BES4, PA4}</code></td>
-<td>valor multivalorado</td>
+<td>Transferência bancária</td>
+<td>Débito e crédito precisam acontecer como uma unidade</td>
 </tr>
 <tr class="even">
-<td><code>endereco</code></td>
-<td><code>"Rua das Flores, 10, Ap 3"</code></td>
-<td>valor composto (rua, número, complemento misturados)</td>
+<td>Matrícula com limite de vagas</td>
+<td>Duas pessoas não podem ocupar a mesma vaga</td>
 </tr>
 <tr class="odd">
-<td><code>codigo_curso</code></td>
-<td><code>"ENS-311"</code></td>
-<td>informação codificada que o sistema “abre”</td>
+<td>Estoque crítico</td>
+<td>Não vender mais unidades do que existem</td>
+</tr>
+<tr class="even">
+<td>Prontuário médico</td>
+<td>Atualizações conflitantes podem afetar decisões clínicas</td>
+</tr>
+<tr class="odd">
+<td>Controle financeiro</td>
+<td>Auditoria exige histórico consistente</td>
 </tr>
 </tbody>
 </table>
+<p>Nesses casos, disponibilidade menor pode ser aceitável. É melhor recusar temporariamente uma operação do que confirmar uma operação incorreta.</p>
 </section>
-<section id="violação-atributo-multivalorado" class="level2">
-<h2 class="anchored" data-anchor-id="violação-atributo-multivalorado">Violação: Atributo Multivalorado</h2>
-<p>Suponha que o banco da UnDF armazenasse as disciplinas de cada aluno em uma única coluna de texto:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esquema problemático (NÃO-1FN)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> matricula_resumida (</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    id_aluno     <span class="dt">INTEGER</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    nome_aluno   <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    disciplinas  TEXT   <span class="co">-- ex: "3110401, 3110601, 3110801"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Instância de exemplo:</p>
+<section id="quando-base-pode-ser-melhor" class="level2">
+<h2 class="anchored" data-anchor-id="quando-base-pode-ser-melhor">Quando BASE Pode Ser Melhor</h2>
+<p>BASE é atraente quando o sistema precisa continuar respondendo e pequenas divergências temporárias não prejudicam o significado principal.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>id_aluno</th>
-<th>nome_aluno</th>
-<th>disciplinas</th>
+<th>Situação</th>
+<th>Por que BASE pode bastar</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2024311001</td>
-<td>Pedro Alves</td>
-<td>3110401, 3110601</td>
+<td>Feed de notícias</td>
+<td>Ordem e contagem podem variar por alguns segundos</td>
 </tr>
 <tr class="even">
-<td>2024311002</td>
-<td>Ana Lima</td>
-<td>3110401</td>
+<td>Curtidas e visualizações</td>
+<td>Valores aproximados são aceitáveis no curto prazo</td>
+</tr>
+<tr class="odd">
+<td>Recomendação</td>
+<td>Resultado não precisa ser exatamente igual para todos</td>
+</tr>
+<tr class="even">
+<td>Cache de catálogo</td>
+<td>Dados podem ser atualizados em seguida</td>
+</tr>
+<tr class="odd">
+<td>Telemetria</td>
+<td>Eventos podem ser agregados com atraso</td>
 </tr>
 </tbody>
 </table>
-<p>Problemas desta estrutura:</p>
-<ul>
-<li>Para filtrar alunos matriculados em <code>3110601</code>, a query precisa usar <code>LIKE '%3110601%'</code> — não usa índice</li>
-<li>Impossível fazer join com a tabela <code>disciplina</code> por <code>id_disciplina</code></li>
-<li>Adicionar uma disciplina obriga a concatenar string — com risco de corrupção de formato</li>
-<li>Contar disciplinas exige parsing no aplicativo</li>
-</ul>
+<p>Nesses casos, a experiência do usuário pode melhorar quando o sistema responde rápido, mesmo que os dados ainda estejam convergindo.</p>
 </section>
-<section id="a-forma-correta-na-undf" class="level2">
-<h2 class="anchored" data-anchor-id="a-forma-correta-na-undf">A Forma Correta na UnDF</h2>
-<p>O banco da UnDF já está em 1FN: cada combinação de <code>(id_disciplina, ano, semestre, turma, id_aluno)</code> ocupa uma linha separada em <code>matricula_disciplina</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Cada tupla representa uma matrícula individual — domínios atômicos ✓</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, ano, semestre, turma, id_aluno, nota</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>   matricula_disciplina</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span>  <span class="dv">5</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="uma-pergunta-prática" class="level2">
+<h2 class="anchored" data-anchor-id="uma-pergunta-prática">Uma Pergunta Prática</h2>
+<p>Antes de escolher a tecnologia, faça esta pergunta:</p>
+<div class="conceito">
+<p>Se dois usuários lerem respostas diferentes por alguns segundos, o sistema continua correto?</p>
+</div>
+<p>Se a resposta for “não”, provavelmente há uma parte do domínio que precisa de garantias fortes. Se a resposta for “sim”, consistência eventual pode ser uma solução simples e escalável.</p>
 </section>
-<section id="atomicidade-é-contextual" class="level2">
-<h2 class="anchored" data-anchor-id="atomicidade-é-contextual">Atomicidade é Contextual</h2>
-<p>A atomicidade depende de como a aplicação usa o dado:</p>
+<section id="sistemas-mistos" class="level2">
+<h2 class="anchored" data-anchor-id="sistemas-mistos">Sistemas Mistos</h2>
+<p>Muitos sistemas reais combinam as duas abordagens:</p>
 <ul>
-<li><code>nome_disciplina = 'Bases da Engenharia de Software 4'</code> é atômico se o sistema nunca extrai partes do nome.</li>
-<li>Se existisse uma regra do negócio que dissesse “os dois primeiros caracteres do nome identificam a área”, então o domínio não seria atômico — e o sistema estaria codificando informação na string.</li>
+<li>pagamentos usam transações fortes;</li>
+<li>catálogo usa cache e replicação eventual;</li>
+<li>feed usa ordenação aproximada;</li>
+<li>auditoria usa gravação durável;</li>
+<li>busca é atualizada de forma assíncrona.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A 1FN é pressuposta em todo o restante do capítulo. A teoria de dependências funcionais (BCNF, 3FN, 4FN) se aplica apenas a relações já em 1FN.</p>
-</div>
-</div>
-</section>
-<section id="violação-atributos-em-colunas-separadas-por-ano" class="level2">
-<h2 class="anchored" data-anchor-id="violação-atributos-em-colunas-separadas-por-ano">Violação: Atributos em Colunas Separadas por Ano</h2>
-<p>Outro padrão problemático que viola o espírito da 1FN é armazenar valores de diferentes períodos em colunas separadas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esquema problemático para salários históricos</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> historico_salario (</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    id_prof       <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    salario_2023  <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    salario_2024  <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    salario_2025  <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    salario_2026  <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Problemas:</p>
-<ul>
-<li>A cada novo ano, é necessário alterar o DDL (<code>ALTER TABLE ADD COLUMN</code>)</li>
-<li>Consultas como “qual foi o salário no ano X?” exigem lógica condicional (<code>CASE WHEN</code>)</li>
-<li>Agregar por ano é impossível sem <code>UNION</code> ou <code>UNPIVOT</code></li>
-</ul>
-<p>A solução correta é uma relação separada com <code>ano</code> como atributo:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Esquema correto</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> historico_salario (</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id_prof  <span class="dt">INTEGER</span> <span class="kw">REFERENCES</span> professor(id_prof),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ano      <span class="dt">INTEGER</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    salario  <span class="dt">NUMERIC</span>(<span class="dv">10</span>,<span class="dv">2</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (id_prof, ano)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O resultado não é “SQL ou NoSQL”, mas uma arquitetura que escolhe garantias diferentes para partes diferentes do problema.</p>
 
 
 </section>
@@ -1480,13 +1463,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/02-dependencias-funcionais.html" class="pagination-link" aria-label="Dependências Funcionais">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Dependências Funcionais</span></span>
+      <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="pagination-link" aria-label="BASE e Consistência Eventual">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">BASE e Consistência Eventual</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/04-bcnf.html" class="pagination-link" aria-label="Forma Normal de Boyce-Codd (BCNF)">
-        <span class="nav-page-text"><span class="chapter-title">Forma Normal de Boyce-Codd (BCNF)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/07-resumo.html" class="pagination-link" aria-label="Resumo e Decisão">
+        <span class="nav-page-text"><span class="chapter-title">Resumo e Decisão</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
