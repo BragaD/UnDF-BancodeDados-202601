@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -894,6 +897,29 @@ ul.task-list li input[type="checkbox"] {
 <li>Depois da sincronização, A e B mostram a mesma contagem.</li>
 </ol>
 <p>Nesse caso, a inconsistência temporária costuma ser aceitável. O usuário talvez veja <code>128</code> curtidas em vez de <code>129</code>, mas o significado do sistema não é destruído.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant U1 as Usuário 1
+    participant A as Servidor A
+    participant B as Servidor B
+    participant U2 as Usuário 2
+    U1-&gt;&gt;A: curtir postagem
+    A--&gt;&gt;U1: resposta rápida
+    U2-&gt;&gt;B: ler contagem
+    B--&gt;&gt;U2: valor antigo
+    A--&gt;&gt;B: sincronizar atualização
+    U2-&gt;&gt;B: ler novamente
+    B--&gt;&gt;U2: valor convergido
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="onde-base-costuma-fazer-sentido" class="level2">
 <h2 class="anchored" data-anchor-id="onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</h2>

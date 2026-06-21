@@ -945,7 +945,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="executando-consultas-select" class="level2">
 <h2 class="anchored" data-anchor-id="executando-consultas-select">Executando Consultas SELECT</h2>
-<div id="617902a3" class="cell" data-execution_count="2">
+<div id="f47ad342" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cur.execute(<span class="st">"SELECT nome, salario FROM professor ORDER BY salario DESC"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1013,7 +1013,7 @@ Aviso
 <p>Quando o usuário digita <code>31 OR 1=1 --</code>, a variável <code>sql</code> fica:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> nome <span class="kw">FROM</span> professor <span class="kw">WHERE</span> id_escola <span class="op">=</span> <span class="dv">31</span> <span class="kw">OR</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span> <span class="co">--</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O fragmento <code>OR 1=1</code> é sempre verdadeiro — o filtro é completamente ignorado. Executando exatamente essa query no banco:</p>
-<div id="61d765c3" class="cell" data-execution_count="3">
+<div id="2fa18772" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando o código vulnerável com input malicioso</span></span>
@@ -1060,7 +1060,7 @@ Aviso
 <li><strong>Parâmetro $1:</strong> a string literal <code>31 OR 1=1 --</code></li>
 </ul>
 <p>O PostgreSQL recebe um texto e tenta compará-lo com a coluna <code>id_escola</code> (tipo <code>INTEGER</code>). Como <code>"31 OR 1=1 --"</code> não é um inteiro válido, o banco rejeita e lança um erro — que o Python captura normalmente:</p>
-<div id="d363103a" class="cell" data-execution_count="4">
+<div id="28567123" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2.errors</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
@@ -1090,7 +1090,7 @@ Aviso
 </div>
 </div>
 <p>Mesmo que o atacante forneça um input que <strong>seja</strong> um inteiro válido (como <code>"999"</code>), a query simplesmente retorna 0 linhas — nenhum SQL extra é executado:</p>
-<div id="064dbaf9" class="cell" data-execution_count="5">
+<div id="e7608d4d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>escola_id_invalido <span class="op">=</span> <span class="st">"999"</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>

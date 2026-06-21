@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -847,6 +850,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Um banco centralizado é conceitualmente simples: os dados ficam em um servidor principal, e todas as aplicações conversam com esse servidor. Enquanto o volume é moderado, essa arquitetura funciona bem. O problema aparece quando o sistema passa a ter muitos usuários, muitas leituras, muitas escritas ou usuários espalhados geograficamente.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg/1280px-Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg" class="img-fluid figure-img" alt="Vista aérea de vários data centers em uma zona de disponibilidade."></p>
+<figcaption>Parte de uma zona de disponibilidade da AWS, com vários data centers próximos entre si.</figcaption>
+</figure>
+</div>
+<p>Fonte: imagem de <a href="https://commons.wikimedia.org/wiki/File:Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg">Tedder/Wikimedia Commons</a>, licenciada sob <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
 <div class="conceito">
 <p>Um <strong>banco de dados distribuído</strong> armazena e processa dados em mais de um nó. Esses nós podem estar no mesmo datacenter, em datacenters diferentes ou em regiões geográficas distintas.</p>
 </div>
@@ -888,6 +898,25 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>Em muitos sistemas reais, as duas estratégias são combinadas: cada partição tem réplicas, e cada réplica pode atender consultas.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    app["Aplicação"] --&gt; router["Roteador de consultas"]
+    router --&gt; p1["Partição 1&lt;br/&gt;Alunos A-M"]
+    router --&gt; p2["Partição 2&lt;br/&gt;Alunos N-Z"]
+    p1 --&gt; r1["Réplica 1A"]
+    p1 --&gt; r2["Réplica 1B"]
+    p2 --&gt; r3["Réplica 2A"]
+    p2 --&gt; r4["Réplica 2B"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="o-preço-da-distribuição" class="level2">
 <h2 class="anchored" data-anchor-id="o-preço-da-distribuição">O Preço da Distribuição</h2>

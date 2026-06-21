@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -859,6 +862,23 @@ ul.task-list li input[type="checkbox"] {
 <p>Em uma matrícula online, a disciplina mais desejada pode receber centenas de tentativas de matrícula no mesmo minuto. Mesmo que o banco esteja distribuído, todas essas operações disputam o mesmo conjunto de vagas.</p>
 </div>
 <p>Nesses casos, adicionar mais servidores nem sempre resolve. Se todos precisam atualizar o mesmo contador, o sistema continua tendo um gargalo lógico.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    u1["Usuário 1"] --&gt; vaga["Registro quente&lt;br/&gt;vagas_restantes = 1"]
+    u2["Usuário 2"] --&gt; vaga
+    u3["Usuário 3"] --&gt; vaga
+    u4["Usuário 4"] --&gt; vaga
+    vaga --&gt; lock["Bloqueio, fila ou conflito"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="leituras-rápidas-escritas-difíceis" class="level2">
 <h2 class="anchored" data-anchor-id="leituras-rápidas-escritas-difíceis">Leituras Rápidas, Escritas Difíceis</h2>
@@ -890,6 +910,21 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>Não existe mágica: se o sistema responde antes de todas as cópias serem atualizadas, alguém pode ler uma cópia antiga.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    w["Escrita: estoque = 9"] --&gt; a["Réplica A&lt;br/&gt;estoque = 9"]
+    w -. "propagação atrasada" .-&gt; b["Réplica B&lt;br/&gt;estoque = 10"]
+    leitor["Leitor"] --&gt; b
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="conflitos-de-atualização" class="level2">
 <h2 class="anchored" data-anchor-id="conflitos-de-atualização">Conflitos de Atualização</h2>

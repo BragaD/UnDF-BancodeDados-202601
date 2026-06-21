@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -900,6 +903,31 @@ ul.task-list li input[type="checkbox"] {
 <p>Um <strong>commit distribuído</strong> tenta garantir que todos os participantes de uma transação distribuída cheguem à mesma decisão: confirmar ou abortar.</p>
 </div>
 <p>Protocolos como o commit em duas fases ajudam a coordenar essa decisão. A intuição é simples: primeiro os nós dizem se estão prontos; depois um coordenador decide o resultado final. O custo também é simples de entender: mais mensagens, mais espera e mais pontos de bloqueio.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant C as Coordenador
+    participant E as Nó de estoque
+    participant P as Nó de pagamento
+    participant O as Nó de pedido
+    C-&gt;&gt;E: preparar?
+    C-&gt;&gt;P: preparar?
+    C-&gt;&gt;O: preparar?
+    E--&gt;&gt;C: pronto
+    P--&gt;&gt;C: pronto
+    O--&gt;&gt;C: pronto
+    C-&gt;&gt;E: commit
+    C-&gt;&gt;P: commit
+    C-&gt;&gt;O: commit
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="por-que-isso-dói-em-alta-escala" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-isso-dói-em-alta-escala">Por Que Isso Dói em Alta Escala?</h2>

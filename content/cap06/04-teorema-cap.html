@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -884,19 +887,32 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png" class="img-fluid figure-img" style="width:55.0%" alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as combinações CA, CP e AP."></p>
+<figcaption>Diagrama de Euler do Teorema CAP.</figcaption>
+</figure>
+</div>
+<p>Fonte: imagem de <a href="https://commons.wikimedia.org/wiki/File:CAP_Theorem_Euler_Diagram.png">JamieMcCarthy/Wikimedia Commons</a>, licenciada sob <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
 <section id="partição-de-rede" class="level2">
 <h2 class="anchored" data-anchor-id="partição-de-rede">Partição de Rede</h2>
 <p>Uma partição ocorre quando parte dos nós não consegue se comunicar com outra parte. Os servidores podem estar ligados, mas a rede entre eles falha.</p>
 <p>Imagine duas réplicas de um mesmo dado:</p>
-<pre class="text"><code>Antes da falha:
-
-Cliente -&gt; Nó A &lt;---- rede ----&gt; Nó B
-              saldo = 100       saldo = 100
-
-Durante a partição:
-
-Cliente -&gt; Nó A      X      Nó B &lt;- Cliente
-              ?                 ?</code></pre>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    c1["Cliente 1"] --&gt; a["Nó A&lt;br/&gt;saldo = 100"]
+    c2["Cliente 2"] --&gt; b["Nó B&lt;br/&gt;saldo = 100"]
+    a -. "rede indisponível" .- b
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>Se um cliente atualiza o saldo no Nó A, mas o Nó A não consegue falar com o Nó B, o sistema tem uma escolha.</p>
 </section>
 <section id="escolha-cp" class="level2">

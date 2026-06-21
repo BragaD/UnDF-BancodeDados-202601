@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -925,6 +928,23 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    acid["ACID&lt;br/&gt;correção imediata"] --&gt; inv["Protege invariantes"]
+    base["BASE&lt;br/&gt;convergência posterior"] --&gt; disp["Protege disponibilidade"]
+    inv --&gt; decisao["Decisão de projeto"]
+    disp --&gt; decisao
+    decisao --&gt; dominio["O domínio define&lt;br/&gt;o que pode relaxar"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="frase-para-levar" class="level2">
 <h2 class="anchored" data-anchor-id="frase-para-levar">Frase Para Levar</h2>

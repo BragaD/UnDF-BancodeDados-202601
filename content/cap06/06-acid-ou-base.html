@@ -77,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -935,6 +938,30 @@ ul.task-list li input[type="checkbox"] {
 <p>Antes de escolher a tecnologia, faça esta pergunta:</p>
 <div class="conceito">
 <p>Se dois usuários lerem respostas diferentes por alguns segundos, o sistema continua correto?</p>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    q1{"Divergência temporária&lt;br/&gt;quebra uma regra do negócio?"}
+    q2{"A operação pode ser&lt;br/&gt;reconciliada depois?"}
+    q3{"Latência e disponibilidade&lt;br/&gt;pesam mais que leitura exata?"}
+    acid["Preferir ACID&lt;br/&gt;ou garantias fortes"]
+    base["BASE / consistência eventual&lt;br/&gt;pode ser aceitável"]
+    misto["Arquitetura mista&lt;br/&gt;forte no núcleo, eventual nas bordas"]
+    q1 -- "Sim" --&gt; acid
+    q1 -- "Não" --&gt; q2
+    q2 -- "Não" --&gt; acid
+    q2 -- "Sim" --&gt; q3
+    q3 -- "Sim" --&gt; base
+    q3 -- "Depende" --&gt; misto
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 <p>Se a resposta for “não”, provavelmente há uma parte do domínio que precisa de garantias fortes. Se a resposta for “sim”, consistência eventual pode ser uma solução simples e escalável.</p>
 </section>
