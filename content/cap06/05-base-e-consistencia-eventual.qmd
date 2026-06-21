@@ -29,6 +29,21 @@ Considere a contagem de curtidas em uma postagem.
 
 Nesse caso, a inconsistência temporária costuma ser aceitável. O usuário talvez veja `128` curtidas em vez de `129`, mas o significado do sistema não é destruído.
 
+```{mermaid}
+sequenceDiagram
+    participant U1 as Usuário 1
+    participant A as Servidor A
+    participant B as Servidor B
+    participant U2 as Usuário 2
+    U1->>A: curtir postagem
+    A-->>U1: resposta rápida
+    U2->>B: ler contagem
+    B-->>U2: valor antigo
+    A-->>B: sincronizar atualização
+    U2->>B: ler novamente
+    B-->>U2: valor convergido
+```
+
 ## Onde BASE Costuma Fazer Sentido
 
 BASE aparece bem em sistemas nos quais disponibilidade e latência são mais importantes que consistência imediata:

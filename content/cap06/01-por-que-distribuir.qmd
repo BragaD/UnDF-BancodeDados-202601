@@ -2,6 +2,10 @@
 
 Um banco centralizado é conceitualmente simples: os dados ficam em um servidor principal, e todas as aplicações conversam com esse servidor. Enquanto o volume é moderado, essa arquitetura funciona bem. O problema aparece quando o sistema passa a ter muitos usuários, muitas leituras, muitas escritas ou usuários espalhados geograficamente.
 
+![Parte de uma zona de disponibilidade da AWS, com vários data centers próximos entre si.](https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg/1280px-Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg){fig-alt="Vista aérea de vários data centers em uma zona de disponibilidade."}
+
+Fonte: imagem de [Tedder/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg), licenciada sob [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
 ::: {.conceito}
 Um **banco de dados distribuído** armazena e processa dados em mais de um nó. Esses nós podem estar no mesmo datacenter, em datacenters diferentes ou em regiões geográficas distintas.
 :::
@@ -24,6 +28,17 @@ Duas estratégias aparecem com frequência:
 | **Particionamento** | Dividir dados entre nós diferentes | Clientes de regiões diferentes em servidores diferentes |
 
 Em muitos sistemas reais, as duas estratégias são combinadas: cada partição tem réplicas, e cada réplica pode atender consultas.
+
+```{mermaid}
+flowchart LR
+    app["Aplicação"] --> router["Roteador de consultas"]
+    router --> p1["Partição 1<br/>Alunos A-M"]
+    router --> p2["Partição 2<br/>Alunos N-Z"]
+    p1 --> r1["Réplica 1A"]
+    p1 --> r2["Réplica 1B"]
+    p2 --> r3["Réplica 2A"]
+    p2 --> r4["Réplica 2B"]
+```
 
 ## O Preço da Distribuição
 

@@ -42,6 +42,22 @@ Antes de escolher a tecnologia, faça esta pergunta:
 Se dois usuários lerem respostas diferentes por alguns segundos, o sistema continua correto?
 :::
 
+```{mermaid}
+flowchart TD
+    q1{"Divergência temporária<br/>quebra uma regra do negócio?"}
+    q2{"A operação pode ser<br/>reconciliada depois?"}
+    q3{"Latência e disponibilidade<br/>pesam mais que leitura exata?"}
+    acid["Preferir ACID<br/>ou garantias fortes"]
+    base["BASE / consistência eventual<br/>pode ser aceitável"]
+    misto["Arquitetura mista<br/>forte no núcleo, eventual nas bordas"]
+    q1 -- "Sim" --> acid
+    q1 -- "Não" --> q2
+    q2 -- "Não" --> acid
+    q2 -- "Sim" --> q3
+    q3 -- "Sim" --> base
+    q3 -- "Depende" --> misto
+```
+
 Se a resposta for "não", provavelmente há uma parte do domínio que precisa de garantias fortes. Se a resposta for "sim", consistência eventual pode ser uma solução simples e escalável.
 
 ## Sistemas Mistos

@@ -14,22 +14,21 @@ As três letras são:
 | **A** | Availability | Toda requisição a um nó ativo recebe resposta |
 | **P** | Partition tolerance | O sistema continua operando apesar de falhas de comunicação entre nós |
 
+![Diagrama de Euler do Teorema CAP.](https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png){fig-alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as combinações CA, CP e AP." width="55%"}
+
+Fonte: imagem de [JamieMcCarthy/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CAP_Theorem_Euler_Diagram.png), licenciada sob [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
 ## Partição de Rede
 
 Uma partição ocorre quando parte dos nós não consegue se comunicar com outra parte. Os servidores podem estar ligados, mas a rede entre eles falha.
 
 Imagine duas réplicas de um mesmo dado:
 
-```text
-Antes da falha:
-
-Cliente -> Nó A <---- rede ----> Nó B
-              saldo = 100       saldo = 100
-
-Durante a partição:
-
-Cliente -> Nó A      X      Nó B <- Cliente
-              ?                 ?
+```{mermaid}
+flowchart LR
+    c1["Cliente 1"] --> a["Nó A<br/>saldo = 100"]
+    c2["Cliente 2"] --> b["Nó B<br/>saldo = 100"]
+    a -. "rede indisponível" .- b
 ```
 
 Se um cliente atualiza o saldo no Nó A, mas o Nó A não consegue falar com o Nó B, o sistema tem uma escolha.

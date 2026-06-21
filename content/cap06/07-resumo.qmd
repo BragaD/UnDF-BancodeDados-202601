@@ -23,6 +23,15 @@ Neste capítulo, vimos que bancos distribuídos surgem de necessidades práticas
 | O sistema precisa continuar respondendo durante falhas parciais? | BASE |
 | O dado pode ser recalculado, reconciliado ou aproximado? | BASE |
 
+```{mermaid}
+flowchart LR
+    acid["ACID<br/>correção imediata"] --> inv["Protege invariantes"]
+    base["BASE<br/>convergência posterior"] --> disp["Protege disponibilidade"]
+    inv --> decisao["Decisão de projeto"]
+    disp --> decisao
+    decisao --> dominio["O domínio define<br/>o que pode relaxar"]
+```
+
 ## Frase Para Levar
 
 ::: {.conceito}

@@ -31,6 +31,23 @@ Um **commit distribuído** tenta garantir que todos os participantes de uma tran
 
 Protocolos como o commit em duas fases ajudam a coordenar essa decisão. A intuição é simples: primeiro os nós dizem se estão prontos; depois um coordenador decide o resultado final. O custo também é simples de entender: mais mensagens, mais espera e mais pontos de bloqueio.
 
+```{mermaid}
+sequenceDiagram
+    participant C as Coordenador
+    participant E as Nó de estoque
+    participant P as Nó de pagamento
+    participant O as Nó de pedido
+    C->>E: preparar?
+    C->>P: preparar?
+    C->>O: preparar?
+    E-->>C: pronto
+    P-->>C: pronto
+    O-->>C: pronto
+    C->>E: commit
+    C->>P: commit
+    C->>O: commit
+```
+
 ## Por Que Isso Dói em Alta Escala?
 
 Quanto mais nós participam de uma transação, maior a chance de atraso ou falha. Em cargas com alta frequência de leituras e escritas, isso pode produzir:
