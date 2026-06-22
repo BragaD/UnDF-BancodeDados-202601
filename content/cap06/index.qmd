@@ -1,23 +1,35 @@
 # Bancos Distribuídos, Consistência e NoSQL
 
 ::: {.callout-note}
-Este capítulo serve como ponte entre transações SQL e o seminário sobre bancos NoSQL.
+Este capítulo é a ponte entre as transações SQL dos capítulos anteriores e o seminário sobre bancos NoSQL. Ele mostra **por que** sistemas modernos abandonam — em parte — as garantias fortes do modelo relacional, e **com base em que critérios** essa decisão é tomada.
 :::
 
-Até aqui, o banco de dados apareceu como uma unidade relativamente simples: uma aplicação envia comandos SQL para um servidor PostgreSQL, e o SGBD garante integridade, concorrência e persistência. Esse modelo é poderoso, mas muitos sistemas modernos precisam operar em uma escala que rompe essa simplicidade.
+Até aqui, o banco de dados apareceu como uma unidade conceitualmente simples: a aplicação envia comandos SQL a um servidor PostgreSQL, e o SGBD cuida sozinho de integridade, concorrência e persistência. Esse modelo é poderoso — e, para a maioria dos sistemas, suficiente. Mas há uma classe de aplicações cuja escala rompe essa simplicidade.
 
-Aplicações com milhões de usuários, acessos globais, alta disponibilidade e grande volume de leitura e escrita não podem depender apenas de uma máquina central. Elas distribuem dados entre vários servidores, regiões e réplicas. Essa distribuição aumenta capacidade e disponibilidade, mas cria um novo problema central: **o que significa manter dados corretos quando várias cópias existem ao mesmo tempo e a rede pode falhar?**
+Pense em três sistemas reais:
 
-Este capítulo apresenta a motivação para bancos distribuídos, mostra por que transações ACID ficam mais difíceis nesse ambiente e introduz o Teorema CAP. A partir dele, discutimos BASE e consistência eventual como alternativas pragmáticas usadas por muitos sistemas NoSQL.
+- A **rede social** em que uma curtida precisa aparecer em milissegundos para um usuário em São Paulo e outro em Tóquio.
+- O **banco** em que dois caixas eletrônicos não podem, em hipótese alguma, sacar o mesmo dinheiro duas vezes.
+- O **sistema de matrícula** da UnDF em que, no primeiro minuto da abertura, milhares de alunos disputam as últimas vagas da mesma disciplina.
+
+Os três precisam de **mais de um servidor** — por volume, por alcance geográfico ou por disponibilidade. E os três, ao distribuir os dados, esbarram na mesma pergunta central:
+
+> O que significa manter dados **corretos** quando existem várias cópias ao mesmo tempo e a rede entre elas pode falhar?
+
+Este capítulo parte da motivação para distribuir dados, mostra por que transações ACID ficam mais caras nesse ambiente, formaliza o trade-off com o **Teorema CAP** e seu refinamento moderno, o **PACELC**, e então apresenta **BASE** e a **consistência eventual** como a postura adotada por muitos bancos NoSQL. O fio condutor é sempre o mesmo: *qual garantia o domínio exige de imediato, e qual ele pode relaxar?*
+
+## Objetivos de Aprendizagem
 
 Ao final deste capítulo, você será capaz de:
 
-- Explicar por que bancos de dados são distribuídos em sistemas modernos
-- Identificar os custos de coordenação de transações ACID em ambientes distribuídos
-- Relacionar concorrência, contenção e replicação em cargas com muitas leituras e escritas
-- Interpretar corretamente o Teorema CAP durante partições de rede
-- Definir BASE e consistência eventual
-- Comparar situações em que ACID é indispensável com situações em que BASE pode ser aceitável
+- Explicar **por que** bancos de dados são distribuídos, com exemplos de domínios diferentes;
+- Descrever o custo de coordenação de transações ACID distribuídas e o **problema de bloqueio** do commit em duas fases;
+- Demonstrar, no PostgreSQL, como a **contenção** em um registro quente leva a *lost updates* — e como evitá-la;
+- Enunciar corretamente o **Teorema CAP**, sabendo o que ele *não* diz (o mito do "escolha 2 de 3");
+- Usar o **PACELC** para raciocinar sobre o trade-off entre consistência e latência mesmo *sem* falhas;
+- Posicionar bancos reais (Cassandra, DynamoDB, MongoDB, HBase, PostgreSQL...) no mapa de garantias;
+- Definir **BASE** e **consistência eventual** e contrastá-las com ACID;
+- Decidir, para um requisito concreto, se ele pede garantias fortes (ACID) ou se tolera convergência posterior (BASE).
 
 ## Seções
 
@@ -27,6 +39,7 @@ Ao final deste capítulo, você será capaz de:
 | [6.2](02-transacoes-distribuidas.qmd) | Transações ACID em Bancos Distribuídos |
 | [6.3](03-concorrencia-e-contencao.qmd) | Concorrência, Contenção e Réplicas |
 | [6.4](04-teorema-cap.qmd) | Teorema CAP |
-| [6.5](05-base-e-consistencia-eventual.qmd) | BASE e Consistência Eventual |
-| [6.6](06-acid-ou-base.qmd) | Quando Usar ACID ou BASE |
-| [Resumo](07-resumo.qmd) | Resumo e Decisão |
+| [6.5](05-pacelc-e-bancos-reais.qmd) | Além do CAP: PACELC e Bancos Reais |
+| [6.6](06-base-e-consistencia-eventual.qmd) | BASE e Consistência Eventual |
+| [6.7](07-acid-ou-base.qmd) | Quando Usar ACID ou BASE |
+| [Resumo](08-resumo.qmd) | Resumo e Decisão |

@@ -1,35 +1,44 @@
 # Transações ACID em Bancos Distribuídos
 
-Transações ACID são uma das grandes forças dos bancos relacionais. Elas permitem que o desenvolvedor pense em operações complexas como uma unidade lógica: ou tudo acontece, ou nada acontece.
+Transações ACID são uma das maiores forças dos bancos relacionais. Elas deixam o desenvolvedor pensar em uma operação complexa como uma **unidade lógica**: ou tudo acontece, ou nada acontece. No Capítulo 4 vimos isso em um único servidor PostgreSQL. Aqui a pergunta é outra: *o que muda quando a transação precisa de vários servidores ao mesmo tempo?*
 
 ::: {.conceito}
-**ACID** resume quatro propriedades de transações: Atomicidade, Consistência, Isolamento e Durabilidade.
+**ACID** resume quatro propriedades de uma transação: **A**tomicidade, **C**onsistência, **I**solamento e **D**urabilidade.
 :::
 
-Em um único servidor, o SGBD controla logs, bloqueios, versões e commits no mesmo ambiente. Em um banco distribuído, a transação pode depender de vários nós. Isso torna cada propriedade mais cara.
+Em um único servidor, o SGBD controla logs, bloqueios, versões e *commits* no mesmo ambiente — tudo "debaixo do mesmo teto". Em um banco distribuído, uma transação pode tocar dados em nós distintos, e cada propriedade fica mais cara:
 
-| Propriedade | Em um servidor | Em vários servidores |
+| Propriedade | Em **um** servidor | Em **vários** servidores |
 |---|---|---|
-| Atomicidade | Um log local registra commit ou rollback | Vários nós precisam concordar sobre commit ou rollback |
-| Consistência | Constraints são verificadas localmente | Regras podem depender de dados espalhados |
-| Isolamento | Bloqueios ou versões são coordenados localmente | Concorrência precisa ser coordenada entre nós |
-| Durabilidade | Escrita persistida no log local | Escrita pode precisar ser replicada antes da resposta |
+| Atomicidade | Um log local registra *commit* ou *rollback* | Vários nós precisam **concordar** sobre *commit* ou *rollback* |
+| Consistência | *Constraints* verificadas localmente | Regras podem depender de dados espalhados |
+| Isolamento | Bloqueios/versões coordenados localmente | A concorrência precisa ser coordenada **pela rede** |
+| Durabilidade | Escrita persistida no log local | A escrita pode precisar ser **replicada** antes de responder |
 
 ## O Problema do Commit Distribuído
 
-Imagine uma compra que atualiza três informações:
+Imagine uma compra que precisa atualizar três informações guardadas em três nós diferentes:
 
-1. reduz o estoque em um nó;
-2. registra o pagamento em outro;
-3. cria o pedido em um terceiro.
+1. reduzir o **estoque** (nó A);
+2. registrar o **pagamento** (nó B);
+3. criar o **pedido** (nó C).
 
-Se todos confirmam, a compra está concluída. Se todos abortam, nada muda. O caso difícil é intermediário: dois nós confirmam, mas o terceiro fica inacessível.
+Se os três confirmam, a compra está concluída. Se os três abortam, nada muda. O caso difícil é o **intermediário**: dois confirmam e o terceiro fica inacessível. Aí o sistema fica num estado que não é nem "comprou" nem "não comprou".
 
 ::: {.conceito}
-Um **commit distribuído** tenta garantir que todos os participantes de uma transação distribuída cheguem à mesma decisão: confirmar ou abortar.
+Um **commit distribuído** tenta garantir que todos os participantes de uma transação cheguem à **mesma decisão**: ou todos confirmam, ou todos abortam — nunca uns sim e outros não.
 :::
 
-Protocolos como o commit em duas fases ajudam a coordenar essa decisão. A intuição é simples: primeiro os nós dizem se estão prontos; depois um coordenador decide o resultado final. O custo também é simples de entender: mais mensagens, mais espera e mais pontos de bloqueio.
+### Commit em Duas Fases (2PC)
+
+O protocolo clássico para isso é o **commit em duas fases** (*two-phase commit*, 2PC). A intuição tem duas etapas e um árbitro, o **coordenador**:
+
+1. **Fase de preparação** — o coordenador pergunta a cada participante: *"você consegue confirmar?"*. Cada um faz o trabalho, garante que conseguirá confirmar e responde **pronto** (e, a partir daí, fica "no aguardo", segurando seus bloqueios).
+2. **Fase de decisão** — se *todos* responderam pronto, o coordenador manda **commit** para todos; se *algum* falhou, manda **abort** para todos.
+
+![Caminho de sucesso do *commit* em duas fases: o coordenador coleta o "pronto" de todos os participantes (fase 1) e só então ordena o *commit* (fase 2).](https://upload.wikimedia.org/wikipedia/commons/8/86/Two_phase_commit_seq_diagram_success_01.png){fig-alt="Diagrama de sequência do protocolo de commit em duas fases mostrando as fases de preparação e de commit." width="80%"}
+
+Fonte: imagem de [Jayaprabhakar/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Two_phase_commit_seq_diagram_success_01.png), em domínio público ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)).
 
 ```{mermaid}
 sequenceDiagram
@@ -37,25 +46,54 @@ sequenceDiagram
     participant E as Nó de estoque
     participant P as Nó de pagamento
     participant O as Nó de pedido
+    Note over C,O: Fase 1 — preparação
     C->>E: preparar?
     C->>P: preparar?
     C->>O: preparar?
-    E-->>C: pronto
-    P-->>C: pronto
-    O-->>C: pronto
+    E-->>C: pronto (segura bloqueios)
+    P-->>C: pronto (segura bloqueios)
+    O-->>C: pronto (segura bloqueios)
+    Note over C,O: Fase 2 — decisão
     C->>E: commit
     C->>P: commit
     C->>O: commit
 ```
 
+### O Calcanhar de Aquiles: o Bloqueio
+
+O 2PC funciona — mas tem uma fraqueza que explica por que sistemas de alta escala fogem dele. Entre dizer **pronto** e receber a decisão, cada participante fica **comprometido, segurando seus bloqueios**, sem poder confirmar nem abortar por conta própria. Ele *prometeu* obedecer ao coordenador.
+
+E se o **coordenador cair** justo nesse intervalo?
+
+```{mermaid}
+sequenceDiagram
+    participant C as Coordenador
+    participant E as Nó de estoque
+    participant P as Nó de pagamento
+    C->>E: preparar?
+    C->>P: preparar?
+    E-->>C: pronto (bloqueado)
+    P-->>C: pronto (bloqueado)
+    Note over C: 💥 coordenador cai
+    Note over E,P: ficam presos, segurando bloqueios,<br/>sem saber se foi commit ou abort
+```
+
+::: {.conceito}
+O 2PC é um **protocolo de bloqueio** (*blocking*): se o coordenador falha na hora errada, os participantes ficam presos segurando bloqueios até ele voltar. Esses bloqueios travam **outras** transações que precisam dos mesmos dados — e o problema se espalha.
+:::
+
 ## Por Que Isso Dói em Alta Escala?
 
-Quanto mais nós participam de uma transação, maior a chance de atraso ou falha. Em cargas com alta frequência de leituras e escritas, isso pode produzir:
+Quanto mais nós participam de uma transação, maiores as chances de **atraso** ou **falha** de algum deles — e o protocolo anda na velocidade do mais lento. Em cargas com alta frequência de leitura e escrita, o efeito acumulado aparece como:
 
-- transações esperando por nós lentos;
-- bloqueios mantidos por mais tempo;
-- aumento de latência para o usuário;
-- maior chance de timeout;
-- queda de vazão quando muitos clientes competem pelos mesmos dados.
+- transações esperando por nós lentos (a "fila anda no ritmo do mais devagar");
+- bloqueios mantidos por **mais tempo**, aumentando a contenção;
+- mais latência percebida pelo usuário;
+- mais *timeouts* e mais retentativas;
+- queda de vazão quando muitos clientes disputam os mesmos dados.
 
-ACID continua sendo valioso. O ponto é que, em sistemas distribuídos, suas garantias exigem coordenação, e coordenação tem custo.
+::: {.exemplo}
+Por isso muitos sistemas em escala **evitam** transações que cruzam vários nós: modelam os dados para que cada operação importante caiba em um único nó (por exemplo, tudo de um pedido junto), reservando o 2PC para os poucos casos em que ele é realmente inevitável.
+:::
+
+ACID continua valioso — ele não "deixou de funcionar". O ponto é que, num ambiente distribuído, suas garantias **exigem coordenação**, e coordenação custa tempo, bloqueios e disponibilidade. É essa conta que o Teorema CAP, mais adiante, vai tornar precisa.

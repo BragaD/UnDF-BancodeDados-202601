@@ -1,0 +1,77 @@
+# Quando Usar ACID ou BASE
+
+A escolha entre ACID e BASE **não é uma guerra entre tecnologias** — e quase nunca é uma escolha para o sistema *inteiro*. É uma decisão de projeto tomada **requisito a requisito**. A pergunta-chave é sempre a mesma: *quais invariantes precisam valer no mesmo instante, e quais informações podem convergir depois?*
+
+::: {.conceito}
+Um **invariante** é uma regra que precisa permanecer verdadeira para o sistema continuar correto. Exemplos: "o saldo não pode ficar negativo" ou "uma vaga não pode ser ocupada por dois alunos". Invariantes que devem valer **imediatamente** pedem garantias fortes (ACID).
+:::
+
+## Quando Ficar com ACID
+
+ACID é a escolha natural quando uma inconsistência temporária pode causar **erro material**: fraude, perda financeira, violação legal ou quebra de confiança. Nesses casos, é melhor **recusar** temporariamente uma operação do que **confirmar** uma operação incorreta.
+
+| Situação | Por que ACID importa |
+|---|---|
+| Transferência bancária | Débito e crédito precisam acontecer como **uma** unidade |
+| Matrícula com limite de vagas (UnDF) | Duas pessoas **não** podem ocupar a mesma vaga |
+| Estoque crítico | Não vender mais unidades do que existem |
+| Prontuário médico | Atualizações conflitantes podem afetar decisões clínicas |
+| Lançamentos contábeis | Auditoria exige histórico consistente |
+
+No vocabulário do PACELC, esses sistemas tendem a **PC/EC**: preferem consistência tanto na falha quanto no dia a dia, e aceitam pagar com latência ou disponibilidade.
+
+## Quando BASE Pode Ser Melhor
+
+BASE é atraente quando o sistema precisa **continuar respondendo** e pequenas divergências temporárias não ferem o significado principal. Aqui a experiência melhora quando o sistema responde rápido, mesmo com os dados ainda convergindo.
+
+| Situação | Por que BASE pode bastar |
+|---|---|
+| *Feed* de notícias | Ordem e contagem podem variar por alguns segundos |
+| Curtidas e visualizações | Valores aproximados são aceitáveis no curto prazo |
+| Recomendações | O resultado não precisa ser idêntico para todos |
+| Cache de catálogo | Dados podem ser atualizados logo em seguida |
+| Telemetria | Eventos podem ser agregados com atraso |
+
+Esses sistemas tendem a **PA/EL**: priorizam disponibilidade na falha e baixa latência no dia a dia.
+
+## A Pergunta Que Decide
+
+Antes de escolher a tecnologia, faça **um** teste:
+
+::: {.conceito}
+Se dois usuários lerem respostas **diferentes** por alguns segundos, o sistema continua **correto**?
+:::
+
+Se a resposta for **"não"**, há um invariante que precisa de garantias fortes ali. Se for **"sim"**, a consistência eventual provavelmente resolve de forma mais simples e escalável.
+
+```{mermaid}
+flowchart TD
+    q1{"Divergência temporária<br/>quebra uma regra do negócio?"}
+    q2{"A operação pode ser<br/>reconciliada depois?"}
+    q3{"Latência e disponibilidade<br/>pesam mais que leitura exata?"}
+    acid["Preferir ACID<br/>(garantias fortes / PC-EC)"]
+    base["BASE / consistência eventual<br/>(PA-EL)"]
+    misto["Arquitetura mista<br/>forte no núcleo, eventual nas bordas"]
+    q1 -- "Sim" --> acid
+    q1 -- "Não" --> q2
+    q2 -- "Não" --> acid
+    q2 -- "Sim" --> q3
+    q3 -- "Sim" --> base
+    q3 -- "Depende" --> misto
+```
+
+## A Resposta Real é "os Dois": Sistemas Mistos
+
+Na prática, sistemas grandes **não escolhem um lado** — eles aplicam garantias diferentes a partes diferentes do problema. Pense em uma loja virtual:
+
+- **pagamentos** usam transações fortes (ACID);
+- o **catálogo** usa cache e replicação eventual (BASE);
+- o **feed** de recomendações usa ordenação aproximada (BASE);
+- a **auditoria** usa gravação durável (ACID);
+- a **busca** é atualizada de forma assíncrona (BASE).
+
+::: {.exemplo}
+O mesmo vale para a UnDF: a **matrícula** (vagas) exige ACID, mas o **painel** que mostra "quantos alunos já se matricularam hoje" pode ser eventual — ninguém se prejudica se esse número estiver alguns segundos atrasado.
+:::
+
+O resultado não é "**SQL ou NoSQL**", mas uma arquitetura que escolhe, conscientemente, **garantias diferentes para partes diferentes** — usando ACID onde o domínio não perdoa e BASE onde ele tolera convergência posterior.

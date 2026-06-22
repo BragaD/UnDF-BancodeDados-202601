@@ -1,57 +1,72 @@
 # Por Que Distribuir Dados?
 
-Um banco centralizado é conceitualmente simples: os dados ficam em um servidor principal, e todas as aplicações conversam com esse servidor. Enquanto o volume é moderado, essa arquitetura funciona bem. O problema aparece quando o sistema passa a ter muitos usuários, muitas leituras, muitas escritas ou usuários espalhados geograficamente.
+Um banco centralizado é conceitualmente simples: os dados vivem em um servidor, e todas as aplicações conversam com ele. Enquanto o volume e o número de usuários são moderados, essa arquitetura é difícil de superar — uma única máquina cuida de tudo e nunca precisa "concordar" com ninguém.
 
-![Parte de uma zona de disponibilidade da AWS, com vários data centers próximos entre si.](https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg/1280px-Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg){fig-alt="Vista aérea de vários data centers em uma zona de disponibilidade."}
+O problema aparece quando o sistema cresce em alguma dimensão que uma máquina sozinha não acompanha. E essa pressão vem de domínios bem diferentes:
+
+| Domínio | O que pressiona | Por que um servidor não basta |
+|---|---|---|
+| Matrícula da UnDF | **Pico de carga** | Milhares de alunos no mesmo minuto da abertura |
+| Rede social global | **Geografia + volume** | Usuários em todos os continentes esperam resposta imediata |
+| Banco / pagamentos | **Disponibilidade** | O sistema não pode parar se um servidor cair |
+| Telemetria / IoT | **Vazão de escrita** | Milhões de eventos por segundo a gravar |
+
+Em todos esses casos, a saída é a mesma: **espalhar os dados por vários nós**.
+
+![Parte de uma zona de disponibilidade da AWS: vários *data centers* próximos entre si formam a infraestrutura que hospeda bancos distribuídos em escala.](https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg/1280px-Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg){fig-alt="Vista aérea de vários data centers em uma zona de disponibilidade da AWS." width="85%"}
 
 Fonte: imagem de [Tedder/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Amazon_AWS_us-west-2_morrow_east_AZ_01.jpg), licenciada sob [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ::: {.conceito}
-Um **banco de dados distribuído** armazena e processa dados em mais de um nó. Esses nós podem estar no mesmo datacenter, em datacenters diferentes ou em regiões geográficas distintas.
+Um **banco de dados distribuído** armazena e processa dados em mais de um nó. Esses nós podem estar no mesmo *rack*, em *data centers* diferentes ou em regiões geográficas separadas por milhares de quilômetros.
 :::
 
-Distribuir dados não é apenas uma escolha tecnológica; é uma resposta a necessidades de engenharia:
+Distribuir dados não é "moda de Big Tech"; é uma resposta a necessidades concretas de engenharia:
 
-- **Escalabilidade**: dividir a carga entre vários servidores permite atender mais requisições.
-- **Disponibilidade**: se um nó falha, outro pode continuar atendendo parte do sistema.
-- **Baixa latência**: dados próximos ao usuário reduzem tempo de resposta.
-- **Tolerância a falhas**: réplicas reduzem o risco de perda ou indisponibilidade.
-- **Crescimento incremental**: novos nós podem ser adicionados conforme o sistema cresce.
+- **Escalabilidade horizontal** — em vez de comprar um servidor cada vez maior (caro e com teto físico), adicionam-se mais máquinas comuns.
+- **Disponibilidade** — se um nó falha, outro continua atendendo. O sistema sobrevive à perda de partes.
+- **Baixa latência** — manter dados perto do usuário (uma réplica no Brasil, outra no Japão) reduz o tempo de resposta.
+- **Tolerância a falhas** — réplicas reduzem o risco de perda definitiva de dados.
+- **Crescimento incremental** — a capacidade acompanha o crescimento, sem migrações arriscadas de "tudo de uma vez".
 
-## Replicação e Particionamento
+## Duas Ferramentas: Replicação e Particionamento
 
-Duas estratégias aparecem com frequência:
+Quase todo sistema distribuído combina duas técnicas básicas. Vale separá-las bem, porque elas resolvem problemas diferentes.
 
-| Estratégia | Ideia | Exemplo |
-|---|---|---|
-| **Replicação** | Manter cópias dos mesmos dados em vários nós | Uma tabela de produtos copiada para leitura rápida |
-| **Particionamento** | Dividir dados entre nós diferentes | Clientes de regiões diferentes em servidores diferentes |
+| Estratégia | Ideia | Resolve | Exemplo na UnDF |
+|---|---|---|---|
+| **Replicação** | Manter **cópias** do mesmo dado em vários nós | Disponibilidade e leitura rápida | O catálogo de disciplinas, lido por todos, copiado em várias réplicas |
+| **Particionamento** (*sharding*) | **Dividir** os dados entre nós diferentes | Volume e vazão | Alunos com matrícula par em um nó, ímpar em outro |
 
-Em muitos sistemas reais, as duas estratégias são combinadas: cada partição tem réplicas, e cada réplica pode atender consultas.
+::: {.conceito}
+**Replicação** copia o mesmo dado para vários nós (redundância). **Particionamento** divide dados distintos entre nós (capacidade). São ortogonais: um sistema sério geralmente usa as duas ao mesmo tempo.
+:::
+
+Na prática elas se combinam: cada partição tem suas próprias réplicas. Assim o sistema escala em volume (porque cada nó guarda só uma fatia) **e** tolera falhas (porque cada fatia tem cópias).
 
 ```{mermaid}
-flowchart LR
-    app["Aplicação"] --> router["Roteador de consultas"]
-    router --> p1["Partição 1<br/>Alunos A-M"]
-    router --> p2["Partição 2<br/>Alunos N-Z"]
-    p1 --> r1["Réplica 1A"]
-    p1 --> r2["Réplica 1B"]
-    p2 --> r3["Réplica 2A"]
-    p2 --> r4["Réplica 2B"]
+flowchart TD
+    app["Aplicação de matrícula"] --> router["Roteador de consultas"]
+    router --> p1["Partição 1<br/>Alunos A–M"]
+    router --> p2["Partição 2<br/>Alunos N–Z"]
+    p1 --> r1a["Réplica 1A<br/>(primária)"]
+    p1 --> r1b["Réplica 1B<br/>(cópia)"]
+    p2 --> r2a["Réplica 2A<br/>(primária)"]
+    p2 --> r2b["Réplica 2B<br/>(cópia)"]
 ```
 
 ## O Preço da Distribuição
 
-Distribuir dados melhora capacidade e disponibilidade, mas troca simplicidade por coordenação. Agora o banco precisa responder perguntas que não existiam no modelo centralizado:
+A distribuição melhora capacidade e disponibilidade, mas **troca simplicidade por coordenação**. No modelo centralizado, perguntas sobre "qual é o valor correto" nem faziam sentido: havia um só valor, em um só lugar. Agora o sistema precisa responder:
 
-- Qual réplica tem o valor mais recente?
-- O que acontece se uma atualização chega a um nó, mas não chega a outro?
-- Uma transação pode envolver dados em servidores diferentes?
-- O sistema deve responder mesmo se parte da rede falhar?
-- É aceitável mostrar temporariamente um valor antigo?
+- Qual réplica tem o valor **mais recente**?
+- O que acontece se uma atualização chega a um nó, mas não ao outro?
+- Uma transação pode envolver dados em servidores **diferentes**?
+- O sistema deve responder mesmo se **parte da rede falhar**?
+- É aceitável mostrar, por alguns instantes, um valor **antigo**?
 
 ::: {.exemplo}
-Em uma rede social, uma curtida pode aparecer para alguns usuários antes de aparecer para todos. Em um sistema bancário, porém, dois saldos conflitantes podem ser inaceitáveis. A diferença não está apenas no banco usado, mas no significado do dado para o negócio.
+A mesma "leitura antiga" tem pesos completamente diferentes conforme o domínio. Numa rede social, uma curtida pode aparecer para alguns usuários antes de aparecer para todos — ninguém se machuca. Num banco, dois saldos conflitantes para a mesma conta podem significar dinheiro criado ou perdido. **A diferença não está no banco de dados usado, mas no significado do dado para o negócio.**
 :::
 
-Essa tensão entre escala, disponibilidade e consistência é o ponto de partida para entender bancos NoSQL.
+Essa tensão entre **escala**, **disponibilidade** e **consistência** é exatamente o que o resto do capítulo formaliza — e é a raiz de por que os bancos NoSQL fazem escolhas tão diferentes do PostgreSQL.

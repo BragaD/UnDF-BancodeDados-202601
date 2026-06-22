@@ -1,0 +1,60 @@
+# Resumo e Decisão
+
+Neste capítulo, vimos que bancos distribuídos surgem de necessidades práticas — escalar, reduzir latência, aumentar disponibilidade, tolerar falhas — em domínios tão diferentes quanto a matrícula da UnDF, uma rede social global e um sistema bancário. Mas a distribuição cobra um preço inevitável: **coordenar dados entre nós é mais difícil do que dentro de um único servidor.**
+
+## Ideias Centrais
+
+| Tema | Ideia principal |
+|---|---|
+| Distribuição | Melhora escala e disponibilidade, mas exige **coordenação** |
+| Replicação × Particionamento | Cópias (disponibilidade) × divisão (capacidade) — quase sempre combinadas |
+| Transações distribuídas | 2PC preserva garantias fortes, mas **bloqueia** se o coordenador cai |
+| Concorrência | Cargas intensas geram **contenção** em registros quentes; um `UPDATE` atômico evita *lost updates* |
+| CAP | **Durante uma partição**, escolha entre consistência forte e disponibilidade |
+| PACELC | **Sem** partição, ainda há o trade-off entre **latência** e consistência |
+| BASE | Aceita inconsistência temporária por disponibilidade e baixa latência |
+
+## CAP e PACELC em Uma Frase
+
+::: {.conceito}
+**CAP**: se há **P**artição, escolha **A** ou **C**. **PACELC** completa: **senão** (rede saudável), escolha **L** ou **C**. Quase todo sistema é descrito por essas duas decisões.
+:::
+
+## Decidindo: ACID ou BASE?
+
+| Pergunta | Inclinação |
+|---|---|
+| A operação precisa estar correta **imediatamente**? | ACID |
+| Uma resposta **indisponível** é melhor que uma resposta **errada**? | ACID |
+| Divergências **temporárias** são aceitáveis? | BASE |
+| O sistema precisa continuar respondendo durante falhas parciais? | BASE |
+| O dado pode ser recalculado, reconciliado ou aproximado? | BASE |
+
+```{mermaid}
+flowchart LR
+    acid["ACID / PC-EC<br/>correção imediata"] --> inv["Protege invariantes"]
+    base["BASE / PA-EL<br/>convergência posterior"] --> disp["Protege disponibilidade e latência"]
+    inv --> decisao["Decisão de projeto"]
+    disp --> decisao
+    decisao --> dominio["O domínio define<br/>o que pode relaxar"]
+```
+
+## Frase Para Levar
+
+::: {.conceito}
+**ACID protege invariantes fortes. BASE protege disponibilidade e latência quando o domínio tolera convergência posterior.** Bancos reais não são "rápidos" ou "lentos" no vácuo — eles fazem apostas diferentes (PostgreSQL aposta em PC/EC; Cassandra, em PA/EL), e a arte é casar a aposta certa com cada parte do problema.
+:::
+
+Essa distinção prepara o seminário sobre bancos NoSQL. A pergunta mais importante não é "qual banco é mais rápido?", mas:
+
+> Quais garantias esta aplicação realmente **precisa**, e quais ela pode **relaxar**?
+
+Ao responder isso, fica claro por que cada família NoSQL adota um modelo de dados, uma estratégia de replicação e um nível de consistência diferentes — e por que, muitas vezes, a melhor arquitetura usa **mais de um banco ao mesmo tempo**.
+
+## Leituras Recomendadas
+
+- BREWER, E. **CAP Twelve Years Later: How the "Rules" Have Changed**. *Computer*, 2012 [@brewer2012].
+- ABADI, D. **Consistency Tradeoffs in Modern Distributed Database System Design** (PACELC). *Computer*, 2012 [@abadi2012].
+- KLEPPMANN, M. **A Critique of the CAP Theorem**. 2015 [@kleppmann2015].
+- KLEPPMANN, M. **Designing Data-Intensive Applications**. O'Reilly, 2017 [@kleppmann2017].
+- PRITCHETT, D. **BASE: An ACID Alternative**. *ACM Queue*, 2008 [@pritchett2008].

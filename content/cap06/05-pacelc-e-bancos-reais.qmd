@@ -1,0 +1,75 @@
+# Além do CAP: PACELC e Bancos Reais
+
+O Teorema CAP tem um ponto cego: ele só descreve o que acontece **durante uma partição**. Mas partições são raras — na maior parte do tempo a rede funciona. Será que, com a rede saudável, um banco distribuído não enfrenta *nenhum* trade-off? Enfrenta — e é justamente o trade-off que mais afeta o dia a dia dos usuários: **latência**.
+
+## A Intuição: Consistência Custa uma Ida e Volta
+
+Imagine um sistema com réplicas em São Paulo e em Tóquio. Para garantir que toda leitura veja a escrita mais recente (consistência forte), uma escrita precisa ser confirmada pela réplica distante **antes** de responder ao usuário. Isso significa **pelo menos uma viagem pela rede** entre os continentes — dezenas ou centenas de milissegundos — em cada operação.
+
+Se o sistema abre mão de parte dessa consistência (responde com a réplica local e propaga depois), ele responde **muito mais rápido**. Esse é o trade-off que o CAP ignora, porque ele existe **mesmo sem nenhuma falha**.
+
+## O Teorema PACELC
+
+Daniel Abadi formalizou essa ideia em 2010 [@abadi2012], estendendo o CAP. O nome é a própria regra:
+
+::: {.conceito}
+**PACELC**: **se** há uma **P**artição, escolha entre **A**vailability e **C**onsistency (a parte do CAP); **senão** (*Else*, rede saudável), escolha entre **L**atency e **C**onsistency.
+:::
+
+Ou seja, há **dois** trade-offs, não um:
+
+```{mermaid}
+flowchart TD
+    start["Operação no sistema distribuído"] --> q{"Há partição<br/>de rede?"}
+    q -- "Sim (P)" --> pa["Availability<br/>(A)"]
+    q -- "Sim (P)" --> pc["Consistency<br/>(C)"]
+    q -- "Não (Else)" --> el["Latency<br/>(L)"]
+    q -- "Não (Else)" --> ec["Consistency<br/>(C)"]
+```
+
+![Representação do PACELC: na partição, o trade-off é Disponibilidade × Consistência; fora dela, Latência × Consistência.](https://upload.wikimedia.org/wikipedia/commons/3/3c/PACELC_theorem.png){fig-alt="Diagrama do teorema PACELC mostrando os trade-offs entre disponibilidade, consistência e latência." width="65%"}
+
+Fonte: imagem de [Lightsoar/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:PACELC_theorem.png), em domínio público ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)).
+
+O PACELC explica algo que o CAP não conseguia: por que muitos sistemas escolhem **consistência eventual mesmo quando a rede está perfeita**. A resposta é latência — não basta sobreviver à falha, é preciso ser rápido no dia a dia.
+
+## Lendo um Sistema em Quatro Letras
+
+Cada banco distribuído pode ser descrito por uma combinação `Px/Ey`, lida assim: *"na partição prefere x; senão prefere y"*.
+
+| Classe | Na partição | Sem partição | Em palavras |
+|---|---|---|---|
+| **PA/EL** | disponibilidade | latência | "responda rápido, sempre; consistência fica em segundo plano" |
+| **PC/EC** | consistência | consistência | "nunca devolva dado errado, custe o que custar" |
+| **PC/EL** | consistência | latência | "seja consistente na falha, mas rápido no dia a dia" |
+| **PA/EC** | disponibilidade | consistência | "fique no ar na falha, mas seja consistente quando dá" |
+
+## Onde os Bancos Reais se Encaixam
+
+Esta é a ponte direta para o seminário de NoSQL. Cada família de banco faz uma aposta diferente — e o PACELC dá o vocabulário para compará-las:
+
+| Banco | Modelo de dados | Classe PACELC | Aposta |
+|---|---|---|---|
+| **Cassandra** | colunar (*wide-column*) | **PA/EL** | disponibilidade e baixa latência acima de tudo |
+| **DynamoDB** (Amazon) | chave-valor / documento | **PA/EL** (ajustável) | rápido por padrão; consistência forte sob demanda |
+| **Riak** | chave-valor | **PA/EL** | sempre aceita escrita, reconcilia depois |
+| **Cosmos DB** (Azure) | multimodelo | ajustável | cinco níveis de consistência configuráveis |
+| **MongoDB** | documento | **PC/EC** (config. padrão) | um primário ordena as escritas |
+| **HBase** / **BigTable** | colunar | **PC/EC** | leitura sempre consistente, à custa de disponibilidade |
+| **VoltDB** | relacional em memória | **PC/EC** | ACID distribuído, foco em correção |
+| **PostgreSQL** | relacional | **PC/EC** | o SGBD deste curso: consistência forte por padrão |
+| **PNUTS** (Yahoo!) | documento | **PC/EL** | consistente na falha, otimizado para latência |
+
+::: {.callout-note}
+Os rótulos são **simplificações**. Bancos modernos como DynamoDB, Cosmos DB e o próprio Cassandra oferecem **consistência ajustável** (*tunable consistency*): o desenvolvedor escolhe, por operação, quantas réplicas precisam concordar. Na prática, a pergunta "este banco é CP ou AP?" vira "**esta consulta** é CP ou AP?".
+:::
+
+::: {.conceito}
+**Consistência ajustável**: o sistema permite escolher o nível de garantia *por operação* — por exemplo, exigir confirmação da maioria das réplicas (mais consistente, mais lento) para uma transferência, mas aceitar uma única réplica (mais rápido) para exibir um feed.
+:::
+
+## Por Que Isso Importa Para o Curso
+
+O PostgreSQL, que usamos o livro inteiro, é **PC/EC**: ele protege a consistência por padrão, e é por isso que serviu tão bem aos capítulos anteriores. Os bancos NoSQL do seminário, em sua maioria, escorregam para o lado **PA/EL** — e fazem isso *de propósito*, porque seus domínios toleram convergência posterior em troca de escala e velocidade.
+
+A próxima seção dá nome a essa filosofia do lado PA/EL: **BASE**.

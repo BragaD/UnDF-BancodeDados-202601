@@ -1,65 +1,79 @@
 # Teorema CAP
 
-O Teorema CAP é uma forma clássica de explicar uma limitação fundamental de sistemas distribuídos. Ele não diz que bancos distribuídos são ruins. Ele diz que, diante de uma partição de rede, certas garantias não podem ser mantidas ao mesmo tempo.
-
-::: {.conceito}
-O **Teorema CAP** afirma que, na presença de uma partição de rede, um sistema distribuído precisa escolher entre manter consistência forte ou manter disponibilidade.
-:::
+O **Teorema CAP** é a forma clássica de explicar um limite fundamental dos sistemas distribuídos. Proposto por Eric Brewer em 2000 [@brewer2000] e demonstrado formalmente por Gilbert e Lynch em 2002 [@gilbert2002], ele não diz que bancos distribuídos são ruins. Diz algo mais específico: **diante de uma falha de comunicação na rede, certas garantias não podem ser mantidas ao mesmo tempo.**
 
 As três letras são:
 
 | Letra | Significado | Intuição |
 |---|---|---|
-| **C** | Consistency | Todos os clientes veem uma visão consistente dos dados |
-| **A** | Availability | Toda requisição a um nó ativo recebe resposta |
-| **P** | Partition tolerance | O sistema continua operando apesar de falhas de comunicação entre nós |
+| **C** | *Consistency* | Todo cliente lê sempre o dado mais recente — uma visão única e atual |
+| **A** | *Availability* | Toda requisição a um nó **em funcionamento** recebe resposta |
+| **P** | *Partition tolerance* | O sistema continua operando apesar de falhas de comunicação entre nós |
 
-![Diagrama de Euler do Teorema CAP.](https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png){fig-alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as combinações CA, CP e AP." width="55%"}
+![Diagrama de Euler tradicional do Teorema CAP, com as combinações CA, CP e AP. Veja a seguir por que ele induz a um erro comum.](https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png){fig-alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as interseções CA, CP e AP." width="50%"}
 
 Fonte: imagem de [JamieMcCarthy/Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CAP_Theorem_Euler_Diagram.png), licenciada sob [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-## Partição de Rede
+## O Que é uma Partição de Rede
 
-Uma partição ocorre quando parte dos nós não consegue se comunicar com outra parte. Os servidores podem estar ligados, mas a rede entre eles falha.
-
-Imagine duas réplicas de um mesmo dado:
+Uma **partição** ocorre quando um grupo de nós não consegue se comunicar com outro grupo. Os servidores podem estar todos **ligados e saudáveis** — o que falhou foi a *rede* entre eles. É como dois prédios da UnDF cujo cabo de fibra foi rompido: cada lado funciona, mas eles não se falam.
 
 ```{mermaid}
 flowchart LR
     c1["Cliente 1"] --> a["Nó A<br/>saldo = 100"]
     c2["Cliente 2"] --> b["Nó B<br/>saldo = 100"]
-    a -. "rede indisponível" .- b
+    a -. "❌ rede rompida" .- b
 ```
 
-Se um cliente atualiza o saldo no Nó A, mas o Nó A não consegue falar com o Nó B, o sistema tem uma escolha.
+Se o Cliente 1 atualiza o saldo no Nó A, mas A não consegue falar com B, o sistema é **forçado a escolher** entre duas saídas ruins.
 
-## Escolha CP
+## A Escolha Real: C **ou** A, Durante a Partição
 
-Um sistema que privilegia consistência pode recusar ou atrasar operações até conseguir coordenar os nós necessários.
+::: {.conceito}
+Quando há uma partição, um sistema distribuído precisa escolher: **recusar/atrasar** a operação para preservar a consistência (sacrificando disponibilidade), **ou** responder mesmo assim, arriscando devolver dados divergentes (sacrificando consistência).
+:::
 
-| Vantagem | Custo |
-|---|---|
-| Evita respostas conflitantes | Pode deixar parte dos usuários sem resposta |
+São os dois perfis clássicos:
 
-Essa escolha faz sentido quando uma resposta errada é pior que uma resposta indisponível.
+| Perfil | Durante a partição... | Vantagem | Custo |
+|---|---|---|---|
+| **CP** (consistência) | recusa ou atrasa operações que não pode coordenar | nunca devolve resposta conflitante | parte dos usuários fica **sem resposta** |
+| **AP** (disponibilidade) | responde em cada lado, sem coordenar | o serviço **continua de pé** | pode devolver **leituras divergentes** |
 
-## Escolha AP
+Escolher **CP** faz sentido quando uma resposta *errada* é pior que uma resposta *ausente* (um saldo bancário). Escolher **AP** faz sentido quando estar *no ar* importa mais e o sistema consegue reconciliar os dados depois (uma curtida, um carrinho).
 
-Um sistema que privilegia disponibilidade pode continuar respondendo em cada lado da partição, mesmo sem coordenação imediata.
+## O Mito do "Escolha 2 de 3"
 
-| Vantagem | Custo |
-|---|---|
-| Mantém o serviço funcionando | Pode produzir leituras temporariamente inconsistentes |
+A leitura mais comum do diagrama acima — *"escolha 2 entre C, A e P"* — é **enganosa** [@kleppmann2015]. O motivo é simples e prático:
 
-Essa escolha faz sentido quando o sistema pode reconciliar dados depois e quando pequenas divergências temporárias são aceitáveis.
+::: {.callout-important}
+**Partições não são uma opção que você "escolhe" abrir mão.** Redes reais falham — cabos rompem, pacotes se perdem, *data centers* ficam isolados. Um sistema distribuído **tem** de tolerar partições. Logo, "P" não está realmente em disputa: a escolha verdadeira é **entre C e A, e só quando uma partição acontece**.
+:::
 
-## O Que CAP Não Diz
+Fora de uma partição (ou seja, **quase sempre**, em uma rede saudável), não há dilema: o sistema pode oferecer consistência **e** disponibilidade ao mesmo tempo [@brewer2012]. O CAP só "morde" no momento da falha. Por isso é mais honesto dizer que um algoritmo **assume que partições podem ocorrer** do que dizer que ele "fornece tolerância a partições".
 
-CAP é frequentemente simplificado demais. Alguns cuidados:
+## Um Detalhe que Confunde: o "C" do CAP ≠ o "C" do ACID
 
-- CAP se torna decisivo **durante partições de rede**.
-- Partição tolerante não é uma escolha opcional em sistemas distribuídos reais: redes falham.
-- Consistência em CAP não é a mesma palavra ampla usada em ACID; aqui a ideia está próxima de todos os clientes observarem uma ordem consistente de operações.
-- Sistemas reais fazem escolhas graduais, não apenas rótulos puros como "CP" ou "AP".
+As duas siglas usam a palavra *consistência*, mas com sentidos diferentes — e misturá-los gera muita confusão:
 
-CAP não substitui projeto de banco de dados. Ele ajuda a formular a pergunta certa: **em caso de falha de comunicação, preferimos esperar para preservar consistência forte ou responder aceitando inconsistência temporária?**
+| | Significado | Quem garante |
+|---|---|---|
+| **C** do **ACID** | a transação **preserva as regras/*constraints*** do banco (ex.: saldo ≥ 0) | o modelo da aplicação + o SGBD |
+| **C** do **CAP** | **linearizabilidade**: todos os clientes enxergam a *mesma ordem* de operações, como se houvesse uma cópia única | o protocolo de replicação |
+
+::: {.conceito}
+No **CAP**, "consistência" significa **linearizabilidade**: qualquer leitura reflete a escrita mais recente, como se existisse um único exemplar do dado. É uma garantia sobre **réplicas**, não sobre *constraints*.
+:::
+
+## O Que o CAP **Não** Diz
+
+- O CAP só é decisivo **durante uma partição**; no resto do tempo, não impõe escolha.
+- "P" **não é opcional** em sistemas distribuídos reais — partições acontecem.
+- A "consistência" do CAP é **linearizabilidade**, não a consistência do ACID.
+- Sistemas reais não são rótulos puros "CP" ou "AP": fazem escolhas **graduais** e muitas vezes **ajustáveis** por operação.
+
+O CAP não substitui o projeto do banco. Ele ajuda a formular a pergunta certa:
+
+> Em caso de falha de comunicação, preferimos **esperar** para preservar consistência forte, ou **responder** aceitando inconsistência temporária?
+
+Mas há um ponto cego importante: o CAP só fala da **partição**. E quando a rede está **saudável** — que é a imensa maioria do tempo? Será que aí não existe nenhum trade-off? Existe, sim — e é o que a próxima seção formaliza com o **PACELC**.

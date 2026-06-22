@@ -154,11 +154,13 @@ book:
           text: "Concorrência, Contenção e Réplicas"
         - href: content/cap06/04-teorema-cap.qmd
           text: "Teorema CAP"
-        - href: content/cap06/05-base-e-consistencia-eventual.qmd
+        - href: content/cap06/05-pacelc-e-bancos-reais.qmd
+          text: "Além do CAP: PACELC e Bancos Reais"
+        - href: content/cap06/06-base-e-consistencia-eventual.qmd
           text: "BASE e Consistência Eventual"
-        - href: content/cap06/06-acid-ou-base.qmd
+        - href: content/cap06/07-acid-ou-base.qmd
           text: "Quando Usar ACID ou BASE"
-        - href: content/cap06/07-resumo.qmd
+        - href: content/cap06/08-resumo.qmd
           text: "Resumo e Decisão"
     - part: "Capítulo 7: Normalização"
       chapters:

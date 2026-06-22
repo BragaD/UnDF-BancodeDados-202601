@@ -1,65 +1,181 @@
 # Concorrência, Contenção e Réplicas
 
-Um banco distribuído normalmente existe para atender muitas requisições ao mesmo tempo. O desafio não é apenas armazenar mais dados; é manter comportamento aceitável quando milhares de operações disputam os mesmos recursos.
+```{r}
+#| label: setup-con
+#| include: false
+suppressWarnings(library(DBI))
+suppressWarnings(library(RPostgres))
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname   = "curso",
+  host     = "localhost",
+  port     = 5432,
+  user     = "postgres",
+  password = Sys.getenv("POSTGRES_PASSWORD", "postgres")
+)
+```
+
+```{r}
+#| label: setup-demo
+#| include: false
+# Tabela mínima e autocontida para a demonstração de contenção.
+# Criada e destruída dentro desta página — não altera o schema do banco curso.
+suppressWarnings({
+  dbExecute(con, "DROP TABLE IF EXISTS vaga_demo")
+  dbExecute(con, "CREATE TABLE vaga_demo (
+              id_disciplina   INT PRIMARY KEY,
+              nome            TEXT,
+              vagas_restantes INT CHECK (vagas_restantes >= 0))")
+  dbExecute(con, "INSERT INTO vaga_demo VALUES (3110401, 'BES4 (ENS-0401)', 1)")
+})
+```
+
+Um banco distribuído existe, em geral, para atender **muitas requisições ao mesmo tempo**. O desafio não é só guardar mais dados; é manter comportamento correto quando milhares de operações disputam os **mesmos** recursos.
 
 ::: {.conceito}
-**Concorrência** ocorre quando várias operações são executadas ao mesmo tempo. **Contenção** ocorre quando essas operações disputam o mesmo dado, índice, bloqueio, partição ou recurso de rede.
+**Concorrência** é a execução simultânea de várias operações. **Contenção** ocorre quando essas operações disputam o mesmo recurso — uma linha, um índice, um bloqueio, uma partição ou a própria rede.
 :::
 
 ## Registros Quentes
 
-Alguns dados concentram muitas operações. São os chamados pontos quentes.
+Alguns dados concentram operações demais. São os **registros quentes** (*hot records*): poucas linhas que recebem uma fração enorme da carga.
 
 ::: {.exemplo}
-Em uma matrícula online, a disciplina mais desejada pode receber centenas de tentativas de matrícula no mesmo minuto. Mesmo que o banco esteja distribuído, todas essas operações disputam o mesmo conjunto de vagas.
+Na abertura da matrícula da UnDF, a disciplina mais concorrida recebe centenas de tentativas no mesmo minuto. Mesmo com o banco distribuído por vários nós, **todas** disputam o mesmo contador de vagas. Adicionar servidores não ajuda: o gargalo é **lógico**, não de hardware — todos precisam da mesma linha.
 :::
-
-Nesses casos, adicionar mais servidores nem sempre resolve. Se todos precisam atualizar o mesmo contador, o sistema continua tendo um gargalo lógico.
 
 ```{mermaid}
 flowchart LR
-    u1["Usuário 1"] --> vaga["Registro quente<br/>vagas_restantes = 1"]
-    u2["Usuário 2"] --> vaga
-    u3["Usuário 3"] --> vaga
-    u4["Usuário 4"] --> vaga
+    u1["Aluno 1"] --> vaga["Registro quente<br/>vagas_restantes = 1"]
+    u2["Aluno 2"] --> vaga
+    u3["Aluno 3"] --> vaga
+    u4["Aluno 4"] --> vaga
     vaga --> lock["Bloqueio, fila ou conflito"]
 ```
 
+## Demonstração: o Perigo do *Lost Update*
+
+Vamos tornar isso concreto no PostgreSQL. Criamos uma disciplina com **exatamente uma vaga** e simulamos dois alunos tentando ocupá-la.
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Estado inicial: a disciplina BES4 (ENS-0401) tem 1 vaga restante
+SELECT id_disciplina, nome, vagas_restantes FROM vaga_demo;
+```
+
+### O jeito errado (read–modify–write)
+
+A forma "intuitiva" — e **errada** — de dar baixa na vaga é: ler o valor, conferir na aplicação, depois gravar o novo valor.
+
+```sql
+-- ANTIPADRÃO: lê, decide na aplicação, escreve
+SELECT vagas_restantes FROM vaga_demo WHERE id_disciplina = 3110401;  -- lê 1
+-- ... a aplicação confere "1 > 0, ok" e calcula 1 - 1 = 0 ...
+UPDATE vaga_demo SET vagas_restantes = 0 WHERE id_disciplina = 3110401;
+```
+
+Com **um** usuário, funciona. Com **dois ao mesmo tempo**, surge o *lost update*: ambos leem `1`, ambos concluem que "há vaga", e ambos gravam `0`. **Dois alunos ocupam uma vaga só.**
+
+```{mermaid}
+sequenceDiagram
+    participant A as Aluno A
+    participant DB as Banco
+    participant B as Aluno B
+    A->>DB: SELECT vagas_restantes
+    DB-->>A: 1
+    B->>DB: SELECT vagas_restantes
+    DB-->>B: 1
+    Note over A,B: os dois leram "1" e acham que há vaga
+    A->>DB: UPDATE ... = 0
+    B->>DB: UPDATE ... = 0
+    Note over DB: 💥 duas matrículas, uma vaga (overselling)
+```
+
+::: {.conceito}
+Um ***lost update*** acontece quando duas transações leem o mesmo valor, decidem com base nele e escrevem por cima uma da outra. A atualização de uma "se perde". É a forma clássica de *overselling*: vender o ingresso, a passagem ou a vaga que já não existe.
+:::
+
+### O jeito certo (decremento atômico condicional)
+
+A correção não é "ler com mais cuidado": é **não separar a decisão da escrita**. Deixamos o banco decidir e atualizar em uma **única instrução atômica**, com a condição embutida no `WHERE`:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Aluno A: só efetua a baixa se AINDA houver vaga (tudo em um comando)
+UPDATE vaga_demo
+SET    vagas_restantes = vagas_restantes - 1
+WHERE  id_disciplina = 3110401
+  AND  vagas_restantes > 0
+RETURNING id_disciplina, vagas_restantes;
+```
+
+O `RETURNING` mostra que o Aluno A conseguiu: sobraram `0` vagas. Agora o Aluno B executa **exatamente a mesma instrução**, um instante depois:
+
+```{sql}
+--| connection: con
+--| eval: true
+-- Aluno B: mesma instrução, logo em seguida — agora não há mais vaga
+UPDATE vaga_demo
+SET    vagas_restantes = vagas_restantes - 1
+WHERE  id_disciplina = 3110401
+  AND  vagas_restantes > 0
+RETURNING id_disciplina, vagas_restantes;
+```
+
+**Zero linhas afetadas.** A guarda `vagas_restantes > 0` não encontrou nenhuma linha: o Aluno B foi recusado, e **não houve *overselling***.
+
+::: {.conceito}
+Por que isso é seguro mesmo com os dois alunos chegando *ao mesmo tempo*? Porque o `UPDATE` adquire um **bloqueio de linha**. Se duas transações disputam a mesma linha, a segunda **espera** a primeira terminar e só então reavalia o `WHERE` — sobre o valor já atualizado (`0`), que não casa. O banco **serializa** as escritas na linha quente: exatamente uma vence.
+:::
+
+```{r}
+#| label: cleanup-demo
+#| include: false
+suppressWarnings(dbExecute(con, "DROP TABLE IF EXISTS vaga_demo"))
+```
+
+Repare na lição: a contenção não desaparece — ela é **inevitável** quando todos querem a mesma vaga. O que muda é se o sistema a resolve **corretamente** (uma instrução atômica) ou **incorretamente** (ler e escrever em passos separados).
+
 ## Leituras Rápidas, Escritas Difíceis
 
-Replicar dados ajuda muito nas leituras: várias réplicas podem responder consultas em paralelo. O problema aparece nas escritas. Uma atualização precisa chegar às réplicas, e isso pode ocorrer de formas diferentes:
+A replicação ajuda enormemente nas **leituras**: várias réplicas respondem consultas em paralelo. O custo aparece nas **escritas** — uma atualização precisa alcançar as réplicas, e há duas formas de fazer isso:
 
-| Estratégia | Comportamento | Custo |
+| Estratégia | Comportamento | Trade-off |
 |---|---|---|
-| Escrita síncrona | A resposta espera várias réplicas confirmarem | Mais consistência, maior latência |
-| Escrita assíncrona | A resposta vem antes de todas as réplicas atualizarem | Menor latência, risco de leitura desatualizada |
+| Escrita **síncrona** | A resposta só volta depois que as réplicas confirmam | Mais consistência, **maior** latência |
+| Escrita **assíncrona** | A resposta volta antes de todas as réplicas atualizarem | Menor latência, **risco** de leitura desatualizada |
 
-Não existe mágica: se o sistema responde antes de todas as cópias serem atualizadas, alguém pode ler uma cópia antiga.
+Não existe mágica: se o sistema responde *antes* de todas as cópias serem atualizadas, alguém pode ler uma cópia antiga. Esse atraso tem nome — **atraso de replicação** (*replication lag*).
 
 ```{mermaid}
 flowchart LR
-    w["Escrita: estoque = 9"] --> a["Réplica A<br/>estoque = 9"]
-    w -. "propagação atrasada" .-> b["Réplica B<br/>estoque = 10"]
+    w["Escrita: estoque = 9"] --> a["Réplica A<br/>estoque = 9 ✅"]
+    w -. "propagação atrasada" .-> b["Réplica B<br/>estoque = 10 ⏳"]
     leitor["Leitor"] --> b
+    b -. "lê valor antigo" .-> leitor
 ```
 
-## Conflitos de Atualização
+## Conflitos e Idempotência
 
-Conflitos surgem quando duas operações alteram dados relacionados antes que o sistema consiga sincronizar todos os nós.
+Conflitos surgem quando duas operações alteram dados relacionados antes que o sistema consiga sincronizar os nós. Por exemplo:
 
-Exemplos:
+- dois usuários compram o último item do estoque;
+- duas réplicas recebem edições diferentes do mesmo perfil;
+- uma aplicação lê um valor antigo e decide com base nele;
+- uma operação é **repetida** após um *timeout* (a resposta se perdeu, mas a escrita ocorreu).
 
-- dois usuários tentam comprar o último item de um estoque;
-- duas réplicas recebem atualizações diferentes do mesmo perfil;
-- uma aplicação lê um valor antigo e toma uma decisão errada;
-- uma operação é repetida depois de timeout e precisa ser idempotente.
+O último caso é especialmente comum em redes não confiáveis e motiva uma propriedade muito útil:
 
 ::: {.conceito}
-Uma operação **idempotente** pode ser executada mais de uma vez sem alterar o resultado final além da primeira execução. Em sistemas distribuídos, isso ajuda a lidar com tentativas repetidas após falhas de rede.
+Uma operação **idempotente** pode ser executada várias vezes sem mudar o resultado além da primeira vez. "Definir o status do pedido como *pago*" é idempotente; "adicionar R\$ 10 ao saldo" **não é** — repeti-la credita o dobro. Em sistemas distribuídos, projetar operações idempotentes é o que torna seguro **tentar de novo** após uma falha de rede.
 :::
 
 ## O Papel do Modelo de Dados
 
-Em bancos relacionais, normalização reduz redundância e facilita integridade. Em muitos bancos NoSQL, o modelo pode aceitar redundância para reduzir coordenação. Dados que seriam separados em várias tabelas podem ser duplicados em documentos, colunas ou caches para responder rápido.
+Em bancos relacionais, a normalização reduz redundância e facilita a integridade (assunto do Capítulo 7). Muitos bancos NoSQL fazem o oposto de propósito: **aceitam redundância para reduzir coordenação**. Dados que estariam separados em várias tabelas são duplicados dentro de um documento, de uma família de colunas ou de um cache, para que uma leitura responda sem *joins* nem visitas a vários nós.
 
-Essa duplicação, porém, empurra uma pergunta para o projeto do sistema: **quando as cópias ficarem temporariamente diferentes, isso é aceitável?**
+Essa duplicação compra velocidade, mas empurra uma pergunta para o projeto do sistema — a mesma que o resto do capítulo vai perseguir:
+
+> Quando as cópias ficarem temporariamente **diferentes**, isso é aceitável?

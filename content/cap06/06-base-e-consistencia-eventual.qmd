@@ -1,0 +1,76 @@
+# BASE e Consistência Eventual
+
+Vimos que o lado **PA/EL** do PACELC prefere disponibilidade e baixa latência à consistência imediata. Essa postura ganhou até um acrônimo, criado como contraponto deliberado ao ACID: **BASE** [@pritchett2008]. O trocadilho é químico — ácido *versus* base — e proposital.
+
+::: {.conceito}
+**BASE** = **B**asically **A**vailable, **S**oft state, **E**ventual consistency — *basicamente disponível, estado flexível e consistência eventual*. A ideia não é "ser menos correto", e sim aceitar que certas aplicações funcionam melhor trocando consistência **imediata** por disponibilidade e velocidade.
+:::
+
+## As Três Ideias
+
+| Ideia | Significado |
+|---|---|
+| **Basically Available** | O sistema procura **sempre responder**, mesmo sob falhas parciais — ainda que com dados aproximados |
+| **Soft state** | O estado pode **mudar sozinho** ao longo do tempo, por causa da sincronização interna entre réplicas, sem nova entrada do usuário |
+| **Eventual consistency** | Se as atualizações pararem, as réplicas **convergem** para o mesmo valor |
+
+::: {.conceito}
+**Consistência eventual**: réplicas podem divergir **temporariamente**, mas, dado tempo suficiente sem novas escritas, todas convergem para o mesmo estado. A promessa não é "nunca divergir" — é "**reconciliar depois**".
+:::
+
+## Um Exemplo Concreto: a Contagem de Curtidas
+
+Considere a contagem de curtidas de uma postagem, replicada em dois servidores:
+
+1. Um usuário curte a postagem no **Servidor A** → resposta imediata.
+2. Outro usuário lê a postagem pelo **Servidor B**, que ainda não recebeu a atualização → vê a contagem **antiga**.
+3. Em segundos, A propaga a mudança para B.
+4. A partir daí, A e B mostram a **mesma** contagem.
+
+```{mermaid}
+sequenceDiagram
+    participant U1 as Usuário 1
+    participant A as Servidor A
+    participant B as Servidor B
+    participant U2 as Usuário 2
+    U1->>A: curtir postagem
+    A-->>U1: ✅ resposta rápida (128 → 129)
+    U2->>B: ler contagem
+    B-->>U2: 128 (valor antigo)
+    A-->>B: sincronizar (propagação)
+    U2->>B: ler novamente
+    B-->>U2: 129 (convergiu)
+```
+
+Aqui a inconsistência temporária é inofensiva: ver `128` em vez de `129` curtidas por alguns segundos **não destrói o significado** do sistema. E o ganho é grande — a curtida foi instantânea, sem esperar coordenação global.
+
+## Onde BASE Costuma Fazer Sentido
+
+BASE brilha quando **disponibilidade e latência valem mais** que a leitura exata no instante:
+
+- *feeds* de redes sociais;
+- contadores de visualizações e curtidas;
+- sistemas de recomendação;
+- cache de catálogo de produtos;
+- logs e telemetria;
+- carrinhos de compra (reconciliáveis depois);
+- índices de busca.
+
+O traço comum: nesses casos, um dado **ligeiramente atrasado** é muito melhor que **nenhum dado** (ou que uma página que trava esperando coordenação).
+
+## O Preço da Flexibilidade
+
+BASE não é "de graça": ele **empurra complexidade para a aplicação**. O desenvolvedor passa a ter responsabilidades que o ACID resolvia sozinho:
+
+- projetar operações **idempotentes** (seguras para repetir);
+- definir **regras de reconciliação** para quando réplicas divergirem (qual escrita "vence"?);
+- **tolerar leituras antigas** na lógica de negócio;
+- exibir **estados intermediários** ao usuário de forma aceitável;
+- decidir **quanto atraso** é tolerável;
+- **monitorar** divergência e convergência.
+
+::: {.exemplo}
+A mesma tecnologia, dois desfechos opostos. Mostrar por alguns segundos a descrição **antiga** de um produto no catálogo: aceitável. Mostrar por alguns segundos um **saldo bancário** incorreto: inaceitável — pode violar regra de negócio, gerar saque indevido e quebrar a confiança do usuário. O banco de dados não decide isso. **O domínio decide.**
+:::
+
+BASE não é "menos correto" por definição. Ele é **correto para os domínios em que a consistência eventual preserva o significado do sistema** — e perigoso nos domínios em que não preserva. Saber distinguir um caso do outro é o tema da próxima seção.
