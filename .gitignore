@@ -43,3 +43,10 @@ dados/taxi/*.parquet
 
 # Gabaritos
 atividades/gabarito*
+
+# atividades — materiais de trabalho não versionados
+atividades/avaliacao-nosql.*
+atividades/guia-temas-nosql.*
+
+# arquivos temporários do Office/Excel (lock files ~$...)
+~$*
