@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>BASE e Consistência Eventual – Bases da Engenharia de Software 4</title>
+<title>Além do CAP: PACELC e Bancos Reais – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -34,7 +53,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/06-acid-ou-base.html" rel="next">
+<link href="../../content/cap06/06-base-e-consistencia-eventual.html" rel="next">
 <link href="../../content/cap06/04-teorema-cap.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -274,7 +293,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-pacelc-e-bancos-reais.html"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -658,17 +677,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -815,10 +839,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#as-três-ideias" id="toc-as-três-ideias" class="nav-link active" data-scroll-target="#as-três-ideias">As Três Ideias</a></li>
-  <li><a href="#um-exemplo-simples" id="toc-um-exemplo-simples" class="nav-link" data-scroll-target="#um-exemplo-simples">Um Exemplo Simples</a></li>
-  <li><a href="#onde-base-costuma-fazer-sentido" id="toc-onde-base-costuma-fazer-sentido" class="nav-link" data-scroll-target="#onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</a></li>
-  <li><a href="#o-preço-da-flexibilidade" id="toc-o-preço-da-flexibilidade" class="nav-link" data-scroll-target="#o-preço-da-flexibilidade">O Preço da Flexibilidade</a></li>
+  <li><a href="#a-intuição-consistência-custa-uma-ida-e-volta" id="toc-a-intuição-consistência-custa-uma-ida-e-volta" class="nav-link active" data-scroll-target="#a-intuição-consistência-custa-uma-ida-e-volta">A Intuição: Consistência Custa uma Ida e Volta</a></li>
+  <li><a href="#o-teorema-pacelc" id="toc-o-teorema-pacelc" class="nav-link" data-scroll-target="#o-teorema-pacelc">O Teorema PACELC</a></li>
+  <li><a href="#lendo-um-sistema-em-quatro-letras" id="toc-lendo-um-sistema-em-quatro-letras" class="nav-link" data-scroll-target="#lendo-um-sistema-em-quatro-letras">Lendo um Sistema em Quatro Letras</a></li>
+  <li><a href="#onde-os-bancos-reais-se-encaixam" id="toc-onde-os-bancos-reais-se-encaixam" class="nav-link" data-scroll-target="#onde-os-bancos-reais-se-encaixam">Onde os Bancos Reais se Encaixam</a></li>
+  <li><a href="#por-que-isso-importa-para-o-curso" id="toc-por-que-isso-importa-para-o-curso" class="nav-link" data-scroll-target="#por-que-isso-importa-para-o-curso">Por Que Isso Importa Para o Curso</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -826,9 +851,9 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/05-pacelc-e-bancos-reais.html"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">BASE e Consistência Eventual</span></h1>
+<h1 class="title"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></h1>
 </div>
 
 
@@ -851,106 +876,194 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Se ACID representa garantias fortes, BASE representa uma postura mais flexível para certos sistemas distribuídos. A ideia não é abandonar qualidade; é aceitar que algumas aplicações funcionam melhor quando trocam consistência imediata por disponibilidade e baixa latência.</p>
-<div class="conceito">
-<p><strong>BASE</strong> significa Basically Available, Soft state, Eventual consistency. Em português: basicamente disponível, estado flexível e consistência eventual.</p>
-</div>
-<section id="as-três-ideias" class="level2">
-<h2 class="anchored" data-anchor-id="as-três-ideias">As Três Ideias</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Ideia</th>
-<th>Significado</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Basically Available</td>
-<td>O sistema tenta responder mesmo diante de falhas parciais</td>
-</tr>
-<tr class="even">
-<td>Soft state</td>
-<td>O estado pode mudar ao longo do tempo sem uma nova entrada explícita do usuário, por causa de sincronização interna</td>
-</tr>
-<tr class="odd">
-<td>Eventual consistency</td>
-<td>Se novas atualizações pararem, as réplicas tendem a convergir para o mesmo valor</td>
-</tr>
-</tbody>
-</table>
-<div class="conceito">
-<p><strong>Consistência eventual</strong> significa que réplicas podem divergir temporariamente, mas devem convergir quando o sistema tiver tempo suficiente para propagar e reconciliar atualizações.</p>
-</div>
+<p>O Teorema CAP tem um ponto cego: ele só descreve o que acontece <strong>durante uma partição</strong>. Mas partições são raras — na maior parte do tempo a rede funciona. Será que, com a rede saudável, um banco distribuído não enfrenta <em>nenhum</em> trade-off? Enfrenta — e é justamente o trade-off que mais afeta o dia a dia dos usuários: <strong>latência</strong>.</p>
+<section id="a-intuição-consistência-custa-uma-ida-e-volta" class="level2">
+<h2 class="anchored" data-anchor-id="a-intuição-consistência-custa-uma-ida-e-volta">A Intuição: Consistência Custa uma Ida e Volta</h2>
+<p>Imagine um sistema com réplicas em São Paulo e em Tóquio. Para garantir que toda leitura veja a escrita mais recente (consistência forte), uma escrita precisa ser confirmada pela réplica distante <strong>antes</strong> de responder ao usuário. Isso significa <strong>pelo menos uma viagem pela rede</strong> entre os continentes — dezenas ou centenas de milissegundos — em cada operação.</p>
+<p>Se o sistema abre mão de parte dessa consistência (responde com a réplica local e propaga depois), ele responde <strong>muito mais rápido</strong>. Esse é o trade-off que o CAP ignora, porque ele existe <strong>mesmo sem nenhuma falha</strong>.</p>
 </section>
-<section id="um-exemplo-simples" class="level2">
-<h2 class="anchored" data-anchor-id="um-exemplo-simples">Um Exemplo Simples</h2>
-<p>Considere a contagem de curtidas em uma postagem.</p>
-<ol type="1">
-<li>Um usuário curte a postagem no servidor A.</li>
-<li>Outro usuário lê a postagem pelo servidor B.</li>
-<li>Por alguns segundos, B ainda mostra a contagem antiga.</li>
-<li>Depois da sincronização, A e B mostram a mesma contagem.</li>
-</ol>
-<p>Nesse caso, a inconsistência temporária costuma ser aceitável. O usuário talvez veja <code>128</code> curtidas em vez de <code>129</code>, mas o significado do sistema não é destruído.</p>
+<section id="o-teorema-pacelc" class="level2">
+<h2 class="anchored" data-anchor-id="o-teorema-pacelc">O Teorema PACELC</h2>
+<p>Daniel Abadi formalizou essa ideia em 2010 <span class="citation" data-cites="abadi2012">(<a href="#ref-abadi2012" role="doc-biblioref">Abadi 2012</a>)</span>, estendendo o CAP. O nome é a própria regra:</p>
+<div class="conceito">
+<p><strong>PACELC</strong>: <strong>se</strong> há uma <strong>P</strong>artição, escolha entre <strong>A</strong>vailability e <strong>C</strong>onsistency (a parte do CAP); <strong>senão</strong> (<em>Else</em>, rede saudável), escolha entre <strong>L</strong>atency e <strong>C</strong>onsistency.</p>
+</div>
+<p>Ou seja, há <strong>dois</strong> trade-offs, não um:</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant U1 as Usuário 1
-    participant A as Servidor A
-    participant B as Servidor B
-    participant U2 as Usuário 2
-    U1-&gt;&gt;A: curtir postagem
-    A--&gt;&gt;U1: resposta rápida
-    U2-&gt;&gt;B: ler contagem
-    B--&gt;&gt;U2: valor antigo
-    A--&gt;&gt;B: sincronizar atualização
-    U2-&gt;&gt;B: ler novamente
-    B--&gt;&gt;U2: valor convergido
+<pre class="mermaid mermaid-js">flowchart TD
+    start["Operação no sistema distribuído"] --&gt; q{"Há partição&lt;br/&gt;de rede?"}
+    q -- "Sim (P)" --&gt; pa["Availability&lt;br/&gt;(A)"]
+    q -- "Sim (P)" --&gt; pc["Consistency&lt;br/&gt;(C)"]
+    q -- "Não (Else)" --&gt; el["Latency&lt;br/&gt;(L)"]
+    q -- "Não (Else)" --&gt; ec["Consistency&lt;br/&gt;(C)"]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-</section>
-<section id="onde-base-costuma-fazer-sentido" class="level2">
-<h2 class="anchored" data-anchor-id="onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</h2>
-<p>BASE aparece bem em sistemas nos quais disponibilidade e latência são mais importantes que consistência imediata:</p>
-<ul>
-<li>feeds de redes sociais;</li>
-<li>contadores de visualização;</li>
-<li>recomendações;</li>
-<li>cache de produtos;</li>
-<li>logs e telemetria;</li>
-<li>carrinhos que podem ser reconciliados depois;</li>
-<li>sistemas de busca e indexação.</li>
-</ul>
-</section>
-<section id="o-preço-da-flexibilidade" class="level2">
-<h2 class="anchored" data-anchor-id="o-preço-da-flexibilidade">O Preço da Flexibilidade</h2>
-<p>BASE exige que a aplicação saiba lidar com incerteza. Isso muda o trabalho do desenvolvedor:</p>
-<ul>
-<li>projetar operações idempotentes;</li>
-<li>definir regras de reconciliação;</li>
-<li>tolerar leituras antigas;</li>
-<li>exibir estados intermediários ao usuário;</li>
-<li>decidir quanto atraso é aceitável;</li>
-<li>monitorar divergências e convergência.</li>
-</ul>
-<div class="exemplo">
-<p>Em um catálogo, mostrar por alguns segundos uma descrição antiga de produto pode ser aceitável. Em uma transferência bancária, mostrar saldo incorreto pode violar regras de negócio e confiança do usuário.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/PACELC_theorem.png" class="img-fluid figure-img" style="width:65.0%" alt="Diagrama do teorema PACELC mostrando os trade-offs entre disponibilidade, consistência e latência."></p>
+<figcaption>Representação do PACELC: na partição, o trade-off é Disponibilidade × Consistência; fora dela, Latência × Consistência.</figcaption>
+</figure>
 </div>
-<p>BASE não é “menos correto” por definição. Ele é correto para domínios em que consistência eventual preserva o significado do sistema.</p>
+<p>Fonte: imagem de <a href="https://commons.wikimedia.org/wiki/File:PACELC_theorem.png">Lightsoar/Wikimedia Commons</a>, em domínio público (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>).</p>
+<p>O PACELC explica algo que o CAP não conseguia: por que muitos sistemas escolhem <strong>consistência eventual mesmo quando a rede está perfeita</strong>. A resposta é latência — não basta sobreviver à falha, é preciso ser rápido no dia a dia.</p>
+</section>
+<section id="lendo-um-sistema-em-quatro-letras" class="level2">
+<h2 class="anchored" data-anchor-id="lendo-um-sistema-em-quatro-letras">Lendo um Sistema em Quatro Letras</h2>
+<p>Cada banco distribuído pode ser descrito por uma combinação <code>Px/Ey</code>, lida assim: <em>“na partição prefere x; senão prefere y”</em>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Classe</th>
+<th>Na partição</th>
+<th>Sem partição</th>
+<th>Em palavras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>PA/EL</strong></td>
+<td>disponibilidade</td>
+<td>latência</td>
+<td>“responda rápido, sempre; consistência fica em segundo plano”</td>
+</tr>
+<tr class="even">
+<td><strong>PC/EC</strong></td>
+<td>consistência</td>
+<td>consistência</td>
+<td>“nunca devolva dado errado, custe o que custar”</td>
+</tr>
+<tr class="odd">
+<td><strong>PC/EL</strong></td>
+<td>consistência</td>
+<td>latência</td>
+<td>“seja consistente na falha, mas rápido no dia a dia”</td>
+</tr>
+<tr class="even">
+<td><strong>PA/EC</strong></td>
+<td>disponibilidade</td>
+<td>consistência</td>
+<td>“fique no ar na falha, mas seja consistente quando dá”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="onde-os-bancos-reais-se-encaixam" class="level2">
+<h2 class="anchored" data-anchor-id="onde-os-bancos-reais-se-encaixam">Onde os Bancos Reais se Encaixam</h2>
+<p>Esta é a ponte direta para o seminário de NoSQL. Cada família de banco faz uma aposta diferente — e o PACELC dá o vocabulário para compará-las:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Banco</th>
+<th>Modelo de dados</th>
+<th>Classe PACELC</th>
+<th>Aposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cassandra</strong></td>
+<td>colunar (<em>wide-column</em>)</td>
+<td><strong>PA/EL</strong></td>
+<td>disponibilidade e baixa latência acima de tudo</td>
+</tr>
+<tr class="even">
+<td><strong>DynamoDB</strong> (Amazon)</td>
+<td>chave-valor / documento</td>
+<td><strong>PA/EL</strong> (ajustável)</td>
+<td>rápido por padrão; consistência forte sob demanda</td>
+</tr>
+<tr class="odd">
+<td><strong>Riak</strong></td>
+<td>chave-valor</td>
+<td><strong>PA/EL</strong></td>
+<td>sempre aceita escrita, reconcilia depois</td>
+</tr>
+<tr class="even">
+<td><strong>Cosmos DB</strong> (Azure)</td>
+<td>multimodelo</td>
+<td>ajustável</td>
+<td>cinco níveis de consistência configuráveis</td>
+</tr>
+<tr class="odd">
+<td><strong>MongoDB</strong></td>
+<td>documento</td>
+<td><strong>PC/EC</strong> (config. padrão)</td>
+<td>um primário ordena as escritas</td>
+</tr>
+<tr class="even">
+<td><strong>HBase</strong> / <strong>BigTable</strong></td>
+<td>colunar</td>
+<td><strong>PC/EC</strong></td>
+<td>leitura sempre consistente, à custa de disponibilidade</td>
+</tr>
+<tr class="odd">
+<td><strong>VoltDB</strong></td>
+<td>relacional em memória</td>
+<td><strong>PC/EC</strong></td>
+<td>ACID distribuído, foco em correção</td>
+</tr>
+<tr class="even">
+<td><strong>PostgreSQL</strong></td>
+<td>relacional</td>
+<td><strong>PC/EC</strong></td>
+<td>o SGBD deste curso: consistência forte por padrão</td>
+</tr>
+<tr class="odd">
+<td><strong>PNUTS</strong> (Yahoo!)</td>
+<td>documento</td>
+<td><strong>PC/EL</strong></td>
+<td>consistente na falha, otimizado para latência</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os rótulos são <strong>simplificações</strong>. Bancos modernos como DynamoDB, Cosmos DB e o próprio Cassandra oferecem <strong>consistência ajustável</strong> (<em>tunable consistency</em>): o desenvolvedor escolhe, por operação, quantas réplicas precisam concordar. Na prática, a pergunta “este banco é CP ou AP?” vira “<strong>esta consulta</strong> é CP ou AP?”.</p>
+</div>
+</div>
+<div class="conceito">
+<p><strong>Consistência ajustável</strong>: o sistema permite escolher o nível de garantia <em>por operação</em> — por exemplo, exigir confirmação da maioria das réplicas (mais consistente, mais lento) para uma transferência, mas aceitar uma única réplica (mais rápido) para exibir um feed.</p>
+</div>
+</section>
+<section id="por-que-isso-importa-para-o-curso" class="level2">
+<h2 class="anchored" data-anchor-id="por-que-isso-importa-para-o-curso">Por Que Isso Importa Para o Curso</h2>
+<p>O PostgreSQL, que usamos o livro inteiro, é <strong>PC/EC</strong>: ele protege a consistência por padrão, e é por isso que serviu tão bem aos capítulos anteriores. Os bancos NoSQL do seminário, em sua maioria, escorregam para o lado <strong>PA/EL</strong> — e fazem isso <em>de propósito</em>, porque seus domínios toleram convergência posterior em troca de escala e velocidade.</p>
+<p>A próxima seção dá nome a essa filosofia do lado PA/EL: <strong>BASE</strong>.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abadi2012" class="csl-entry" role="listitem">
+Abadi, Daniel J. 2012. <span>«Consistency Tradeoffs in Modern Distributed Database System Design: CAP is Only Part of the Story»</span>. <em>Computer</em> 45 (2): 37–42. <a href="https://doi.org/10.1109/MC.2012.33">https://doi.org/10.1109/MC.2012.33</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1468,8 +1581,8 @@ document.addEventListener('DOMContentLoaded', function () {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/06-acid-ou-base.html" class="pagination-link" aria-label="Quando Usar ACID ou BASE">
-        <span class="nav-page-text"><span class="chapter-title">Quando Usar ACID ou BASE</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="pagination-link" aria-label="BASE e Consistência Eventual">
+        <span class="nav-page-text"><span class="chapter-title">BASE e Consistência Eventual</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

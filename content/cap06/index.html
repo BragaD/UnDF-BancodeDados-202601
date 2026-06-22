@@ -655,17 +655,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -812,7 +817,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#seções" id="toc-seções" class="nav-link active" data-scroll-target="#seções">Seções</a></li>
+  <li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem">Objetivos de Aprendizagem</a></li>
+  <li><a href="#seções" id="toc-seções" class="nav-link" data-scroll-target="#seções">Seções</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -855,21 +861,35 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo serve como ponte entre transações SQL e o seminário sobre bancos NoSQL.</p>
+<p>Este capítulo é a ponte entre as transações SQL dos capítulos anteriores e o seminário sobre bancos NoSQL. Ele mostra <strong>por que</strong> sistemas modernos abandonam — em parte — as garantias fortes do modelo relacional, e <strong>com base em que critérios</strong> essa decisão é tomada.</p>
 </div>
 </div>
-<p>Até aqui, o banco de dados apareceu como uma unidade relativamente simples: uma aplicação envia comandos SQL para um servidor PostgreSQL, e o SGBD garante integridade, concorrência e persistência. Esse modelo é poderoso, mas muitos sistemas modernos precisam operar em uma escala que rompe essa simplicidade.</p>
-<p>Aplicações com milhões de usuários, acessos globais, alta disponibilidade e grande volume de leitura e escrita não podem depender apenas de uma máquina central. Elas distribuem dados entre vários servidores, regiões e réplicas. Essa distribuição aumenta capacidade e disponibilidade, mas cria um novo problema central: <strong>o que significa manter dados corretos quando várias cópias existem ao mesmo tempo e a rede pode falhar?</strong></p>
-<p>Este capítulo apresenta a motivação para bancos distribuídos, mostra por que transações ACID ficam mais difíceis nesse ambiente e introduz o Teorema CAP. A partir dele, discutimos BASE e consistência eventual como alternativas pragmáticas usadas por muitos sistemas NoSQL.</p>
+<p>Até aqui, o banco de dados apareceu como uma unidade conceitualmente simples: a aplicação envia comandos SQL a um servidor PostgreSQL, e o SGBD cuida sozinho de integridade, concorrência e persistência. Esse modelo é poderoso — e, para a maioria dos sistemas, suficiente. Mas há uma classe de aplicações cuja escala rompe essa simplicidade.</p>
+<p>Pense em três sistemas reais:</p>
+<ul>
+<li>A <strong>rede social</strong> em que uma curtida precisa aparecer em milissegundos para um usuário em São Paulo e outro em Tóquio.</li>
+<li>O <strong>banco</strong> em que dois caixas eletrônicos não podem, em hipótese alguma, sacar o mesmo dinheiro duas vezes.</li>
+<li>O <strong>sistema de matrícula</strong> da UnDF em que, no primeiro minuto da abertura, milhares de alunos disputam as últimas vagas da mesma disciplina.</li>
+</ul>
+<p>Os três precisam de <strong>mais de um servidor</strong> — por volume, por alcance geográfico ou por disponibilidade. E os três, ao distribuir os dados, esbarram na mesma pergunta central:</p>
+<blockquote class="blockquote">
+<p>O que significa manter dados <strong>corretos</strong> quando existem várias cópias ao mesmo tempo e a rede entre elas pode falhar?</p>
+</blockquote>
+<p>Este capítulo parte da motivação para distribuir dados, mostra por que transações ACID ficam mais caras nesse ambiente, formaliza o trade-off com o <strong>Teorema CAP</strong> e seu refinamento moderno, o <strong>PACELC</strong>, e então apresenta <strong>BASE</strong> e a <strong>consistência eventual</strong> como a postura adotada por muitos bancos NoSQL. O fio condutor é sempre o mesmo: <em>qual garantia o domínio exige de imediato, e qual ele pode relaxar?</em></p>
+<section id="objetivos-de-aprendizagem" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos-de-aprendizagem">Objetivos de Aprendizagem</h2>
 <p>Ao final deste capítulo, você será capaz de:</p>
 <ul>
-<li>Explicar por que bancos de dados são distribuídos em sistemas modernos</li>
-<li>Identificar os custos de coordenação de transações ACID em ambientes distribuídos</li>
-<li>Relacionar concorrência, contenção e replicação em cargas com muitas leituras e escritas</li>
-<li>Interpretar corretamente o Teorema CAP durante partições de rede</li>
-<li>Definir BASE e consistência eventual</li>
-<li>Comparar situações em que ACID é indispensável com situações em que BASE pode ser aceitável</li>
+<li>Explicar <strong>por que</strong> bancos de dados são distribuídos, com exemplos de domínios diferentes;</li>
+<li>Descrever o custo de coordenação de transações ACID distribuídas e o <strong>problema de bloqueio</strong> do commit em duas fases;</li>
+<li>Demonstrar, no PostgreSQL, como a <strong>contenção</strong> em um registro quente leva a <em>lost updates</em> — e como evitá-la;</li>
+<li>Enunciar corretamente o <strong>Teorema CAP</strong>, sabendo o que ele <em>não</em> diz (o mito do “escolha 2 de 3”);</li>
+<li>Usar o <strong>PACELC</strong> para raciocinar sobre o trade-off entre consistência e latência mesmo <em>sem</em> falhas;</li>
+<li>Posicionar bancos reais (Cassandra, DynamoDB, MongoDB, HBase, PostgreSQL…) no mapa de garantias;</li>
+<li>Definir <strong>BASE</strong> e <strong>consistência eventual</strong> e contrastá-las com ACID;</li>
+<li>Decidir, para um requisito concreto, se ele pede garantias fortes (ACID) ou se tolera convergência posterior (BASE).</li>
 </ul>
+</section>
 <section id="seções" class="level2">
 <h2 class="anchored" data-anchor-id="seções">Seções</h2>
 <table class="caption-top table">
@@ -897,15 +917,19 @@ Nota
 <td>Teorema CAP</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap06/05-base-e-consistencia-eventual.html">6.5</a></td>
-<td>BASE e Consistência Eventual</td>
+<td><a href="../../content/cap06/05-pacelc-e-bancos-reais.html">6.5</a></td>
+<td>Além do CAP: PACELC e Bancos Reais</td>
 </tr>
 <tr class="even">
-<td><a href="../../content/cap06/06-acid-ou-base.html">6.6</a></td>
-<td>Quando Usar ACID ou BASE</td>
+<td><a href="../../content/cap06/06-base-e-consistencia-eventual.html">6.6</a></td>
+<td>BASE e Consistência Eventual</td>
 </tr>
 <tr class="odd">
-<td><a href="../../content/cap06/07-resumo.html">Resumo</a></td>
+<td><a href="../../content/cap06/07-acid-ou-base.html">6.7</a></td>
+<td>Quando Usar ACID ou BASE</td>
+</tr>
+<tr class="even">
+<td><a href="../../content/cap06/08-resumo.html">Resumo</a></td>
 <td>Resumo e Decisão</td>
 </tr>
 </tbody>

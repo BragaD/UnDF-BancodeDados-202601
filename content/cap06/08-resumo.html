@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -35,7 +54,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../content/cap07/index.html" rel="next">
-<link href="../../content/cap06/06-acid-ou-base.html" rel="prev">
+<link href="../../content/cap06/07-acid-ou-base.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -274,7 +293,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/07-resumo.html"><span class="chapter-title">Resumo e Decisão</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/08-resumo.html"><span class="chapter-title">Resumo e Decisão</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -658,17 +677,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -816,8 +840,10 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#ideias-centrais" id="toc-ideias-centrais" class="nav-link active" data-scroll-target="#ideias-centrais">Ideias Centrais</a></li>
-  <li><a href="#acid-vs-base" id="toc-acid-vs-base" class="nav-link" data-scroll-target="#acid-vs-base">ACID vs BASE</a></li>
+  <li><a href="#cap-e-pacelc-em-uma-frase" id="toc-cap-e-pacelc-em-uma-frase" class="nav-link" data-scroll-target="#cap-e-pacelc-em-uma-frase">CAP e PACELC em Uma Frase</a></li>
+  <li><a href="#decidindo-acid-ou-base" id="toc-decidindo-acid-ou-base" class="nav-link" data-scroll-target="#decidindo-acid-ou-base">Decidindo: ACID ou BASE?</a></li>
   <li><a href="#frase-para-levar" id="toc-frase-para-levar" class="nav-link" data-scroll-target="#frase-para-levar">Frase Para Levar</a></li>
+  <li><a href="#leituras-recomendadas" id="toc-leituras-recomendadas" class="nav-link" data-scroll-target="#leituras-recomendadas">Leituras Recomendadas</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -825,7 +851,7 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/07-resumo.html"><span class="chapter-title">Resumo e Decisão</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/08-resumo.html"><span class="chapter-title">Resumo e Decisão</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Resumo e Decisão</span></h1>
 </div>
@@ -850,7 +876,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Neste capítulo, vimos que bancos distribuídos surgem de necessidades práticas: escalar, reduzir latência, aumentar disponibilidade e tolerar falhas. A distribuição, porém, introduz um custo inevitável: coordenar dados entre nós diferentes é mais difícil do que coordenar dados dentro de um único servidor.</p>
+<p>Neste capítulo, vimos que bancos distribuídos surgem de necessidades práticas — escalar, reduzir latência, aumentar disponibilidade, tolerar falhas — em domínios tão diferentes quanto a matrícula da UnDF, uma rede social global e um sistema bancário. Mas a distribuição cobra um preço inevitável: <strong>coordenar dados entre nós é mais difícil do que dentro de um único servidor.</strong></p>
 <section id="ideias-centrais" class="level2">
 <h2 class="anchored" data-anchor-id="ideias-centrais">Ideias Centrais</h2>
 <table class="caption-top table">
@@ -867,33 +893,43 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Distribuição</td>
-<td>Melhora escala e disponibilidade, mas exige coordenação</td>
+<td>Melhora escala e disponibilidade, mas exige <strong>coordenação</strong></td>
 </tr>
 <tr class="even">
-<td>Replicação</td>
-<td>Acelera leituras e tolera falhas, mas pode gerar leituras antigas</td>
+<td>Replicação × Particionamento</td>
+<td>Cópias (disponibilidade) × divisão (capacidade) — quase sempre combinadas</td>
 </tr>
 <tr class="odd">
 <td>Transações distribuídas</td>
-<td>Preservam garantias fortes, mas aumentam latência e bloqueios</td>
+<td>2PC preserva garantias fortes, mas <strong>bloqueia</strong> se o coordenador cai</td>
 </tr>
 <tr class="even">
 <td>Concorrência</td>
-<td>Cargas intensas criam contenção, especialmente em dados quentes</td>
+<td>Cargas intensas geram <strong>contenção</strong> em registros quentes; um <code>UPDATE</code> atômico evita <em>lost updates</em></td>
 </tr>
 <tr class="odd">
 <td>CAP</td>
-<td>Durante partições, o sistema escolhe entre consistência forte e disponibilidade</td>
+<td><strong>Durante uma partição</strong>, escolha entre consistência forte e disponibilidade</td>
 </tr>
 <tr class="even">
+<td>PACELC</td>
+<td><strong>Sem</strong> partição, ainda há o trade-off entre <strong>latência</strong> e consistência</td>
+</tr>
+<tr class="odd">
 <td>BASE</td>
-<td>Aceita inconsistência temporária em troca de disponibilidade e baixa latência</td>
+<td>Aceita inconsistência temporária por disponibilidade e baixa latência</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="acid-vs-base" class="level2">
-<h2 class="anchored" data-anchor-id="acid-vs-base">ACID vs BASE</h2>
+<section id="cap-e-pacelc-em-uma-frase" class="level2">
+<h2 class="anchored" data-anchor-id="cap-e-pacelc-em-uma-frase">CAP e PACELC em Uma Frase</h2>
+<div class="conceito">
+<p><strong>CAP</strong>: se há <strong>P</strong>artição, escolha <strong>A</strong> ou <strong>C</strong>. <strong>PACELC</strong> completa: <strong>senão</strong> (rede saudável), escolha <strong>L</strong> ou <strong>C</strong>. Quase todo sistema é descrito por essas duas decisões.</p>
+</div>
+</section>
+<section id="decidindo-acid-ou-base" class="level2">
+<h2 class="anchored" data-anchor-id="decidindo-acid-ou-base">Decidindo: ACID ou BASE?</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -907,15 +943,15 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>A operação precisa ser correta imediatamente?</td>
+<td>A operação precisa estar correta <strong>imediatamente</strong>?</td>
 <td>ACID</td>
 </tr>
 <tr class="even">
-<td>Uma resposta indisponível é melhor que uma resposta errada?</td>
+<td>Uma resposta <strong>indisponível</strong> é melhor que uma resposta <strong>errada</strong>?</td>
 <td>ACID</td>
 </tr>
 <tr class="odd">
-<td>Divergências temporárias são aceitáveis?</td>
+<td>Divergências <strong>temporárias</strong> são aceitáveis?</td>
 <td>BASE</td>
 </tr>
 <tr class="even">
@@ -934,8 +970,8 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    acid["ACID&lt;br/&gt;correção imediata"] --&gt; inv["Protege invariantes"]
-    base["BASE&lt;br/&gt;convergência posterior"] --&gt; disp["Protege disponibilidade"]
+    acid["ACID / PC-EC&lt;br/&gt;correção imediata"] --&gt; inv["Protege invariantes"]
+    base["BASE / PA-EL&lt;br/&gt;convergência posterior"] --&gt; disp["Protege disponibilidade e latência"]
     inv --&gt; decisao["Decisão de projeto"]
     disp --&gt; decisao
     decisao --&gt; dominio["O domínio define&lt;br/&gt;o que pode relaxar"]
@@ -949,15 +985,42 @@ ul.task-list li input[type="checkbox"] {
 <section id="frase-para-levar" class="level2">
 <h2 class="anchored" data-anchor-id="frase-para-levar">Frase Para Levar</h2>
 <div class="conceito">
-<p>ACID protege invariantes fortes. BASE protege disponibilidade e latência quando o domínio tolera convergência posterior.</p>
+<p><strong>ACID protege invariantes fortes. BASE protege disponibilidade e latência quando o domínio tolera convergência posterior.</strong> Bancos reais não são “rápidos” ou “lentos” no vácuo — eles fazem apostas diferentes (PostgreSQL aposta em PC/EC; Cassandra, em PA/EL), e a arte é casar a aposta certa com cada parte do problema.</p>
 </div>
-<p>Essa distinção prepara a discussão sobre bancos NoSQL. A pergunta mais importante não é apenas “qual banco é mais rápido?”, mas sim:</p>
+<p>Essa distinção prepara o seminário sobre bancos NoSQL. A pergunta mais importante não é “qual banco é mais rápido?”, mas:</p>
 <blockquote class="blockquote">
-<p>Quais garantias esta aplicação realmente precisa, e quais garantias ela pode relaxar?</p>
+<p>Quais garantias esta aplicação realmente <strong>precisa</strong>, e quais ela pode <strong>relaxar</strong>?</p>
 </blockquote>
-<p>Ao responder essa pergunta, fica mais claro por que diferentes bancos NoSQL adotam diferentes modelos de dados, estratégias de replicação e níveis de consistência.</p>
+<p>Ao responder isso, fica claro por que cada família NoSQL adota um modelo de dados, uma estratégia de replicação e um nível de consistência diferentes — e por que, muitas vezes, a melhor arquitetura usa <strong>mais de um banco ao mesmo tempo</strong>.</p>
+</section>
+<section id="leituras-recomendadas" class="level2">
+<h2 class="anchored" data-anchor-id="leituras-recomendadas">Leituras Recomendadas</h2>
+<ul>
+<li>BREWER, E. <strong>CAP Twelve Years Later: How the “Rules” Have Changed</strong>. <em>Computer</em>, 2012 <span class="citation" data-cites="brewer2012">(<a href="#ref-brewer2012" role="doc-biblioref">Brewer 2012</a>)</span>.</li>
+<li>ABADI, D. <strong>Consistency Tradeoffs in Modern Distributed Database System Design</strong> (PACELC). <em>Computer</em>, 2012 <span class="citation" data-cites="abadi2012">(<a href="#ref-abadi2012" role="doc-biblioref">Abadi 2012</a>)</span>.</li>
+<li>KLEPPMANN, M. <strong>A Critique of the CAP Theorem</strong>. 2015 <span class="citation" data-cites="kleppmann2015">(<a href="#ref-kleppmann2015" role="doc-biblioref">Kleppmann 2015</a>)</span>.</li>
+<li>KLEPPMANN, M. <strong>Designing Data-Intensive Applications</strong>. O’Reilly, 2017 <span class="citation" data-cites="kleppmann2017">(<a href="#ref-kleppmann2017" role="doc-biblioref">Kleppmann 2017</a>)</span>.</li>
+<li>PRITCHETT, D. <strong>BASE: An ACID Alternative</strong>. <em>ACM Queue</em>, 2008 <span class="citation" data-cites="pritchett2008">(<a href="#ref-pritchett2008" role="doc-biblioref">Pritchett 2008</a>)</span>.</li>
+</ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abadi2012" class="csl-entry" role="listitem">
+Abadi, Daniel J. 2012. <span>«Consistency Tradeoffs in Modern Distributed Database System Design: CAP is Only Part of the Story»</span>. <em>Computer</em> 45 (2): 37–42. <a href="https://doi.org/10.1109/MC.2012.33">https://doi.org/10.1109/MC.2012.33</a>.
+</div>
+<div id="ref-brewer2012" class="csl-entry" role="listitem">
+Brewer, Eric A. 2012. <span>«CAP Twelve Years Later: How the <span>“Rules”</span> Have Changed»</span>. <em>Computer</em> 45 (2): 23–29. <a href="https://doi.org/10.1109/MC.2012.37">https://doi.org/10.1109/MC.2012.37</a>.
+</div>
+<div id="ref-kleppmann2015" class="csl-entry" role="listitem">
+Kleppmann, Martin. 2015. <span>«A Critique of the CAP Theorem»</span>. <em>arXiv preprint arXiv:1509.05393</em>. <a href="https://arxiv.org/abs/1509.05393">https://arxiv.org/abs/1509.05393</a>.
+</div>
+<div id="ref-kleppmann2017" class="csl-entry" role="listitem">
+Kleppmann, Martin. 2017. <em>Designing Data-Intensive Applications</em>. O’Reilly Media.
+</div>
+<div id="ref-pritchett2008" class="csl-entry" role="listitem">
+Pritchett, Dan. 2008. <span>«<span>BASE</span>: An <span>ACID</span> Alternative»</span>. <em>ACM Queue</em> 6 (3): 48–55. <a href="https://doi.org/10.1145/1394127.1394128">https://doi.org/10.1145/1394127.1394128</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1470,7 +1533,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/06-acid-ou-base.html" class="pagination-link" aria-label="Quando Usar ACID ou BASE">
+      <a href="../../content/cap06/07-acid-ou-base.html" class="pagination-link" aria-label="Quando Usar ACID ou BASE">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Quando Usar ACID ou BASE</span></span>
       </a>          
   </div>

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Douglas Braga">
 
-<title>Concorrência, Contenção e Réplicas – Bases da Engenharia de Software 4</title>
+<title>BASE e Consistência Eventual – Bases da Engenharia de Software 4</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,42 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -69,8 +53,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/04-teorema-cap.html" rel="next">
-<link href="../../content/cap06/02-transacoes-distribuidas.html" rel="prev">
+<link href="../../content/cap06/07-acid-ou-base.html" rel="next">
+<link href="../../content/cap06/05-pacelc-e-bancos-reais.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -309,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-concorrencia-e-contencao.html"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -683,7 +667,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
+  <a href="../../content/cap06/03-concorrencia-e-contencao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -698,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -855,15 +839,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#registros-quentes" id="toc-registros-quentes" class="nav-link active" data-scroll-target="#registros-quentes">Registros Quentes</a></li>
-  <li><a href="#demonstração-o-perigo-do-lost-update" id="toc-demonstração-o-perigo-do-lost-update" class="nav-link" data-scroll-target="#demonstração-o-perigo-do-lost-update">Demonstração: o Perigo do <em>Lost Update</em></a>
-  <ul>
-  <li><a href="#o-jeito-errado-readmodifywrite" id="toc-o-jeito-errado-readmodifywrite" class="nav-link" data-scroll-target="#o-jeito-errado-readmodifywrite">O jeito errado (read–modify–write)</a></li>
-  <li><a href="#o-jeito-certo-decremento-atômico-condicional" id="toc-o-jeito-certo-decremento-atômico-condicional" class="nav-link" data-scroll-target="#o-jeito-certo-decremento-atômico-condicional">O jeito certo (decremento atômico condicional)</a></li>
-  </ul></li>
-  <li><a href="#leituras-rápidas-escritas-difíceis" id="toc-leituras-rápidas-escritas-difíceis" class="nav-link" data-scroll-target="#leituras-rápidas-escritas-difíceis">Leituras Rápidas, Escritas Difíceis</a></li>
-  <li><a href="#conflitos-e-idempotência" id="toc-conflitos-e-idempotência" class="nav-link" data-scroll-target="#conflitos-e-idempotência">Conflitos e Idempotência</a></li>
-  <li><a href="#o-papel-do-modelo-de-dados" id="toc-o-papel-do-modelo-de-dados" class="nav-link" data-scroll-target="#o-papel-do-modelo-de-dados">O Papel do Modelo de Dados</a></li>
+  <li><a href="#as-três-ideias" id="toc-as-três-ideias" class="nav-link active" data-scroll-target="#as-três-ideias">As Três Ideias</a></li>
+  <li><a href="#um-exemplo-concreto-a-contagem-de-curtidas" id="toc-um-exemplo-concreto-a-contagem-de-curtidas" class="nav-link" data-scroll-target="#um-exemplo-concreto-a-contagem-de-curtidas">Um Exemplo Concreto: a Contagem de Curtidas</a></li>
+  <li><a href="#onde-base-costuma-fazer-sentido" id="toc-onde-base-costuma-fazer-sentido" class="nav-link" data-scroll-target="#onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</a></li>
+  <li><a href="#o-preço-da-flexibilidade" id="toc-o-preço-da-flexibilidade" class="nav-link" data-scroll-target="#o-preço-da-flexibilidade">O Preço da Flexibilidade</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -871,9 +850,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/03-concorrencia-e-contencao.html"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-base-e-consistencia-eventual.html"><span class="chapter-title">BASE e Consistência Eventual</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Concorrência, Contenção e Réplicas</span></h1>
+<h1 class="title"><span class="chapter-title">BASE e Consistência Eventual</span></h1>
 </div>
 
 
@@ -896,222 +875,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Um banco distribuído existe, em geral, para atender <strong>muitas requisições ao mesmo tempo</strong>. O desafio não é só guardar mais dados; é manter comportamento correto quando milhares de operações disputam os <strong>mesmos</strong> recursos.</p>
+<p>Vimos que o lado <strong>PA/EL</strong> do PACELC prefere disponibilidade e baixa latência à consistência imediata. Essa postura ganhou até um acrônimo, criado como contraponto deliberado ao ACID: <strong>BASE</strong> <span class="citation" data-cites="pritchett2008">(<a href="#ref-pritchett2008" role="doc-biblioref">Pritchett 2008</a>)</span>. O trocadilho é químico — ácido <em>versus</em> base — e proposital.</p>
 <div class="conceito">
-<p><strong>Concorrência</strong> é a execução simultânea de várias operações. <strong>Contenção</strong> ocorre quando essas operações disputam o mesmo recurso — uma linha, um índice, um bloqueio, uma partição ou a própria rede.</p>
+<p><strong>BASE</strong> = <strong>B</strong>asically <strong>A</strong>vailable, <strong>S</strong>oft state, <strong>E</strong>ventual consistency — <em>basicamente disponível, estado flexível e consistência eventual</em>. A ideia não é “ser menos correto”, e sim aceitar que certas aplicações funcionam melhor trocando consistência <strong>imediata</strong> por disponibilidade e velocidade.</p>
 </div>
-<section id="registros-quentes" class="level2">
-<h2 class="anchored" data-anchor-id="registros-quentes">Registros Quentes</h2>
-<p>Alguns dados concentram operações demais. São os <strong>registros quentes</strong> (<em>hot records</em>): poucas linhas que recebem uma fração enorme da carga.</p>
-<div class="exemplo">
-<p>Na abertura da matrícula da UnDF, a disciplina mais concorrida recebe centenas de tentativas no mesmo minuto. Mesmo com o banco distribuído por vários nós, <strong>todas</strong> disputam o mesmo contador de vagas. Adicionar servidores não ajuda: o gargalo é <strong>lógico</strong>, não de hardware — todos precisam da mesma linha.</p>
-</div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    u1["Aluno 1"] --&gt; vaga["Registro quente&lt;br/&gt;vagas_restantes = 1"]
-    u2["Aluno 2"] --&gt; vaga
-    u3["Aluno 3"] --&gt; vaga
-    u4["Aluno 4"] --&gt; vaga
-    vaga --&gt; lock["Bloqueio, fila ou conflito"]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="demonstração-o-perigo-do-lost-update" class="level2">
-<h2 class="anchored" data-anchor-id="demonstração-o-perigo-do-lost-update">Demonstração: o Perigo do <em>Lost Update</em></h2>
-<p>Vamos tornar isso concreto no PostgreSQL. Criamos uma disciplina com <strong>exatamente uma vaga</strong> e simulamos dois alunos tentando ocupá-la.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Estado inicial: a disciplina BES4 (ENS-0401) tem 1 vaga restante</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> id_disciplina, nome, vagas_restantes <span class="kw">FROM</span> vaga_demo;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>1 records</caption>
+<section id="as-três-ideias" class="level2">
+<h2 class="anchored" data-anchor-id="as-três-ideias">As Três Ideias</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">id_disciplina</th>
-<th style="text-align: left;">nome</th>
-<th style="text-align: right;">vagas_restantes</th>
+<th>Ideia</th>
+<th>Significado</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">3110401</td>
-<td style="text-align: left;">BES4 (ENS-0401)</td>
-<td style="text-align: right;">1</td>
+<td><strong>Basically Available</strong></td>
+<td>O sistema procura <strong>sempre responder</strong>, mesmo sob falhas parciais — ainda que com dados aproximados</td>
+</tr>
+<tr class="even">
+<td><strong>Soft state</strong></td>
+<td>O estado pode <strong>mudar sozinho</strong> ao longo do tempo, por causa da sincronização interna entre réplicas, sem nova entrada do usuário</td>
+</tr>
+<tr class="odd">
+<td><strong>Eventual consistency</strong></td>
+<td>Se as atualizações pararem, as réplicas <strong>convergem</strong> para o mesmo valor</td>
 </tr>
 </tbody>
 </table>
+<div class="conceito">
+<p><strong>Consistência eventual</strong>: réplicas podem divergir <strong>temporariamente</strong>, mas, dado tempo suficiente sem novas escritas, todas convergem para o mesmo estado. A promessa não é “nunca divergir” — é “<strong>reconciliar depois</strong>”.</p>
 </div>
-</div>
-<section id="o-jeito-errado-readmodifywrite" class="level3">
-<h3 class="anchored" data-anchor-id="o-jeito-errado-readmodifywrite">O jeito errado (read–modify–write)</h3>
-<p>A forma “intuitiva” — e <strong>errada</strong> — de dar baixa na vaga é: ler o valor, conferir na aplicação, depois gravar o novo valor.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ANTIPADRÃO: lê, decide na aplicação, escreve</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> vagas_restantes <span class="kw">FROM</span> vaga_demo <span class="kw">WHERE</span> id_disciplina <span class="op">=</span> <span class="dv">3110401</span>;  <span class="co">-- lê 1</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- ... a aplicação confere "1 &gt; 0, ok" e calcula 1 - 1 = 0 ...</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> vaga_demo <span class="kw">SET</span> vagas_restantes <span class="op">=</span> <span class="dv">0</span> <span class="kw">WHERE</span> id_disciplina <span class="op">=</span> <span class="dv">3110401</span>;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Com <strong>um</strong> usuário, funciona. Com <strong>dois ao mesmo tempo</strong>, surge o <em>lost update</em>: ambos leem <code>1</code>, ambos concluem que “há vaga”, e ambos gravam <code>0</code>. <strong>Dois alunos ocupam uma vaga só.</strong></p>
+</section>
+<section id="um-exemplo-concreto-a-contagem-de-curtidas" class="level2">
+<h2 class="anchored" data-anchor-id="um-exemplo-concreto-a-contagem-de-curtidas">Um Exemplo Concreto: a Contagem de Curtidas</h2>
+<p>Considere a contagem de curtidas de uma postagem, replicada em dois servidores:</p>
+<ol type="1">
+<li>Um usuário curte a postagem no <strong>Servidor A</strong> → resposta imediata.</li>
+<li>Outro usuário lê a postagem pelo <strong>Servidor B</strong>, que ainda não recebeu a atualização → vê a contagem <strong>antiga</strong>.</li>
+<li>Em segundos, A propaga a mudança para B.</li>
+<li>A partir daí, A e B mostram a <strong>mesma</strong> contagem.</li>
+</ol>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">sequenceDiagram
-    participant A as Aluno A
-    participant DB as Banco
-    participant B as Aluno B
-    A-&gt;&gt;DB: SELECT vagas_restantes
-    DB--&gt;&gt;A: 1
-    B-&gt;&gt;DB: SELECT vagas_restantes
-    DB--&gt;&gt;B: 1
-    Note over A,B: os dois leram "1" e acham que há vaga
-    A-&gt;&gt;DB: UPDATE ... = 0
-    B-&gt;&gt;DB: UPDATE ... = 0
-    Note over DB: 💥 duas matrículas, uma vaga (overselling)
+    participant U1 as Usuário 1
+    participant A as Servidor A
+    participant B as Servidor B
+    participant U2 as Usuário 2
+    U1-&gt;&gt;A: curtir postagem
+    A--&gt;&gt;U1: ✅ resposta rápida (128 → 129)
+    U2-&gt;&gt;B: ler contagem
+    B--&gt;&gt;U2: 128 (valor antigo)
+    A--&gt;&gt;B: sincronizar (propagação)
+    U2-&gt;&gt;B: ler novamente
+    B--&gt;&gt;U2: 129 (convergiu)
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<div class="conceito">
-<p>Um <strong><em>lost update</em></strong> acontece quando duas transações leem o mesmo valor, decidem com base nele e escrevem por cima uma da outra. A atualização de uma “se perde”. É a forma clássica de <em>overselling</em>: vender o ingresso, a passagem ou a vaga que já não existe.</p>
-</div>
+<p>Aqui a inconsistência temporária é inofensiva: ver <code>128</code> em vez de <code>129</code> curtidas por alguns segundos <strong>não destrói o significado</strong> do sistema. E o ganho é grande — a curtida foi instantânea, sem esperar coordenação global.</p>
 </section>
-<section id="o-jeito-certo-decremento-atômico-condicional" class="level3">
-<h3 class="anchored" data-anchor-id="o-jeito-certo-decremento-atômico-condicional">O jeito certo (decremento atômico condicional)</h3>
-<p>A correção não é “ler com mais cuidado”: é <strong>não separar a decisão da escrita</strong>. Deixamos o banco decidir e atualizar em uma <strong>única instrução atômica</strong>, com a condição embutida no <code>WHERE</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aluno A: só efetua a baixa se AINDA houver vaga (tudo em um comando)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> vaga_demo</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    vagas_restantes <span class="op">=</span> vagas_restantes <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110401</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  vagas_restantes <span class="op">&gt;</span> <span class="dv">0</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">RETURNING</span> id_disciplina, vagas_restantes;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>1 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_disciplina</th>
-<th style="text-align: right;">vagas_restantes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">3110401</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>O <code>RETURNING</code> mostra que o Aluno A conseguiu: sobraram <code>0</code> vagas. Agora o Aluno B executa <strong>exatamente a mesma instrução</strong>, um instante depois:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Aluno B: mesma instrução, logo em seguida — agora não há mais vaga</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> vaga_demo</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span>    vagas_restantes <span class="op">=</span> vagas_restantes <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span>  id_disciplina <span class="op">=</span> <span class="dv">3110401</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span>  vagas_restantes <span class="op">&gt;</span> <span class="dv">0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">RETURNING</span> id_disciplina, vagas_restantes;</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top">
-<caption>0 records</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">id_disciplina</th>
-<th style="text-align: right;">vagas_restantes</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-</div>
-</div>
-<p><strong>Zero linhas afetadas.</strong> A guarda <code>vagas_restantes &gt; 0</code> não encontrou nenhuma linha: o Aluno B foi recusado, e <strong>não houve <em>overselling</em></strong>.</p>
-<div class="conceito">
-<p>Por que isso é seguro mesmo com os dois alunos chegando <em>ao mesmo tempo</em>? Porque o <code>UPDATE</code> adquire um <strong>bloqueio de linha</strong>. Se duas transações disputam a mesma linha, a segunda <strong>espera</strong> a primeira terminar e só então reavalia o <code>WHERE</code> — sobre o valor já atualizado (<code>0</code>), que não casa. O banco <strong>serializa</strong> as escritas na linha quente: exatamente uma vence.</p>
-</div>
-<p>Repare na lição: a contenção não desaparece — ela é <strong>inevitável</strong> quando todos querem a mesma vaga. O que muda é se o sistema a resolve <strong>corretamente</strong> (uma instrução atômica) ou <strong>incorretamente</strong> (ler e escrever em passos separados).</p>
-</section>
-</section>
-<section id="leituras-rápidas-escritas-difíceis" class="level2">
-<h2 class="anchored" data-anchor-id="leituras-rápidas-escritas-difíceis">Leituras Rápidas, Escritas Difíceis</h2>
-<p>A replicação ajuda enormemente nas <strong>leituras</strong>: várias réplicas respondem consultas em paralelo. O custo aparece nas <strong>escritas</strong> — uma atualização precisa alcançar as réplicas, e há duas formas de fazer isso:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Estratégia</th>
-<th>Comportamento</th>
-<th>Trade-off</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Escrita <strong>síncrona</strong></td>
-<td>A resposta só volta depois que as réplicas confirmam</td>
-<td>Mais consistência, <strong>maior</strong> latência</td>
-</tr>
-<tr class="even">
-<td>Escrita <strong>assíncrona</strong></td>
-<td>A resposta volta antes de todas as réplicas atualizarem</td>
-<td>Menor latência, <strong>risco</strong> de leitura desatualizada</td>
-</tr>
-</tbody>
-</table>
-<p>Não existe mágica: se o sistema responde <em>antes</em> de todas as cópias serem atualizadas, alguém pode ler uma cópia antiga. Esse atraso tem nome — <strong>atraso de replicação</strong> (<em>replication lag</em>).</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    w["Escrita: estoque = 9"] --&gt; a["Réplica A&lt;br/&gt;estoque = 9 ✅"]
-    w -. "propagação atrasada" .-&gt; b["Réplica B&lt;br/&gt;estoque = 10 ⏳"]
-    leitor["Leitor"] --&gt; b
-    b -. "lê valor antigo" .-&gt; leitor
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="conflitos-e-idempotência" class="level2">
-<h2 class="anchored" data-anchor-id="conflitos-e-idempotência">Conflitos e Idempotência</h2>
-<p>Conflitos surgem quando duas operações alteram dados relacionados antes que o sistema consiga sincronizar os nós. Por exemplo:</p>
+<section id="onde-base-costuma-fazer-sentido" class="level2">
+<h2 class="anchored" data-anchor-id="onde-base-costuma-fazer-sentido">Onde BASE Costuma Fazer Sentido</h2>
+<p>BASE brilha quando <strong>disponibilidade e latência valem mais</strong> que a leitura exata no instante:</p>
 <ul>
-<li>dois usuários compram o último item do estoque;</li>
-<li>duas réplicas recebem edições diferentes do mesmo perfil;</li>
-<li>uma aplicação lê um valor antigo e decide com base nele;</li>
-<li>uma operação é <strong>repetida</strong> após um <em>timeout</em> (a resposta se perdeu, mas a escrita ocorreu).</li>
+<li><em>feeds</em> de redes sociais;</li>
+<li>contadores de visualizações e curtidas;</li>
+<li>sistemas de recomendação;</li>
+<li>cache de catálogo de produtos;</li>
+<li>logs e telemetria;</li>
+<li>carrinhos de compra (reconciliáveis depois);</li>
+<li>índices de busca.</li>
 </ul>
-<p>O último caso é especialmente comum em redes não confiáveis e motiva uma propriedade muito útil:</p>
-<div class="conceito">
-<p>Uma operação <strong>idempotente</strong> pode ser executada várias vezes sem mudar o resultado além da primeira vez. “Definir o status do pedido como <em>pago</em>” é idempotente; “adicionar R$ 10 ao saldo” <strong>não é</strong> — repeti-la credita o dobro. Em sistemas distribuídos, projetar operações idempotentes é o que torna seguro <strong>tentar de novo</strong> após uma falha de rede.</p>
-</div>
+<p>O traço comum: nesses casos, um dado <strong>ligeiramente atrasado</strong> é muito melhor que <strong>nenhum dado</strong> (ou que uma página que trava esperando coordenação).</p>
 </section>
-<section id="o-papel-do-modelo-de-dados" class="level2">
-<h2 class="anchored" data-anchor-id="o-papel-do-modelo-de-dados">O Papel do Modelo de Dados</h2>
-<p>Em bancos relacionais, a normalização reduz redundância e facilita a integridade (assunto do Capítulo 7). Muitos bancos NoSQL fazem o oposto de propósito: <strong>aceitam redundância para reduzir coordenação</strong>. Dados que estariam separados em várias tabelas são duplicados dentro de um documento, de uma família de colunas ou de um cache, para que uma leitura responda sem <em>joins</em> nem visitas a vários nós.</p>
-<p>Essa duplicação compra velocidade, mas empurra uma pergunta para o projeto do sistema — a mesma que o resto do capítulo vai perseguir:</p>
-<blockquote class="blockquote">
-<p>Quando as cópias ficarem temporariamente <strong>diferentes</strong>, isso é aceitável?</p>
-</blockquote>
+<section id="o-preço-da-flexibilidade" class="level2">
+<h2 class="anchored" data-anchor-id="o-preço-da-flexibilidade">O Preço da Flexibilidade</h2>
+<p>BASE não é “de graça”: ele <strong>empurra complexidade para a aplicação</strong>. O desenvolvedor passa a ter responsabilidades que o ACID resolvia sozinho:</p>
+<ul>
+<li>projetar operações <strong>idempotentes</strong> (seguras para repetir);</li>
+<li>definir <strong>regras de reconciliação</strong> para quando réplicas divergirem (qual escrita “vence”?);</li>
+<li><strong>tolerar leituras antigas</strong> na lógica de negócio;</li>
+<li>exibir <strong>estados intermediários</strong> ao usuário de forma aceitável;</li>
+<li>decidir <strong>quanto atraso</strong> é tolerável;</li>
+<li><strong>monitorar</strong> divergência e convergência.</li>
+</ul>
+<div class="exemplo">
+<p>A mesma tecnologia, dois desfechos opostos. Mostrar por alguns segundos a descrição <strong>antiga</strong> de um produto no catálogo: aceitável. Mostrar por alguns segundos um <strong>saldo bancário</strong> incorreto: inaceitável — pode violar regra de negócio, gerar saque indevido e quebrar a confiança do usuário. O banco de dados não decide isso. <strong>O domínio decide.</strong></p>
+</div>
+<p>BASE não é “menos correto” por definição. Ele é <strong>correto para os domínios em que a consistência eventual preserva o significado do sistema</strong> — e perigoso nos domínios em que não preserva. Saber distinguir um caso do outro é o tema da próxima seção.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-pritchett2008" class="csl-entry" role="listitem">
+Pritchett, Dan. 2008. <span>«<span>BASE</span>: An <span>ACID</span> Alternative»</span>. <em>ACM Queue</em> 6 (3): 48–55. <a href="https://doi.org/10.1145/1394127.1394128">https://doi.org/10.1145/1394127.1394128</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1624,13 +1493,13 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/02-transacoes-distribuidas.html" class="pagination-link" aria-label="Transações ACID em Bancos Distribuídos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Transações ACID em Bancos Distribuídos</span></span>
+      <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="pagination-link" aria-label="Além do CAP: PACELC e Bancos Reais">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/04-teorema-cap.html" class="pagination-link" aria-label="Teorema CAP">
-        <span class="nav-page-text"><span class="chapter-title">Teorema CAP</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/07-acid-ou-base.html" class="pagination-link" aria-label="Quando Usar ACID ou BASE">
+        <span class="nav-page-text"><span class="chapter-title">Quando Usar ACID ou BASE</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

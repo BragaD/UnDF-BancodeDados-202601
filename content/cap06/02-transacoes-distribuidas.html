@@ -658,17 +658,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -815,7 +820,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#o-problema-do-commit-distribuído" id="toc-o-problema-do-commit-distribuído" class="nav-link active" data-scroll-target="#o-problema-do-commit-distribuído">O Problema do Commit Distribuído</a></li>
+  <li><a href="#o-problema-do-commit-distribuído" id="toc-o-problema-do-commit-distribuído" class="nav-link active" data-scroll-target="#o-problema-do-commit-distribuído">O Problema do Commit Distribuído</a>
+  <ul>
+  <li><a href="#commit-em-duas-fases-2pc" id="toc-commit-em-duas-fases-2pc" class="nav-link" data-scroll-target="#commit-em-duas-fases-2pc">Commit em Duas Fases (2PC)</a></li>
+  <li><a href="#o-calcanhar-de-aquiles-o-bloqueio" id="toc-o-calcanhar-de-aquiles-o-bloqueio" class="nav-link" data-scroll-target="#o-calcanhar-de-aquiles-o-bloqueio">O Calcanhar de Aquiles: o Bloqueio</a></li>
+  </ul></li>
   <li><a href="#por-que-isso-dói-em-alta-escala" id="toc-por-que-isso-dói-em-alta-escala" class="nav-link" data-scroll-target="#por-que-isso-dói-em-alta-escala">Por Que Isso Dói em Alta Escala?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
@@ -849,11 +858,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Transações ACID são uma das grandes forças dos bancos relacionais. Elas permitem que o desenvolvedor pense em operações complexas como uma unidade lógica: ou tudo acontece, ou nada acontece.</p>
+<p>Transações ACID são uma das maiores forças dos bancos relacionais. Elas deixam o desenvolvedor pensar em uma operação complexa como uma <strong>unidade lógica</strong>: ou tudo acontece, ou nada acontece. No Capítulo 4 vimos isso em um único servidor PostgreSQL. Aqui a pergunta é outra: <em>o que muda quando a transação precisa de vários servidores ao mesmo tempo?</em></p>
 <div class="conceito">
-<p><strong>ACID</strong> resume quatro propriedades de transações: Atomicidade, Consistência, Isolamento e Durabilidade.</p>
+<p><strong>ACID</strong> resume quatro propriedades de uma transação: <strong>A</strong>tomicidade, <strong>C</strong>onsistência, <strong>I</strong>solamento e <strong>D</strong>urabilidade.</p>
 </div>
-<p>Em um único servidor, o SGBD controla logs, bloqueios, versões e commits no mesmo ambiente. Em um banco distribuído, a transação pode depender de vários nós. Isso torna cada propriedade mais cara.</p>
+<p>Em um único servidor, o SGBD controla logs, bloqueios, versões e <em>commits</em> no mesmo ambiente — tudo “debaixo do mesmo teto”. Em um banco distribuído, uma transação pode tocar dados em nós distintos, e cada propriedade fica mais cara:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -863,46 +872,59 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th>Propriedade</th>
-<th>Em um servidor</th>
-<th>Em vários servidores</th>
+<th>Em <strong>um</strong> servidor</th>
+<th>Em <strong>vários</strong> servidores</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Atomicidade</td>
-<td>Um log local registra commit ou rollback</td>
-<td>Vários nós precisam concordar sobre commit ou rollback</td>
+<td>Um log local registra <em>commit</em> ou <em>rollback</em></td>
+<td>Vários nós precisam <strong>concordar</strong> sobre <em>commit</em> ou <em>rollback</em></td>
 </tr>
 <tr class="even">
 <td>Consistência</td>
-<td>Constraints são verificadas localmente</td>
+<td><em>Constraints</em> verificadas localmente</td>
 <td>Regras podem depender de dados espalhados</td>
 </tr>
 <tr class="odd">
 <td>Isolamento</td>
-<td>Bloqueios ou versões são coordenados localmente</td>
-<td>Concorrência precisa ser coordenada entre nós</td>
+<td>Bloqueios/versões coordenados localmente</td>
+<td>A concorrência precisa ser coordenada <strong>pela rede</strong></td>
 </tr>
 <tr class="even">
 <td>Durabilidade</td>
 <td>Escrita persistida no log local</td>
-<td>Escrita pode precisar ser replicada antes da resposta</td>
+<td>A escrita pode precisar ser <strong>replicada</strong> antes de responder</td>
 </tr>
 </tbody>
 </table>
 <section id="o-problema-do-commit-distribuído" class="level2">
 <h2 class="anchored" data-anchor-id="o-problema-do-commit-distribuído">O Problema do Commit Distribuído</h2>
-<p>Imagine uma compra que atualiza três informações:</p>
+<p>Imagine uma compra que precisa atualizar três informações guardadas em três nós diferentes:</p>
 <ol type="1">
-<li>reduz o estoque em um nó;</li>
-<li>registra o pagamento em outro;</li>
-<li>cria o pedido em um terceiro.</li>
+<li>reduzir o <strong>estoque</strong> (nó A);</li>
+<li>registrar o <strong>pagamento</strong> (nó B);</li>
+<li>criar o <strong>pedido</strong> (nó C).</li>
 </ol>
-<p>Se todos confirmam, a compra está concluída. Se todos abortam, nada muda. O caso difícil é intermediário: dois nós confirmam, mas o terceiro fica inacessível.</p>
+<p>Se os três confirmam, a compra está concluída. Se os três abortam, nada muda. O caso difícil é o <strong>intermediário</strong>: dois confirmam e o terceiro fica inacessível. Aí o sistema fica num estado que não é nem “comprou” nem “não comprou”.</p>
 <div class="conceito">
-<p>Um <strong>commit distribuído</strong> tenta garantir que todos os participantes de uma transação distribuída cheguem à mesma decisão: confirmar ou abortar.</p>
+<p>Um <strong>commit distribuído</strong> tenta garantir que todos os participantes de uma transação cheguem à <strong>mesma decisão</strong>: ou todos confirmam, ou todos abortam — nunca uns sim e outros não.</p>
 </div>
-<p>Protocolos como o commit em duas fases ajudam a coordenar essa decisão. A intuição é simples: primeiro os nós dizem se estão prontos; depois um coordenador decide o resultado final. O custo também é simples de entender: mais mensagens, mais espera e mais pontos de bloqueio.</p>
+<section id="commit-em-duas-fases-2pc" class="level3">
+<h3 class="anchored" data-anchor-id="commit-em-duas-fases-2pc">Commit em Duas Fases (2PC)</h3>
+<p>O protocolo clássico para isso é o <strong>commit em duas fases</strong> (<em>two-phase commit</em>, 2PC). A intuição tem duas etapas e um árbitro, o <strong>coordenador</strong>:</p>
+<ol type="1">
+<li><strong>Fase de preparação</strong> — o coordenador pergunta a cada participante: <em>“você consegue confirmar?”</em>. Cada um faz o trabalho, garante que conseguirá confirmar e responde <strong>pronto</strong> (e, a partir daí, fica “no aguardo”, segurando seus bloqueios).</li>
+<li><strong>Fase de decisão</strong> — se <em>todos</em> responderam pronto, o coordenador manda <strong>commit</strong> para todos; se <em>algum</em> falhou, manda <strong>abort</strong> para todos.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Two_phase_commit_seq_diagram_success_01.png" class="img-fluid figure-img" style="width:80.0%" alt="Diagrama de sequência do protocolo de commit em duas fases mostrando as fases de preparação e de commit."></p>
+<figcaption>Caminho de sucesso do <em>commit</em> em duas fases: o coordenador coleta o “pronto” de todos os participantes (fase 1) e só então ordena o <em>commit</em> (fase 2).</figcaption>
+</figure>
+</div>
+<p>Fonte: imagem de <a href="https://commons.wikimedia.org/wiki/File:Two_phase_commit_seq_diagram_success_01.png">Jayaprabhakar/Wikimedia Commons</a>, em domínio público (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>).</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -913,12 +935,14 @@ ul.task-list li input[type="checkbox"] {
     participant E as Nó de estoque
     participant P as Nó de pagamento
     participant O as Nó de pedido
+    Note over C,O: Fase 1 — preparação
     C-&gt;&gt;E: preparar?
     C-&gt;&gt;P: preparar?
     C-&gt;&gt;O: preparar?
-    E--&gt;&gt;C: pronto
-    P--&gt;&gt;C: pronto
-    O--&gt;&gt;C: pronto
+    E--&gt;&gt;C: pronto (segura bloqueios)
+    P--&gt;&gt;C: pronto (segura bloqueios)
+    O--&gt;&gt;C: pronto (segura bloqueios)
+    Note over C,O: Fase 2 — decisão
     C-&gt;&gt;E: commit
     C-&gt;&gt;P: commit
     C-&gt;&gt;O: commit
@@ -929,17 +953,50 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
+<section id="o-calcanhar-de-aquiles-o-bloqueio" class="level3">
+<h3 class="anchored" data-anchor-id="o-calcanhar-de-aquiles-o-bloqueio">O Calcanhar de Aquiles: o Bloqueio</h3>
+<p>O 2PC funciona — mas tem uma fraqueza que explica por que sistemas de alta escala fogem dele. Entre dizer <strong>pronto</strong> e receber a decisão, cada participante fica <strong>comprometido, segurando seus bloqueios</strong>, sem poder confirmar nem abortar por conta própria. Ele <em>prometeu</em> obedecer ao coordenador.</p>
+<p>E se o <strong>coordenador cair</strong> justo nesse intervalo?</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant C as Coordenador
+    participant E as Nó de estoque
+    participant P as Nó de pagamento
+    C-&gt;&gt;E: preparar?
+    C-&gt;&gt;P: preparar?
+    E--&gt;&gt;C: pronto (bloqueado)
+    P--&gt;&gt;C: pronto (bloqueado)
+    Note over C: 💥 coordenador cai
+    Note over E,P: ficam presos, segurando bloqueios,&lt;br/&gt;sem saber se foi commit ou abort
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="conceito">
+<p>O 2PC é um <strong>protocolo de bloqueio</strong> (<em>blocking</em>): se o coordenador falha na hora errada, os participantes ficam presos segurando bloqueios até ele voltar. Esses bloqueios travam <strong>outras</strong> transações que precisam dos mesmos dados — e o problema se espalha.</p>
+</div>
+</section>
+</section>
 <section id="por-que-isso-dói-em-alta-escala" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-isso-dói-em-alta-escala">Por Que Isso Dói em Alta Escala?</h2>
-<p>Quanto mais nós participam de uma transação, maior a chance de atraso ou falha. Em cargas com alta frequência de leituras e escritas, isso pode produzir:</p>
+<p>Quanto mais nós participam de uma transação, maiores as chances de <strong>atraso</strong> ou <strong>falha</strong> de algum deles — e o protocolo anda na velocidade do mais lento. Em cargas com alta frequência de leitura e escrita, o efeito acumulado aparece como:</p>
 <ul>
-<li>transações esperando por nós lentos;</li>
-<li>bloqueios mantidos por mais tempo;</li>
-<li>aumento de latência para o usuário;</li>
-<li>maior chance de timeout;</li>
-<li>queda de vazão quando muitos clientes competem pelos mesmos dados.</li>
+<li>transações esperando por nós lentos (a “fila anda no ritmo do mais devagar”);</li>
+<li>bloqueios mantidos por <strong>mais tempo</strong>, aumentando a contenção;</li>
+<li>mais latência percebida pelo usuário;</li>
+<li>mais <em>timeouts</em> e mais retentativas;</li>
+<li>queda de vazão quando muitos clientes disputam os mesmos dados.</li>
 </ul>
-<p>ACID continua sendo valioso. O ponto é que, em sistemas distribuídos, suas garantias exigem coordenação, e coordenação tem custo.</p>
+<div class="exemplo">
+<p>Por isso muitos sistemas em escala <strong>evitam</strong> transações que cruzam vários nós: modelam os dados para que cada operação importante caiba em um único nó (por exemplo, tudo de um pedido junto), reservando o 2PC para os poucos casos em que ele é realmente inevitável.</p>
+</div>
+<p>ACID continua valioso — ele não “deixou de funcionar”. O ponto é que, num ambiente distribuído, suas garantias <strong>exigem coordenação</strong>, e coordenação custa tempo, bloqueios e disponibilidade. É essa conta que o Teorema CAP, mais adiante, vai tornar precisa.</p>
 
 
 </section>

@@ -34,8 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/07-resumo.html" rel="next">
-<link href="../../content/cap06/05-base-e-consistencia-eventual.html" rel="prev">
+<link href="../../content/cap06/08-resumo.html" rel="next">
+<link href="../../content/cap06/06-base-e-consistencia-eventual.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -274,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/07-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -658,17 +658,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -817,8 +822,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#quando-ficar-com-acid" id="toc-quando-ficar-com-acid" class="nav-link active" data-scroll-target="#quando-ficar-com-acid">Quando Ficar com ACID</a></li>
   <li><a href="#quando-base-pode-ser-melhor" id="toc-quando-base-pode-ser-melhor" class="nav-link" data-scroll-target="#quando-base-pode-ser-melhor">Quando BASE Pode Ser Melhor</a></li>
-  <li><a href="#uma-pergunta-prática" id="toc-uma-pergunta-prática" class="nav-link" data-scroll-target="#uma-pergunta-prática">Uma Pergunta Prática</a></li>
-  <li><a href="#sistemas-mistos" id="toc-sistemas-mistos" class="nav-link" data-scroll-target="#sistemas-mistos">Sistemas Mistos</a></li>
+  <li><a href="#a-pergunta-que-decide" id="toc-a-pergunta-que-decide" class="nav-link" data-scroll-target="#a-pergunta-que-decide">A Pergunta Que Decide</a></li>
+  <li><a href="#a-resposta-real-é-os-dois-sistemas-mistos" id="toc-a-resposta-real-é-os-dois-sistemas-mistos" class="nav-link" data-scroll-target="#a-resposta-real-é-os-dois-sistemas-mistos">A Resposta Real é “os Dois”: Sistemas Mistos</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -826,7 +831,7 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/06-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/cap06/index.html">Capítulo 6: Bancos Distribuídos, Consistência e NoSQL</a></li><li class="breadcrumb-item"><a href="../../content/cap06/07-acid-ou-base.html"><span class="chapter-title">Quando Usar ACID ou BASE</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Quando Usar ACID ou BASE</span></h1>
 </div>
@@ -851,13 +856,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>A escolha entre ACID e BASE não deve ser tratada como uma guerra entre tecnologias. Ela é uma decisão de projeto. O ponto central é entender quais invariantes do sistema precisam ser preservados imediatamente e quais informações podem convergir depois.</p>
+<p>A escolha entre ACID e BASE <strong>não é uma guerra entre tecnologias</strong> — e quase nunca é uma escolha para o sistema <em>inteiro</em>. É uma decisão de projeto tomada <strong>requisito a requisito</strong>. A pergunta-chave é sempre a mesma: <em>quais invariantes precisam valer no mesmo instante, e quais informações podem convergir depois?</em></p>
 <div class="conceito">
-<p>Um <strong>invariante</strong> é uma regra que deve permanecer verdadeira para o sistema continuar correto. Exemplos: “saldo não pode ficar negativo” ou “uma vaga não pode ser ocupada por dois alunos”.</p>
+<p>Um <strong>invariante</strong> é uma regra que precisa permanecer verdadeira para o sistema continuar correto. Exemplos: “o saldo não pode ficar negativo” ou “uma vaga não pode ser ocupada por dois alunos”. Invariantes que devem valer <strong>imediatamente</strong> pedem garantias fortes (ACID).</p>
 </div>
 <section id="quando-ficar-com-acid" class="level2">
 <h2 class="anchored" data-anchor-id="quando-ficar-com-acid">Quando Ficar com ACID</h2>
-<p>ACID é a escolha natural quando inconsistência temporária pode causar erro material, fraude, perda financeira, violação legal ou quebra de confiança.</p>
+<p>ACID é a escolha natural quando uma inconsistência temporária pode causar <strong>erro material</strong>: fraude, perda financeira, violação legal ou quebra de confiança. Nesses casos, é melhor <strong>recusar</strong> temporariamente uma operação do que <strong>confirmar</strong> uma operação incorreta.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -872,11 +877,11 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Transferência bancária</td>
-<td>Débito e crédito precisam acontecer como uma unidade</td>
+<td>Débito e crédito precisam acontecer como <strong>uma</strong> unidade</td>
 </tr>
 <tr class="even">
-<td>Matrícula com limite de vagas</td>
-<td>Duas pessoas não podem ocupar a mesma vaga</td>
+<td>Matrícula com limite de vagas (UnDF)</td>
+<td>Duas pessoas <strong>não</strong> podem ocupar a mesma vaga</td>
 </tr>
 <tr class="odd">
 <td>Estoque crítico</td>
@@ -887,16 +892,16 @@ ul.task-list li input[type="checkbox"] {
 <td>Atualizações conflitantes podem afetar decisões clínicas</td>
 </tr>
 <tr class="odd">
-<td>Controle financeiro</td>
+<td>Lançamentos contábeis</td>
 <td>Auditoria exige histórico consistente</td>
 </tr>
 </tbody>
 </table>
-<p>Nesses casos, disponibilidade menor pode ser aceitável. É melhor recusar temporariamente uma operação do que confirmar uma operação incorreta.</p>
+<p>No vocabulário do PACELC, esses sistemas tendem a <strong>PC/EC</strong>: preferem consistência tanto na falha quanto no dia a dia, e aceitam pagar com latência ou disponibilidade.</p>
 </section>
 <section id="quando-base-pode-ser-melhor" class="level2">
 <h2 class="anchored" data-anchor-id="quando-base-pode-ser-melhor">Quando BASE Pode Ser Melhor</h2>
-<p>BASE é atraente quando o sistema precisa continuar respondendo e pequenas divergências temporárias não prejudicam o significado principal.</p>
+<p>BASE é atraente quando o sistema precisa <strong>continuar respondendo</strong> e pequenas divergências temporárias não ferem o significado principal. Aqui a experiência melhora quando o sistema responde rápido, mesmo com os dados ainda convergindo.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -910,7 +915,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Feed de notícias</td>
+<td><em>Feed</em> de notícias</td>
 <td>Ordem e contagem podem variar por alguns segundos</td>
 </tr>
 <tr class="even">
@@ -918,12 +923,12 @@ ul.task-list li input[type="checkbox"] {
 <td>Valores aproximados são aceitáveis no curto prazo</td>
 </tr>
 <tr class="odd">
-<td>Recomendação</td>
-<td>Resultado não precisa ser exatamente igual para todos</td>
+<td>Recomendações</td>
+<td>O resultado não precisa ser idêntico para todos</td>
 </tr>
 <tr class="even">
 <td>Cache de catálogo</td>
-<td>Dados podem ser atualizados em seguida</td>
+<td>Dados podem ser atualizados logo em seguida</td>
 </tr>
 <tr class="odd">
 <td>Telemetria</td>
@@ -931,14 +936,15 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Nesses casos, a experiência do usuário pode melhorar quando o sistema responde rápido, mesmo que os dados ainda estejam convergindo.</p>
+<p>Esses sistemas tendem a <strong>PA/EL</strong>: priorizam disponibilidade na falha e baixa latência no dia a dia.</p>
 </section>
-<section id="uma-pergunta-prática" class="level2">
-<h2 class="anchored" data-anchor-id="uma-pergunta-prática">Uma Pergunta Prática</h2>
-<p>Antes de escolher a tecnologia, faça esta pergunta:</p>
+<section id="a-pergunta-que-decide" class="level2">
+<h2 class="anchored" data-anchor-id="a-pergunta-que-decide">A Pergunta Que Decide</h2>
+<p>Antes de escolher a tecnologia, faça <strong>um</strong> teste:</p>
 <div class="conceito">
-<p>Se dois usuários lerem respostas diferentes por alguns segundos, o sistema continua correto?</p>
+<p>Se dois usuários lerem respostas <strong>diferentes</strong> por alguns segundos, o sistema continua <strong>correto</strong>?</p>
 </div>
+<p>Se a resposta for <strong>“não”</strong>, há um invariante que precisa de garantias fortes ali. Se for <strong>“sim”</strong>, a consistência eventual provavelmente resolve de forma mais simples e escalável.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -948,8 +954,8 @@ ul.task-list li input[type="checkbox"] {
     q1{"Divergência temporária&lt;br/&gt;quebra uma regra do negócio?"}
     q2{"A operação pode ser&lt;br/&gt;reconciliada depois?"}
     q3{"Latência e disponibilidade&lt;br/&gt;pesam mais que leitura exata?"}
-    acid["Preferir ACID&lt;br/&gt;ou garantias fortes"]
-    base["BASE / consistência eventual&lt;br/&gt;pode ser aceitável"]
+    acid["Preferir ACID&lt;br/&gt;(garantias fortes / PC-EC)"]
+    base["BASE / consistência eventual&lt;br/&gt;(PA-EL)"]
     misto["Arquitetura mista&lt;br/&gt;forte no núcleo, eventual nas bordas"]
     q1 -- "Sim" --&gt; acid
     q1 -- "Não" --&gt; q2
@@ -963,19 +969,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>Se a resposta for “não”, provavelmente há uma parte do domínio que precisa de garantias fortes. Se a resposta for “sim”, consistência eventual pode ser uma solução simples e escalável.</p>
 </section>
-<section id="sistemas-mistos" class="level2">
-<h2 class="anchored" data-anchor-id="sistemas-mistos">Sistemas Mistos</h2>
-<p>Muitos sistemas reais combinam as duas abordagens:</p>
+<section id="a-resposta-real-é-os-dois-sistemas-mistos" class="level2">
+<h2 class="anchored" data-anchor-id="a-resposta-real-é-os-dois-sistemas-mistos">A Resposta Real é “os Dois”: Sistemas Mistos</h2>
+<p>Na prática, sistemas grandes <strong>não escolhem um lado</strong> — eles aplicam garantias diferentes a partes diferentes do problema. Pense em uma loja virtual:</p>
 <ul>
-<li>pagamentos usam transações fortes;</li>
-<li>catálogo usa cache e replicação eventual;</li>
-<li>feed usa ordenação aproximada;</li>
-<li>auditoria usa gravação durável;</li>
-<li>busca é atualizada de forma assíncrona.</li>
+<li><strong>pagamentos</strong> usam transações fortes (ACID);</li>
+<li>o <strong>catálogo</strong> usa cache e replicação eventual (BASE);</li>
+<li>o <strong>feed</strong> de recomendações usa ordenação aproximada (BASE);</li>
+<li>a <strong>auditoria</strong> usa gravação durável (ACID);</li>
+<li>a <strong>busca</strong> é atualizada de forma assíncrona (BASE).</li>
 </ul>
-<p>O resultado não é “SQL ou NoSQL”, mas uma arquitetura que escolhe garantias diferentes para partes diferentes do problema.</p>
+<div class="exemplo">
+<p>O mesmo vale para a UnDF: a <strong>matrícula</strong> (vagas) exige ACID, mas o <strong>painel</strong> que mostra “quantos alunos já se matricularam hoje” pode ser eventual — ninguém se prejudica se esse número estiver alguns segundos atrasado.</p>
+</div>
+<p>O resultado não é “<strong>SQL ou NoSQL</strong>”, mas uma arquitetura que escolhe, conscientemente, <strong>garantias diferentes para partes diferentes</strong> — usando ACID onde o domínio não perdoa e BASE onde ele tolera convergência posterior.</p>
 
 
 </section>
@@ -1490,12 +1498,12 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="pagination-link" aria-label="BASE e Consistência Eventual">
+      <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="pagination-link" aria-label="BASE e Consistência Eventual">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">BASE e Consistência Eventual</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/07-resumo.html" class="pagination-link" aria-label="Resumo e Decisão">
+      <a href="../../content/cap06/08-resumo.html" class="pagination-link" aria-label="Resumo e Decisão">
         <span class="nav-page-text"><span class="chapter-title">Resumo e Decisão</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

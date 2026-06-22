@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -34,7 +53,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/cap06/05-base-e-consistencia-eventual.html" rel="next">
+<link href="../../content/cap06/05-pacelc-e-bancos-reais.html" rel="next">
 <link href="../../content/cap06/03-concorrencia-e-contencao.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -658,17 +677,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
+  <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/06-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  <a href="../../content/cap06/06-base-e-consistencia-eventual.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BASE e Consistência Eventual</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/cap06/07-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
+  <a href="../../content/cap06/07-acid-ou-base.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quando Usar ACID ou BASE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/cap06/08-resumo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resumo e Decisão</span></a>
   </div>
 </li>
       </ul>
@@ -815,10 +839,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#partição-de-rede" id="toc-partição-de-rede" class="nav-link active" data-scroll-target="#partição-de-rede">Partição de Rede</a></li>
-  <li><a href="#escolha-cp" id="toc-escolha-cp" class="nav-link" data-scroll-target="#escolha-cp">Escolha CP</a></li>
-  <li><a href="#escolha-ap" id="toc-escolha-ap" class="nav-link" data-scroll-target="#escolha-ap">Escolha AP</a></li>
-  <li><a href="#o-que-cap-não-diz" id="toc-o-que-cap-não-diz" class="nav-link" data-scroll-target="#o-que-cap-não-diz">O Que CAP Não Diz</a></li>
+  <li><a href="#o-que-é-uma-partição-de-rede" id="toc-o-que-é-uma-partição-de-rede" class="nav-link active" data-scroll-target="#o-que-é-uma-partição-de-rede">O Que é uma Partição de Rede</a></li>
+  <li><a href="#a-escolha-real-c-ou-a-durante-a-partição" id="toc-a-escolha-real-c-ou-a-durante-a-partição" class="nav-link" data-scroll-target="#a-escolha-real-c-ou-a-durante-a-partição">A Escolha Real: C <strong>ou</strong> A, Durante a Partição</a></li>
+  <li><a href="#o-mito-do-escolha-2-de-3" id="toc-o-mito-do-escolha-2-de-3" class="nav-link" data-scroll-target="#o-mito-do-escolha-2-de-3">O Mito do “Escolha 2 de 3”</a></li>
+  <li><a href="#um-detalhe-que-confunde-o-c-do-cap-o-c-do-acid" id="toc-um-detalhe-que-confunde-o-c-do-cap-o-c-do-acid" class="nav-link" data-scroll-target="#um-detalhe-que-confunde-o-c-do-cap-o-c-do-acid">Um Detalhe que Confunde: o “C” do CAP ≠ o “C” do ACID</a></li>
+  <li><a href="#o-que-o-cap-não-diz" id="toc-o-que-o-cap-não-diz" class="nav-link" data-scroll-target="#o-que-o-cap-não-diz">O Que o CAP <strong>Não</strong> Diz</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BragaD/UnDF-BancodeDados-202601/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -851,10 +876,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>O Teorema CAP é uma forma clássica de explicar uma limitação fundamental de sistemas distribuídos. Ele não diz que bancos distribuídos são ruins. Ele diz que, diante de uma partição de rede, certas garantias não podem ser mantidas ao mesmo tempo.</p>
-<div class="conceito">
-<p>O <strong>Teorema CAP</strong> afirma que, na presença de uma partição de rede, um sistema distribuído precisa escolher entre manter consistência forte ou manter disponibilidade.</p>
-</div>
+<p>O <strong>Teorema CAP</strong> é a forma clássica de explicar um limite fundamental dos sistemas distribuídos. Proposto por Eric Brewer em 2000 <span class="citation" data-cites="brewer2000">(<a href="#ref-brewer2000" role="doc-biblioref">Brewer 2000</a>)</span> e demonstrado formalmente por Gilbert e Lynch em 2002 <span class="citation" data-cites="gilbert2002">(<a href="#ref-gilbert2002" role="doc-biblioref">Gilbert e Lynch 2002</a>)</span>, ele não diz que bancos distribuídos são ruins. Diz algo mais específico: <strong>diante de uma falha de comunicação na rede, certas garantias não podem ser mantidas ao mesmo tempo.</strong></p>
 <p>As três letras são:</p>
 <table class="caption-top table">
 <colgroup>
@@ -872,32 +894,31 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><strong>C</strong></td>
-<td>Consistency</td>
-<td>Todos os clientes veem uma visão consistente dos dados</td>
+<td><em>Consistency</em></td>
+<td>Todo cliente lê sempre o dado mais recente — uma visão única e atual</td>
 </tr>
 <tr class="even">
 <td><strong>A</strong></td>
-<td>Availability</td>
-<td>Toda requisição a um nó ativo recebe resposta</td>
+<td><em>Availability</em></td>
+<td>Toda requisição a um nó <strong>em funcionamento</strong> recebe resposta</td>
 </tr>
 <tr class="odd">
 <td><strong>P</strong></td>
-<td>Partition tolerance</td>
+<td><em>Partition tolerance</em></td>
 <td>O sistema continua operando apesar de falhas de comunicação entre nós</td>
 </tr>
 </tbody>
 </table>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png" class="img-fluid figure-img" style="width:55.0%" alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as combinações CA, CP e AP."></p>
-<figcaption>Diagrama de Euler do Teorema CAP.</figcaption>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/98/CAP_Theorem_Euler_Diagram.png" class="img-fluid figure-img" style="width:50.0%" alt="Diagrama com os conjuntos Consistency, Availability e Partition Tolerance e as interseções CA, CP e AP."></p>
+<figcaption>Diagrama de Euler tradicional do Teorema CAP, com as combinações CA, CP e AP. Veja a seguir por que ele induz a um erro comum.</figcaption>
 </figure>
 </div>
 <p>Fonte: imagem de <a href="https://commons.wikimedia.org/wiki/File:CAP_Theorem_Euler_Diagram.png">JamieMcCarthy/Wikimedia Commons</a>, licenciada sob <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
-<section id="partição-de-rede" class="level2">
-<h2 class="anchored" data-anchor-id="partição-de-rede">Partição de Rede</h2>
-<p>Uma partição ocorre quando parte dos nós não consegue se comunicar com outra parte. Os servidores podem estar ligados, mas a rede entre eles falha.</p>
-<p>Imagine duas réplicas de um mesmo dado:</p>
+<section id="o-que-é-uma-partição-de-rede" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-é-uma-partição-de-rede">O Que é uma Partição de Rede</h2>
+<p>Uma <strong>partição</strong> ocorre quando um grupo de nós não consegue se comunicar com outro grupo. Os servidores podem estar todos <strong>ligados e saudáveis</strong> — o que falhou foi a <em>rede</em> entre eles. É como dois prédios da UnDF cujo cabo de fibra foi rompido: cada lado funciona, mas eles não se falam.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -906,73 +927,133 @@ ul.task-list li input[type="checkbox"] {
 <pre class="mermaid mermaid-js">flowchart LR
     c1["Cliente 1"] --&gt; a["Nó A&lt;br/&gt;saldo = 100"]
     c2["Cliente 2"] --&gt; b["Nó B&lt;br/&gt;saldo = 100"]
-    a -. "rede indisponível" .- b
+    a -. "❌ rede rompida" .- b
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Se um cliente atualiza o saldo no Nó A, mas o Nó A não consegue falar com o Nó B, o sistema tem uma escolha.</p>
+<p>Se o Cliente 1 atualiza o saldo no Nó A, mas A não consegue falar com B, o sistema é <strong>forçado a escolher</strong> entre duas saídas ruins.</p>
 </section>
-<section id="escolha-cp" class="level2">
-<h2 class="anchored" data-anchor-id="escolha-cp">Escolha CP</h2>
-<p>Um sistema que privilegia consistência pode recusar ou atrasar operações até conseguir coordenar os nós necessários.</p>
+<section id="a-escolha-real-c-ou-a-durante-a-partição" class="level2">
+<h2 class="anchored" data-anchor-id="a-escolha-real-c-ou-a-durante-a-partição">A Escolha Real: C <strong>ou</strong> A, Durante a Partição</h2>
+<div class="conceito">
+<p>Quando há uma partição, um sistema distribuído precisa escolher: <strong>recusar/atrasar</strong> a operação para preservar a consistência (sacrificando disponibilidade), <strong>ou</strong> responder mesmo assim, arriscando devolver dados divergentes (sacrificando consistência).</p>
+</div>
+<p>São os dois perfis clássicos:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
+<th>Perfil</th>
+<th>Durante a partição…</th>
 <th>Vantagem</th>
 <th>Custo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Evita respostas conflitantes</td>
-<td>Pode deixar parte dos usuários sem resposta</td>
+<td><strong>CP</strong> (consistência)</td>
+<td>recusa ou atrasa operações que não pode coordenar</td>
+<td>nunca devolve resposta conflitante</td>
+<td>parte dos usuários fica <strong>sem resposta</strong></td>
+</tr>
+<tr class="even">
+<td><strong>AP</strong> (disponibilidade)</td>
+<td>responde em cada lado, sem coordenar</td>
+<td>o serviço <strong>continua de pé</strong></td>
+<td>pode devolver <strong>leituras divergentes</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Essa escolha faz sentido quando uma resposta errada é pior que uma resposta indisponível.</p>
+<p>Escolher <strong>CP</strong> faz sentido quando uma resposta <em>errada</em> é pior que uma resposta <em>ausente</em> (um saldo bancário). Escolher <strong>AP</strong> faz sentido quando estar <em>no ar</em> importa mais e o sistema consegue reconciliar os dados depois (uma curtida, um carrinho).</p>
 </section>
-<section id="escolha-ap" class="level2">
-<h2 class="anchored" data-anchor-id="escolha-ap">Escolha AP</h2>
-<p>Um sistema que privilegia disponibilidade pode continuar respondendo em cada lado da partição, mesmo sem coordenação imediata.</p>
+<section id="o-mito-do-escolha-2-de-3" class="level2">
+<h2 class="anchored" data-anchor-id="o-mito-do-escolha-2-de-3">O Mito do “Escolha 2 de 3”</h2>
+<p>A leitura mais comum do diagrama acima — <em>“escolha 2 entre C, A e P”</em> — é <strong>enganosa</strong> <span class="citation" data-cites="kleppmann2015">(<a href="#ref-kleppmann2015" role="doc-biblioref">Kleppmann 2015</a>)</span>. O motivo é simples e prático:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Partições não são uma opção que você “escolhe” abrir mão.</strong> Redes reais falham — cabos rompem, pacotes se perdem, <em>data centers</em> ficam isolados. Um sistema distribuído <strong>tem</strong> de tolerar partições. Logo, “P” não está realmente em disputa: a escolha verdadeira é <strong>entre C e A, e só quando uma partição acontece</strong>.</p>
+</div>
+</div>
+<p>Fora de uma partição (ou seja, <strong>quase sempre</strong>, em uma rede saudável), não há dilema: o sistema pode oferecer consistência <strong>e</strong> disponibilidade ao mesmo tempo <span class="citation" data-cites="brewer2012">(<a href="#ref-brewer2012" role="doc-biblioref">Brewer 2012</a>)</span>. O CAP só “morde” no momento da falha. Por isso é mais honesto dizer que um algoritmo <strong>assume que partições podem ocorrer</strong> do que dizer que ele “fornece tolerância a partições”.</p>
+</section>
+<section id="um-detalhe-que-confunde-o-c-do-cap-o-c-do-acid" class="level2">
+<h2 class="anchored" data-anchor-id="um-detalhe-que-confunde-o-c-do-cap-o-c-do-acid">Um Detalhe que Confunde: o “C” do CAP ≠ o “C” do ACID</h2>
+<p>As duas siglas usam a palavra <em>consistência</em>, mas com sentidos diferentes — e misturá-los gera muita confusão:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Vantagem</th>
-<th>Custo</th>
+<th></th>
+<th>Significado</th>
+<th>Quem garante</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mantém o serviço funcionando</td>
-<td>Pode produzir leituras temporariamente inconsistentes</td>
+<td><strong>C</strong> do <strong>ACID</strong></td>
+<td>a transação <strong>preserva as regras/<em>constraints</em></strong> do banco (ex.: saldo ≥ 0)</td>
+<td>o modelo da aplicação + o SGBD</td>
+</tr>
+<tr class="even">
+<td><strong>C</strong> do <strong>CAP</strong></td>
+<td><strong>linearizabilidade</strong>: todos os clientes enxergam a <em>mesma ordem</em> de operações, como se houvesse uma cópia única</td>
+<td>o protocolo de replicação</td>
 </tr>
 </tbody>
 </table>
-<p>Essa escolha faz sentido quando o sistema pode reconciliar dados depois e quando pequenas divergências temporárias são aceitáveis.</p>
+<div class="conceito">
+<p>No <strong>CAP</strong>, “consistência” significa <strong>linearizabilidade</strong>: qualquer leitura reflete a escrita mais recente, como se existisse um único exemplar do dado. É uma garantia sobre <strong>réplicas</strong>, não sobre <em>constraints</em>.</p>
+</div>
 </section>
-<section id="o-que-cap-não-diz" class="level2">
-<h2 class="anchored" data-anchor-id="o-que-cap-não-diz">O Que CAP Não Diz</h2>
-<p>CAP é frequentemente simplificado demais. Alguns cuidados:</p>
+<section id="o-que-o-cap-não-diz" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-o-cap-não-diz">O Que o CAP <strong>Não</strong> Diz</h2>
 <ul>
-<li>CAP se torna decisivo <strong>durante partições de rede</strong>.</li>
-<li>Partição tolerante não é uma escolha opcional em sistemas distribuídos reais: redes falham.</li>
-<li>Consistência em CAP não é a mesma palavra ampla usada em ACID; aqui a ideia está próxima de todos os clientes observarem uma ordem consistente de operações.</li>
-<li>Sistemas reais fazem escolhas graduais, não apenas rótulos puros como “CP” ou “AP”.</li>
+<li>O CAP só é decisivo <strong>durante uma partição</strong>; no resto do tempo, não impõe escolha.</li>
+<li>“P” <strong>não é opcional</strong> em sistemas distribuídos reais — partições acontecem.</li>
+<li>A “consistência” do CAP é <strong>linearizabilidade</strong>, não a consistência do ACID.</li>
+<li>Sistemas reais não são rótulos puros “CP” ou “AP”: fazem escolhas <strong>graduais</strong> e muitas vezes <strong>ajustáveis</strong> por operação.</li>
 </ul>
-<p>CAP não substitui projeto de banco de dados. Ele ajuda a formular a pergunta certa: <strong>em caso de falha de comunicação, preferimos esperar para preservar consistência forte ou responder aceitando inconsistência temporária?</strong></p>
+<p>O CAP não substitui o projeto do banco. Ele ajuda a formular a pergunta certa:</p>
+<blockquote class="blockquote">
+<p>Em caso de falha de comunicação, preferimos <strong>esperar</strong> para preservar consistência forte, ou <strong>responder</strong> aceitando inconsistência temporária?</p>
+</blockquote>
+<p>Mas há um ponto cego importante: o CAP só fala da <strong>partição</strong>. E quando a rede está <strong>saudável</strong> — que é a imensa maioria do tempo? Será que aí não existe nenhum trade-off? Existe, sim — e é o que a próxima seção formaliza com o <strong>PACELC</strong>.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-brewer2000" class="csl-entry" role="listitem">
+Brewer, Eric A. 2000. <span>«Towards Robust Distributed Systems (Keynote)»</span>. <em>Proceedings of the 19th Annual ACM Symposium on Principles of Distributed Computing (PODC)</em>. <a href="https://doi.org/10.1145/343477.343502">https://doi.org/10.1145/343477.343502</a>.
+</div>
+<div id="ref-brewer2012" class="csl-entry" role="listitem">
+Brewer, Eric A. 2012. <span>«CAP Twelve Years Later: How the <span>“Rules”</span> Have Changed»</span>. <em>Computer</em> 45 (2): 23–29. <a href="https://doi.org/10.1109/MC.2012.37">https://doi.org/10.1109/MC.2012.37</a>.
+</div>
+<div id="ref-gilbert2002" class="csl-entry" role="listitem">
+Gilbert, Seth, e Nancy Lynch. 2002. <span>«Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services»</span>. <em>ACM SIGACT News</em> 33 (2): 51–59. <a href="https://doi.org/10.1145/564585.564601">https://doi.org/10.1145/564585.564601</a>.
+</div>
+<div id="ref-kleppmann2015" class="csl-entry" role="listitem">
+Kleppmann, Martin. 2015. <span>«A Critique of the CAP Theorem»</span>. <em>arXiv preprint arXiv:1509.05393</em>. <a href="https://arxiv.org/abs/1509.05393">https://arxiv.org/abs/1509.05393</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1490,8 +1571,8 @@ document.addEventListener('DOMContentLoaded', function () {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/cap06/05-base-e-consistencia-eventual.html" class="pagination-link" aria-label="BASE e Consistência Eventual">
-        <span class="nav-page-text"><span class="chapter-title">BASE e Consistência Eventual</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/cap06/05-pacelc-e-bancos-reais.html" class="pagination-link" aria-label="Além do CAP: PACELC e Bancos Reais">
+        <span class="nav-page-text"><span class="chapter-title">Além do CAP: PACELC e Bancos Reais</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
